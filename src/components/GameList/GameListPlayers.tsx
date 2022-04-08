@@ -1,5 +1,6 @@
 import { List } from "semantic-ui-react";
 import { GameListPlayer } from "../../models/websocket/ServerGameList";
+import './GameListPlayers.scss';
 
 interface GameListPlayerProps {
   players: GameListPlayer[];
