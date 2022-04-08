@@ -74,10 +74,10 @@ function GameListPage() {
   return (
     <Container>
       <Grid stackable className="equal width">
-        <Grid.Column className="twelve wide column">
+        <Grid.Column width="twelve">
           <GameList gameList={gameList}></GameList>
         </Grid.Column>
-        <Grid.Column columns="four wide column">
+        <Grid.Column width="four">
           <OnlineStats gameList={gameList}></OnlineStats>
         </Grid.Column>
       </Grid>

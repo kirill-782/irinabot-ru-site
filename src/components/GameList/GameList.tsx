@@ -1,5 +1,6 @@
 import { GameListGame } from "../../models/websocket/ServerGameList";
 import { Table } from "semantic-ui-react";
+import GameListPlayers from "./GameListPlayers";
 
 function GameList({ gameList }) {
   return (
@@ -23,7 +24,7 @@ function GameList({ gameList }) {
               <Table.Cell>1.26</Table.Cell>
               <Table.Cell>{game.name}</Table.Cell>
               <Table.Cell>
-                {game.players.map((player) => player.name).join(", ")}
+                <GameListPlayers players={game.players} />
               </Table.Cell>
             </Table.Row>
           );
