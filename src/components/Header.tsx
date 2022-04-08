@@ -1,6 +1,8 @@
 import React, { ReactNode } from "react";
 import { Dropdown, Icon, Menu, SemanticICONS } from "semantic-ui-react";
 import { useWindowSize } from "../hooks/useWindowSize";
+import MobileMenuList from "./MobileMenuList/MobileMenuList";
+import './Header.scss';
 
 export interface MenuItem {
   type: string;
@@ -34,11 +36,22 @@ function Header({ items }: HeaderProps) {
     // Mobile bar
 
     return (
-      <Menu>
-        <Menu.Item content="Mobile Menu"></Menu.Item>
+      <Menu className='mobile-menu'>
+        <Menu.Item onClick={toggleMobileMenuList} content="Mobile Menu"></Menu.Item>
+        <div className="mobile-menu-list">
+          {items.map((item) => {
+            if (item.type === "item") return processAsMenuItem(item);
+            else return processAsMenuDropDown(item);
+          })}
+        </div>
       </Menu>
     );
   }
+}
+
+function toggleMobileMenuList() {
+  const mobileMenu = document.querySelector('.mobile-menu-list');
+  mobileMenu.classList.toggle("active");
 }
 
 function processAsMenuItem(item: MenuItem): ReactNode {
@@ -50,7 +63,7 @@ function processAsMenuItem(item: MenuItem): ReactNode {
       position={item.position}
       key={item.name}
     >
-      <Icon name={item.icon} />
+      <Icon name={item.icon} className={item.icon ? item.icon : 'no-icon'} />
       {item.node}
     </Menu.Item>
   );
