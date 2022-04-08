@@ -77,7 +77,7 @@ function parseDropDownItems(items: Array<MenuItem>): ReactNode {
     if (item.type === "item") return processAsDropDownItem(item);
     else {
       // <span>{item.node}</span>;
-      return parseDropDownItems(item.subMenu);      
+      return parseDropDownItems(item.subMenu);
     }
   });
 }

@@ -2,7 +2,6 @@ import React, { useEffect, useReducer, useState } from "react";
 import { SemanticToastContainer } from "react-semantic-toasts";
 import { Icon } from "semantic-ui-react";
 import Footer from "./components/Footer";
-// import GameList from "./components/GameList";
 import Header, { MenuItem } from "./components/Header";
 import { AppRuntimeSettingsContext, WebsocketContext } from "./context";
 import { GHostWebSocket } from "./services/GHostWebsocket";
