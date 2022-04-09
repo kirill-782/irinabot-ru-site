@@ -38,8 +38,24 @@ function Header({ items }: HeaderProps) {
     return (
       <Menu className='mobile-menu'>
         <Menu.Item onClick={toggleMobileMenuList} content="Mobile Menu"></Menu.Item>
+        <Dropdown
+          item
+          //onClick={}
+          icon='dropdown'
+          name='user-profile'
+          trigger={<span><Icon name='user'/>Symmetra</span>}
+          labeled
+          className='user-profile-dropdown'
+        >
+          <Dropdown.Menu>
+          <Dropdown.Item name='settings' key='1'>Настройки</Dropdown.Item>
+            <Dropdown.Item name='exit' key='2'>Выход</Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
         <div className="mobile-menu-list">
+          {console.log(items)}
           {items.map((item) => {
+            if (item.name === "logo" || item.name === "usermenu") return false;
             if (item.type === "item") return processAsMenuItem(item);
             else return processAsMenuDropDown(item);
           })}
