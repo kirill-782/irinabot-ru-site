@@ -11,13 +11,12 @@
     "@types/react": "^17.0.43",
     "@types/react-dom": "^17.0.14",
     "axios": "^0.26.1",
-    "node-sass": "^7.0.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.0",
     "react-semantic-toasts": "^0.6.6",
-    "semantic-ui-less": "^2.4.1",
+    "semantic-ui-css": "2.4.1",
     "semantic-ui-react": "^2.1.2",
     "typescript": "^4.6.3",
     "web-vitals": "^2.1.4"
@@ -45,5 +44,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "sass": "1.50.0",
+    "sass-loader": "12.6.0",
+    "webpack": "5.72.0"
   }
 }

@@ -1,0 +1,74 @@
+@use 'sass:math';
+/*******************************
+             Loader
+*******************************/
+
+/* Some global loader styles defined in site.variables */
+// $loaderSpeed
+// $loaderLineWidth
+// $loaderFillColor
+// $loaderLineColor
+// $invertedLoaderFillColor
+// $invertedLoaderLineColor
+
+/*-------------------
+      Standard
+--------------------*/
+
+$loaderTopOffset: 50%;
+$loaderLeftOffset: 50%;
+
+$shapeBorderColor: $loaderLineColor transparent transparent;
+$invertedShapeBorderColor: $invertedLoaderLineColor transparent transparent;
+
+/*-------------------
+        Types
+--------------------*/
+
+/* Text */
+$textDistance: $mini;
+$loaderTextColor: $textColor;
+$invertedLoaderTextColor: $invertedTextColor;
+
+
+/*-------------------
+        States
+--------------------*/
+
+$indeterminateDirection: reverse;
+$indeterminateSpeed: (2 * $loaderSpeed);
+
+/*-------------------
+      Variations
+--------------------*/
+
+$inlineVerticalAlign: middle;
+$inlineMargin: 0em;
+
+/* Exact Sizes (Avoids Rounding Errors) */
+$mini    : $exact14px;
+$tiny    : $exact16px;
+$small   : $exact24px;
+$medium  : $exact32px;
+$large   : $exact48px;
+$big     : $exact52px;
+$huge    : $exact58px;
+$massive : $exact64px;
+
+$miniOffset: 0em 0em 0em math.div(-$mini, 2);
+$tinyOffset: 0em 0em 0em math.div(-$tiny, 2);
+$smallOffset: 0em 0em 0em math.div(-$small, 2);
+$mediumOffset: 0em 0em 0em math.div(-$medium, 2);
+$largeOffset: 0em 0em 0em math.div(-$large, 2);
+$bigOffset: 0em 0em 0em math.div(-$big, 2);
+$hugeOffset: 0em 0em 0em math.div(-$huge, 2);
+$massiveOffset: 0em 0em 0em math.div(-$massive, 2);
+
+$tinyFontSize: $relativeTiny;
+$miniFontSize: $relativeMini;
+$smallFontSize: $relativeSmall;
+$mediumFontSize: $relativeMedium;
+$largeFontSize: $relativeLarge;
+$bigFontSize: $relativeBig;
+$hugeFontSize: $relativeHuge;
+$massiveFontSize: $relativeMassive;

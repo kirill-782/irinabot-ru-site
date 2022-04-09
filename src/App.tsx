@@ -7,22 +7,9 @@ import { Route, Routes } from "react-router-dom";
 import Layout from "./components/Layout";
 import GameListPage from "./components/Pages/GameListPage";
 
+import './semantic-ui-sass/template/_index.scss';
+
 function App() {
-  useEffect(() => {
-    if (localStorage.getItem("theme") === "dark") {
-      const head = document.head;
-      const link = document.createElement("link");
-
-      link.type = "text/css";
-      link.rel = "stylesheet";
-      link.href = process.env.PUBLIC_URL + "/styles/semantic.slate.min.css";
-      head.appendChild(link);
-
-      return () => {
-        head.removeChild(link);
-      };
-    }
-  }, []);
 
   const [ghostSocket, dispatchGHostSocket] = useReducer((state, action) => {
     if (action === "connect") state.connect();
