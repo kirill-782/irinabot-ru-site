@@ -46,39 +46,39 @@
 }
 
 .mobile-menu-list {
+  display: none;
+  background: #fff;
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  top: 44px;
+  font-weight: 400;
+  border: 1px solid rgba(34, 36, 38, 0.15);
+  box-shadow: 0 1px 2px 0 #22242626;
+  border-radius: 0.28571429rem;
+  top: 45px;
+  left: 0;
+
+  &.active {
+    display: block;
+  }
+}
+
+.ui.menu.mobile-menu {
+  .icon.item > .icon.no-icon {
     display: none;
-    background: #fff;
-    position: absolute;
-    z-index: 1;
-    width: 100%;
-    top: 44px;
-    font-weight: 400;
-    border: 1px solid rgba(34,36,38,.15);
-    box-shadow: 0 1px 2px 0 #22242626;
-    border-radius: 0.28571429rem;
-    top: 45px;
-    left: 0;
-
-    &.active {
-        display: block;
-    }
+  }
 }
 
 .ui.menu.mobile-menu {
-    .icon.item > .icon.no-icon {
-        display: none;
-    }
-}
+  margin: 0.5rem;
+  position: relative;
 
-.ui.menu.mobile-menu {
-    margin: 0.5rem;
-    position: relative;
-
-    &:first-child {
-        margin-top: 0.5rem;
-    }
+  &:first-child {
+    margin-top: 0.5rem;
+  }
 }
 
 .user-profile-dropdown {
-    margin-left: auto;
+  margin-left: auto;
 }
