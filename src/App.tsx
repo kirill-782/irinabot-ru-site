@@ -1,6 +1,7 @@
 import React, { useEffect, useReducer, useState } from "react";
 import { AppRuntimeSettingsContext, WebsocketContext } from "./context";
 import { GHostWebSocket } from "./services/GHostWebsocket";
+import { loadTheme } from './utils/Theme';
 
 import "react-semantic-toasts/styles/react-semantic-alert.css";
 import { Route, Routes } from "react-router-dom";
@@ -10,6 +11,7 @@ import GameListPage from "./components/Pages/GameListPage";
 import './semantic-ui-sass/template/_index.scss';
 
 function App() {
+  useEffect(loadTheme, []);
 
   const [ghostSocket, dispatchGHostSocket] = useReducer((state, action) => {
     if (action === "connect") state.connect();

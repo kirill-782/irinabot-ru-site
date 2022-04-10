@@ -1,12 +1,14 @@
 import { Outlet } from "react-router-dom";
 import { SemanticToastContainer } from "react-semantic-toasts";
 import { Icon } from "semantic-ui-react";
+import { Checkbox } from "semantic-ui-react";
+import type { CheckboxProps } from "semantic-ui-react";
 import Footer from "./Footer";
+import { switchTheme, E_THEME, getTheme } from "../utils/Theme";
 import Header, { MenuItem } from "./Header";
 
-const setTheme = (theme: string) => {
-  localStorage.setItem("theme", theme);
-  document.location.reload();
+const handleChangeTheme = (_, data: CheckboxProps) => {
+  switchTheme(data.checked ? E_THEME.DARK : E_THEME.LIGHT)
 };
 
 const menuItems: Array<MenuItem> = [
@@ -69,34 +71,15 @@ const menuItems: Array<MenuItem> = [
     ],
   },
   {
-    type: "menu",
+    type: "item",
     name: "theme",
     text: "Выбор темы",
     node: (
       <span>
-        <Icon name="paint brush" />
-        Выбор темы
+        <Checkbox toggle checked={getTheme() === E_THEME.DARK} onChange={handleChangeTheme} label={<>Тема <Icon name="sun" /></>}/>        
       </span>
     ),
     onClick: (...args) => console.log("theme", ...args),
-    subMenu: [
-      {
-        type: "item",
-        name: "dark",
-        icon: "sun",
-        text: "Тёмная тема",
-        node: <span>Тёмная тема</span>,
-        onClick: () => setTheme("dark"),
-      },
-      {
-        type: "item",
-        name: "light",
-        icon: "sun outline",
-        text: "Светлая тема",
-        node: <span>Светлая тема</span>,
-        onClick: () => setTheme("light"),
-      },
-    ],
   },
 ];
 
