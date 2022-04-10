@@ -11,10 +11,11 @@ import { GHostPackageEvent } from "../../services/GHostWebsocket";
 import GameList from "../GameList/GameList";
 import OnlineStats from "../GameList/OnlineStats";
 import {
-  allSlotsOrder,
-  defaultGameListOrder,
-  freeSlotsOrder,
-  playerCountOrder,
+  allSlotsSort,
+  defaultSort,
+  freeSlotsSort,
+  gameTypeSort,
+  playersOccupiedSlot,
 } from "../../utils/GameListSortMethods";
 
 function GameListPage() {
@@ -24,17 +25,18 @@ function GameListPage() {
   const [gameList, setGameList] = useState<GameListGame[]>([]);
   const [quicFilter, setQuicFilter] = useState<string>("");
   const [orderFunction, setOrderFunction] = useState<any>("");
+  const [reverseOrder, setReverseOrder] = useState(false);
 
   const getOrderFunction = (value) => {
     switch (value) {
       case "freeSlots":
-        return freeSlotsOrder;
+        return freeSlotsSort;
       case "allSlots":
-        return allSlotsOrder;
+        return allSlotsSort;
       case "playerSlots":
-        return playerCountOrder;
+        return playersOccupiedSlot;
       default:
-        return defaultGameListOrder;
+        return defaultSort;
     }
   };
 
@@ -59,13 +61,13 @@ function GameListPage() {
       return false;
     });
 
-    console.log(filtredGames);
-
-    if (filtredGames.length > 1)
-      filtredGames.sort(getOrderFunction(orderFunction));
-
-    return filtredGames;
-  }, [gameList, quicFilter, orderFunction]);
+    return filtredGames.sort((a, b) => {
+      return (
+        gameTypeSort(a, b) ||
+        getOrderFunction(orderFunction)(a, b) * (reverseOrder ? -1 : 1)
+      );
+    });
+  }, [gameList, quicFilter, orderFunction, reverseOrder]);
 
   // Subscribe component to socket events and gameList
 
@@ -93,7 +95,7 @@ function GameListPage() {
         setGameList(gameList.games);
 
         clearTimeout(intervalId);
-        intervalId = setTimeout(trySendGameList, 500);
+        intervalId = setTimeout(trySendGameList, 3000);
       }
     };
 
@@ -129,25 +131,21 @@ function GameListPage() {
       key: "default",
       text: "По умолчанию",
       value: "default",
-      orderFunction: defaultGameListOrder,
     },
     {
       key: "freeSlots",
       text: "Свободно слотов",
       value: "freeSlots",
-      orderFunction: freeSlotsOrder,
     },
     {
       key: "allSlots",
       text: "Всего слотов",
       value: "allSlots",
-      orderFunction: allSlotsOrder,
     },
     {
       key: "playerSlots",
       text: "Игроков в игре",
       value: "playerSlots",
-      orderFunction: playerCountOrder,
     },
   ];
 
@@ -167,18 +165,27 @@ function GameListPage() {
                 basic
                 floating
                 options={options}
-                defaultValue="page"
+                defaultValue="default"
               />
             }
           />
-          <Button floated="right" basic color="green" icon="bell" />
-          <Button floated="right" basic color="green" icon="filter" />
+          <Button floated="right" basic icon="bell" />
+          <Button floated="right" basic icon="filter" />
+          <Button
+            floated="right"
+            color={reverseOrder ? "green" : null}
+            basic
+            icon="exchange"
+            onClick={() => setReverseOrder((reverseOrder) => !reverseOrder)}
+          />
         </Grid.Column>
       </Grid>
 
       <Grid columns="equal" stackable>
         <Grid.Column width="twelve">
-          <GameList gameList={filtredGameList}></GameList>
+          <div>
+            <GameList gameList={filtredGameList}></GameList>
+          </div>
         </Grid.Column>
         <Grid.Column width="four">
           <OnlineStats gameList={gameList}></OnlineStats>
