@@ -53,9 +53,9 @@ const menuItems: Array<MenuItem> = [
     type: "menu",
     name: "usermenu",
     text: "Symmetra",
+    icon: "user",
     node: (
       <span>
-        <Icon name="user" />
         Symmetra
       </span>
     ),
@@ -75,7 +75,7 @@ const menuItems: Array<MenuItem> = [
     name: "theme",
     text: "Выбор темы",
     node: (
-      <span>
+      <span className="theme-switcher">
         <Checkbox toggle checked={getTheme() === E_THEME.DARK} onChange={handleChangeTheme} label={<>Тема <Icon name="sun" /></>}/>        
       </span>
     ),

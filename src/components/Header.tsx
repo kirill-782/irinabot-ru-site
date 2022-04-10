@@ -24,7 +24,7 @@ function Header({ items }: HeaderProps) {
   if (windowSize.width === undefined || windowSize.width > 767) {
     // PC BAR
     return (
-      <Menu inverted fixed="top">
+      <Menu inverted fixed="top" className="desktop-menu">
         {items.map((item) => {
           if (item.type === "item") return processAsMenuItem(item);
           else return processAsMenuDropDown(item);
@@ -90,9 +90,10 @@ function processAsMenuDropDown(item: MenuItem): ReactNode {
       <Dropdown
         item
         onClick={item.onClick}
-        icon={item.icon}
+        icon='dropdown'
         name={item.name}
         text={item.text}
+        trigger={<span><Icon name={item.icon}/>{item.text}</span>}
       >
         <Dropdown.Menu>{parseDropDownItems(item.subMenu)}</Dropdown.Menu>
       </Dropdown>

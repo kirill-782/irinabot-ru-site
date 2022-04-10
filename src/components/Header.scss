@@ -1,3 +1,50 @@
+.ui.menu.desktop-menu,
+.ui.menu.mobile-menu {
+    min-height: 40px;
+}
+
+.ui.menu.mobile-menu {
+    font-size: inherit;
+}
+
+.ui.menu.desktop-menu .item,
+.ui.menu.desktop-menu .menu {
+    height: 40px;
+    .ui.toggle.checkbox {
+        min-height: initial;
+    }
+}
+
+.ui.dropdown  {
+    & > .dropdown.icon {
+        line-height: 1.2;
+    }
+}
+
+.menu {
+    .ui.toggle.checkbox{
+        min-height: initial;
+    }
+}
+
+.ui.menu .right.item::before, 
+.ui.menu .right.menu > .item::before {
+    right: 0;
+    left: auto;
+}
+
+.theme-switcher {
+    .ui i {
+        float: left;
+        margin-top: 1px;
+    }
+    
+}
+
+.ui.menu div.item > i.dropdown.icon {
+    margin: 0.2em 0em 0em 1em;
+}
+
 .mobile-menu-list {
     display: none;
     background: #fff;
