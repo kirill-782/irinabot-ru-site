@@ -18,16 +18,16 @@ $closeOpacity: 0.8;
 $closeSize: 1.25em;
 $closeColor: $white;
 
-$closeHitbox: 2.25rem;
-$closeDistance: 0.25rem;
-$closeHitBoxOffset: math.div($closeHitbox - 1rem, 2);
+$closeHitbox: 2.25em;
+$closeDistance: 0.25em;
+$closeHitBoxOffset: math.div($closeHitbox - 1em, 2);
 $closePadding: $closeHitBoxOffset 0rem 0rem 0rem;
 $closeTop: -($closeDistance + $closeHitbox);
 $closeRight: -($closeDistance + $closeHitbox);
 
 /* Header */
 $headerMargin: 0em;
-$headerVerticalPadding: 1.25rem;
+$headerVerticalPadding: 1.25em;
 $headerHorizontalPadding: 1.5rem;
 $headerPadding: $headerVerticalPadding $headerHorizontalPadding;
 $headerBackground: $white;
@@ -63,7 +63,7 @@ $actionAlign: right;
 $buttonDistance: 0.75em;
 
 /* Inner Close Position (Tablet/Mobile) */
-$innerCloseTop: ($headerVerticalPadding - $closeHitBoxOffset + ($lineHeight - 1rem));
+$innerCloseTop: ($headerVerticalPadding - $closeHitBoxOffset + ($lineHeight - 1em));
 $innerCloseRight: 1rem;
 $innerCloseColor: $textColor;
 

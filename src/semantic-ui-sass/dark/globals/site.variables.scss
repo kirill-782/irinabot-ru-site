@@ -1,0 +1,72 @@
+/*******************************
+     User Global Variables
+*******************************/
+
+$pageBackground      : #222;
+
+$white: #464545;
+$black: #d3d3d3;
+$textColor: #fff;
+
+/*-------------------
+    Emotive Colors
+--------------------*/
+
+/* Positive */
+$positiveColor           : $green;
+$positiveBackgroundColor : #9eb1a1;
+$positiveBorderColor     : #A3C293;
+$positiveHeaderColor     : #1A531B;
+$positiveTextColor       : #2C662D;
+
+/* Negative */
+$negativeColor           : $red;
+$negativeBackgroundColor : #303030;
+$negativeBorderColor     : #E0B4B4;
+$negativeHeaderColor     : #912D2B;
+$negativeTextColor       : #9F3A38;
+
+/* Info */
+$infoColor              : #31CCEC;
+$infoBackgroundColor    : #2c4747;
+$infoBorderColor        : #A9D5DE;
+$infoHeaderColor        : #0E566C;
+$infoTextColor          : #276F86;
+
+/* Warning */
+$warningColor           : #F2C037;
+$warningBackgroundColor : #ab9c7c;
+$warningBorderColor     : #C9BA9B;
+$warningHeaderColor     : #794B02;
+$warningTextColor       : #573A08;
+
+/* Error */
+$errorBackgroundColor   : $negativeBackgroundColor;
+$errorColor             : $negativeColor;
+$errorBorderColor       : $negativeBorderColor;
+$errorHeaderColor       : $negativeHeaderColor;
+$errorTextColor         : $negativeTextColor;
+
+/*-------------------
+     Neutral Text
+--------------------*/
+
+$darkTextColor               : rgba(255, 255, 255, 0.9);
+$mutedTextColor              : rgba(255, 255, 255, 0.8);
+$lightTextColor              : rgba(255, 255, 255, 0.7);
+
+$unselectedTextColor         : rgba(255, 255, 255, 0.5);
+$hoveredTextColor            : rgba(255, 255, 255, 1);
+$pressedTextColor            : rgba(255, 255, 255, 1);
+$selectedTextColor           : rgba(255, 255, 255, 1);
+$disabledTextColor           : rgba(255, 255, 255, 0.2);
+
+$invertedTextColor           : rgba(0, 0, 0, 0.85);
+$invertedMutedTextColor      : rgba(0, 0, 0, 0.6);
+$invertedLightTextColor      : rgba(0, 0, 0, 0.4);
+
+$invertedUnselectedTextColor : rgba(0, 0, 0, 0.4);
+$invertedHoveredTextColor    : rgba(0, 0, 0, 0.8);
+$invertedPressedTextColor    : rgba(0, 0, 0, 0.9);
+$invertedSelectedTextColor   : rgba(0, 0, 0, 0.95);
+$invertedDisabledTextColor   : rgba(0, 0, 0, 0.2);
