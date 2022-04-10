@@ -1,6 +1,7 @@
+import React from "react";
 import { List } from "semantic-ui-react";
 import { GameListPlayer } from "../../models/websocket/ServerGameList";
-import './GameListPlayers.scss';
+import "./GameListPlayers.scss";
 
 interface GameListPlayerProps {
   players: GameListPlayer[];
@@ -9,7 +10,7 @@ interface GameListPlayerProps {
 const realmToText = {
   "178.218.214.114": "iCCup",
   connector: "IrInA Connector",
-  "127.0.0.1": "Игрок другой платформы"
+  "127.0.0.1": "Игрок другой платформы",
 };
 
 function GameListPlayers({ players }: GameListPlayerProps) {

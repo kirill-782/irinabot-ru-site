@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 import { Dropdown, Icon, Menu, SemanticICONS } from "semantic-ui-react";
 import { useWindowSize } from "../hooks/useWindowSize";
-import './Header.scss';
+import "./Header.scss";
 
 export interface MenuItem {
   type: string;
@@ -35,20 +35,32 @@ function Header({ items }: HeaderProps) {
     // Mobile bar
 
     return (
-      <Menu className='mobile-menu'>
-        <Menu.Item onClick={toggleMobileMenuList} content="Mobile Menu"></Menu.Item>
+      <Menu className="mobile-menu">
+        <Menu.Item
+          onClick={toggleMobileMenuList}
+          content="Mobile Menu"
+        ></Menu.Item>
         <Dropdown
           item
           //onClick={}
-          icon='dropdown'
-          name='user-profile'
-          trigger={<span><Icon name='user'/>Symmetra</span>}
+          icon="dropdown"
+          name="user-profile"
+          trigger={
+            <span>
+              <Icon name="user" />
+              Symmetra
+            </span>
+          }
           labeled
-          className='user-profile-dropdown'
+          className="user-profile-dropdown"
         >
           <Dropdown.Menu>
-          <Dropdown.Item name='settings' key='1'>Настройки</Dropdown.Item>
-            <Dropdown.Item name='exit' key='2'>Выход</Dropdown.Item>
+            <Dropdown.Item name="settings" key="1">
+              Настройки
+            </Dropdown.Item>
+            <Dropdown.Item name="exit" key="2">
+              Выход
+            </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
         <div className="mobile-menu-list">
@@ -65,7 +77,7 @@ function Header({ items }: HeaderProps) {
 }
 
 function toggleMobileMenuList() {
-  const mobileMenu = document.querySelector('.mobile-menu-list');
+  const mobileMenu = document.querySelector(".mobile-menu-list");
   mobileMenu.classList.toggle("active");
 }
 
@@ -78,7 +90,7 @@ function processAsMenuItem(item: MenuItem): ReactNode {
       position={item.position}
       key={item.name}
     >
-      <Icon name={item.icon} className={item.icon ? item.icon : 'no-icon'} />
+      <Icon name={item.icon} className={item.icon ? item.icon : "no-icon"} />
       {item.node}
     </Menu.Item>
   );

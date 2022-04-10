@@ -8,7 +8,7 @@ import { switchTheme, E_THEME, getTheme } from "../utils/Theme";
 import Header, { MenuItem } from "./Header";
 
 const handleChangeTheme = (_, data: CheckboxProps) => {
-  switchTheme(data.checked ? E_THEME.DARK : E_THEME.LIGHT)
+  switchTheme(data.checked ? E_THEME.DARK : E_THEME.LIGHT);
 };
 
 const menuItems: Array<MenuItem> = [
@@ -76,7 +76,16 @@ const menuItems: Array<MenuItem> = [
     text: "Выбор темы",
     node: (
       <span>
-        <Checkbox toggle checked={getTheme() === E_THEME.DARK} onChange={handleChangeTheme} label={<>Тема <Icon name="sun" /></>}/>        
+        <Checkbox
+          toggle
+          checked={getTheme() === E_THEME.DARK}
+          onChange={handleChangeTheme}
+          label={
+            <>
+              Тема <Icon name="sun" />
+            </>
+          }
+        />
       </span>
     ),
     onClick: (...args) => console.log("theme", ...args),
