@@ -1,18 +1,71 @@
-import { useContext, useEffect, useState } from "react";
-import { Container, Grid } from "semantic-ui-react";
+import { useContext, useEffect, useMemo, useState } from "react";
+import { Button, Container, Dropdown, Grid, Input } from "semantic-ui-react";
 import { AppRuntimeSettingsContext, WebsocketContext } from "../../context";
 import { ClientGameListConverter } from "../../models/websocket/ClientGameList";
 import { DEFAULT_GAME_LIST } from "../../models/websocket/HeaderConstants";
-import { ServerGameList } from "../../models/websocket/ServerGameList";
+import {
+  GameListGame,
+  ServerGameList,
+} from "../../models/websocket/ServerGameList";
 import { GHostPackageEvent } from "../../services/GHostWebsocket";
 import GameList from "../GameList/GameList";
 import OnlineStats from "../GameList/OnlineStats";
+import {
+  allSlotsOrder,
+  defaultGameListOrder,
+  freeSlotsOrder,
+  playerCountOrder,
+} from "../../utils/GameListSortMethods";
 
 function GameListPage() {
   const sockets = useContext(WebsocketContext);
   const runtimeContext = useContext(AppRuntimeSettingsContext);
 
-  const [gameList, setGameList] = useState([]);
+  const [gameList, setGameList] = useState<GameListGame[]>([]);
+  const [quicFilter, setQuicFilter] = useState<string>("");
+  const [orderFunction, setOrderFunction] = useState<any>("");
+
+  const getOrderFunction = (value) => {
+    switch (value) {
+      case "freeSlots":
+        return freeSlotsOrder;
+      case "allSlots":
+        return allSlotsOrder;
+      case "playerSlots":
+        return playerCountOrder;
+      default:
+        return defaultGameListOrder;
+    }
+  };
+
+  const filtredGameList = useMemo(() => {
+    let filtredGames = gameList.filter((game) => {
+      if (quicFilter.length == 0) return true;
+
+      if (game.name.toLocaleLowerCase().search(quicFilter.toLowerCase()) >= 0)
+        return true;
+
+      const players = game.players.filter((player) => {
+        if (player.name.length == 0) return false;
+        if (
+          player.name.toLocaleLowerCase().search(quicFilter.toLowerCase()) >= 0
+        )
+          return true;
+        return false;
+      });
+
+      if (players.length > 0) return true;
+
+      return false;
+    });
+
+    console.log(filtredGames);
+
+    if (filtredGames.length > 1)
+      filtredGames.sort(getOrderFunction(orderFunction));
+
+    return filtredGames;
+  }, [gameList, quicFilter, orderFunction]);
 
   // Subscribe component to socket events and gameList
 
@@ -71,11 +124,61 @@ function GameListPage() {
     };
   }, [sockets.ghostSocket, runtimeContext.gameList]);
 
+  const options = [
+    {
+      key: "default",
+      text: "По умолчанию",
+      value: "default",
+      orderFunction: defaultGameListOrder,
+    },
+    {
+      key: "freeSlots",
+      text: "Свободно слотов",
+      value: "freeSlots",
+      orderFunction: freeSlotsOrder,
+    },
+    {
+      key: "allSlots",
+      text: "Всего слотов",
+      value: "allSlots",
+      orderFunction: allSlotsOrder,
+    },
+    {
+      key: "playerSlots",
+      text: "Игроков в игре",
+      value: "playerSlots",
+      orderFunction: playerCountOrder,
+    },
+  ];
+
   return (
     <Container>
-      <Grid stackable className="equal width">
+      <Grid columns="equal" stackable>
         <Grid.Column width="twelve">
-          <GameList gameList={gameList}></GameList>
+          <Input
+            onChange={(event, data) => setQuicFilter(data.value)}
+            value={quicFilter}
+            style={{ width: "50%" }}
+            placeholder="Быстрый фильтр"
+            action={
+              <Dropdown
+                onChange={(event, data) => setOrderFunction(data.value)}
+                button
+                basic
+                floating
+                options={options}
+                defaultValue="page"
+              />
+            }
+          />
+          <Button floated="right" basic color="green" icon="bell" />
+          <Button floated="right" basic color="green" icon="filter" />
+        </Grid.Column>
+      </Grid>
+
+      <Grid columns="equal" stackable>
+        <Grid.Column width="twelve">
+          <GameList gameList={filtredGameList}></GameList>
         </Grid.Column>
         <Grid.Column width="four">
           <OnlineStats gameList={gameList}></OnlineStats>

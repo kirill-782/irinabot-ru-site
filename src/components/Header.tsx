@@ -1,7 +1,6 @@
 import React, { ReactNode } from "react";
 import { Dropdown, Icon, Menu, SemanticICONS } from "semantic-ui-react";
 import { useWindowSize } from "../hooks/useWindowSize";
-import MobileMenuList from "./MobileMenuList/MobileMenuList";
 import './Header.scss';
 
 export interface MenuItem {

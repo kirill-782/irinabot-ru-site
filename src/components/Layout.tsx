@@ -105,7 +105,7 @@ function Layout() {
     <>
       <Header items={menuItems}></Header>
       <SemanticToastContainer animation="fade" position="top-right" />
-      <div style={{ marginTop: 50 }}>
+      <div style={{ marginTop: 70 }}>
         <Outlet />
       </div>
       <Footer></Footer>
