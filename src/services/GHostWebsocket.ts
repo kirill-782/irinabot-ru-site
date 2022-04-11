@@ -120,6 +120,9 @@ export class GHostWebSocket extends EventTarget {
     this.socketConnect.close();
 
     this.deattachListeners();
+
+    this.dispatchEvent(new CustomEvent("close"));
+    if (this.options.autoReconnect) this.autoReconnect();
   }
 
   public connect() {
@@ -166,6 +169,7 @@ export class GHostWebSocket extends EventTarget {
   private wsOnError = (event) => {};
 
   private wsOnClose = (event) => {
+    console.log("wsOnClose")
     this.dispatchEvent(new CustomEvent("close"));
 
     if (this.options.autoReconnect) this.autoReconnect();

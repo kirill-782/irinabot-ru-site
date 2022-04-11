@@ -16,6 +16,7 @@ import GameListPage from "./components/Pages/GameListPage";
 import "./semantic-ui-sass/template/_index.scss";
 import { useGHostSocket } from "./hooks/useGHostSocket";
 import { useWebsocketAuth } from "./hooks/useWebsocketAuth";
+import OauthStubPage from './components/Pages/OauthStubPage';
 
 function App() {
   useEffect(loadTheme, []);
@@ -47,6 +48,7 @@ function App() {
               <Route index element={<GameListPage />} />
               <Route path="gamelist" element={<GameListPage />} />
             </Route>
+            <Route path="/oauth" element={<OauthStubPage />} />
           </Routes>
         </AuthContext.Provider>
       </AppRuntimeSettingsContext.Provider>

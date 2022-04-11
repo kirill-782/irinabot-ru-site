@@ -94,6 +94,7 @@ export const useWebsocketAuth = ({ ghostSocket }: WebsocketAuthOptions) => {
     };
 
     const onClose = () => {
+      console.log("onClose")
       authDispatcher({ action: "clearAuth", payload: null });
     };
 

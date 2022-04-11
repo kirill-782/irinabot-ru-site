@@ -3,6 +3,8 @@ import { Dropdown, Icon, Menu, SemanticICONS } from "semantic-ui-react";
 import { useWindowSize } from "../hooks/useWindowSize";
 import "./Header.scss";
 import { AuthContext } from "./../context/index";
+import LoginDropdown from "./Header/LoginDropdown";
+import UserDrowdown from './Header/UserDropdown';
 
 export interface MenuItem {
   type: string;
@@ -28,9 +30,9 @@ function Header() {
         <Menu.Item name="logo">
           IrInA Host B<Icon name="circle" />T
         </Menu.Item>
-        <Menu.Item name="logo" position="right">
-          {currentAuth !== null ? currentAuth.connectorName : "Анонимус"}
-        </Menu.Item>
+        <Menu.Menu position="right">
+          {currentAuth !== null ? (<UserDrowdown />) : (<LoginDropdown />)}
+        </Menu.Menu>
       </Menu>
     );
   } else {
