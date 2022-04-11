@@ -1,3 +1,21 @@
+export const GLOBAL_CONTEXT_HEADER_CONSTANT = 0x00;
+
+// Server answer constant
+export const GLOBAL_GET_ERROR = 0x00;
+export const GLOBAL_PONG = 0x02;
+export const GLOBAL_USER_AUTH_RESPONSE = 0x03;
+export const GLOBAL_BNET_KEY = 0x04;
+export const GLOBAL_INTEGRATION_BY_TOKEN = 0x05;
+export const GLOBAL_SET_CONNECTOR_NAME = 0x06;
+export const GLOBAL_DELETE_INTEGRATION = 0x07;
+
+// Client request constant
+export const GLOBAL_SEND_ERROR = 0x00;
+export const GLOBAL_PING = 0x02;
+export const GLOBAL_USERAUTH = 0x03;
+export const GLOBAL_GETBNETKEY = 0x04;
+export const GLOBAL_ADD_INTEGRATION_BY_TOKEN = 0x05;
+
 export const DEFAULT_CONTEXT_HEADER_CONSTANT = 0x01;
 
 // Server answer constant

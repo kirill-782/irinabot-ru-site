@@ -4,12 +4,20 @@ import {
   DEFAULT_GAME_LIST,
   DEFAULT_MAP_INFO,
   DEFAULT_WEBSOCKET_CONNECT_STATS,
+  GLOBAL_GET_ERROR,
+  GLOBAL_USER_AUTH_RESPONSE,
 } from "../models/websocket/HeaderConstants";
 import { ServerMapInfoConverter } from "../models/websocket/ServerMapInfo";
 import { ServerGameListConverter } from "./../models/websocket/ServerGameList";
 import { DataBuffer } from "./../utils/DataBuffer";
 import { AbstractPackage } from "./../models/websocket/AbstractPackage";
 import { ServerWebsocketConnectStatsConverter } from "../models/websocket/ServerWebsocketConnectStats";
+import { GLOBAL_CONTEXT_HEADER_CONSTANT } from "./../models/websocket/HeaderConstants";
+import {
+  ServerUserAuth,
+  ServerUserAuthConverter,
+} from "./../models/websocket/ServerUserAuth";
+import { ServerErrorConverter } from "../models/websocket/ServerError";
 
 export interface GHostWebSocketOptions {
   url: string;
@@ -27,6 +35,12 @@ const packageHandlers = (() => {
     new ServerMapInfoConverter();
   handlers[DEFAULT_CONTEXT_HEADER_CONSTANT][DEFAULT_WEBSOCKET_CONNECT_STATS] =
     new ServerWebsocketConnectStatsConverter();
+
+  handlers[GLOBAL_CONTEXT_HEADER_CONSTANT] = [];
+  handlers[GLOBAL_CONTEXT_HEADER_CONSTANT][GLOBAL_GET_ERROR] =
+    new ServerErrorConverter();
+  handlers[GLOBAL_CONTEXT_HEADER_CONSTANT][GLOBAL_USER_AUTH_RESPONSE] =
+    new ServerUserAuthConverter();
 
   return handlers;
 })();
