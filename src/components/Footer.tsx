@@ -1,11 +1,12 @@
 import { useContext } from "react";
 import { toast } from "react-semantic-toasts";
 import { Icon, Label, Menu } from "semantic-ui-react";
-import { AppRuntimeSettingsContext } from "../context";
+import { AppRuntimeSettingsContext, WebsocketContext } from "../context";
 import OnlineStatsCounter from "./Footer/OnlineStatsCounter";
 
 function Footer(props) {
   const runTimeContext = useContext(AppRuntimeSettingsContext);
+  const websocketContext = useContext(WebsocketContext);
 
   const refreshButtonOnClick = () => {
     runTimeContext.gameList.setLocked((locked) => {
@@ -23,6 +24,9 @@ function Footer(props) {
         <Label floating color="red">
           1
         </Label>
+      </Menu.Item>
+      <Menu.Item title="Отображает состояние соединения с хостботом.">
+        <Icon name="plug" color={websocketContext.isGHostSocketConnected ? "green" : "red"}></Icon>
       </Menu.Item>
       <Menu.Item position="right" onClick={refreshButtonOnClick}>
         <Icon name="refresh" className={connectorClassList.join(" ")}></Icon>

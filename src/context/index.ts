@@ -6,6 +6,7 @@ import { ServerUserAuth } from "./../models/websocket/ServerUserAuth";
 
 export type WebsocketContextType = {
   ghostSocket: GHostWebSocket;
+  isGHostSocketConnected: boolean;
 };
 
 export const WebsocketContext = createContext<WebsocketContextType>(null);
@@ -40,7 +41,7 @@ export type AuthAction = {
 };
 
 export type AuthContextType = {
-  dispatchAuth: React.Dispatch<AuthAction>
+  dispatchAuth: React.Dispatch<AuthAction>;
   auth: AuthData;
 };
 

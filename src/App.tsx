@@ -16,12 +16,14 @@ import GameListPage from "./components/Pages/GameListPage";
 import "./semantic-ui-sass/template/_index.scss";
 import { useGHostSocket } from "./hooks/useGHostSocket";
 import { useWebsocketAuth } from "./hooks/useWebsocketAuth";
-import OauthStubPage from './components/Pages/OauthStubPage';
+import OauthStubPage from "./components/Pages/OauthStubPage";
 
 function App() {
   useEffect(loadTheme, []);
 
-  const ghostSocket = useGHostSocket({ url: "wss://irinabot.ru/ghost/" });
+  const [ghostSocket, isGHostSocketConnected] = useGHostSocket({
+    url: "wss://irinabot.ru/ghost/",
+  });
   const [gameListLocked, setGameListLocked] = useState(false);
 
   const [authState, authDispatcher] = useWebsocketAuth({ ghostSocket });
@@ -30,6 +32,7 @@ function App() {
     <WebsocketContext.Provider
       value={{
         ghostSocket,
+        isGHostSocketConnected,
       }}
     >
       <AppRuntimeSettingsContext.Provider
