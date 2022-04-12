@@ -1,10 +1,9 @@
 import React, { ReactNode, useContext } from "react";
-import { Dropdown, Icon, Menu, SemanticICONS } from "semantic-ui-react";
-import { useWindowSize } from "../hooks/useWindowSize";
+import { Icon, Menu, SemanticICONS } from "semantic-ui-react";
 import "./Header.scss";
 import { AuthContext } from "./../context/index";
 import LoginDropdown from "./Header/LoginDropdown";
-import UserDrowdown from './Header/UserDropdown';
+import UserDrowdown from "./Header/UserDropdown";
 
 export interface MenuItem {
   type: string;
@@ -18,28 +17,19 @@ export interface MenuItem {
 }
 
 function Header() {
-  const windowSize = useWindowSize();
-
   const authContext = useContext(AuthContext);
   const currentAuth = authContext.auth.currentAuth;
 
-  if (windowSize.width === undefined || windowSize.width > 767) {
-    // PC BAR
-    return (
-      <Menu inverted fixed="top" className="desktop-menu">
-        <Menu.Item name="logo">
-          IrInA Host B<Icon name="circle" />T
-        </Menu.Item>
-        <Menu.Menu position="right">
-          {currentAuth !== null ? (<UserDrowdown />) : (<LoginDropdown />)}
-        </Menu.Menu>
-      </Menu>
-    );
-  } else {
-    // Mobile bar
-
-    return <Menu className="mobile-menu"></Menu>;
-  }
+  return (
+    <Menu fixed="top" inverted>
+      <Menu.Item name="logo">
+        IrInA Host B<Icon name="circle" />T
+      </Menu.Item>
+      <Menu.Menu position="right">
+        {currentAuth !== null ? <UserDrowdown /> : <LoginDropdown />}
+      </Menu.Menu>
+    </Menu>
+  );
 }
 
 export default Header;
