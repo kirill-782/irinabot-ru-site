@@ -8,21 +8,18 @@
  *
  */
 
-
 /*******************************
             Theme
 *******************************/
 
-$type    : 'view';
-$element : 'comment';
+$type: "view";
+$element: "comment";
 
-@import '../../theme';
-
+@import "../../theme";
 
 /*******************************
             Standard
 *******************************/
-
 
 /*--------------
     Comments
@@ -58,7 +55,6 @@ $element : 'comment';
   padding-top: $firstCommentPadding;
 }
 
-
 /*--------------------
     Nested Comments
 ---------------------*/
@@ -67,7 +63,7 @@ $element : 'comment';
   margin: $nestedCommentsMargin;
   padding: $nestedCommentsPadding;
 }
-.ui.comments .comment .comments:before{
+.ui.comments .comment .comments:before {
   position: absolute;
   top: 0px;
   left: 0px;
@@ -156,7 +152,6 @@ $element : 'comment';
   line-height: $textLineHeight;
 }
 
-
 /*--------------------
      User Actions
 ---------------------*/
@@ -204,7 +199,6 @@ $element : 'comment';
   display: none;
 }
 
-
 /*******************************
            Variations
 *******************************/
@@ -236,7 +230,6 @@ $element : 'comment';
   opacity: 1;
 }
 
-
 /*-------------------
         Sizes
 --------------------*/
@@ -265,6 +258,3 @@ $element : 'comment';
 .ui.massive.comments {
   font-size: $massive;
 }
-
-
-

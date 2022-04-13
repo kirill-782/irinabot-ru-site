@@ -26,7 +26,7 @@ $subHeadingDistance: $exact2px;
 $subHeadingFontSize: $relativeTiny;
 $subHeadingFontWeight: $bold;
 $subHeadingTextTransform: uppercase;
-$subHeadingColor: '';
+$subHeadingColor: "";
 
 $smallSubHeadingSize: $relativeMini;
 $largeSubHeadingSize: $relativeSmall;
@@ -52,7 +52,7 @@ $imageMargin: $iconMargin;
 $imageAlignment: middle;
 
 /* Label */
-$labelSize: '';
+$labelSize: "";
 $labelDistance: 0.5rem;
 $labelVerticalAlign: middle;
 
@@ -69,11 +69,11 @@ $nextParagraphDistance: 0em;
 --------------------*/
 
 /* Sizing */
-$hugeFontSize   : $h1;
-$largeFontSize  : $h2;
-$mediumFontSize : $h3;
-$smallFontSize  : $h4;
-$tinyFontSize   : $h5;
+$hugeFontSize: $h1;
+$largeFontSize: $h2;
+$mediumFontSize: $h3;
+$smallFontSize: $h4;
+$tinyFontSize: $h5;
 
 /* Sub Header */
 $h1SubHeaderFontSize: $large;
@@ -82,11 +82,11 @@ $h3SubHeaderFontSize: $medium;
 $h4SubHeaderFontSize: $medium;
 $h5SubHeaderFontSize: $small;
 
-$hugeSubHeaderFontSize  : $h1SubHeaderFontSize;
-$largeSubHeaderFontSize : $h2SubHeaderFontSize;
-$subHeaderFontSize      : $h3SubHeaderFontSize;
-$smallSubHeaderFontSize : $h4SubHeaderFontSize;
-$tinySubHeaderFontSize  : $h5SubHeaderFontSize;
+$hugeSubHeaderFontSize: $h1SubHeaderFontSize;
+$largeSubHeaderFontSize: $h2SubHeaderFontSize;
+$subHeaderFontSize: $h3SubHeaderFontSize;
+$smallSubHeaderFontSize: $h4SubHeaderFontSize;
+$tinySubHeaderFontSize: $h5SubHeaderFontSize;
 
 /* Icon Header */
 $iconHeaderSize: 3em;

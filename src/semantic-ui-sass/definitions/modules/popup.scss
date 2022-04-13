@@ -8,17 +8,14 @@
  *
  */
 
-
 /*******************************
             Theme
 *******************************/
 
-$type    : 'module';
-$element : 'popup';
+$type: "module";
+$element: "popup";
 
-@import '../../theme';
-
-
+@import "../../theme";
 
 /*******************************
             Popup
@@ -61,7 +58,7 @@ $element : 'popup';
 
 .ui.popup:before {
   position: absolute;
-  content: '';
+  content: "";
   width: $arrowSize;
   height: $arrowSize;
 
@@ -89,7 +86,7 @@ $element : 'popup';
 [data-tooltip]:before {
   pointer-events: none;
   position: absolute;
-  content: '';
+  content: "";
   font-size: $medium;
   width: $arrowSize;
   height: $arrowSize;
@@ -154,16 +151,12 @@ $element : 'popup';
   opacity: 0;
   transform: rotate(45deg) scale(0) !important;
   transform-origin: center top;
-  transition:
-    all $tooltipDuration $tooltipEasing
-  ;
+  transition: all $tooltipDuration $tooltipEasing;
 }
 [data-tooltip]:after {
   opacity: 1;
   transform-origin: center bottom;
-  transition:
-    all $tooltipDuration $tooltipEasing
-  ;
+  transition: all $tooltipDuration $tooltipEasing;
 }
 [data-tooltip]:hover:before,
 [data-tooltip]:hover:after {
@@ -205,7 +198,6 @@ $element : 'popup';
 [data-tooltip][data-position="bottom right"]:hover:after {
   transform: scale(1) !important;
 }
-
 
 /*--------------
     Inverted
@@ -289,7 +281,6 @@ $element : 'popup';
   margin-left: $tooltipArrowHorizontalOffset;
   margin-bottom: (-$tooltipArrowVerticalOffset);
 }
-
 
 /* Bottom Center */
 [data-position="bottom center"][data-tooltip]:after {
@@ -583,7 +574,6 @@ $element : 'popup';
   background: $invertedArrowBottomBackground;
 }
 
-
 /*******************************
             Coupling
 *******************************/
@@ -614,7 +604,6 @@ $element : 'popup';
   backface-visibility: hidden;
 }
 
-
 /*******************************
             Variations
 *******************************/
@@ -626,7 +615,6 @@ $element : 'popup';
 .ui.basic.popup:before {
   display: none;
 }
-
 
 /*--------------
      Wide
@@ -646,7 +634,6 @@ $element : 'popup';
   }
 }
 
-
 /*--------------
      Fluid
 ---------------*/
@@ -655,7 +642,6 @@ $element : 'popup';
   width: 100%;
   max-width: none;
 }
-
 
 /*--------------
      Colors
@@ -685,7 +671,6 @@ $element : 'popup';
   max-width: none;
 }
 
-
 /*--------------
      Sizes
 ---------------*/
@@ -708,6 +693,3 @@ $element : 'popup';
 .ui.huge.popup {
   font-size: $huge;
 }
-
-
-

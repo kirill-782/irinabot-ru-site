@@ -12,11 +12,10 @@
             Theme
 *******************************/
 
-$type    : 'view';
-$element : 'feed';
+$type: "view";
+$element: "feed";
 
-@import '../../theme';
-
+@import "../../theme";
 
 /*******************************
          Activity Feed
@@ -31,7 +30,6 @@ $element : 'feed';
 .ui.feed:last-child {
   margin-bottom: 0em;
 }
-
 
 /*******************************
             Content
@@ -260,8 +258,6 @@ $element : 'feed';
   color: $metadataActionHoverColor;
 }
 
-
-
 /*******************************
             Variations
 *******************************/
@@ -275,5 +271,3 @@ $element : 'feed';
 .ui.large.feed {
   font-size: $large;
 }
-
-

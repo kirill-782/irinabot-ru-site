@@ -1,4 +1,4 @@
-@use 'sass:math';
+@use "sass:math";
 /*!
  * # Semantic UI - Item
  * http://github.com/semantic-org/semantic-ui/
@@ -13,11 +13,10 @@
             Theme
 *******************************/
 
-$type    : 'view';
-$element : 'item';
+$type: "view";
+$element: "item";
 
-@import '../../theme';
-
+@import "../../theme";
 
 /*******************************
             Standard
@@ -66,7 +65,7 @@ $element : 'item';
 
 .ui.items > .item:after {
   display: block;
-  content: ' ';
+  content: " ";
   height: 0px;
   clear: both;
   overflow: hidden;
@@ -78,8 +77,6 @@ $element : 'item';
 .ui.items > .item:last-child {
   margin-bottom: 0em;
 }
-
-
 
 /*--------------
      Images
@@ -107,7 +104,6 @@ $element : 'item';
   border-radius: $borderRadius;
 }
 
-
 /*--------------
      Content
 ---------------*/
@@ -125,7 +121,7 @@ $element : 'item';
 }
 .ui.items > .item > .content:after {
   display: block;
-  content: ' ';
+  content: " ";
   height: 0px;
   clear: both;
   overflow: hidden;
@@ -164,7 +160,6 @@ $element : 'item';
   float: right;
 }
 
-
 /*--------------
   Content Image
 ---------------*/
@@ -179,7 +174,6 @@ $element : 'item';
   height: $avatarSize;
   border-radius: $avatarBorderRadius;
 }
-
 
 /*--------------
    Description
@@ -255,8 +249,6 @@ $element : 'item';
   color: $metaLinkHoverColor;
 }
 
-
-
 /*--------------
      Labels
 ---------------*/
@@ -312,21 +304,22 @@ $element : 'item';
   border-top: $extraDivider;
 }
 .ui.items > .item .extra > * {
-  margin: math.div($extraRowSpacing, 2) $extraHorizontalSpacing math.div($extraRowSpacing, 2) 0em;
+  margin: math.div($extraRowSpacing, 2) $extraHorizontalSpacing
+    math.div($extraRowSpacing, 2) 0em;
 }
 .ui.items > .item .extra > [class*="right floated"] {
-  margin: math.div($extraRowSpacing, 2) 0em math.div($extraRowSpacing, 2) $extraHorizontalSpacing;
+  margin: math.div($extraRowSpacing, 2) 0em math.div($extraRowSpacing, 2)
+    $extraHorizontalSpacing;
 }
 
 .ui.items > .item .extra:after {
   display: block;
-  content: ' ';
+  content: " ";
   height: 0px;
   clear: both;
   overflow: hidden;
   visibility: hidden;
 }
-
 
 /*******************************
           Responsive
@@ -336,7 +329,6 @@ $element : 'item';
 .ui.items > .item > .image:not(.ui) {
   width: $imageWidth;
 }
-
 
 /* Tablet Only */
 @media only screen and (min-width: $tabletBreakpoint) and (max-width: $largestTabletScreen) {
@@ -350,7 +342,6 @@ $element : 'item';
     display: block;
     padding: 0em 0em 0em $tabletContentImageDistance;
   }
-
 }
 
 /* Mobile Only */
@@ -376,11 +367,9 @@ $element : 'item';
   }
 }
 
-
 /*******************************
            Variations
 *******************************/
-
 
 /*-------------------
        Aligned
@@ -396,7 +385,6 @@ $element : 'item';
   align-self: flex-end;
 }
 
-
 /*--------------
      Relaxed
 ---------------*/
@@ -407,7 +395,6 @@ $element : 'item';
 .ui[class*="very relaxed"].items > .item {
   margin: $veryRelaxedItemSpacing 0em;
 }
-
 
 /*-------------------
       Divided
@@ -438,7 +425,6 @@ $element : 'item';
   padding: $veryRelaxedItemSpacing 0em;
 }
 
-
 /*-------------------
         Link
 --------------------*/
@@ -452,7 +438,6 @@ $element : 'item';
 .ui.link.items > .item:hover .content .header {
   color: $headerLinkHoverColor;
 }
-
 
 /*--------------
       Size
@@ -472,5 +457,3 @@ $element : 'item';
     width: $unstackableMobileImageWidth !important;
   }
 }
-
-

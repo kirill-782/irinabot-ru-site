@@ -8,17 +8,14 @@
  *
  */
 
-
-
 /*******************************
             Theme
 *******************************/
 
-$type    : 'module';
-$element : 'sidebar';
+$type: "module";
+$element: "sidebar";
 
-@import '../../theme';
-
+@import "../../theme";
 
 /*******************************
             Sidebar
@@ -49,7 +46,6 @@ $element : 'sidebar';
 .ui.sidebar > * {
   backface-visibility: hidden;
 }
-
 
 /*--------------
    Direction
@@ -82,7 +78,6 @@ $element : 'sidebar';
   transform: translate3d(0, 100%, 0);
 }
 
-
 /*--------------
      Pushable
 ---------------*/
@@ -107,7 +102,6 @@ body.pushable {
 .pushable:not(body) > .pusher:after {
   position: absolute;
 }
-
 
 /*--------------
      Fixed
@@ -152,7 +146,7 @@ body.pushable > .pusher {
   position: fixed;
   top: 0px;
   right: 0px;
-  content: '';
+  content: "";
   background-color: $dimmerColor;
   overflow: hidden;
   opacity: 0;
@@ -240,7 +234,6 @@ body.pushable > .pusher {
        iOS
 ---------------*/
 
-
 /*******************************
           Variations
 *******************************/
@@ -307,8 +300,6 @@ body.pushable > .pusher {
   transform: translate3d(-$veryWideWidth, 0, 0);
 }
 
-
-
 /*******************************
           Animations
 *******************************/
@@ -362,8 +353,6 @@ body.pushable > .pusher {
   transform: none !important;
 }
 
-
-
 /*--------------
       Push
 ---------------*/
@@ -393,7 +382,6 @@ body.pushable > .pusher {
   transform: translate3d(0%, 0, 0);
 }
 
-
 /*--------------
     Uncover
 ---------------*/
@@ -409,7 +397,6 @@ body.pushable > .pusher {
   transform: translate3d(0, 0, 0);
   transition: transform $duration $easing;
 }
-
 
 /*--------------
    Slide Along
@@ -443,7 +430,6 @@ body.pushable > .pusher {
 .ui.visible.slide.along.sidebar {
   transform: translate3d(0%, 0, 0);
 }
-
 
 /*--------------
    Slide Out
@@ -535,5 +521,3 @@ body.pushable > .pusher {
 .ui.visible.scale.down.sidebar ~ .pusher {
   transform: scale(0.75);
 }
-
-

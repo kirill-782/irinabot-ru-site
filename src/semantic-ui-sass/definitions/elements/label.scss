@@ -1,4 +1,4 @@
-@use 'sass:math';
+@use "sass:math";
 /*!
  * # Semantic UI - Label
  * http://github.com/semantic-org/semantic-ui/
@@ -9,16 +9,14 @@
  *
  */
 
-
 /*******************************
             Theme
 *******************************/
 
-$type    : 'element';
-$element : 'label';
+$type: "element";
+$element: "label";
 
-@import '../../theme';
-
+@import "../../theme";
 
 /*******************************
             Label
@@ -92,7 +90,6 @@ a.ui.label {
   margin: 0em $detailIconDistance 0em 0em;
 }
 
-
 /* Removable label */
 .ui.label > .close.icon,
 .ui.label > .delete.icon {
@@ -115,7 +112,6 @@ a.ui.label {
   margin: 0em $groupHorizontalMargin $groupVerticalMargin 0em;
 }
 
-
 /*-------------------
        Coupling
 --------------------*/
@@ -124,20 +120,19 @@ a.ui.label {
   margin-top: $lineHeightOffset;
 }
 
-
 /* Remove border radius on attached segment */
 .ui.attached.segment > .ui.top.left.attached.label,
-.ui.bottom.attached.segment > .ui.top.left.attached.label  {
+.ui.bottom.attached.segment > .ui.top.left.attached.label {
   border-top-left-radius: 0;
 }
 .ui.attached.segment > .ui.top.right.attached.label,
-.ui.bottom.attached.segment > .ui.top.right.attached.label  {
+.ui.bottom.attached.segment > .ui.top.right.attached.label {
   border-top-right-radius: 0;
 }
-.ui.top.attached.segment > .ui.bottom.left.attached.label  {
+.ui.top.attached.segment > .ui.bottom.left.attached.label {
   border-bottom-left-radius: 0;
 }
-.ui.top.attached.segment > .ui.bottom.right.attached.label  {
+.ui.top.attached.segment > .ui.bottom.right.attached.label {
   border-bottom-right-radius: 0;
 }
 
@@ -150,7 +145,6 @@ a.ui.label {
   margin-top: 0em;
   margin-bottom: $attachedSegmentPadding !important;
 }
-
 
 /*******************************
              Types
@@ -202,26 +196,25 @@ a.ui.label {
 }
 .ui.tag.labels .label:before,
 .ui.tag.label:before {
-    position: absolute;
-    transform: translateY(-50%) translateX(50%) rotate(-45deg);
+  position: absolute;
+  transform: translateY(-50%) translateX(50%) rotate(-45deg);
 
-    top: $tagTriangleTopOffset;
-    right: $tagTriangleRightOffset;
-    content: '';
+  top: $tagTriangleTopOffset;
+  right: $tagTriangleRightOffset;
+  content: "";
 
-    background-color: inherit;
-    background-image: $tagTriangleBackgroundImage;
+  background-color: inherit;
+  background-image: $tagTriangleBackgroundImage;
 
-    width: $tagTriangleSize;
-    height: $tagTriangleSize;
-    transition: $tagTransition;
+  width: $tagTriangleSize;
+  height: $tagTriangleSize;
+  transition: $tagTransition;
 }
-
 
 .ui.tag.labels .label:after,
 .ui.tag.label:after {
   position: absolute;
-  content: '';
+  content: "";
   top: 50%;
   left: math.div(-$tagCircleSize, 2);
 
@@ -233,7 +226,6 @@ a.ui.label {
   box-shadow: $tagCircleBoxShadow;
   border-radius: $circularRadius;
 }
-
 
 /*-------------------
     Corner Label
@@ -256,7 +248,7 @@ a.ui.label {
 }
 
 /* Icon Label */
-.ui.corner.label{
+.ui.corner.label {
   background-color: transparent !important;
 }
 .ui.corner.label:after {
@@ -330,7 +322,7 @@ a.ui.label {
 
 .ui.ribbon.label:after {
   position: absolute;
-  content: '';
+  content: "";
 
   top: 100%;
   left: 0%;
@@ -398,7 +390,6 @@ a.ui.label {
   padding-left: $horizontalPadding;
 }
 
-
 /*-------------------
       Attached
 --------------------*/
@@ -447,7 +438,6 @@ a.ui.label {
   width: auto;
   border-radius: $attachedBorderRadius 0em $attachedCornerBorderRadius 0em;
 }
-
 
 /*******************************
              States
@@ -507,13 +497,12 @@ a.ui.active.label:hover {
   background-image: $labelActiveHoverBackgroundImage;
   color: $labelActiveHoverTextColor;
 }
-.ui.labels a.active.label:ActiveHover:before,
-a.ui.active.label:ActiveHover:before {
+.ui.labels a.active.label:activehover:before,
+a.ui.active.label:activehover:before {
   background-color: $labelActiveHoverBackgroundColor;
   background-image: $labelActiveHoverBackgroundImage;
   color: $labelActiveHoverTextColor;
 }
-
 
 /*-------------------
       Visible
@@ -533,11 +522,9 @@ a.ui.active.label:ActiveHover:before {
   display: none !important;
 }
 
-
 /*******************************
            Variations
 *******************************/
-
 
 /*-------------------
        Colors
@@ -552,7 +539,7 @@ a.ui.active.label:ActiveHover:before {
 }
 /* Link */
 .ui.red.labels .label:hover,
-a.ui.red.label:hover{
+a.ui.red.label:hover {
   background-color: $redHover !important;
   border-color: $redHover !important;
   color: $redHoverTextColor !important;
@@ -588,7 +575,7 @@ a.ui.basic.red.label:hover {
 }
 /* Link */
 .ui.orange.labels .label:hover,
-a.ui.orange.label:hover{
+a.ui.orange.label:hover {
   background-color: $orangeHover !important;
   border-color: $orangeHover !important;
   color: $orangeHoverTextColor !important;
@@ -624,7 +611,7 @@ a.ui.basic.orange.label:hover {
 }
 /* Link */
 .ui.yellow.labels .label:hover,
-a.ui.yellow.label:hover{
+a.ui.yellow.label:hover {
   background-color: $yellowHover !important;
   border-color: $yellowHover !important;
   color: $yellowHoverTextColor !important;
@@ -660,7 +647,7 @@ a.ui.basic.yellow.label:hover {
 }
 /* Link */
 .ui.olive.labels .label:hover,
-a.ui.olive.label:hover{
+a.ui.olive.label:hover {
   background-color: $oliveHover !important;
   border-color: $oliveHover !important;
   color: $oliveHoverTextColor !important;
@@ -696,7 +683,7 @@ a.ui.basic.olive.label:hover {
 }
 /* Link */
 .ui.green.labels .label:hover,
-a.ui.green.label:hover{
+a.ui.green.label:hover {
   background-color: $greenHover !important;
   border-color: $greenHover !important;
   color: $greenHoverTextColor !important;
@@ -732,7 +719,7 @@ a.ui.basic.green.label:hover {
 }
 /* Link */
 .ui.teal.labels .label:hover,
-a.ui.teal.label:hover{
+a.ui.teal.label:hover {
   background-color: $tealHover !important;
   border-color: $tealHover !important;
   color: $tealHoverTextColor !important;
@@ -768,7 +755,7 @@ a.ui.basic.teal.label:hover {
 }
 /* Link */
 .ui.blue.labels .label:hover,
-a.ui.blue.label:hover{
+a.ui.blue.label:hover {
   background-color: $blueHover !important;
   border-color: $blueHover !important;
   color: $blueHoverTextColor !important;
@@ -804,7 +791,7 @@ a.ui.basic.blue.label:hover {
 }
 /* Link */
 .ui.violet.labels .label:hover,
-a.ui.violet.label:hover{
+a.ui.violet.label:hover {
   background-color: $violetHover !important;
   border-color: $violetHover !important;
   color: $violetHoverTextColor !important;
@@ -840,7 +827,7 @@ a.ui.basic.violet.label:hover {
 }
 /* Link */
 .ui.purple.labels .label:hover,
-a.ui.purple.label:hover{
+a.ui.purple.label:hover {
   background-color: $purpleHover !important;
   border-color: $purpleHover !important;
   color: $purpleHoverTextColor !important;
@@ -876,7 +863,7 @@ a.ui.basic.purple.label:hover {
 }
 /* Link */
 .ui.pink.labels .label:hover,
-a.ui.pink.label:hover{
+a.ui.pink.label:hover {
   background-color: $pinkHover !important;
   border-color: $pinkHover !important;
   color: $pinkHoverTextColor !important;
@@ -912,7 +899,7 @@ a.ui.basic.pink.label:hover {
 }
 /* Link */
 .ui.brown.labels .label:hover,
-a.ui.brown.label:hover{
+a.ui.brown.label:hover {
   background-color: $brownHover !important;
   border-color: $brownHover !important;
   color: $brownHoverTextColor !important;
@@ -948,7 +935,7 @@ a.ui.basic.brown.label:hover {
 }
 /* Link */
 .ui.grey.labels .label:hover,
-a.ui.grey.label:hover{
+a.ui.grey.label:hover {
   background-color: $greyHover !important;
   border-color: $greyHover !important;
   color: $greyHoverTextColor !important;
@@ -984,7 +971,7 @@ a.ui.basic.grey.label:hover {
 }
 /* Link */
 .ui.black.labels .label:hover,
-a.ui.black.label:hover{
+a.ui.black.label:hover {
   background-color: $blackHover !important;
   border-color: $blackHover !important;
   color: $blackHoverTextColor !important;
@@ -1011,7 +998,6 @@ a.ui.basic.black.label:hover {
   border-color: $blackHover !important;
 }
 
-
 /*-------------------
         Basic
 --------------------*/
@@ -1036,7 +1022,6 @@ a.ui.basic.label:hover {
 .ui.basic.pointing.label:before {
   border-color: inherit;
 }
-
 
 /*-------------------
        Fluid
@@ -1069,7 +1054,6 @@ a.ui.basic.label:hover {
   min-width: $horizontalLabelMinWidth;
   text-align: center;
 }
-
 
 /*-------------------
        Circular
@@ -1118,7 +1102,7 @@ a.ui.basic.label:hover {
 /* Arrow */
 .ui.pointing.label:before {
   position: absolute;
-  content: '';
+  content: "";
   transform: rotate(45deg);
   background-image: none;
 
@@ -1207,7 +1191,6 @@ a.ui.basic.label:hover {
   right: $basicPointingTriangleOffset;
 }
 
-
 /*------------------
    Floating Label
 -------------------*/
@@ -1256,5 +1239,3 @@ a.ui.basic.label:hover {
 .ui.massive.label {
   font-size: $massive;
 }
-
-

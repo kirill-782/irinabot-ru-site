@@ -8,16 +8,14 @@
  *
  */
 
-
 /*******************************
             Theme
 *******************************/
 
-$type    : 'module';
-$element : 'sticky';
+$type: "module";
+$element: "sticky";
 
-@import '../../theme';
-
+@import "../../theme";
 
 /*******************************
             Sticky
@@ -59,7 +57,6 @@ $element : 'sticky';
   bottom: 0px;
 }
 
-
 /*******************************
             Types
 *******************************/
@@ -71,5 +68,3 @@ $element : 'sticky';
   position: -o-sticky;
   position: sticky;
 }
-
-

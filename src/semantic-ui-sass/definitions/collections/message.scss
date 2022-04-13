@@ -12,11 +12,10 @@
             Theme
 *******************************/
 
-$type    : 'collection';
-$element : 'message';
+$type: "collection";
+$element: "message";
 
-@import '../../theme';
-
+@import "../../theme";
 
 /*******************************
             Message
@@ -41,7 +40,6 @@ $element : 'message';
 .ui.message:last-child {
   margin-bottom: 0em;
 }
-
 
 /*--------------
      Content
@@ -97,7 +95,7 @@ $element : 'message';
 }
 .ui.message .list:not(.ui) li:before {
   position: absolute;
-  content: '•';
+  content: "•";
   left: -1em;
   height: 100%;
   vertical-align: baseline;
@@ -105,7 +103,6 @@ $element : 'message';
 .ui.message .list:not(.ui) li:last-child {
   margin-bottom: 0em;
 }
-
 
 /* Icon */
 .ui.message > .icon {
@@ -166,7 +163,6 @@ $element : 'message';
   display: none;
 }
 
-
 /*******************************
             Variations
 *******************************/
@@ -181,7 +177,6 @@ $element : 'message';
 .ui.compact.icon.message {
   display: inline-flex;
 }
-
 
 /*--------------
     Attached
@@ -210,7 +205,6 @@ $element : 'message';
   width: auto;
 }
 
-
 /*--------------
       Icon
 ---------------*/
@@ -235,7 +229,6 @@ $element : 'message';
   vertical-align: $iconVerticalAlign;
 }
 
-
 .ui.icon.message .icon:not(.close) + .content {
   padding-left: $iconContentDistance;
 }
@@ -250,7 +243,6 @@ $element : 'message';
 .ui.floating.message {
   box-shadow: $floatingBoxShadow;
 }
-
 
 /*--------------
      Colors
@@ -342,7 +334,6 @@ $element : 'message';
 .ui.success.message .header {
   color: $successHeaderColor;
 }
-
 
 /* Colors */
 .ui.inverted.message,
@@ -478,5 +469,3 @@ $element : 'message';
 .ui.massive.message {
   font-size: $relativeMassive;
 }
-
-

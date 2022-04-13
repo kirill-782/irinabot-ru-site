@@ -1,4 +1,4 @@
-@use 'sass:math';
+@use "sass:math";
 /*******************************
              Menu
 *******************************/
@@ -11,11 +11,9 @@
 $itemVerticalPadding: $relativeSmall;
 $itemHorizontalPadding: $relativeLarge;
 $itemTextTransform: none;
-$itemTransition:
-  background $defaultDuration $defaultEasing,
+$itemTransition: background $defaultDuration $defaultEasing,
   box-shadow $defaultDuration $defaultEasing,
-  color $defaultDuration $defaultEasing
-;
+  color $defaultDuration $defaultEasing;
 $itemFontWeight: $normal;
 $itemTextColor: $textColor;
 
@@ -23,7 +21,7 @@ $itemTextColor: $textColor;
 $verticalMargin: $medium;
 $horizontalMargin: 0em;
 $margin: $verticalMargin $horizontalMargin;
-$background: #FFFFFF;
+$background: #ffffff;
 $fontFamily: $pageFont;
 $itemBackground: none;
 $fontWeight: $normal;
@@ -44,7 +42,8 @@ $subMenuFontSize: $relativeTiny;
 $subMenuTextColor: rgba(0, 0, 0, 0.5);
 
 $subMenuIndent: 0em;
-$subMenuHorizontalPadding: math.div($itemHorizontalPadding, $tinySize) + $subMenuIndent;
+$subMenuHorizontalPadding: math.div($itemHorizontalPadding, $tinySize) +
+  $subMenuIndent;
 $subMenuVerticalPadding: 0.5em;
 
 /* Text Item */
@@ -64,7 +63,7 @@ $dropdownIconFloat: right;
 $dropdownIconDistance: 1em;
 
 /* Header */
-$headerBackground: '';
+$headerBackground: "";
 $headerWeight: $bold;
 $headerTextTransform: $normal;
 
@@ -84,7 +83,7 @@ $arrowBorder: $arrowBorderWidth solid $solidBorderColor;
 $arrowTransition: background $defaultDuration $defaultEasing;
 $arrowZIndex: 2;
 
-$arrowHoverColor: #F2F2F2;
+$arrowHoverColor: #f2f2f2;
 $arrowActiveColor: $arrowHoverColor;
 $arrowActiveHoverColor: $arrowActiveColor;
 
@@ -128,7 +127,7 @@ $labelAndIconMargin: 0em 0.5em 0em 0em;
 /* Dropdown in Menu */
 $dropdownMenuBoxShadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.08);
 
-$dropdownBackground: #FFFFFF;
+$dropdownBackground: #ffffff;
 $dropdownMenuDistance: 0em;
 $dropdownMenuBorderRadius: $borderRadius;
 
@@ -166,7 +165,6 @@ $hoverItemTextColor: $selectedTextColor;
 $pressedItemBackground: $subtleTransparentBlack;
 $pressedItemTextColor: $hoverItemTextColor;
 
-
 /* Active Item */
 $activeItemBackground: $transparentBlack;
 $activeItemTextColor: $selectedTextColor;
@@ -192,7 +190,6 @@ $subMenuActiveBackground: transparent;
 $subMenuActiveTextColor: $activeItemTextColor;
 $subMenuActiveFontWeight: $bold;
 
-
 /*--------------
      Types
 ---------------*/
@@ -200,12 +197,11 @@ $subMenuActiveFontWeight: $bold;
 /* Vertical */
 $verticalBoxShadow: $boxShadow;
 $verticalPointerWidth: 2px;
-$verticalBackground: #FFFFFF;
+$verticalBackground: #ffffff;
 $verticalItemBackground: none;
 $verticalDividerBackground: $dividerBackground;
 
 $verticalActiveBoxShadow: none;
-
 
 /* Secondary */
 $secondaryBackground: none;
@@ -240,8 +236,10 @@ $secondaryVerticalItemBorderRadius: $defaultBorderRadius;
 
 $secondaryMenuSubMenuMargin: 0em -$secondaryItemHorizontalPadding;
 $secondaryMenuSubMenuItemMargin: 0em;
-$secondarySubMenuHorizontalPadding: math.div($itemHorizontalPadding, $tinySize) + $subMenuIndent;
-$secondaryMenuSubMenuItemPadding: $relative7px $secondarySubMenuHorizontalPadding;
+$secondarySubMenuHorizontalPadding: math.div($itemHorizontalPadding, $tinySize) +
+  $subMenuIndent;
+$secondaryMenuSubMenuItemPadding: $relative7px
+  $secondarySubMenuHorizontalPadding;
 
 /* Pointing */
 $secondaryPointingBorderWidth: 2px;
@@ -261,8 +259,8 @@ $secondaryPointingActiveHoverBorderColor: $secondaryPointingActiveBorderColor;
 $secondaryPointingActiveHoverTextColor: $secondaryPointingActiveTextColor;
 
 $secondaryPointingHeaderColor: $darkTextColor;
-$secondaryVerticalPointingItemMargin: 0em (-$secondaryPointingBorderWidth) 0em 0em;
-
+$secondaryVerticalPointingItemMargin: 0em (-$secondaryPointingBorderWidth) 0em
+  0em;
 
 /* Inverted Secondary */
 $secondaryInvertedColor: $invertedLightTextColor;
@@ -281,10 +279,9 @@ $secondaryPointingInvertedItemHoverTextColor: $selectedTextColor;
 $secondaryPointingInvertedActiveBorderColor: $white;
 $secondaryPointingInvertedActiveColor: $invertedSelectedTextColor;
 
-
 /* Tiered */
-$tieredActiveItemBackground: #FCFCFC;
-$tieredActiveMenuBackground: #FCFCFC;
+$tieredActiveItemBackground: #fcfcfc;
+$tieredActiveMenuBackground: #fcfcfc;
 
 $tieredSubMenuTextTransform: $normal;
 $tieredSubMenuFontWeight: $normal;
@@ -299,12 +296,10 @@ $tieredSubMenuActiveColor: $selectedTextColor;
 
 $tieredInvertedSubMenuBackground: rgba(0, 0, 0, 0.2);
 
-
 /* Icon */
 $iconMenuTextAlign: center;
 $iconMenuItemColor: $black;
 $iconMenuInvertedItemColor: $white;
-
 
 /* Tabular */
 $tabularBorderColor: $solidBorderColor;
@@ -329,8 +324,6 @@ $tabularActiveColor: $selectedTextColor;
 $tabularActiveBoxShadow: none;
 $tabularActiveWeight: $bold;
 
-
-
 /* Pagination */
 $paginationMinWidth: 3em;
 $paginationActiveBackground: $transparentBlack;
@@ -342,10 +335,9 @@ $labeledIconSize: $relativeMassive;
 $labeledIconMinWidth: 6em;
 $labeledIconTextMargin: 0.5rem;
 
-
 /* Text */
 $textMenuItemSpacing: $relative7px;
-$textMenuMargin: $relativeMedium -($textMenuItemSpacing);
+$textMenuMargin: $relativeMedium - ($textMenuItemSpacing);
 $textMenuItemColor: $mutedTextColor;
 $textMenuItemFontWeight: $normal;
 $textMenuItemMargin: 0em 0em;
@@ -370,7 +362,6 @@ $textVerticalMenuItemMargin: $relative8px 0em;
 
 $textVerticalMenuIconFloat: none;
 $textVerticalMenuIconMargin: $iconMargin;
-
 
 /*--------------
    Variations
@@ -403,7 +394,7 @@ $invertedMenuPressedColor: $invertedSelectedTextColor;
 /* Inverted Active */
 $invertedActiveBackground: $strongTransparentWhite;
 $invertedActiveColor: $invertedSelectedTextColor;
-$invertedArrowActiveColor: #3D3E3F;
+$invertedArrowActiveColor: #3d3e3f;
 
 /* Inverted Active Hover  */
 $invertedActiveHoverBackground: $invertedActiveBackground;
@@ -434,10 +425,7 @@ $attachedHorizontalOffset: (-$borderWidth);
 $attachedWidth: calc(100% - ($attachedHorizontalOffset * 2));
 $attachedBoxShadow: none;
 $attachedBorder: $borderWidth solid $solidBorderColor;
-$attachedBottomBoxShadow:
-  $boxShadow,
-  $attachedBoxShadow
-;
+$attachedBottomBoxShadow: $boxShadow, $attachedBoxShadow;
 
 /* Resize large sizes */
 $mini: $exact11px;

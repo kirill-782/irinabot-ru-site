@@ -1,4 +1,4 @@
-@use 'sass:math';
+@use "sass:math";
 /*******************************
              Loader
 *******************************/
@@ -30,7 +30,6 @@ $textDistance: $mini;
 $loaderTextColor: $textColor;
 $invertedLoaderTextColor: $invertedTextColor;
 
-
 /*-------------------
         States
 --------------------*/
@@ -46,14 +45,14 @@ $inlineVerticalAlign: middle;
 $inlineMargin: 0em;
 
 /* Exact Sizes (Avoids Rounding Errors) */
-$mini    : $exact14px;
-$tiny    : $exact16px;
-$small   : $exact24px;
-$medium  : $exact32px;
-$large   : $exact48px;
-$big     : $exact52px;
-$huge    : $exact58px;
-$massive : $exact64px;
+$mini: $exact14px;
+$tiny: $exact16px;
+$small: $exact24px;
+$medium: $exact32px;
+$large: $exact48px;
+$big: $exact52px;
+$huge: $exact58px;
+$massive: $exact64px;
 
 $miniOffset: 0em 0em 0em math.div(-$mini, 2);
 $tinyOffset: 0em 0em 0em math.div(-$tiny, 2);

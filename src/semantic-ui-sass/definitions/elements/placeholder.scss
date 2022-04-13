@@ -11,11 +11,10 @@
             Theme
 *******************************/
 
-$type    : 'element';
-$element : 'placeholder';
+$type: "element";
+$element: "placeholder";
 
-@import '../../theme';
-
+@import "../../theme";
 
 /*-------------------
       Content
@@ -32,12 +31,12 @@ $element : 'placeholder';
   max-width: $placeholderMaxWidth;
 }
 
-@keyframes placeholderShimmer{
+@keyframes placeholderShimmer {
   0% {
-    background-position: (-$placeholderLoadingGradientWidth) 0
+    background-position: (-$placeholderLoadingGradientWidth) 0;
   }
   100% {
-    background-position: $placeholderLoadingGradientWidth 0
+    background-position: $placeholderLoadingGradientWidth 0;
   }
 }
 
@@ -53,7 +52,11 @@ $element : 'placeholder';
 .ui.placeholder + .ui.placeholder + .ui.placeholder + .ui.placeholder {
   animation-delay: ($placeholderAnimationInterval * 3);
 }
-.ui.placeholder + .ui.placeholder + .ui.placeholder + .ui.placeholder + .ui.placeholder {
+.ui.placeholder
+  + .ui.placeholder
+  + .ui.placeholder
+  + .ui.placeholder
+  + .ui.placeholder {
   animation-delay: ($placeholderAnimationInterval * 4);
 }
 
@@ -82,7 +85,6 @@ $element : 'placeholder';
   padding-top: 75%;
 }
 
-
 /* Lines */
 .ui.placeholder .line {
   position: relative;
@@ -92,7 +94,7 @@ $element : 'placeholder';
 .ui.placeholder .line:after {
   top: 100%;
   position: absolute;
-  content: '';
+  content: "";
   background-color: inherit;
 }
 .ui.placeholder .line:before {
@@ -165,7 +167,7 @@ $element : 'placeholder';
 .ui.placeholder .image.header:after {
   display: block;
   height: $placeholderLineMargin;
-  content: '';
+  content: "";
   margin-left: $placeholderImageWidth;
 }
 
@@ -179,7 +181,7 @@ $element : 'placeholder';
 .ui.placeholder .paragraph:not(:first-child):before,
 .ui.placeholder .header:not(:first-child):before {
   height: $placeholderSpacing;
-  content: '';
+  content: "";
   display: block;
 }
 
@@ -198,7 +200,6 @@ $element : 'placeholder';
 /*******************************
             Variations
 *******************************/
-
 
 /*-------------------
         Sizes
@@ -222,7 +223,6 @@ $element : 'placeholder';
 .ui.placeholder .very.short.line.line.line:after {
   width: $placeholderVeryShortLineOutdent;
 }
-
 
 /*-------------------
         Fluid

@@ -12,10 +12,8 @@ $margin: $verticalMargin $horizontalMargin;
 $borderCollapse: separate;
 $borderSpacing: 0px;
 $borderRadius: $defaultBorderRadius;
-$transition:
-  background $defaultDuration $defaultEasing,
-  color $defaultDuration $defaultEasing
-;
+$transition: background $defaultDuration $defaultEasing,
+  color $defaultDuration $defaultEasing;
 $background: $white;
 $color: $textColor;
 $borderWidth: 1px;
@@ -94,11 +92,10 @@ $definitionColumnBackground: $subtleTransparentBlack;
 $definitionColumnFontWeight: $bold;
 $definitionColumnColor: $selectedTextColor;
 $definitionColumnFontSize: $relativeMedium;
-$definitionColumnTextTransform: '';
-$definitionColumnBoxShadow: '';
-$definitionColumnTextAlign: '';
-$definitionColumnHorizontalPadding: '';
-
+$definitionColumnTextTransform: "";
+$definitionColumnBoxShadow: "";
+$definitionColumnTextAlign: "";
+$definitionColumnHorizontalPadding: "";
 
 /*--------------
     Couplings
@@ -138,10 +135,10 @@ $warningColorHover: darken($warningColor, 3);
 
 /* Active */
 $activeColor: $textColor;
-$activeBackgroundColor: #E0E0E0;
+$activeBackgroundColor: #e0e0e0;
 $activeBoxShadow: $stateMarkerWidth 0px 0px $activeColor inset;
 
-$activeBackgroundHover: #EFEFEF;
+$activeBackgroundHover: #efefef;
 $activeColorHover: $selectedTextColor;
 
 /*--------------
@@ -155,10 +152,7 @@ $attachedHorizontalOffset: (-$borderWidth);
 $attachedWidth: calc(100% - ($attachedHorizontalOffset * 2));
 $attachedBoxShadow: none;
 $attachedBorder: $borderWidth solid $solidBorderColor;
-$attachedBottomBoxShadow:
-  $boxShadow,
-  $attachedBoxShadow
-;
+$attachedBottomBoxShadow: $boxShadow, $attachedBoxShadow;
 
 /* Striped */
 $stripedBackground: rgba(0, 0, 50, 0.02);
@@ -171,16 +165,16 @@ $selectableInvertedBackground: $transparentWhite;
 $selectableInvertedTextColor: $invertedSelectedTextColor;
 
 /* Sortable */
-$sortableBackground: '';
+$sortableBackground: "";
 $sortableColor: $textColor;
 
 $sortableBorder: 1px solid $borderColor;
 $sortableIconWidth: auto;
 $sortableIconDistance: 0.5em;
 $sortableIconOpacity: 0.8;
-$sortableIconFont: 'Icons';
-$sortableIconAscending: '\f0d8';
-$sortableIconDescending: '\f0d7';
+$sortableIconFont: "Icons";
+$sortableIconAscending: "\f0d8";
+$sortableIconDescending: "\f0d7";
 $sortableDisabledColor: $disabledTextColor;
 
 $sortableHoverBackground: $transparentBlack;
@@ -225,7 +219,7 @@ $basicTableHeaderBackground: transparent;
 $basicTableCellBackground: transparent;
 $basicTableHeaderDivider: none;
 $basicTableCellBorder: 1px solid rgba(0, 0, 0, 0.1);
-$basicTableCellPadding: '';
+$basicTableCellPadding: "";
 $basicTableStripedBackground: $transparentBlack;
 
 /* Padded */
@@ -239,7 +233,6 @@ $compactVerticalPadding: 0.5em;
 $compactHorizontalPadding: 0.7em;
 $veryCompactVerticalPadding: 0.4em;
 $veryCompactHorizontalPadding: 0.6em;
-
 
 /* Sizes */
 $small: 0.9em;

@@ -8,17 +8,14 @@
  *
  */
 
-
-
 /*******************************
             Theme
 *******************************/
 
-$type    : 'module';
-$element : 'shape';
+$type: "module";
+$element: "shape";
 
-@import '../../theme';
-
+@import "../../theme";
 
 /*******************************
               Shape
@@ -94,7 +91,6 @@ $element : 'shape';
   white-space: normal;
 }
 
-
 /*******************************
              States
 *******************************/
@@ -108,7 +104,6 @@ $element : 'shape';
   top: -9999px;
   left: -9999px;
 }
-
 
 /*--------------
     Animating
@@ -124,7 +119,6 @@ $element : 'shape';
 .ui.shape .hidden.side {
   opacity: $hiddenSideOpacity;
 }
-
 
 /*--------------
       CSS
@@ -147,5 +141,3 @@ $element : 'shape';
 .ui.shape .active.side {
   display: block;
 }
-
-

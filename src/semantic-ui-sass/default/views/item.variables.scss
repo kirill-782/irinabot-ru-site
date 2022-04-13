@@ -18,7 +18,7 @@ $padding: 0em;
 $width: 100%;
 $boxShadow: none;
 $border: none;
-$zIndex: '';
+$zIndex: "";
 $transition: box-shadow $defaultDuration $defaultEasing;
 
 /* Responsive */
@@ -35,7 +35,6 @@ $mobileImageWidth: auto;
 $mobileImageMaxHeight: 250px;
 $mobileContentImageDistance: 1.5em;
 
-
 /*-------------------
        Content
 --------------------*/
@@ -43,7 +42,7 @@ $mobileContentImageDistance: 1.5em;
 /* Image */
 $imageDisplay: block;
 $imageFloat: none;
-$imageMaxHeight: '';
+$imageMaxHeight: "";
 $imageVerticalAlign: top;
 $imageMargin: 0em;
 $imagePadding: 0em;
@@ -85,20 +84,19 @@ $actionHoverOpacity: 1;
 $actionTransition: color $defaultDuration $defaultEasing;
 
 /* Actions */
-$favoriteColor: #FFB70A;
-$favoriteActiveColor: #FFE623;
-$likeColor: #FF2733;
-$likeActiveColor: #FF2733;
+$favoriteColor: #ffb70a;
+$favoriteActiveColor: #ffe623;
+$likeColor: #ff2733;
+$likeActiveColor: #ff2733;
 
 /* Links */
 $headerLinkColor: $headerColor;
 $headerLinkHoverColor: $linkHoverColor;
 $metaLinkColor: $lightTextColor;
 $metaLinkHoverColor: $textColor;
-$contentLinkColor: '';
-$contentLinkHoverColor: '';
+$contentLinkColor: "";
+$contentLinkHoverColor: "";
 $contentLinkTransition: color $defaultDuration $defaultEasing;
-
 
 /* Description */
 $descriptionDistance: 0.6em;
@@ -108,7 +106,7 @@ $descriptionLineHeight: $lineHeight;
 $descriptionColor: $textColor;
 
 /* Content Image */
-$contentImageWidth: '';
+$contentImageWidth: "";
 $contentImageVerticalAlign: middle;
 
 /* Avatar Image */
@@ -151,7 +149,5 @@ $dividedPadding: 1em 0em;
 $dividedFirstLastMargin: 0em;
 $dividedFirstLastPadding: 0em;
 
-
 /* Unstackable */
 $unstackableMobileImageWidth: 125px;
-

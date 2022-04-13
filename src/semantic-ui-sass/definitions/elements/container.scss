@@ -12,11 +12,10 @@
             Theme
 *******************************/
 
-$type    : 'element';
-$element : 'container';
+$type: "element";
+$element: "container";
 
-@import '../../theme';
-
+@import "../../theme";
 
 /*******************************
             Container
@@ -104,7 +103,6 @@ $element : 'container';
              Types
 *******************************/
 
-
 /* Text Container */
 .ui.text.container {
   font-family: $textFontFamily;
@@ -120,7 +118,6 @@ $element : 'container';
 .ui.fluid.container {
   width: 100%;
 }
-
 
 /*******************************
            Variations
@@ -139,6 +136,3 @@ $element : 'container';
   text-align: justify;
   hyphens: auto;
 }
-
-
-

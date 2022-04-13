@@ -8,7 +8,6 @@
  *
  */
 
-
 /*******************************
              Step
 *******************************/
@@ -17,11 +16,10 @@
    Load Theme
 ---------------*/
 
-$type    : 'element';
-$element : 'step';
+$type: "element";
+$element: "step";
 
-@import '../../theme';
-
+@import "../../theme";
 
 /*******************************
             Plural
@@ -48,7 +46,6 @@ $element : 'step';
 .ui.steps:last-child {
   margin-bottom: 0em;
 }
-
 
 /*******************************
            Singular
@@ -80,7 +77,7 @@ $element : 'step';
   display: none;
   position: absolute;
   z-index: 2;
-  content: '';
+  content: "";
   top: $arrowTopOffset;
   right: $arrowRightOffset;
   border: medium none;
@@ -115,7 +112,6 @@ $element : 'step';
 .ui.steps .step:only-child {
   border-radius: $stepsBorderRadius;
 }
-
 
 /*******************************
             Content
@@ -200,7 +196,6 @@ $element : 'step';
   align-self: $iconAlign;
 }
 
-
 /*--------------
     Vertical
 ---------------*/
@@ -229,7 +224,6 @@ $element : 'step';
   border-radius: $stepsBorderRadius;
 }
 
-
 /* Arrow */
 .ui.vertical.steps .step:after {
   display: none;
@@ -253,14 +247,12 @@ $element : 'step';
   display: $verticalActiveLastArrowDisplay;
 }
 
-
 /*---------------
     Responsive
 ----------------*/
 
 /* Mobile (Default) */
 @media only screen and (max-width: ($largestMobileScreen)) {
-
   .ui.steps:not(.unstackable) {
     display: inline-flex;
     overflow: visible;
@@ -295,7 +287,6 @@ $element : 'step';
   .ui.ordered.steps:not(.unstackable) .step:before {
     margin: 0em 0em $mobileIconDistance 0em;
   }
-
 }
 
 /*******************************
@@ -381,11 +372,9 @@ $element : 'step';
   background: $disabledBackground;
 }
 
-
 /*******************************
            Variations
 *******************************/
-
 
 /*--------------
    Stackable
@@ -393,43 +382,41 @@ $element : 'step';
 
 /* Tablet Or Below */
 @media only screen and (max-width: $largestTabletScreen) {
+  .ui[class*="tablet stackable"].steps {
+    display: inline-flex;
+    overflow: visible;
+    flex-direction: column;
+  }
 
-.ui[class*="tablet stackable"].steps {
-  display: inline-flex;
-  overflow: visible;
-  flex-direction: column;
-}
+  /* Steps */
+  .ui[class*="tablet stackable"].steps .step {
+    flex-direction: column;
+    border-radius: $borderRadius;
+    padding: $verticalPadding $horizontalPadding;
+  }
+  .ui[class*="tablet stackable"].steps .step:first-child {
+    padding: $verticalPadding $horizontalPadding;
+    border-radius: $stepsBorderRadius $stepsBorderRadius 0em 0em;
+  }
+  .ui[class*="tablet stackable"].steps .step:last-child {
+    border-radius: 0em 0em $stepsBorderRadius $stepsBorderRadius;
+  }
 
-/* Steps */
-.ui[class*="tablet stackable"].steps .step {
-  flex-direction: column;
-  border-radius: $borderRadius;
-  padding: $verticalPadding $horizontalPadding;
-}
-.ui[class*="tablet stackable"].steps .step:first-child {
-  padding: $verticalPadding $horizontalPadding;
-  border-radius: $stepsBorderRadius $stepsBorderRadius 0em 0em;
-}
-.ui[class*="tablet stackable"].steps .step:last-child {
-  border-radius: 0em 0em $stepsBorderRadius $stepsBorderRadius;
-}
+  /* Arrow */
+  .ui[class*="tablet stackable"].steps .step:after {
+    display: none !important;
+  }
 
-/* Arrow */
-.ui[class*="tablet stackable"].steps .step:after {
-  display: none !important;
-}
+  /* Content */
+  .ui[class*="tablet stackable"].steps .step .content {
+    text-align: center;
+  }
 
-/* Content */
-.ui[class*="tablet stackable"].steps .step .content {
-  text-align: center;
-}
-
-/* Icon */
-.ui[class*="tablet stackable"].steps .step > .icon,
-.ui[class*="tablet stackable"].ordered.steps .step:before {
-  margin: 0em 0em $mobileIconDistance 0em;
-}
-
+  /* Icon */
+  .ui[class*="tablet stackable"].steps .step > .icon,
+  .ui[class*="tablet stackable"].ordered.steps .step:before {
+    margin: 0em 0em $mobileIconDistance 0em;
+  }
 }
 
 /*--------------
@@ -518,13 +505,12 @@ $element : 'step';
   width: 14.285%;
 }
 .ui.eight.steps > .step {
-  width: 12.500%;
+  width: 12.5%;
 }
 
 /*-------------------
        Sizes
 --------------------*/
-
 
 .ui.mini.steps .step,
 .ui.mini.step {
@@ -558,6 +544,3 @@ $element : 'step';
 .ui.massive.step {
   font-size: $massive;
 }
-
-
-

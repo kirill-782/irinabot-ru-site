@@ -9,13 +9,10 @@ $verticalAlign: baseline;
 $iconCursor: pointer;
 $iconWidth: 1.25em;
 $iconHeight: auto;
-$iconTransition:
-  opacity $defaultDuration $defaultEasing,
+$iconTransition: opacity $defaultDuration $defaultEasing,
   background $defaultDuration $defaultEasing,
   text-shadow $defaultDuration $defaultEasing,
-  color $defaultDuration $defaultEasing
-;
-
+  color $defaultDuration $defaultEasing;
 
 /*-------------------
         Types
@@ -41,24 +38,20 @@ $starInactiveColor: $inactiveColor;
 $starInactiveTextShadow: none;
 
 $starActiveBackground: $activeBackground;
-$starActiveColor: #FFE623;
-$starActiveShadowColor: #DDC507;
-$starActiveTextShadow:
-  0px (-$starShadowWidth) 0px $starActiveShadowColor,
+$starActiveColor: #ffe623;
+$starActiveShadowColor: #ddc507;
+$starActiveTextShadow: 0px (-$starShadowWidth) 0px $starActiveShadowColor,
   (-$starShadowWidth) 0px 0px $starActiveShadowColor,
   0px $starShadowWidth 0px $starActiveShadowColor,
-  $starShadowWidth 0px 0px $starActiveShadowColor
-;
+  $starShadowWidth 0px 0px $starActiveShadowColor;
 
 $starSelectedBackground: $selectedBackground;
-$starSelectedColor: #FFCC00;
-$starSelectedShadowColor: #E6A200;
-$starSelectedTextShadow:
-  0px (-$starShadowWidth) 0px $starSelectedShadowColor,
+$starSelectedColor: #ffcc00;
+$starSelectedShadowColor: #e6a200;
+$starSelectedTextShadow: 0px (-$starShadowWidth) 0px $starSelectedShadowColor,
   (-$starShadowWidth) 0px 0px $starSelectedShadowColor,
   0px $starShadowWidth 0px $starSelectedShadowColor,
-  $starShadowWidth 0px 0px $starSelectedShadowColor
-;
+  $starShadowWidth 0px 0px $starSelectedShadowColor;
 
 /* Heart */
 $heartIconWidth: 1.4em;
@@ -70,24 +63,20 @@ $heartInactiveColor: $inactiveColor;
 $heartInactiveTextShadow: none;
 
 $heartActiveBackground: $activeBackground;
-$heartActiveColor: #FF6D75;
-$heartActiveShadowColor: #CD0707;
-$heartActiveTextShadow:
-  0px (-$heartShadowWidth) 0px $heartActiveShadowColor,
+$heartActiveColor: #ff6d75;
+$heartActiveShadowColor: #cd0707;
+$heartActiveTextShadow: 0px (-$heartShadowWidth) 0px $heartActiveShadowColor,
   (-$heartShadowWidth) 0px 0px $heartActiveShadowColor,
   0px $heartShadowWidth 0px $heartActiveShadowColor,
-  $heartShadowWidth 0px 0px $heartActiveShadowColor
-;
+  $heartShadowWidth 0px 0px $heartActiveShadowColor;
 
 $heartSelectedBackground: $selectedBackground;
-$heartSelectedColor: #FF3000;
-$heartSelectedShadowColor: #AA0101;
-$heartSelectedTextShadow:
-  0px (-$heartShadowWidth) 0px $heartSelectedShadowColor,
+$heartSelectedColor: #ff3000;
+$heartSelectedShadowColor: #aa0101;
+$heartSelectedTextShadow: 0px (-$heartShadowWidth) 0px $heartSelectedShadowColor,
   (-$heartShadowWidth) 0px 0px $heartSelectedShadowColor,
   0px $heartShadowWidth 0px $heartSelectedShadowColor,
-  $heartShadowWidth 0px 0px $heartSelectedShadowColor
-;
+  $heartShadowWidth 0px 0px $heartSelectedShadowColor;
 
 /*-------------------
         States

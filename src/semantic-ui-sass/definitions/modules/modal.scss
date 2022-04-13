@@ -8,16 +8,14 @@
  *
  */
 
-
 /*******************************
             Theme
 *******************************/
 
-$type    : 'module';
-$element : 'modal';
+$type: "module";
+$element: "modal";
 
-@import '../../theme.scss';
-
+@import "../../theme.scss";
 
 /*******************************
              Modal
@@ -178,31 +176,31 @@ $element : 'modal';
 --------------------*/
 
 /* Modal Width */
-@media only screen and (max-width : $largestMobileScreen) {
+@media only screen and (max-width: $largestMobileScreen) {
   .ui.modal {
     width: $mobileWidth;
     margin: $mobileMargin;
   }
 }
-@media only screen and (min-width : $tabletBreakpoint) {
+@media only screen and (min-width: $tabletBreakpoint) {
   .ui.modal {
     width: $tabletWidth;
     margin: $tabletMargin;
   }
 }
-@media only screen and (min-width : $computerBreakpoint) {
+@media only screen and (min-width: $computerBreakpoint) {
   .ui.modal {
     width: $computerWidth;
     margin: $computerMargin;
   }
 }
-@media only screen and (min-width : $largeMonitorBreakpoint) {
+@media only screen and (min-width: $largeMonitorBreakpoint) {
   .ui.modal {
     width: $largeMonitorWidth;
     margin: $largeMonitorMargin;
   }
 }
-@media only screen and (min-width : $widescreenMonitorBreakpoint) {
+@media only screen and (min-width: $widescreenMonitorBreakpoint) {
   .ui.modal {
     width: $widescreenMonitorWidth;
     margin: $widescreenMonitorMargin;
@@ -210,7 +208,7 @@ $element : 'modal';
 }
 
 /* Tablet and Mobile */
-@media only screen and (max-width : $largestTabletScreen) {
+@media only screen and (max-width: $largestTabletScreen) {
   .ui.modal > .header {
     padding-right: $closeHitbox;
   }
@@ -222,8 +220,7 @@ $element : 'modal';
 }
 
 /* Mobile */
-@media only screen and (max-width : $largestMobileScreen) {
-
+@media only screen and (max-width: $largestMobileScreen) {
   .ui.modal > .header {
     padding: $mobileHeaderPadding !important;
     padding-right: $closeHitbox !important;
@@ -326,12 +323,11 @@ $element : 'modal';
 }
 
 /* Tablet and Mobile */
-@media only screen and (max-width : $largestTabletScreen) {
+@media only screen and (max-width: $largestTabletScreen) {
   .ui.basic.modal > .close {
     color: $basicInnerCloseColor;
   }
 }
-
 
 /*******************************
              States
@@ -359,7 +355,7 @@ $element : 'modal';
 .modals.dimmer[class*="top aligned"] .modal {
   margin: $topAlignedMargin auto;
 }
-@media only screen and (max-width : $largestMobileScreen) {
+@media only screen and (max-width: $largestMobileScreen) {
   .modals.dimmer[class*="top aligned"] .modal {
     margin: $mobileTopAlignedMargin auto;
   }
@@ -368,7 +364,7 @@ $element : 'modal';
 .legacy.modals.dimmer[class*="top aligned"] {
   padding-top: $topAlignedMargin;
 }
-@media only screen and (max-width : $largestMobileScreen) {
+@media only screen and (max-width: $largestMobileScreen) {
   .legacy.modals.dimmer[class*="top aligned"] {
     padding-top: $mobileTopAlignedMargin;
   }
@@ -433,7 +429,6 @@ $element : 'modal';
   color: $innerCloseColor;
 }
 
-
 /*--------------
       Size
 ---------------*/
@@ -448,31 +443,31 @@ $element : 'modal';
 }
 
 /* Mini Modal Width */
-@media only screen and (max-width : $largestMobileScreen) {
+@media only screen and (max-width: $largestMobileScreen) {
   .ui.mini.modal {
     width: $miniMobileWidth;
     margin: $miniMobileMargin;
   }
 }
-@media only screen and (min-width : $tabletBreakpoint) {
+@media only screen and (min-width: $tabletBreakpoint) {
   .ui.mini.modal {
     width: $miniTabletWidth;
     margin: $miniTabletMargin;
   }
 }
-@media only screen and (min-width : $computerBreakpoint) {
+@media only screen and (min-width: $computerBreakpoint) {
   .ui.mini.modal {
     width: $miniComputerWidth;
     margin: $miniComputerMargin;
   }
 }
-@media only screen and (min-width : $largeMonitorBreakpoint) {
+@media only screen and (min-width: $largeMonitorBreakpoint) {
   .ui.mini.modal {
     width: $miniLargeMonitorWidth;
     margin: $miniLargeMonitorMargin;
   }
 }
-@media only screen and (min-width : $widescreenMonitorBreakpoint) {
+@media only screen and (min-width: $widescreenMonitorBreakpoint) {
   .ui.mini.modal {
     width: $miniWidescreenMonitorWidth;
     margin: $miniWidescreenMonitorMargin;
@@ -485,31 +480,31 @@ $element : 'modal';
 }
 
 /* Tiny Modal Width */
-@media only screen and (max-width : $largestMobileScreen) {
+@media only screen and (max-width: $largestMobileScreen) {
   .ui.tiny.modal {
     width: $tinyMobileWidth;
     margin: $tinyMobileMargin;
   }
 }
-@media only screen and (min-width : $tabletBreakpoint) {
+@media only screen and (min-width: $tabletBreakpoint) {
   .ui.tiny.modal {
     width: $tinyTabletWidth;
     margin: $tinyTabletMargin;
   }
 }
-@media only screen and (min-width : $computerBreakpoint) {
+@media only screen and (min-width: $computerBreakpoint) {
   .ui.tiny.modal {
     width: $tinyComputerWidth;
     margin: $tinyComputerMargin;
   }
 }
-@media only screen and (min-width : $largeMonitorBreakpoint) {
+@media only screen and (min-width: $largeMonitorBreakpoint) {
   .ui.tiny.modal {
     width: $tinyLargeMonitorWidth;
     margin: $tinyLargeMonitorMargin;
   }
 }
-@media only screen and (min-width : $widescreenMonitorBreakpoint) {
+@media only screen and (min-width: $widescreenMonitorBreakpoint) {
   .ui.tiny.modal {
     width: $tinyWidescreenMonitorWidth;
     margin: $tinyWidescreenMonitorMargin;
@@ -522,31 +517,31 @@ $element : 'modal';
 }
 
 /* Small Modal Width */
-@media only screen and (max-width : $largestMobileScreen) {
+@media only screen and (max-width: $largestMobileScreen) {
   .ui.small.modal {
     width: $smallMobileWidth;
     margin: $smallMobileMargin;
   }
 }
-@media only screen and (min-width : $tabletBreakpoint) {
+@media only screen and (min-width: $tabletBreakpoint) {
   .ui.small.modal {
     width: $smallTabletWidth;
     margin: $smallTabletMargin;
   }
 }
-@media only screen and (min-width : $computerBreakpoint) {
+@media only screen and (min-width: $computerBreakpoint) {
   .ui.small.modal {
     width: $smallComputerWidth;
     margin: $smallComputerMargin;
   }
 }
-@media only screen and (min-width : $largeMonitorBreakpoint) {
+@media only screen and (min-width: $largeMonitorBreakpoint) {
   .ui.small.modal {
     width: $smallLargeMonitorWidth;
     margin: $smallLargeMonitorMargin;
   }
 }
-@media only screen and (min-width : $widescreenMonitorBreakpoint) {
+@media only screen and (min-width: $widescreenMonitorBreakpoint) {
   .ui.small.modal {
     width: $smallWidescreenMonitorWidth;
     margin: $smallWidescreenMonitorMargin;
@@ -557,36 +552,33 @@ $element : 'modal';
 .ui.large.modal > .header {
   font-size: $largeHeaderSize;
 }
-@media only screen and (max-width : $largestMobileScreen) {
+@media only screen and (max-width: $largestMobileScreen) {
   .ui.large.modal {
     width: $largeMobileWidth;
     margin: $largeMobileMargin;
   }
 }
-@media only screen and (min-width : $tabletBreakpoint) {
+@media only screen and (min-width: $tabletBreakpoint) {
   .ui.large.modal {
     width: $largeTabletWidth;
     margin: $largeTabletMargin;
   }
 }
-@media only screen and (min-width : $computerBreakpoint) {
+@media only screen and (min-width: $computerBreakpoint) {
   .ui.large.modal {
     width: $largeComputerWidth;
     margin: $largeComputerMargin;
   }
 }
-@media only screen and (min-width : $largeMonitorBreakpoint) {
+@media only screen and (min-width: $largeMonitorBreakpoint) {
   .ui.large.modal {
     width: $largeLargeMonitorWidth;
     margin: $largeLargeMonitorMargin;
   }
 }
-@media only screen and (min-width : $widescreenMonitorBreakpoint) {
+@media only screen and (min-width: $widescreenMonitorBreakpoint) {
   .ui.large.modal {
     width: $largeWidescreenMonitorWidth;
     margin: $largeWidescreenMonitorMargin;
   }
 }
-
-
-

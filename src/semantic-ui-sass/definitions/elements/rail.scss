@@ -12,11 +12,10 @@
             Theme
 *******************************/
 
-$type    : 'element';
-$element : 'rail';
+$type: "element";
+$element: "rail";
 
-@import '../../theme';
-
+@import "../../theme";
 
 /*******************************
              Rails
@@ -64,7 +63,6 @@ $element : 'rail';
   padding: 0em $splitDistance 0em 0em;
   margin: 0em $splitDistance 0em 0em;
 }
-
 
 /*--------------
     Dividing
@@ -150,6 +148,3 @@ $element : 'rail';
 .ui.massive.rail {
   font-size: $massive;
 }
-
-
-

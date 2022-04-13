@@ -1,4 +1,4 @@
-@use 'sass:math';
+@use "sass:math";
 /*******************************
              Icon
 *******************************/
@@ -7,14 +7,12 @@
    Font Files
 ---------------*/
 
-$fontName: 'icons';
-$src:
-  url("#{$fontPath}/#{$fontName}.eot?#iefix") format('embedded-opentype'),
-  url("#{$fontPath}/#{$fontName}.woff2") format('woff2'),
-  url("#{$fontPath}/#{$fontName}.woff") format('woff'),
-  url("#{$fontPath}/#{$fontName}.ttf") format('truetype'),
-  url("#{$fontPath}/#{$fontName}.svg#icons") format('svg')
-;
+$fontName: "icons";
+$src: url("#{$fontPath}/#{$fontName}.eot?#iefix") format("embedded-opentype"),
+  url("#{$fontPath}/#{$fontName}.woff2") format("woff2"),
+  url("#{$fontPath}/#{$fontName}.woff") format("woff"),
+  url("#{$fontPath}/#{$fontName}.ttf") format("truetype"),
+  url("#{$fontPath}/#{$fontName}.svg#icons") format("svg");
 $fallbackSRC: url("#{$fontPath}/#{$fontName}.eot");
 
 /*--------------
@@ -23,26 +21,24 @@ $fallbackSRC: url("#{$fontPath}/#{$fontName}.eot");
 
 /* Outline Icons */
 $importOutlineIcons: true;
-$outlineFontName: 'outline-icons';
-$outlineSrc:
-  url("#{$fontPath}/#{$outlineFontName}.eot?#iefix") format('embedded-opentype'),
-  url("#{$fontPath}/#{$outlineFontName}.woff2") format('woff2'),
-  url("#{$fontPath}/#{$outlineFontName}.woff") format('woff'),
-  url("#{$fontPath}/#{$outlineFontName}.ttf") format('truetype'),
-  url("#{$fontPath}/#{$outlineFontName}.svg#icons") format('svg')
-;
+$outlineFontName: "outline-icons";
+$outlineSrc: url("#{$fontPath}/#{$outlineFontName}.eot?#iefix")
+    format("embedded-opentype"),
+  url("#{$fontPath}/#{$outlineFontName}.woff2") format("woff2"),
+  url("#{$fontPath}/#{$outlineFontName}.woff") format("woff"),
+  url("#{$fontPath}/#{$outlineFontName}.ttf") format("truetype"),
+  url("#{$fontPath}/#{$outlineFontName}.svg#icons") format("svg");
 $outlineFallbackSRC: url("#{$fontPath}/#{$outlineFontName}.eot");
 
 /* Brand Icons */
 $importBrandIcons: true;
-$brandFontName: 'brand-icons';
-$brandSrc:
-  url("#{$fontPath}/#{$brandFontName}.eot?#iefix") format('embedded-opentype'),
-  url("#{$fontPath}/#{$brandFontName}.woff2") format('woff2'),
-  url("#{$fontPath}/#{$brandFontName}.woff") format('woff'),
-  url("#{$fontPath}/#{$brandFontName}.ttf") format('truetype'),
-  url("#{$fontPath}/#{$brandFontName}.svg#icons") format('svg')
-;
+$brandFontName: "brand-icons";
+$brandSrc: url("#{$fontPath}/#{$brandFontName}.eot?#iefix")
+    format("embedded-opentype"),
+  url("#{$fontPath}/#{$brandFontName}.woff2") format("woff2"),
+  url("#{$fontPath}/#{$brandFontName}.woff") format("woff"),
+  url("#{$fontPath}/#{$brandFontName}.ttf") format("truetype"),
+  url("#{$fontPath}/#{$brandFontName}.svg#icons") format("svg");
 $brandFallbackSRC: url("#{$fontPath}/#{$brandFontName}.eot");
 
 /*--------------
@@ -54,7 +50,6 @@ $opacity: 1;
 $width: $iconWidth;
 $height: 1em;
 $distanceFromText: 0.25rem;
-
 
 /* Variations */
 $linkOpacity: 0.8;
@@ -72,18 +67,14 @@ $borderedShadow: 0em 0em 0em 0.1em rgba(0, 0, 0, 0.1) inset;
 
 $cornerIconSize: 0.45em;
 $cornerIconStroke: 1px;
-$cornerIconShadow:
-  (-$cornerIconStroke) (-$cornerIconStroke) 0 $white,
-   $cornerIconStroke (-$cornerIconStroke) 0 $white,
-  (-$cornerIconStroke)  $cornerIconStroke 0 $white,
-   $cornerIconStroke  $cornerIconStroke 0 $white
-;
-$cornerIconInvertedShadow:
-  (-$cornerIconStroke) (-$cornerIconStroke) 0 $black,
-   $cornerIconStroke (-$cornerIconStroke) 0 $black,
-  (-$cornerIconStroke)  $cornerIconStroke 0 $black,
-   $cornerIconStroke  $cornerIconStroke 0 $black
-;
+$cornerIconShadow: (-$cornerIconStroke) (-$cornerIconStroke) 0 $white,
+  $cornerIconStroke (-$cornerIconStroke) 0 $white,
+  (-$cornerIconStroke) $cornerIconStroke 0 $white,
+  $cornerIconStroke $cornerIconStroke 0 $white;
+$cornerIconInvertedShadow: (-$cornerIconStroke) (-$cornerIconStroke) 0 $black,
+  $cornerIconStroke (-$cornerIconStroke) 0 $black,
+  (-$cornerIconStroke) $cornerIconStroke 0 $black,
+  $cornerIconStroke $cornerIconStroke 0 $black;
 
 $mini: 0.4rem;
 $tiny: 0.5rem;

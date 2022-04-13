@@ -1,4 +1,4 @@
-@use 'sass:math';
+@use "sass:math";
 /*******************************
              Form
 *******************************/
@@ -32,14 +32,13 @@ $labelColor: $textColor;
 $inputFont: $pageFont;
 $inputWidth: 100%;
 $inputFontSize: 1em;
-$inputPadding: ($inputVerticalPadding + math.div((1em - $inputLineHeight), 2)) $inputHorizontalPadding;
+$inputPadding: ($inputVerticalPadding + math.div((1em - $inputLineHeight), 2))
+  $inputHorizontalPadding;
 $inputBorder: 1px solid $borderColor;
 $inputBorderRadius: $absoluteBorderRadius;
 $inputColor: $textColor;
-$inputTransition:
-  color $defaultDuration $defaultEasing,
-  border-color $defaultDuration $defaultEasing
-;
+$inputTransition: color $defaultDuration $defaultEasing,
+  border-color $defaultDuration $defaultEasing;
 $inputBoxShadow: 0em 0em 0em 0em transparent inset;
 
 /* Select */
@@ -92,7 +91,8 @@ $inputFocusPointerSize: 0px;
 $inputFocusBackground: $inputBackground;
 $inputFocusBorderColor: $focusedFormBorderColor;
 $inputFocusColor: $selectedTextColor;
-$inputFocusBoxShadow: $inputFocusPointerSize 0em 0em 0em $selectedBorderColor inset;
+$inputFocusBoxShadow: $inputFocusPointerSize 0em 0em 0em $selectedBorderColor
+  inset;
 $inputFocusBorderRadius: $inputBorderRadius;
 
 /* Text Area Focus */
@@ -106,23 +106,22 @@ $textAreaFocusBorderRadius: $inputFocusBorderRadius;
 $disabledLabelOpacity: $disabledOpacity;
 
 /* AutoFill */
-$inputAutoFillBackground: #FFFFF0;
-$inputAutoFillBorder: #E5DFA1;
+$inputAutoFillBackground: #fffff0;
+$inputAutoFillBorder: #e5dfa1;
 $inputAutoFillFocusBackground: $inputAutoFillBackground;
-$inputAutoFillFocusBorder: #D5C315;
-$inputAutoFillErrorBackground: #FFFAF0;
-$inputAutoFillErrorBorder: #E0B4B4;
-
+$inputAutoFillFocusBorder: #d5c315;
+$inputAutoFillErrorBackground: #fffaf0;
+$inputAutoFillErrorBorder: #e0b4b4;
 
 /* Input Error */
-$inputErrorBorderRadius: '';
+$inputErrorBorderRadius: "";
 $inputErrorBoxShadow: none;
 
 /* Dropdown Error */
-$dropdownErrorHoverBackground: #FBE7E7;
+$dropdownErrorHoverBackground: #fbe7e7;
 $dropdownErrorSelectedBackground: $dropdownErrorHoverBackground;
-$dropdownErrorActiveBackground: #FDCFCF;
-$dropdownErrorLabelBackground: #EACBCB;
+$dropdownErrorActiveBackground: #fdcfcf;
+$dropdownErrorLabelBackground: #eacbcb;
 $dropdownErrorLabelColor: $errorTextColor;
 
 /* Focused Error */
@@ -148,7 +147,7 @@ $loaderLineZIndex: 101;
 --------------------*/
 
 /* Required */
-$requiredContent: '*';
+$requiredContent: "*";
 $requiredColor: $negativeColor;
 $requiredVerticalOffset: -0.2em;
 $requiredDistance: 0.2em;
@@ -176,7 +175,6 @@ $groupedLabelMargin: $labelMargin;
 $groupedLabelFontSize: $labelFontSize;
 $groupedLabelFontWeight: $labelFontWeight;
 $groupedLabelTextTransform: $labelTextTransform;
-
 
 /* Inline */
 $inlineInputSize: $relativeMedium;

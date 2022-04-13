@@ -12,11 +12,10 @@
             Theme
 *******************************/
 
-$type    : 'module';
-$element : 'accordion';
+$type: "module";
+$element: "accordion";
 
-@import '../../theme';
-
+@import "../../theme";
 
 /*******************************
             Accordion
@@ -143,7 +142,6 @@ $element : 'accordion';
   border-top: none;
 }
 
-
 /* Content */
 .ui.styled.accordion .content,
 .ui.styled.accordion .accordion .content {
@@ -154,7 +152,6 @@ $element : 'accordion';
   padding: $styledChildContentMargin;
   padding: $styledChildContentPadding;
 }
-
 
 /* Hover */
 .ui.styled.accordion .title:hover,
@@ -170,7 +167,6 @@ $element : 'accordion';
   color: $styledHoverChildTitleColor;
 }
 
-
 /* Active */
 .ui.styled.accordion .active.title {
   background: $styledActiveTitleBackground;
@@ -180,7 +176,6 @@ $element : 'accordion';
   background: $styledActiveChildTitleBackground;
   color: $styledActiveChildTitleColor;
 }
-
 
 /*******************************
             States
@@ -215,6 +210,3 @@ $element : 'accordion';
 .ui.inverted.accordion .title:not(.ui) {
   color: $invertedTitleColor;
 }
-
-
-

@@ -8,17 +8,14 @@
  *
  */
 
-
 /*******************************
             Theme
 *******************************/
 
-$type    : 'element';
-$element : 'image';
+$type: "element";
+$element: "image";
 
-@import '../../theme';
-
-
+@import "../../theme";
 
 /*******************************
              Image
@@ -43,7 +40,6 @@ img.ui.image {
   height: auto;
 }
 
-
 /*******************************
             States
 *******************************/
@@ -62,18 +58,15 @@ img.ui.image {
   visibility: hidden;
 }
 
-
 .ui.disabled.images,
 .ui.disabled.image {
   cursor: default;
   opacity: $disabledOpacity;
 }
 
-
 /*******************************
           Variations
 *******************************/
-
 
 /*--------------
      Inline
@@ -168,7 +161,6 @@ img.ui.bordered.image {
   height: auto;
 }
 
-
 /*--------------
      Avatar
 ---------------*/
@@ -232,7 +224,6 @@ img.ui.bordered.image {
 .ui.floated.image:last-child {
   margin-bottom: 0em;
 }
-
 
 .ui.centered.images,
 .ui.centered.image {
@@ -309,7 +300,6 @@ img.ui.bordered.image {
   font-size: $massive;
 }
 
-
 /*******************************
               Groups
 *******************************/
@@ -325,5 +315,3 @@ img.ui.bordered.image {
   display: inline-block;
   margin: 0em $imageHorizontalMargin $imageVerticalMargin;
 }
-
-

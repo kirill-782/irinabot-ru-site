@@ -8,47 +8,45 @@
        Fonts
 --------------------*/
 
-$fontName          : 'Lato';
-$fontSmoothing     : antialiased;
+$fontName: "Lato";
+$fontSmoothing: antialiased;
 
-$headerFont        : $fontName, 'Helvetica Neue', Arial, Helvetica, sans-serif;
-$pageFont          : $fontName, 'Helvetica Neue', Arial, Helvetica, sans-serif;
+$headerFont: $fontName, "Helvetica Neue", Arial, Helvetica, sans-serif;
+$pageFont: $fontName, "Helvetica Neue", Arial, Helvetica, sans-serif;
 
-$googleFontName    : $fontName;
-$importGoogleFonts : true;
-$googleFontSizes   : '400,700,400italic,700italic';
-$googleSubset      : 'latin';
+$googleFontName: $fontName;
+$importGoogleFonts: true;
+$googleFontSizes: "400,700,400italic,700italic";
+$googleSubset: "latin";
 
-$googleProtocol    : 'https://';
-$googleFontRequest : '#{$googleFontName}:#{$googleFontSizes}&subset=#{$googleSubset}';
+$googleProtocol: "https://";
+$googleFontRequest: "#{$googleFontName}:#{$googleFontSizes}&subset=#{$googleSubset}";
 
-
-$bold              : bold;
-$normal            : normal;
+$bold: bold;
+$normal: normal;
 
 /*-------------------
       Base Sizes
 --------------------*/
 
 /* This is the single variable that controls them all */
-$emSize   : 14;
+$emSize: 14;
 
 /* The size of page text  */
-$fontSize : 14px;
-
+$fontSize: 14px;
 
 /*--------------
   Page Heading
 ---------------*/
 
-$headerFontWeight : $bold;
-$headerLineHeight : math.div(18em, 14);
+$headerFontWeight: $bold;
+$headerLineHeight: math.div(18em, 14);
 
-$h1 : math.div(28rem, 14);
-$h2 : math.div(24rem, 14);
-$h3 : math.div(18rem, 14);
-$h4 : math.div(15rem, 14);
-$h5 : math.div(14rem, 14);
+$h1: math.div(28rem, 14);
+$h2: math.div(24rem, 14);
+$h3: math.div(18rem, 14);
+$h4: math.div(15rem, 14);
+$h5: math.div(14rem, 14);
 
 /*-------------------
         Sizes
@@ -59,41 +57,40 @@ $h5 : math.div(14rem, 14);
   This ensures these "ratios" remain constant despite changes in EM
 */
 
-$miniSize        : math.div(11, 14);
-$tinySize        : math.div(12, 14);
-$smallSize       : math.div(13, 14);
-$mediumSize      : math.div(14, 14);
-$largeSize       : math.div(16, 14);
-$bigSize         : math.div(18, 14);
-$hugeSize        : math.div(20, 14);
-$massiveSize     : math.div(24, 14);
-
+$miniSize: math.div(11, 14);
+$tinySize: math.div(12, 14);
+$smallSize: math.div(13, 14);
+$mediumSize: math.div(14, 14);
+$largeSize: math.div(16, 14);
+$bigSize: math.div(18, 14);
+$hugeSize: math.div(20, 14);
+$massiveSize: math.div(24, 14);
 
 /*-------------------
         Page
 --------------------*/
 
-$pageBackground      : #FFFFFF;
-$pageOverflowX       : hidden;
+$pageBackground: #ffffff;
+$pageOverflowX: hidden;
 
-$lineHeight          : 1.4285em;
-$textColor           : rgba(0, 0, 0, 0.87);
+$lineHeight: 1.4285em;
+$textColor: rgba(0, 0, 0, 0.87);
 
 /*-------------------
       Paragraph
 --------------------*/
 
-$paragraphMargin     : 0em 0em 1em;
-$paragraphLineHeight : $lineHeight;
+$paragraphMargin: 0em 0em 1em;
+$paragraphLineHeight: $lineHeight;
 
 /*-------------------
        Links
 --------------------*/
 
-$linkColor           : #4183C4;
-$linkUnderline       : none;
-$linkHoverColor      : saturate(darken($linkColor, 20), 15);
-$linkHoverUnderline  : $linkUnderline;
+$linkColor: #4183c4;
+$linkUnderline: none;
+$linkHoverColor: saturate(darken($linkColor, 20), 15);
+$linkHoverUnderline: $linkUnderline;
 
 /*-------------------
     Scroll Bars
@@ -124,11 +121,11 @@ $thumbInvertedHoverBackground: rgba(255, 255, 255, 0.35);
   Highlighted Text
 --------------------*/
 
-$highlightBackground      : #CCE2FF;
-$highlightColor           : $textColor;
+$highlightBackground: #cce2ff;
+$highlightColor: $textColor;
 
-$inputHighlightBackground : rgba(100, 100, 100, 0.4);
-$inputHighlightColor      : $textColor;
+$inputHighlightBackground: rgba(100, 100, 100, 0.4);
+$inputHighlightColor: $textColor;
 
 /*-------------------
         Grid
@@ -140,156 +137,155 @@ $columnCount: 16;
      Transitions
 --------------------*/
 
-$defaultDuration : 0.1s;
-$defaultEasing   : ease;
+$defaultDuration: 0.1s;
+$defaultEasing: ease;
 
 /*-------------------
      Breakpoints
 --------------------*/
 
-$mobileBreakpoint            : 320px;
-$tabletBreakpoint            : 768px;
-$computerBreakpoint          : 992px;
-$largeMonitorBreakpoint      : 1200px;
-$widescreenMonitorBreakpoint : 1920px;
+$mobileBreakpoint: 320px;
+$tabletBreakpoint: 768px;
+$computerBreakpoint: 992px;
+$largeMonitorBreakpoint: 1200px;
+$widescreenMonitorBreakpoint: 1920px;
 
 /*-------------------
       Site Colors
 --------------------*/
 
 /*---  Colors  ---*/
-$red              : #DB2828;
-$orange           : #F2711C;
-$yellow           : #FBBD08;
-$olive            : #B5CC18;
-$green            : #21BA45;
-$teal             : #00B5AD;
-$blue             : #2185D0;
-$violet           : #6435C9;
-$purple           : #A333C8;
-$pink             : #E03997;
-$brown            : #A5673F;
-$grey             : #767676;
-$black            : #1B1C1D;
+$red: #db2828;
+$orange: #f2711c;
+$yellow: #fbbd08;
+$olive: #b5cc18;
+$green: #21ba45;
+$teal: #00b5ad;
+$blue: #2185d0;
+$violet: #6435c9;
+$purple: #a333c8;
+$pink: #e03997;
+$brown: #a5673f;
+$grey: #767676;
+$black: #1b1c1d;
 
 /*---  Light Colors  ---*/
-$lightRed         : #FF695E;
-$lightOrange      : #FF851B;
-$lightYellow      : #FFE21F;
-$lightOlive       : #D9E778;
-$lightGreen       : #2ECC40;
-$lightTeal        : #6DFFFF;
-$lightBlue        : #54C8FF;
-$lightViolet      : #A291FB;
-$lightPurple      : #DC73FF;
-$lightPink        : #FF8EDF;
-$lightBrown       : #D67C1C;
-$lightGrey        : #DCDDDE;
-$lightBlack       : #545454;
+$lightRed: #ff695e;
+$lightOrange: #ff851b;
+$lightYellow: #ffe21f;
+$lightOlive: #d9e778;
+$lightGreen: #2ecc40;
+$lightTeal: #6dffff;
+$lightBlue: #54c8ff;
+$lightViolet: #a291fb;
+$lightPurple: #dc73ff;
+$lightPink: #ff8edf;
+$lightBrown: #d67c1c;
+$lightGrey: #dcddde;
+$lightBlack: #545454;
 
 /*---   Neutrals  ---*/
-$fullBlack        : #000000;
-$offWhite         : #F9FAFB;
-$darkWhite        : #F3F4F5;
-$midWhite         : #DCDDDE;
-$white            : #FFFFFF;
+$fullBlack: #000000;
+$offWhite: #f9fafb;
+$darkWhite: #f3f4f5;
+$midWhite: #dcddde;
+$white: #ffffff;
 
 /*--- Colored Backgrounds ---*/
-$redBackground    : #FFE8E6;
-$orangeBackground : #FFEDDE;
-$yellowBackground : #FFF8DB;
-$oliveBackground  : #FBFDEF;
-$greenBackground  : #E5F9E7;
-$tealBackground   : #E1F7F7;
-$blueBackground   : #DFF0FF;
-$violetBackground : #EAE7FF;
-$purpleBackground : #F6E7FF;
-$pinkBackground   : #FFE3FB;
-$brownBackground  : #F1E2D3;
+$redBackground: #ffe8e6;
+$orangeBackground: #ffedde;
+$yellowBackground: #fff8db;
+$oliveBackground: #fbfdef;
+$greenBackground: #e5f9e7;
+$tealBackground: #e1f7f7;
+$blueBackground: #dff0ff;
+$violetBackground: #eae7ff;
+$purpleBackground: #f6e7ff;
+$pinkBackground: #ffe3fb;
+$brownBackground: #f1e2d3;
 
 /*--- Colored Text ---*/
-$redTextColor    : $red;
-$orangeTextColor : $orange;
-$yellowTextColor : #B58105; // Yellow text is difficult to read
-$oliveTextColor  : #8ABC1E; // Olive is difficult to read
-$greenTextColor  : #1EBC30; // Green is difficult to read
-$tealTextColor   : #10A3A3; // Teal text is difficult to read
-$blueTextColor   : $blue;
-$violetTextColor : $violet;
-$purpleTextColor : $purple;
-$pinkTextColor   : $pink;
-$brownTextColor  : $brown;
+$redTextColor: $red;
+$orangeTextColor: $orange;
+$yellowTextColor: #b58105; // Yellow text is difficult to read
+$oliveTextColor: #8abc1e; // Olive is difficult to read
+$greenTextColor: #1ebc30; // Green is difficult to read
+$tealTextColor: #10a3a3; // Teal text is difficult to read
+$blueTextColor: $blue;
+$violetTextColor: $violet;
+$purpleTextColor: $purple;
+$pinkTextColor: $pink;
+$brownTextColor: $brown;
 
 /*--- Colored Border ---*/
-$redBorderColor    : $redTextColor;
-$orangeBorderColor : $orangeTextColor;
-$yellowBorderColor : $yellowTextColor;
-$oliveBorderColor  : $oliveTextColor;
-$greenBorderColor  : $greenTextColor;
-$tealBorderColor   : $tealTextColor;
-$blueBorderColor   : $blueTextColor;
-$violetBorderColor : $violetTextColor;
-$purpleBorderColor : $purpleTextColor;
-$pinkBorderColor   : $pinkTextColor;
-$brownBorderColor  : $brownTextColor;
+$redBorderColor: $redTextColor;
+$orangeBorderColor: $orangeTextColor;
+$yellowBorderColor: $yellowTextColor;
+$oliveBorderColor: $oliveTextColor;
+$greenBorderColor: $greenTextColor;
+$tealBorderColor: $tealTextColor;
+$blueBorderColor: $blueTextColor;
+$violetBorderColor: $violetTextColor;
+$purpleBorderColor: $purpleTextColor;
+$pinkBorderColor: $pinkTextColor;
+$brownBorderColor: $brownTextColor;
 
 /*-------------------
      Alpha Colors
 --------------------*/
 
-$subtleTransparentBlack     : rgba(0, 0, 0, 0.03);
-$transparentBlack           : rgba(0, 0, 0, 0.05);
-$strongTransparentBlack     : rgba(0, 0, 0, 0.10);
-$veryStrongTransparentBlack : rgba(0, 0, 0, 0.15);
+$subtleTransparentBlack: rgba(0, 0, 0, 0.03);
+$transparentBlack: rgba(0, 0, 0, 0.05);
+$strongTransparentBlack: rgba(0, 0, 0, 0.1);
+$veryStrongTransparentBlack: rgba(0, 0, 0, 0.15);
 
-$subtleTransparentWhite     : rgba(255, 255, 255, 0.02);
-$transparentWhite           : rgba(255, 255, 255, 0.08);
-$strongTransparentWhite     : rgba(255, 255, 255, 0.15);
+$subtleTransparentWhite: rgba(255, 255, 255, 0.02);
+$transparentWhite: rgba(255, 255, 255, 0.08);
+$strongTransparentWhite: rgba(255, 255, 255, 0.15);
 
 /*******************************
            Power-User
 *******************************/
-
 
 /*-------------------
     Emotive Colors
 --------------------*/
 
 /* Positive */
-$positiveColor           : $green;
-$positiveBackgroundColor : #FCFFF5;
-$positiveBorderColor     : #A3C293;
-$positiveHeaderColor     : #1A531B;
-$positiveTextColor       : #2C662D;
+$positiveColor: $green;
+$positiveBackgroundColor: #fcfff5;
+$positiveBorderColor: #a3c293;
+$positiveHeaderColor: #1a531b;
+$positiveTextColor: #2c662d;
 
 /* Negative */
-$negativeColor           : $red;
-$negativeBackgroundColor : #FFF6F6;
-$negativeBorderColor     : #E0B4B4;
-$negativeHeaderColor     : #912D2B;
-$negativeTextColor       : #9F3A38;
+$negativeColor: $red;
+$negativeBackgroundColor: #fff6f6;
+$negativeBorderColor: #e0b4b4;
+$negativeHeaderColor: #912d2b;
+$negativeTextColor: #9f3a38;
 
 /* Info */
-$infoColor              : #31CCEC;
-$infoBackgroundColor    : #F8FFFF;
-$infoBorderColor        : #A9D5DE;
-$infoHeaderColor        : #0E566C;
-$infoTextColor          : #276F86;
+$infoColor: #31ccec;
+$infoBackgroundColor: #f8ffff;
+$infoBorderColor: #a9d5de;
+$infoHeaderColor: #0e566c;
+$infoTextColor: #276f86;
 
 /* Warning */
-$warningColor           : #F2C037;
-$warningBorderColor     : #C9BA9B;
-$warningBackgroundColor : #FFFAF3;
-$warningHeaderColor     : #794B02;
-$warningTextColor       : #573A08;
+$warningColor: #f2c037;
+$warningBorderColor: #c9ba9b;
+$warningBackgroundColor: #fffaf3;
+$warningHeaderColor: #794b02;
+$warningTextColor: #573a08;
 
 /*-------------------
         Paths
 --------------------*/
 
 /* For source only. Modified in gulp for dist */
-$imagePath : '../assets/images';
-$fontPath  : '../assets/fonts';
+$imagePath: "../assets/images";
+$fontPath: "../assets/fonts";
 
 /*-------------------
        Em Sizes
@@ -299,100 +295,100 @@ $fontPath  : '../assets/fonts';
   This rounds $size values to the closest pixel then expresses that value in (r)em.
   This ensures all size values round to exact pixels
 */
-$mini            : math.div(math.round($miniSize * $emSize), $emSize) * 1rem;
-$tiny            : math.div(math.round($tinySize * $emSize), $emSize) * 1rem;
-$small           : math.div(math.round($smallSize * $emSize), $emSize) * 1rem;
-$medium          : math.div(math.round($mediumSize * $emSize), $emSize) * 1rem;
-$large           : math.div(math.round($largeSize * $emSize), $emSize) * 1rem;
-$big             : math.div(math.round($bigSize * $emSize), $emSize) * 1rem;
-$huge            : math.div(math.round($hugeSize * $emSize), $emSize) * 1rem;
-$massive         : math.div(math.round($massiveSize * $emSize), $emSize) * 1rem;
+$mini: math.div(math.round($miniSize * $emSize), $emSize) * 1rem;
+$tiny: math.div(math.round($tinySize * $emSize), $emSize) * 1rem;
+$small: math.div(math.round($smallSize * $emSize), $emSize) * 1rem;
+$medium: math.div(math.round($mediumSize * $emSize), $emSize) * 1rem;
+$large: math.div(math.round($largeSize * $emSize), $emSize) * 1rem;
+$big: math.div(math.round($bigSize * $emSize), $emSize) * 1rem;
+$huge: math.div(math.round($hugeSize * $emSize), $emSize) * 1rem;
+$massive: math.div(math.round($massiveSize * $emSize), $emSize) * 1rem;
 
 /* em */
-$relativeMini    : math.div(math.round($miniSize * $emSize), $emSize) * 1em;
-$relativeTiny    : math.div(math.round($tinySize * $emSize), $emSize) * 1em;
-$relativeSmall   : math.div(math.round($smallSize * $emSize), $emSize) * 1em;
-$relativeMedium  : math.div(math.round($mediumSize * $emSize), $emSize) * 1em;
-$relativeLarge   : math.div(math.round($largeSize * $emSize), $emSize) * 1em;
-$relativeBig     : math.div(math.round($bigSize * $emSize), $emSize) * 1em;
-$relativeHuge    : math.div(math.round($hugeSize * $emSize), $emSize) * 1em;
-$relativeMassive : math.div(math.round($massiveSize * $emSize), $emSize) * 1em;
+$relativeMini: math.div(math.round($miniSize * $emSize), $emSize) * 1em;
+$relativeTiny: math.div(math.round($tinySize * $emSize), $emSize) * 1em;
+$relativeSmall: math.div(math.round($smallSize * $emSize), $emSize) * 1em;
+$relativeMedium: math.div(math.round($mediumSize * $emSize), $emSize) * 1em;
+$relativeLarge: math.div(math.round($largeSize * $emSize), $emSize) * 1em;
+$relativeBig: math.div(math.round($bigSize * $emSize), $emSize) * 1em;
+$relativeHuge: math.div(math.round($hugeSize * $emSize), $emSize) * 1em;
+$relativeMassive: math.div(math.round($massiveSize * $emSize), $emSize) * 1em;
 
 /* rem */
-$absoluteMini    : math.div(math.round($miniSize * $emSize), $emSize) * 1rem;
-$absoluteTiny    : math.div(math.round($tinySize * $emSize), $emSize) * 1rem;
-$absoluteSmall   : math.div(math.round($smallSize * $emSize), $emSize) * 1rem;
-$absoluteMedium  : math.div(math.round($mediumSize * $emSize), $emSize) * 1rem;
-$absoluteLarge   : math.div(math.round($largeSize * $emSize), $emSize) * 1rem;
-$absoluteBig     : math.div(math.round($bigSize * $emSize), $emSize) * 1rem;
-$absoluteHuge    : math.div(math.round($hugeSize * $emSize), $emSize) * 1rem;
-$absoluteMassive : math.div(math.round($massiveSize * $emSize), $emSize) * 1rem;
+$absoluteMini: math.div(math.round($miniSize * $emSize), $emSize) * 1rem;
+$absoluteTiny: math.div(math.round($tinySize * $emSize), $emSize) * 1rem;
+$absoluteSmall: math.div(math.round($smallSize * $emSize), $emSize) * 1rem;
+$absoluteMedium: math.div(math.round($mediumSize * $emSize), $emSize) * 1rem;
+$absoluteLarge: math.div(math.round($largeSize * $emSize), $emSize) * 1rem;
+$absoluteBig: math.div(math.round($bigSize * $emSize), $emSize) * 1rem;
+$absoluteHuge: math.div(math.round($hugeSize * $emSize), $emSize) * 1rem;
+$absoluteMassive: math.div(math.round($massiveSize * $emSize), $emSize) * 1rem;
 
 /*-------------------
        Icons
 --------------------*/
 
 /* Maximum Glyph Width of Icon */
-$iconWidth : 1.18em;
+$iconWidth: 1.18em;
 
 /*-------------------
      Neutral Text
 --------------------*/
 
-$darkTextColor               : rgba(0, 0, 0, 0.85);
-$mutedTextColor              : rgba(0, 0, 0, 0.6);
-$lightTextColor              : rgba(0, 0, 0, 0.4);
+$darkTextColor: rgba(0, 0, 0, 0.85);
+$mutedTextColor: rgba(0, 0, 0, 0.6);
+$lightTextColor: rgba(0, 0, 0, 0.4);
 
-$unselectedTextColor         : rgba(0, 0, 0, 0.4);
-$hoveredTextColor            : rgba(0, 0, 0, 0.8);
-$pressedTextColor            : rgba(0, 0, 0, 0.9);
-$selectedTextColor           : rgba(0, 0, 0, 0.95);
-$disabledTextColor           : rgba(0, 0, 0, 0.2);
+$unselectedTextColor: rgba(0, 0, 0, 0.4);
+$hoveredTextColor: rgba(0, 0, 0, 0.8);
+$pressedTextColor: rgba(0, 0, 0, 0.9);
+$selectedTextColor: rgba(0, 0, 0, 0.95);
+$disabledTextColor: rgba(0, 0, 0, 0.2);
 
-$invertedTextColor           : rgba(255, 255, 255, 0.9);
-$invertedMutedTextColor      : rgba(255, 255, 255, 0.8);
-$invertedLightTextColor      : rgba(255, 255, 255, 0.7);
-$invertedUnselectedTextColor : rgba(255, 255, 255, 0.5);
-$invertedHoveredTextColor    : rgba(255, 255, 255, 1);
-$invertedPressedTextColor    : rgba(255, 255, 255, 1);
-$invertedSelectedTextColor   : rgba(255, 255, 255, 1);
-$invertedDisabledTextColor   : rgba(255, 255, 255, 0.2);
+$invertedTextColor: rgba(255, 255, 255, 0.9);
+$invertedMutedTextColor: rgba(255, 255, 255, 0.8);
+$invertedLightTextColor: rgba(255, 255, 255, 0.7);
+$invertedUnselectedTextColor: rgba(255, 255, 255, 0.5);
+$invertedHoveredTextColor: rgba(255, 255, 255, 1);
+$invertedPressedTextColor: rgba(255, 255, 255, 1);
+$invertedSelectedTextColor: rgba(255, 255, 255, 1);
+$invertedDisabledTextColor: rgba(255, 255, 255, 0.2);
 
 /*-------------------
      Brand Colors
 --------------------*/
 
-$facebookColor   : #3B5998;
-$twitterColor    : #55ACEE;
-$googlePlusColor : #DD4B39;
-$linkedInColor   : #1F88BE;
-$youtubeColor    : #FF0000;
-$pinterestColor  : #BD081C;
-$vkColor         : #4D7198;
-$instagramColor  : #49769C;
+$facebookColor: #3b5998;
+$twitterColor: #55acee;
+$googlePlusColor: #dd4b39;
+$linkedInColor: #1f88be;
+$youtubeColor: #ff0000;
+$pinterestColor: #bd081c;
+$vkColor: #4d7198;
+$instagramColor: #49769c;
 
 /*-------------------
       Borders
 --------------------*/
 
-$circularRadius                : 500rem;
+$circularRadius: 500rem;
 
-$borderColor               : rgba(34, 36, 38, 0.15);
-$strongBorderColor         : rgba(34, 36, 38, 0.22);
-$internalBorderColor       : rgba(34, 36, 38, 0.1);
-$selectedBorderColor       : rgba(34, 36, 38, 0.35);
-$strongSelectedBorderColor : rgba(34, 36, 38, 0.5);
-$disabledBorderColor       : rgba(34, 36, 38, 0.5);
+$borderColor: rgba(34, 36, 38, 0.15);
+$strongBorderColor: rgba(34, 36, 38, 0.22);
+$internalBorderColor: rgba(34, 36, 38, 0.1);
+$selectedBorderColor: rgba(34, 36, 38, 0.35);
+$strongSelectedBorderColor: rgba(34, 36, 38, 0.5);
+$disabledBorderColor: rgba(34, 36, 38, 0.5);
 
-$solidInternalBorderColor  : #FAFAFA;
-$solidBorderColor          : #D4D4D5;
-$solidSelectedBorderColor  : #BCBDBD;
+$solidInternalBorderColor: #fafafa;
+$solidBorderColor: #d4d4d5;
+$solidSelectedBorderColor: #bcbdbd;
 
-$whiteBorderColor              : rgba(255, 255, 255, 0.1);
-$selectedWhiteBorderColor      : rgba(255, 255, 255, 0.8);
+$whiteBorderColor: rgba(255, 255, 255, 0.1);
+$selectedWhiteBorderColor: rgba(255, 255, 255, 0.8);
 
-$solidWhiteBorderColor         : #555555;
-$selectedSolidWhiteBorderColor : #999999;
+$solidWhiteBorderColor: #555555;
+$selectedSolidWhiteBorderColor: #999999;
 
 /*-------------------
   Exact Pixel Values
@@ -407,171 +403,170 @@ $selectedSolidWhiteBorderColor : #999999;
 
 */
 
-$exact1px  : math.div(1, $emSize) * 1rem;
-$exact2px  : math.div(2, $emSize) * 1rem;
-$exact3px  : math.div(3, $emSize) * 1rem;
-$exact4px  : math.div(4, $emSize) * 1rem;
-$exact5px  : math.div(5, $emSize) * 1rem;
-$exact6px  : math.div(6, $emSize) * 1rem;
-$exact7px  : math.div(7, $emSize) * 1rem;
-$exact8px  : math.div(8, $emSize) * 1rem;
-$exact9px  : math.div(9, $emSize) * 1rem;
-$exact10px : math.div(10, $emSize) * 1rem;
-$exact11px : math.div(11, $emSize) * 1rem;
-$exact12px : math.div(12, $emSize) * 1rem;
-$exact13px : math.div(13, $emSize) * 1rem;
-$exact14px : math.div(14, $emSize) * 1rem;
-$exact15px : math.div(15, $emSize) * 1rem;
-$exact16px : math.div(16, $emSize) * 1rem;
-$exact17px : math.div(17, $emSize) * 1rem;
-$exact18px : math.div(18, $emSize) * 1rem;
-$exact19px : math.div(19, $emSize) * 1rem;
-$exact20px : math.div(20, $emSize) * 1rem;
-$exact21px : math.div(21, $emSize) * 1rem;
-$exact22px : math.div(22, $emSize) * 1rem;
-$exact23px : math.div(23, $emSize) * 1rem;
-$exact24px : math.div(24, $emSize) * 1rem;
-$exact25px : math.div(25, $emSize) * 1rem;
-$exact26px : math.div(26, $emSize) * 1rem;
-$exact27px : math.div(27, $emSize) * 1rem;
-$exact28px : math.div(28, $emSize) * 1rem;
-$exact29px : math.div(29, $emSize) * 1rem;
-$exact30px : math.div(30, $emSize) * 1rem;
-$exact31px : math.div(31, $emSize) * 1rem;
-$exact32px : math.div(32, $emSize) * 1rem;
-$exact33px : math.div(33, $emSize) * 1rem;
-$exact34px : math.div(34, $emSize) * 1rem;
-$exact35px : math.div(35, $emSize) * 1rem;
-$exact36px : math.div(36, $emSize) * 1rem;
-$exact37px : math.div(37, $emSize) * 1rem;
-$exact38px : math.div(38, $emSize) * 1rem;
-$exact39px : math.div(39, $emSize) * 1rem;
-$exact40px : math.div(40, $emSize) * 1rem;
-$exact41px : math.div(41, $emSize) * 1rem;
-$exact42px : math.div(42, $emSize) * 1rem;
-$exact43px : math.div(43, $emSize) * 1rem;
-$exact44px : math.div(44, $emSize) * 1rem;
-$exact45px : math.div(45, $emSize) * 1rem;
-$exact46px : math.div(46, $emSize) * 1rem;
-$exact47px : math.div(47, $emSize) * 1rem;
-$exact48px : math.div(48, $emSize) * 1rem;
-$exact49px : math.div(49, $emSize) * 1rem;
-$exact50px : math.div(50, $emSize) * 1rem;
-$exact51px : math.div(51, $emSize) * 1rem;
-$exact52px : math.div(52, $emSize) * 1rem;
-$exact53px : math.div(53, $emSize) * 1rem;
-$exact54px : math.div(54, $emSize) * 1rem;
-$exact55px : math.div(55, $emSize) * 1rem;
-$exact56px : math.div(56, $emSize) * 1rem;
-$exact57px : math.div(57, $emSize) * 1rem;
-$exact58px : math.div(58, $emSize) * 1rem;
-$exact59px : math.div(59, $emSize) * 1rem;
-$exact60px : math.div(60, $emSize) * 1rem;
-$exact61px : math.div(61, $emSize) * 1rem;
-$exact62px : math.div(62, $emSize) * 1rem;
-$exact63px : math.div(63, $emSize) * 1rem;
-$exact64px : math.div(64, $emSize) * 1rem;
+$exact1px: math.div(1, $emSize) * 1rem;
+$exact2px: math.div(2, $emSize) * 1rem;
+$exact3px: math.div(3, $emSize) * 1rem;
+$exact4px: math.div(4, $emSize) * 1rem;
+$exact5px: math.div(5, $emSize) * 1rem;
+$exact6px: math.div(6, $emSize) * 1rem;
+$exact7px: math.div(7, $emSize) * 1rem;
+$exact8px: math.div(8, $emSize) * 1rem;
+$exact9px: math.div(9, $emSize) * 1rem;
+$exact10px: math.div(10, $emSize) * 1rem;
+$exact11px: math.div(11, $emSize) * 1rem;
+$exact12px: math.div(12, $emSize) * 1rem;
+$exact13px: math.div(13, $emSize) * 1rem;
+$exact14px: math.div(14, $emSize) * 1rem;
+$exact15px: math.div(15, $emSize) * 1rem;
+$exact16px: math.div(16, $emSize) * 1rem;
+$exact17px: math.div(17, $emSize) * 1rem;
+$exact18px: math.div(18, $emSize) * 1rem;
+$exact19px: math.div(19, $emSize) * 1rem;
+$exact20px: math.div(20, $emSize) * 1rem;
+$exact21px: math.div(21, $emSize) * 1rem;
+$exact22px: math.div(22, $emSize) * 1rem;
+$exact23px: math.div(23, $emSize) * 1rem;
+$exact24px: math.div(24, $emSize) * 1rem;
+$exact25px: math.div(25, $emSize) * 1rem;
+$exact26px: math.div(26, $emSize) * 1rem;
+$exact27px: math.div(27, $emSize) * 1rem;
+$exact28px: math.div(28, $emSize) * 1rem;
+$exact29px: math.div(29, $emSize) * 1rem;
+$exact30px: math.div(30, $emSize) * 1rem;
+$exact31px: math.div(31, $emSize) * 1rem;
+$exact32px: math.div(32, $emSize) * 1rem;
+$exact33px: math.div(33, $emSize) * 1rem;
+$exact34px: math.div(34, $emSize) * 1rem;
+$exact35px: math.div(35, $emSize) * 1rem;
+$exact36px: math.div(36, $emSize) * 1rem;
+$exact37px: math.div(37, $emSize) * 1rem;
+$exact38px: math.div(38, $emSize) * 1rem;
+$exact39px: math.div(39, $emSize) * 1rem;
+$exact40px: math.div(40, $emSize) * 1rem;
+$exact41px: math.div(41, $emSize) * 1rem;
+$exact42px: math.div(42, $emSize) * 1rem;
+$exact43px: math.div(43, $emSize) * 1rem;
+$exact44px: math.div(44, $emSize) * 1rem;
+$exact45px: math.div(45, $emSize) * 1rem;
+$exact46px: math.div(46, $emSize) * 1rem;
+$exact47px: math.div(47, $emSize) * 1rem;
+$exact48px: math.div(48, $emSize) * 1rem;
+$exact49px: math.div(49, $emSize) * 1rem;
+$exact50px: math.div(50, $emSize) * 1rem;
+$exact51px: math.div(51, $emSize) * 1rem;
+$exact52px: math.div(52, $emSize) * 1rem;
+$exact53px: math.div(53, $emSize) * 1rem;
+$exact54px: math.div(54, $emSize) * 1rem;
+$exact55px: math.div(55, $emSize) * 1rem;
+$exact56px: math.div(56, $emSize) * 1rem;
+$exact57px: math.div(57, $emSize) * 1rem;
+$exact58px: math.div(58, $emSize) * 1rem;
+$exact59px: math.div(59, $emSize) * 1rem;
+$exact60px: math.div(60, $emSize) * 1rem;
+$exact61px: math.div(61, $emSize) * 1rem;
+$exact62px: math.div(62, $emSize) * 1rem;
+$exact63px: math.div(63, $emSize) * 1rem;
+$exact64px: math.div(64, $emSize) * 1rem;
 
-$relative1px  : math.div(1, $emSize) * 1em;
-$relative2px  : math.div(2, $emSize) * 1em;
-$relative3px  : math.div(3, $emSize) * 1em;
-$relative4px  : math.div(4, $emSize) * 1em;
-$relative5px  : math.div(5, $emSize) * 1em;
-$relative6px  : math.div(6, $emSize) * 1em;
-$relative7px  : math.div(7, $emSize) * 1em;
-$relative8px  : math.div(8, $emSize) * 1em;
-$relative9px  : math.div(9, $emSize) * 1em;
-$relative10px : math.div(10, $emSize) * 1em;
-$relative11px : math.div(11, $emSize) * 1em;
-$relative12px : math.div(12, $emSize) * 1em;
-$relative13px : math.div(13, $emSize) * 1em;
-$relative14px : math.div(14, $emSize) * 1em;
-$relative15px : math.div(15, $emSize) * 1em;
-$relative16px : math.div(16, $emSize) * 1em;
-$relative17px : math.div(17, $emSize) * 1em;
-$relative18px : math.div(18, $emSize) * 1em;
-$relative19px : math.div(19, $emSize) * 1em;
-$relative20px : math.div(20, $emSize) * 1em;
-$relative21px : math.div(21, $emSize) * 1em;
-$relative22px : math.div(22, $emSize) * 1em;
-$relative23px : math.div(23, $emSize) * 1em;
-$relative24px : math.div(24, $emSize) * 1em;
-$relative25px : math.div(25, $emSize) * 1em;
-$relative26px : math.div(26, $emSize) * 1em;
-$relative27px : math.div(27, $emSize) * 1em;
-$relative28px : math.div(28, $emSize) * 1em;
-$relative29px : math.div(29, $emSize) * 1em;
-$relative30px : math.div(30, $emSize) * 1em;
-$relative31px : math.div(31, $emSize) * 1em;
-$relative32px : math.div(32, $emSize) * 1em;
-$relative33px : math.div(33, $emSize) * 1em;
-$relative34px : math.div(34, $emSize) * 1em;
-$relative35px : math.div(35, $emSize) * 1em;
-$relative36px : math.div(36, $emSize) * 1em;
-$relative37px : math.div(37, $emSize) * 1em;
-$relative38px : math.div(38, $emSize) * 1em;
-$relative39px : math.div(39, $emSize) * 1em;
-$relative40px : math.div(40, $emSize) * 1em;
-$relative41px : math.div(41, $emSize) * 1em;
-$relative42px : math.div(42, $emSize) * 1em;
-$relative43px : math.div(43, $emSize) * 1em;
-$relative44px : math.div(44, $emSize) * 1em;
-$relative45px : math.div(45, $emSize) * 1em;
-$relative46px : math.div(46, $emSize) * 1em;
-$relative47px : math.div(47, $emSize) * 1em;
-$relative48px : math.div(48, $emSize) * 1em;
-$relative49px : math.div(49, $emSize) * 1em;
-$relative50px : math.div(50, $emSize) * 1em;
-$relative51px : math.div(51, $emSize) * 1em;
-$relative52px : math.div(52, $emSize) * 1em;
-$relative53px : math.div(53, $emSize) * 1em;
-$relative54px : math.div(54, $emSize) * 1em;
-$relative55px : math.div(55, $emSize) * 1em;
-$relative56px : math.div(56, $emSize) * 1em;
-$relative57px : math.div(57, $emSize) * 1em;
-$relative58px : math.div(58, $emSize) * 1em;
-$relative59px : math.div(59, $emSize) * 1em;
-$relative60px : math.div(60, $emSize) * 1em;
-$relative61px : math.div(61, $emSize) * 1em;
-$relative62px : math.div(62, $emSize) * 1em;
-$relative63px : math.div(63, $emSize) * 1em;
-$relative64px : math.div(64, $emSize) * 1em;
+$relative1px: math.div(1, $emSize) * 1em;
+$relative2px: math.div(2, $emSize) * 1em;
+$relative3px: math.div(3, $emSize) * 1em;
+$relative4px: math.div(4, $emSize) * 1em;
+$relative5px: math.div(5, $emSize) * 1em;
+$relative6px: math.div(6, $emSize) * 1em;
+$relative7px: math.div(7, $emSize) * 1em;
+$relative8px: math.div(8, $emSize) * 1em;
+$relative9px: math.div(9, $emSize) * 1em;
+$relative10px: math.div(10, $emSize) * 1em;
+$relative11px: math.div(11, $emSize) * 1em;
+$relative12px: math.div(12, $emSize) * 1em;
+$relative13px: math.div(13, $emSize) * 1em;
+$relative14px: math.div(14, $emSize) * 1em;
+$relative15px: math.div(15, $emSize) * 1em;
+$relative16px: math.div(16, $emSize) * 1em;
+$relative17px: math.div(17, $emSize) * 1em;
+$relative18px: math.div(18, $emSize) * 1em;
+$relative19px: math.div(19, $emSize) * 1em;
+$relative20px: math.div(20, $emSize) * 1em;
+$relative21px: math.div(21, $emSize) * 1em;
+$relative22px: math.div(22, $emSize) * 1em;
+$relative23px: math.div(23, $emSize) * 1em;
+$relative24px: math.div(24, $emSize) * 1em;
+$relative25px: math.div(25, $emSize) * 1em;
+$relative26px: math.div(26, $emSize) * 1em;
+$relative27px: math.div(27, $emSize) * 1em;
+$relative28px: math.div(28, $emSize) * 1em;
+$relative29px: math.div(29, $emSize) * 1em;
+$relative30px: math.div(30, $emSize) * 1em;
+$relative31px: math.div(31, $emSize) * 1em;
+$relative32px: math.div(32, $emSize) * 1em;
+$relative33px: math.div(33, $emSize) * 1em;
+$relative34px: math.div(34, $emSize) * 1em;
+$relative35px: math.div(35, $emSize) * 1em;
+$relative36px: math.div(36, $emSize) * 1em;
+$relative37px: math.div(37, $emSize) * 1em;
+$relative38px: math.div(38, $emSize) * 1em;
+$relative39px: math.div(39, $emSize) * 1em;
+$relative40px: math.div(40, $emSize) * 1em;
+$relative41px: math.div(41, $emSize) * 1em;
+$relative42px: math.div(42, $emSize) * 1em;
+$relative43px: math.div(43, $emSize) * 1em;
+$relative44px: math.div(44, $emSize) * 1em;
+$relative45px: math.div(45, $emSize) * 1em;
+$relative46px: math.div(46, $emSize) * 1em;
+$relative47px: math.div(47, $emSize) * 1em;
+$relative48px: math.div(48, $emSize) * 1em;
+$relative49px: math.div(49, $emSize) * 1em;
+$relative50px: math.div(50, $emSize) * 1em;
+$relative51px: math.div(51, $emSize) * 1em;
+$relative52px: math.div(52, $emSize) * 1em;
+$relative53px: math.div(53, $emSize) * 1em;
+$relative54px: math.div(54, $emSize) * 1em;
+$relative55px: math.div(55, $emSize) * 1em;
+$relative56px: math.div(56, $emSize) * 1em;
+$relative57px: math.div(57, $emSize) * 1em;
+$relative58px: math.div(58, $emSize) * 1em;
+$relative59px: math.div(59, $emSize) * 1em;
+$relative60px: math.div(60, $emSize) * 1em;
+$relative61px: math.div(61, $emSize) * 1em;
+$relative62px: math.div(62, $emSize) * 1em;
+$relative63px: math.div(63, $emSize) * 1em;
+$relative64px: math.div(64, $emSize) * 1em;
 
 /* Columns */
-$oneWide        : math.div(1, $columnCount) * 100%;
-$twoWide        : math.div(2, $columnCount) * 100%;
-$threeWide      : math.div(3, $columnCount) * 100%;
-$fourWide       : math.div(4, $columnCount) * 100%;
-$fiveWide       : math.div(5, $columnCount) * 100%;
-$sixWide        : math.div(6, $columnCount) * 100%;
-$sevenWide      : math.div(7, $columnCount) * 100%;
-$eightWide      : math.div(8, $columnCount) * 100%;
-$nineWide       : math.div(9, $columnCount) * 100%;
-$tenWide        : math.div(10, $columnCount) * 100%;
-$elevenWide     : math.div(11, $columnCount) * 100%;
-$twelveWide     : math.div(12, $columnCount) * 100%;
-$thirteenWide   : math.div(13, $columnCount) * 100%;
-$fourteenWide   : math.div(14, $columnCount) * 100%;
-$fifteenWide    : math.div(15, $columnCount) * 100%;
-$sixteenWide    : math.div(16, $columnCount) * 100%;
+$oneWide: math.div(1, $columnCount) * 100%;
+$twoWide: math.div(2, $columnCount) * 100%;
+$threeWide: math.div(3, $columnCount) * 100%;
+$fourWide: math.div(4, $columnCount) * 100%;
+$fiveWide: math.div(5, $columnCount) * 100%;
+$sixWide: math.div(6, $columnCount) * 100%;
+$sevenWide: math.div(7, $columnCount) * 100%;
+$eightWide: math.div(8, $columnCount) * 100%;
+$nineWide: math.div(9, $columnCount) * 100%;
+$tenWide: math.div(10, $columnCount) * 100%;
+$elevenWide: math.div(11, $columnCount) * 100%;
+$twelveWide: math.div(12, $columnCount) * 100%;
+$thirteenWide: math.div(13, $columnCount) * 100%;
+$fourteenWide: math.div(14, $columnCount) * 100%;
+$fifteenWide: math.div(15, $columnCount) * 100%;
+$sixteenWide: math.div(16, $columnCount) * 100%;
 
-$oneColumn      : math.div(1, 1 )* 100%;
-$twoColumn      : math.div(1, 2 )* 100%;
-$threeColumn    : math.div(1, 3 )* 100%;
-$fourColumn     : math.div(1, 4 )* 100%;
-$fiveColumn     : math.div(1, 5 )* 100%;
-$sixColumn      : math.div(1, 6 )* 100%;
-$sevenColumn    : math.div(1, 7 )* 100%;
-$eightColumn    : math.div(1, 8 )* 100%;
-$nineColumn     : math.div(1, 9 )* 100%;
-$tenColumn      : math.div(1, 10) * 100%;
-$elevenColumn   : math.div(1, 11) * 100%;
-$twelveColumn   : math.div(1, 12) * 100%;
-$thirteenColumn : math.div(1, 13) * 100%;
-$fourteenColumn : math.div(1, 14) * 100%;
-$fifteenColumn  : math.div(1, 15) * 100%;
-$sixteenColumn  : math.div(1, 16) * 100%;
-
+$oneColumn: math.div(1, 1) * 100%;
+$twoColumn: math.div(1, 2) * 100%;
+$threeColumn: math.div(1, 3) * 100%;
+$fourColumn: math.div(1, 4) * 100%;
+$fiveColumn: math.div(1, 5) * 100%;
+$sixColumn: math.div(1, 6) * 100%;
+$sevenColumn: math.div(1, 7) * 100%;
+$eightColumn: math.div(1, 8) * 100%;
+$nineColumn: math.div(1, 9) * 100%;
+$tenColumn: math.div(1, 10) * 100%;
+$elevenColumn: math.div(1, 11) * 100%;
+$twelveColumn: math.div(1, 12) * 100%;
+$thirteenColumn: math.div(1, 13) * 100%;
+$fourteenColumn: math.div(1, 14) * 100%;
+$fifteenColumn: math.div(1, 15) * 100%;
+$sixteenColumn: math.div(1, 16) * 100%;
 
 /*******************************
              States
@@ -590,255 +585,250 @@ $invertedDisabledTextColor: rgba(225, 225, 225, 0.3);
 --------------------*/
 
 /*---  Shadows  ---*/
-$floatingShadowHover:
-  0px 2px 4px 0px rgba(34, 36, 38, 0.15),
-  0px 2px 10px 0px rgba(34, 36, 38, 0.25)
-;
-
+$floatingShadowHover: 0px 2px 4px 0px rgba(34, 36, 38, 0.15),
+  0px 2px 10px 0px rgba(34, 36, 38, 0.25);
 
 /*-------------------
     Brand Colors
 --------------------*/
 
-$primaryColor        : $blue;
-$secondaryColor      : $black;
+$primaryColor: $blue;
+$secondaryColor: $black;
 
-$lightPrimaryColor   : $lightBlue;
-$lightSecondaryColor : $lightBlack;
+$lightPrimaryColor: $lightBlue;
+$lightSecondaryColor: $lightBlack;
 
 /*---  Colors  ---*/
-$primaryColorHover        : saturate(darken($primaryColor, 5), 10);
-$secondaryColorHover      : saturate(lighten($secondaryColor, 5), 10);
-$lightPrimaryColorHover   : saturate(darken($lightPrimaryColor, 5), 10);
-$lightSecondaryColorHover : saturate(lighten($lightSecondaryColor, 5), 10);
+$primaryColorHover: saturate(darken($primaryColor, 5), 10);
+$secondaryColorHover: saturate(lighten($secondaryColor, 5), 10);
+$lightPrimaryColorHover: saturate(darken($lightPrimaryColor, 5), 10);
+$lightSecondaryColorHover: saturate(lighten($lightSecondaryColor, 5), 10);
 
-$redHover                 : saturate(darken($red, 5), 10);
-$orangeHover              : saturate(darken($orange, 5), 10);
-$yellowHover              : saturate(darken($yellow, 5), 10);
-$oliveHover               : saturate(darken($olive, 5), 10);
-$greenHover               : saturate(darken($green, 5), 10);
-$tealHover                : saturate(darken($teal, 5), 10);
-$blueHover                : saturate(darken($blue, 5), 10);
-$violetHover              : saturate(darken($violet, 5), 10);
-$purpleHover              : saturate(darken($purple, 5), 10);
-$pinkHover                : saturate(darken($pink, 5), 10);
-$brownHover               : saturate(darken($brown, 5), 10);
+$redHover: saturate(darken($red, 5), 10);
+$orangeHover: saturate(darken($orange, 5), 10);
+$yellowHover: saturate(darken($yellow, 5), 10);
+$oliveHover: saturate(darken($olive, 5), 10);
+$greenHover: saturate(darken($green, 5), 10);
+$tealHover: saturate(darken($teal, 5), 10);
+$blueHover: saturate(darken($blue, 5), 10);
+$violetHover: saturate(darken($violet, 5), 10);
+$purpleHover: saturate(darken($purple, 5), 10);
+$pinkHover: saturate(darken($pink, 5), 10);
+$brownHover: saturate(darken($brown, 5), 10);
 
-$lightRedHover            : saturate(darken($lightRed, 5), 10);
-$lightOrangeHover         : saturate(darken($lightOrange, 5), 10);
-$lightYellowHover         : saturate(darken($lightYellow, 5), 10);
-$lightOliveHover          : saturate(darken($lightOlive, 5), 10);
-$lightGreenHover          : saturate(darken($lightGreen, 5), 10);
-$lightTealHover           : saturate(darken($lightTeal, 5), 10);
-$lightBlueHover           : saturate(darken($lightBlue, 5), 10);
-$lightVioletHover         : saturate(darken($lightViolet, 5), 10);
-$lightPurpleHover         : saturate(darken($lightPurple, 5), 10);
-$lightPinkHover           : saturate(darken($lightPink, 5), 10);
-$lightBrownHover          : saturate(darken($lightBrown, 5), 10);
-$lightGreyHover           : saturate(darken($lightGrey, 5), 10);
-$lightBlackHover          : saturate(darken($fullBlack, 5), 10);
+$lightRedHover: saturate(darken($lightRed, 5), 10);
+$lightOrangeHover: saturate(darken($lightOrange, 5), 10);
+$lightYellowHover: saturate(darken($lightYellow, 5), 10);
+$lightOliveHover: saturate(darken($lightOlive, 5), 10);
+$lightGreenHover: saturate(darken($lightGreen, 5), 10);
+$lightTealHover: saturate(darken($lightTeal, 5), 10);
+$lightBlueHover: saturate(darken($lightBlue, 5), 10);
+$lightVioletHover: saturate(darken($lightViolet, 5), 10);
+$lightPurpleHover: saturate(darken($lightPurple, 5), 10);
+$lightPinkHover: saturate(darken($lightPink, 5), 10);
+$lightBrownHover: saturate(darken($lightBrown, 5), 10);
+$lightGreyHover: saturate(darken($lightGrey, 5), 10);
+$lightBlackHover: saturate(darken($fullBlack, 5), 10);
 
 /*---  Emotive  ---*/
-$positiveColorHover       : saturate(darken($positiveColor, 5), 10);
-$negativeColorHover       : saturate(darken($negativeColor, 5), 10);
+$positiveColorHover: saturate(darken($positiveColor, 5), 10);
+$negativeColorHover: saturate(darken($negativeColor, 5), 10);
 
 /*---  Brand   ---*/
-$facebookHoverColor       : saturate(darken($facebookColor, 5), 10);
-$twitterHoverColor        : saturate(darken($twitterColor, 5), 10);
-$googlePlusHoverColor     : saturate(darken($googlePlusColor, 5), 10);
-$linkedInHoverColor       : saturate(darken($linkedInColor, 5), 10);
-$youtubeHoverColor        : saturate(darken($youtubeColor, 5), 10);
-$instagramHoverColor      : saturate(darken($instagramColor, 5), 10);
-$pinterestHoverColor      : saturate(darken($pinterestColor, 5), 10);
-$vkHoverColor             : saturate(darken($vkColor, 5), 10);
+$facebookHoverColor: saturate(darken($facebookColor, 5), 10);
+$twitterHoverColor: saturate(darken($twitterColor, 5), 10);
+$googlePlusHoverColor: saturate(darken($googlePlusColor, 5), 10);
+$linkedInHoverColor: saturate(darken($linkedInColor, 5), 10);
+$youtubeHoverColor: saturate(darken($youtubeColor, 5), 10);
+$instagramHoverColor: saturate(darken($instagramColor, 5), 10);
+$pinterestHoverColor: saturate(darken($pinterestColor, 5), 10);
+$vkHoverColor: saturate(darken($vkColor, 5), 10);
 
 /*---  Dark Tones  ---*/
-$fullBlackHover           : lighten($fullBlack, 5);
-$blackHover               : lighten($black, 5);
-$greyHover                : lighten($grey, 5);
+$fullBlackHover: lighten($fullBlack, 5);
+$blackHover: lighten($black, 5);
+$greyHover: lighten($grey, 5);
 
 /*---  Light Tones  ---*/
-$whiteHover               : darken($white, 5);
-$offWhiteHover            : darken($offWhite, 5);
-$darkWhiteHover           : darken($darkWhite, 5);
+$whiteHover: darken($white, 5);
+$offWhiteHover: darken($offWhite, 5);
+$darkWhiteHover: darken($darkWhite, 5);
 
 /*-------------------
         Focus
 --------------------*/
 
 /*---  Colors  ---*/
-$primaryColorFocus        : saturate(darken($primaryColor, 8), 20);
-$secondaryColorFocus      : saturate(lighten($secondaryColor, 8), 20);
-$lightPrimaryColorFocus   : saturate(darken($lightPrimaryColor, 8), 20);
-$lightSecondaryColorFocus : saturate(lighten($lightSecondaryColor, 8), 20);
+$primaryColorFocus: saturate(darken($primaryColor, 8), 20);
+$secondaryColorFocus: saturate(lighten($secondaryColor, 8), 20);
+$lightPrimaryColorFocus: saturate(darken($lightPrimaryColor, 8), 20);
+$lightSecondaryColorFocus: saturate(lighten($lightSecondaryColor, 8), 20);
 
-$redFocus                 : saturate(darken($red, 8), 20);
-$orangeFocus              : saturate(darken($orange, 8), 20);
-$yellowFocus              : saturate(darken($yellow, 8), 20);
-$oliveFocus               : saturate(darken($olive, 8), 20);
-$greenFocus               : saturate(darken($green, 8), 20);
-$tealFocus                : saturate(darken($teal, 8), 20);
-$blueFocus                : saturate(darken($blue, 8), 20);
-$violetFocus              : saturate(darken($violet, 8), 20);
-$purpleFocus              : saturate(darken($purple, 8), 20);
-$pinkFocus                : saturate(darken($pink, 8), 20);
-$brownFocus               : saturate(darken($brown, 8), 20);
+$redFocus: saturate(darken($red, 8), 20);
+$orangeFocus: saturate(darken($orange, 8), 20);
+$yellowFocus: saturate(darken($yellow, 8), 20);
+$oliveFocus: saturate(darken($olive, 8), 20);
+$greenFocus: saturate(darken($green, 8), 20);
+$tealFocus: saturate(darken($teal, 8), 20);
+$blueFocus: saturate(darken($blue, 8), 20);
+$violetFocus: saturate(darken($violet, 8), 20);
+$purpleFocus: saturate(darken($purple, 8), 20);
+$pinkFocus: saturate(darken($pink, 8), 20);
+$brownFocus: saturate(darken($brown, 8), 20);
 
-$lightRedFocus            : saturate(darken($lightRed, 8), 20);
-$lightOrangeFocus         : saturate(darken($lightOrange, 8), 20);
-$lightYellowFocus         : saturate(darken($lightYellow, 8), 20);
-$lightOliveFocus          : saturate(darken($lightOlive, 8), 20);
-$lightGreenFocus          : saturate(darken($lightGreen, 8), 20);
-$lightTealFocus           : saturate(darken($lightTeal, 8), 20);
-$lightBlueFocus           : saturate(darken($lightBlue, 8), 20);
-$lightVioletFocus         : saturate(darken($lightViolet, 8), 20);
-$lightPurpleFocus         : saturate(darken($lightPurple, 8), 20);
-$lightPinkFocus           : saturate(darken($lightPink, 8), 20);
-$lightBrownFocus          : saturate(darken($lightBrown, 8), 20);
-$lightGreyFocus           : saturate(darken($lightGrey, 8), 20);
-$lightBlackFocus          : saturate(darken($fullBlack, 8), 20);
+$lightRedFocus: saturate(darken($lightRed, 8), 20);
+$lightOrangeFocus: saturate(darken($lightOrange, 8), 20);
+$lightYellowFocus: saturate(darken($lightYellow, 8), 20);
+$lightOliveFocus: saturate(darken($lightOlive, 8), 20);
+$lightGreenFocus: saturate(darken($lightGreen, 8), 20);
+$lightTealFocus: saturate(darken($lightTeal, 8), 20);
+$lightBlueFocus: saturate(darken($lightBlue, 8), 20);
+$lightVioletFocus: saturate(darken($lightViolet, 8), 20);
+$lightPurpleFocus: saturate(darken($lightPurple, 8), 20);
+$lightPinkFocus: saturate(darken($lightPink, 8), 20);
+$lightBrownFocus: saturate(darken($lightBrown, 8), 20);
+$lightGreyFocus: saturate(darken($lightGrey, 8), 20);
+$lightBlackFocus: saturate(darken($fullBlack, 8), 20);
 
 /*---  Emotive  ---*/
-$positiveColorFocus       : saturate(darken($positiveColor, 8), 20);
-$negativeColorFocus       : saturate(darken($negativeColor, 8), 20);
+$positiveColorFocus: saturate(darken($positiveColor, 8), 20);
+$negativeColorFocus: saturate(darken($negativeColor, 8), 20);
 
 /*---  Brand   ---*/
-$facebookFocusColor       : saturate(darken($facebookColor, 8), 20);
-$twitterFocusColor        : saturate(darken($twitterColor, 8), 20);
-$googlePlusFocusColor     : saturate(darken($googlePlusColor, 8), 20);
-$linkedInFocusColor       : saturate(darken($linkedInColor, 8), 20);
-$youtubeFocusColor        : saturate(darken($youtubeColor, 8), 20);
-$instagramFocusColor      : saturate(darken($instagramColor, 8), 20);
-$pinterestFocusColor      : saturate(darken($pinterestColor, 8), 20);
-$vkFocusColor             : saturate(darken($vkColor, 8), 20);
+$facebookFocusColor: saturate(darken($facebookColor, 8), 20);
+$twitterFocusColor: saturate(darken($twitterColor, 8), 20);
+$googlePlusFocusColor: saturate(darken($googlePlusColor, 8), 20);
+$linkedInFocusColor: saturate(darken($linkedInColor, 8), 20);
+$youtubeFocusColor: saturate(darken($youtubeColor, 8), 20);
+$instagramFocusColor: saturate(darken($instagramColor, 8), 20);
+$pinterestFocusColor: saturate(darken($pinterestColor, 8), 20);
+$vkFocusColor: saturate(darken($vkColor, 8), 20);
 
 /*---  Dark Tones  ---*/
-$fullBlackFocus           : lighten($fullBlack, 8);
-$blackFocus               : lighten($black, 8);
-$greyFocus                : lighten($grey, 8);
+$fullBlackFocus: lighten($fullBlack, 8);
+$blackFocus: lighten($black, 8);
+$greyFocus: lighten($grey, 8);
 
 /*---  Light Tones  ---*/
-$whiteFocus               : darken($white, 8);
-$offWhiteFocus            : darken($offWhite, 8);
-$darkWhiteFocus           : darken($darkWhite, 8);
-
+$whiteFocus: darken($white, 8);
+$offWhiteFocus: darken($offWhite, 8);
+$darkWhiteFocus: darken($darkWhite, 8);
 
 /*---  Colors  ---*/
-$primaryColorDown        : darken($primaryColor, 10);
-$secondaryColorDown      : lighten($secondaryColor, 10);
-$lightPrimaryColorDown   : darken($lightPrimaryColor, 10);
-$lightSecondaryColorDown : lighten($lightSecondaryColor, 10);
+$primaryColorDown: darken($primaryColor, 10);
+$secondaryColorDown: lighten($secondaryColor, 10);
+$lightPrimaryColorDown: darken($lightPrimaryColor, 10);
+$lightSecondaryColorDown: lighten($lightSecondaryColor, 10);
 
-$redDown                 : darken($red, 10);
-$orangeDown              : darken($orange, 10);
-$yellowDown              : darken($yellow, 10);
-$oliveDown               : darken($olive, 10);
-$greenDown               : darken($green, 10);
-$tealDown                : darken($teal, 10);
-$blueDown                : darken($blue, 10);
-$violetDown              : darken($violet, 10);
-$purpleDown              : darken($purple, 10);
-$pinkDown                : darken($pink, 10);
-$brownDown               : darken($brown, 10);
+$redDown: darken($red, 10);
+$orangeDown: darken($orange, 10);
+$yellowDown: darken($yellow, 10);
+$oliveDown: darken($olive, 10);
+$greenDown: darken($green, 10);
+$tealDown: darken($teal, 10);
+$blueDown: darken($blue, 10);
+$violetDown: darken($violet, 10);
+$purpleDown: darken($purple, 10);
+$pinkDown: darken($pink, 10);
+$brownDown: darken($brown, 10);
 
-$lightRedDown            : darken($lightRed, 10);
-$lightOrangeDown         : darken($lightOrange, 10);
-$lightYellowDown         : darken($lightYellow, 10);
-$lightOliveDown          : darken($lightOlive, 10);
-$lightGreenDown          : darken($lightGreen, 10);
-$lightTealDown           : darken($lightTeal, 10);
-$lightBlueDown           : darken($lightBlue, 10);
-$lightVioletDown         : darken($lightViolet, 10);
-$lightPurpleDown         : darken($lightPurple, 10);
-$lightPinkDown           : darken($lightPink, 10);
-$lightBrownDown          : darken($lightBrown, 10);
-$lightGreyDown           : darken($lightGrey, 10);
-$lightBlackDown          : darken($fullBlack, 10);
+$lightRedDown: darken($lightRed, 10);
+$lightOrangeDown: darken($lightOrange, 10);
+$lightYellowDown: darken($lightYellow, 10);
+$lightOliveDown: darken($lightOlive, 10);
+$lightGreenDown: darken($lightGreen, 10);
+$lightTealDown: darken($lightTeal, 10);
+$lightBlueDown: darken($lightBlue, 10);
+$lightVioletDown: darken($lightViolet, 10);
+$lightPurpleDown: darken($lightPurple, 10);
+$lightPinkDown: darken($lightPink, 10);
+$lightBrownDown: darken($lightBrown, 10);
+$lightGreyDown: darken($lightGrey, 10);
+$lightBlackDown: darken($fullBlack, 10);
 
 /*---  Emotive  ---*/
-$positiveColorDown       : darken($positiveColor, 10);
-$negativeColorDown       : darken($negativeColor, 10);
+$positiveColorDown: darken($positiveColor, 10);
+$negativeColorDown: darken($negativeColor, 10);
 
 /*---  Brand   ---*/
-$facebookDownColor       : darken($facebookColor, 10);
-$twitterDownColor        : darken($twitterColor, 10);
-$googlePlusDownColor     : darken($googlePlusColor, 10);
-$linkedInDownColor       : darken($linkedInColor, 10);
-$youtubeDownColor        : darken($youtubeColor, 10);
-$instagramDownColor      : darken($instagramColor, 10);
-$pinterestDownColor      : darken($pinterestColor, 10);
-$vkDownColor             : darken($vkColor, 10);
+$facebookDownColor: darken($facebookColor, 10);
+$twitterDownColor: darken($twitterColor, 10);
+$googlePlusDownColor: darken($googlePlusColor, 10);
+$linkedInDownColor: darken($linkedInColor, 10);
+$youtubeDownColor: darken($youtubeColor, 10);
+$instagramDownColor: darken($instagramColor, 10);
+$pinterestDownColor: darken($pinterestColor, 10);
+$vkDownColor: darken($vkColor, 10);
 
 /*---  Dark Tones  ---*/
-$fullBlackDown           : lighten($fullBlack, 10);
-$blackDown               : lighten($black, 10);
-$greyDown                : lighten($grey, 10);
+$fullBlackDown: lighten($fullBlack, 10);
+$blackDown: lighten($black, 10);
+$greyDown: lighten($grey, 10);
 
 /*---  Light Tones  ---*/
-$whiteDown               : darken($white, 10);
-$offWhiteDown            : darken($offWhite, 10);
-$darkWhiteDown           : darken($darkWhite, 10);
-
+$whiteDown: darken($white, 10);
+$offWhiteDown: darken($offWhite, 10);
+$darkWhiteDown: darken($darkWhite, 10);
 
 /*-------------------
         Active
 --------------------*/
 
 /*---  Colors  ---*/
-$primaryColorActive        : saturate(darken($primaryColor, 5), 15);
-$secondaryColorActive      : saturate(lighten($secondaryColor, 5), 15);
-$lightPrimaryColorActive   : saturate(darken($lightPrimaryColor, 5), 15);
-$lightSecondaryColorActive : saturate(lighten($lightSecondaryColor, 5), 15);
+$primaryColorActive: saturate(darken($primaryColor, 5), 15);
+$secondaryColorActive: saturate(lighten($secondaryColor, 5), 15);
+$lightPrimaryColorActive: saturate(darken($lightPrimaryColor, 5), 15);
+$lightSecondaryColorActive: saturate(lighten($lightSecondaryColor, 5), 15);
 
-$redActive                 : saturate(darken($red, 5), 15);
-$orangeActive              : saturate(darken($orange, 5), 15);
-$yellowActive              : saturate(darken($yellow, 5), 15);
-$oliveActive               : saturate(darken($olive, 5), 15);
-$greenActive               : saturate(darken($green, 5), 15);
-$tealActive                : saturate(darken($teal, 5), 15);
-$blueActive                : saturate(darken($blue, 5), 15);
-$violetActive              : saturate(darken($violet, 5), 15);
-$purpleActive              : saturate(darken($purple, 5), 15);
-$pinkActive                : saturate(darken($pink, 5), 15);
-$brownActive               : saturate(darken($brown, 5), 15);
+$redActive: saturate(darken($red, 5), 15);
+$orangeActive: saturate(darken($orange, 5), 15);
+$yellowActive: saturate(darken($yellow, 5), 15);
+$oliveActive: saturate(darken($olive, 5), 15);
+$greenActive: saturate(darken($green, 5), 15);
+$tealActive: saturate(darken($teal, 5), 15);
+$blueActive: saturate(darken($blue, 5), 15);
+$violetActive: saturate(darken($violet, 5), 15);
+$purpleActive: saturate(darken($purple, 5), 15);
+$pinkActive: saturate(darken($pink, 5), 15);
+$brownActive: saturate(darken($brown, 5), 15);
 
-$lightRedActive            : saturate(darken($lightRed, 5), 15);
-$lightOrangeActive         : saturate(darken($lightOrange, 5), 15);
-$lightYellowActive         : saturate(darken($lightYellow, 5), 15);
-$lightOliveActive          : saturate(darken($lightOlive, 5), 15);
-$lightGreenActive          : saturate(darken($lightGreen, 5), 15);
-$lightTealActive           : saturate(darken($lightTeal, 5), 15);
-$lightBlueActive           : saturate(darken($lightBlue, 5), 15);
-$lightVioletActive         : saturate(darken($lightViolet, 5), 15);
-$lightPurpleActive         : saturate(darken($lightPurple, 5), 15);
-$lightPinkActive           : saturate(darken($lightPink, 5), 15);
-$lightBrownActive          : saturate(darken($lightBrown, 5), 15);
-$lightGreyActive           : saturate(darken($lightGrey, 5), 15);
-$lightBlackActive          : saturate(darken($fullBlack, 5), 15);
+$lightRedActive: saturate(darken($lightRed, 5), 15);
+$lightOrangeActive: saturate(darken($lightOrange, 5), 15);
+$lightYellowActive: saturate(darken($lightYellow, 5), 15);
+$lightOliveActive: saturate(darken($lightOlive, 5), 15);
+$lightGreenActive: saturate(darken($lightGreen, 5), 15);
+$lightTealActive: saturate(darken($lightTeal, 5), 15);
+$lightBlueActive: saturate(darken($lightBlue, 5), 15);
+$lightVioletActive: saturate(darken($lightViolet, 5), 15);
+$lightPurpleActive: saturate(darken($lightPurple, 5), 15);
+$lightPinkActive: saturate(darken($lightPink, 5), 15);
+$lightBrownActive: saturate(darken($lightBrown, 5), 15);
+$lightGreyActive: saturate(darken($lightGrey, 5), 15);
+$lightBlackActive: saturate(darken($fullBlack, 5), 15);
 
 /*---  Emotive  ---*/
-$positiveColorActive       : saturate(darken($positiveColor, 5), 15);
-$negativeColorActive       : saturate(darken($negativeColor, 5), 15);
+$positiveColorActive: saturate(darken($positiveColor, 5), 15);
+$negativeColorActive: saturate(darken($negativeColor, 5), 15);
 
 /*---  Brand   ---*/
-$facebookActiveColor       : saturate(darken($facebookColor, 5), 15);
-$twitterActiveColor        : saturate(darken($twitterColor, 5), 15);
-$googlePlusActiveColor     : saturate(darken($googlePlusColor, 5), 15);
-$linkedInActiveColor       : saturate(darken($linkedInColor, 5), 15);
-$youtubeActiveColor        : saturate(darken($youtubeColor, 5), 15);
-$instagramActiveColor      : saturate(darken($instagramColor, 5), 15);
-$pinterestActiveColor      : saturate(darken($pinterestColor, 5), 15);
-$vkActiveColor             : saturate(darken($vkColor, 5), 15);
+$facebookActiveColor: saturate(darken($facebookColor, 5), 15);
+$twitterActiveColor: saturate(darken($twitterColor, 5), 15);
+$googlePlusActiveColor: saturate(darken($googlePlusColor, 5), 15);
+$linkedInActiveColor: saturate(darken($linkedInColor, 5), 15);
+$youtubeActiveColor: saturate(darken($youtubeColor, 5), 15);
+$instagramActiveColor: saturate(darken($instagramColor, 5), 15);
+$pinterestActiveColor: saturate(darken($pinterestColor, 5), 15);
+$vkActiveColor: saturate(darken($vkColor, 5), 15);
 
 /*---  Dark Tones  ---*/
-$fullBlackActive           : darken($fullBlack, 5);
-$blackActive               : darken($black, 5);
-$greyActive                : darken($grey, 5);
+$fullBlackActive: darken($fullBlack, 5);
+$blackActive: darken($black, 5);
+$greyActive: darken($grey, 5);
 
 /*---  Light Tones  ---*/
-$whiteActive               : darken($white, 5);
-$offWhiteActive            : darken($offWhite, 5);
-$darkWhiteActive           : darken($darkWhite, 5);
+$whiteActive: darken($white, 5);
+$offWhiteActive: darken($offWhite, 5);
+$darkWhiteActive: darken($darkWhite, 5);
 /*-------------------
     Border Radius
 --------------------*/
@@ -855,28 +845,27 @@ $defaultBorderRadius: $absoluteBorderRadius;
        Loader
 --------------------*/
 
-$loaderSize              : $relativeBig;
-$loaderSpeed             : 0.6s;
-$loaderLineWidth         : 0.2em;
-$loaderFillColor         : rgba(0, 0, 0, 0.1);
-$loaderLineColor         : $grey;
+$loaderSize: $relativeBig;
+$loaderSpeed: 0.6s;
+$loaderLineWidth: 0.2em;
+$loaderFillColor: rgba(0, 0, 0, 0.1);
+$loaderLineColor: $grey;
 
-$invertedLoaderFillColor : rgba(255, 255, 255, 0.15);
-$invertedLoaderLineColor : $white;
-
+$invertedLoaderFillColor: rgba(255, 255, 255, 0.15);
+$invertedLoaderLineColor: $white;
 
 /*--- Colored Headers ---*/
-$redHeaderColor    : darken($redTextColor, 5);
-$oliveHeaderColor  : darken($oliveTextColor, 5);
-$greenHeaderColor  : darken($greenTextColor, 5);
-$yellowHeaderColor : darken($yellowTextColor, 5);
-$blueHeaderColor   : darken($blueTextColor, 5);
-$tealHeaderColor   : darken($tealTextColor, 5);
-$pinkHeaderColor   : darken($pinkTextColor, 5);
-$violetHeaderColor : darken($violetTextColor, 5);
-$purpleHeaderColor : darken($purpleTextColor, 5);
-$orangeHeaderColor : darken($orangeTextColor, 5);
-$brownHeaderColor  : darken($brownTextColor, 5);
+$redHeaderColor: darken($redTextColor, 5);
+$oliveHeaderColor: darken($oliveTextColor, 5);
+$greenHeaderColor: darken($greenTextColor, 5);
+$yellowHeaderColor: darken($yellowTextColor, 5);
+$blueHeaderColor: darken($blueTextColor, 5);
+$tealHeaderColor: darken($tealTextColor, 5);
+$pinkHeaderColor: darken($pinkTextColor, 5);
+$violetHeaderColor: darken($violetTextColor, 5);
+$purpleHeaderColor: darken($purpleTextColor, 5);
+$orangeHeaderColor: darken($orangeTextColor, 5);
+$brownHeaderColor: darken($brownTextColor, 5);
 
 /*-------------------
        Accents
@@ -886,22 +875,17 @@ $brownHeaderColor  : darken($brownTextColor, 5);
 $subtleGradient: linear-gradient(transparent, $transparentBlack);
 
 /* Differentiating Layers */
-$subtleShadow:
-  0px 1px 2px 0 $borderColor
-;
-$floatingShadow:
-  0px 2px 4px 0px rgba(34, 36, 38, 0.12),
-  0px 2px 10px 0px rgba(34, 36, 38, 0.15)
-;
-
+$subtleShadow: 0px 1px 2px 0 $borderColor;
+$floatingShadow: 0px 2px 4px 0px rgba(34, 36, 38, 0.12),
+  0px 2px 10px 0px rgba(34, 36, 38, 0.15);
 
 /*-------------------
     Derived Values
 --------------------*/
 
 /* Loaders Position Offset */
-$loaderOffset : math.div($loaderSize, -2);
-$loaderMargin : $loaderOffset 0em 0em $loaderOffset;
+$loaderOffset: math.div($loaderSize, -2);
+$loaderMargin: $loaderOffset 0em 0em $loaderOffset;
 
 /* Rendered Scrollbar Width */
 $scrollbarWidth: 17px;
@@ -910,47 +894,45 @@ $scrollbarWidth: 17px;
 $glyphWidth: 1.1em;
 
 /* Used to match floats with text */
-$lineHeightOffset       : #{math.div($lineHeight - 1em, 2)}px;
-$headerLineHeightOffset : #{math.div($headerLineHeight - 1em, 2)}px;
+$lineHeightOffset: #{math.div($lineHeight - 1em, 2)}px;
+$headerLineHeightOffset: #{math.div($headerLineHeight - 1em, 2)}px;
 
 /* Header Spacing */
-$headerTopMargin    : "calc(2rem - " + $headerLineHeightOffset + ")";
-$headerBottomMargin : 1rem;
-$headerMargin       : $headerTopMargin 0em $headerBottomMargin;
+$headerTopMargin: "calc(2rem - " + $headerLineHeightOffset + ")";
+$headerBottomMargin: 1rem;
+$headerMargin: $headerTopMargin 0em $headerBottomMargin;
 
 /* Minimum Mobile Width */
-$pageMinWidth       : 320px;
+$pageMinWidth: 320px;
 
 /* Positive / Negative Dupes */
-$successBackgroundColor : $positiveBackgroundColor;
-$successColor           : $positiveColor;
-$successBorderColor     : $positiveBorderColor;
-$successHeaderColor     : $positiveHeaderColor;
-$successTextColor       : $positiveTextColor;
+$successBackgroundColor: $positiveBackgroundColor;
+$successColor: $positiveColor;
+$successBorderColor: $positiveBorderColor;
+$successHeaderColor: $positiveHeaderColor;
+$successTextColor: $positiveTextColor;
 
-$errorBackgroundColor   : $negativeBackgroundColor;
-$errorColor             : $negativeColor;
-$errorBorderColor       : $negativeBorderColor;
-$errorHeaderColor       : $negativeHeaderColor;
-$errorTextColor         : $negativeTextColor;
-
+$errorBackgroundColor: $negativeBackgroundColor;
+$errorColor: $negativeColor;
+$errorBorderColor: $negativeBorderColor;
+$errorHeaderColor: $negativeHeaderColor;
+$errorTextColor: $negativeTextColor;
 
 /* Responsive */
-$largestMobileScreen : ($tabletBreakpoint - 1px);
-$largestTabletScreen : ($computerBreakpoint - 1px);
-$largestSmallMonitor : ($largeMonitorBreakpoint - 1px);
-$largestLargeMonitor : ($widescreenMonitorBreakpoint - 1px);
-
+$largestMobileScreen: ($tabletBreakpoint - 1px);
+$largestTabletScreen: ($computerBreakpoint - 1px);
+$largestSmallMonitor: ($largeMonitorBreakpoint - 1px);
+$largestLargeMonitor: ($widescreenMonitorBreakpoint - 1px);
 
 /*--------------
    Form Input
 ---------------*/
 
 /* This adjusts the default form input across all elements */
-$inputBackground        : $white;
-$inputVerticalPadding   : $relative11px;
-$inputHorizontalPadding : $relative14px;
-$inputPadding           : $inputVerticalPadding $inputHorizontalPadding;
+$inputBackground: $white;
+$inputVerticalPadding: $relative11px;
+$inputHorizontalPadding: $relative14px;
+$inputPadding: $inputVerticalPadding $inputHorizontalPadding;
 
 /* Input Text Color */
 $inputColor: $textColor;
@@ -965,7 +947,7 @@ $inputLineHeight: math.div(17, 14) * 1em;
 --------------------*/
 
 /* Used on inputs, textarea etc */
-$focusedFormBorderColor: #85B7D9;
+$focusedFormBorderColor: #85b7d9;
 
 /* Used on dropdowns, other larger blocks */
-$focusedFormMutedBorderColor: #96C8DA;
+$focusedFormMutedBorderColor: #96c8da;

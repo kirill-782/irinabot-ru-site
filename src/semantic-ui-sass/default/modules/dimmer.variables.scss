@@ -5,15 +5,13 @@
 $dimmablePosition: relative;
 $dimmerPosition: absolute;
 
-$backgroundColor: rgba(0, 0, 0 , 0.85);
+$backgroundColor: rgba(0, 0, 0, 0.85);
 $lineHeight: 1;
 $perspective: 2000px;
 $padding: 1em;
 
 $duration: 0.5s;
-$transition:
-  background-color $duration linear
-;
+$transition: background-color $duration linear;
 $zIndex: 1000;
 $textAlign: center;
 $verticalAlign: middle;
@@ -38,9 +36,8 @@ $visibleOpacity: 1;
 --------------------*/
 
 /* Page Dimmer*/
-$transformStyle: '';
+$transformStyle: "";
 $pageDimmerPosition: fixed;
-
 
 /*-------------------
       Variations

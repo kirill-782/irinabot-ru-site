@@ -13,11 +13,10 @@
             Theme
 *******************************/
 
-$type    : 'view';
-$element : 'ad';
+$type: "view";
+$element: "ad";
 
-@import '../../theme';
-
+@import "../../theme";
 
 /*******************************
          Advertisement
@@ -199,8 +198,6 @@ $element : 'ad';
   height: 400px;
 }
 
-
-
 /*--------------
      Mobile
 ---------------*/
@@ -226,12 +223,11 @@ $element : 'ad';
   display: none;
 }
 
-@media only screen and (max-width : $largestMobileScreen) {
+@media only screen and (max-width: $largestMobileScreen) {
   .ui.mobile.ad {
     display: block;
   }
 }
-
 
 /*******************************
            Variations
@@ -265,4 +261,3 @@ $element : 'ad';
 .ui.test.ad[data-text]:after {
   content: attr(data-text);
 }
-

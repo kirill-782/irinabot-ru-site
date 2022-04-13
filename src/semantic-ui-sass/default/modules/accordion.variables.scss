@@ -19,10 +19,8 @@ $iconHeight: 1em;
 $iconDisplay: inline-block;
 $iconMargin: 0em 0.25rem 0em 0rem;
 $iconPadding: 0em;
-$iconTransition:
-  transform $defaultDuration $defaultEasing,
-  opacity $defaultDuration $defaultEasing
-;
+$iconTransition: transform $defaultDuration $defaultEasing,
+  opacity $defaultDuration $defaultEasing;
 $iconVerticalAlign: baseline;
 $iconTransform: none;
 
@@ -31,7 +29,7 @@ $childAccordionMargin: 1em 0em 0em;
 $childAccordionPadding: 0em;
 
 /* Content */
-$contentMargin: '';
+$contentMargin: "";
 $contentPadding: 0.5em 0em 1em;
 
 /*-------------------
@@ -42,7 +40,6 @@ $menuTitlePadding: 0em;
 $menuIconFloat: right;
 $menuIconMargin: $lineHeightOffset 0em 0em 1em;
 $menuIconTransform: rotate(180deg);
-
 
 /*-------------------
        States
@@ -58,10 +55,7 @@ $activeIconTransform: rotate(90deg);
 $styledWidth: 600px;
 $styledBackground: $white;
 $styledBorderRadius: $defaultBorderRadius;
-$styledBoxShadow:
-  $subtleShadow,
-  0px 0px 0px 1px $borderColor
-;
+$styledBoxShadow: $subtleShadow, 0px 0px 0px 1px $borderColor;
 
 /* Content */
 $styledContentMargin: 0em;
@@ -78,10 +72,8 @@ $styledTitleFontWeight: $bold;
 $styledTitleColor: $unselectedTextColor;
 $styledTitleTransition: background-color $defaultDuration $defaultEasing;
 $styledTitleBorder: 1px solid $borderColor;
-$styledTitleTransition:
-  background $defaultDuration $defaultEasing,
-  color $defaultDuration $defaultEasing
-;
+$styledTitleTransition: background $defaultDuration $defaultEasing,
+  color $defaultDuration $defaultEasing;
 
 /* Styled Title States */
 $styledTitleHoverBackground: transparent;
@@ -97,4 +89,3 @@ $styledActiveChildTitleColor: $styledActiveTitleColor;
 
 /* Inverted */
 $invertedTitleColor: $invertedTextColor;
-

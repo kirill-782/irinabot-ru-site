@@ -88,7 +88,6 @@
   }
 }
 
-
 /*--------------
      Drop
 ---------------*/
@@ -362,7 +361,6 @@
   }
 }
 
-
 /*--------------
       Fly
 ---------------*/
@@ -370,7 +368,7 @@
 /* Inward */
 .transition.fly {
   animation-duration: 0.6s;
-  transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
 }
 .transition.fly.in {
   animation-name: flyIn;
@@ -409,20 +407,20 @@
 @keyframes flyIn {
   0% {
     opacity: 0;
-    transform: scale3d(.3, .3, .3);
+    transform: scale3d(0.3, 0.3, 0.3);
   }
   20% {
     transform: scale3d(1.1, 1.1, 1.1);
   }
   40% {
-    transform: scale3d(.9, .9, .9);
+    transform: scale3d(0.9, 0.9, 0.9);
   }
   60% {
     opacity: 1;
     transform: scale3d(1.03, 1.03, 1.03);
   }
   80% {
-    transform: scale3d(.97, .97, .97);
+    transform: scale3d(0.97, 0.97, 0.97);
   }
   100% {
     opacity: 1;
@@ -509,22 +507,24 @@
 /* Out */
 @keyframes flyOut {
   20% {
-    transform: scale3d(.9, .9, .9);
+    transform: scale3d(0.9, 0.9, 0.9);
   }
-  50%, 55% {
+  50%,
+  55% {
     opacity: 1;
     transform: scale3d(1.1, 1.1, 1.1);
   }
   100% {
     opacity: 0;
-    transform: scale3d(.3, .3, .3);
+    transform: scale3d(0.3, 0.3, 0.3);
   }
 }
 @keyframes flyOutUp {
   20% {
     transform: translate3d(0, 10px, 0);
   }
-  40%, 45% {
+  40%,
+  45% {
     opacity: 1;
     transform: translate3d(0, -20px, 0);
   }
@@ -537,7 +537,8 @@
   20% {
     transform: translate3d(0, -10px, 0);
   }
-  40%, 45% {
+  40%,
+  45% {
     opacity: 1;
     transform: translate3d(0, 20px, 0);
   }
@@ -650,7 +651,6 @@
     transform: scaleX(0);
   }
 }
-
 
 /*--------------
      Swing
@@ -775,7 +775,6 @@
   }
 }
 
-
 /*--------------
       Zoom
 ---------------*/
@@ -807,7 +806,6 @@
   }
 }
 
-
 /*******************************
        Static Animations
 *******************************/
@@ -815,7 +813,6 @@
 /*--------------
     Emphasis
 ---------------*/
-
 
 .flash.transition {
   animation-duration: 750ms;
@@ -843,39 +840,53 @@
 }
 .transition.glow {
   animation-duration: 2000ms;
-  animation-timing-function: cubic-bezier(0.190, 1.000, 0.220, 1.000);
+  animation-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
 }
 .transition.glow {
   animation-name: glow;
 }
 
-
 /* Flash */
 @keyframes flash {
-  0%, 50%, 100% {
+  0%,
+  50%,
+  100% {
     opacity: 1;
   }
-  25%, 75% {
+  25%,
+  75% {
     opacity: 0;
   }
 }
 
 /* Shake */
 @keyframes shake {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateX(0);
   }
-  10%, 30%, 50%, 70%, 90% {
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
     transform: translateX(-10px);
   }
-  20%, 40%, 60%, 80% {
+  20%,
+  40%,
+  60%,
+  80% {
     transform: translateX(10px);
   }
 }
 
 /* Bounce */
 @keyframes bounce {
-  0%, 20%, 50%, 80%, 100% {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
     transform: translateY(0);
   }
   40% {
@@ -891,13 +902,19 @@
   0% {
     transform: scale(1);
   }
-  10%, 20% {
+  10%,
+  20% {
     transform: scale(0.9) rotate(-3deg);
   }
-  30%, 50%, 70%, 90% {
+  30%,
+  50%,
+  70%,
+  90% {
     transform: scale(1.1) rotate(3deg);
   }
-  40%, 60%, 80% {
+  40%,
+  60%,
+  80% {
     transform: scale(1.1) rotate(-3deg);
   }
   100% {
@@ -919,7 +936,6 @@
     transform: scale(1);
     opacity: 1;
   }
-
 }
 
 /* Jiggle */
@@ -937,10 +953,10 @@
     transform: scale3d(1.15, 0.85, 1);
   }
   65% {
-    transform: scale3d(.95, 1.05, 1);
+    transform: scale3d(0.95, 1.05, 1);
   }
   75% {
-    transform: scale3d(1.05, .95, 1);
+    transform: scale3d(1.05, 0.95, 1);
   }
   100% {
     transform: scale3d(1, 1, 1);
@@ -950,13 +966,12 @@
 /* Glow */
 @keyframes glow {
   0% {
-    background-color: #FCFCFD;
+    background-color: #fcfcfd;
   }
   30% {
-    background-color: #FFF6CD;
+    background-color: #fff6cd;
   }
   100% {
-    background-color: #FCFCFD;
+    background-color: #fcfcfd;
   }
 }
-

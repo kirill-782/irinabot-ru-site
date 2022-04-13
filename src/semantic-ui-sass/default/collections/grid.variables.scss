@@ -1,4 +1,4 @@
-@use 'sass:math';
+@use "sass:math";
 /*******************************
              Grid
 *******************************/
@@ -20,7 +20,7 @@ $minWidth: 320px;
 $gutterWidth: 2rem;
 $rowSpacing: 2rem;
 
-$tableWidth: "calc(100% + "$gutterWidth")";
+$tableWidth: "calc(100% + " $gutterWidth ")";
 $columnMaxImageWidth: 100%;
 
 $consecutiveGridDistance: math.div($rowSpacing, 2);
@@ -62,7 +62,6 @@ $celledGridDivider: 0px 0px 0px $celledWidth $celledBorderColor;
 $celledRowDivider: 0px (-$celledWidth) 0px 0px $celledBorderColor;
 $celledColumnDivider: (-$celledWidth) 0px 0px 0px $celledBorderColor;
 
-
 /*--------------
     Stackable
 ---------------*/
@@ -71,7 +70,6 @@ $stackableRowSpacing: $rowSpacing;
 $stackableGutter: $gutterWidth;
 $stackableMobileBorder: 1px solid $borderColor;
 $stackableInvertedMobileBorder: 1px solid $whiteBorderColor;
-
 
 /*******************************
              Legacy

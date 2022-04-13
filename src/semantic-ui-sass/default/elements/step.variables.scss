@@ -1,4 +1,4 @@
-@use 'sass:math';
+@use "sass:math";
 /*******************************
              Step
 *******************************/
@@ -9,7 +9,7 @@
 
 $stepMargin: 1em 0em;
 $stepsBorderRadius: $defaultBorderRadius;
-$stepsBackground: '';
+$stepsBackground: "";
 $stepsBoxShadow: none;
 $stepsBorder: 1px solid $borderColor;
 
@@ -24,12 +24,9 @@ $arrowSize: $relativeLarge;
 $verticalPadding: $relativeLarge;
 $horizontalPadding: 2em;
 
-$transition:
-  background-color $defaultDuration $defaultEasing,
-  opacity $defaultDuration $defaultEasing,
-  color $defaultDuration $defaultEasing,
-  box-shadow $defaultDuration $defaultEasing
-;
+$transition: background-color $defaultDuration $defaultEasing,
+  opacity $defaultDuration $defaultEasing, color $defaultDuration $defaultEasing,
+  box-shadow $defaultDuration $defaultEasing;
 $lineHeight: $relativeLarge;
 $alignItems: center;
 $justifyContent: center;
@@ -57,7 +54,6 @@ $descriptionDistance: 0.25em;
 $descriptionFontSize: $relativeSmall;
 $descriptionFontWeight: $normal;
 $descriptionColor: $textColor;
-
 
 /* Arrow */
 $arrowBackgroundColor: $backgroundColor;
@@ -124,7 +120,6 @@ $activeIconColor: $darkTextColor;
 /* Active + Hover */
 $activeHoverBackground: $lightGrey;
 $activeHoverColor: $textColor;
-
 
 /* Disabled */
 $disabledBackground: $background;

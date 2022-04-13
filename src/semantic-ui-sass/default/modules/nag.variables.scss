@@ -1,4 +1,4 @@
-@use 'sass:math';
+@use "sass:math";
 /*******************************
              Nag
 *******************************/
@@ -25,7 +25,6 @@ $color: $textColor;
 
 $transition: 0.2s background ease;
 
-
 /*--------------
     Elements
 ---------------*/
@@ -41,7 +40,6 @@ $closeRight: 1em;
 $closeColor: $white;
 $closeTransition: opacity 0.2s ease;
 $closeOpacity: 0.4;
-
 
 /*--------------
       States
@@ -72,4 +70,3 @@ $invertedBackground: $darkWhite;
 ---------------*/
 
 $groupedBorderRadius: 0em;
-

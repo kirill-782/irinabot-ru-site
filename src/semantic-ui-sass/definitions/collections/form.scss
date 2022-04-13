@@ -1,4 +1,4 @@
-@use 'sass:math';
+@use "sass:math";
 /*!
  * # Semantic UI - Form
  * http://github.com/semantic-org/semantic-ui/
@@ -13,11 +13,10 @@
             Theme
 *******************************/
 
-$type    : 'collection';
-$element : 'form';
+$type: "collection";
+$element: "form";
 
-@import '../../theme';
-
+@import "../../theme";
 
 /*******************************
             Elements
@@ -59,7 +58,6 @@ $element : 'form';
   margin: 0em;
 }
 
-
 /*--------------------
         Labels
 ---------------------*/
@@ -76,7 +74,6 @@ $element : 'form';
 /*--------------------
     Standard Inputs
 ---------------------*/
-
 
 .ui.form textarea,
 .ui.form input:not([type]),
@@ -117,7 +114,7 @@ $element : 'form';
   margin: 0em;
   outline: none;
   -webkit-appearance: none;
-  tap-highlight-color:  rgba(255, 255, 255, 0);
+  tap-highlight-color: rgba(255, 255, 255, 0);
 
   line-height: $inputLineHeight;
   padding: $inputPadding;
@@ -135,7 +132,7 @@ $element : 'form';
 .ui.form textarea {
   margin: 0em;
   -webkit-appearance: none;
-  tap-highlight-color:  rgba(255, 255, 255, 0);
+  tap-highlight-color: rgba(255, 255, 255, 0);
 
   padding: $textAreaPadding;
   font-size: $textAreaFontSize;
@@ -168,7 +165,6 @@ $element : 'form';
 .ui.form input.attached {
   width: auto;
 }
-
 
 /*--------------------
      Basic Select
@@ -248,7 +244,6 @@ $element : 'form';
   width: 0px;
 }
 
-
 /*--------------------
    Types of Messages
 ---------------------*/
@@ -288,7 +283,6 @@ $element : 'form';
   left: 0em;
 }
 
-
 /*******************************
             States
 *******************************/
@@ -313,8 +307,6 @@ $element : 'form';
   box-shadow: 0px 0px 0px 100px $inputAutoFillErrorBackground inset !important;
   border-color: $inputAutoFillErrorBorder !important;
 }
-
-
 
 /*--------------------
       Placeholder
@@ -362,7 +354,6 @@ $element : 'form';
   color: $inputErrorPlaceholderFocusColor;
 }
 
-
 /*--------------------
         Focus
 ---------------------*/
@@ -393,7 +384,6 @@ $element : 'form';
   box-shadow: $textAreaFocusBoxShadow;
   -webkit-appearance: none;
 }
-
 
 /*--------------------
         Success
@@ -557,7 +547,6 @@ $element : 'form';
   background-color: $dropdownErrorSelectedBackground;
 }
 
-
 /* Active */
 .ui.form .fields.error .field .ui.dropdown .menu .active.item,
 .ui.form .field.error .ui.dropdown .menu .active.item {
@@ -606,7 +595,6 @@ $element : 'form';
   opacity: 1;
 }
 
-
 /*--------------
     Loading
 ---------------*/
@@ -618,7 +606,7 @@ $element : 'form';
 }
 .ui.loading.form:before {
   position: absolute;
-  content: '';
+  content: "";
   top: 0%;
   left: 0%;
   background: $loaderDimmerColor;
@@ -628,7 +616,7 @@ $element : 'form';
 }
 .ui.loading.form:after {
   position: absolute;
-  content: '';
+  content: "";
   top: 50%;
   left: 50%;
 
@@ -641,7 +629,8 @@ $element : 'form';
 
   border-radius: $circularRadius;
 
-  border-color: $loaderLineColor $loaderFillColor $loaderFillColor $loaderFillColor;
+  border-color: $loaderLineColor $loaderFillColor $loaderFillColor
+    $loaderFillColor;
   border-style: solid;
   border-width: $loaderLineWidth;
 
@@ -658,7 +647,6 @@ $element : 'form';
     transform: rotate(360deg);
   }
 }
-
 
 /*******************************
          Element Types
@@ -692,11 +680,9 @@ $element : 'form';
   left: 100%;
 }
 
-
 /*******************************
            Variations
 *******************************/
-
 
 /*--------------------
     Inverted Colors
@@ -734,7 +720,6 @@ $element : 'form';
   color: $invertedInputColor;
   box-shadow: $invertedInputBoxShadow;
 }
-
 
 /*--------------------
      Field Groups
@@ -823,13 +808,15 @@ $element : 'form';
 }
 
 /* Swap to full width on mobile */
-@media only screen and (max-width : $largestMobileScreen) {
+@media only screen and (max-width: $largestMobileScreen) {
   .ui.form .fields {
     flex-wrap: wrap;
   }
 
   .ui[class*="equal width"].form:not(.unstackable) .fields > .field,
-  .ui.form:not(.unstackable) [class*="equal width"].fields:not(.unstackable) > .field,
+  .ui.form:not(.unstackable)
+    [class*="equal width"].fields:not(.unstackable)
+    > .field,
   .ui.form:not(.unstackable) .two.fields:not(.unstackable) > .fields,
   .ui.form:not(.unstackable) .two.fields:not(.unstackable) > .field,
   .ui.form:not(.unstackable) .three.fields:not(.unstackable) > .fields,
@@ -852,7 +839,6 @@ $element : 'form';
     margin: 0em 0em $rowDistance;
   }
 }
-
 
 /* Sizing Combinations */
 .ui.form .fields .wide.field {
@@ -911,7 +897,7 @@ $element : 'form';
 }
 
 /* Swap to full width on mobile */
-@media only screen and (max-width : $largestMobileScreen) {
+@media only screen and (max-width: $largestMobileScreen) {
   .ui.form:not(.unstackable) .two.fields:not(.unstackable) > .fields,
   .ui.form:not(.unstackable) .two.fields:not(.unstackable) > .field,
   .ui.form:not(.unstackable) .three.fields:not(.unstackable) > .fields,
@@ -1022,7 +1008,6 @@ $element : 'form';
   width: 100%;
 }
 
-
 /*--------------------
         Sizes
 ---------------------*/
@@ -1051,5 +1036,3 @@ $element : 'form';
 .ui.massive.form {
   font-size: $massive;
 }
-
-

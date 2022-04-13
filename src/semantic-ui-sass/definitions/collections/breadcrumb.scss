@@ -12,12 +12,10 @@
             Theme
 *******************************/
 
-$type    : 'collection';
-$element : 'breadcrumb';
+$type: "collection";
+$element: "breadcrumb";
 
-@import '../../theme';
-
-
+@import "../../theme";
 
 /*******************************
            Breadcrumb
@@ -59,7 +57,6 @@ $element : 'breadcrumb';
   color: $linkHoverColor;
 }
 
-
 /* Icon Divider */
 .ui.breadcrumb .icon.divider {
   font-size: $iconDividerSize;
@@ -90,7 +87,6 @@ $element : 'breadcrumb';
   font-weight: $activeFontWeight;
 }
 
-
 /*******************************
            Variations
 *******************************/
@@ -119,5 +115,3 @@ $element : 'breadcrumb';
 .ui.massive.breadcrumb {
   font-size: $massive;
 }
-
-

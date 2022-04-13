@@ -1,4 +1,4 @@
-@use 'sass:math';
+@use "sass:math";
 /*******************************
             Input
 *******************************/
@@ -23,10 +23,8 @@ $border: $borderWidth solid $borderColor;
 $boxShadow: none;
 
 $borderRadius: $defaultBorderRadius;
-$transition:
-  box-shadow $defaultDuration $defaultEasing,
-  border-color $defaultDuration $defaultEasing
-;
+$transition: box-shadow $defaultDuration $defaultEasing,
+  border-color $defaultDuration $defaultEasing;
 
 /*-------------------
         Types
@@ -70,7 +68,7 @@ $placeholderFocusColor: $inputPlaceholderFocusColor;
 
 /* Down */
 $downBorderColor: rgba(0, 0, 0, 0.3);
-$downBackground: #FAFAFA;
+$downBackground: #fafafa;
 $downColor: $textColor;
 $downBoxShadow: none;
 
@@ -99,4 +97,3 @@ $invertedLoaderFillColor: rgba(0, 0, 0, 0.15);
 /* Inverted */
 $transparentInvertedPlaceholderColor: $invertedUnselectedTextColor;
 $transparentInvertedColor: $white;
-

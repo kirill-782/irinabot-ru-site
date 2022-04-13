@@ -1,4 +1,4 @@
-@use 'sass:math';
+@use "sass:math";
 /*******************************
              Popup
 *******************************/
@@ -32,7 +32,6 @@ $arrowWidth: 1em;
 $arrowDistanceFromEdge: 1em;
 $boxArrowOffset: 0em;
 $popupDistanceAway: $arrowSize;
-
 
 /* Header */
 $headerFontFamily: $headerFont;

@@ -12,17 +12,14 @@
             Theme
 *******************************/
 
-$type    : 'element';
-$element : 'input';
+$type: "element";
+$element: "input";
 
-@import '../../theme';
-
-
+@import "../../theme";
 
 /*******************************
            Standard
 *******************************/
-
 
 /*--------------------
         Inputs
@@ -56,7 +53,6 @@ $element : 'input';
   box-shadow: $boxShadow;
 }
 
-
 /*--------------------
       Placeholder
 ---------------------*/
@@ -72,7 +68,6 @@ $element : 'input';
 .ui.input > input:-ms-input-placeholder {
   color: $placeholderColor;
 }
-
 
 /*******************************
             States
@@ -110,7 +105,7 @@ $element : 'input';
 
 .ui.loading.loading.input > i.icon:before {
   position: absolute;
-  content: '';
+  content: "";
   top: 50%;
   left: 50%;
 
@@ -123,7 +118,7 @@ $element : 'input';
 }
 .ui.loading.loading.input > i.icon:after {
   position: absolute;
-  content: '';
+  content: "";
   top: 50%;
   left: 50%;
 
@@ -143,13 +138,12 @@ $element : 'input';
   box-shadow: 0px 0px 0px 1px transparent;
 }
 
-
 /*--------------------
         Focus
 ---------------------*/
 
 .ui.input.focus > input,
-.ui.input > input:focus  {
+.ui.input > input:focus {
   border-color: $focusBorderColor;
   background: $focusBackground;
   color: $focusColor;
@@ -167,8 +161,6 @@ $element : 'input';
 .ui.input > input:focus:-ms-input-placeholder {
   color: $placeholderFocusColor;
 }
-
-
 
 /*--------------------
         Error
@@ -211,7 +203,6 @@ $element : 'input';
       Transparent
 ---------------------*/
 
-
 .ui.transparent.input > input {
   border-color: transparent !important;
   background-color: transparent !important;
@@ -250,7 +241,6 @@ $element : 'input';
 .ui.transparent.inverted.input > input:-ms-input-placeholder {
   color: $transparentInvertedPlaceholderColor;
 }
-
 
 /*--------------------
          Icon
@@ -340,7 +330,9 @@ $element : 'input';
   border-bottom-left-radius: 0px;
   border-left-color: transparent;
 }
-.ui.labeled.input:not([class*="corner labeled"]) .label:first-child + input:focus {
+.ui.labeled.input:not([class*="corner labeled"])
+  .label:first-child
+  + input:focus {
   border-left-color: $focusBorderColor;
 }
 
@@ -368,13 +360,16 @@ $element : 'input';
 }
 
 /* Spacing with corner label */
-.ui[class*="corner labeled"]:not([class*="left corner labeled"]).labeled.input > input {
+.ui[class*="corner labeled"]:not([class*="left corner labeled"]).labeled.input
+  > input {
   padding-right: $labeledMargin !important;
 }
-.ui[class*="corner labeled"].icon.input:not([class*="left corner labeled"]) > input {
+.ui[class*="corner labeled"].icon.input:not([class*="left corner labeled"])
+  > input {
   padding-right: $labeledIconInputMargin !important;
 }
-.ui[class*="corner labeled"].icon.input:not([class*="left corner labeled"]) > .icon {
+.ui[class*="corner labeled"].icon.input:not([class*="left corner labeled"])
+  > .icon {
   margin-right: $labeledIconMargin;
 }
 
@@ -398,7 +393,6 @@ $element : 'input';
   right: auto;
   left: $borderWidth;
 }
-
 
 /*--------------------
         Action
@@ -425,7 +419,9 @@ $element : 'input';
 }
 .ui.action.input:not([class*="left action"]) > .dropdown:not(:first-child),
 .ui.action.input:not([class*="left action"]) > .button:not(:first-child),
-.ui.action.input:not([class*="left action"]) > .buttons:not(:first-child) > .button {
+.ui.action.input:not([class*="left action"])
+  > .buttons:not(:first-child)
+  > .button {
   border-radius: 0px;
 }
 .ui.action.input:not([class*="left action"]) > .dropdown:last-child,
@@ -505,5 +501,3 @@ $element : 'input';
 .ui.massive.input {
   font-size: $relativeMassive;
 }
-
-

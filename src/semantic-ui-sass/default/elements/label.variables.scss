@@ -1,4 +1,4 @@
-@use 'sass:math';
+@use "sass:math";
 /*******************************
              Label
 *******************************/
@@ -10,7 +10,7 @@
 $verticalAlign: baseline;
 $verticalMargin: 0em;
 $horizontalMargin: $relative2px;
-$backgroundColor: #E8E8E8;
+$backgroundColor: #e8e8e8;
 $color: $mutedTextColor;
 $backgroundImage: none;
 $verticalPadding: 0.5833em; /* medium is not $emSize custom value required */
@@ -69,35 +69,40 @@ $imageLabelTextDistance: 0.5em;
 $imageLabelDetailDistance: $imageLabelTextDistance;
 $imageLabelBorderRadius: $borderRadius;
 $imageLabelBoxShadow: none;
-$imageLabelPadding: $imageLabelVerticalPadding $imageLabelHorizontalPadding $imageLabelVerticalPadding $imageLabelTextDistance;
+$imageLabelPadding: $imageLabelVerticalPadding $imageLabelHorizontalPadding
+  $imageLabelVerticalPadding $imageLabelTextDistance;
 
-$imageLabelImageMargin: (-$verticalPadding) $imageLabelTextDistance (-$verticalPadding) -$imageLabelTextDistance;
-$imageLabelImageBorderRadius: $imageLabelBorderRadius 0em 0em $imageLabelBorderRadius;
+$imageLabelImageMargin: (-$verticalPadding) $imageLabelTextDistance
+  (-$verticalPadding) -$imageLabelTextDistance;
+$imageLabelImageBorderRadius: $imageLabelBorderRadius 0em 0em
+  $imageLabelBorderRadius;
 $imageLabelImageHeight: $imageHeight;
 
 $imageLabelDetailBackground: $strongTransparentBlack;
-$imageLabelDetailPadding: $imageLabelVerticalPadding $imageLabelHorizontalPadding;
-$imageLabelDetailMargin: (-$imageLabelVerticalPadding) (-$imageLabelHorizontalPadding) (-$imageLabelVerticalPadding) $imageLabelDetailDistance;
+$imageLabelDetailPadding: $imageLabelVerticalPadding
+  $imageLabelHorizontalPadding;
+$imageLabelDetailMargin: (-$imageLabelVerticalPadding)
+  (-$imageLabelHorizontalPadding) (-$imageLabelVerticalPadding)
+  $imageLabelDetailDistance;
 
 /*-------------------
         States
 --------------------*/
 
 /* Hover */
-$labelHoverBackgroundColor: #E0E0E0;
+$labelHoverBackgroundColor: #e0e0e0;
 $labelHoverBackgroundImage: none;
 $labelHoverTextColor: $hoveredTextColor;
 
 /* Active */
-$labelActiveBackgroundColor: #D0D0D0;
+$labelActiveBackgroundColor: #d0d0d0;
 $labelActiveBackgroundImage: none;
 $labelActiveTextColor: $selectedTextColor;
 
 /* Active Hover */
-$labelActiveHoverBackgroundColor: #C8C8C8;
+$labelActiveHoverBackgroundColor: #c8c8c8;
 $labelActiveHoverBackgroundImage: none;
 $labelActiveHoverTextColor: $selectedTextColor;
-
 
 /*-------------------
       Variations
@@ -133,17 +138,16 @@ $ribbonShadowColor: rgba(0, 0, 0, 0.15);
 $ribbonMargin: 1rem;
 $ribbonOffset: (-($ribbonMargin + $ribbonTriangleSize));
 $ribbonDistance: calc($ribbonMargin + $ribbonTriangleSize);
-$rightRibbonOffset:  calc(100% + $ribbonMargin + $ribbonTriangleSize);
+$rightRibbonOffset: calc(100% + $ribbonMargin + $ribbonTriangleSize);
 
 $ribbonImageTopDistance: 1rem;
 $ribbonImageMargin: -0.05rem; /* Rounding Offset on Triangle */
 $ribbonImageOffset: (-$ribbonImageMargin - $ribbonTriangleSize);
-$rightRibbonImageOffset:  calc(100% + $ribbonImageMargin + $ribbonTriangleSize);
+$rightRibbonImageOffset: calc(100% + $ribbonImageMargin + $ribbonTriangleSize);
 
 $ribbonTableMargin: $absoluteMini; /* Rounding Offset on Triangle */
 $ribbonTableOffset: (-($ribbonTableMargin + $ribbonTriangleSize));
-$rightRibbonTableOffset:  calc(100% + $ribbonTableMargin + $ribbonTriangleSize);
-
+$rightRibbonTableOffset: calc(100% + $ribbonTableMargin + $ribbonTriangleSize);
 
 /* Colors */
 $redTextColor: $white;
@@ -200,7 +204,8 @@ $attachedBorderRadius: $borderRadius;
 $cornerSizeRatio: 1;
 $cornerTransition: color $labelTransitionDuration $labelTransitionEasing;
 $cornerTriangleSize: 4em;
-$cornerTriangleTransition: border-color $labelTransitionDuration $labelTransitionEasing;
+$cornerTriangleTransition: border-color $labelTransitionDuration
+  $labelTransitionEasing;
 $cornerTriangleZIndex: 1;
 
 $cornerIconSize: $relativeLarge;
@@ -229,7 +234,8 @@ $pointingVerticalDistance: 1em;
 $pointingTriangleSize: 0.6666em;
 $pointingHorizontalDistance: $pointingTriangleSize;
 
-$pointingTriangleTransition: background $labelTransitionDuration $labelTransitionEasing;
+$pointingTriangleTransition: background $labelTransitionDuration
+  $labelTransitionEasing;
 $pointingTriangleZIndex: 2;
 
 /* Basic Pointing */
@@ -245,11 +251,11 @@ $floatingZIndex: 100;
 --------------------*/
 
 /* Sizing */
-$mini    : $exact9px;
-$tiny    : $exact10px;
-$small   : $exact11px;
-$medium  : $exact12px;
-$large   : $absoluteMedium;
-$big     : $absoluteBig;
-$huge    : $absoluteHuge;
-$massive : $absoluteMassive;
+$mini: $exact9px;
+$tiny: $exact10px;
+$small: $exact11px;
+$medium: $exact12px;
+$large: $absoluteMedium;
+$big: $absoluteBig;
+$huge: $absoluteHuge;
+$massive: $absoluteMassive;

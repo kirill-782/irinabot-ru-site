@@ -8,16 +8,14 @@
  *
  */
 
-
 /*******************************
             Theme
 *******************************/
 
-$type    : 'collection';
-$element : 'table';
+$type: "collection";
+$element: "table";
 
-@import '../../theme';
-
+@import "../../theme";
 
 /*******************************
              Table
@@ -153,16 +151,15 @@ $element : 'table';
   display: block;
 }
 
-
 /* Responsive */
-@media only screen and (max-width : $largestMobileScreen) {
+@media only screen and (max-width: $largestMobileScreen) {
   .ui.table:not(.unstackable) {
     width: 100%;
   }
   .ui.table:not(.unstackable) tbody,
   .ui.table:not(.unstackable) tr,
   .ui.table:not(.unstackable) tr > th,
-  .ui.table:not(.unstackable) tr > td  {
+  .ui.table:not(.unstackable) tr > td {
     display: block !important;
     width: auto !important;
     display: block !important;
@@ -201,7 +198,6 @@ $element : 'table';
   }
 }
 
-
 /*******************************
             Coupling
 *******************************/
@@ -213,7 +209,6 @@ $element : 'table';
 .ui.table td .image img {
   max-width: none;
 }
-
 
 /*******************************
              Types
@@ -253,7 +248,8 @@ $element : 'table';
   background: $definitionHeaderBackground;
   font-weight: $definitionHeaderFontWeight;
   color: $definitionHeaderColor;
-  box-shadow: (-$borderWidth) (-$borderWidth) 0px $borderWidth $definitionPageBackground;
+  box-shadow: (-$borderWidth) (-$borderWidth) 0px $borderWidth
+    $definitionPageBackground;
 }
 
 .ui.definition.table tfoot:not(.full-width) th:first-child {
@@ -261,7 +257,8 @@ $element : 'table';
   background: $definitionFooterBackground;
   font-weight: $definitionFooterColor;
   color: $definitionFooterFontWeight;
-  box-shadow: $borderWidth $borderWidth 0px $borderWidth $definitionPageBackground;
+  box-shadow: $borderWidth $borderWidth 0px $borderWidth
+    $definitionPageBackground;
 }
 
 /* Remove Border */
@@ -286,7 +283,6 @@ $element : 'table';
   padding-right: $definitionColumnHorizontalPadding;
 }
 
-
 /* Fix 2nd Column */
 .ui.definition.table thead:not(.full-width) th:nth-child(2) {
   border-left: $borderWidth solid $borderColor;
@@ -297,7 +293,6 @@ $element : 'table';
 .ui.definition.table td:nth-child(2) {
   border-left: $borderWidth solid $borderColor;
 }
-
 
 /*******************************
              States
@@ -372,8 +367,6 @@ $element : 'table';
   color: $activeColor !important;
 }
 
-
-
 /*--------------
      Disabled
 ---------------*/
@@ -394,13 +387,12 @@ $element : 'table';
     Stackable
 ---------------*/
 
-@media only screen and (max-width : $largestTabletScreen) {
-
+@media only screen and (max-width: $largestTabletScreen) {
   .ui[class*="tablet stackable"].table,
   .ui[class*="tablet stackable"].table tbody,
   .ui[class*="tablet stackable"].table tr,
   .ui[class*="tablet stackable"].table tr > th,
-  .ui[class*="tablet stackable"].table tr > td  {
+  .ui[class*="tablet stackable"].table tr > td {
     display: block !important;
     width: 100% !important;
     display: block !important;
@@ -492,7 +484,6 @@ $element : 'table';
   text-overflow: ellipsis;
 }
 
-
 /*--------------
    Selectable
 ---------------*/
@@ -549,8 +540,6 @@ $element : 'table';
   background: $negativeBackgroundHover !important;
   color: $negativeColorHover !important;
 }
-
-
 
 /*-------------------
       Attached
@@ -752,7 +741,6 @@ $element : 'table';
   color: $white !important;
 }
 
-
 /*--------------
   Column Count
 ---------------*/
@@ -896,7 +884,7 @@ $element : 'table';
   font-style: normal;
   font-weight: $normal;
   text-decoration: inherit;
-  content: '';
+  content: "";
   height: 1em;
   width: $sortableIconWidth;
   opacity: $sortableIconOpacity;
@@ -948,7 +936,6 @@ $element : 'table';
   border-left-color: $sortableInvertedBorderColor;
   border-right-color: $sortableInvertedBorderColor;
 }
-
 
 /*--------------
     Inverted
@@ -1038,7 +1025,10 @@ $element : 'table';
 .ui[class*="very basic"].table:not(.sortable):not(.striped) td:last-child {
   padding-right: 0em;
 }
-.ui[class*="very basic"].table:not(.sortable):not(.striped) thead tr:first-child th {
+.ui[class*="very basic"].table:not(.sortable):not(.striped)
+  thead
+  tr:first-child
+  th {
   padding-top: 0em;
 }
 
@@ -1116,5 +1106,3 @@ $element : 'table';
 .ui.large.table {
   font-size: $large;
 }
-
-

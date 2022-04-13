@@ -13,12 +13,8 @@ $easing: ease-in-out;
 $hiddenSideOpacity: 0.6;
 $animatingZIndex: 100;
 
-$transition:
-  transform $duration $easing,
-  left $duration $easing,
-  width $duration $easing,
-  height $duration $easing
-;
+$transition: transform $duration $easing, left $duration $easing,
+  width $duration $easing, height $duration $easing;
 $sideTransition: opacity $duration $easing;
 $backfaceVisibility: hidden;
 
@@ -31,7 +27,7 @@ $sideMargin: 0em;
 
 /* Cube */
 $cubeSize: 15em;
-$cubeBackground: #E6E6E6;
+$cubeBackground: #e6e6e6;
 $cubePadding: 2em;
 $cubeTextColor: $textColor;
 $cubeBoxShadow: 0px 0px 2px rgba(0, 0, 0, 0.3);

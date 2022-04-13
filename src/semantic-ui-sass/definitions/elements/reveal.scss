@@ -12,17 +12,16 @@
             Theme
 *******************************/
 
-$type    : 'element';
-$element : 'reveal';
+$type: "element";
+$element: "reveal";
 
-@import '../../theme';
-
+@import "../../theme";
 
 /*******************************
             Reveal
 *******************************/
 
-.ui.reveal  {
+.ui.reveal {
   display: inherit;
   position: relative !important;
   font-size: 0em !important;
@@ -46,11 +45,9 @@ $element : 'reveal';
   z-index: $activeZIndex !important;
 }
 
-
 /*******************************
               Types
 *******************************/
-
 
 /*--------------
       Slide
@@ -129,7 +126,6 @@ $element : 'reveal';
   transform: translateY(0%) !important;
 }
 
-
 /*--------------
       Fade
 ---------------*/
@@ -141,7 +137,6 @@ $element : 'reveal';
 .ui.fade.reveal:hover > .visible.content {
   opacity: 0;
 }
-
 
 /*--------------
       Move
@@ -186,8 +181,6 @@ $element : 'reveal';
 .ui.move.down.reveal:hover > .visible.content {
   transform: translateY(100%) !important;
 }
-
-
 
 /*--------------
      Rotate
@@ -235,7 +228,6 @@ $element : 'reveal';
   display: none !important;
 }
 
-
 /*******************************
            Coupling
 *******************************/
@@ -264,7 +256,6 @@ $element : 'reveal';
   transition-delay: 0s !important;
 }
 
-
 /*--------------
      Sizing
 ---------------*/
@@ -272,5 +263,3 @@ $element : 'reveal';
 .ui.reveal > .content {
   font-size: $medium !important;
 }
-
-

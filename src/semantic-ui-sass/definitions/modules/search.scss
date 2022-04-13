@@ -8,16 +8,14 @@
  *
  */
 
-
 /*******************************
             Theme
 *******************************/
 
-$type    : 'module';
-$element : 'search';
+$type: "module";
+$element: "search";
 
-@import '../../theme';
-
+@import "../../theme";
 
 /*******************************
              Search
@@ -31,7 +29,7 @@ $element : 'search';
   margin: 0em;
   outline: none;
   -webkit-appearance: none;
-  -webkit-tap-highlight-color:  rgba(255, 255, 255, 0);
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 
   text-shadow: none;
   font-style: normal;
@@ -51,7 +49,6 @@ $element : 'search';
 .ui.search .prompt {
   border-radius: $promptBorderRadius;
 }
-
 
 /*--------------
      Icon
@@ -181,7 +178,6 @@ $element : 'search';
   text-align: $actionAlign;
 }
 
-
 /*******************************
             States
 *******************************/
@@ -202,7 +198,7 @@ $element : 'search';
 
 .ui.loading.search .input > i.icon:before {
   position: absolute;
-  content: '';
+  content: "";
   top: 50%;
   left: 50%;
 
@@ -215,7 +211,7 @@ $element : 'search';
 }
 .ui.loading.search .input > i.icon:after {
   position: absolute;
-  content: '';
+  content: "";
   top: 50%;
   left: 50%;
 
@@ -234,7 +230,6 @@ $element : 'search';
 
   box-shadow: 0px 0px 0px 1px transparent;
 }
-
 
 /*--------------
       Hover
@@ -284,7 +279,6 @@ $element : 'search';
   opacity: $disabledOpacity;
 }
 
-
 /*******************************
            Types
 *******************************/
@@ -313,14 +307,16 @@ $element : 'search';
   opacity: $selectionCloseIconOpacity;
   pointer-events: auto;
 }
-.ui.search.selection > .icon.input:not([class*="left icon"]) > .icon ~ .remove.icon {
+.ui.search.selection
+  > .icon.input:not([class*="left icon"])
+  > .icon
+  ~ .remove.icon {
   right: $selectionCloseIconInputRight;
 }
 .ui.search.selection > .icon.input > .remove.icon:hover {
   opacity: $selectionCloseIconHoverOpacity;
   color: $selectionCloseIconHoverColor;
 }
-
 
 /*--------------
     Category
@@ -409,7 +405,6 @@ $element : 'search';
   width: 100%;
 }
 
-
 /*--------------
       Sizes
 ---------------*/
@@ -445,5 +440,3 @@ $element : 'search';
     max-width: $mobileMaxWidth;
   }
 }
-
-

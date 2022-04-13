@@ -11,16 +11,14 @@
             Theme
 *******************************/
 
-$type    : 'element';
-$element : 'loader';
+$type: "element";
+$element: "loader";
 
-@import '../../theme';
-
+@import "../../theme";
 
 /*******************************
             Loader
 *******************************/
-
 
 /* Standard Size */
 .ui.loader {
@@ -37,7 +35,7 @@ $element : 'loader';
 /* Static Shape */
 .ui.loader:before {
   position: absolute;
-  content: '';
+  content: "";
   top: 0%;
   left: 50%;
   width: 100%;
@@ -50,7 +48,7 @@ $element : 'loader';
 /* Active Shape */
 .ui.loader:after {
   position: absolute;
-  content: '';
+  content: "";
   top: 0%;
   left: 50%;
   width: 100%;
@@ -174,7 +172,6 @@ $element : 'loader';
   font-style: normal;
 }
 
-
 /*******************************
             States
 *******************************/
@@ -197,11 +194,9 @@ $element : 'loader';
             Variations
 *******************************/
 
-
 /*-------------------
         Sizes
 --------------------*/
-
 
 /* Loader */
 .ui.inverted.dimmer .ui.mini.loader,
@@ -287,13 +282,12 @@ $element : 'loader';
   padding-top: ($massive + $textDistance);
 }
 
-
 /*-------------------
        Inverted
 --------------------*/
 
 .ui.inverted.loader {
-  color: $invertedLoaderTextColor
+  color: $invertedLoaderTextColor;
 }
 .ui.inverted.loader:before {
   border-color: $invertedLoaderFillColor;
@@ -327,6 +321,3 @@ $element : 'loader';
   margin-left: auto;
   margin-right: auto;
 }
-
-
-

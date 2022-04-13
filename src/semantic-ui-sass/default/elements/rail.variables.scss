@@ -1,4 +1,4 @@
-@use 'sass:math';
+@use "sass:math";
 /*******************************
             Rail
 *******************************/
@@ -24,12 +24,11 @@ $veryCloseDistance: 1em;
 $splitCloseDistance: math.div($closeDistance, 2);
 $splitVeryCloseDistance: math.div($veryCloseDistance, 2);
 
-$closeWidth: "calc("$width" + "$splitCloseDistance")";
-$veryCloseWidth: "calc("$width" + "$splitVeryCloseDistance")";
+$closeWidth: "calc(" $width " + " $splitCloseDistance ")";
+$veryCloseWidth: "calc(" $width " + " $splitVeryCloseDistance ")";
 
 /* Dividing */
 $dividingBorder: 1px solid $borderColor;
 $dividingDistance: 5px;
 $splitDividingDistance: math.div($dividingDistance, 2);
 $dividingWidth: $width + $splitDividingDistance;
-

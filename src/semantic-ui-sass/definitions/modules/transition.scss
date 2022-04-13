@@ -8,16 +8,14 @@
  *
  */
 
-
 /*******************************
             Theme
 *******************************/
 
-$type    : 'module';
-$element : 'transition';
+$type: "module";
+$element: "transition";
 
-@import '../../theme';
-
+@import "../../theme";
 
 /*******************************
           Transitions
@@ -33,7 +31,6 @@ $element : 'transition';
 /*******************************
             States
 *******************************/
-
 
 /* Animating */
 .animating.transition {
@@ -58,7 +55,7 @@ $element : 'transition';
 .visible.transition {
   display: block !important;
   visibility: visible !important;
-/*  backface-visibility: $backfaceVisibility;
+  /*  backface-visibility: $backfaceVisibility;
   transform: $use3DAcceleration;*/
 }
 
@@ -74,6 +71,3 @@ $element : 'transition';
 .looping.transition {
   animation-iteration-count: infinite;
 }
-
-
-

@@ -1,8 +1,7 @@
-@use 'sass:math';
+@use "sass:math";
 /*******************************
             Comments
 *******************************/
-
 
 /*-------------------
        View
@@ -82,10 +81,9 @@ $commentReplyDistance: $replyDistance;
 --------------------*/
 
 /* Threaded */
-$threadedCommentMargin: -1.5em 0 -1em  math.div($avatarWidth, 2);
+$threadedCommentMargin: -1.5em 0 -1em math.div($avatarWidth, 2);
 $threadedCommentPadding: 3em 0em 2em 2.25em;
 $threadedCommentBoxShadow: -1px 0px 0px $borderColor;
-
 
 /* Minimal */
 $minimalActionPosition: absolute;

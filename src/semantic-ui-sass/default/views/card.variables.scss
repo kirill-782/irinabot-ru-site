@@ -1,4 +1,4 @@
-@use 'sass:math';
+@use "sass:math";
 /*******************************
              Card
 *******************************/
@@ -22,16 +22,11 @@ $padding: 0em;
 $width: 290px;
 $borderWidth: 1px;
 $borderShadow: 0px 0px 0px $borderWidth $solidBorderColor;
-$boxShadow:
-  $shadowBoxShadow,
-  $borderShadow
-;
+$boxShadow: $shadowBoxShadow, $borderShadow;
 $border: none;
-$zIndex: '';
-$transition:
-  box-shadow $defaultDuration $defaultEasing,
-  transform $defaultDuration $defaultEasing
-;
+$zIndex: "";
+$transition: box-shadow $defaultDuration $defaultEasing,
+  transform $defaultDuration $defaultEasing;
 
 /* Card Group */
 $horizontalSpacing: 1em;
@@ -51,7 +46,6 @@ $consecutiveGroupDistance: math.div($rowSpacing, 2);
        Content
 --------------------*/
 
-
 /* Image */
 $imageBackground: $transparentBlack;
 $imagePadding: 0em;
@@ -69,9 +63,8 @@ $contentBorderRadius: 0em;
 $contentBoxShadow: none;
 $contentBorder: none;
 
-
 /* Header */
-$headerMargin: '';
+$headerMargin: "";
 $headerFontWeight: $bold;
 $headerFontSize: $relativeBig;
 $headerLineHeightOffset: math.div(-$lineHeight + 1em, 2);
@@ -87,15 +80,15 @@ $actionOpacity: 0.75;
 $actionHoverOpacity: 1;
 $actionTransition: color $defaultDuration $defaultEasing;
 
-$starColor: #FFB70A;
-$starActiveColor: #FFE623;
+$starColor: #ffb70a;
+$starActiveColor: #ffe623;
 
-$likeColor: #FF2733;
-$likeActiveColor: #FF2733;
+$likeColor: #ff2733;
+$likeActiveColor: #ff2733;
 
 /* Links */
-$contentLinkColor: '';
-$contentLinkHoverColor: '';
+$contentLinkColor: "";
+$contentLinkHoverColor: "";
 $contentLinkTransition: color $defaultDuration $defaultEasing;
 
 $headerLinkColor: $headerColor;
@@ -109,7 +102,7 @@ $descriptionDistance: 0.5em;
 $descriptionColor: rgba(0, 0, 0, 0.68);
 
 /* Content Image */
-$contentImageWidth: '';
+$contentImageWidth: "";
 $contentImageVerticalAlign: middle;
 
 /* Avatar Image */
@@ -121,7 +114,7 @@ $paragraphDistance: 0.5em;
 
 /* Dimmer */
 $dimmerZIndex: 10;
-$dimmerColor: '';
+$dimmerColor: "";
 
 /* Additional Content */
 $extraDivider: 1px solid rgba(0, 0, 0, 0.05);
@@ -155,22 +148,13 @@ $linkHoverZIndex: 5;
 $linkHoverRaiseDistance: 3px;
 $linkHoverTransform: translateY(-$linkHoverRaiseDistance);
 
-$shadowHoverBoxShadow: 0px $shadowDistance $linkHoverRaiseDistance 0px $solidSelectedBorderColor;
-$linkHoverBoxShadow:
-  $shadowHoverBoxShadow,
-  $borderShadow
-;
-
+$shadowHoverBoxShadow: 0px $shadowDistance $linkHoverRaiseDistance 0px
+  $solidSelectedBorderColor;
+$linkHoverBoxShadow: $shadowHoverBoxShadow, $borderShadow;
 
 /* Raised */
-$raisedShadow:
-  $borderShadow,
-  $floatingShadow
-;
-$raisedShadowHover:
-  $borderShadow,
-  $floatingShadowHover
-;
+$raisedShadow: $borderShadow, $floatingShadow;
+$raisedShadowHover: $borderShadow, $floatingShadowHover;
 
 /* Card Count */
 $wideCardSpacing: 1em;
@@ -212,7 +196,8 @@ $tenCardOffset: (-$tenCardSpacing);
 /* Stackable */
 $stackableRowSpacing: 1em;
 $stackableCardSpacing: 1em;
-$stackableMargin: "calc(" + $oneColumn + " - " + ($stackableCardSpacing * 2) + ")";
+$stackableMargin: "calc(" + $oneColumn + " - " + ($stackableCardSpacing * 2) +
+  ")";
 
 /* Sizes */
 $medium: 1em;

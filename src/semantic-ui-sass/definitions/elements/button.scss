@@ -1,4 +1,4 @@
-@use 'sass:math';
+@use "sass:math";
 /*!
  * # Semantic UI - Button
  * http://github.com/semantic-org/semantic-ui/
@@ -13,11 +13,10 @@
             Theme
 *******************************/
 
-$type    : 'element';
-$element : 'button';
+$type: "element";
+$element: "button";
 
-@import '../../theme';
-
+@import "../../theme";
 
 /*******************************
             Button
@@ -38,7 +37,8 @@ $element : 'button';
   font-family: $fontFamily;
 
   margin: 0em $horizontalMargin $verticalMargin 0em;
-  padding: $verticalPadding $horizontalPadding ($verticalPadding + $shadowOffset);
+  padding: $verticalPadding $horizontalPadding
+    ($verticalPadding + $shadowOffset);
 
   text-transform: $textTransform;
   text-shadow: $textShadow;
@@ -57,7 +57,6 @@ $element : 'button';
 
   -webkit-tap-highlight-color: $tapColor;
 }
-
 
 /*******************************
             States
@@ -125,7 +124,6 @@ $element : 'button';
   background-image: $activeBackgroundImage;
 }
 
-
 /*--------------
     Loading
 ---------------*/
@@ -142,7 +140,7 @@ $element : 'button';
 }
 .ui.loading.button:before {
   position: absolute;
-  content: '';
+  content: "";
   top: 50%;
   left: 50%;
 
@@ -155,7 +153,7 @@ $element : 'button';
 }
 .ui.loading.button:after {
   position: absolute;
-  content: '';
+  content: "";
   top: 50%;
   left: 50%;
 
@@ -273,7 +271,8 @@ $element : 'button';
 /* Vertical */
 .ui.vertical.animated.button .visible.content,
 .ui.vertical.animated.button .hidden.content {
-  transition: top $animationDuration $animationEasing, transform $animationDuration $animationEasing;
+  transition: top $animationDuration $animationEasing,
+    transform $animationDuration $animationEasing;
 }
 .ui.vertical.animated.button .visible.content {
   transform: translateY(0%);
@@ -298,7 +297,8 @@ $element : 'button';
 /* Fade */
 .ui.fade.animated.button .visible.content,
 .ui.fade.animated.button .hidden.content {
-  transition: opacity $animationDuration $animationEasing, transform $animationDuration $animationEasing;
+  transition: opacity $animationDuration $animationEasing,
+    transform $animationDuration $animationEasing;
 }
 .ui.fade.animated.button .visible.content {
   left: auto;
@@ -375,7 +375,6 @@ $element : 'button';
   box-shadow: 0px 0px 0px $invertedBorderSize $midWhite inset !important;
   color: $focusColor;
 }
-
 
 /*-------------------
     Labeled Button
@@ -566,7 +565,7 @@ $element : 'button';
 
 /* VK */
 .ui.vk.button {
-  background-color: #4D7198;
+  background-color: #4d7198;
   color: $white;
   background-image: $coloredBackgroundImage;
   box-shadow: $coloredBoxShadow;
@@ -604,7 +603,6 @@ $element : 'button';
            Variations
 *******************************/
 
-
 /*-------------------
        Floated
 --------------------*/
@@ -628,15 +626,19 @@ $element : 'button';
 
 .ui.compact.buttons .button,
 .ui.compact.button {
-  padding: $compactVerticalPadding $compactHorizontalPadding ( $compactVerticalPadding + $shadowOffset );
+  padding: $compactVerticalPadding $compactHorizontalPadding
+    ($compactVerticalPadding + $shadowOffset);
 }
 .ui.compact.icon.buttons .button,
 .ui.compact.icon.button {
-  padding: $compactVerticalPadding $compactVerticalPadding ( $compactVerticalPadding + $shadowOffset );
+  padding: $compactVerticalPadding $compactVerticalPadding
+    ($compactVerticalPadding + $shadowOffset);
 }
 .ui.compact.labeled.icon.buttons .button,
 .ui.compact.labeled.icon.button {
-  padding: $compactVerticalPadding ($compactHorizontalPadding + $labeledIconWidth) ( $compactVerticalPadding + $shadowOffset );
+  padding: $compactVerticalPadding
+    ($compactHorizontalPadding + $labeledIconWidth)
+    ($compactVerticalPadding + $shadowOffset);
 }
 
 /*-------------------
@@ -690,7 +692,7 @@ $element : 'button';
 
 .ui.icon.buttons .button,
 .ui.icon.button {
-  padding: $verticalPadding $verticalPadding ( $verticalPadding + $shadowOffset );
+  padding: $verticalPadding $verticalPadding ($verticalPadding + $shadowOffset);
 }
 .ui.icon.buttons .button > .icon,
 .ui.icon.button > .icon {
@@ -698,7 +700,6 @@ $element : 'button';
   margin: 0em !important;
   vertical-align: top;
 }
-
 
 /*-------------------
         Basic
@@ -799,7 +800,6 @@ $element : 'button';
   box-shadow: $basicInvertedHoverBoxShadow !important;
 }
 
-
 /* Basic Group */
 .ui.basic.buttons .button {
   border-left: $basicGroupBorder;
@@ -815,8 +815,6 @@ $element : 'button';
 .ui.basic.vertical.buttons .button:first-child {
   border-top-width: 0px;
 }
-
-
 
 /*--------------
   Labeled Icon
@@ -868,7 +866,6 @@ $element : 'button';
   box-shadow: $labeledIconRightShadow;
 }
 
-
 .ui.labeled.icon.buttons > .button > .icon:before,
 .ui.labeled.icon.button > .icon:before,
 .ui.labeled.icon.buttons > .button > .icon:after,
@@ -908,9 +905,6 @@ $element : 'button';
   padding-right: $horizontalPadding !important;
 }
 
-
-
-
 /*--------------
      Toggle
 ---------------*/
@@ -941,7 +935,6 @@ $element : 'button';
   width: 1em;
   vertical-align: baseline;
 }
-
 
 /*-------------------
       Or Buttons
@@ -990,11 +983,9 @@ $element : 'button';
   display: none;
 }
 
-
 /*-------------------
        Attached
 --------------------*/
-
 
 /* Singular */
 .ui.attached.button {
@@ -1161,7 +1152,7 @@ $element : 'button';
   width: 100%;
 }
 .ui.eight.buttons > .button {
-  width: 12.500%;
+  width: 12.5%;
 }
 
 .ui.nine.buttons {
@@ -1218,7 +1209,7 @@ $element : 'button';
   height: 14.285%;
 }
 .ui.eight.vertical.buttons > .button {
-  height: 12.500%;
+  height: 12.5%;
 }
 .ui.nine.vertical.buttons > .button {
   height: 11.11%;
@@ -1232,7 +1223,6 @@ $element : 'button';
 .ui.twelve.vertical.buttons > .button {
   height: 8.3333%;
 }
-
 
 /*-------------------
        Colors
@@ -1515,7 +1505,6 @@ $element : 'button';
   box-shadow: 0px 0px 0px $invertedBorderSize $lightGreyDown inset !important;
   color: $white !important;
 }
-
 
 /*--- Brown ---*/
 .ui.brown.buttons .button,
@@ -1832,7 +1821,6 @@ $element : 'button';
   color: $greenTextColor;
   text-shadow: $greenTextShadow;
 }
-
 
 /* Basic */
 .ui.basic.green.buttons .button,
@@ -2212,7 +2200,6 @@ $element : 'button';
   box-shadow: 0px 0px 0px $invertedBorderSize $lightPinkDown inset !important;
   color: $lightPink !important;
 }
-
 
 /*--- Violet ---*/
 .ui.violet.buttons .button,
@@ -2631,7 +2618,6 @@ $element : 'button';
   color: $lightRed !important;
 }
 
-
 /*--- Teal ---*/
 .ui.teal.buttons .button,
 .ui.teal.button {
@@ -2770,7 +2756,6 @@ $element : 'button';
   box-shadow: 0px 0px 0px $invertedBorderSize $lightTealDown inset !important;
   color: $lightTeal !important;
 }
-
 
 /*--- Olive ---*/
 .ui.olive.buttons .button,
@@ -3049,7 +3034,6 @@ $element : 'button';
   box-shadow: 0px 0px 0px $invertedBorderSize $lightYellowDown inset !important;
   color: $lightYellow !important;
 }
-
 
 /*-------------------
        Primary
@@ -3559,5 +3543,3 @@ $element : 'button';
 .ui.vertical.buttons .button:only-child {
   border-radius: $borderRadius;
 }
-
-

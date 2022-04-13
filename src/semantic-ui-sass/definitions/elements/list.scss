@@ -12,11 +12,10 @@
             Theme
 *******************************/
 
-$type    : 'element';
-$element : 'list';
+$type: "element";
+$element: "list";
 
-@import '../../theme';
-
+@import "../../theme";
 
 /*******************************
             List
@@ -66,7 +65,7 @@ ul.ui.list > li:first-child:after,
 ol.ui.list > li:first-child:after,
 .ui.list > .list > .item,
 .ui.list > .item:after {
-  content: '';
+  content: "";
   display: block;
   height: 0;
   clear: both;
@@ -103,7 +102,6 @@ ol.ui.list ol li,
   line-height: $childItemLineHeight;
 }
 
-
 /* Icon */
 .ui.list .list > .item > i.icon,
 .ui.list > .item > i.icon {
@@ -119,7 +117,6 @@ ol.ui.list ol li,
   display: inline-block;
   vertical-align: $iconVerticalAlign;
 }
-
 
 /* Image */
 .ui.list .list > .item > .image,
@@ -270,7 +267,6 @@ ol.ui.list ol li,
   padding-bottom: 0em;
 }
 
-
 /*******************************
             Types
 *******************************/
@@ -324,7 +320,6 @@ ol.ui.list ol li,
   display: inline-block;
 }
 
-
 /*******************************
              States
 *******************************/
@@ -351,7 +346,6 @@ ol.ui.list ol li,
 .ui.list > a.item:hover .icon {
   color: $itemLinkIconHoverColor;
 }
-
 
 /*******************************
            Variations
@@ -384,7 +378,6 @@ ol.ui.list ol li,
 .ui.inverted.list > a.item:hover {
   color: $invertedItemLinkHoverColor;
 }
-
 
 /* Linking Content */
 .ui.inverted.list .item a:not(.ui) {
@@ -762,7 +755,6 @@ ol.ui.horizontal.list li:before,
   border-color: $dividedInvertedBorderColor;
 }
 
-
 /*-------------------
         Celled
 --------------------*/
@@ -949,6 +941,3 @@ ol.ui.horizontal.list li:before,
 .ui.massive.horizontal.list > .item {
   font-size: $massive;
 }
-
-
-

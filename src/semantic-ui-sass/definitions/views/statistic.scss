@@ -12,11 +12,10 @@
             Theme
 *******************************/
 
-$type    : 'view';
-$element : 'statistic';
+$type: "view";
+$element: "statistic";
 
-@import '../../theme';
-
+@import "../../theme";
 
 /*******************************
            Statistic
@@ -40,8 +39,6 @@ $element : 'statistic';
 .ui.statistic:last-child {
   margin-bottom: 0em;
 }
-
-
 
 /*******************************
             Group
@@ -68,7 +65,7 @@ $element : 'statistic';
 /* Clearing */
 .ui.statistics:after {
   display: block;
-  content: ' ';
+  content: " ";
   height: 0px;
   clear: both;
   overflow: hidden;
@@ -79,11 +76,9 @@ $element : 'statistic';
   margin-top: 0em;
 }
 
-
 /*******************************
             Content
 *******************************/
-
 
 /*--------------
       Value
@@ -126,8 +121,6 @@ $element : 'statistic';
   margin-top: $bottomLabelDistance;
 }
 
-
-
 /*******************************
              Types
 *******************************/
@@ -169,17 +162,13 @@ $element : 'statistic';
   vertical-align: $imageVerticalAlign;
 }
 
-
-
 /*******************************
             Variations
 *******************************/
 
-
 /*--------------
       Count
 ---------------*/
-
 
 .ui.ten.statistics {
   margin: $itemGroupMargin;
@@ -260,9 +249,6 @@ $element : 'statistic';
   min-width: $oneColumn;
   margin: $itemMargin;
 }
-
-
-
 
 /*--------------
    Horizontal
@@ -460,11 +446,9 @@ $element : 'statistic';
   margin-bottom: 0em;
 }
 
-
 /*--------------
      Sizes
 ---------------*/
-
 
 /* Mini */
 .ui.mini.statistics .statistic > .value,
@@ -479,7 +463,6 @@ $element : 'statistic';
 .ui.mini.statistic > .text.value {
   font-size: $miniTextValueSize !important;
 }
-
 
 /* Tiny */
 .ui.tiny.statistics .statistic > .value,
@@ -550,6 +533,3 @@ $element : 'statistic';
 .ui.huge.statistic > .text.value {
   font-size: $hugeTextValueSize !important;
 }
-
-
-

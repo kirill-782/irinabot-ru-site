@@ -1,4 +1,4 @@
-@use 'sass:math';
+@use "sass:math";
 /*******************************
             Checkbox
 *******************************/
@@ -7,7 +7,6 @@ $checkboxSize: 17px;
 $checkboxColor: $textColor;
 $checkboxLineHeight: $checkboxSize;
 
-
 /* Label */
 $labelDistance: 1.85714em; /* 26px $ 14/em */
 
@@ -15,12 +14,10 @@ $labelDistance: 1.85714em; /* 26px $ 14/em */
 $checkboxBackground: $white;
 $checkboxBorder: 1px solid $solidBorderColor;
 $checkboxBorderRadius: $exact3px;
-$checkboxTransition:
-  border $defaultDuration $defaultEasing,
+$checkboxTransition: border $defaultDuration $defaultEasing,
   opacity $defaultDuration $defaultEasing,
   transform $defaultDuration $defaultEasing,
-  box-shadow $defaultDuration $defaultEasing
-;
+  box-shadow $defaultDuration $defaultEasing;
 
 /* Checkmark */
 $checkboxCheckFontSize: 14px;
@@ -105,10 +102,7 @@ $radioActiveFocusBulletColor: $checkboxActiveFocusCheckColor;
 
 /* Slider & Toggle Handle */
 $handleBackground: $white $subtleGradient;
-$handleBoxShadow:
-  $subtleShadow,
-  0px 0px 0px 1px $borderColor inset
-;
+$handleBoxShadow: $subtleShadow, 0px 0px 0px 1px $borderColor inset;
 
 /* Slider */
 $sliderHandleSize: 1.5rem;
@@ -144,8 +138,6 @@ $sliderOnLabelColor: $selectedTextColor;
 $sliderOnFocusLineColor: $lightBlackFocus;
 $sliderOnFocusLabelColor: $sliderOnLabelColor;
 
-
-
 /* Toggle */
 $toggleLaneWidth: 3.5rem;
 $toggleHandleSize: 1.5rem;
@@ -156,10 +148,8 @@ $toggleHeight: $toggleHandleSize;
 
 $toggleHandleRadius: $circularRadius;
 $toggleHandleOffset: 0rem;
-$toggleHandleTransition:
-  background $sliderTransitionDuration $defaultEasing,
-  left $sliderTransitionDuration $defaultEasing
-;
+$toggleHandleTransition: background $sliderTransitionDuration $defaultEasing,
+  left $sliderTransitionDuration $defaultEasing;
 
 $toggleLaneBackground: $transparentBlack;
 $toggleLaneHeight: $toggleHandleSize;
@@ -171,7 +161,6 @@ $toggleOnOffset: ($toggleLaneWidth - $toggleHandleSize) + 0.15rem;
 $toggleLabelDistance: $toggleLaneWidth + 1rem;
 $toggleLabelLineHeight: 1.5rem;
 $toggleLabelOffset: 0.15em;
-
 
 $toggleFocusColor: $veryStrongTransparentBlack;
 $toggleHoverColor: $toggleFocusColor;
@@ -186,8 +175,6 @@ $toggleOnHandleBoxShadow: $handleBoxShadow;
 
 $toggleOnFocusLaneColor: $primaryColorFocus;
 $toggleOnFocusLabelColor: $toggleOnLabelColor;
-
-
 
 /*-------------------
       Variations
