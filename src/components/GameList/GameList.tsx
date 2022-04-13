@@ -1,9 +1,14 @@
 import { GameListGame } from "../../models/websocket/ServerGameList";
-import { Table } from "semantic-ui-react";
+import { Container, Table } from "semantic-ui-react";
 import GameListPlayers from "./GameListPlayers";
-import React from "react";
+import React, { useContext } from "react";
+import { WebsocketContext } from "../../context";
+import { ClientRequestUDPGameConverter } from "../../models/websocket/ClientRequestUDPGame";
+import ConnectorAddButton from "./ConnectorAddButton";
 
 function GameList({ gameList }) {
+  const sockets = useContext(WebsocketContext);
+
   const getPlayerSlots = (game: GameListGame): number => {
     let usedSlots = 0;
 
@@ -15,13 +20,14 @@ function GameList({ gameList }) {
   };
 
   return (
-    <Table celled>
+    <Table>
       <Table.Header>
         <Table.Row>
           <Table.HeaderCell>Патч</Table.HeaderCell>
           <Table.HeaderCell>Слоты</Table.HeaderCell>
           <Table.HeaderCell>Игра</Table.HeaderCell>
           <Table.HeaderCell>Игроки</Table.HeaderCell>
+          <Table.HeaderCell></Table.HeaderCell>
         </Table.Row>
       </Table.Header>
       <Table.Body>
@@ -40,6 +46,9 @@ function GameList({ gameList }) {
               <Table.Cell>{game.name}</Table.Cell>
               <Table.Cell>
                 <GameListPlayers players={game.players} />
+              </Table.Cell>
+              <Table.Cell>
+                <ConnectorAddButton game={game} />
               </Table.Cell>
             </Table.Row>
           );

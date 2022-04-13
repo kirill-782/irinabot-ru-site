@@ -28,7 +28,6 @@ function LoginDropdown() {
     const onStorage = (e: StorageEvent) => {
       if (e.key.startsWith(state)) {
         if (e.key.substring(state.length + 1) === "token") {
-
           window.localStorage.setItem("authTokenType", data.type.toString());
           window.localStorage.setItem("authToken", e.newValue);
 
@@ -45,7 +44,7 @@ function LoginDropdown() {
           });
         }
 
-        window.localStorage.removeItem( e.key );
+        window.localStorage.removeItem(e.key);
       }
     };
 

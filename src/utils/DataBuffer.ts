@@ -1,5 +1,4 @@
 export class DataBuffer {
-  private length: number;
   private offset: number;
   readonly littleEndian: boolean;
   private data: DataView;
@@ -11,6 +10,10 @@ export class DataBuffer {
     this.offset = 0;
     this.littleEndian = true;
     this.allowResize = true;
+  }
+
+  public length() {
+    return this.data.byteLength;
   }
 
   public setPosition(position: number): void {

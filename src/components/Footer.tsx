@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { toast } from "react-semantic-toasts";
 import { Icon, Label, Menu } from "semantic-ui-react";
 import { AppRuntimeSettingsContext, WebsocketContext } from "../context";
+import ConnectorIndicator from "./Footer/ConnectorIndicator";
 import OnlineStatsCounter from "./Footer/OnlineStatsCounter";
 
 function Footer(props) {
@@ -19,14 +20,12 @@ function Footer(props) {
   return (
     <Menu text fixed="bottom" size="massive">
       <OnlineStatsCounter />
-      <Menu.Item>
-        <Icon name="rss" color="green"></Icon>
-        <Label floating color="red">
-          1
-        </Label>
-      </Menu.Item>
+      <ConnectorIndicator />
       <Menu.Item title="Отображает состояние соединения с хостботом.">
-        <Icon name="plug" color={websocketContext.isGHostSocketConnected ? "green" : "red"}></Icon>
+        <Icon
+          name="plug"
+          color={websocketContext.isGHostSocketConnected ? "green" : null}
+        ></Icon>
       </Menu.Item>
       <Menu.Item position="right" onClick={refreshButtonOnClick}>
         <Icon name="refresh" className={connectorClassList.join(" ")}></Icon>

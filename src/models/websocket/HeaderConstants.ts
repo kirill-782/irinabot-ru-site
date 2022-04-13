@@ -36,3 +36,12 @@ export const DEFAULT_CREATE_GAME = 0x04;
 export const DEFAULT_GET_WEBSOCKETCONNECTS_STATS = 0x05;
 export const DEFAULT_SEND_MESSAGE = 0x0c;
 export const DEFAULT_GET_MAPINFO = 0x0d;
+
+// Connector constants
+
+export const CONNECTOR_HELLO = 0x00;
+export const CONNECTOR_UDP_BROADCAST = 0x01;
+export const CONNECTOR_ADD_GAME = 0x02;
+export const CONNECTOR_RESET_GAMES = 0x03;
+
+export const CONNECTOR_SYMMARY = 0xff;

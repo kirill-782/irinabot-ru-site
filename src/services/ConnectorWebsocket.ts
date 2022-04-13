@@ -1,53 +1,23 @@
 import { AbstractConverter } from "../models/websocket/AbstractPackage";
-import {
-  DEFAULT_CONTEXT_HEADER_CONSTANT,
-  DEFAULT_GAME_LIST,
-  DEFAULT_MAP_INFO,
-  DEFAULT_UDP_ANSWER,
-  DEFAULT_WEBSOCKET_CONNECT_STATS,
-  GLOBAL_GET_ERROR,
-  GLOBAL_USER_AUTH_RESPONSE,
-} from "../models/websocket/HeaderConstants";
-import { ServerMapInfoConverter } from "../models/websocket/ServerMapInfo";
-import { ServerGameListConverter } from "./../models/websocket/ServerGameList";
+
 import { DataBuffer } from "./../utils/DataBuffer";
 import { AbstractPackage } from "./../models/websocket/AbstractPackage";
-import { ServerWebsocketConnectStatsConverter } from "../models/websocket/ServerWebsocketConnectStats";
-import { GLOBAL_CONTEXT_HEADER_CONSTANT } from "./../models/websocket/HeaderConstants";
+import { CONNECTOR_SYMMARY } from "../models/websocket/HeaderConstants";
 import {
-  ServerUserAuth,
-  ServerUserAuthConverter,
-} from "./../models/websocket/ServerUserAuth";
-import { ServerErrorConverter } from "../models/websocket/ServerError";
-import {
-  ServerUDPAnswer,
-  ServerUDPAnswerConverter,
-} from "./../models/websocket/ServerUDPAnswer";
+  ConnectorSummary,
+  ConnectorSummaryConverter,
+} from "./../models/websocket/ConnectorSummary";
 
-export interface GHostWebSocketOptions {
+export interface ConnectorWebsocketOptions {
   url: string;
   reconnectInterval?: number;
   autoReconnect?: boolean;
 }
 
 const packageHandlers = (() => {
-  let handlers: Array<Array<AbstractConverter>> = [];
+  let handlers: Array<AbstractConverter> = [];
 
-  handlers[DEFAULT_CONTEXT_HEADER_CONSTANT] = [];
-  handlers[DEFAULT_CONTEXT_HEADER_CONSTANT][DEFAULT_GAME_LIST] =
-    new ServerGameListConverter();
-  handlers[DEFAULT_CONTEXT_HEADER_CONSTANT][DEFAULT_MAP_INFO] =
-    new ServerMapInfoConverter();
-  handlers[DEFAULT_CONTEXT_HEADER_CONSTANT][DEFAULT_WEBSOCKET_CONNECT_STATS] =
-    new ServerWebsocketConnectStatsConverter();
-  handlers[DEFAULT_CONTEXT_HEADER_CONSTANT][DEFAULT_UDP_ANSWER] =
-    new ServerUDPAnswerConverter();
-
-  handlers[GLOBAL_CONTEXT_HEADER_CONSTANT] = [];
-  handlers[GLOBAL_CONTEXT_HEADER_CONSTANT][GLOBAL_GET_ERROR] =
-    new ServerErrorConverter();
-  handlers[GLOBAL_CONTEXT_HEADER_CONSTANT][GLOBAL_USER_AUTH_RESPONSE] =
-    new ServerUserAuthConverter();
+  handlers[CONNECTOR_SYMMARY] = new ConnectorSummaryConverter();
 
   return handlers;
 })();
@@ -56,7 +26,7 @@ interface PackageEventDetail {
   package: AbstractPackage;
 }
 
-export class GHostPackageEvent extends CustomEvent<PackageEventDetail> {
+export class ConnectorPackageEvent extends CustomEvent<PackageEventDetail> {
   constructor(incomingPackage: AbstractPackage) {
     super("package", { detail: { package: incomingPackage } });
   }
@@ -66,41 +36,41 @@ interface MessageEventDetail {
   data: any;
 }
 
-export class GHostMessageEvent extends CustomEvent<MessageEventDetail> {
+export class ConnectorMessageEvent extends CustomEvent<MessageEventDetail> {
   constructor(data) {
     super("message", { detail: { data: data } });
   }
 }
 
-export interface GHostWebSocket {
+export interface ConnectorWebsocket {
   addEventListener(
     event: "package",
-    callback: (data: GHostPackageEvent) => void
+    callback: (data: ConnectorPackageEvent) => void
   ): void;
   addEventListener(
     event: "message",
-    callback: (data: GHostMessageEvent) => void
+    callback: (data: ConnectorMessageEvent) => void
   ): void;
   addEventListener(event: "open", callback: (data: Event) => void): void;
   addEventListener(event: "close", callback: (data: Event) => void): void;
 
   removeEventListener(
     event: "package",
-    callback: (data: GHostPackageEvent) => void
+    callback: (data: ConnectorPackageEvent) => void
   ): void;
   removeEventListener(
     event: "message",
-    callback: (data: GHostMessageEvent) => void
+    callback: (data: ConnectorMessageEvent) => void
   ): void;
   removeEventListener(event: "open", callback: (data: Event) => void): void;
   removeEventListener(event: "close", callback: (data: Event) => void): void;
 }
 
-export class GHostWebSocket extends EventTarget {
+export class ConnectorWebsocket extends EventTarget {
   private socketConnect: WebSocket;
-  private options: GHostWebSocketOptions;
+  private options: ConnectorWebsocketOptions;
 
-  constructor(options: GHostWebSocketOptions) {
+  constructor(options: ConnectorWebsocketOptions) {
     super();
 
     if (options.autoReconnect == undefined) options.autoReconnect = true;
@@ -183,29 +153,22 @@ export class GHostWebSocket extends EventTarget {
   };
 
   private wsOnMessage = (event: MessageEvent) => {
-    this.dispatchEvent(new GHostMessageEvent(event.data));
+    this.dispatchEvent(new ConnectorMessageEvent(event.data));
 
     if (event.data instanceof ArrayBuffer) {
       const dataBuffer = new DataBuffer(event.data);
 
-      const context = dataBuffer.getUint8();
-
-      if (packageHandlers[context] == undefined) {
-        console.log("Unknown context passed (" + context + ")");
-        return;
-      }
-
       const type = dataBuffer.getUint8();
 
-      if (packageHandlers[context][type] == undefined) {
-        console.log("Unknown type passed (" + type + ")");
+      if (packageHandlers[type] == undefined) {
+        console.log("Unknown connector type passed (" + type + ")");
         return;
       }
 
-      let converter = packageHandlers[context][type];
+      let converter = packageHandlers[type];
       let incomingPackage = converter.parse(dataBuffer);
 
-      this.dispatchEvent(new GHostPackageEvent(incomingPackage));
+      this.dispatchEvent(new ConnectorPackageEvent(incomingPackage));
     }
   };
 }

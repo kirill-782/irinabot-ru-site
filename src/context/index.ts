@@ -1,4 +1,5 @@
 import { createContext } from "react";
+import { ConnectorWebsocket } from "../services/ConnectorWebsocket";
 import { GHostWebSocket } from "../services/GHostWebsocket";
 import { ServerUserAuth } from "./../models/websocket/ServerUserAuth";
 
@@ -7,6 +8,8 @@ import { ServerUserAuth } from "./../models/websocket/ServerUserAuth";
 export type WebsocketContextType = {
   ghostSocket: GHostWebSocket;
   isGHostSocketConnected: boolean;
+  connectorSocket: ConnectorWebsocket;
+  isConnectorSocketConnected: boolean;
 };
 
 export const WebsocketContext = createContext<WebsocketContextType>(null);

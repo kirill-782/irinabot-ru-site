@@ -14,9 +14,9 @@ function OauthStubPage() {
       urlParser.get("error") + ": " + urlParser.get("error_description")
     );
   }
-  
+
   window.close();
-  
+
   return (
     <span>
       Я окошко интроверт. Мне не нравится, что на меня кто то смотрит. Закрой

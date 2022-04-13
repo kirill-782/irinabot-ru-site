@@ -25,7 +25,6 @@ export const useWebsocketAuth = ({ ghostSocket }: WebsocketAuthOptions) => {
 
   const [authState, authDispatcher] = useReducer(
     (state: AuthData, action: AuthAction) => {
-      console.log(state, action);
       if (action.action == "clearCredentials") {
         const newState: AuthData = { ...state, authCredentials: null };
         return newState;
@@ -94,7 +93,6 @@ export const useWebsocketAuth = ({ ghostSocket }: WebsocketAuthOptions) => {
     };
 
     const onClose = () => {
-      console.log("onClose")
       authDispatcher({ action: "clearAuth", payload: null });
     };
 
