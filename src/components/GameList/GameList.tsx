@@ -1,13 +1,10 @@
 import { GameListGame } from "../../models/websocket/ServerGameList";
-import { Container, Table } from "semantic-ui-react";
+import { Table } from "semantic-ui-react";
 import GameListPlayers from "./GameListPlayers";
 import React, { useContext } from "react";
-import { WebsocketContext } from "../../context";
-import { ClientRequestUDPGameConverter } from "../../models/websocket/ClientRequestUDPGame";
 import ConnectorAddButton from "./ConnectorAddButton";
 
 function GameList({ gameList }) {
-  const sockets = useContext(WebsocketContext);
 
   const getPlayerSlots = (game: GameListGame): number => {
     let usedSlots = 0;

@@ -7,7 +7,6 @@ import {
   gameTypeSort,
   playersOccupiedSlot,
 } from "../utils/GameListSortMethods";
-import GameList from "./../components/GameList/GameList";
 
 interface useGameListFilterOptions {
   gameList: GameListGame[];
@@ -27,6 +26,17 @@ export const useGameListFilter = ({
       if (quicFilter.length == 0) return true;
 
       if (game.name.toLocaleLowerCase().search(quicFilter.toLowerCase()) >= 0)
+        return true;
+
+      if (
+        game.mapName.toLocaleLowerCase().search(quicFilter.toLowerCase()) >= 0
+      )
+        return true;
+
+      if (
+        game.mapFileName.toLocaleLowerCase().search(quicFilter.toLowerCase()) >=
+        0
+      )
         return true;
 
       const players = game.players.filter((player) => {
