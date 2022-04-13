@@ -18,7 +18,7 @@ function Footer(props) {
   const connectorClassList = runTimeContext.gameList.locked ? ["red"] : [];
 
   return (
-    <Menu text fixed="bottom" size="massive">
+    <Menu text fixed="bottom" size="massive" className='footer-menu'>
       <OnlineStatsCounter />
       <ConnectorIndicator />
       <Menu.Item title="Отображает состояние соединения с хостботом.">
@@ -28,7 +28,7 @@ function Footer(props) {
         ></Icon>
       </Menu.Item>
       <Menu.Item position="right" onClick={refreshButtonOnClick}>
-        <Icon name="refresh" className={connectorClassList.join(" ")}></Icon>
+        <Icon name="sync alternate" className={connectorClassList.join(" ")}></Icon>
       </Menu.Item>
       <Menu.Item
         onClick={() => toast({ type: "error", title: "Не поддерживается" })}

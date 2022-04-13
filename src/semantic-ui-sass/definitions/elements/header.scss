@@ -34,7 +34,7 @@ $element: "header";
 }
 
 .ui.header:first-child {
-  margin-top: $firstMargin;
+  margin-top: -.14285714em;
 }
 .ui.header:last-child {
   margin-bottom: $lastMargin;

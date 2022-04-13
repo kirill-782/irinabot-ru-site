@@ -1916,7 +1916,7 @@ Floated Menu / Item
 
 /* Medium */
 .ui.menu {
-  font-size: $medium;
+  font-size: $menuFontSize;
 }
 .ui.vertical.menu {
   width: $mediumWidth;
@@ -1952,4 +1952,11 @@ Floated Menu / Item
 }
 .ui.massive.vertical.menu {
   width: $massiveWidth;
+}
+
+/* Footer Menu */
+.footer-menu {
+  i.icon, i.icons {
+    font-size: 18px;
+  }
 }

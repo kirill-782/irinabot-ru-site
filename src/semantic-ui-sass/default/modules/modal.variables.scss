@@ -25,12 +25,12 @@ $closeRight: -($closeDistance + $closeHitbox);
 
 /* Header */
 $headerMargin: 0em;
-$headerVerticalPadding: 1.25em;
+$headerVerticalPadding: 0.97220em;
 $headerHorizontalPadding: 1.5rem;
 $headerPadding: $headerVerticalPadding $headerHorizontalPadding;
 $headerBackground: $white;
 $headerColor: $darkTextColor;
-$headerFontSize: $huge;
+$headerFontSize: $big;
 $headerBoxShadow: none;
 $headerFontWeight: $bold;
 $headerFontFamily: $headerFont;

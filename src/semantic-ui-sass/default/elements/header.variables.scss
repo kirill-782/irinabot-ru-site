@@ -14,7 +14,7 @@ $lineHeightOffset: $headerLineHeightOffset;
 
 $topMargin: $headerTopMargin;
 $bottomMargin: $headerBottomMargin;
-$margin: $topMargin 0em $bottomMargin;
+$margin: calc(2rem - .14285714em) 0 1rem;
 
 $firstMargin: (-$lineHeightOffset);
 $lastMargin: 0em;

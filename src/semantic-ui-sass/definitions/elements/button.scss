@@ -692,13 +692,12 @@ $element: "button";
 
 .ui.icon.buttons .button,
 .ui.icon.button {
-  padding: $verticalPadding $verticalPadding ($verticalPadding + $shadowOffset);
+  padding: .58928571em 1.125em .58928571em;
 }
 .ui.icon.buttons .button > .icon,
 .ui.icon.button > .icon {
   opacity: $iconButtonOpacity;
   margin: 0em !important;
-  vertical-align: top;
 }
 
 /*-------------------

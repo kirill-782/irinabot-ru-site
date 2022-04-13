@@ -19,7 +19,7 @@ export interface MenuItem {
 function Header() {
   const authContext = useContext(AuthContext);
   const currentAuth = authContext.auth.currentAuth;
-
+  
   return (
     <Menu fixed="top" inverted>
       <Menu.Item name="logo">
