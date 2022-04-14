@@ -1354,9 +1354,11 @@ Floated Menu / Item
 .ui.link.inverted.menu .item:hover,
 .ui.inverted.menu .dropdown.item:hover,
 .ui.inverted.menu .link.item:hover,
-.ui.inverted.menu a.item:hover {
+.ui.inverted.menu a.item:hover,
+.ui.inverted.menu div.theme-switcher:hover {
   background: $invertedHoverBackground;
   color: $invertedHoverColor;
+  cursor: pointer;
 }
 .ui.vertical.inverted.menu .item .menu a.item:hover,
 .ui.vertical.inverted.menu .item .menu .link.item:hover {
