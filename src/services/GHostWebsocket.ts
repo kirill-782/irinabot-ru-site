@@ -14,15 +14,9 @@ import { DataBuffer } from "./../utils/DataBuffer";
 import { AbstractPackage } from "./../models/websocket/AbstractPackage";
 import { ServerWebsocketConnectStatsConverter } from "../models/websocket/ServerWebsocketConnectStats";
 import { GLOBAL_CONTEXT_HEADER_CONSTANT } from "./../models/websocket/HeaderConstants";
-import {
-  ServerUserAuth,
-  ServerUserAuthConverter,
-} from "./../models/websocket/ServerUserAuth";
+import { ServerUserAuthConverter } from "./../models/websocket/ServerUserAuth";
 import { ServerErrorConverter } from "../models/websocket/ServerError";
-import {
-  ServerUDPAnswer,
-  ServerUDPAnswerConverter,
-} from "./../models/websocket/ServerUDPAnswer";
+import { ServerUDPAnswerConverter } from "./../models/websocket/ServerUDPAnswer";
 
 export interface GHostWebSocketOptions {
   url: string;
