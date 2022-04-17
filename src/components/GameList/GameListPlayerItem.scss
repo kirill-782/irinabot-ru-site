@@ -1,0 +1,162 @@
+$opacity: 20%;
+$red: #FD0400;
+$blue: #0142FF;
+$teal: #17bf99;
+$purple: #540081;
+$yellow: #bbb805;
+$orange: #FD8B10;
+$green: #20BF00;
+$pink: #E45BAF;
+$gray: #939796;
+$light-blue: #7DBFF1;
+$dark-green: #126049;
+$brown: #4F2A04;
+$maroon: #9B0000;
+$navy: #0001C4;
+$turquoise: #00EAFF;
+$violet: #BE00FE;
+$wheat: #bfa670;
+$peach: #F8A48A;
+$mint: #97c167;
+$leavender:#DEB7EE;
+$coal: #282828;
+$snow: #bfc3d1;
+$emerald: #00781E;
+$peanut: #A56F33;
+
+.ui.list .list > a.item.player-name, 
+.ui.list > a.item.player-name {
+  padding: 3px;
+  border-radius: 4px;
+  
+  &.red {
+    color: $red;
+    background: rgba($red, $opacity);
+  }
+
+  &.blue {
+    color: $blue;
+    background: rgba($blue, $opacity);
+  }
+
+  &.teal {
+    color: $teal;
+    background: rgba($teal, $opacity);
+  }
+
+  &.purple {
+    color: $purple;
+    background: rgba($purple, $opacity);
+  }
+
+  &.yellow {
+    color: $yellow;
+    background: rgba($yellow, $opacity);
+  }
+
+  &.orange {
+    color: $orange;
+    background: rgba($orange, $opacity);
+  }
+
+  &.green {
+    color: $green;
+    background: rgba($green, $opacity);
+  }
+
+  &.pink {
+    color: $pink;
+    background: rgba($pink, $opacity);
+  }
+
+  &.gray {
+    color: $gray;
+    background: rgba($gray, $opacity);
+  }
+
+  &.ligt-blue {
+    color: $ligt-blue;
+    background: rgba($ligt-blue, $opacity);
+  }
+
+  &.dark-green {
+    color: $dark-green;
+    background: rgba($dark-green, $opacity);
+  }
+
+  &.brown {
+    color: $brown;
+    background: rgba($brown, $opacity);
+  }
+
+  &.maroon {
+    color: $maroon;
+    background: rgba($maroon, $opacity);
+  }
+
+  &.navy {
+    color: $navy;
+    background: rgba($navy, $opacity);
+  }
+
+  &.turquoise {
+    color: $turquoise;
+    background: rgba($turquoise, $opacity);
+  }
+
+  &.violet {
+    color: $violet;
+    background: rgba($violet, $opacity);
+  }
+
+  &.violet {
+    color: $violet;
+    background: rgba($violet, $opacity);
+  }
+
+  &.wheat {
+    color: $wheat;
+    background: rgba($wheat, $opacity);
+  }
+
+  &.peach {
+    color: $peach;
+    background: rgba($peach, $opacity);
+  }
+
+  &.mint {
+    color: $mint;
+    background: rgba($mint, $opacity);
+  }
+
+  &.leavender {
+    color: $leavender;
+    background: rgba($leavender, $opacity);
+  }
+
+  &.coal {
+    color: $coal;
+    background: rgba($coal, $opacity);
+  }
+
+  &.snow {
+    color: $snow;
+    background: rgba($snow, $opacity);
+  }
+
+  &.emerald {
+    color: $emerald;
+    background: rgba($emerald, $opacity);
+  }
+
+  &.peanut {
+    color: $peanut;
+    background: rgba($peanut, $opacity);
+  }
+}
+
+.ui.horizontal.list > .item.player-name:first-child, 
+.ui.horizontal.list > .item.player-name:last-child {
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
