@@ -1,6 +1,7 @@
 import React, { ReactNode, useContext } from "react";
 import { Icon, Menu, SemanticICONS } from "semantic-ui-react";
 import LoginDropdown from "../../Header/LoginDropdown";
+import UploadMap from "../../Header/UploadMap";
 import UserDrowdown from "../../Header/UserDropdown";
 import { AuthContext } from "./../../../context/index";
 import './DesktopMenu.scss';
@@ -33,7 +34,7 @@ const DesktopMenu = () => {
       <Menu.Item onClick={handleMenuItemClick}><Icon name="help" />Справка</Menu.Item>
       
       <Menu.Menu position="right">
-        <Menu.Item onClick={handleMenuItemClick}><Icon name="upload" />Загрузка карт</Menu.Item>
+        <UploadMap/>
         <Menu.Item onClick={handleMenuItemClick}><Icon name="ruble sign" />Платные услуги</Menu.Item>
           {currentAuth !== null ? <UserDrowdown /> : <LoginDropdown />}
       </Menu.Menu>

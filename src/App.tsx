@@ -4,6 +4,7 @@ import {
   AuthAction,
   AuthContext,
   AuthData,
+  RestContext,
   WebsocketContext,
 } from "./context";
 import { loadTheme } from "./utils/Theme";
@@ -19,6 +20,8 @@ import { useWebsocketAuth } from "./hooks/useWebsocketAuth";
 import OauthStubPage from "./components/Pages/OauthStubPage";
 import { useConnectorSocket } from "./hooks/useConnectorSocket";
 import { useConnectorGameAdd } from "./hooks/useConnectorGameAdd";
+import { MapService } from "./services/MapService";
+import { MapUploaderService } from "./services/MapUploaderService";
 
 function App() {
   useEffect(loadTheme, []);
@@ -56,13 +59,20 @@ function App() {
             dispatchAuth: authDispatcher as React.Dispatch<AuthAction>,
           }}
         >
-          <Routes>
-            <Route path="/*" element={<Layout />}>
-              <Route index element={<GameListPage />} />
-              <Route path="gamelist" element={<GameListPage />} />
-            </Route>
-            <Route path="/oauth" element={<OauthStubPage />} />
-          </Routes>
+          <RestContext.Provider
+            value={{
+              mapsApi: new MapService(),
+              mapUploader: new MapUploaderService(new MapService()),
+            }}
+          >
+            <Routes>
+              <Route path="/*" element={<Layout />}>
+                <Route index element={<GameListPage />} />
+                <Route path="gamelist" element={<GameListPage />} />
+              </Route>
+              <Route path="/oauth" element={<OauthStubPage />} />
+            </Routes>
+          </RestContext.Provider>
         </AuthContext.Provider>
       </AppRuntimeSettingsContext.Provider>
     </WebsocketContext.Provider>

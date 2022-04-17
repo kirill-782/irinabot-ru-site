@@ -1,11 +1,10 @@
 import { Outlet } from "react-router-dom";
 import { SemanticToastContainer } from "react-semantic-toasts";
-import { Icon } from "semantic-ui-react";
-import { Checkbox } from "semantic-ui-react";
 import type { CheckboxProps } from "semantic-ui-react";
 import Footer from "./Footer";
-import { switchTheme, E_THEME, getTheme } from "../utils/Theme";
-import Header, { MenuItem } from "./Header";
+import { switchTheme, E_THEME } from "../utils/Theme";
+import Header from "./Header";
+import PrepareUploadMapModal from "./Modal/PrepareUploadMapModal";
 
 const handleChangeTheme = (_, data: CheckboxProps) => {
   switchTheme(data.checked ? E_THEME.DARK : E_THEME.LIGHT);

@@ -1,10 +1,11 @@
 import React, { ReactNode, useContext } from "react";
-import { Icon, Menu, SemanticICONS, Checkbox } from "semantic-ui-react";
+import { Icon, Menu, SemanticICONS, Checkbox, CheckboxProps } from "semantic-ui-react";
 import LoginDropdown from "../../Header/LoginDropdown";
 import UserDrowdown from "../../Header/UserDropdown";
 import { AuthContext } from "./../../../context/index";
 import { switchTheme, E_THEME, getTheme } from "../../../utils/Theme";
 import './MobileMenu.scss';
+import UploadMap from "../../Header/UploadMap";
 
 export interface MenuItem {
   type: string;
@@ -49,7 +50,7 @@ const MobileMenu = () => {
       </Menu.Menu>
       <div className='burger-mobile-menu'>
         <Menu.Item onClick={handleMenuItemClick}><Icon name="gamepad" />Активные Игры</Menu.Item>
-        <Menu.Item onClick={handleMenuItemClick}><Icon name="upload" />Загрузка карт</Menu.Item>
+        <UploadMap/>
         <Menu.Item onClick={handleMenuItemClick}><Icon name="ruble sign" />Платные услуги</Menu.Item>
         <Menu.Item onClick={handleMenuItemClick}><Icon name="help" />Справка</Menu.Item>
         <Checkbox 
