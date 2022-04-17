@@ -47,7 +47,7 @@ function GameListPlayerItem({ player }: GameListPlayerItemProps) {
       case 8:
         return 'gray';
       case 9:
-        return 'ligt-blue';
+        return 'light-blue';
       case 10:
         return 'dark-green';
       case 11:
