@@ -1,6 +1,7 @@
 import { Button, Container, Grid, Icon, List, Popup } from "semantic-ui-react";
 import { GameListPlayer } from "../../models/websocket/ServerGameList";
 import { useEffect, useState } from "react";
+import './GameListPlayerItem.scss';
 
 const realmToText = {
   "178.218.214.114": "iCCup",
@@ -23,8 +24,62 @@ interface GamePlayerStats {
 function GameListPlayerItem({ player }: GameListPlayerItemProps) {
   const [gamePlayerStats, setGamePlayerStats] =
     useState<GamePlayerStats>(undefined);
-
   //https://nwc3l.com/irinabot_profile?id=zsef_He_yIIaJI&json
+
+  const getClassColorByPlayer = ({colour}) => {
+    switch (colour) {
+      case 0:
+        return 'red';
+      case 1:
+        return 'blue';
+      case 2:
+        return 'teal';
+      case 3:
+        return 'purple';
+      case 4:
+        return 'yellow';
+      case 5:
+        return 'orange';
+      case 6:
+        return 'green';
+      case 7:
+        return 'pink';
+      case 8:
+        return 'gray';
+      case 9:
+        return 'ligt-blue';
+      case 10:
+        return 'dark-green';
+      case 11:
+        return 'brown';
+      case 12:
+        return 'maroon';
+      case 13:
+        return 'navy';
+      case 14:
+        return 'turquoise';
+      case 15:
+        return 'violet';
+      case 16:
+        return 'wheat';
+      case 17:
+        return 'peach';
+      case 18:
+        return 'mint';
+      case 19:
+        return 'leavender';
+      case 20:
+        return 'coal';
+      case 21:
+        return 'snow';
+      case 22:
+        return 'emerald';
+      case 23:
+        return 'peanut';
+      default:
+        return '';
+    }
+  }
 
   const loadStats = () => {
     const urlParser = new URLSearchParams();
@@ -82,6 +137,7 @@ function GameListPlayerItem({ player }: GameListPlayerItemProps) {
               ? player.realm
               : realmToText[player.realm]
           }
+          className={`player-name ${getClassColorByPlayer(player)}`}
         >
           {player.name}
         </List.Item>
