@@ -3,13 +3,13 @@
 }
 
 .mobile-menu {
-  .mobile-menu-pushable { 
-    background-color: rgba(0,0,0,.4);
+  .mobile-menu-pushable {
+    background-color: rgba(0, 0, 0, 0.4);
     z-index: 1;
     overflow: hidden;
     opacity: 0;
-    -webkit-transition: opacity .5s;
-    transition: opacity .5s;
+    -webkit-transition: opacity 0.5s;
+    transition: opacity 0.5s;
     will-change: opacity;
 
     &.active {

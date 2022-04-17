@@ -21,13 +21,12 @@ const AppMedia = createMedia({
     tablet: 890,
     computer: 992,
     largeScreen: 1200,
-    widescreen: 1920
-  }
+    widescreen: 1920,
+  },
 });
 const { Media, MediaContextProvider } = AppMedia;
 
 const MainMenu = () => {
-
   return (
     <MediaContextProvider>
       <Media at="mobile">
@@ -35,10 +34,10 @@ const MainMenu = () => {
       </Media>
 
       <Media greaterThan="mobile">
-        <DesktopMenu/>
+        <DesktopMenu />
       </Media>
     </MediaContextProvider>
   );
-}
-  
+};
+
 export default MainMenu;

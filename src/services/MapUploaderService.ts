@@ -110,8 +110,7 @@ export class MapUploaderService extends EventTarget {
     return this.currentUpload !== null;
   }
 
-  public getQueueLength()
-  {
+  public getQueueLength() {
     return this.uploadQueue.length;
   }
 
@@ -119,7 +118,12 @@ export class MapUploaderService extends EventTarget {
     if (!this.currentUpload && this.uploadQueue.length > 0) {
       this.currentUpload = this.uploadQueue.shift();
 
-      this.dispatchEvent(new UploadMapStartEvent({entry: this.currentUpload, remain: this.uploadQueue.length}));
+      this.dispatchEvent(
+        new UploadMapStartEvent({
+          entry: this.currentUpload,
+          remain: this.uploadQueue.length,
+        })
+      );
 
       const { file, flags, additionalFlags } = this.currentUpload;
       this.mapsApi
@@ -128,19 +132,38 @@ export class MapUploaderService extends EventTarget {
           {
             signal: this.abortController.signal,
             onUploadProgress: (progressEvent: ProgressEvent) => {
-              this.dispatchEvent(new UploadMapProgressEvent({entry: this.currentUpload, loaded: progressEvent.loaded, total: progressEvent.total}));
+              this.dispatchEvent(
+                new UploadMapProgressEvent({
+                  entry: this.currentUpload,
+                  loaded: progressEvent.loaded,
+                  total: progressEvent.total,
+                })
+              );
             },
           }
         )
         .then((map) => {
-          this.dispatchEvent(new UploadMapCompleteEvent({map, error: null, remain: this.uploadQueue.length}));
+          this.dispatchEvent(
+            new UploadMapCompleteEvent({
+              map,
+              error: null,
+              remain: this.uploadQueue.length,
+            })
+          );
         })
         .catch((error) => {
-          this.dispatchEvent(new UploadMapCompleteEvent({map: null, error, remain: this.uploadQueue.length}));
-        }).finally(()=>{
+          this.dispatchEvent(
+            new UploadMapCompleteEvent({
+              map: null,
+              error,
+              remain: this.uploadQueue.length,
+            })
+          );
+        })
+        .finally(() => {
           this.currentUpload = null;
           this.startUpload();
-        })
+        });
     }
   }
 }

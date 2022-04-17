@@ -29,7 +29,7 @@ export const useConnectorGameAdd = ({
             title: "Игра в коннектор отправлена",
             description: "Зайдите в LAN Warcraft III, чтобы войти",
             type: "success",
-            time: 10000
+            time: 10000,
           });
           const udpAnswer = data.detail.package as ServerUDPAnswer;
           const converter = new ConnectorBrowserAddGameConverter();

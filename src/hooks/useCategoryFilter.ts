@@ -1,8 +1,11 @@
 import { useMemo } from "react";
 import { Category } from "../models/rest/Category";
 
-export const useCategoryFilter = (selectedCategories: number[], categories: Category[], maxSelected: number) => {
-
+export const useCategoryFilter = (
+  selectedCategories: number[],
+  categories: Category[],
+  maxSelected: number
+) => {
   const hasSingleton = (categoryId) => {
     for (let i = 0; i < categories.length; ++i) {
       if (categoryId == categories[i].id) return categories[i].singleton;
@@ -52,4 +55,4 @@ export const useCategoryFilter = (selectedCategories: number[], categories: Cate
       [selectedCategories, categories]
     );
   }, [categories, selectedCategories]);
-}
+};

@@ -55,8 +55,8 @@ export const AuthContext = createContext<AuthContextType>(null);
 // RestApi context
 
 export type RestContextType = {
-  mapUploader: MapUploaderService
-  mapsApi: MapService
+  mapUploader: MapUploaderService;
+  mapsApi: MapService;
 };
 
-export const RestContext = createContext<RestContextType>(null)
+export const RestContext = createContext<RestContextType>(null);

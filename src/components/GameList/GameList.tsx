@@ -5,7 +5,6 @@ import React, { useContext } from "react";
 import ConnectorAddButton from "./ConnectorAddButton";
 
 function GameList({ gameList }) {
-
   const getPlayerSlots = (game: GameListGame): number => {
     let usedSlots = 0;
 

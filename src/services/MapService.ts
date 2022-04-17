@@ -28,8 +28,8 @@ export class MapService {
       url: this.config.basePath + "/v1/maps",
       method: "POST",
       validateStatus: (status) => {
-        return status == 200 || status == 201
-      }
+        return status == 200 || status == 201;
+      },
     };
 
     request = this.appendOptions(request, options);
@@ -62,7 +62,7 @@ export class MapService {
   ) => {
     let request: AxiosRequestConfig<FormData> = {
       url: this.config.basePath + "/v1/maps/categories",
-      method: "GET"
+      method: "GET",
     };
 
     request = this.appendOptions(request, options);
@@ -73,9 +73,7 @@ export class MapService {
   };
 
   private appendOptions(request: AxiosRequestConfig, options?: RequestOptions) {
-
-    if(!options)
-      return request; 
+    if (!options) return request;
 
     request.onUploadProgress = options.onUploadProgress;
 

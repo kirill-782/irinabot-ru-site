@@ -39,13 +39,11 @@ function UploadMap() {
 
   useEffect(() => {
     const onUploadComplete = (event: UploadMapCompleteEvent) => {
-
-
       if (event.detail.remain === 0) {
         setMapUploadind(false);
         setModalOpen(false);
       }
-      
+
       if (!modalOpen) {
         if (event.detail.error)
           toast({
