@@ -15,7 +15,7 @@ function ConnectorIndicator() {
 
   useEffect(() => {
     const onConnectorSymmary = (e: ConnectorPackageEvent) => {
-      if (e.detail.package.type == CONNECTOR_SYMMARY) {
+      if (e.detail.package.type === CONNECTOR_SYMMARY) {
         const symmary = e.detail.package as ConnectorSummary;
 
         setConnectorGames(symmary.games);

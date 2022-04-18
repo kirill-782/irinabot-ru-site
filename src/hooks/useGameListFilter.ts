@@ -23,7 +23,7 @@ export const useGameListFilter = ({
 }: useGameListFilterOptions) => {
   return useMemo(() => {
     let filtredGames = gameList.filter((game) => {
-      if (quicFilter.length == 0) return true;
+      if (quicFilter.length === 0) return true;
 
       if (game.name.toLocaleLowerCase().search(quicFilter.toLowerCase()) >= 0)
         return true;
@@ -40,7 +40,7 @@ export const useGameListFilter = ({
         return true;
 
       const players = game.players.filter((player) => {
-        if (player.name.length == 0) return false;
+        if (player.name.length === 0) return false;
         if (
           player.name.toLocaleLowerCase().search(quicFilter.toLowerCase()) >= 0
         )

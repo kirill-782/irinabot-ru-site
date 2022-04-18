@@ -2,7 +2,6 @@ import { DataBuffer } from "../../utils/DataBuffer";
 import { AbstractPackage, AbstractConverter } from "./AbstractPackage";
 import {
   DEFAULT_CONTEXT_HEADER_CONSTANT,
-  DEFAULT_MAP_INFO,
   DEFAULT_UDP_ANSWER,
 } from "./HeaderConstants";
 

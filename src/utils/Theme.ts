@@ -19,7 +19,7 @@ export const loadTheme = () => {
   if (theme === E_THEME.LIGHT) {
     return;
   }
-  require(`../semantic-ui-sass/${theme}/_index.scss`);
+  import(`../semantic-ui-sass/${theme}/_index.scss`);
 };
 
 /** Переключение темы сайта

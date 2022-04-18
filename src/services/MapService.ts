@@ -28,7 +28,7 @@ export class MapService {
       url: this.config.basePath + "/v1/maps",
       method: "POST",
       validateStatus: (status) => {
-        return status == 200 || status == 201;
+        return status === 200 || status === 201;
       },
     };
 

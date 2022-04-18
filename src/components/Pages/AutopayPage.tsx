@@ -3,7 +3,6 @@ import {
   Container,
   Form,
   Grid,
-  GridRow,
   Header,
   Message,
 } from "semantic-ui-react";
@@ -99,7 +98,7 @@ function AutopayPage() {
     const totalPrice = basePriceInMoonth * parseInt(duration);
 
     return [totalPrice, totalPrice > 0 && parseInt(connectroId) > 1];
-  }, [duration, selectedPlaces, connectroId]);
+  }, [selectedPlaces, duration, connectroId, availablePlaces]);
 
   const renerErrorMessage = () => {
     if (isValid) return null;

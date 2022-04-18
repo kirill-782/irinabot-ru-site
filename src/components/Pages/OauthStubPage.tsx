@@ -1,5 +1,3 @@
-import { url } from "inspector";
-
 function OauthStubPage() {
   const urlParser = new URLSearchParams(window.location.hash.substring(1));
 

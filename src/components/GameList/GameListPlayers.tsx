@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, List, Placeholder, Popup } from "semantic-ui-react";
+import { List } from "semantic-ui-react";
 import { GameListPlayer } from "../../models/websocket/ServerGameList";
 import GameListPlayerItem from "./GameListPlayerItem";
 import "./GameListPlayers.scss";

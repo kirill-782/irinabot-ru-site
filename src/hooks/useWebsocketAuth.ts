@@ -21,23 +21,23 @@ interface WebsocketAuthOptions {
 }
 
 export const useWebsocketAuth = ({ ghostSocket }: WebsocketAuthOptions) => {
-  const sockets = useContext(WebsocketContext);
+  useContext(WebsocketContext);
 
   const [authState, authDispatcher] = useReducer(
     (state: AuthData, action: AuthAction) => {
-      if (action.action == "clearCredentials") {
+      if (action.action === "clearCredentials") {
         const newState: AuthData = { ...state, authCredentials: null };
         return newState;
-      } else if (action.action == "clearAuth") {
+      } else if (action.action === "clearAuth") {
         const newState: AuthData = { ...state, currentAuth: null };
         return newState;
-      } else if (action.action == "saveAuth") {
+      } else if (action.action === "saveAuth") {
         const newState: AuthData = {
           ...state,
           currentAuth: action.payload as ServerUserAuth,
         };
         return newState;
-      } else if (action.action == "saveCredentials") {
+      } else if (action.action === "saveCredentials") {
         const newState: AuthData = {
           ...state,
           authCredentials: action.payload as AuthCredentials,
@@ -53,7 +53,7 @@ export const useWebsocketAuth = ({ ghostSocket }: WebsocketAuthOptions) => {
   // Load localStorage auth
 
   useEffect(() => {
-    if (window.localStorage.getItem("authTokenType") != undefined) {
+    if (window.localStorage.getItem("authTokenType") !== undefined) {
       const tokenType = parseInt(window.localStorage.getItem("authTokenType"));
       const token = window.localStorage.getItem("authToken");
 
@@ -82,8 +82,8 @@ export const useWebsocketAuth = ({ ghostSocket }: WebsocketAuthOptions) => {
 
     const onPackage = (e: GHostPackageEvent) => {
       if (
-        e.detail.package.context == GLOBAL_CONTEXT_HEADER_CONSTANT &&
-        e.detail.package.type == GLOBAL_USER_AUTH_RESPONSE
+        e.detail.package.context === GLOBAL_CONTEXT_HEADER_CONSTANT &&
+        e.detail.package.type === GLOBAL_USER_AUTH_RESPONSE
       ) {
         authDispatcher({
           action: "saveAuth",

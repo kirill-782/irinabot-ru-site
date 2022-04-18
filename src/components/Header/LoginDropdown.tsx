@@ -1,7 +1,7 @@
-import { useContext, useEffect } from "react";
-import { Dropdown, Icon } from "semantic-ui-react";
+import { useContext } from "react";
+import { Dropdown } from "semantic-ui-react";
 import { AuthMethod, AviableAuthMethods } from "../../config/AuthMethods";
-import { AuthContext, AuthCredentials } from "./../../context/index";
+import { AuthContext } from "./../../context/index";
 import { toast } from "react-semantic-toasts";
 
 function LoginDropdown() {

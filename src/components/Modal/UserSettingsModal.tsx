@@ -8,8 +8,6 @@ import {
   Modal,
   Image,
   Form,
-  Label,
-  FormField,
   Input,
 } from "semantic-ui-react";
 import { useContext } from "react";

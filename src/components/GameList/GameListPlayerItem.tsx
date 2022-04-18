@@ -1,6 +1,6 @@
-import { Button, Container, Grid, Icon, List, Popup } from "semantic-ui-react";
+import { Button, Grid, Icon, List, Popup } from "semantic-ui-react";
 import { GameListPlayer } from "../../models/websocket/ServerGameList";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./GameListPlayerItem.scss";
 
 const realmToText = {
@@ -133,7 +133,7 @@ function GameListPlayerItem({ player }: GameListPlayerItemProps) {
           key={player.name}
           as="a"
           title={
-            realmToText[player.realm] == undefined
+            !realmToText[player.realm]
               ? player.realm
               : realmToText[player.realm]
           }

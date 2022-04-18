@@ -4,7 +4,7 @@ const getFreeSlots = (game: GameListGame): number => {
   let usedSlots = 0;
 
   game.players.forEach((player) => {
-    if (player.name.length == 0) usedSlots++;
+    if (player.name.length === 0) usedSlots++;
   });
 
   return usedSlots;
@@ -24,14 +24,14 @@ export const defaultSort = (a: GameListGame, b: GameListGame): number => {
 };
 
 export const freeSlotsSort = (a: GameListGame, b: GameListGame): number => {
-  if (Number(a.started) - Number(b.started) != 0)
+  if (Number(a.started) - Number(b.started) !== 0)
     return Number(a.started) - Number(b.started);
 
   return getFreeSlots(a) - getFreeSlots(b);
 };
 
 export const allSlotsSort = (a: GameListGame, b: GameListGame): number => {
-  if (Number(a.started) - Number(b.started) != 0)
+  if (Number(a.started) - Number(b.started) !== 0)
     return Number(a.started) - Number(b.started);
 
   return a.players.length - b.players.length;
@@ -41,7 +41,7 @@ export const playersOccupiedSlot = (
   a: GameListGame,
   b: GameListGame
 ): number => {
-  if (Number(a.started) - Number(b.started) != 0)
+  if (Number(a.started) - Number(b.started) !== 0)
     return Number(a.started) - Number(b.started);
 
   return (
@@ -80,11 +80,11 @@ const sortByOtherGame = (a: GameListGame, b: GameListGame): number => {
 };
 
 const sortByGamePatch = (a: GameListGame, b: GameListGame): number => {
-  if (a.maxPlayers == 1 && b.maxPlayers == 1) return 0;
+  if (a.maxPlayers === 1 && b.maxPlayers === 1) return 0;
 
-  if (a.maxPlayers == 1) return 1;
+  if (a.maxPlayers === 1) return 1;
 
-  if (b.maxPlayers == 1) return -1;
+  if (b.maxPlayers === 1) return -1;
 
   return 0;
 };
@@ -95,15 +95,15 @@ const sortByPinnedGamePosition = (a: GameListGame, b: GameListGame): number => {
   return order.indexOf(a.gamePosition) - order.indexOf(b.gamePosition);
 };
 
-const sortByFullLobby = (a: GameListGame, b: GameListGame): number => {
-  if (getFreeSlots(a) > 0 && getFreeSlots(b) > 0) return 0;
+// const sortByFullLobby = (a: GameListGame, b: GameListGame): number => {
+//   if (getFreeSlots(a) > 0 && getFreeSlots(b) > 0) return 0;
 
-  if (getFreeSlots(a) > 0) return 1;
+//   if (getFreeSlots(a) > 0) return 1;
 
-  if (getFreeSlots(b) > 0) return -1;
+//   if (getFreeSlots(b) > 0) return -1;
 
-  return 0;
-};
+//   return 0;
+// };
 
 const sortByOrderID = (a: GameListGame, b: GameListGame): number => {
   return a.orderID - b.orderID;

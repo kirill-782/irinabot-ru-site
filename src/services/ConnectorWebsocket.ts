@@ -4,7 +4,6 @@ import { DataBuffer } from "./../utils/DataBuffer";
 import { AbstractPackage } from "./../models/websocket/AbstractPackage";
 import { CONNECTOR_SYMMARY } from "../models/websocket/HeaderConstants";
 import {
-  ConnectorSummary,
   ConnectorSummaryConverter,
 } from "./../models/websocket/ConnectorSummary";
 
@@ -73,9 +72,9 @@ export class ConnectorWebsocket extends EventTarget {
   constructor(options: ConnectorWebsocketOptions) {
     super();
 
-    if (options.autoReconnect == undefined) options.autoReconnect = true;
+    if (!options.autoReconnect) options.autoReconnect = true;
 
-    if (options.reconnectInterval == undefined)
+    if (!options.reconnectInterval)
       options.reconnectInterval = 3500;
 
     this.options = options;
@@ -135,7 +134,7 @@ export class ConnectorWebsocket extends EventTarget {
 
   private autoReconnect() {
     setTimeout(() => {
-      if (this.socketConnect.readyState == WebSocket.CLOSED) this.reconnect();
+      if (this.socketConnect.readyState === WebSocket.CLOSED) this.reconnect();
     }, this.options.reconnectInterval);
   }
 
@@ -160,7 +159,7 @@ export class ConnectorWebsocket extends EventTarget {
 
       const type = dataBuffer.getUint8();
 
-      if (packageHandlers[type] == undefined) {
+      if (!packageHandlers[type]) {
         console.log("Unknown connector type passed (" + type + ")");
         return;
       }

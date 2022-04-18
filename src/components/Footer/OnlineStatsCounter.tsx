@@ -1,4 +1,3 @@
-import { stat } from "fs";
 import React, { useContext, useState } from "react";
 import { Menu } from "semantic-ui-react";
 import { WebsocketContext } from "../../context";

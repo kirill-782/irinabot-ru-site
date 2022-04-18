@@ -39,7 +39,7 @@ export const useGameListSubscribe = ({
     };
 
     const onPackage = (event: GHostPackageEvent) => {
-      if (event.detail.package.type == DEFAULT_GAME_LIST) {
+      if (event.detail.package.type === DEFAULT_GAME_LIST) {
         const gameList: ServerGameList = event.detail.package as ServerGameList;
         onGameList(gameList.games);
 

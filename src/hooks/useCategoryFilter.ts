@@ -8,7 +8,7 @@ export const useCategoryFilter = (
 ) => {
   const hasSingleton = (categoryId) => {
     for (let i = 0; i < categories.length; ++i) {
-      if (categoryId == categories[i].id) return categories[i].singleton;
+      if (categoryId === categories[i].id) return categories[i].singleton;
     }
 
     return false;
@@ -26,7 +26,7 @@ export const useCategoryFilter = (
       // Disable select other categories
       if (singletonCategorySelected) {
         selectableCategories = categories.filter((category) => {
-          return category.id == selectedCategories[0];
+          return category.id === selectedCategories[0];
         });
       }
       // Disable select singleton categories
@@ -40,7 +40,7 @@ export const useCategoryFilter = (
     else if (selectedCategories.length === maxSelected) {
       selectableCategories = categories.filter(
         (category) =>
-          selectedCategories.find((e) => category.id == e) !== undefined
+          selectedCategories.find((e) => category.id === e) !== undefined
       );
     } else {
       selectableCategories = categories.filter((category) => {

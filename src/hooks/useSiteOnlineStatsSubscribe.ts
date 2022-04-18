@@ -27,7 +27,7 @@ export const useSiteOnlineStatsSubscribe = ({
     if (ghostSocket.isConnected()) sendStatsRequest();
 
     const onConnectedCount = (event: GHostPackageEvent) => {
-      if (event.detail.package.type == DEFAULT_WEBSOCKET_CONNECT_STATS) {
+      if (event.detail.package.type === DEFAULT_WEBSOCKET_CONNECT_STATS) {
         const stats: ServerWebsocketConnectStats = event.detail
           .package as ServerWebsocketConnectStats;
         onOnlineStats(stats);

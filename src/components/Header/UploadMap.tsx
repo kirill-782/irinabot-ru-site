@@ -12,11 +12,11 @@ import {
   UploadMapStartEvent,
 } from "./../../services/MapUploaderService";
 
-interface UploadState {
-  file: FileList;
-  flags: Flags;
-  additionalFlags: AdditionalFlags;
-}
+// interface UploadState {
+//   file: FileList;
+//   flags: Flags;
+//   additionalFlags: AdditionalFlags;
+// }
 
 interface CurrentMapUploadDescription {
   fillename: string;

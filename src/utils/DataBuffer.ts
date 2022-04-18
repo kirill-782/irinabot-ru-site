@@ -37,7 +37,7 @@ export class DataBuffer {
   public putUint8(number: number): DataBuffer {
     this.reserveIfNeed(1);
 
-    let resp = this.data.setUint8(this.offset, number);
+    this.data.setUint8(this.offset, number);
     this.offset++;
     return this;
   }
@@ -51,7 +51,7 @@ export class DataBuffer {
   public putInt8(number: number): DataBuffer {
     this.reserveIfNeed(1);
 
-    let resp = this.data.setInt8(this.offset, number);
+    this.data.setInt8(this.offset, number);
     this.offset++;
     return this;
   }
@@ -65,7 +65,7 @@ export class DataBuffer {
   public putInt16(number: number): DataBuffer {
     this.reserveIfNeed(2);
 
-    let resp = this.data.setInt16(this.offset, number, this.littleEndian);
+    this.data.setInt16(this.offset, number, this.littleEndian);
     this.offset += 2;
     return this;
   }
@@ -79,7 +79,7 @@ export class DataBuffer {
   public putUint16(number: number): DataBuffer {
     this.reserveIfNeed(2);
 
-    let resp = this.data.setUint16(this.offset, number, this.littleEndian);
+    this.data.setUint16(this.offset, number, this.littleEndian);
     this.offset += 2;
     return this;
   }
@@ -93,7 +93,7 @@ export class DataBuffer {
   public putInt32(number: number): DataBuffer {
     this.reserveIfNeed(4);
 
-    let resp = this.data.setInt32(this.offset, number, this.littleEndian);
+    this.data.setInt32(this.offset, number, this.littleEndian);
     this.offset += 4;
     return this;
   }
@@ -107,7 +107,7 @@ export class DataBuffer {
   public putUint32(number: number): DataBuffer {
     this.reserveIfNeed(4);
 
-    let resp = this.data.setUint32(this.offset, number, this.littleEndian);
+    this.data.setUint32(this.offset, number, this.littleEndian);
     this.offset += 4;
     return this;
   }
@@ -116,7 +116,7 @@ export class DataBuffer {
     let ints = [];
     for (let i = 0; true; ++i) {
       let newbyte = this.getUint8();
-      if (newbyte == 0) {
+      if (newbyte === 0) {
         let S = DataBuffer.stringFromUTF8Array(ints);
 
         if (S == null) return "";
@@ -182,7 +182,7 @@ export class DataBuffer {
         ch = ch & (0x3f >> extra);
         for (; extra > 0; extra -= 1) {
           let chx = data[index++];
-          if ((chx & 0xc0) != 0x80) return null;
+          if ((chx & 0xc0) !== 0x80) return null;
 
           ch = (ch << 6) | (chx & 0x3f);
         }

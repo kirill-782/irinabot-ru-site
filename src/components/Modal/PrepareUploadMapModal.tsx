@@ -21,7 +21,6 @@ function PrepareUploadMapModal({
   open,
   onClose,
 }: PrepareUploadMapModalProps) {
-  const mapService = new MapService();
   const [categories, setCategories] = useState<Category[]>([]);
 
   const [loadding, setLoading] = useState<boolean>(true);
@@ -30,6 +29,8 @@ function PrepareUploadMapModal({
   const [selectedCategories, setSelectedCategories] = useState<any>([]);
 
   useEffect(() => {
+    const mapService = new MapService();
+
     mapService
       .getCategories()
       .then((categories) => {

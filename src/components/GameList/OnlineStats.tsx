@@ -1,6 +1,5 @@
 import { Table } from "semantic-ui-react";
-import { useMemo, useState } from "react";
-import GameList from "./GameList";
+import { useMemo } from "react";
 import { GameListGame } from "../../models/websocket/ServerGameList";
 
 interface OnlineStatsRow {
@@ -34,7 +33,7 @@ function OnlineStats({ gameList }: OnlineStatsProps) {
     let stats: Map<String, OnlineStatsRow> = new Map();
 
     const appendToStats = (statsPart: OnlineStatsRow) => {
-      if (stats.get(statsPart.categoryId) == undefined)
+      if (!stats.get(statsPart.categoryId))
         stats.set(statsPart.categoryId, statsPart);
       else {
         stats.get(statsPart.categoryId).lobbyCount += statsPart.lobbyCount;
@@ -52,7 +51,7 @@ function OnlineStats({ gameList }: OnlineStatsProps) {
 
         playersCount++;
 
-        if (realmToCategory[player.realm] == undefined)
+        if (!realmToCategory[player.realm])
           appendToStats({
             categoryId: "other",
             lobbyCount: 0,

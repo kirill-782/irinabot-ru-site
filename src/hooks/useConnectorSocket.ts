@@ -7,7 +7,7 @@ import {
 export const useConnectorSocket = (
   options: ConnectorWebsocketOptions
 ): [ConnectorWebsocket, boolean] => {
-  const [connectorSocket, setConnectorSocket] = useState<ConnectorWebsocket>(
+  const [connectorSocket] = useState<ConnectorWebsocket>(
     new ConnectorWebsocket(options)
   );
   const [isSocketConnected, setSocketConnected] = useState<boolean>(false);

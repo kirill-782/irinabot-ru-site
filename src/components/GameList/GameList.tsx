@@ -1,7 +1,7 @@
 import { GameListGame } from "../../models/websocket/ServerGameList";
 import { Table } from "semantic-ui-react";
 import GameListPlayers from "./GameListPlayers";
-import React, { useContext } from "react";
+import React from "react";
 import ConnectorAddButton from "./ConnectorAddButton";
 
 function GameList({ gameList }) {

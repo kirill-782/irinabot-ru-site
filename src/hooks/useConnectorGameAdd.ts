@@ -8,7 +8,6 @@ import {
 import { toast } from "react-semantic-toasts";
 import { ServerUDPAnswer } from "../models/websocket/ServerUDPAnswer";
 import { ConnectorBrowserAddGameConverter } from "../models/websocket/ConnectorBrowserGameAdd";
-import { time } from "console";
 interface useConnectorGameAddOptions {
   ghostSocket: GHostWebSocket;
   connectorSocket: ConnectorWebsocket;
@@ -21,8 +20,8 @@ export const useConnectorGameAdd = ({
   useEffect(() => {
     const onUDPGameAddPackage = (data) => {
       if (
-        data.detail.package.type == DEFAULT_UDP_ANSWER &&
-        data.detail.package.context == DEFAULT_CONTEXT_HEADER_CONSTANT
+        data.detail.package.type === DEFAULT_UDP_ANSWER &&
+        data.detail.package.context === DEFAULT_CONTEXT_HEADER_CONSTANT
       ) {
         if (connectorSocket.isConnected()) {
           toast({

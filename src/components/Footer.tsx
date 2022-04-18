@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { toast } from "react-semantic-toasts";
-import { Icon, Label, Menu } from "semantic-ui-react";
+import { Icon, Menu } from "semantic-ui-react";
 import { AppRuntimeSettingsContext, WebsocketContext } from "../context";
 import ConnectorIndicator from "./Footer/ConnectorIndicator";
 import OnlineStatsCounter from "./Footer/OnlineStatsCounter";

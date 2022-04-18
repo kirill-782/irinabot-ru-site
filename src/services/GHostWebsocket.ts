@@ -97,9 +97,9 @@ export class GHostWebSocket extends EventTarget {
   constructor(options: GHostWebSocketOptions) {
     super();
 
-    if (options.autoReconnect == undefined) options.autoReconnect = true;
+    if (!options.autoReconnect) options.autoReconnect = true;
 
-    if (options.reconnectInterval == undefined)
+    if (!options.reconnectInterval)
       options.reconnectInterval = 3500;
 
     this.options = options;
@@ -159,7 +159,7 @@ export class GHostWebSocket extends EventTarget {
 
   private autoReconnect() {
     setTimeout(() => {
-      if (this.socketConnect.readyState == WebSocket.CLOSED) this.reconnect();
+      if (this.socketConnect.readyState === WebSocket.CLOSED) this.reconnect();
     }, this.options.reconnectInterval);
   }
 
@@ -184,14 +184,14 @@ export class GHostWebSocket extends EventTarget {
 
       const context = dataBuffer.getUint8();
 
-      if (packageHandlers[context] == undefined) {
+      if (!packageHandlers[context]) {
         console.log("Unknown context passed (" + context + ")");
         return;
       }
 
       const type = dataBuffer.getUint8();
 
-      if (packageHandlers[context][type] == undefined) {
+      if (!packageHandlers[context][type]) {
         console.log("Unknown type passed (" + type + ")");
         return;
       }
