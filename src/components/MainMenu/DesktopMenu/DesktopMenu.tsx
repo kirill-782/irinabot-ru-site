@@ -1,4 +1,5 @@
 import React, { ReactNode, useContext } from "react";
+import { NavLink } from "react-router-dom";
 import { Icon, Menu, SemanticICONS } from "semantic-ui-react";
 import LoginDropdown from "../../Header/LoginDropdown";
 import UploadMap from "../../Header/UploadMap";
@@ -27,10 +28,10 @@ const DesktopMenu = () => {
 
   return (
     <Menu fixed="top" inverted className="main-menu">
-      <Menu.Item name="logo">
+      <Menu.Item as={NavLink} to="/">
         IrInA Host B<Icon name="circle" />T
       </Menu.Item>
-      <Menu.Item onClick={handleMenuItemClick}>
+      <Menu.Item as={NavLink} to="/gamelist">
         <Icon name="gamepad" />
         Активные Игры
       </Menu.Item>
@@ -41,9 +42,9 @@ const DesktopMenu = () => {
 
       <Menu.Menu position="right">
         <UploadMap />
-        <Menu.Item onClick={handleMenuItemClick}>
+        <Menu.Item as={NavLink} to="/autopay">
           <Icon name="ruble sign" />
-          Платные услуги
+          Донат
         </Menu.Item>
         {currentAuth !== null ? <UserDrowdown /> : <LoginDropdown />}
       </Menu.Menu>

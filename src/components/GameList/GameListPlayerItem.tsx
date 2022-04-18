@@ -1,7 +1,7 @@
 import { Button, Container, Grid, Icon, List, Popup } from "semantic-ui-react";
 import { GameListPlayer } from "../../models/websocket/ServerGameList";
 import { useEffect, useState } from "react";
-import './GameListPlayerItem.scss';
+import "./GameListPlayerItem.scss";
 
 const realmToText = {
   "178.218.214.114": "iCCup",
@@ -26,60 +26,60 @@ function GameListPlayerItem({ player }: GameListPlayerItemProps) {
     useState<GamePlayerStats>(undefined);
   //https://nwc3l.com/irinabot_profile?id=zsef_He_yIIaJI&json
 
-  const getClassColorByPlayer = ({colour}) => {
+  const getClassColorByPlayer = ({ colour }) => {
     switch (colour) {
       case 0:
-        return 'red';
+        return "red";
       case 1:
-        return 'blue';
+        return "blue";
       case 2:
-        return 'teal';
+        return "teal";
       case 3:
-        return 'purple';
+        return "purple";
       case 4:
-        return 'yellow';
+        return "yellow";
       case 5:
-        return 'orange';
+        return "orange";
       case 6:
-        return 'green';
+        return "green";
       case 7:
-        return 'pink';
+        return "pink";
       case 8:
-        return 'gray';
+        return "gray";
       case 9:
-        return 'light-blue';
+        return "light-blue";
       case 10:
-        return 'dark-green';
+        return "dark-green";
       case 11:
-        return 'brown';
+        return "brown";
       case 12:
-        return 'maroon';
+        return "maroon";
       case 13:
-        return 'navy';
+        return "navy";
       case 14:
-        return 'turquoise';
+        return "turquoise";
       case 15:
-        return 'violet';
+        return "violet";
       case 16:
-        return 'wheat';
+        return "wheat";
       case 17:
-        return 'peach';
+        return "peach";
       case 18:
-        return 'mint';
+        return "mint";
       case 19:
-        return 'leavender';
+        return "leavender";
       case 20:
-        return 'coal';
+        return "coal";
       case 21:
-        return 'snow';
+        return "snow";
       case 22:
-        return 'emerald';
+        return "emerald";
       case 23:
-        return 'peanut';
+        return "peanut";
       default:
-        return '';
+        return "";
     }
-  }
+  };
 
   const loadStats = () => {
     const urlParser = new URLSearchParams();

@@ -1,34 +1,34 @@
 $opacity: 20%;
-$red: #FD0400;
-$blue: #0142FF;
+$red: #fd0400;
+$blue: #0142ff;
 $teal: #17bf99;
 $purple: #540081;
 $yellow: #bbb805;
-$orange: #FD8B10;
-$green: #20BF00;
-$pink: #E45BAF;
+$orange: #fd8b10;
+$green: #20bf00;
+$pink: #e45baf;
 $gray: #939796;
-$light-blue: #7DBFF1;
+$light-blue: #7dbff1;
 $dark-green: #126049;
-$brown: #4F2A04;
-$maroon: #9B0000;
-$navy: #0001C4;
-$turquoise: #00EAFF;
-$violet: #BE00FE;
+$brown: #4f2a04;
+$maroon: #9b0000;
+$navy: #0001c4;
+$turquoise: #00eaff;
+$violet: #be00fe;
 $wheat: #bfa670;
-$peach: #F8A48A;
+$peach: #f8a48a;
 $mint: #97c167;
-$leavender:#DEB7EE;
+$leavender: #deb7ee;
 $coal: #282828;
 $snow: #bfc3d1;
-$emerald: #00781E;
-$peanut: #A56F33;
+$emerald: #00781e;
+$peanut: #a56f33;
 
-.ui.list .list > a.item.player-name, 
+.ui.list .list > a.item.player-name,
 .ui.list > a.item.player-name {
   padding: 3px;
   border-radius: 4px;
-  
+
   &.red {
     color: $red;
     background: rgba($red, $opacity);
@@ -155,7 +155,7 @@ $peanut: #A56F33;
   }
 }
 
-.ui.horizontal.list > .item.player-name:first-child, 
+.ui.horizontal.list > .item.player-name:first-child,
 .ui.horizontal.list > .item.player-name:last-child {
   padding-top: 3px;
   padding-bottom: 3px;

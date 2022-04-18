@@ -22,6 +22,7 @@ import { useConnectorSocket } from "./hooks/useConnectorSocket";
 import { useConnectorGameAdd } from "./hooks/useConnectorGameAdd";
 import { MapService } from "./services/MapService";
 import { MapUploaderService } from "./services/MapUploaderService";
+import AutopayPage from "./components/Pages/AutopayPage";
 
 function App() {
   useEffect(loadTheme, []);
@@ -69,6 +70,7 @@ function App() {
               <Route path="/*" element={<Layout />}>
                 <Route index element={<GameListPage />} />
                 <Route path="gamelist" element={<GameListPage />} />
+                <Route path="autopay" element={<AutopayPage />} />
               </Route>
               <Route path="/oauth" element={<OauthStubPage />} />
             </Routes>

@@ -12,6 +12,7 @@ import { AuthContext } from "./../../../context/index";
 import { switchTheme, E_THEME, getTheme } from "../../../utils/Theme";
 import "./MobileMenu.scss";
 import UploadMap from "../../Header/UploadMap";
+import { NavLink } from "react-router-dom";
 
 export interface MenuItem {
   type: string;
@@ -55,14 +56,14 @@ const MobileMenu = () => {
         {currentAuth !== null ? <UserDrowdown /> : <LoginDropdown />}
       </Menu.Menu>
       <div className="burger-mobile-menu">
-        <Menu.Item onClick={handleMenuItemClick}>
+        <Menu.Item as={NavLink} to="/gamelist">
           <Icon name="gamepad" />
           Активные Игры
         </Menu.Item>
         <UploadMap />
-        <Menu.Item onClick={handleMenuItemClick}>
+        <Menu.Item as={NavLink} to="/autopay">
           <Icon name="ruble sign" />
-          Платные услуги
+          Донат
         </Menu.Item>
         <Menu.Item onClick={handleMenuItemClick}>
           <Icon name="help" />
