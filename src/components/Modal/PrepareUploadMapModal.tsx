@@ -1,5 +1,13 @@
 import { SyntheticEvent, useEffect, useRef, useState, useMemo } from "react";
-import { Button, Dropdown, Form, Grid, Header, Modal } from "semantic-ui-react";
+import {
+  Button,
+  Dropdown,
+  Form,
+  Grid,
+  Header,
+  Modal,
+  Message,
+} from "semantic-ui-react";
 
 import { Category } from "../../models/rest/Category";
 import { Flags } from "../../models/rest/Flags";
@@ -82,20 +90,16 @@ function PrepareUploadMapModal({
   };
 
   const handleDragExit = (ev: React.DragEvent<HTMLDivElement>) => {
-
     ev.preventDefault();
     ev.stopPropagation();
 
     dragCounter.value--;
     if (dragCounter.value === 0) {
-
       setDragging(false);
     }
   };
 
   const handleDrop = (ev: React.DragEvent<HTMLDivElement>) => {
-
-
     dragCounter.value = 0;
     setDragging(false);
     ev.preventDefault();
@@ -104,7 +108,7 @@ function PrepareUploadMapModal({
     if (!selectedCategories.length) return;
 
     const file = ev.dataTransfer.files[0];
-    if (file && (file.name.endsWith('.w3x') || file.name.endsWith('.w3m'))) {
+    if (file && (file.name.endsWith(".w3x") || file.name.endsWith(".w3m"))) {
       emitMapSelected(ev.dataTransfer.files);
     }
   };
@@ -112,6 +116,7 @@ function PrepareUploadMapModal({
   return (
     <Modal open={open} onClose={onClose}>
       <Modal.Header>Выберите карту</Modal.Header>
+
       <Modal.Content>
         <div
           onDragEnter={handleDragEnter}
@@ -119,6 +124,7 @@ function PrepareUploadMapModal({
           onDragOver={handleDrag}
           onDrop={handleDrop}
         >
+          {isDragging && <DragAndDropField />}
           <Modal.Description>
             <Header>Какую карту загрузить?</Header>
             <p>
@@ -142,37 +148,27 @@ function PrepareUploadMapModal({
                   value={selectedCategories}
                 />
               </Form.Field>
-
-              {isDragging ? (
-                <DragAndDropField />
-              ) : (
-                <Form.Field>
-                  <Grid>
-                    <Grid.Row centered>
-                      <Button
-                        as={"a"}
-                        content="Выбрать карту"
-                        icon="file"
-                        disabled={!selectedCategories.length}
-                        size="big"
-                        onClick={() => {
-                          fileInput.current.click();
-                        }}
-                      />
-                      <input
-                        multiple
-                        accept=".w3x , .w3m"
-                        onChange={(e) => {
-                          emitMapSelected(e.target.files);
-                        }}
-                        type="file"
-                        hidden
-                        ref={fileInput}
-                      />
+              <Form.Field>
+                <Grid>
+                  <Grid.Row centered>
+                    <input
+                      multiple
+                      accept=".w3x , .w3m"
+                      onChange={(e) => {
+                        emitMapSelected(e.target.files);
+                      }}
+                      type="file"
+                      hidden
+                      ref={fileInput}
+                    />
+                    <Grid.Row>
+                      <Message header="Загрузка карты" content={selectedCategories.length === 0 ? "Перед загрузкой карты, выберите категорию" : "Нажмите сюда для загрузки карты или перетащите файл в область окна"} onClick={() => {
+                        !selectedCategories.length && fileInput.current.click();
+                      }} />
                     </Grid.Row>
-                  </Grid>
-                </Form.Field>
-              )}
+                  </Grid.Row>
+                </Grid>
+              </Form.Field>
             </Form>
           </Modal.Description>
         </div>

@@ -103,6 +103,7 @@ $element: "modal";
 ---------------*/
 
 .ui.modal > .content {
+  position: relative;
   display: block;
   width: 100%;
   font-size: $contentFontSize;
