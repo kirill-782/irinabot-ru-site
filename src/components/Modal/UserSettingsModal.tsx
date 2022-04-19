@@ -69,7 +69,7 @@ function UserSettingsModal(props) {
             <Form.Field>
               <label>Nickname IrInA connector</label>
               <Form.Group widths="equal">
-                <Input placeholder={auth.currentAuth.connectorName}></Input>
+                <Form.Input placeholder={auth.currentAuth.connectorName}></Form.Input>
                 <Button style={{ marginLeft: 10 }} color="green">
                   Сохранить
                 </Button>

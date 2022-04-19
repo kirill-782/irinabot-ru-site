@@ -164,7 +164,6 @@ $selectionBorderRadius: $borderRadius;
 $selectionIconOpacity: 0.8;
 $selectionIconZIndex: 3;
 $selectionIconHitbox: $selectionVerticalPadding;
-$selectionIconMargin: (-$selectionIconHitbox);
 $selectionIconPadding: math.div($selectionIconHitbox, $dropdownIconSize);
 $selectionIconTransition: opacity $defaultDuration $defaultEasing;
 

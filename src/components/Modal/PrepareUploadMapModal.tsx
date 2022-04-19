@@ -117,13 +117,12 @@ function PrepareUploadMapModal({
     <Modal open={open} onClose={onClose}>
       <Modal.Header>Выберите карту</Modal.Header>
 
-      <Modal.Content>
-        <div
-          onDragEnter={handleDragEnter}
-          onDragLeave={handleDragExit}
-          onDragOver={handleDrag}
-          onDrop={handleDrop}
-        >
+      <Modal.Content
+        onDragEnter={handleDragEnter}
+        onDragLeave={handleDragExit}
+        onDragOver={handleDrag}
+        onDrop={handleDrop}
+      >
           {isDragging && <DragAndDropField />}
           <Modal.Description>
             <Header>Какую карту загрузить?</Header>
@@ -162,16 +161,24 @@ function PrepareUploadMapModal({
                       ref={fileInput}
                     />
                     <Grid.Row>
-                      <Message header="Загрузка карты" content={selectedCategories.length === 0 ? "Перед загрузкой карты, выберите категорию" : "Нажмите сюда для загрузки карты или перетащите файл в область окна"} onClick={() => {
-                        !selectedCategories.length && fileInput.current.click();
-                      }} />
+                      <Message
+                        header="Загрузка карты"
+                        content={
+                          selectedCategories.length === 0
+                            ? "Перед загрузкой карты, выберите категорию"
+                            : "Нажмите сюда для загрузки карты или перетащите файл в область окна"
+                        }
+                        onClick={() => {
+                          !selectedCategories.length &&
+                            fileInput.current.click();
+                        }}
+                      />
                     </Grid.Row>
                   </Grid.Row>
                 </Grid>
               </Form.Field>
             </Form>
           </Modal.Description>
-        </div>
       </Modal.Content>
     </Modal>
   );
