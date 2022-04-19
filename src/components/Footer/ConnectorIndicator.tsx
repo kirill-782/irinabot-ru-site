@@ -7,6 +7,7 @@ import {
   ConnectorGame,
   ConnectorSummary,
 } from "./../../models/websocket/ConnectorSummary";
+import ConnectorSummaryModal from "../Modal/ConnectorSummaryModal";
 
 function ConnectorIndicator() {
   const websocketContext = useContext(WebsocketContext);
@@ -16,9 +17,9 @@ function ConnectorIndicator() {
   useEffect(() => {
     const onConnectorSymmary = (e: ConnectorPackageEvent) => {
       if (e.detail.package.type === CONNECTOR_SYMMARY) {
-        const symmary = e.detail.package as ConnectorSummary;
+        const summary = e.detail.package as ConnectorSummary;
 
-        setConnectorGames(symmary.games);
+        setConnectorGames(summary.games);
       }
     };
 
@@ -35,12 +36,22 @@ function ConnectorIndicator() {
     };
   });
 
+  const [connectorSummaryModalOpen, setConnectorSummaryModalOpen] =
+    useState(false);
+
   return (
     <Menu.Item>
       <Icon
         name="rss"
         color={websocketContext.isConnectorSocketConnected ? "green" : null}
+        onClick={() => setConnectorSummaryModalOpen(true)}
       ></Icon>
+      <ConnectorSummaryModal
+        connectorGames={connectorGames}
+        open={connectorSummaryModalOpen}
+        onClose={() => setConnectorSummaryModalOpen(false)}
+      />
+
       {connectorGames.length > 0 && (
         <Label floating color="red">
           {connectorGames.length}
