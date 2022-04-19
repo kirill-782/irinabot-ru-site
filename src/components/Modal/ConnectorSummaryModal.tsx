@@ -36,7 +36,6 @@ function ConnectorSummaryModal({
 
       <Modal.Content>
         <Modal.Description>
-          <Header>Какую карту загрузить?</Header>
           <Message>
             Эти игры будут отправлены в локальную сеть Warcraft III. Вы можете
             убрать игру из списка, или очтистить его
