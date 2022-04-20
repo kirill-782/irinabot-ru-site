@@ -38,10 +38,12 @@ export class ConnectorSummaryConverter extends AbstractConverter {
 
     for (let i = 0; i < gameCount; ++i) {
       let game: ConnectorGame = {
-        gameId: dataBuffer.getUint16(),
+        gameId: dataBuffer.getUint32(),
         gameName: dataBuffer.getNullTerminatedString(),
         mapName: dataBuffer.getNullTerminatedString(),
       };
+
+      console.log(game)
 
       games[games.length] = game;
     }
