@@ -1,3 +1,32 @@
 /*******************************
          Site Overrides
 *******************************/
+.ui.table {
+  background: #343434;
+  color: #adadad;
+}
+
+.ui.table thead th {
+  background: #101010;
+  color: #adadad;
+}
+
+.ui.table tr.error, 
+.ui.table tr.error.positive, 
+.ui.table td.error.positive, 
+.ui.table td.error {
+  background: #202020 !important;
+  color: #cf3838 !important;
+}
+
+.ui.table tr.warning, 
+.ui.table td.warning {
+  background: #2F3E30 !important;
+  color: #cb9d4f !important;
+}
+
+.ui.table tr.positive, 
+.ui.table td.positive {
+  background: #202020 !important;
+  color: #898989 !important;
+}

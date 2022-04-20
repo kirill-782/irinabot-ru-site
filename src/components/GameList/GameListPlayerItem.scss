@@ -24,6 +24,16 @@ $snow: #bfc3d1;
 $emerald: #00781e;
 $peanut: #a56f33;
 
+/* DARK THEME */
+$d_blue: #2b61ff;
+$d_purple: #a505fb;
+$d_brown: #85592d;
+$d_dark-green: #177a5d;
+$d_maroon: #bf1e1e;
+$d_navy: #5253c1;
+$d_coal: #000000;
+$d_emerald: #029527;
+
 .ui.list .list > a.item.player-name,
 .ui.list > a.item.player-name {
   padding: 3px;
@@ -159,4 +169,49 @@ $peanut: #a56f33;
 .ui.horizontal.list > .item.player-name:last-child {
   padding-top: 3px;
   padding-bottom: 3px;
+}
+
+.game-list.dark {
+  .ui.list .list > a.item.player-name,
+  .ui.list > a.item.player-name {
+    &.blue {
+      color: $d_blue;
+      background: rgba($d_blue, $opacity);
+    }
+
+    &.purple {
+      color: $purple;
+      background: rgba($purple, $opacity);
+    }
+
+    &.brown {
+      color: $d_brown;
+      background: rgba($d_brown, $opacity);
+    }
+
+    &.dark-green {
+      color: $d_dark-green;
+      background: rgba($d_dark-green, $opacity);
+    }
+
+    &.maroon {
+      color: $d_maroon;
+      background: rgba($d_maroon, $opacity);
+    }
+
+    &.navy {
+      color: $d_navy;
+      background: rgba($d_navy, $opacity);
+    }
+
+    &.coal {
+      color: $d_coal;
+      background: rgba($d_coal, $opacity);
+    }
+
+    &.emerald {
+      color: $d_emerald;
+      background: rgba($d_emerald, $opacity);
+    }
+  }
 }

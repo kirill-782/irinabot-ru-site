@@ -1,3 +1,28 @@
 /*******************************
         Site Overrides
 *******************************/
+.ui.message {
+  color: #c5c5c5;
+  background: #0e0e0e;
+}
+
+.ui.error.message, 
+.ui.attached.error.message {
+  box-shadow: 0px 0px 0px 1px #000000 inset, 0px 0px 0px 0px rgb(0 0 0 / 0%);
+}
+
+.ui.red.message {
+  background-color: #0c0c0c;
+  color: #d90b0b;
+  box-shadow: 0px 0px 0px 1px #a31d1d inset, 0px 0px 0px 0px rgb(0 0 0 / 0%);
+}
+
+.ui.info.message, 
+.ui.attached.info.message {
+  box-shadow: 0px 0px 0px 1px #22b2cf inset, 0px 0px 0px 0px rgb(0 0 0 / 0%);
+}
+
+.ui.info.message {
+  background-color: #0c0c0c;
+  color: #24acd7;
+}

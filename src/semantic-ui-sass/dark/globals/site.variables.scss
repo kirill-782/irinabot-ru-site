@@ -1,11 +1,12 @@
 /*******************************
      User Global Variables
 *******************************/
+$pageBackground: #1C1C1C;
 
-$pageBackground: #222;
-
-$white: #464545;
-$black: #d3d3d3;
+$white: #dfdfdf;
+$black: #1C1C1C;
+$darkest: #101010;
+$inputTextColor: #A8A8A8;
 $textColor: #fff;
 
 /*-------------------
@@ -61,12 +62,14 @@ $pressedTextColor: rgba(255, 255, 255, 1);
 $selectedTextColor: rgba(255, 255, 255, 1);
 $disabledTextColor: rgba(255, 255, 255, 0.2);
 
-$invertedTextColor: rgba(0, 0, 0, 0.85);
-$invertedMutedTextColor: rgba(0, 0, 0, 0.6);
-$invertedLightTextColor: rgba(0, 0, 0, 0.4);
+$invertedMutedTextColor: rgba(255, 255, 255, 1);
+$invertedLightTextColor: rgba(255, 255, 255, 1);
 
-$invertedUnselectedTextColor: rgba(0, 0, 0, 0.4);
-$invertedHoveredTextColor: rgba(0, 0, 0, 0.8);
-$invertedPressedTextColor: rgba(0, 0, 0, 0.9);
-$invertedSelectedTextColor: rgba(0, 0, 0, 0.95);
-$invertedDisabledTextColor: rgba(0, 0, 0, 0.2);
+$invertedUnselectedTextColor: rgba(255, 255, 255, 1);
+$invertedHoveredTextColor: rgba(255, 255, 255, 1);
+$invertedPressedTextColor: rgba(255, 255, 255, 1);
+$invertedSelectedTextColor: rgba(255, 255, 255, 1);
+$invertedDisabledTextColor: rgba(255, 255, 255, 0.2);
+
+$inputBackground: $darkest;
+$inputColor: #fff;

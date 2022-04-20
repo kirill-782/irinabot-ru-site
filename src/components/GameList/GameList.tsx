@@ -3,6 +3,7 @@ import { Table } from "semantic-ui-react";
 import GameListPlayers from "./GameListPlayers";
 import React from "react";
 import ConnectorAddButton from "./ConnectorAddButton";
+import { getTheme } from '../../utils/Theme';
 
 function GameList({ gameList }) {
   const getPlayerSlots = (game: GameListGame): number => {
@@ -16,7 +17,7 @@ function GameList({ gameList }) {
   };
 
   return (
-    <Table>
+    <Table className={`game-list ${getTheme()}`}>
       <Table.Header>
         <Table.Row>
           <Table.HeaderCell>Патч</Table.HeaderCell>
@@ -34,12 +35,13 @@ function GameList({ gameList }) {
               positive={game.started}
               error={game.hasGamePowerUp}
               warning={game.hasOtherGame}
+              className='vip'
             >
               <Table.Cell>1.26</Table.Cell>
               <Table.Cell>
                 {getPlayerSlots(game) + "/" + game.players.length}
               </Table.Cell>
-              <Table.Cell>{game.name}</Table.Cell>
+              <Table.Cell className='game-title'>{game.name}</Table.Cell>
               <Table.Cell>
                 <GameListPlayers players={game.players} />
               </Table.Cell>

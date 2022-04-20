@@ -1,10 +1,11 @@
 import React, { ReactNode, useContext } from "react";
 import { NavLink } from "react-router-dom";
-import { Icon, Menu, SemanticICONS } from "semantic-ui-react";
+import { Icon, Menu, SemanticICONS, Checkbox, CheckboxProps } from "semantic-ui-react";
 import LoginDropdown from "../../Header/LoginDropdown";
 import UploadMap from "../../Header/UploadMap";
 import UserDrowdown from "../../Header/UserDropdown";
 import { AuthContext } from "./../../../context/index";
+import { switchTheme, E_THEME, getTheme } from "../../../utils/Theme";
 import "./DesktopMenu.scss";
 
 export interface MenuItem {
@@ -46,6 +47,18 @@ const DesktopMenu = () => {
           <Icon name="ruble sign" />
           Донат
         </Menu.Item>
+        <Checkbox
+          toggle
+          className="item theme-switcher"
+          checked={getTheme() === E_THEME.DARK}
+          onChange={(_, data: CheckboxProps) => switchTheme(data.checked ? E_THEME.DARK : E_THEME.LIGHT)}
+          label={
+            <>
+              <Icon name="paint brush" />
+              Сменить тему
+            </>
+          }
+        />
         {currentAuth !== null ? <UserDrowdown /> : <LoginDropdown />}
       </Menu.Menu>
     </Menu>
