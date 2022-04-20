@@ -1,4 +1,12 @@
-import { Modal, Header, Message, List, Icon, Button, Placeholder } from "semantic-ui-react";
+import {
+  Modal,
+  Header,
+  Message,
+  List,
+  Icon,
+  Button,
+  Placeholder,
+} from "semantic-ui-react";
 import type { SyntheticEvent } from "react";
 import { useContext } from "react";
 import { ConnectorGame } from "../../models/websocket/ConnectorSummary";
@@ -23,11 +31,13 @@ function ConnectorSummaryModal({
   const websocketContext = useContext(WebsocketContext);
 
   const handleRemove = (gameId: number) => {
-    websocketContext.ghostSocket.send(removeGameConverter.assembly({ gameId }));
+    websocketContext.connectorSocket.send(
+      removeGameConverter.assembly({ gameId })
+    );
   };
 
   const handleRemoveAll = () => {
-    websocketContext.ghostSocket.send(resetAllConverter.assembly({}));
+    websocketContext.connectorSocket.send(resetAllConverter.assembly({}));
   };
 
   return (
@@ -40,13 +50,13 @@ function ConnectorSummaryModal({
             Эти игры будут отправлены в локальную сеть Warcraft III. Вы можете
             убрать игру из списка, или очтистить его
           </Message>
-          {connectorGames ? (
+          {connectorGames.length > 0 ? (
             <List divided relaxed>
-              {connectorGames.map((el) => (
-                <List.Item>
+              {connectorGames.map((el, index) => (
+                <List.Item key={index}>
                   <List.Content>
                     <List.Header as="h4">
-                      {el.mapName}
+                      {el.gameName}
                       <Button
                         icon
                         floated="right"
@@ -72,13 +82,11 @@ function ConnectorSummaryModal({
               </List.Item>
             </List>
           ) : (
-            <Placeholder>
-              <Placeholder.Paragraph>
-                <Placeholder.Line />
-                <Placeholder.Line />
-                <Placeholder.Line />
-              </Placeholder.Paragraph>
-            </Placeholder>
+            <Message>
+              {websocketContext.isConnectorSocketConnected
+                ? "Вы еще не добавили ни одной игруы"
+                : "Коннектор не запущен"}
+            </Message>
           )}
         </Modal.Description>
       </Modal.Content>

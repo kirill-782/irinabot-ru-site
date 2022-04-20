@@ -23,15 +23,29 @@ function ConnectorIndicator() {
       }
     };
 
+    const onConnectorSocketClose = () => {
+      setConnectorGames([]);
+    };
+
     websocketContext.connectorSocket.addEventListener(
       "package",
       onConnectorSymmary
+    );
+
+    websocketContext.connectorSocket.addEventListener(
+      "close",
+      onConnectorSocketClose
     );
 
     return () => {
       websocketContext.connectorSocket.removeEventListener(
         "package",
         onConnectorSymmary
+      );
+
+      websocketContext.connectorSocket.removeEventListener(
+        "close",
+        onConnectorSocketClose
       );
     };
   });
