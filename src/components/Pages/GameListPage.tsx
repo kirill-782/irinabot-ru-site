@@ -1,12 +1,18 @@
 import React, { useContext, useState } from "react";
-import { Button, Container, Dropdown, Grid, Input } from "semantic-ui-react";
+import {
+  Button,
+  Container,
+  Grid,
+  Input,
+} from "semantic-ui-react";
 import { AppRuntimeSettingsContext, WebsocketContext } from "../../context";
 import { GameListGame } from "../../models/websocket/ServerGameList";
 import GameList from "../GameList/GameList";
 import OnlineStats from "../GameList/OnlineStats";
 
 import { useGameListSubscribe } from "../../hooks/useGameListSubscribe";
-import { useGameListFilter } from "../../hooks/useGameListFilter";
+import { FilterSettings, useGameListFilter } from "../../hooks/useGameListFilter";
+import GameListFilter from "../GameList/GameListFilter";
 
 function GameListPage() {
   const sockets = useContext(WebsocketContext);
@@ -14,8 +20,20 @@ function GameListPage() {
 
   const [gameList, setGameList] = useState<GameListGame[]>([]);
   const [quicFilter, setQuicFilter] = useState<string>("");
-  const [orderName, setOrderName] = useState<any>("");
-  const [reverseOrder, setReverseOrder] = useState(false);
+
+  const [filterSettings, setFilterSettings] = useState<FilterSettings>({
+    noLoadStarted: true,
+    onlySelfGames: false,
+    gameType: 0,
+    orderBy: "default",
+    reverseOrder: false,
+    minPlayers: 1,
+    maxPlayers: 24,
+    minFreeSlots: 1,
+    maxFreeSlots: 24,
+    minSlots: 1,
+    maxSlots: 24,
+  });
 
   useGameListSubscribe({
     ghostSocket: sockets.ghostSocket,
@@ -26,70 +44,38 @@ function GameListPage() {
   const filtredGameList = useGameListFilter({
     gameList,
     quicFilter,
-    reverseOrder,
-    orderName,
+    filters: filterSettings
   });
-
-  const options = [
-    {
-      key: "default",
-      text: "По умолчанию",
-      value: "default",
-    },
-    {
-      key: "freeSlots",
-      text: "Свободно слотов",
-      value: "freeSlots",
-    },
-    {
-      key: "allSlots",
-      text: "Всего слотов",
-      value: "allSlots",
-    },
-    {
-      key: "playerSlots",
-      text: "Игроков в игре",
-      value: "playerSlots",
-    },
-  ];
 
   return (
     <Container>
       <Grid columns="equal" stackable>
-        <Grid.Column width="twelve">
+        <Grid.Column width="three" />
+        <Grid.Column width="ten">
           <Input
             onChange={(event, data) => setQuicFilter(data.value)}
             value={quicFilter}
             style={{ width: "50%" }}
             placeholder="Быстрый фильтр"
-            action={
-              <Dropdown
-                onChange={(event, data) => setOrderName(data.value)}
-                button
-                basic
-                floating
-                options={options}
-                defaultValue="default"
-              />
-            }
           />
           <Button floated="right" basic icon="bell" />
           <Button floated="right" basic icon="filter" />
-          <Button
-            floated="right"
-            color={reverseOrder ? "green" : null}
-            basic
-            icon="exchange"
-            onClick={() => setReverseOrder((reverseOrder) => !reverseOrder)}
-          />
         </Grid.Column>
       </Grid>
 
       <Grid columns="equal" stackable>
-        <Grid.Column width="twelve">
+        <Grid.Column width="three">
+          <GameListFilter
+            filterSettings={filterSettings}
+            onFilterChange={(value) => {
+              setFilterSettings(value);
+            }}
+          />
+        </Grid.Column>
+        <Grid.Column width="ten">
           <GameList gameList={filtredGameList}></GameList>
         </Grid.Column>
-        <Grid.Column width="four">
+        <Grid.Column width="three">
           <OnlineStats gameList={gameList}></OnlineStats>
         </Grid.Column>
       </Grid>
