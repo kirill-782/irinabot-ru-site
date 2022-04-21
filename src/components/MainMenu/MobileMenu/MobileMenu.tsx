@@ -29,10 +29,6 @@ const MobileMenu = () => {
   const authContext = useContext(AuthContext);
   const currentAuth = authContext.auth.currentAuth;
 
-  const onChangeTheme = (_, data: CheckboxProps) => {
-    switchTheme(data.checked ? E_THEME.DARK : E_THEME.LIGHT);
-  };
-
   const onBurgerButtonClick = () => {
     const mobileMenu = document.querySelector(".burger-mobile-menu");
     const burgerIcon = document.querySelector(".burger-icon");
@@ -73,7 +69,7 @@ const MobileMenu = () => {
           toggle
           className="item theme-switcher"
           checked={getTheme() === E_THEME.DARK}
-          onChange={onChangeTheme}
+          onChange={(_, data: CheckboxProps) => switchTheme(data.checked ? E_THEME.DARK : E_THEME.LIGHT)}
           label={
             <>
               <Icon name="paint brush" />
