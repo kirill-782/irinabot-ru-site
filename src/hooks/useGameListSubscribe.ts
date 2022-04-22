@@ -8,27 +8,37 @@ import {
   GHostPackageEvent,
   GHostWebSocket,
 } from "./../services/GHostWebsocket";
-import { ClientGameListConverter } from "../models/websocket/ClientGameList";
+import {
+  ClientGameListConverter,
+  GAMELIST_FILTER_STARTED,
+} from "../models/websocket/ClientGameList";
+import { FilterSettings } from "./useGameListFilter";
 
 interface GameListSubscribeOptions {
   ghostSocket: GHostWebSocket;
   isGameListLocked: boolean;
   onGameList: (games: GameListGame[]) => void;
+  filters: FilterSettings;
 }
 
 export const useGameListSubscribe = ({
   ghostSocket,
   isGameListLocked,
   onGameList,
+  filters,
 }: GameListSubscribeOptions) => {
   useEffect(() => {
     let intervalId;
 
     const sendGameListRequest = () => {
       if (ghostSocket.isConnected()) {
+        let filterFlags = 0xffffffff;
+
+        if (filters.noLoadStarted) filterFlags &= ~GAMELIST_FILTER_STARTED;
+
         let clientGameListConverter = new ClientGameListConverter();
         ghostSocket.send(
-          clientGameListConverter.assembly({ filters: 0xffffffff })
+          clientGameListConverter.assembly({ filters: filterFlags })
         );
       }
     };
@@ -66,6 +76,8 @@ export const useGameListSubscribe = ({
     ghostSocket.addEventListener("open", onConnectOpen);
     ghostSocket.addEventListener("close", onConnectClose);
 
+    if (ghostSocket.isConnected()) trySendGameList();
+
     return () => {
       clearInterval(intervalId);
 
@@ -73,5 +85,5 @@ export const useGameListSubscribe = ({
       ghostSocket.removeEventListener("open", onConnectOpen);
       ghostSocket.removeEventListener("close", onConnectClose);
     };
-  }, [ghostSocket, isGameListLocked]);
+  }, [ghostSocket, isGameListLocked, filters]);
 };

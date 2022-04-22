@@ -1,17 +1,15 @@
 import React, { useContext, useState } from "react";
-import {
-  Button,
-  Container,
-  Grid,
-  Input,
-} from "semantic-ui-react";
+import { Button, Container, Grid, Input } from "semantic-ui-react";
 import { AppRuntimeSettingsContext, WebsocketContext } from "../../context";
 import { GameListGame } from "../../models/websocket/ServerGameList";
 import GameList from "../GameList/GameList";
 import OnlineStats from "../GameList/OnlineStats";
 
 import { useGameListSubscribe } from "../../hooks/useGameListSubscribe";
-import { FilterSettings, useGameListFilter } from "../../hooks/useGameListFilter";
+import {
+  FilterSettings,
+  useGameListFilter,
+} from "../../hooks/useGameListFilter";
 import GameListFilter from "../GameList/GameListFilter";
 
 function GameListPage() {
@@ -39,12 +37,13 @@ function GameListPage() {
     ghostSocket: sockets.ghostSocket,
     isGameListLocked: runtimeContext.gameList.locked,
     onGameList: setGameList,
+    filters: filterSettings,
   });
 
   const filtredGameList = useGameListFilter({
     gameList,
     quicFilter,
-    filters: filterSettings
+    filters: filterSettings,
   });
 
   return (

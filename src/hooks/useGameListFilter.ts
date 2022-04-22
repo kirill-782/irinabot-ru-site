@@ -1,8 +1,13 @@
 import { useContext, useMemo } from "react";
 import { AuthContext } from "../context";
 import { GameListGame } from "../models/websocket/ServerGameList";
-import { allSlotsSort, defaultSort, freeSlotsSort, gameTypeSort, playersOccupiedSlot } from "../utils/GameListSortMethods";
-
+import {
+  allSlotsSort,
+  defaultSort,
+  freeSlotsSort,
+  gameTypeSort,
+  playersOccupiedSlot,
+} from "../utils/GameListSortMethods";
 
 export interface FilterSettings {
   noLoadStarted: boolean;
@@ -29,12 +34,10 @@ export const useGameListFilter = ({
   quicFilter,
   filters,
 }: useGameListFilterOptions) => {
-
   const currentAuth = useContext(AuthContext).auth.currentAuth;
 
   return useMemo(() => {
     let filtredGames = gameList.filter((game) => {
-
       // Game Type Filter
 
       if (filters.gameType) {
@@ -43,31 +46,36 @@ export const useGameListFilter = ({
         if (filters.gameType === 2 && game.orderID !== 0) return false;
       }
 
-      if(currentAuth && filters.onlySelfGames && currentAuth.connectorId !== game.creatorID)
+      if (
+        currentAuth &&
+        filters.onlySelfGames &&
+        currentAuth.connectorId !== game.creatorID
+      )
         return false;
 
       // Quic filter
 
       if (quicFilter.length === 0) return true;
 
-      if (game.name.toLocaleLowerCase().search(quicFilter.toLowerCase()) >= 0)
+      if (game.name.toLocaleLowerCase().indexOf(quicFilter.toLowerCase()) >= 0)
         return true;
 
       if (
-        game.mapName.toLocaleLowerCase().search(quicFilter.toLowerCase()) >= 0
+        game.mapName.toLocaleLowerCase().indexOf(quicFilter.toLowerCase()) >= 0
       )
         return true;
 
       if (
-        game.mapFileName.toLocaleLowerCase().search(quicFilter.toLowerCase()) >=
-        0
+        game.mapFileName
+          .toLocaleLowerCase()
+          .indexOf(quicFilter.toLowerCase()) >= 0
       )
         return true;
 
       const players = game.players.filter((player) => {
         if (player.name.length === 0) return false;
         if (
-          player.name.toLocaleLowerCase().search(quicFilter.toLowerCase()) >= 0
+          player.name.toLocaleLowerCase().indexOf(quicFilter.toLowerCase()) >= 0
         )
           return true;
         return false;
