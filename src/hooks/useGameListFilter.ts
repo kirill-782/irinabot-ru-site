@@ -15,12 +15,9 @@ export interface FilterSettings {
   gameType: 0 | 1 | 2;
   orderBy: string;
   reverseOrder: boolean;
-  minPlayers: number;
-  maxPlayers: number;
-  minFreeSlots: number;
-  maxFreeSlots: number;
-  minSlots: number;
-  maxSlots: number;
+  players: [number, number];
+  freeSlots: [number, number];
+  slots: [number, number];
 }
 
 interface useGameListFilterOptions {
@@ -38,6 +35,15 @@ export const useGameListFilter = ({
 
   return useMemo(() => {
     let filtredGames = gameList.filter((game) => {
+      const playersCount = (() => {
+        let playersCount = 0;
+        game.players.forEach((player) => {
+          if (player.name.length > 0) playersCount++;
+        });
+
+        return playersCount;
+      })();
+
       // Game Type Filter
 
       if (filters.gameType) {
@@ -50,6 +56,26 @@ export const useGameListFilter = ({
         currentAuth &&
         filters.onlySelfGames &&
         currentAuth.connectorId !== game.creatorID
+      )
+        return false;
+
+      // Slots filter
+
+      if (
+        game.players.length < filters.slots[0] ||
+        game.players.length > filters.slots[1]
+      )
+        return false;
+
+      if (
+        playersCount < filters.players[0] ||
+        playersCount > filters.players[1]
+      )
+        return false;
+
+      if (
+        game.players.length - playersCount < filters.freeSlots[0] ||
+        game.players.length - playersCount > filters.freeSlots[1]
       )
         return false;
 

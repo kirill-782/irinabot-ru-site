@@ -1,16 +1,6 @@
+import ReactSlider from "react-slider";
 import { Button, Form } from "semantic-ui-react";
-import { Slider } from "react-semantic-ui-range";
 import { FilterSettings } from "../../hooks/useGameListFilter";
-
-const settings = {
-  start: [1, 24],
-  min: 1,
-  max: 24,
-  step: 1,
-  onChange: (e, v) => {
-    console.log(e, v);
-  },
-};
 
 const options = [
   {
@@ -35,7 +25,7 @@ const options = [
   },
 ];
 
- interface GameListFilterProps {
+interface GameListFilterProps {
   filterSettings: FilterSettings;
   onFilterChange: (filterState: FilterSettings) => void;
 }
@@ -139,15 +129,51 @@ function GameListFilter({
 
         <Form.Field>
           <label>Фильтр по игрокам в лобби</label>
-          <Slider multiple discrete color="red" settings={settings} />
+          <ReactSlider
+            value={filterSettings.players}
+            onChange={(newValue) => {
+              onFilterChange({
+                ...filterSettings,
+                players: newValue,
+              });
+            }}
+            max={24}
+            min={1}
+            step={1}
+            renderThumb={(props, state) => <div {...props}>{state.valueNow}</div>}
+          />
         </Form.Field>
         <Form.Field>
           <label>Фильтр по свободным слотам</label>
-          <Slider multiple discrete color="red" settings={settings} />
+          <ReactSlider
+            value={filterSettings.freeSlots}
+            onChange={(newValue) => {
+              onFilterChange({
+                ...filterSettings,
+                freeSlots: newValue,
+              });
+            }}
+            max={24}
+            min={1}
+            step={1}
+            renderThumb={(props, state) => <div {...props}>{state.valueNow}</div>}
+          />
         </Form.Field>
         <Form.Field>
           <label>Фильтр по числу слотов</label>
-          <Slider multiple discrete color="red" settings={settings} />
+          <ReactSlider
+            value={filterSettings.slots}
+            onChange={(newValue) => {
+              onFilterChange({
+                ...filterSettings,
+                slots: newValue,
+              });
+            }}
+            max={24}
+            min={1}
+            step={1}
+            renderThumb={(props, state) => <div {...props}>{state.valueNow}</div>}
+          />
         </Form.Field>
       </Form>
     </>

@@ -25,12 +25,9 @@ function GameListPage() {
     gameType: 0,
     orderBy: "default",
     reverseOrder: false,
-    minPlayers: 1,
-    maxPlayers: 24,
-    minFreeSlots: 1,
-    maxFreeSlots: 24,
-    minSlots: 1,
-    maxSlots: 24,
+    players: [1,24],
+    slots: [1,24],
+    freeSlots: [1,24]
   });
 
   useGameListSubscribe({
