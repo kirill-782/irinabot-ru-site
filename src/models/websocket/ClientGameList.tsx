@@ -9,6 +9,10 @@ export interface ClientGameList extends AbstractPackage {
   filters: number;
 }
 
+export const GAMELIST_FILTER_STARTED = 1;
+export const GAMELIST_FILTER_OTHERS = 1 << 1;
+export const GAMELIST_FILTER_COMMON = 1 << 2;
+
 export class ClientGameListConverter extends AbstractConverter {
   public assembly(data: ClientGameList) {
     const dataBuffer = new DataBuffer(new ArrayBuffer(6));
