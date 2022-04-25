@@ -171,7 +171,7 @@ $d_emerald: #029527;
   padding-bottom: 3px;
 }
 
-.game-list.dark {
+.dark {
   .ui.list .list > a.item.player-name,
   .ui.list > a.item.player-name {
     &.blue {
@@ -180,8 +180,8 @@ $d_emerald: #029527;
     }
 
     &.purple {
-      color: $purple;
-      background: rgba($purple, $opacity);
+      color: $d_purple;
+      background: rgba($d_purple, $opacity);
     }
 
     &.brown {

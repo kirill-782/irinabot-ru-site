@@ -3,7 +3,6 @@ import { Table } from "semantic-ui-react";
 import GameListPlayers from "./GameListPlayers";
 import React from "react";
 import ConnectorAddButton from "./ConnectorAddButton";
-import { getTheme } from '../../utils/Theme';
 
 function GameList({ gameList }) {
   const getPlayerSlots = (game: GameListGame): number => {
@@ -17,7 +16,7 @@ function GameList({ gameList }) {
   };
 
   return (
-    <Table className={`game-list ${getTheme()}`}>
+    <Table>
       <Table.Header>
         <Table.Row>
           <Table.HeaderCell>Патч</Table.HeaderCell>
