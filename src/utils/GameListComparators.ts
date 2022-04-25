@@ -10,34 +10,34 @@ const getFreeSlots = (game: GameListGame): number => {
   return usedSlots;
 };
 
-export const gameTypeSort = (a: GameListGame, b: GameListGame): number => {
-  return sortByStarted(a, b) || sortByOtherGame(a, b);
+export const gameTypeComparator = (a: GameListGame, b: GameListGame): number => {
+  return compareByStarted(a, b) || compareByOtherGame(a, b);
 };
 
-export const defaultSort = (a: GameListGame, b: GameListGame): number => {
+export const defaultComparator = (a: GameListGame, b: GameListGame): number => {
   return (
-    sortByPassword(a, b) ||
-    sortByGamePatch(a, b) ||
-    sortByPinnedGamePosition(a, b) ||
-    sortByOrderID(a, b)
+    compareByPassword(a, b) ||
+    compareByGamePatch(a, b) ||
+    compareByPinnedGamePosition(a, b) ||
+    compareByOrderID(a, b)
   );
 };
 
-export const freeSlotsSort = (a: GameListGame, b: GameListGame): number => {
+export const freeSlotsComparator = (a: GameListGame, b: GameListGame): number => {
   if (Number(a.started) - Number(b.started) !== 0)
     return Number(a.started) - Number(b.started);
 
   return getFreeSlots(a) - getFreeSlots(b);
 };
 
-export const allSlotsSort = (a: GameListGame, b: GameListGame): number => {
+export const allSlotsComparator = (a: GameListGame, b: GameListGame): number => {
   if (Number(a.started) - Number(b.started) !== 0)
     return Number(a.started) - Number(b.started);
 
   return a.players.length - b.players.length;
 };
 
-export const playersOccupiedSlot = (
+export const playersOccupiedComparator = (
   a: GameListGame,
   b: GameListGame
 ): number => {
@@ -49,7 +49,7 @@ export const playersOccupiedSlot = (
   );
 };
 
-const sortByPassword = (a: GameListGame, b: GameListGame): number => {
+const compareByPassword = (a: GameListGame, b: GameListGame): number => {
   if (a.hasPassword && b.hasPassword) return 0;
 
   if (a.hasPassword) return 1;
@@ -59,7 +59,7 @@ const sortByPassword = (a: GameListGame, b: GameListGame): number => {
   return 0;
 };
 
-const sortByStarted = (a: GameListGame, b: GameListGame): number => {
+const compareByStarted = (a: GameListGame, b: GameListGame): number => {
   if (a.started && b.started) return 0;
 
   if (a.started) return 1;
@@ -69,7 +69,7 @@ const sortByStarted = (a: GameListGame, b: GameListGame): number => {
   return 0;
 };
 
-const sortByOtherGame = (a: GameListGame, b: GameListGame): number => {
+const compareByOtherGame = (a: GameListGame, b: GameListGame): number => {
   if (a.hasOtherGame && b.hasOtherGame) return 0;
 
   if (a.hasOtherGame) return 1;
@@ -79,7 +79,7 @@ const sortByOtherGame = (a: GameListGame, b: GameListGame): number => {
   return 0;
 };
 
-const sortByGamePatch = (a: GameListGame, b: GameListGame): number => {
+const compareByGamePatch = (a: GameListGame, b: GameListGame): number => {
   if (a.maxPlayers === 1 && b.maxPlayers === 1) return 0;
 
   if (a.maxPlayers === 1) return 1;
@@ -89,13 +89,13 @@ const sortByGamePatch = (a: GameListGame, b: GameListGame): number => {
   return 0;
 };
 
-const sortByPinnedGamePosition = (a: GameListGame, b: GameListGame): number => {
+const compareByPinnedGamePosition = (a: GameListGame, b: GameListGame): number => {
   const order = [1, 3, 0, 2];
 
   return order.indexOf(a.gamePosition) - order.indexOf(b.gamePosition);
 };
 
-// const sortByFullLobby = (a: GameListGame, b: GameListGame): number => {
+// const compareByFullLobby = (a: GameListGame, b: GameListGame): number => {
 //   if (getFreeSlots(a) > 0 && getFreeSlots(b) > 0) return 0;
 
 //   if (getFreeSlots(a) > 0) return 1;
@@ -105,6 +105,6 @@ const sortByPinnedGamePosition = (a: GameListGame, b: GameListGame): number => {
 //   return 0;
 // };
 
-const sortByOrderID = (a: GameListGame, b: GameListGame): number => {
+const compareByOrderID = (a: GameListGame, b: GameListGame): number => {
   return a.orderID - b.orderID;
 };

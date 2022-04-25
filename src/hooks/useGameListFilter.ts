@@ -2,12 +2,12 @@ import { useContext, useMemo } from "react";
 import { AuthContext } from "../context";
 import { GameListGame } from "../models/websocket/ServerGameList";
 import {
-  allSlotsSort,
-  defaultSort,
-  freeSlotsSort,
-  gameTypeSort,
-  playersOccupiedSlot,
-} from "../utils/GameListSortMethods";
+  allSlotsComparator,
+  defaultComparator,
+  freeSlotsComparator,
+  gameTypeComparator,
+  playersOccupiedComparator,
+} from "../utils/GameListComparators";
 
 export interface FilterSettings {
   noLoadStarted: boolean;
@@ -116,23 +116,23 @@ export const useGameListFilter = ({
 
     return filtredGames.sort((a, b) => {
       return (
-        gameTypeSort(a, b) ||
-        getOrderFunction(filters.orderBy)(a, b) *
+        gameTypeComparator(a, b) ||
+        getCompareFunction(filters.orderBy)(a, b) *
           (filters.reverseOrder ? -1 : 1)
       );
     });
-  }, [gameList, quicFilter, filters]);
+  }, [gameList, quicFilter, filters, currentAuth]);
 };
 
-const getOrderFunction = (value) => {
+const getCompareFunction = (value) => {
   switch (value) {
     case "freeSlots":
-      return freeSlotsSort;
+      return freeSlotsComparator;
     case "allSlots":
-      return allSlotsSort;
+      return allSlotsComparator;
     case "playerSlots":
-      return playersOccupiedSlot;
+      return playersOccupiedComparator;
     default:
-      return defaultSort;
+      return defaultComparator;
   }
 };

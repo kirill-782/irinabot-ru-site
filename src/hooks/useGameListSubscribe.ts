@@ -85,5 +85,5 @@ export const useGameListSubscribe = ({
       ghostSocket.removeEventListener("open", onConnectOpen);
       ghostSocket.removeEventListener("close", onConnectClose);
     };
-  }, [ghostSocket, isGameListLocked, filters]);
+  }, [ghostSocket, isGameListLocked, filters, onGameList]);
 };

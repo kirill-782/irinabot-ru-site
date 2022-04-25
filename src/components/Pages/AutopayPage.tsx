@@ -16,37 +16,38 @@ interface Place {
   price: number;
 }
 
+const availablePlaces: Place[] = [
+  {
+    placeId: 1,
+    title: "VIP доступ",
+    description: "",
+    imageUrl: "/images/vip.png",
+    price: 149,
+  },
+  {
+    placeId: 5,
+    title: "Ban list",
+    description: "",
+    imageUrl: "/images/ban_list.png",
+    price: 99,
+  },
+  {
+    placeId: 6,
+    title: "Admin list",
+    description: "",
+    imageUrl: "/images/admin_lina.png",
+    price: 99,
+  },
+  {
+    placeId: 4,
+    title: "Autohost",
+    description: "",
+    imageUrl: "/images/autohost.png",
+    price: 299,
+  },
+];
+
 function AutopayPage() {
-  const availablePlaces: Place[] = [
-    {
-      placeId: 1,
-      title: "VIP доступ",
-      description: "",
-      imageUrl: "/images/vip.png",
-      price: 149,
-    },
-    {
-      placeId: 5,
-      title: "Ban list",
-      description: "",
-      imageUrl: "/images/ban_list.png",
-      price: 99,
-    },
-    {
-      placeId: 6,
-      title: "Admin list",
-      description: "",
-      imageUrl: "/images/admin_lina.png",
-      price: 99,
-    },
-    {
-      placeId: 4,
-      title: "Autohost",
-      description: "",
-      imageUrl: "/images/autohost.png",
-      price: 299,
-    },
-  ];
 
   const authContext = useContext(AuthContext);
 
@@ -98,7 +99,7 @@ function AutopayPage() {
     const totalPrice = basePriceInMoonth * parseInt(duration);
 
     return [totalPrice, totalPrice > 0 && parseInt(connectroId) > 1];
-  }, [selectedPlaces, duration, connectroId, availablePlaces]);
+  }, [selectedPlaces, duration, connectroId]);
 
   const renerErrorMessage = () => {
     if (isValid) return null;

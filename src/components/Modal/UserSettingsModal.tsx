@@ -8,7 +8,6 @@ import {
   Modal,
   Image,
   Form,
-  Input,
 } from "semantic-ui-react";
 import { useContext } from "react";
 import { AuthContext } from "./../../context/index";

@@ -13,15 +13,16 @@ export const useSiteOnlineStatsSubscribe = ({
   ghostSocket,
   onOnlineStats,
 }: SiteOnlineStatsSubscribeOptions) => {
-  let sendStatsRequest = () => {
-    if (ghostSocket.isConnected()) {
-      let clientWebsocketConnectStatsConverter =
-        new ClientWebsocketConnectStatsConverter();
-      ghostSocket.send(clientWebsocketConnectStatsConverter.assembly({}));
-    }
-  };
-
   useEffect(() => {
+    
+    const sendStatsRequest = () => {
+      if (ghostSocket.isConnected()) {
+        let clientWebsocketConnectStatsConverter =
+          new ClientWebsocketConnectStatsConverter();
+        ghostSocket.send(clientWebsocketConnectStatsConverter.assembly({}));
+      }
+    };
+
     let intervalId;
 
     if (ghostSocket.isConnected()) sendStatsRequest();
@@ -55,5 +56,5 @@ export const useSiteOnlineStatsSubscribe = ({
       ghostSocket.removeEventListener("open", onConnectOpen);
       ghostSocket.removeEventListener("close", onConnectClose);
     };
-  }, []);
+  }, [ghostSocket, onOnlineStats]);
 };

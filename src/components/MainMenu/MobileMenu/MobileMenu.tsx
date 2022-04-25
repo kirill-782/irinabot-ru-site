@@ -9,7 +9,7 @@ import {
 import LoginDropdown from "../../Header/LoginDropdown";
 import UserDrowdown from "../../Header/UserDropdown";
 import { AuthContext } from "./../../../context/index";
-import { switchTheme, E_THEME, getTheme } from "../../../utils/Theme";
+import { switchTheme, E_THEME, currentTheme } from "../../../utils/Theme";
 import "./MobileMenu.scss";
 import UploadMap from "../../Header/UploadMap";
 import { NavLink } from "react-router-dom";
@@ -68,7 +68,7 @@ const MobileMenu = () => {
         <Checkbox
           toggle
           className="item theme-switcher"
-          checked={getTheme() === E_THEME.DARK}
+          checked={currentTheme === E_THEME.DARK}
           onChange={(_, data: CheckboxProps) => switchTheme(data.checked ? E_THEME.DARK : E_THEME.LIGHT)}
           label={
             <>

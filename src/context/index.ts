@@ -30,6 +30,7 @@ export const AppRuntimeSettingsContext =
 
 // Auth Context
 
+
 export type AuthCredentials = {
   type: number;
   token: string;
@@ -40,10 +41,31 @@ export type AuthData = {
   authCredentials: AuthCredentials;
 };
 
-export type AuthAction = {
-  action: string;
-  payload: ServerUserAuth | AuthCredentials;
+// Actions
+
+type SaveCredentialsActionType = {
+  action: "saveCredentials";
+  payload: AuthCredentials;
 };
+
+type SaveAuthActionType = {
+  action: "saveAuth";
+  payload: ServerUserAuth;
+};
+
+type ClearCredentialsActionType = {
+  action: "clearCredentials";
+};
+
+type ClearAuthActionType = {
+  action: "clearAuth";
+};
+
+export type AuthAction =
+  | SaveAuthActionType
+  | SaveCredentialsActionType
+  | ClearCredentialsActionType
+  | ClearAuthActionType;
 
 export type AuthContextType = {
   dispatchAuth: React.Dispatch<AuthAction>;

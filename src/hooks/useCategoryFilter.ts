@@ -6,15 +6,16 @@ export const useCategoryFilter = (
   categories: Category[],
   maxSelected: number
 ) => {
-  const hasSingleton = (categoryId) => {
-    for (let i = 0; i < categories.length; ++i) {
-      if (categoryId === categories[i].id) return categories[i].singleton;
-    }
-
-    return false;
-  };
-
   return useMemo(() => {
+
+    const hasSingleton = (categoryId) => {
+      for (let i = 0; i < categories.length; ++i) {
+        if (categoryId === categories[i].id) return categories[i].singleton;
+      }
+  
+      return false;
+    };
+
     let selectableCategories = [];
 
     // If noting selected - allow select all categories
@@ -54,5 +55,5 @@ export const useCategoryFilter = (
       },
       [selectedCategories, categories]
     );
-  }, [categories, selectedCategories]);
+  }, [categories, selectedCategories, maxSelected]);
 };

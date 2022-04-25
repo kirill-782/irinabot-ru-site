@@ -1,7 +1,6 @@
 import { useContext, useEffect, useReducer } from "react";
 import {
   AuthAction,
-  AuthCredentials,
   AuthData,
   WebsocketContext,
 } from "../context";
@@ -34,13 +33,13 @@ export const useWebsocketAuth = ({ ghostSocket }: WebsocketAuthOptions) => {
       } else if (action.action === "saveAuth") {
         const newState: AuthData = {
           ...state,
-          currentAuth: action.payload as ServerUserAuth,
+          currentAuth: action.payload,
         };
         return newState;
       } else if (action.action === "saveCredentials") {
         const newState: AuthData = {
           ...state,
-          authCredentials: action.payload as AuthCredentials,
+          authCredentials: action.payload,
         };
         return newState;
       }
@@ -93,7 +92,7 @@ export const useWebsocketAuth = ({ ghostSocket }: WebsocketAuthOptions) => {
     };
 
     const onClose = () => {
-      authDispatcher({ action: "clearAuth", payload: null });
+      authDispatcher({ action: "clearAuth" });
     };
 
     ghostSocket.addEventListener("open", onOpen);

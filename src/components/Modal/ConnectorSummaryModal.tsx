@@ -1,11 +1,9 @@
 import {
   Modal,
-  Header,
   Message,
   List,
   Icon,
   Button,
-  Placeholder,
 } from "semantic-ui-react";
 import type { SyntheticEvent } from "react";
 import { useContext } from "react";

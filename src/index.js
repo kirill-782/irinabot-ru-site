@@ -2,11 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App";
-import { getTheme } from './utils/Theme';
+import { currentTheme } from './utils/Theme';
 
 ReactDOM.render(
   <BrowserRouter>
-    <div className={getTheme()}>
+    <div className={currentTheme}>
       <App />
     </div>
   </BrowserRouter>,

@@ -119,7 +119,7 @@ export class DataBuffer {
       if (newbyte === 0) {
         let S = DataBuffer.stringFromUTF8Array(ints);
 
-        if (S == null) return "";
+        if (S === null) return "";
 
         return S;
       }
