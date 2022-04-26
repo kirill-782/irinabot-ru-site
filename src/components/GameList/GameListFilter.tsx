@@ -28,11 +28,13 @@ const options = [
 interface GameListFilterProps {
   filterSettings: FilterSettings;
   onFilterChange: (filterState: FilterSettings) => void;
+  disabledFilters: string[];
 }
 
 function GameListFilter({
   filterSettings,
   onFilterChange,
+  disabledFilters,
 }: GameListFilterProps) {
   return (
     <>
@@ -40,6 +42,8 @@ function GameListFilter({
         <Form.Checkbox
           label="Не загружать начатые игры"
           checked={filterSettings.noLoadStarted}
+          name="noLoadStarted"
+          disabled={disabledFilters.indexOf("noLoadStarted") > -1}
           onChange={(event, data) => {
             onFilterChange({
               ...filterSettings,
@@ -48,6 +52,8 @@ function GameListFilter({
           }}
         ></Form.Checkbox>
         <Form.Checkbox
+          name="onlySelfGames"
+          disabled={disabledFilters.indexOf("onlySelfGames") > -1}
           checked={filterSettings.onlySelfGames}
           onChange={(event, data) => {
             onFilterChange({
@@ -64,6 +70,7 @@ function GameListFilter({
             control="input"
             type="radio"
             name="gameType"
+            disabled={disabledFilters.indexOf("gameType") > -1}
             checked={filterSettings.gameType === 1}
             onChange={(event, data) => {
               onFilterChange({
@@ -77,6 +84,7 @@ function GameListFilter({
             control="input"
             type="radio"
             name="gameType"
+            disabled={disabledFilters.indexOf("gameType") > -1}
             checked={filterSettings.gameType === 0}
             onChange={(event, data) => {
               onFilterChange({
@@ -90,6 +98,7 @@ function GameListFilter({
             control="input"
             type="radio"
             name="gameType"
+            disabled={disabledFilters.indexOf("gameType") > -1}
             checked={filterSettings.gameType === 2}
             onChange={(event, data) => {
               onFilterChange({
@@ -101,6 +110,8 @@ function GameListFilter({
         </Form.Group>
         <Form.Group>
           <Form.Dropdown
+            name="orderBy"
+            disabled={disabledFilters.indexOf("orderBy") > -1}
             onChange={(event, data) =>
               onFilterChange({
                 ...filterSettings,
@@ -117,6 +128,8 @@ function GameListFilter({
             floated="right"
             basic
             icon="exchange"
+            name="reverseOrder"
+            disabled={disabledFilters.indexOf("reverseOrder") > -1}
             color={filterSettings.reverseOrder ? "green" : null}
             onClick={() =>
               onFilterChange({
@@ -140,7 +153,9 @@ function GameListFilter({
             max={24}
             min={1}
             step={1}
-            renderThumb={(props, state) => <div {...props}>{state.valueNow}</div>}
+            renderThumb={(props, state) => (
+              <div {...props}>{state.valueNow}</div>
+            )}
           />
         </Form.Field>
         <Form.Field>
@@ -156,7 +171,9 @@ function GameListFilter({
             max={24}
             min={1}
             step={1}
-            renderThumb={(props, state) => <div {...props}>{state.valueNow}</div>}
+            renderThumb={(props, state) => (
+              <div {...props}>{state.valueNow}</div>
+            )}
           />
         </Form.Field>
         <Form.Field>
@@ -172,7 +189,9 @@ function GameListFilter({
             max={24}
             min={1}
             step={1}
-            renderThumb={(props, state) => <div {...props}>{state.valueNow}</div>}
+            renderThumb={(props, state) => (
+              <div {...props}>{state.valueNow}</div>
+            )}
           />
         </Form.Field>
       </Form>

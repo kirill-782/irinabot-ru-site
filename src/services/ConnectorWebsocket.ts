@@ -145,7 +145,6 @@ export class ConnectorWebsocket extends EventTarget {
   private wsOnError = (event) => {};
 
   private wsOnClose = (event) => {
-    console.log("wsOnClose");
     this.dispatchEvent(new CustomEvent("close"));
 
     if (this.options.autoReconnect) this.autoReconnect();

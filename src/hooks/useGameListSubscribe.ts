@@ -19,6 +19,7 @@ interface GameListSubscribeOptions {
   isGameListLocked: boolean;
   onGameList: (games: GameListGame[]) => void;
   filters: FilterSettings;
+  ignoreFocusCheck: boolean
 }
 
 export const useGameListSubscribe = ({
@@ -26,6 +27,7 @@ export const useGameListSubscribe = ({
   isGameListLocked,
   onGameList,
   filters,
+  ignoreFocusCheck
 }: GameListSubscribeOptions) => {
   useEffect(() => {
     let intervalId;
@@ -44,7 +46,7 @@ export const useGameListSubscribe = ({
     };
 
     const trySendGameList = () => {
-      if (document.hasFocus() && !isGameListLocked) sendGameListRequest();
+      if ((document.hasFocus() || ignoreFocusCheck) && !isGameListLocked) sendGameListRequest();
       else intervalId = setTimeout(trySendGameList, 500);
     };
 
@@ -59,10 +61,7 @@ export const useGameListSubscribe = ({
     };
 
     if (ghostSocket.isConnected()) {
-      let clientGameListConverter = new ClientGameListConverter();
-      ghostSocket.send(
-        clientGameListConverter.assembly({ filters: 0xffffffff })
-      );
+      trySendGameList();
     }
 
     const onConnectOpen = () => sendGameListRequest();
@@ -85,5 +84,5 @@ export const useGameListSubscribe = ({
       ghostSocket.removeEventListener("open", onConnectOpen);
       ghostSocket.removeEventListener("close", onConnectClose);
     };
-  }, [ghostSocket, isGameListLocked, filters, onGameList]);
+  }, [ghostSocket, isGameListLocked, filters, onGameList, ignoreFocusCheck]);
 };
