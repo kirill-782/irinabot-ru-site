@@ -1,10 +1,4 @@
-import {
-  Modal,
-  Message,
-  List,
-  Icon,
-  Button,
-} from "semantic-ui-react";
+import { Modal, Message, List, Icon, Button } from "semantic-ui-react";
 import type { SyntheticEvent } from "react";
 import { useContext } from "react";
 import { ConnectorGame } from "../../models/websocket/ConnectorSummary";

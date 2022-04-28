@@ -19,7 +19,7 @@ interface GameListSubscribeOptions {
   isGameListLocked: boolean;
   onGameList: (games: GameListGame[]) => void;
   filters: FilterSettings;
-  ignoreFocusCheck: boolean
+  ignoreFocusCheck: boolean;
 }
 
 export const useGameListSubscribe = ({
@@ -27,7 +27,7 @@ export const useGameListSubscribe = ({
   isGameListLocked,
   onGameList,
   filters,
-  ignoreFocusCheck
+  ignoreFocusCheck,
 }: GameListSubscribeOptions) => {
   useEffect(() => {
     let intervalId;
@@ -46,7 +46,8 @@ export const useGameListSubscribe = ({
     };
 
     const trySendGameList = () => {
-      if ((document.hasFocus() || ignoreFocusCheck) && !isGameListLocked) sendGameListRequest();
+      if ((document.hasFocus() || ignoreFocusCheck) && !isGameListLocked)
+        sendGameListRequest();
       else intervalId = setTimeout(trySendGameList, 500);
     };
 

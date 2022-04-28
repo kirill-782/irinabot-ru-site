@@ -23,6 +23,7 @@ import { useConnectorGameAdd } from "./hooks/useConnectorGameAdd";
 import { MapService } from "./services/MapService";
 import { MapUploaderService } from "./services/MapUploaderService";
 import AutopayPage from "./components/Pages/AutopayPage";
+import RegisterAccountModal from "./components/Modal/RegisterAccountModal";
 
 function App() {
   useEffect(loadTheme, []);
@@ -36,7 +37,9 @@ function App() {
   });
   const [gameListLocked, setGameListLocked] = useState(false);
 
-  const [authState, authDispatcher] = useWebsocketAuth({ ghostSocket });
+  const [authState, authDispatcher, needRegisterModal] = useWebsocketAuth({
+    ghostSocket,
+  });
 
   useConnectorGameAdd({ ghostSocket, connectorSocket });
 
@@ -74,6 +77,15 @@ function App() {
               </Route>
               <Route path="/oauth" element={<OauthStubPage />} />
             </Routes>
+            <RegisterAccountModal
+              open={needRegisterModal}
+              onApprove={() => {
+                authDispatcher({ action: "setForce", payload: true });
+              }}
+              onReject={() => {
+                authDispatcher({ action: "clearCredentials" });
+              }}
+            ></RegisterAccountModal>
           </RestContext.Provider>
         </AuthContext.Provider>
       </AppRuntimeSettingsContext.Provider>

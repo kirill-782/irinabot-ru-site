@@ -3,9 +3,7 @@ import { AbstractConverter } from "../models/websocket/AbstractPackage";
 import { DataBuffer } from "./../utils/DataBuffer";
 import { AbstractPackage } from "./../models/websocket/AbstractPackage";
 import { CONNECTOR_SYMMARY } from "../models/websocket/HeaderConstants";
-import {
-  ConnectorSummaryConverter,
-} from "./../models/websocket/ConnectorSummary";
+import { ConnectorSummaryConverter } from "./../models/websocket/ConnectorSummary";
 
 export interface ConnectorWebsocketOptions {
   url: string;
@@ -74,8 +72,7 @@ export class ConnectorWebsocket extends EventTarget {
 
     if (!options.autoReconnect) options.autoReconnect = true;
 
-    if (!options.reconnectInterval)
-      options.reconnectInterval = 3500;
+    if (!options.reconnectInterval) options.reconnectInterval = 3500;
 
     this.options = options;
   }

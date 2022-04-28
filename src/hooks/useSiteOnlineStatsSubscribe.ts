@@ -14,7 +14,6 @@ export const useSiteOnlineStatsSubscribe = ({
   onOnlineStats,
 }: SiteOnlineStatsSubscribeOptions) => {
   useEffect(() => {
-    
     const sendStatsRequest = () => {
       if (ghostSocket.isConnected()) {
         let clientWebsocketConnectStatsConverter =

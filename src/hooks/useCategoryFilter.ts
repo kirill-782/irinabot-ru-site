@@ -7,12 +7,11 @@ export const useCategoryFilter = (
   maxSelected: number
 ) => {
   return useMemo(() => {
-
     const hasSingleton = (categoryId) => {
       for (let i = 0; i < categories.length; ++i) {
         if (categoryId === categories[i].id) return categories[i].singleton;
       }
-  
+
       return false;
     };
 

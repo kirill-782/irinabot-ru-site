@@ -122,62 +122,61 @@ function PrepareUploadMapModal({
         onDragOver={handleDrag}
         onDrop={handleDrop}
       >
-          {isDragging && <DragAndDropField />}
-          <Modal.Description>
-            <Header>Какую карту загрузить?</Header>
-            <p>
-              Укажите путь до w3x карты. Обычно карты находятся в папке maps,
-              которая находится там где Warcraft III.
-            </p>
-            <Form>
-              <Form.Field>
-                <label>Выберите до 5 категорий для карты</label>
-                <Dropdown
-                  fluid
-                  multiple
-                  placeholder="Категории"
-                  selection
-                  options={dropdownOptions}
-                  error={loadingError}
-                  loading={loadding}
-                  onChange={(e, p) => {
-                    setSelectedCategories(p.value);
-                  }}
-                  value={selectedCategories}
-                />
-              </Form.Field>
-              <Form.Field>
-                <Grid>
-                  <Grid.Row centered>
-                    <input
-                      multiple
-                      accept=".w3x , .w3m"
-                      onChange={(e) => {
-                        emitMapSelected(e.target.files);
+        {isDragging && <DragAndDropField />}
+        <Modal.Description>
+          <Header>Какую карту загрузить?</Header>
+          <p>
+            Укажите путь до w3x карты. Обычно карты находятся в папке maps,
+            которая находится там где Warcraft III.
+          </p>
+          <Form>
+            <Form.Field>
+              <label>Выберите до 5 категорий для карты</label>
+              <Dropdown
+                fluid
+                multiple
+                placeholder="Категории"
+                selection
+                options={dropdownOptions}
+                error={loadingError}
+                loading={loadding}
+                onChange={(e, p) => {
+                  setSelectedCategories(p.value);
+                }}
+                value={selectedCategories}
+              />
+            </Form.Field>
+            <Form.Field>
+              <Grid>
+                <Grid.Row centered>
+                  <input
+                    multiple
+                    accept=".w3x , .w3m"
+                    onChange={(e) => {
+                      emitMapSelected(e.target.files);
+                    }}
+                    type="file"
+                    hidden
+                    ref={fileInput}
+                  />
+                  <Grid.Row>
+                    <Message
+                      header="Загрузка карты"
+                      content={
+                        selectedCategories.length === 0
+                          ? "Перед загрузкой карты, выберите категорию"
+                          : "Нажмите сюда для загрузки карты или перетащите файл в область окна"
+                      }
+                      onClick={() => {
+                        !selectedCategories.length && fileInput.current.click();
                       }}
-                      type="file"
-                      hidden
-                      ref={fileInput}
                     />
-                    <Grid.Row>
-                      <Message
-                        header="Загрузка карты"
-                        content={
-                          selectedCategories.length === 0
-                            ? "Перед загрузкой карты, выберите категорию"
-                            : "Нажмите сюда для загрузки карты или перетащите файл в область окна"
-                        }
-                        onClick={() => {
-                          !selectedCategories.length &&
-                            fileInput.current.click();
-                        }}
-                      />
-                    </Grid.Row>
                   </Grid.Row>
-                </Grid>
-              </Form.Field>
-            </Form>
-          </Modal.Description>
+                </Grid.Row>
+              </Grid>
+            </Form.Field>
+          </Form>
+        </Modal.Description>
       </Modal.Content>
     </Modal>
   );

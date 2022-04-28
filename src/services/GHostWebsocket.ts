@@ -5,6 +5,8 @@ import {
   DEFAULT_MAP_INFO,
   DEFAULT_UDP_ANSWER,
   DEFAULT_WEBSOCKET_CONNECT_STATS,
+  GLOBAL_ADD_INTEGRATION_RESPONSE,
+  GLOBAL_BNET_KEY,
   GLOBAL_GET_ERROR,
   GLOBAL_USER_AUTH_RESPONSE,
 } from "../models/websocket/HeaderConstants";
@@ -17,6 +19,8 @@ import { GLOBAL_CONTEXT_HEADER_CONSTANT } from "./../models/websocket/HeaderCons
 import { ServerUserAuthConverter } from "./../models/websocket/ServerUserAuth";
 import { ServerErrorConverter } from "../models/websocket/ServerError";
 import { ServerUDPAnswerConverter } from "./../models/websocket/ServerUDPAnswer";
+import { ServerAddIntegrationResponseConverter } from "./../models/websocket/ServerAddIntegrationResponse";
+import { ServerBnetKeyConverter } from "./../models/websocket/ServerBnetKey";
 
 export interface GHostWebSocketOptions {
   url: string;
@@ -42,6 +46,10 @@ const packageHandlers = (() => {
     new ServerErrorConverter();
   handlers[GLOBAL_CONTEXT_HEADER_CONSTANT][GLOBAL_USER_AUTH_RESPONSE] =
     new ServerUserAuthConverter();
+  handlers[GLOBAL_CONTEXT_HEADER_CONSTANT][GLOBAL_ADD_INTEGRATION_RESPONSE] =
+    new ServerAddIntegrationResponseConverter();
+  handlers[GLOBAL_CONTEXT_HEADER_CONSTANT][GLOBAL_BNET_KEY] =
+    new ServerBnetKeyConverter();
 
   return handlers;
 })();
@@ -99,8 +107,7 @@ export class GHostWebSocket extends EventTarget {
 
     if (!options.autoReconnect) options.autoReconnect = true;
 
-    if (!options.reconnectInterval)
-      options.reconnectInterval = 3500;
+    if (!options.reconnectInterval) options.reconnectInterval = 3500;
 
     this.options = options;
   }

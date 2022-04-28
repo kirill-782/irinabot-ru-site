@@ -1,17 +1,17 @@
-import { useContext, useEffect, useReducer } from "react";
-import {
-  AuthAction,
-  AuthData,
-  WebsocketContext,
-} from "../context";
+import { useContext, useEffect, useReducer, useState } from "react";
+import { toast } from "react-semantic-toasts";
+import { AuthAction, AuthData, WebsocketContext } from "../context";
 import { ClientUserAuthConverter } from "../models/websocket/ClientUserAuth";
+import { ServerError } from "../models/websocket/ServerError";
 import { ServerUserAuth } from "../models/websocket/ServerUserAuth";
 import {
   GHostPackageEvent,
   GHostWebSocket,
 } from "./../services/GHostWebsocket";
 import {
+  GLOBAL_ADD_INTEGRATION_RESPONSE,
   GLOBAL_CONTEXT_HEADER_CONSTANT,
+  GLOBAL_GET_ERROR,
   GLOBAL_USER_AUTH_RESPONSE,
 } from "./../models/websocket/HeaderConstants";
 
@@ -19,8 +19,12 @@ interface WebsocketAuthOptions {
   ghostSocket: GHostWebSocket;
 }
 
-export const useWebsocketAuth = ({ ghostSocket }: WebsocketAuthOptions) => {
+export const useWebsocketAuth = ({
+  ghostSocket,
+}: WebsocketAuthOptions): [AuthData, React.Dispatch<AuthAction>, boolean] => {
   useContext(WebsocketContext);
+
+  const [needRegistryModal, setNeedRegistryModal] = useState<boolean>(false);
 
   const [authState, authDispatcher] = useReducer(
     (state: AuthData, action: AuthAction) => {
@@ -42,11 +46,17 @@ export const useWebsocketAuth = ({ ghostSocket }: WebsocketAuthOptions) => {
           authCredentials: action.payload,
         };
         return newState;
+      } else if (action.action === "setForce") {
+        const newState: AuthData = {
+          ...state,
+          forceLogin: action.payload,
+        };
+        return newState;
       }
 
       return state;
     },
-    { authCredentials: null, currentAuth: null }
+    { authCredentials: null, currentAuth: null, forceLogin: false }
   );
 
   // Load localStorage auth
@@ -88,6 +98,52 @@ export const useWebsocketAuth = ({ ghostSocket }: WebsocketAuthOptions) => {
           action: "saveAuth",
           payload: e.detail.package as ServerUserAuth,
         });
+        authDispatcher({
+          action: "setForce",
+          payload: false,
+        });
+      } else if (
+        e.detail.package.context === GLOBAL_CONTEXT_HEADER_CONSTANT &&
+        e.detail.package.type === GLOBAL_ADD_INTEGRATION_RESPONSE
+      ) {
+        authDispatcher({
+          action: "saveAuth",
+          payload: { ...authState.currentAuth, ...e.detail.package },
+        });
+      } else if (
+        e.detail.package.context === GLOBAL_CONTEXT_HEADER_CONSTANT &&
+        e.detail.package.type === GLOBAL_GET_ERROR
+      ) {
+        const errorData = e.detail.package as ServerError;
+
+        if (errorData.errorCode === 0)
+          toast({
+            title: "Ошибка",
+            description: errorData.description,
+            type: "error",
+            time: 10000,
+          });
+        else if (errorData.errorCode === 0x10) setNeedRegistryModal(true);
+        else if (errorData.errorCode === 1 && errorData.description === "") {
+          toast({
+            title: "Ошибка входа",
+            description: "Сессия просрочена. Войдите заново",
+            type: "error",
+            time: 10000,
+          });
+
+          window.localStorage.removeItem("authTokenType");
+          window.localStorage.removeItem("authToken");
+
+          authDispatcher({ action: "clearCredentials" });
+        } else if (errorData.errorCode === 1 && errorData.description === "") {
+          toast({
+            title: "Ошибка входа",
+            description: "Сессия просрочена. Войдите заново",
+            type: "error",
+            time: 10000,
+          });
+        }
       }
     };
 
@@ -119,11 +175,23 @@ export const useWebsocketAuth = ({ ghostSocket }: WebsocketAuthOptions) => {
         converter.assembly({
           tokenType: authState.authCredentials.type,
           token: authState.authCredentials.token,
-          force: false,
+          force: authState.forceLogin,
         })
       );
     }
   }, [authState, ghostSocket]);
 
-  return [authState, authDispatcher];
+  // needRegistry modal toggler
+
+  useEffect(() => {
+    if (
+      (authState.forceLogin || !authState.authCredentials) &&
+      needRegistryModal
+    )
+      setNeedRegistryModal(false);
+
+    if (authState.currentAuth) setNeedRegistryModal(false);
+  }, [authState, needRegistryModal]);
+
+  return [authState, authDispatcher, needRegistryModal];
 };

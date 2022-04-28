@@ -1,4 +1,4 @@
-import { SemanticICONS } from "semantic-ui-react";
+import { SemanticCOLORS, SemanticICONS } from "semantic-ui-react";
 
 export interface AuthMethod {
   oauthEndpoint: string;
@@ -8,6 +8,8 @@ export interface AuthMethod {
   name: string;
   icon: SemanticICONS;
   type: number;
+  color: SemanticCOLORS;
+  authObjectProperty: string;
 }
 
 export const AviableAuthMethods: AuthMethod[] = [
@@ -18,6 +20,8 @@ export const AviableAuthMethods: AuthMethod[] = [
     name: "Discord",
     icon: "discord",
     type: 1,
+    color: "purple",
+    authObjectProperty: "discordId",
   },
   {
     oauthEndpoint: "https://oauth.vk.com/oauth/authorize",
@@ -26,5 +30,7 @@ export const AviableAuthMethods: AuthMethod[] = [
     name: "Вконтакте",
     icon: "vk",
     type: 2,
+    color: "blue",
+    authObjectProperty: "vkId",
   },
 ];

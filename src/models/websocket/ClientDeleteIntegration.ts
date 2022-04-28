@@ -2,36 +2,30 @@ import { DataBuffer } from "../../utils/DataBuffer";
 import { AbstractConverter, AbstractPackage } from "./AbstractPackage";
 import {
   GLOBAL_CONTEXT_HEADER_CONSTANT,
-  GLOBAL_USER_AUTH,
+  GLOBAL_DELETE_INTEGRATION,
 } from "./HeaderConstants";
 
-export interface ClientUserAuth extends AbstractPackage {
+export interface ClientDeleteIntegration extends AbstractPackage {
   tokenType: number;
-  force: boolean;
-  token: string;
 }
 
-export class ClientUserAuthConverter extends AbstractConverter {
-  public assembly(data: ClientUserAuth) {
+export class ClientDeleteIntegrationConverter extends AbstractConverter {
+  public assembly(data: ClientDeleteIntegration) {
     const dataBuffer = new DataBuffer(new ArrayBuffer(2));
 
     dataBuffer.putUint8(GLOBAL_CONTEXT_HEADER_CONSTANT);
-    dataBuffer.putUint8(GLOBAL_USER_AUTH);
+    dataBuffer.putUint8(GLOBAL_DELETE_INTEGRATION);
 
     dataBuffer.putUint8(data.tokenType);
-    dataBuffer.putUint8(data.force ? 1 : 0);
-    dataBuffer.putNullTerminatedString(data.token);
 
     return dataBuffer.toArrayBuffer();
   }
 
-  public parse(dataBuffer: DataBuffer): ClientUserAuth {
+  public parse(dataBuffer: DataBuffer): ClientDeleteIntegration {
     return {
       context: GLOBAL_CONTEXT_HEADER_CONSTANT,
-      type: GLOBAL_USER_AUTH,
+      type: GLOBAL_DELETE_INTEGRATION,
       tokenType: dataBuffer.getUint8(),
-      force: dataBuffer.getUint8() > 0,
-      token: dataBuffer.getNullTerminatedString(),
     };
   }
 }

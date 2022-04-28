@@ -34,12 +34,14 @@ export const useGameListFilterSetings = () => {
   };
 
   const enableFilter = (filterName: string) => {
-    const disabledFilterIndex = disabledFilters.indexOf(filterName);
+    let disabledFilterIndex = disabledFilters.indexOf(filterName);
 
-    if (disabledFilterIndex > -1) {
+    while (disabledFilterIndex > -1) {
       disabledFilters.splice(disabledFilterIndex, 1);
-      setDisabledFilters([...disabledFilters]);
+      disabledFilterIndex = disabledFilters.indexOf(filterName);
     }
+
+    setDisabledFilters([...disabledFilters]);
   };
 
   // Load filters from localStorage
@@ -62,6 +64,7 @@ export const useGameListFilterSetings = () => {
 
   // Authorization dependent filters
   useEffect(() => {
+    console.log(auth.currentAuth);
     if (auth.currentAuth) enableFilter("onlySelfGames");
     else if (!auth.authCredentials) disableFilter("onlySelfGames");
 
@@ -79,6 +82,6 @@ export const useGameListFilterSetings = () => {
     disabledFilters,
     enableFilter,
     disableFilter,
-    setFilterSettings: updateFilters
-  }
+    setFilterSettings: updateFilters,
+  };
 };

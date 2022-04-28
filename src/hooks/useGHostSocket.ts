@@ -5,9 +5,7 @@ import { GHostWebSocketOptions } from "./../services/GHostWebsocket";
 export const useGHostSocket = (
   options: GHostWebSocketOptions
 ): [GHostWebSocket, boolean] => {
-  const [ghostSocket] = useState<GHostWebSocket>(
-    new GHostWebSocket(options)
-  );
+  const [ghostSocket] = useState<GHostWebSocket>(new GHostWebSocket(options));
   const [isSocketConnected, setSocketConnected] = useState<boolean>(false);
 
   useEffect(() => {
