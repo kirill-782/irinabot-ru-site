@@ -1,0 +1,17 @@
+.ui.card.chat {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: white;
+
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.chat-feed {
+    cursor: pointer;
+}
+
+.ui.comments .reply.form .chat-textarea textarea {
+    height: auto;
+}
