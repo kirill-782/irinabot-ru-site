@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { toast } from "react-semantic-toasts";
-import { Icon, Menu } from "semantic-ui-react";
+import { Icon, Label, Menu } from "semantic-ui-react";
 import { AppRuntimeSettingsContext, WebsocketContext } from "../context";
 import { Chat } from "./Chat";
 import ConnectorIndicator from "./Footer/ConnectorIndicator";
@@ -9,8 +9,9 @@ import OnlineStatsCounter from "./Footer/OnlineStatsCounter";
 function Footer(props) {
   const runTimeContext = useContext(AppRuntimeSettingsContext);
   const websocketContext = useContext(WebsocketContext);
-  
+
   const [showChat, setShowShat] = useState(false);
+  const [hasUnreadMessages, setUnreadMessages] = useState(false);
 
   const refreshButtonOnClick = () => {
     runTimeContext.gameList.setLocked((locked) => {
@@ -22,7 +23,7 @@ function Footer(props) {
 
   return (
     <>
-      {showChat && <Chat />}
+      {showChat && <Chat setUnreadMessages={setUnreadMessages} />}
       <Menu text fixed="bottom" size="massive" className="footer-menu">
         <OnlineStatsCounter />
         <ConnectorIndicator />
@@ -38,10 +39,9 @@ function Footer(props) {
             className={connectorClassList.join(" ")}
           ></Icon>
         </Menu.Item>
-        <Menu.Item
-          onClick={() => setShowShat(!showChat)}
-        >
+        <Menu.Item onClick={() => setShowShat(!showChat)}>
           <Icon name="envelope"></Icon>
+          {hasUnreadMessages && <Label circular color="red" empty floating />}
         </Menu.Item>
         <Menu.Item
           as="a"

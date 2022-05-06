@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Card, Divider, Feed, Icon } from "semantic-ui-react";
-import { User } from "./interfaces";
+import { Card, Divider, Feed, Icon, Label } from "semantic-ui-react";
+import { User, ChatProps } from "./interfaces";
 import "./chat.scss";
 import { UserChat } from "./UserChat";
 
@@ -12,7 +12,7 @@ const getUsers = (): User[] => {
   return [];
 };
 
-export const Chat = () => {
+export const Chat: React.FC<ChatProps> = ({ setUnreadMessages }) => {
   const [users, setUsers] = useState(getUsers());
   const [selectedUser, setSelectedUser] = useState<User>();
 
@@ -38,7 +38,28 @@ export const Chat = () => {
       ];
       setUsers(newUsers);
     }
-  }, [users]);
+    setUnreadMessages(users.some(el => el.newMessages));
+  }, [setUnreadMessages, users]);
+
+  const handleSelectUser = (user: User) => {
+    const newUsers = [...users];
+    const matchUser = newUsers.find(el => el === user);
+    matchUser.newMessages = false;
+    console.log('u', newUsers);
+    setUsers(newUsers);
+    setSelectedUser(user);
+  }
+
+  const sendMessage = (user: User, message: string) => {
+    const newUsers = [...users];
+    const matchUser = newUsers.find(el => el === user);
+    matchUser.messages.push({
+      message,
+      date: (new Date()).toLocaleDateString(),
+      isIncoming: false,
+    });
+    setSelectedUser(user);
+  }
 
   return (
     <Card className="chat">
@@ -59,7 +80,7 @@ export const Chat = () => {
       </Card.Content>
       <Card.Content>
         {selectedUser ? (
-          <UserChat user={selectedUser} />
+          <UserChat user={selectedUser} sendMessage={sendMessage} />
         ) : (
           <Feed className="chat-feed">
             {users.map((user) => {
@@ -69,7 +90,7 @@ export const Chat = () => {
 
               return (
                 <React.Fragment key={user.name}>
-                  <Feed.Event onClick={() => setSelectedUser(user)}>
+                  <Feed.Event onClick={() => handleSelectUser(user)}>
                     <Feed.Label icon="user" />
                     <Feed.Content>
                       <Feed.Summary>
@@ -83,6 +104,7 @@ export const Chat = () => {
                       </Feed.Summary>
                       {lastMessage && (
                         <Feed.Extra>
+                          {user.newMessages && <Label className="chat-label-icon" circular color="red" empty />}
                           {lastMessage.isIncoming ? `${user.name}: ` : ""}
                           {lastMessage.message}
                         </Feed.Extra>

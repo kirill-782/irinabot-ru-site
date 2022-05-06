@@ -15,3 +15,10 @@ export interface User {
   /** Признак новых сообщений */
   newMessages: boolean;
 }
+
+
+/** Пропсы чата */
+export interface ChatProps {
+  /** Изменить иконку непрочитанных сообщений в footer */
+  setUnreadMessages(val: boolean): void;
+}

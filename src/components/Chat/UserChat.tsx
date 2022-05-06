@@ -1,12 +1,22 @@
 import { Comment, Form, Button } from "semantic-ui-react";
 import { User } from "./interfaces";
+import { useState } from 'react';
 
 interface UserChatProps {
   user: User;
+  sendMessage(user, message): void;
 }
 
-export const UserChat: React.FC<UserChatProps> = ({ user }) => {
-  console.log("user", user);
+export const UserChat: React.FC<UserChatProps> = ({ user, sendMessage }) => {
+  const [message, setMessage ] = useState("");
+
+  const handleClickSend = () => {
+    if (!message) {
+      return;
+    }
+    setMessage("");
+    sendMessage(user, message);
+  }
 
   return (
     <Comment.Group>
@@ -23,8 +33,8 @@ export const UserChat: React.FC<UserChatProps> = ({ user }) => {
       ))}
 
       <Form reply>
-        <Form.TextArea rows={2} className="chat-textarea" />
-        <Button content="Add Reply" labelPosition="left" icon="edit" primary />
+        <Form.TextArea rows={2} className="chat-textarea" onChange={(ev) => setMessage(ev.target.value)} value={message} />
+        <Button content="Отправить" labelPosition="left" icon="edit" primary onClick={handleClickSend}/>
       </Form>
     </Comment.Group>
   );
