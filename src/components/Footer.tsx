@@ -1,5 +1,4 @@
 import { useContext, useState } from "react";
-import { toast } from "react-semantic-toasts";
 import { Icon, Label, Menu } from "semantic-ui-react";
 import { AppRuntimeSettingsContext, WebsocketContext } from "../context";
 import { Chat } from "./Chat";
