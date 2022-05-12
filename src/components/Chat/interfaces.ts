@@ -16,7 +16,6 @@ export interface User {
   newMessages: boolean;
 }
 
-
 /** Пропсы чата */
 export interface ChatProps {
   /** Изменить иконку непрочитанных сообщений в footer */

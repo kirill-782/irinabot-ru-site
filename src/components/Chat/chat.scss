@@ -1,21 +1,21 @@
 .ui.card.chat {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    background: white;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: white;
 
-    max-height: 500px;
-    overflow-y: auto;
+  max-height: 500px;
+  overflow-y: auto;
 }
 
 .chat-feed {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .ui.comments .reply.form .chat-textarea textarea {
-    height: auto;
+  height: auto;
 }
 
 .ui.label.chat-label-icon:first-child {
-    margin-right: 10px;
+  margin-right: 10px;
 }
