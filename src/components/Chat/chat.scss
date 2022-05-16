@@ -6,6 +6,12 @@
 
   max-height: 500px;
   overflow-y: auto;
+
+  width: 580px;
+
+  @media (max-width: 700px) {
+    width: 85%;
+  }
 }
 
 .chat-feed {
@@ -18,4 +24,8 @@
 
 .ui.label.chat-label-icon:first-child {
   margin-right: 10px;
+}
+
+.chat .remove-user-button {
+  color: red;
 }

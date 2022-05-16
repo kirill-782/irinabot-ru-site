@@ -1,17 +1,20 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { SyntheticEvent, useContext, useEffect, useState } from "react";
 import { Card, Divider, Feed, Icon, Label } from "semantic-ui-react";
-import { User, ChatProps } from "./interfaces";
+import { User, ChatProps, Message } from "./interfaces";
 import "./chat.scss";
 import { UserChat } from "./UserChat";
 import { ConsoleBot } from "./ConsoleBot";
-import { WebsocketContext } from "./../../context/index";
+import { AuthContext, WebsocketContext } from "./../../context";
 import { ClientTextMessageConverter } from "./../../models/websocket/ClientTextMessage";
 import { GHostPackageEvent } from "../../services/GHostWebsocket";
 import {
   DEFAULT_CONTEXT_HEADER_CONSTANT,
   DEFAULT_NEW_MESSAGE,
 } from "../../models/websocket/HeaderConstants";
-import { ServerTextMessage } from "../../models/websocket/ServerTextMessage";
+import {
+  ServerTextMessage,
+  ServerTextMessageConverter,
+} from "../../models/websocket/ServerTextMessage";
 
 const getUsers = (): User[] => {
   const usersStr = localStorage.getItem("chat-users");
@@ -21,12 +24,35 @@ const getUsers = (): User[] => {
   return [];
 };
 
+const saveUsers = (users: User[]) => {
+  // Сохраняем последние 10 сообщений
+  let stringifyUsers = JSON.stringify(users.map((el) => ({ ...el, messages: el.messages.slice(-10) })));
+  // TODO найти точный параметр для подкрутки
+  // Если слишком много сообщений, подчистить все сообщения
+  if (stringifyUsers.length > 20000) {
+    stringifyUsers = JSON.stringify(
+      users.map((el) => ({ ...el, messages: [] }))
+    );
+  }
+  localStorage.setItem("chat-users", stringifyUsers);
+};
+
 export const Chat: React.FC<ChatProps> = ({ setUnreadMessages }) => {
+  const authContext = useContext(AuthContext);
   const sockets = useContext(WebsocketContext);
   const [users, setUsers] = useState(getUsers());
   const [selectedUser, setSelectedUser] = useState<User>();
   const [consoleMessages, setConsoleMessages] = useState<string[]>([]);
   const [openedChat, setOpenedChat] = useState<"chat" | "console" | "">("");
+  const [confirmRemove, setConfirmRemove] = useState<User>();
+
+  useEffect(() => {
+    if (confirmRemove) {
+      setTimeout(() => {
+        setConfirmRemove(undefined);
+      }, 2000);
+    }
+  }, [confirmRemove]);
 
   const sendMessage = (user: User, message: string) => {
     const newUsers = [...users];
@@ -36,6 +62,12 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages }) => {
       date: new Date().toLocaleDateString(),
       isIncoming: false,
     });
+    const converter = new ServerTextMessageConverter();
+    // const converter = new ClientTextMessageConverter();
+    const me = authContext?.auth?.currentAuth?.nickname;
+    sockets.ghostSocket.send(
+      converter.assembly({ from: me, to: user.name, text: message })
+    );
     setSelectedUser(user);
   };
 
@@ -50,10 +82,24 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages }) => {
     const newUsers = [...users];
     const matchUser = newUsers.find((el) => el === user);
     matchUser.newMessages = false;
-    console.log("u", newUsers);
+    saveUsers(newUsers);
     setUsers(newUsers);
     setSelectedUser(user);
     setOpenedChat("chat");
+  };
+
+  const handleRemoveUser = (ev: SyntheticEvent, user: User) => {
+    ev.preventDefault();
+    ev.stopPropagation();
+    setConfirmRemove(user);
+  }
+
+  const removeUser = (ev: SyntheticEvent, user: User) => {
+    ev.preventDefault();
+    ev.stopPropagation();
+    const newUsers = users.filter((el) => el !== user);
+    saveUsers(newUsers);
+    setUsers(newUsers);
   };
 
   let content, label;
@@ -94,6 +140,13 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages }) => {
                           user.messages[user.messages.length - 1].date
                         }
                       />
+                      {confirmRemove === user ? (
+                        <span className="remove-user-button" onClick={(ev) => removeUser(ev, user)}>
+                          Подтвердить удаление
+                        </span>
+                      ) : (
+                        <Icon name="remove" onClick={(ev) => handleRemoveUser(ev, user)} />
+                      )}
                     </Feed.Summary>
                     {lastMessage && (
                       <Feed.Extra>
@@ -130,7 +183,7 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages }) => {
   useEffect(() => {
     const onPacket = (packet: GHostPackageEvent) => {
       if (
-        packet.detail.package.context == DEFAULT_CONTEXT_HEADER_CONSTANT &&
+        packet.detail.package.context === DEFAULT_CONTEXT_HEADER_CONSTANT &&
         packet.detail.package.type === DEFAULT_NEW_MESSAGE
       ) {
         const message = packet.detail.package as ServerTextMessage;
@@ -138,9 +191,35 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages }) => {
         console.log(message);
 
         if (message.to === "chat") {
-          const newConsoleMessages = [...consoleMessages];
-          newConsoleMessages.push(message.text);
-          setConsoleMessages(newConsoleMessages);
+          setConsoleMessages((consoleMessages) => {
+            const newConsoleMessages = [...consoleMessages];
+            newConsoleMessages.push(message.text);
+            return newConsoleMessages;
+          });
+        } else {
+          setUsers((users) => {
+            const newUsers = [...users];
+            const { from, text } = message;
+            const newMessage: Message = {
+              date: new Date().toLocaleDateString(),
+              isIncoming: true,
+              message: text,
+            };
+            let matchUser: User = users.find((el) => el.name === from);
+            if (!matchUser) {
+              matchUser = {
+                name: from,
+                messages: [newMessage],
+                newMessages: true,
+              };
+              newUsers.push(matchUser);
+            } else {
+              matchUser.messages.push(newMessage);
+              matchUser.newMessages = true;
+            }
+            saveUsers(newUsers);
+            return newUsers;
+          });
         }
       }
     };
@@ -150,30 +229,7 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages }) => {
     return () => {
       sockets.ghostSocket.removeEventListener("package", onPacket);
     };
-
-    // Временная заглушка пока не появились сокеты
-    if (users && !users.length) {
-      const newUsers: User[] = [
-        {
-          name: "Лёлик",
-          messages: [
-            { date: "04.05.2022", message: "Привет", isIncoming: true },
-          ],
-          newMessages: false,
-        },
-        {
-          name: "Болик",
-          messages: [
-            { date: "04.05.2023", message: "Пока", isIncoming: true },
-            { date: "04.05.2027", message: "Сам пока!", isIncoming: false },
-          ],
-          newMessages: true,
-        },
-      ];
-      setUsers(newUsers);
-    }
-    setUnreadMessages(users.some((el) => el.newMessages));
-  }, [setUnreadMessages, users]);
+  }, [setUnreadMessages, sockets.ghostSocket, users]);
 
   const closeChat = () => {
     setSelectedUser(null);
