@@ -1,20 +1,17 @@
 import React, { SyntheticEvent, useContext, useEffect, useState } from "react";
-import { Card, Divider, Feed, Icon, Label } from "semantic-ui-react";
+import { Card, Divider, Feed, Form, Icon, Label } from "semantic-ui-react";
 import { User, ChatProps, Message } from "./interfaces";
 import "./chat.scss";
 import { UserChat } from "./UserChat";
 import { ConsoleBot } from "./ConsoleBot";
-import { AuthContext, WebsocketContext } from "./../../context";
+import { WebsocketContext } from "./../../context";
 import { ClientTextMessageConverter } from "./../../models/websocket/ClientTextMessage";
 import { GHostPackageEvent } from "../../services/GHostWebsocket";
 import {
   DEFAULT_CONTEXT_HEADER_CONSTANT,
   DEFAULT_NEW_MESSAGE,
 } from "../../models/websocket/HeaderConstants";
-import {
-  ServerTextMessage,
-  ServerTextMessageConverter,
-} from "../../models/websocket/ServerTextMessage";
+import { ServerTextMessage } from "../../models/websocket/ServerTextMessage";
 
 const getUsers = (): User[] => {
   const usersStr = localStorage.getItem("chat-users");
@@ -26,7 +23,9 @@ const getUsers = (): User[] => {
 
 const saveUsers = (users: User[]) => {
   // Сохраняем последние 10 сообщений
-  let stringifyUsers = JSON.stringify(users.map((el) => ({ ...el, messages: el.messages.slice(-10) })));
+  let stringifyUsers = JSON.stringify(
+    users.map((el) => ({ ...el, messages: el.messages.slice(-10) }))
+  );
   // TODO найти точный параметр для подкрутки
   // Если слишком много сообщений, подчистить все сообщения
   if (stringifyUsers.length > 20000) {
@@ -38,13 +37,13 @@ const saveUsers = (users: User[]) => {
 };
 
 export const Chat: React.FC<ChatProps> = ({ setUnreadMessages }) => {
-  const authContext = useContext(AuthContext);
   const sockets = useContext(WebsocketContext);
   const [users, setUsers] = useState(getUsers());
   const [selectedUser, setSelectedUser] = useState<User>();
   const [consoleMessages, setConsoleMessages] = useState<string[]>([]);
   const [openedChat, setOpenedChat] = useState<"chat" | "console" | "">("");
   const [confirmRemove, setConfirmRemove] = useState<User>();
+  const [newUsername, setNewUsername] = useState<string>();
 
   useEffect(() => {
     if (confirmRemove) {
@@ -62,11 +61,10 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages }) => {
       date: new Date().toLocaleDateString(),
       isIncoming: false,
     });
-    const converter = new ServerTextMessageConverter();
-    // const converter = new ClientTextMessageConverter();
-    const me = authContext?.auth?.currentAuth?.nickname;
+    // const converter = new ServerTextMessageConverter();
+    const converter = new ClientTextMessageConverter();
     sockets.ghostSocket.send(
-      converter.assembly({ from: me, to: user.name, text: message })
+      converter.assembly({ from: "whisper", to: user.name, text: message })
     );
     setSelectedUser(user);
   };
@@ -92,12 +90,24 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages }) => {
     ev.preventDefault();
     ev.stopPropagation();
     setConfirmRemove(user);
-  }
+  };
 
   const removeUser = (ev: SyntheticEvent, user: User) => {
     ev.preventDefault();
     ev.stopPropagation();
     const newUsers = users.filter((el) => el !== user);
+    saveUsers(newUsers);
+    setUsers(newUsers);
+  };
+
+  const handleNewChat = () => {
+    const newUsers = [...users];
+    newUsers.push({
+      name: newUsername,
+      messages: [],
+      newMessages: false,
+    });
+    setNewUsername("");
     saveUsers(newUsers);
     setUsers(newUsers);
   };
@@ -136,19 +146,26 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages }) => {
                       {user.name}
                       <Feed.Date
                         content={
-                          user.messages.length &&
-                          user.messages[user.messages.length - 1].date
+                          user.messages.length
+                            ? user.messages[user.messages.length - 1].date
+                            : ""
                         }
                       />
                       {confirmRemove === user ? (
-                        <span className="remove-user-button" onClick={(ev) => removeUser(ev, user)}>
+                        <span
+                          className="remove-user-button"
+                          onClick={(ev) => removeUser(ev, user)}
+                        >
                           Подтвердить удаление
                         </span>
                       ) : (
-                        <Icon name="remove" onClick={(ev) => handleRemoveUser(ev, user)} />
+                        <Icon
+                          name="remove"
+                          onClick={(ev) => handleRemoveUser(ev, user)}
+                        />
                       )}
                     </Feed.Summary>
-                    {lastMessage && (
+                    {lastMessage ? (
                       <Feed.Extra>
                         {user.newMessages && (
                           <Label
@@ -161,6 +178,8 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages }) => {
                         {lastMessage.isIncoming ? `${user.name}: ` : ""}
                         {lastMessage.message}
                       </Feed.Extra>
+                    ) : (
+                      "Нет сообщений"
                     )}
                   </Feed.Content>
                 </Feed.Event>
@@ -175,6 +194,23 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages }) => {
               summary="Консоль бота для ввода команд"
             />
           </Feed.Event>
+          <Divider />
+          <Form>
+            <Form.Group widths="equal">
+              <Form.Input
+                placeholder="Введите никнейм"
+                value={newUsername}
+                onChange={(ev) => setNewUsername(ev.target.value)}
+              />
+              <Form.Button
+                content="Начать чат"
+                labelPosition="left"
+                icon="edit"
+                primary
+                onClick={handleNewChat}
+              />
+            </Form.Group>
+          </Form>
         </Feed>
       );
       break;
