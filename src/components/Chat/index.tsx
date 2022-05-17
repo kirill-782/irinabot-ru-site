@@ -84,6 +84,7 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages }) => {
     setUsers(newUsers);
     setSelectedUser(user);
     setOpenedChat("chat");
+    setUnreadMessages(newUsers.some(el => el.newMessages));
   };
 
   const handleRemoveUser = (ev: SyntheticEvent, user: User) => {
@@ -251,8 +252,11 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages }) => {
               newUsers.push(matchUser);
             } else {
               matchUser.messages.push(newMessage);
-              matchUser.newMessages = true;
+              if (selectedUser !== matchUser) {
+                matchUser.newMessages = true;
+              }
             }
+            setUnreadMessages(newUsers.some(el => el.newMessages));
             saveUsers(newUsers);
             return newUsers;
           });
@@ -265,7 +269,7 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages }) => {
     return () => {
       sockets.ghostSocket.removeEventListener("package", onPacket);
     };
-  }, [setUnreadMessages, sockets.ghostSocket, users]);
+  }, [selectedUser, setUnreadMessages, sockets.ghostSocket, users]);
 
   const closeChat = () => {
     setSelectedUser(null);
