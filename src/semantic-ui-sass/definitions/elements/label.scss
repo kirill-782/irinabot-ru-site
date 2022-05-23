@@ -473,8 +473,8 @@ a.ui.label:hover:before {
 --------------------*/
 
 .ui.active.label {
-  background-color: $labelActiveBackgroundColor;
-  border-color: $labelActiveBackgroundColor;
+  background-color: #424242;
+  border-color: #d0d0d0;
 
   background-image: $labelActiveBackgroundImage;
   color: $labelActiveTextColor;
@@ -496,6 +496,8 @@ a.ui.active.label:hover {
 
   background-image: $labelActiveHoverBackgroundImage;
   color: $labelActiveHoverTextColor;
+  background-color: #5c5a5a;
+  border-color: #000;
 }
 .ui.labels a.active.label:activehover:before,
 a.ui.active.label:activehover:before {

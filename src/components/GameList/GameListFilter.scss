@@ -1,0 +1,39 @@
+.sidebar-filter {
+  [type=radio] {
+    position: relative;
+    top: 1px;
+    margin-right: 5px;
+  }
+  
+  .slider {
+    position: relative;
+    min-height: 20px;
+
+    .thumb {
+      background: rgb(16, 16, 16);
+      padding: 3px 7px;
+      border-radius: 4px;
+      border: 1px solid #2c2c2c;
+
+      &:hover {
+        background: #2a2a2a;
+        border: 1px solid #878787;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .ui.basic.green.buttons .button,
+  .ui.basic.green.button {
+    box-shadow: 0px 0px 0px 1px #101010 inset !important;
+    color: #e7e7e7 !important;
+  }
+
+  .ui.basic.green.buttons .button:hover,
+  .ui.basic.green.button:hover,
+  .ui.basic.green.button:focus {
+    background: #2a2a2a !important;
+    box-shadow: 0px 0px 0px 1px #2a2a2a inset !important;
+    color: #d3d3d3 !important;
+  }
+}

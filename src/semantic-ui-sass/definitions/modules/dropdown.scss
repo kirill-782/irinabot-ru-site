@@ -475,6 +475,8 @@ select.ui.dropdown {
 .ui.selection.active.dropdown .menu {
   border-color: $selectionVisibleBorderColor;
   box-shadow: $selectionVisibleMenuBoxShadow;
+  width: 100%;
+  box-sizing: content-box;
 }
 
 /* Focus */

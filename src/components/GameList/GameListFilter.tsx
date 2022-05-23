@@ -1,6 +1,7 @@
 import ReactSlider from "react-slider";
 import { Button, Form } from "semantic-ui-react";
 import { FilterSettings } from "../../hooks/useGameListFilter";
+import './GameListFilter.scss';
 
 const options = [
   {
@@ -38,7 +39,7 @@ function GameListFilter({
 }: GameListFilterProps) {
   return (
     <>
-      <Form>
+      <Form className="sidebar-filter">
         <Form.Checkbox
           label="Не загружать начатые игры"
           checked={filterSettings.noLoadStarted}
