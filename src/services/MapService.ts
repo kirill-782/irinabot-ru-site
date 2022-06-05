@@ -72,6 +72,20 @@ export class MapService {
     return response.data;
   };
 
+  public searchMap = async (mapName: string) => {
+    const request: AxiosRequestConfig<FormData> = {
+      url: this.config.basePath + "/v1/maps/search",
+      method: "GET",
+      params: {
+        q: mapName
+      }
+    };
+  
+    const response = await Axios.request(request);
+
+    console.log('response', response);
+  };
+
   private appendOptions(request: AxiosRequestConfig, options?: RequestOptions) {
     if (!options) return request;
 
@@ -83,6 +97,7 @@ export class MapService {
 
     return request;
   }
+
 }
 
 interface UploadMapParametres {

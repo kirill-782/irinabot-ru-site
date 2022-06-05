@@ -24,6 +24,7 @@ import { MapService } from "./services/MapService";
 import { MapUploaderService } from "./services/MapUploaderService";
 import AutopayPage from "./components/Pages/AutopayPage";
 import RegisterAccountModal from "./components/Modal/RegisterAccountModal";
+import CreateGame from "./components/CreateGame";
 
 function App() {
   useEffect(loadTheme, []);
@@ -74,6 +75,7 @@ function App() {
                 <Route index element={<GameListPage />} />
                 <Route path="gamelist" element={<GameListPage />} />
                 <Route path="autopay" element={<AutopayPage />} />
+                <Route path="create" element={<CreateGame />} />
               </Route>
               <Route path="/oauth" element={<OauthStubPage />} />
             </Routes>

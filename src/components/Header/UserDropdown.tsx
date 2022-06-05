@@ -1,4 +1,5 @@
 import { useContext, useState } from "react";
+import { NavLink } from "react-router-dom";
 import { Dropdown } from "semantic-ui-react";
 import { AuthContext, WebsocketContext } from "../../context";
 import UserSettingsModal from "../Modal/UserSettingsModal";
@@ -32,6 +33,7 @@ function UserDrowdown() {
         item
       >
         <Dropdown.Menu>
+          <Dropdown.Item as={NavLink} to="/create">Создать игру</Dropdown.Item>
           <Dropdown.Item
             onClick={() => {
               setUserSettingsModalOpen(true);
