@@ -1,7 +1,11 @@
-import { BaseSyntheticEvent, useState, useContext } from "react";
-import { Form, Grid, Header, Container } from "semantic-ui-react";
+import { BaseSyntheticEvent, useState, useContext, useEffect } from "react";
+import { Form, Grid, Header, Container, Item } from "semantic-ui-react";
 import { RestContext } from "../../context";
+import { SearchFilters } from "../../models/rest/SearchFilters";
 import "./CreateGame.scss";
+import { GameCard } from "./GameCard";
+import { Filters } from "./Filters";
+import { Map } from "../../models/rest/Map";
 
 const patchesOption = [
   { key: "1.26", text: "1.26", value: "1.26" },
@@ -61,25 +65,43 @@ const genreOptions = [
 ];
 
 function CreateGame() {
-  const [searchedMaps, setSearchedMaps] = useState([]);
+  const [searchedMaps, setSearchedMaps] = useState<Map[]>([]);
+  const [selectedMap, setSelectedMap] = useState<Map>();
+  const [isLoading, setLoading] = useState(false);
+  const [filters, setFilters] = useState<SearchFilters>({});
+  const [searchValue, setSearchValue] = useState("");
   const { mapsApi } = useContext(RestContext);
+
+  console.log("m", searchedMaps);
 
   const searchMap = ({ target }: BaseSyntheticEvent) => {
     const value = target.value;
-    console.log(value);
+    setSearchValue(value);
 
-    mapsApi.searchMap(value);
+    setLoading(true);
+    setSearchedMaps([]);
+    mapsApi.searchMap(value, filters).then((maps) => {
+      setSearchedMaps(maps);
+      setLoading(false);
+    });
   };
+
+  useEffect(() => {
+    if (searchValue) {
+      searchMap({ target: { value: searchValue } } as BaseSyntheticEvent);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filters]);
 
   return (
     <Container className="create-game">
       <Header>Создание игры</Header>
-      <Form>
+      <Form action="z">
         <Grid columns="equal" divided>
           <Grid.Row>
             <Grid.Column width={3}>
               <Header size="small">Фильтры</Header>
-              Столбец 1
+              <Filters onFitlerChange={setFilters} />
             </Grid.Column>
             <Grid.Column width={9}>
               <Header size="small">Основные параметры</Header>
@@ -99,16 +121,6 @@ function CreateGame() {
                 />
               </Form.Group>
               <Form.Group widths="equal">
-                <Form.Dropdown
-                  search
-                  fluid
-                  selection
-                  name="mapname"
-                  onSearchChange={searchMap}
-                  label="Поиск карты"
-                  placeholder="Введите часть названия карты..."
-                  options={searchedMaps}
-                />
                 <Form.Select
                   fluid
                   name="map_players"
@@ -116,14 +128,48 @@ function CreateGame() {
                   options={countPlayers}
                   defaultValue={countPlayers[0].value}
                 />
+
+                <Form.Select
+                  name="map_genre"
+                  fluid
+                  label="Тип карты"
+                  options={genreOptions}
+                  defaultValue={genreOptions[0].value}
+                />
               </Form.Group>
-              <Form.Select
-                name="map_genre"
-                fluid
-                label="Тип карты"
-                options={genreOptions}
-                defaultValue={genreOptions[0].value}
-              />
+
+              {selectedMap ? (
+                <Item.Group className="map-group">
+                  <GameCard
+                    {...selectedMap}
+                    selected={true}
+                    onClick={() => setSelectedMap(undefined)}
+                  />
+                </Item.Group>
+              ) : (
+                <>
+                  <Form.Input
+                    search
+                    fluid
+                    selection
+                    onChange={searchMap}
+                    loading={isLoading}
+                    value={searchValue}
+                    label="Поиск карты"
+                    placeholder="Введите часть названия карты..."
+                  />
+                  <Item.Group className="map-group">
+                    {searchedMaps.map((map, key) => (
+                      <GameCard
+                        key={key}
+                        {...map}
+                        selected={false}
+                        onClick={() => setSelectedMap(map)}
+                      />
+                    ))}
+                  </Item.Group>
+                </>
+              )}
             </Grid.Column>
             <Grid.Column width={3}>
               <Header size="small">Дополнительные параметры</Header>

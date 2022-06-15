@@ -4,6 +4,7 @@ import { Flags } from "../models/rest/Flags";
 import Axios, { AxiosRequestConfig } from "axios";
 import { Map } from "../models/rest/Map";
 import { Category } from "../models/rest/Category";
+import { SearchFilters } from "../models/rest/SearchFilters";
 
 export interface RequestOptions {
   onUploadProgress?: (progressEvent: any) => void;
@@ -72,18 +73,19 @@ export class MapService {
     return response.data;
   };
 
-  public searchMap = async (mapName: string) => {
+  public searchMap = async (mapName: string, filters: SearchFilters) => {
     const request: AxiosRequestConfig<FormData> = {
       url: this.config.basePath + "/v1/maps/search",
       method: "GET",
       params: {
-        q: mapName
+        q: mapName,
+        ...filters
       }
     };
   
-    const response = await Axios.request(request);
+    const response = await Axios.request<Map[]>(request);
 
-    console.log('response', response);
+    return response.data;
   };
 
   private appendOptions(request: AxiosRequestConfig, options?: RequestOptions) {

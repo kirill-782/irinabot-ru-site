@@ -1,6 +1,14 @@
 @media only screen and (min-width: 1450px) {
-    .ui.container.create-game {
-      width: 1400px;
-    }
+  .ui.container.create-game {
+    width: 1400px;
   }
-  
+}
+
+.map-group {
+  height: 55vh;
+  overflow-y: auto;
+}
+
+.map-description {
+  max-width: 300px;
+}
