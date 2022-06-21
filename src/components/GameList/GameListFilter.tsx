@@ -109,9 +109,10 @@ function GameListFilter({
             }}
           />
         </Form.Group>
-        <Form.Group>
+        <Form.Group className="order-filter">
           <Form.Dropdown
             name="orderBy"
+            className="order-filter-select"
             disabled={disabledFilters.indexOf("orderBy") > -1}
             onChange={(event, data) =>
               onFilterChange({
@@ -141,7 +142,7 @@ function GameListFilter({
           />
         </Form.Group>
 
-        <Form.Field>
+        <Form.Field className="players-filter">
           <label>Фильтр по игрокам в лобби</label>
           <ReactSlider
             value={filterSettings.players}

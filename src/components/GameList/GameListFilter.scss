@@ -1,3 +1,37 @@
+.dark {
+  .sidebar-filter {
+    .slider {
+      .thumb {
+        background: rgb(16, 16, 16);
+        padding: 3px 7px;
+        border-radius: 4px;
+        border: 1px solid #2c2c2c;
+        color: white;
+    
+        &:hover {
+          background: #2a2a2a;
+          border: 1px solid #878787;
+          cursor: pointer;
+        }
+      }
+    }
+
+    .ui.basic.green.buttons .button,
+    .ui.basic.green.button {
+      box-shadow: 0px 0px 0px 1px #101010 inset !important;
+      color: #e7e7e7 !important;
+    }
+
+    .ui.basic.green.buttons .button:hover,
+    .ui.basic.green.button:hover,
+    .ui.basic.green.button:focus {
+      background: #2a2a2a !important;
+      box-shadow: 0px 0px 0px 1px #2a2a2a inset !important;
+      color: #d3d3d3 !important;
+    }
+  }
+}
+
 .sidebar-filter {
   [type=radio] {
     position: relative;
@@ -10,31 +44,93 @@
     min-height: 20px;
 
     .thumb {
-      background: rgb(16, 16, 16);
+      background: rgb(255 255 255);
       padding: 3px 7px;
       border-radius: 4px;
-      border: 1px solid #2c2c2c;
-      color: white;
+      border: 1px solid #e8e9e9;
+      color: black;
 
       &:hover {
-        background: #2a2a2a;
-        border: 1px solid #878787;
+        background: #f9fafb;
+        border: 1px solid #d5d5d5;
         cursor: pointer;
       }
     }
   }
 
-  .ui.basic.green.buttons .button,
-  .ui.basic.green.button {
-    box-shadow: 0px 0px 0px 1px #101010 inset !important;
-    color: #e7e7e7 !important;
+  
+}
+
+@media screen and (max-width: 1450px) {
+  .sidebar-filter {
+    .ui.basic.buttons .button,
+    .ui.basic.button {
+        padding: 8px;
+    }
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .sidebar-filter {
+    .ui.basic.buttons .button,
+    .ui.basic.button {
+      padding: 5px;
+      font-size: 11px;
+    }
   }
 
-  .ui.basic.green.buttons .button:hover,
-  .ui.basic.green.button:hover,
-  .ui.basic.green.button:focus {
-    background: #2a2a2a !important;
-    box-shadow: 0px 0px 0px 1px #2a2a2a inset !important;
-    color: #d3d3d3 !important;
+  .online-stats-column {
+    font-size: 10px;
   }
+}
+
+@media screen and (max-width: 991px) {
+  .sidebar-filter {
+
+    .ui.basic.buttons .button,
+    .ui.basic.button {
+      padding: 7px 3px;
+    }
+  }
+
+  .ui.grid>[class*="three wide"].column.online-stats-column {
+    order: -1;
+    width: 100% !important;
+  }
+
+  .ui.grid>[class*="ten wide"].column.game-list-column {
+    width: 81.2% !important;
+  }
+
+  .online-stats-column {
+    font-size: 14px;
+  }
+
+  .ui.form .fields.order-filter {
+    flex-direction: column;
+    button {
+      margin: 0 7px;
+    }
+  }
+
+  .ui.form .fields .field.order-filter-select {
+    margin-bottom: 10px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .sidebar-filter {
+
+    .ui.basic.buttons .button,
+    .ui.basic.button {
+      padding: 10px 10px;
+      font-size: 14px;
+    }
+  }
+
+  .players-filter {
+    margin-top: 15px;
+  }
+
+  
 }

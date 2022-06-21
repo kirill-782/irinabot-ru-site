@@ -67,10 +67,10 @@ function GameListPage() {
             onFilterChange={setFilterSettings}
           />
         </Grid.Column>
-        <Grid.Column width="ten">
+        <Grid.Column width="ten" className="game-list-column">
           {gameListComponent}
         </Grid.Column>
-        <Grid.Column width="three">
+        <Grid.Column width="three" className="online-stats-column">
           <OnlineStats gameList={gameList}></OnlineStats>
         </Grid.Column>
       </Grid>
