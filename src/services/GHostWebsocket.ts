@@ -1,6 +1,7 @@
 import { AbstractConverter } from "../models/websocket/AbstractPackage";
 import {
   DEFAULT_CONTEXT_HEADER_CONSTANT,
+  DEFAULT_CREATE_GAME_RESPONSE,
   DEFAULT_GAME_LIST,
   DEFAULT_MAP_INFO,
   DEFAULT_NEW_MESSAGE,
@@ -22,7 +23,11 @@ import { ServerErrorConverter } from "../models/websocket/ServerError";
 import { ServerUDPAnswerConverter } from "./../models/websocket/ServerUDPAnswer";
 import { ServerAddIntegrationResponseConverter } from "./../models/websocket/ServerAddIntegrationResponse";
 import { ServerBnetKeyConverter } from "./../models/websocket/ServerBnetKey";
-import { ServerTextMessageConverter } from './../models/websocket/ServerTextMessage';
+import { ServerTextMessageConverter } from "./../models/websocket/ServerTextMessage";
+import {
+  ServerCreateGame,
+  ServerCreateGameConverter,
+} from "./../models/websocket/ServerCreateGame";
 
 export interface GHostWebSocketOptions {
   url: string;
@@ -40,10 +45,12 @@ const packageHandlers = (() => {
     new ServerMapInfoConverter();
   handlers[DEFAULT_CONTEXT_HEADER_CONSTANT][DEFAULT_WEBSOCKET_CONNECT_STATS] =
     new ServerWebsocketConnectStatsConverter();
-    handlers[DEFAULT_CONTEXT_HEADER_CONSTANT][DEFAULT_UDP_ANSWER] =
+  handlers[DEFAULT_CONTEXT_HEADER_CONSTANT][DEFAULT_UDP_ANSWER] =
     new ServerUDPAnswerConverter();
-    handlers[DEFAULT_CONTEXT_HEADER_CONSTANT][DEFAULT_NEW_MESSAGE] =
+  handlers[DEFAULT_CONTEXT_HEADER_CONSTANT][DEFAULT_NEW_MESSAGE] =
     new ServerTextMessageConverter();
+  handlers[DEFAULT_CONTEXT_HEADER_CONSTANT][DEFAULT_CREATE_GAME_RESPONSE] =
+    new ServerCreateGameConverter();
 
   handlers[GLOBAL_CONTEXT_HEADER_CONSTANT] = [];
   handlers[GLOBAL_CONTEXT_HEADER_CONSTANT][GLOBAL_GET_ERROR] =
