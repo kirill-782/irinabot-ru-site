@@ -25,16 +25,17 @@ import { MapUploaderService } from "./services/MapUploaderService";
 import AutopayPage from "./components/Pages/AutopayPage";
 import RegisterAccountModal from "./components/Modal/RegisterAccountModal";
 import CreateGame from "./components/CreateGame";
+import { CONNECTOR_WEBSOCKET_ENDPOINT, WEBSOCKET_ENDPOINT } from "./config/ApplicationConfig";
 
 function App() {
   useEffect(loadTheme, []);
 
   const [ghostSocket, isGHostSocketConnected] = useGHostSocket({
-    url: "wss://irinabot.ru/ghost/",
+    url: WEBSOCKET_ENDPOINT,
   });
 
   const [connectorSocket, isConnectorSocketConnected] = useConnectorSocket({
-    url: "ws://127.0.0.1:8148",
+    url: CONNECTOR_WEBSOCKET_ENDPOINT,
   });
   const [gameListLocked, setGameListLocked] = useState(false);
 

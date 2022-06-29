@@ -1,44 +1,19 @@
 import { Table } from "semantic-ui-react";
 import { useMemo } from "react";
 import { GameListGame } from "../../models/websocket/ServerGameList";
+import { categoryToString, OnlineStatsRow, order, realmToCategory } from "../../config/PvpGNConfig";
 
-interface OnlineStatsRow {
-  categoryId: string;
-  lobbyCount: number;
-  playersCount: number;
-}
 
 interface OnlineStatsProps {
   gameList: GameListGame[];
 }
-
-const realmToCategory = {
-  "178.218.214.114": "iccup",
-  connector: "connector",
-  "pvpgn.onligamez.ru": "ozbnet",
-  "Rubattle.net": "rubattlenet",
-  "server.eurobattle.net": "eurobattlenet"
-};
-
-const categoryToString = {
-  iccup: "Игроков с iCCup",
-  ozbnet: "Игроков с OZBnet",
-  rubattlenet: "Игроков с RuBattle.Net",
-  eurobattlenet: "Игроков с EuroBattle.Net",
-  connector: "Игроков с IrInA Connector	",
-  other: "Игроки с остальных платфром	",
-  all: "Всего",
-  lobby: "Лобби",
-  started: "Начатые игры",
-};
-
-const order = ["all", "lobby", "started", "connector", "iccup", "ozbnet", "rubattlenet", "eurobattlenet", "other"];
 
 function OnlineStats({ gameList }: OnlineStatsProps) {
   const gameStats = useMemo<OnlineStatsRow[]>(() => {
     let stats: Map<String, OnlineStatsRow> = new Map();
 
     const appendToStats = (statsPart: OnlineStatsRow) => {
+      
       if (!stats.get(statsPart.categoryId))
         stats.set(statsPart.categoryId, statsPart);
       else {
