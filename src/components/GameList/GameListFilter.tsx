@@ -1,7 +1,7 @@
 import ReactSlider from "react-slider";
 import { Button, Form } from "semantic-ui-react";
 import { FilterSettings } from "../../hooks/useGameListFilter";
-import './GameListFilter.scss';
+import "./GameListFilter.scss";
 
 const options = [
   {

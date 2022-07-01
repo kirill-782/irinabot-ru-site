@@ -7,6 +7,23 @@ import { GameCard } from "./GameCard";
 import { Filters } from "./Filters";
 import { Map } from "../../models/rest/Map";
 
+const MAP_FLAG_TEAMS_TOGETHER = 1;
+const MAP_FLAG_FIXED_TEAMS = 2;
+const MAP_FLAG_UNIT_SHARE = 4;
+const MAP_FLAG_RANDOM_HERO = 8;
+const MAP_FLAG_RANDOM_RACES = 16;
+
+const assemblyMapOptions = (
+  mapFlags: number,
+  mapSpeed: number,
+  mapVisibility: number,
+  mapObservers: number
+): number => {
+  return (
+    mapFlags | ((mapSpeed | (mapVisibility << 2) | (mapObservers << 5)) << 8)
+  );
+};
+
 const patchesOption = [
   { key: "1.26", text: "1.26", value: "1.26" },
   { key: "1.29", text: "1.29 (коннектор)", value: "1.29" },

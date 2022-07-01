@@ -9,7 +9,7 @@ export const realmToCategory = {
   connector: "connector",
   "pvpgn.onligamez.ru": "ozbnet",
   "Rubattle.net": "rubattlenet",
-  "server.eurobattle.net": "eurobattlenet"
+  "server.eurobattle.net": "eurobattlenet",
 };
 
 export const categoryToString = {
@@ -24,4 +24,14 @@ export const categoryToString = {
   started: "Начатые игры",
 };
 
-export const order = ["all", "lobby", "started", "connector", "iccup", "ozbnet", "rubattlenet", "eurobattlenet", "other"];
+export const order = [
+  "all",
+  "lobby",
+  "started",
+  "connector",
+  "iccup",
+  "ozbnet",
+  "rubattlenet",
+  "eurobattlenet",
+  "other",
+];

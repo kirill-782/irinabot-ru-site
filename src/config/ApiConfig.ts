@@ -5,5 +5,9 @@ export interface ApiConfig {
   username?: string;
   password?: string;
 
+  bearerToken?: string;
+
+  type?: "basic" | "bearer";
+
   basePath?: string;
 }

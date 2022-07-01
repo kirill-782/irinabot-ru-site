@@ -79,10 +79,10 @@ export class MapService {
       method: "GET",
       params: {
         q: mapName,
-        ...filters
-      }
+        ...filters,
+      },
     };
-  
+
     const response = await Axios.request<Map[]>(request);
 
     return response.data;
@@ -99,7 +99,6 @@ export class MapService {
 
     return request;
   }
-
 }
 
 interface UploadMapParametres {

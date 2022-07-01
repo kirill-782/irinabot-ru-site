@@ -1,6 +1,12 @@
 import React, { ReactNode, useContext } from "react";
 import { NavLink } from "react-router-dom";
-import { Icon, Menu, SemanticICONS, Checkbox, CheckboxProps } from "semantic-ui-react";
+import {
+  Icon,
+  Menu,
+  SemanticICONS,
+  Checkbox,
+  CheckboxProps,
+} from "semantic-ui-react";
 import LoginDropdown from "../../Header/LoginDropdown";
 import UploadMap from "../../Header/UploadMap";
 import UserDrowdown from "../../Header/UserDropdown";
@@ -51,7 +57,9 @@ const DesktopMenu = () => {
           toggle
           className="item theme-switcher"
           checked={currentTheme === E_THEME.DARK}
-          onChange={(_, data: CheckboxProps) => switchTheme(data.checked ? E_THEME.DARK : E_THEME.LIGHT)}
+          onChange={(_, data: CheckboxProps) =>
+            switchTheme(data.checked ? E_THEME.DARK : E_THEME.LIGHT)
+          }
           label={
             <>
               <Icon name="paint brush" />

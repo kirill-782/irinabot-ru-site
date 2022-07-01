@@ -10,7 +10,10 @@ const getFreeSlots = (game: GameListGame): number => {
   return usedSlots;
 };
 
-export const gameTypeComparator = (a: GameListGame, b: GameListGame): number => {
+export const gameTypeComparator = (
+  a: GameListGame,
+  b: GameListGame
+): number => {
   return compareByStarted(a, b) || compareByOtherGame(a, b);
 };
 
@@ -23,14 +26,20 @@ export const defaultComparator = (a: GameListGame, b: GameListGame): number => {
   );
 };
 
-export const freeSlotsComparator = (a: GameListGame, b: GameListGame): number => {
+export const freeSlotsComparator = (
+  a: GameListGame,
+  b: GameListGame
+): number => {
   if (Number(a.started) - Number(b.started) !== 0)
     return Number(a.started) - Number(b.started);
 
   return getFreeSlots(a) - getFreeSlots(b);
 };
 
-export const allSlotsComparator = (a: GameListGame, b: GameListGame): number => {
+export const allSlotsComparator = (
+  a: GameListGame,
+  b: GameListGame
+): number => {
   if (Number(a.started) - Number(b.started) !== 0)
     return Number(a.started) - Number(b.started);
 
@@ -89,7 +98,10 @@ const compareByGamePatch = (a: GameListGame, b: GameListGame): number => {
   return 0;
 };
 
-const compareByPinnedGamePosition = (a: GameListGame, b: GameListGame): number => {
+const compareByPinnedGamePosition = (
+  a: GameListGame,
+  b: GameListGame
+): number => {
   const order = [1, 3, 0, 2];
 
   return order.indexOf(a.gamePosition) - order.indexOf(b.gamePosition);

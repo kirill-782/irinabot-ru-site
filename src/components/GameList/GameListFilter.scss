@@ -7,7 +7,7 @@
         border-radius: 4px;
         border: 1px solid #2c2c2c;
         color: white;
-    
+
         &:hover {
           background: #2a2a2a;
           border: 1px solid #878787;
@@ -33,12 +33,12 @@
 }
 
 .sidebar-filter {
-  [type=radio] {
+  [type="radio"] {
     position: relative;
     top: 1px;
     margin-right: 5px;
   }
-  
+
   .slider {
     position: relative;
     min-height: 20px;
@@ -57,15 +57,13 @@
       }
     }
   }
-
-  
 }
 
 @media screen and (max-width: 1450px) {
   .sidebar-filter {
     .ui.basic.buttons .button,
     .ui.basic.button {
-        padding: 8px;
+      padding: 8px;
     }
   }
 }
@@ -86,19 +84,18 @@
 
 @media screen and (max-width: 991px) {
   .sidebar-filter {
-
     .ui.basic.buttons .button,
     .ui.basic.button {
       padding: 7px 3px;
     }
   }
 
-  .ui.grid>[class*="three wide"].column.online-stats-column {
+  .ui.grid > [class*="three wide"].column.online-stats-column {
     order: -1;
     width: 100% !important;
   }
 
-  .ui.grid>[class*="ten wide"].column.game-list-column {
+  .ui.grid > [class*="ten wide"].column.game-list-column {
     width: 81.2% !important;
   }
 
@@ -120,7 +117,6 @@
 
 @media screen and (max-width: 767px) {
   .sidebar-filter {
-
     .ui.basic.buttons .button,
     .ui.basic.button {
       padding: 10px 10px;
@@ -131,6 +127,4 @@
   .players-filter {
     margin-top: 15px;
   }
-
-  
 }

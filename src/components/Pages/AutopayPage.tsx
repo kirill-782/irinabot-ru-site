@@ -1,11 +1,5 @@
 import { useContext, useEffect, useMemo, useRef, useState } from "react";
-import {
-  Container,
-  Form,
-  Grid,
-  Header,
-  Message,
-} from "semantic-ui-react";
+import { Container, Form, Grid, Header, Message } from "semantic-ui-react";
 import { AuthContext } from "./../../context/index";
 
 interface Place {
@@ -48,7 +42,6 @@ const availablePlaces: Place[] = [
 ];
 
 function AutopayPage() {
-
   const authContext = useContext(AuthContext);
 
   const [selectedPlaces, setSelectedPlaces] = useState([]);

@@ -8,6 +8,7 @@
   color: #000;
 }
 
-.ui.checkbox input:checked ~ .box:after, .ui.checkbox input:checked ~ label:after {
+.ui.checkbox input:checked ~ .box:after,
+.ui.checkbox input:checked ~ label:after {
   color: #000;
 }

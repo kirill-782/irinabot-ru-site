@@ -1,13 +1,11 @@
 /*******************************
     User Variable Overrides
 *******************************/
-.ui.input > input::-moz-selection
-{
-  background:#fff;
-  color:#000;
+.ui.input > input::-moz-selection {
+  background: #fff;
+  color: #000;
 }
- .ui.input > input::selection
-{
-  background:#fff;
-  color:#000;
+.ui.input > input::selection {
+  background: #fff;
+  color: #000;
 }

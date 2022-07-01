@@ -1,41 +1,41 @@
 /*******************************
          Site Overrides
 *******************************/
-.ui.basic.buttons .button, 
+.ui.basic.buttons .button,
 .ui.basic.button {
   background: $darkest !important;
   color: $inputColor !important;
 }
 
-.ui.basic.buttons .button:hover, 
+.ui.basic.buttons .button:hover,
 .ui.basic.button:hover {
   background: lighten($darkest, 10%) !important;
   color: darken($inputColor, 10%) !important;
 }
 
-.ui.basic.buttons .active.button, 
+.ui.basic.buttons .active.button,
 .ui.basic.active.button {
   background: rgb(34 34 34) !important;
 }
 
-.ui.basic.buttons .active.button, 
+.ui.basic.buttons .active.button,
 .ui.basic.active.button {
   background: rgb(34 34 34) !important;
   color: darken($inputColor, 20%) !important;
 }
 
-.ui.basic.buttons .button:focus, 
+.ui.basic.buttons .button:focus,
 .ui.basic.button:focus {
   background: #323232 !important;
 }
 
-.ui.green.buttons .button, 
+.ui.green.buttons .button,
 .ui.green.button {
   background-color: #0e6623;
   color: #cdcdcd;
 }
 
-.ui.green.buttons .button:hover, 
+.ui.green.buttons .button:hover,
 .ui.green.button:hover {
   background-color: #0a6420;
   color: #cdcdcd;

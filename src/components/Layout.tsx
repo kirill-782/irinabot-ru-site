@@ -5,7 +5,6 @@ import Footer from "./Footer";
 // import { switchTheme, E_THEME } from "../utils/Theme";
 import Header from "./Header";
 
-
 // const handleChangeTheme = (_, data: CheckboxProps) => {
 //   switchTheme(data.checked ? E_THEME.DARK : E_THEME.LIGHT);
 // };

@@ -39,7 +39,7 @@ const saveUsers = (users: User[]) => {
 export const Chat: React.FC<ChatProps> = ({ setUnreadMessages }) => {
   const sockets = useContext(WebsocketContext);
   const [users, setUsers] = useState(getUsers());
-  const [selectedUser, setSelectedUser] = useState<User>();
+  const [selectedUser, setSelectedUser] = useState<User | null>();
   const [consoleMessages, setConsoleMessages] = useState<string[]>([]);
   const [openedChat, setOpenedChat] = useState<"chat" | "console" | "">("");
   const [confirmRemove, setConfirmRemove] = useState<User>();
@@ -56,11 +56,13 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages }) => {
   const sendMessage = (user: User, message: string) => {
     const newUsers = [...users];
     const matchUser = newUsers.find((el) => el === user);
-    matchUser.messages.push({
-      message,
-      date: new Date().toLocaleDateString(),
-      isIncoming: false,
-    });
+    if (matchUser) {
+      matchUser.messages.push({
+        message,
+        date: new Date().toLocaleDateString(),
+        isIncoming: false,
+      });
+    }
     // const converter = new ServerTextMessageConverter();
     const converter = new ClientTextMessageConverter();
     sockets.ghostSocket.send(
@@ -79,12 +81,13 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages }) => {
   const handleSelectUser = (user: User) => {
     const newUsers = [...users];
     const matchUser = newUsers.find((el) => el === user);
-    matchUser.newMessages = false;
+    if (matchUser) matchUser.newMessages = false;
+
     saveUsers(newUsers);
     setUsers(newUsers);
     setSelectedUser(user);
     setOpenedChat("chat");
-    setUnreadMessages(newUsers.some(el => el.newMessages));
+    setUnreadMessages(newUsers.some((el) => el.newMessages));
   };
 
   const handleRemoveUser = (ev: SyntheticEvent, user: User) => {
@@ -103,11 +106,14 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages }) => {
 
   const handleNewChat = () => {
     const newUsers = [...users];
-    newUsers.push({
-      name: newUsername,
-      messages: [],
-      newMessages: false,
-    });
+
+    if (newUsername) {
+      newUsers.push({
+        name: newUsername,
+        messages: [],
+        newMessages: false,
+      });
+    }
     setNewUsername("");
     saveUsers(newUsers);
     setUsers(newUsers);
@@ -117,8 +123,10 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages }) => {
 
   switch (openedChat) {
     case "chat":
-      label = selectedUser.name;
-      content = <UserChat user={selectedUser} sendMessage={sendMessage} />;
+      if (selectedUser) {
+        label = selectedUser.name;
+        content = <UserChat user={selectedUser} sendMessage={sendMessage} />;
+      }
       break;
     case "console":
       label = "Консоль";
@@ -242,7 +250,9 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages }) => {
               isIncoming: true,
               message: text,
             };
-            let matchUser: User = users.find((el) => el.name === from);
+            let matchUser: User | undefined = users.find(
+              (el) => el.name === from
+            );
             if (!matchUser) {
               matchUser = {
                 name: from,
@@ -256,7 +266,7 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages }) => {
                 matchUser.newMessages = true;
               }
             }
-            setUnreadMessages(newUsers.some(el => el.newMessages));
+            setUnreadMessages(newUsers.some((el) => el.newMessages));
             saveUsers(newUsers);
             return newUsers;
           });

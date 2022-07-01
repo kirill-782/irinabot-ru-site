@@ -69,7 +69,9 @@ const MobileMenu = () => {
           toggle
           className="item theme-switcher"
           checked={currentTheme === E_THEME.DARK}
-          onChange={(_, data: CheckboxProps) => switchTheme(data.checked ? E_THEME.DARK : E_THEME.LIGHT)}
+          onChange={(_, data: CheckboxProps) =>
+            switchTheme(data.checked ? E_THEME.DARK : E_THEME.LIGHT)
+          }
           label={
             <>
               <Icon name="paint brush" />

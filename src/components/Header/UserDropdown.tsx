@@ -33,7 +33,9 @@ function UserDrowdown() {
         item
       >
         <Dropdown.Menu>
-          <Dropdown.Item as={NavLink} to="/create">Создать игру</Dropdown.Item>
+          <Dropdown.Item as={NavLink} to="/create">
+            Создать игру
+          </Dropdown.Item>
           <Dropdown.Item
             onClick={() => {
               setUserSettingsModalOpen(true);

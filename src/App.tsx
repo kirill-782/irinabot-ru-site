@@ -25,7 +25,10 @@ import { MapUploaderService } from "./services/MapUploaderService";
 import AutopayPage from "./components/Pages/AutopayPage";
 import RegisterAccountModal from "./components/Modal/RegisterAccountModal";
 import CreateGame from "./components/CreateGame";
-import { CONNECTOR_WEBSOCKET_ENDPOINT, WEBSOCKET_ENDPOINT } from "./config/ApplicationConfig";
+import {
+  CONNECTOR_WEBSOCKET_ENDPOINT,
+  WEBSOCKET_ENDPOINT,
+} from "./config/ApplicationConfig";
 
 function App() {
   useEffect(loadTheme, []);

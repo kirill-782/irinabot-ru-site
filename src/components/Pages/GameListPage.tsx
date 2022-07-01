@@ -11,7 +11,7 @@ import { useGameListFilter } from "../../hooks/useGameListFilter";
 import GameListFilter from "../GameList/GameListFilter";
 import { useDebounce } from "./../../hooks/useDebounce";
 
-import "./GameListPage.scss"
+import "./GameListPage.scss";
 
 function GameListPage() {
   const sockets = useContext(WebsocketContext);
@@ -38,9 +38,9 @@ function GameListPage() {
   });
 
   // Cached render
-  const gameListComponent = useMemo(()=>{
-    return (<GameList gameList={filtredGameList}></GameList>);
-  }, [filtredGameList])
+  const gameListComponent = useMemo(() => {
+    return <GameList gameList={filtredGameList}></GameList>;
+  }, [filtredGameList]);
 
   return (
     <Container className="game-list">

@@ -1,8 +1,12 @@
 import { Table } from "semantic-ui-react";
 import { useMemo } from "react";
 import { GameListGame } from "../../models/websocket/ServerGameList";
-import { categoryToString, OnlineStatsRow, order, realmToCategory } from "../../config/PvpGNConfig";
-
+import {
+  categoryToString,
+  OnlineStatsRow,
+  order,
+  realmToCategory,
+} from "../../config/PvpGNConfig";
 
 interface OnlineStatsProps {
   gameList: GameListGame[];
@@ -13,12 +17,13 @@ function OnlineStats({ gameList }: OnlineStatsProps) {
     let stats: Map<String, OnlineStatsRow> = new Map();
 
     const appendToStats = (statsPart: OnlineStatsRow) => {
-      
-      if (!stats.get(statsPart.categoryId))
+      const statsRow = stats.get(statsPart.categoryId);
+
+      if (statsRow) {
+        statsRow.lobbyCount += statsPart.lobbyCount;
+        statsRow.playersCount += statsPart.playersCount;
+      } else {
         stats.set(statsPart.categoryId, statsPart);
-      else {
-        stats.get(statsPart.categoryId).lobbyCount += statsPart.lobbyCount;
-        stats.get(statsPart.categoryId).playersCount += statsPart.playersCount;
       }
     };
 
