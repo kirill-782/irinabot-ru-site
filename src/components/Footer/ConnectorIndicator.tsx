@@ -57,7 +57,7 @@ function ConnectorIndicator() {
     <Menu.Item>
       <Icon
         name="rss"
-        color={websocketContext.isConnectorSocketConnected ? "green" : null}
+        color={websocketContext.isConnectorSocketConnected ? "green" : undefined}
         onClick={() => setConnectorSummaryModalOpen(true)}
       ></Icon>
       <ConnectorSummaryModal

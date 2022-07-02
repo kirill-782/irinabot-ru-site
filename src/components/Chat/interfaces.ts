@@ -21,3 +21,8 @@ export interface ChatProps {
   /** Изменить иконку непрочитанных сообщений в footer */
   setUnreadMessages(val: boolean): void;
 }
+
+export enum SelectionType {
+  CONSOLE,
+  USER,
+}

@@ -1,6 +1,6 @@
-import React, { SyntheticEvent, useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Card, Divider, Feed, Form, Icon, Label } from "semantic-ui-react";
-import { User, ChatProps, Message } from "./interfaces";
+import { User, ChatProps, Message, SelectionType } from "./interfaces";
 import "./chat.scss";
 import { UserChat } from "./UserChat";
 import { ConsoleBot } from "./ConsoleBot";
@@ -12,6 +12,7 @@ import {
   DEFAULT_NEW_MESSAGE,
 } from "../../models/websocket/HeaderConstants";
 import { ServerTextMessage } from "../../models/websocket/ServerTextMessage";
+import ChatList from "./ChatList";
 
 const getUsers = (): User[] => {
   const usersStr = localStorage.getItem("chat-users");
@@ -39,19 +40,10 @@ const saveUsers = (users: User[]) => {
 export const Chat: React.FC<ChatProps> = ({ setUnreadMessages }) => {
   const sockets = useContext(WebsocketContext);
   const [users, setUsers] = useState(getUsers());
-  const [selectedUser, setSelectedUser] = useState<User | null>();
   const [consoleMessages, setConsoleMessages] = useState<string[]>([]);
-  const [openedChat, setOpenedChat] = useState<"chat" | "console" | "">("");
-  const [confirmRemove, setConfirmRemove] = useState<User>();
-  const [newUsername, setNewUsername] = useState<string>();
 
-  useEffect(() => {
-    if (confirmRemove) {
-      setTimeout(() => {
-        setConfirmRemove(undefined);
-      }, 2000);
-    }
-  }, [confirmRemove]);
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const [openedChat, setOpenedChat] = useState<"chat" | "console" | "">("");
 
   const sendMessage = (user: User, message: string) => {
     const newUsers = [...users];
@@ -78,45 +70,31 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages }) => {
     );
   };
 
-  const handleSelectUser = (user: User) => {
+  const onNewUser = (user: User) => {
+    const existUser = users.find((i) => {
+      if (user.name == i.name) return true;
+
+      return false;
+    });
+
+    if (existUser) return;
+
     const newUsers = [...users];
-    const matchUser = newUsers.find((el) => el === user);
-    if (matchUser) matchUser.newMessages = false;
+    newUsers.push(user);
 
-    saveUsers(newUsers);
-    setUsers(newUsers);
-    setSelectedUser(user);
-    setOpenedChat("chat");
-    setUnreadMessages(newUsers.some((el) => el.newMessages));
-  };
-
-  const handleRemoveUser = (ev: SyntheticEvent, user: User) => {
-    ev.preventDefault();
-    ev.stopPropagation();
-    setConfirmRemove(user);
-  };
-
-  const removeUser = (ev: SyntheticEvent, user: User) => {
-    ev.preventDefault();
-    ev.stopPropagation();
-    const newUsers = users.filter((el) => el !== user);
-    saveUsers(newUsers);
     setUsers(newUsers);
   };
 
-  const handleNewChat = () => {
-    const newUsers = [...users];
+  const onDeleteUser = (user: User) => {
+    setUsers(users.filter((el) => el !== user));
+  };
 
-    if (newUsername) {
-      newUsers.push({
-        name: newUsername,
-        messages: [],
-        newMessages: false,
-      });
+  const onSelectonChange = (type: SelectionType, user?: User) => {
+    if (type == SelectionType.CONSOLE) setOpenedChat("console");
+    else if (type == SelectionType.USER && user) {
+      setOpenedChat("chat");
+      setSelectedUser(user);
     }
-    setNewUsername("");
-    saveUsers(newUsers);
-    setUsers(newUsers);
   };
 
   let content, label;
@@ -140,90 +118,19 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages }) => {
     default:
       label = "Чат";
       content = (
-        <Feed className="chat-feed">
-          {users.map((user) => {
-            const lastMessage = user.messages.length
-              ? user.messages[user.messages.length - 1]
-              : null;
-
-            return (
-              <React.Fragment key={user.name}>
-                <Feed.Event onClick={() => handleSelectUser(user)}>
-                  <Feed.Label icon="user" />
-                  <Feed.Content>
-                    <Feed.Summary>
-                      {user.name}
-                      <Feed.Date
-                        content={
-                          user.messages.length
-                            ? user.messages[user.messages.length - 1].date
-                            : ""
-                        }
-                      />
-                      {confirmRemove === user ? (
-                        <span
-                          className="remove-user-button"
-                          onClick={(ev) => removeUser(ev, user)}
-                        >
-                          Подтвердить удаление
-                        </span>
-                      ) : (
-                        <Icon
-                          name="remove"
-                          onClick={(ev) => handleRemoveUser(ev, user)}
-                        />
-                      )}
-                    </Feed.Summary>
-                    {lastMessage ? (
-                      <Feed.Extra>
-                        {user.newMessages && (
-                          <Label
-                            className="chat-label-icon"
-                            circular
-                            color="red"
-                            empty
-                          />
-                        )}
-                        {lastMessage.isIncoming ? `${user.name}: ` : ""}
-                        {lastMessage.message}
-                      </Feed.Extra>
-                    ) : (
-                      "Нет сообщений"
-                    )}
-                  </Feed.Content>
-                </Feed.Event>
-                <Divider />
-              </React.Fragment>
-            );
-          })}
-          <Feed.Event onClick={() => setOpenedChat("console")}>
-            <Feed.Label icon="pencil" />
-            <Feed.Content
-              date="Консоль бота"
-              summary="Консоль бота для ввода команд"
-            />
-          </Feed.Event>
-          <Divider />
-          <Form>
-            <Form.Group widths="equal">
-              <Form.Input
-                placeholder="Введите никнейм"
-                value={newUsername}
-                onChange={(ev) => setNewUsername(ev.target.value)}
-              />
-              <Form.Button
-                content="Начать чат"
-                labelPosition="left"
-                icon="edit"
-                primary
-                onClick={handleNewChat}
-              />
-            </Form.Group>
-          </Form>
-        </Feed>
+        <ChatList
+          users={users}
+          onDeleteUser={onDeleteUser}
+          onSelectonChange={onSelectonChange}
+          onNewUser={onNewUser}
+        />
       );
       break;
   }
+
+  useEffect(() => {
+    saveUsers(users);
+  }, [users]);
 
   useEffect(() => {
     const onPacket = (packet: GHostPackageEvent) => {
