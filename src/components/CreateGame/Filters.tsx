@@ -1,5 +1,6 @@
-import { SyntheticEvent, useState } from "react";
-import { Form } from "semantic-ui-react";
+import { SyntheticEvent, useEffect, useState, useContext } from "react";
+import { DropdownItemProps, DropdownProps, Form } from "semantic-ui-react";
+import { RestContext } from "../../context";
 import type { FiltersProps } from "./interfaces";
 
 const orderOptions = [
@@ -12,14 +13,46 @@ export const Filters: React.FC<FiltersProps> = ({ onFitlerChange }) => {
   const [minPlayers, setMinPlayers] = useState<number>();
   const [maxPlayers, setMaxPlayers] = useState<number>();
   const [orderBy, setOrderBy] = useState<string>(orderOptions[0].value);
+  const [categories, setCategories] = useState<DropdownItemProps[]>([]);
+  const [selectedCategories, setSelectedCategories] = useState<number[]>([]);
+  const { mapsApi } = useContext(RestContext);
+
+  useEffect(() => {
+    mapsApi.getCategories().then((res) =>
+      setCategories(
+        res.map((el) => ({
+          key: el.id,
+          value: el.id,
+          text: el.name,
+          singleton: el.singleton,
+        }))
+      )
+    );
+  }, [mapsApi]);
 
   const onSumbit = (ev: SyntheticEvent) =>
     onFitlerChange({
-      verify: verified,
+      verify: verified ? true : undefined,
       minPlayers,
       maxPlayers,
       orderBy,
+      category: selectedCategories,
     });
+
+  const handleCategoryChange = (_, { value }: DropdownProps) => {
+    console.log("v", value, categories);
+    if (Array.isArray(value)) {
+      const singleTonValue = value.find(
+        (el) => categories.find((c) => c.value === (el as number))?.singleton
+      );
+      console.log('singleton?', singleTonValue);
+      if (singleTonValue) {
+        setSelectedCategories([singleTonValue as number]);
+      } else {
+        setSelectedCategories(value as number[]);
+      }
+    }
+  };
 
   return (
     <Form>
@@ -50,6 +83,15 @@ export const Filters: React.FC<FiltersProps> = ({ onFitlerChange }) => {
         options={orderOptions}
         value={orderBy}
         onChange={(_, data) => setOrderBy(String(data.value))}
+      />
+      <Form.Select
+        name="map_genre"
+        fluid
+        label="Тип карты"
+        multiple
+        options={categories}
+        onChange={handleCategoryChange}
+        value={selectedCategories}
       />
       <Form.Button type="button" onClick={onSumbit}>
         Применить фильры

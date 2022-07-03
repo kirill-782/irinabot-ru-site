@@ -73,6 +73,21 @@ export class MapService {
     return response.data;
   };
 
+  public getMaps = async () => {
+    const request: AxiosRequestConfig<FormData> = {
+      url: this.config.basePath + "/v1/maps",
+      method: "GET",
+      params: {
+        count: 20,
+        offset: 0
+      },
+    };
+
+    const response = await Axios.request<Map[]>(request);
+
+    return response.data;
+  };
+
   public searchMap = async (mapName: string, filters: SearchFilters) => {
     const request: AxiosRequestConfig<FormData> = {
       url: this.config.basePath + "/v1/maps/search",
@@ -84,6 +99,18 @@ export class MapService {
     };
 
     const response = await Axios.request<Map[]>(request);
+
+    return response.data;
+  };
+
+  
+  public getVersions = async () => {
+    const request: AxiosRequestConfig<FormData> = {
+      url: this.config.basePath + "/v1/configs/versions",
+      method: "GET",
+    };
+
+    const response = await Axios.request<string[]>(request);
 
     return response.data;
   };
