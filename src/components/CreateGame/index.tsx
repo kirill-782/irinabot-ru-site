@@ -1,4 +1,9 @@
-import { BaseSyntheticEvent, useState, useContext, useEffect } from "react";
+import React, {
+  BaseSyntheticEvent,
+  useState,
+  useContext,
+  useEffect,
+} from "react";
 import {
   Form,
   Grid,
@@ -8,6 +13,8 @@ import {
   Divider,
   DropdownItemProps,
   DropdownProps,
+  Button,
+  InputOnChangeData,
 } from "semantic-ui-react";
 import { RestContext } from "../../context";
 import { SearchFilters } from "../../models/rest/SearchFilters";
@@ -16,35 +23,45 @@ import { GameCard } from "./GameCard";
 import { Filters } from "./Filters";
 import { Map } from "../../models/rest/Map";
 
-// const MAP_FLAG_TEAMS_TOGETHER = 1;
-// const MAP_FLAG_FIXED_TEAMS = 2;
-// const MAP_FLAG_UNIT_SHARE = 4;
-// const MAP_FLAG_RANDOM_HERO = 8;
-// const MAP_FLAG_RANDOM_RACES = 16;
+const assemblyMapOptions = (
+  mapFlags: number,
+  mapSpeed: number,
+  mapVisibility: number,
+  mapObservers: number
+): number => {
+  return (
+    mapFlags | ((mapSpeed | (mapVisibility << 2) | (mapObservers << 5)) << 8)
+  );
+};
 
-// const assemblyMapOptions = (
-//   mapFlags: number,
-//   mapSpeed: number,
-//   mapVisibility: number,
-//   mapObservers: number
-// ): number => {
-//   return (
-//     mapFlags | ((mapSpeed | (mapVisibility << 2) | (mapObservers << 5)) << 8)
-//   );
-// };
+const assemblyMapFlags = (
+  mapFlagTeamsTogether,
+  mapFlagFixedTeams,
+  mapFlagUnitShare,
+  mapFlagRandomHero,
+  mapFlagRandomRaces
+) => {
+  return (
+    mapFlagTeamsTogether * 1 +
+    mapFlagFixedTeams * 2 +
+    mapFlagUnitShare * 4 +
+    mapFlagRandomHero * 8 +
+    mapFlagRandomRaces * 16
+  );
+};
 
 const visibilityOptions = [
-  { key: "4", text: "По умочланию", value: "4" },
-  { key: "1", text: "Скрыта", value: "1" },
-  { key: "2", text: "Разведана", value: "2" },
-  { key: "3", text: "Открыта", value: "3" },
+  { key: "4", text: "По умочланию", value: 4 },
+  { key: "1", text: "Скрыта", value: 1 },
+  { key: "2", text: "Разведана", value: 2 },
+  { key: "3", text: "Открыта", value: 3 },
 ];
 
-const spectatorsOptions = [
-  { key: "1", text: "Нет", value: "1" },
-  { key: "3", text: "Все зрители", value: "3" },
-  { key: "2", text: "После поражения", value: "2" },
-  { key: "4", text: "Судьи", value: "4" },
+const observersOptions = [
+  { key: "1", text: "Нет", value: 1 },
+  { key: "3", text: "Все зрители", value: 3 },
+  { key: "2", text: "После поражения", value: 2 },
+  { key: "4", text: "Судьи", value: 4 },
 ];
 
 function CreateGame() {
@@ -57,6 +74,19 @@ function CreateGame() {
   const { mapsApi } = useContext(RestContext);
   const [patchesOption, setPatchesOption] = useState<DropdownItemProps[]>([]);
   const [selectedPatch, setSelectedPatch] = useState<DropdownItemProps>();
+  const [canCreateGame, setCanCreateGame] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const [mapFlagTeamsTogether, setMapFlagTeamsTogether] = useState(0);
+  const [mapFlagFixedTeams, setMapFlagFixedTeams] = useState(0);
+  const [mapFlagUnitShare, setMapFlagUnitShare] = useState(0);
+  const [mapFlagRandomHero, setMapFlagRandomHero] = useState(0);
+  const [mapFlagRandomRaces, setMapFlagRandomRaces] = useState(0);
+
+  const [mapSpeed, setMapSpeed] = useState(0);
+  const [mapVisibility, setMapVisibility] = useState(4);
+  const [mapObservers, setMapObservers] = useState(1);
+  const [mapName, setMapName] = useState("");
 
   console.log("m", searchedMaps);
 
@@ -72,6 +102,51 @@ function CreateGame() {
       setSearchedMaps(maps);
       setLoading(false);
     });
+  };
+
+  const handleCreateGame = (ev: React.SyntheticEvent) => {
+    console.log("name", mapName);
+    console.log("map", selectedMap);
+    console.log("patch", selectedPatch);
+    const mapFlags = assemblyMapFlags(
+      mapFlagTeamsTogether,
+      mapFlagFixedTeams,
+      mapFlagUnitShare,
+      mapFlagRandomHero,
+      mapFlagRandomRaces
+    );
+    console.log("FLAGS", mapFlags);
+    console.log(
+      "mapSpeed",
+      mapSpeed,
+      "mapVisibility",
+      mapVisibility,
+      "mapObservers",
+      mapObservers
+    );
+    console.log(
+      "map options",
+      assemblyMapOptions(mapFlags, mapSpeed, mapVisibility, mapObservers)
+    );
+
+    const mapId: number | undefined = selectedMap?.id;
+    const patch: string = selectedPatch?.value as string;
+
+    if (mapId && patch)
+      mapsApi.getMapInfo(mapId).then((mapRes) => {
+        const matchConfigInfo = mapRes?.configs?.find(
+          (el) => el.version === patch
+        );
+        if (matchConfigInfo?.status === 1) {
+          mapsApi.getMapConfig(mapId, patch).then((res) => {
+            console.log("send config", res);
+          });
+        }
+        console.log("map config", mapRes);
+      });
+
+    ev.preventDefault();
+    return false;
   };
 
   useEffect(() => {
@@ -99,6 +174,23 @@ function CreateGame() {
     setSelectedPatch(patchesOption.find((el) => el.value === value));
   };
 
+  const handleVisibilityChange = (_, { value }: DropdownProps) => {
+    setMapVisibility(value as number);
+  };
+
+  const handleObserversChange = (_, { value }: DropdownProps) => {
+    setMapObservers(value as number);
+  };
+
+  const handleMapNameChange = (_, { value }: InputOnChangeData) => {
+    setMapName(value);
+  };
+
+  const handleMapSelect = (map: Map) => {
+    setSelectedMap(map);
+    setCanCreateGame(false);
+  };
+
   return (
     <Container className="create-game">
       <Header>Создание игры</Header>
@@ -111,22 +203,26 @@ function CreateGame() {
             </Grid.Column>
             <Grid.Column width={9}>
               <Header size="small">Основные параметры</Header>
-              <Form.Group widths="equal">
-                <Form.Input
-                  fluid
-                  name="name"
-                  label="Название игры"
-                  placeholder="Название игры"
-                />
-                <Form.Select
-                  fluid
-                  name="patch"
-                  label="Патч"
-                  onChange={handlePatchChange}
-                  options={patchesOption}
-                  value={selectedPatch?.value}
-                />
-              </Form.Group>
+              {selectedMap && (
+                <Form.Group widths="equal">
+                  <Form.Input
+                    fluid
+                    name="name"
+                    label="Название игры"
+                    placeholder="Название игры"
+                    value={mapName}
+                    onChange={handleMapNameChange}
+                  />
+                  <Form.Select
+                    fluid
+                    name="patch"
+                    label="Патч"
+                    onChange={handlePatchChange}
+                    options={patchesOption}
+                    value={selectedPatch?.value}
+                  />
+                </Form.Group>
+              )}
 
               {selectedMap ? (
                 <Item.Group className="map-group">
@@ -135,6 +231,16 @@ function CreateGame() {
                     selected={true}
                     onClick={() => setSelectedMap(undefined)}
                   />
+                  <Grid.Row>
+                    <Button
+                      role="button"
+                      type="button"
+                      onClick={handleCreateGame}
+                      disabled={canCreateGame}
+                    >
+                      Создать
+                    </Button>
+                  </Grid.Row>
                 </Item.Group>
               ) : (
                 <>
@@ -155,7 +261,7 @@ function CreateGame() {
                           key={key}
                           {...map}
                           selected={false}
-                          onClick={() => setSelectedMap(map)}
+                          onClick={() => handleMapSelect(map)}
                         />
                       )
                     )}
@@ -170,24 +276,50 @@ function CreateGame() {
                 name="enter-with-password"
               />
               <Divider />
-              <Form.Checkbox label="Города союзников рядом" name="near_city" />
-              <Form.Checkbox label="Фиксация кланов" name="fixed_clans" />
-              <Form.Checkbox label="Общие войска" name="common_units" />
-              <Form.Checkbox label="Случайные герои" name="random_heroes" />
-              <Form.Checkbox label="Случайные расы" name="random_race" />
+              <Form.Checkbox
+                label="Города союзников рядом"
+                name="mapFlagTeamsTogether"
+                onChange={() =>
+                  setMapFlagTeamsTogether(mapFlagTeamsTogether ? 0 : 1)
+                }
+              />
+              <Form.Checkbox
+                label="Фиксация кланов"
+                name="mapFlagFixedTeams"
+                onChange={() => setMapFlagFixedTeams(mapFlagFixedTeams ? 0 : 1)}
+              />
+              <Form.Checkbox
+                label="Общие войска"
+                name="mapFlagUnitShare"
+                onChange={() => setMapFlagUnitShare(mapFlagUnitShare ? 0 : 1)}
+              />
+              <Form.Checkbox
+                label="Случайные расы"
+                name="mapFlagRandomRaces"
+                onChange={() =>
+                  setMapFlagRandomRaces(mapFlagRandomRaces ? 0 : 1)
+                }
+              />
+              <Form.Checkbox
+                label="Случайные герои"
+                name="mapFlagRandomHero"
+                onChange={() => setMapFlagRandomHero(mapFlagRandomHero ? 0 : 1)}
+              />
               <Form.Select
                 fluid
                 name="spectators"
                 label="Зрители"
-                options={spectatorsOptions}
-                defaultValue={spectatorsOptions[0].value}
+                onChange={handleObserversChange}
+                options={observersOptions}
+                value={mapObservers}
               />
               <Form.Select
                 fluid
                 name="visibility"
                 label="Карта"
                 options={visibilityOptions}
-                defaultValue={visibilityOptions[0].value}
+                onChange={handleVisibilityChange}
+                value={mapVisibility}
               />
             </Grid.Column>
           </Grid.Row>

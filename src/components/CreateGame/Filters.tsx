@@ -14,7 +14,7 @@ export const Filters: React.FC<FiltersProps> = ({ onFitlerChange }) => {
   const [maxPlayers, setMaxPlayers] = useState<number>();
   const [orderBy, setOrderBy] = useState<string>(orderOptions[0].value);
   const [categories, setCategories] = useState<DropdownItemProps[]>([]);
-  const [selectedCategories, setSelectedCategories] = useState<number[]>([]);
+  const [selectedCategories, setSelectedCategories] = useState<number>();
   const { mapsApi } = useContext(RestContext);
 
   useEffect(() => {
@@ -40,18 +40,7 @@ export const Filters: React.FC<FiltersProps> = ({ onFitlerChange }) => {
     });
 
   const handleCategoryChange = (_, { value }: DropdownProps) => {
-    console.log("v", value, categories);
-    if (Array.isArray(value)) {
-      const singleTonValue = value.find(
-        (el) => categories.find((c) => c.value === (el as number))?.singleton
-      );
-      console.log('singleton?', singleTonValue);
-      if (singleTonValue) {
-        setSelectedCategories([singleTonValue as number]);
-      } else {
-        setSelectedCategories(value as number[]);
-      }
-    }
+    setSelectedCategories(value as number);
   };
 
   return (
@@ -73,7 +62,7 @@ export const Filters: React.FC<FiltersProps> = ({ onFitlerChange }) => {
         onChange={({ target: { value } }) => setMaxPlayers(Number(value))}
       />
       <Form.Checkbox
-        label="Верифицированные карты"
+        label="Только верифицированные карты"
         checked={verified}
         onChange={() => setVerified(!verified)}
       />
@@ -88,7 +77,6 @@ export const Filters: React.FC<FiltersProps> = ({ onFitlerChange }) => {
         name="map_genre"
         fluid
         label="Тип карты"
-        multiple
         options={categories}
         onChange={handleCategoryChange}
         value={selectedCategories}

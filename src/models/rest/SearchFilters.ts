@@ -11,5 +11,5 @@ export interface SearchFilters {
   /** Порядок сортировки. */
   orderBy?: string;
   /** Только карты из заданной категории */
-  category?: number[];
+  category?: number;
 }

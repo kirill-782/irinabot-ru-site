@@ -5,6 +5,7 @@ import Axios, { AxiosRequestConfig } from "axios";
 import { Map } from "../models/rest/Map";
 import { Category } from "../models/rest/Category";
 import { SearchFilters } from "../models/rest/SearchFilters";
+import { ConfigInfo } from "../models/rest/ConfigInfo";
 
 export interface RequestOptions {
   onUploadProgress?: (progressEvent: any) => void;
@@ -84,6 +85,31 @@ export class MapService {
     };
 
     const response = await Axios.request<Map[]>(request);
+
+    return response.data;
+  };
+
+  public getMapInfo = async (mapId: number) => {
+    const request: AxiosRequestConfig<FormData> = {
+      url: this.config.basePath + "/v1/maps/" + mapId,
+      method: "GET",
+    };
+  
+    const response = await Axios.request<Map>(request);
+
+    return response.data;
+  };
+
+  public getMapConfig = async (mapId: number, patchId: string) => {
+    const request: AxiosRequestConfig<FormData> = {
+      url: this.config.basePath + "/v1/maps/" + mapId + '/defaultConfigs/' + patchId,
+      method: "GET",
+      headers: {
+        'Accept': `application/jose`
+      }
+    };
+
+    const response = await Axios.request<ConfigInfo>(request);
 
     return response.data;
   };

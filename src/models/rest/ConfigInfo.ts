@@ -19,8 +19,8 @@ export type ConfigInfo = {
 
 export namespace ConfigInfo {
   export enum status {
-    _0 = "0",
-    _1 = "1",
-    _2 = "2",
+    _0 = 0,
+    _1 = 1,
+    _2 = 2,
   }
 }
