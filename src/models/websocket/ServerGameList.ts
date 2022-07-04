@@ -37,6 +37,7 @@ export class GameListGameFlags {
 export interface GameListGame {
   name: string;
   gameFlags: GameListGameFlags;
+  mapId: number;
   gamePosition: number;
   gameCounter: number;
   gameTicks: number;
@@ -99,6 +100,7 @@ class GameListGameConverter {
 
     dataBuffer.putNullTerminatedString(data.name);
     dataBuffer.putUint16(data.gameFlags.toInteger());
+    dataBuffer.putUint32(data.mapId);
     dataBuffer.putUint8(data.gamePosition);
     dataBuffer.putUint32(data.gameCounter);
     dataBuffer.putUint32(data.gameTicks);
@@ -126,6 +128,7 @@ class GameListGameConverter {
   public parse(dataBuffer: DataBuffer): GameListGame {
     const name = dataBuffer.getNullTerminatedString();
     const gameFlags = new GameListGameFlags(dataBuffer.getUint16());
+    const mapId = dataBuffer.getUint32( );
     const gamePosition = dataBuffer.getUint8();
     const gameCounter = dataBuffer.getUint32();
     const gameTicks = dataBuffer.getUint32();
@@ -147,6 +150,7 @@ class GameListGameConverter {
     return {
       name,
       gameFlags,
+      mapId,
       gamePosition,
       gameCounter,
       gameTicks,
