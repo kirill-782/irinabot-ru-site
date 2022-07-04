@@ -48,7 +48,7 @@ function GameListFilter({
           onChange={(event, data) => {
             onFilterChange({
               ...filterSettings,
-              noLoadStarted: data.checked,
+              noLoadStarted: !!data.checked,
             });
           }}
         ></Form.Checkbox>
@@ -59,7 +59,7 @@ function GameListFilter({
           onChange={(event, data) => {
             onFilterChange({
               ...filterSettings,
-              onlySelfGames: data.checked,
+              onlySelfGames: !!data.checked,
             });
           }}
           label="Только мои игры"
@@ -132,7 +132,7 @@ function GameListFilter({
             icon="exchange"
             name="reverseOrder"
             disabled={disabledFilters.indexOf("reverseOrder") > -1}
-            color={filterSettings.reverseOrder ? "green" : null}
+            color={filterSettings.reverseOrder ? "green" : undefined}
             onClick={() =>
               onFilterChange({
                 ...filterSettings,

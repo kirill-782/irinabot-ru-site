@@ -51,7 +51,7 @@ function OnlineStats({ gameList }: OnlineStatsProps) {
           });
       });
 
-      if (game.started)
+      if (game.gameFlags.started)
         appendToStats({ categoryId: "started", lobbyCount: 1, playersCount });
       else appendToStats({ categoryId: "lobby", lobbyCount: 1, playersCount });
 

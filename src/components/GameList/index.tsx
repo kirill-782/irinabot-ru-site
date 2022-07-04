@@ -33,9 +33,9 @@ function GameList({ gameList }) {
           return (
             <Table.Row
               key={game.gameCounter}
-              positive={game.started}
-              error={game.hasGamePowerUp}
-              warning={game.hasOtherGame}
+              positive={game.gameFlags.started}
+              error={game.gameFlags.hasGamePowerUp}
+              warning={game.gameFlags.hasOtherGame}
               className={game.hidden ? "hidden" : ""}
             >
               <Table.Cell>1.26</Table.Cell>

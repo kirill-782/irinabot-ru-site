@@ -1,4 +1,4 @@
-const isProduction = process.env.NODE_ENV == "production";
+const isProduction = process.env.NODE_ENV === "production";
 
 export const WEBSOCKET_ENDPOINT = isProduction
   ? "wss://" + window.location.host + "/ghost/"

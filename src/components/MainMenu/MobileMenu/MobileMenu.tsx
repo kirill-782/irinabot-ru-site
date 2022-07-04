@@ -33,10 +33,10 @@ const MobileMenu = () => {
     const mobileMenu = document.querySelector(".burger-mobile-menu");
     const burgerIcon = document.querySelector(".burger-icon");
     const overlay = document.querySelector(".mobile-menu-pushable");
-    mobileMenu.classList.toggle("active");
-    overlay.classList.toggle("active");
-    burgerIcon.classList.toggle("sidebar");
-    burgerIcon.classList.toggle("close");
+    mobileMenu?.classList.toggle("active");
+    overlay?.classList.toggle("active");
+    burgerIcon?.classList.toggle("sidebar");
+    burgerIcon?.classList.toggle("close");
   };
 
   const handleMenuItemClick = () => {

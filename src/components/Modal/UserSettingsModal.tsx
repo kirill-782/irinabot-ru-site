@@ -75,23 +75,33 @@ function UserSettingsModal(props) {
       "popup"
     );
 
-    const onStorage = (e: StorageEvent) => {
-      if (e.key.startsWith(state)) {
-        if (e.key.substring(state.length + 1) === "token") {
-          const converter = new ClientAddIntegrationByTokenConverter();
-          sockets.ghostSocket.send(
-            converter.assembly({ tokenType: data.type, token: e.newValue })
-          );
-        } else {
-          toast({
-            title: "Ошибка",
-            description: e.newValue,
-            type: "error",
-            time: 10000,
-          });
-        }
+    if (!oauthWindow) return;
 
-        window.localStorage.removeItem(e.key);
+    const onStorage = (e: StorageEvent) => {
+      const storageKey = e.key;
+      const storageNewValue = e.newValue;
+
+      if (storageNewValue && storageKey) {
+        if (storageKey.startsWith(state)) {
+          if (storageKey.substring(state.length + 1) === "token") {
+            const converter = new ClientAddIntegrationByTokenConverter();
+            sockets.ghostSocket.send(
+              converter.assembly({
+                tokenType: data.type,
+                token: storageNewValue,
+              })
+            );
+          } else {
+            toast({
+              title: "Ошибка",
+              description: storageNewValue,
+              type: "error",
+              time: 10000,
+            });
+          }
+
+          window.localStorage.removeItem(e.key);
+        }
       }
     };
 

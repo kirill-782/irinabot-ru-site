@@ -1,5 +1,5 @@
-import React, { SyntheticEvent, useEffect, useState } from "react";
-import { Divider, Feed, Form, Icon, Label } from "semantic-ui-react";
+import React, { useState } from "react";
+import { Divider, Feed, Form } from "semantic-ui-react";
 import ChatRow from "./ChatRow";
 import { SelectionType, User } from "./interfaces";
 

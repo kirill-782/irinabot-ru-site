@@ -97,20 +97,6 @@ export const useGameListFilter = ({
       )
         return { ...game, hidden: false };
 
-      if (
-        game.mapName
-          .toLocaleLowerCase()
-          .indexOf(filters.quicFilter.toLowerCase()) >= 0
-      )
-        return { ...game, hidden: false };
-
-      if (
-        game.mapFileName
-          .toLocaleLowerCase()
-          .indexOf(filters.quicFilter.toLowerCase()) >= 0
-      )
-        return { ...game, hidden: false };
-
       const players = game.players.filter((player) => {
         if (player.name.length === 0) return false;
         if (

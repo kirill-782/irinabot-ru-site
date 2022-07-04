@@ -22,6 +22,7 @@ import "./CreateGame.scss";
 import { GameCard } from "./GameCard";
 import { Filters } from "./Filters";
 import { Map } from "../../models/rest/Map";
+import { ConfigInfo } from "../../models/rest/ConfigInfo";
 
 const assemblyMapOptions = (
   mapFlags: number,

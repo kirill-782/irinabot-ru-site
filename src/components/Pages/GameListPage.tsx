@@ -2,7 +2,7 @@ import React, { useContext, useMemo, useState } from "react";
 import { Button, Container, Grid, Input } from "semantic-ui-react";
 import { AppRuntimeSettingsContext, WebsocketContext } from "../../context";
 import { GameListGame } from "../../models/websocket/ServerGameList";
-import GameList from "../GameList/GameList";
+import GameList from "../GameList";
 import OnlineStats from "../GameList/OnlineStats";
 
 import { useGameListSubscribe } from "../../hooks/useGameListSubscribe";

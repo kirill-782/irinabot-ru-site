@@ -23,7 +23,7 @@ interface GamePlayerStats {
 
 function GameListPlayerItem({ player }: GameListPlayerItemProps) {
   const [gamePlayerStats, setGamePlayerStats] =
-    useState<GamePlayerStats>(undefined);
+    useState<GamePlayerStats | null>(null);
   //https://nwc3l.com/irinabot_profile?id=zsef_He_yIIaJI&json
 
   const getClassColorByPlayer = ({ colour }) => {

@@ -30,8 +30,8 @@ export const freeSlotsComparator = (
   a: GameListGame,
   b: GameListGame
 ): number => {
-  if (Number(a.started) - Number(b.started) !== 0)
-    return Number(a.started) - Number(b.started);
+  if (Number(a.gameFlags.started) - Number(b.gameFlags.started) !== 0)
+    return Number(a.gameFlags.started) - Number(b.gameFlags.started);
 
   return getFreeSlots(a) - getFreeSlots(b);
 };
@@ -40,8 +40,8 @@ export const allSlotsComparator = (
   a: GameListGame,
   b: GameListGame
 ): number => {
-  if (Number(a.started) - Number(b.started) !== 0)
-    return Number(a.started) - Number(b.started);
+  if (Number(a.gameFlags.started) - Number(b.gameFlags.started) !== 0)
+    return Number(a.gameFlags.started) - Number(b.gameFlags.started);
 
   return a.players.length - b.players.length;
 };
@@ -50,8 +50,8 @@ export const playersOccupiedComparator = (
   a: GameListGame,
   b: GameListGame
 ): number => {
-  if (Number(a.started) - Number(b.started) !== 0)
-    return Number(a.started) - Number(b.started);
+  if (Number(a.gameFlags.started) - Number(b.gameFlags.started) !== 0)
+    return Number(a.gameFlags.started) - Number(b.gameFlags.started);
 
   return (
     a.players.length - getFreeSlots(a) - (b.players.length - getFreeSlots(b))
@@ -59,31 +59,31 @@ export const playersOccupiedComparator = (
 };
 
 const compareByPassword = (a: GameListGame, b: GameListGame): number => {
-  if (a.hasPassword && b.hasPassword) return 0;
+  if (a.gameFlags.hasPassword && b.gameFlags.hasPassword) return 0;
 
-  if (a.hasPassword) return 1;
+  if (a.gameFlags.hasPassword) return 1;
 
-  if (b.hasPassword) return -1;
+  if (b.gameFlags.hasPassword) return -1;
 
   return 0;
 };
 
 const compareByStarted = (a: GameListGame, b: GameListGame): number => {
-  if (a.started && b.started) return 0;
+  if (a.gameFlags.started && b.gameFlags.started) return 0;
 
-  if (a.started) return 1;
+  if (a.gameFlags.started) return 1;
 
-  if (b.started) return -1;
+  if (b.gameFlags.started) return -1;
 
   return 0;
 };
 
 const compareByOtherGame = (a: GameListGame, b: GameListGame): number => {
-  if (a.hasOtherGame && b.hasOtherGame) return 0;
+  if (a.gameFlags.hasOtherGame && b.gameFlags.hasOtherGame) return 0;
 
-  if (a.hasOtherGame) return 1;
+  if (a.gameFlags.hasOtherGame) return 1;
 
-  if (b.hasOtherGame) return -1;
+  if (b.gameFlags.hasOtherGame) return -1;
 
   return 0;
 };

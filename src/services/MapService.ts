@@ -80,7 +80,7 @@ export class MapService {
       method: "GET",
       params: {
         count: 20,
-        offset: 0
+        offset: 0,
       },
     };
 
@@ -94,7 +94,7 @@ export class MapService {
       url: this.config.basePath + "/v1/maps/" + mapId,
       method: "GET",
     };
-  
+
     const response = await Axios.request<Map>(request);
 
     return response.data;
@@ -102,11 +102,16 @@ export class MapService {
 
   public getMapConfig = async (mapId: number, patchId: string) => {
     const request: AxiosRequestConfig<FormData> = {
-      url: this.config.basePath + "/v1/maps/" + mapId + '/defaultConfigs/' + patchId,
+      url:
+        this.config.basePath +
+        "/v1/maps/" +
+        mapId +
+        "/defaultConfigs/" +
+        patchId,
       method: "GET",
       headers: {
-        'Accept': `application/jose`
-      }
+        Accept: `application/jose`,
+      },
     };
 
     const response = await Axios.request<ConfigInfo>(request);
@@ -129,7 +134,6 @@ export class MapService {
     return response.data;
   };
 
-  
   public getVersions = async () => {
     const request: AxiosRequestConfig<FormData> = {
       url: this.config.basePath + "/v1/configs/versions",

@@ -9,14 +9,34 @@ export interface ServerGameList extends AbstractPackage {
   games: Array<GameListGame>;
 }
 
+export class GameListGameFlags {
+  public started: boolean;
+  public hasPassword: boolean;
+  public hasOtherGame: boolean;
+  public hasGamePowerUp: boolean;
+
+  constructor(flags: number) {
+    this.started = (flags & 1) > 0;
+    this.hasPassword = (flags & 2) > 0;
+    this.hasGamePowerUp = (flags & 4) > 0;
+    this.hasOtherGame = (flags & 8) > 0;
+  }
+
+  public toInteger = () => {
+    let number = 0;
+
+    if (this.started) number |= 1;
+    if (this.hasPassword) number |= 2;
+    if (this.hasGamePowerUp) number |= 4;
+    if (this.hasOtherGame) number |= 8;
+
+    return number;
+  };
+}
+
 export interface GameListGame {
-  started: boolean;
   name: string;
-  mapName: string;
-  mapFileName: string;
-  hasPassword: boolean;
-  hasOtherGame: boolean;
-  hasGamePowerUp: boolean;
+  gameFlags: GameListGameFlags;
   gamePosition: number;
   gameCounter: number;
   gameTicks: number;
@@ -77,13 +97,8 @@ class GameListGameConverter {
   public assembly(data: GameListGame) {
     const dataBuffer = new DataBuffer(new ArrayBuffer(2));
 
-    dataBuffer.putUint8(data.started ? 1 : 0);
     dataBuffer.putNullTerminatedString(data.name);
-    dataBuffer.putNullTerminatedString(data.mapName);
-    dataBuffer.putNullTerminatedString(data.mapFileName);
-    dataBuffer.putUint8(data.hasPassword ? 1 : 0);
-    dataBuffer.putUint8(data.hasOtherGame ? 1 : 0);
-    dataBuffer.putUint8(data.hasGamePowerUp ? 1 : 0);
+    dataBuffer.putUint16(data.gameFlags.toInteger());
     dataBuffer.putUint8(data.gamePosition);
     dataBuffer.putUint32(data.gameCounter);
     dataBuffer.putUint32(data.gameTicks);
@@ -109,13 +124,8 @@ class GameListGameConverter {
   }
 
   public parse(dataBuffer: DataBuffer): GameListGame {
-    const started = dataBuffer.getUint8() > 0;
     const name = dataBuffer.getNullTerminatedString();
-    const mapName = dataBuffer.getNullTerminatedString(); // MapName
-    const mapFileName = dataBuffer.getNullTerminatedString(); // MapFilename
-    const hasPassword = dataBuffer.getUint8() > 0;
-    const hasOtherGame = dataBuffer.getUint8() > 0;
-    const hasGamePowerUp = dataBuffer.getUint8() > 0;
+    const gameFlags = new GameListGameFlags(dataBuffer.getUint16());
     const gamePosition = dataBuffer.getUint8();
     const gameCounter = dataBuffer.getUint32();
     const gameTicks = dataBuffer.getUint32();
@@ -135,13 +145,8 @@ class GameListGameConverter {
       players[players.length] = gameListPlayerConverter.parse(dataBuffer);
 
     return {
-      started,
       name,
-      mapName,
-      mapFileName,
-      hasPassword,
-      hasOtherGame,
-      hasGamePowerUp,
+      gameFlags,
       gamePosition,
       gameCounter,
       gameTicks,

@@ -16,7 +16,7 @@ function UserDrowdown() {
     window.localStorage.removeItem("authTokenType");
     window.localStorage.removeItem("authToken");
 
-    authContext.dispatchAuth({ action: "clearCredentials", payload: null });
+    authContext.dispatchAuth({ action: "clearCredentials" });
 
     // Socket dont support logout frame
     sockets.ghostSocket.disconnect();
