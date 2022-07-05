@@ -12,6 +12,7 @@ import GameListFilter from "../GameList/GameListFilter";
 import { useDebounce } from "./../../hooks/useDebounce";
 
 import "./GameListPage.scss";
+import { ClientCreateGame, ClientCreateGameConverter } from './../../models/websocket/ClientCreateGame';
 
 function GameListPage() {
   const sockets = useContext(WebsocketContext);
@@ -41,6 +42,8 @@ function GameListPage() {
   const gameListComponent = useMemo(() => {
     return <GameList gameList={filtredGameList}></GameList>;
   }, [filtredGameList]);
+
+
 
   return (
     <Container className="game-list">
@@ -74,6 +77,20 @@ function GameListPage() {
           <OnlineStats gameList={gameList}></OnlineStats>
         </Grid.Column>
       </Grid>
+      <div style={{ width: 300, height: 200, position: "absolute", zIndex: 1000, backgroundColor: "gray", top: 100, right: 50}}>
+        <input id="gameName-asuna" placeholder="gameName"></input><br/><br/>
+        <textarea id="mapData-asuna" placeholder="mapData"></textarea><br/><br/>
+        <input  id="mapFlags-asuna" placeholder="mapFlags"></input><br/><br/>
+        <button value="Создать" onClick={()=>{
+          sockets.ghostSocket.send(new ClientCreateGameConverter().assembly({
+            gameName: (window.document.getElementById("gameName-asuna") as HTMLInputElement).value,
+            mapData: (window.document.getElementById("mapData-asuna") as HTMLInputElement).value,
+            flags: parseInt((window.document.getElementById("mapFlags-asuna") as HTMLInputElement).value),
+            privateGame: false,
+            slotPreset: "",
+          }))
+        }}>Создать</button>
+      </div>
     </Container>
   );
 }

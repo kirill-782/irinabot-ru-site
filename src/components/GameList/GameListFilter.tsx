@@ -153,7 +153,7 @@ function GameListFilter({
               });
             }}
             max={24}
-            min={1}
+            min={0}
             step={1}
             renderThumb={(props, state) => (
               <div {...props}>{state.valueNow}</div>
@@ -171,7 +171,7 @@ function GameListFilter({
               });
             }}
             max={24}
-            min={1}
+            min={0}
             step={1}
             renderThumb={(props, state) => (
               <div {...props}>{state.valueNow}</div>
@@ -189,7 +189,7 @@ function GameListFilter({
               });
             }}
             max={24}
-            min={1}
+            min={0}
             step={1}
             renderThumb={(props, state) => (
               <div {...props}>{state.valueNow}</div>

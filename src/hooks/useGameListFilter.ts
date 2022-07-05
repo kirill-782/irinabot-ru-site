@@ -51,6 +51,7 @@ export const useGameListFilter = ({
 
       // Game Type Filter
 
+
       if (filters.gameType) {
         if (filters.gameType === 1 && game.orderID === 0)
           return { ...game, hidden: true };
