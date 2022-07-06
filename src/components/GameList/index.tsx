@@ -5,8 +5,15 @@ import ConnectorAddButton from "./ConnectorAddButton";
 
 import "./GameList.scss";
 import { GameListGameFilterExtends } from "../../hooks/useGameListFilter";
+import { GameListGame } from "./../../models/websocket/ServerGameList";
 
-function GameList({ gameList }) {
+interface GameListProps {
+  gameList: GameListGame[];
+  selectedGame: GameListGame | null;
+  setSelectedGame: (game: GameListGame | null) => void;
+}
+
+function GameList({ gameList, selectedGame, setSelectedGame }: GameListProps) {
   const getPlayerSlots = (game: GameListGameFilterExtends): number => {
     let usedSlots = 0;
 
@@ -33,10 +40,18 @@ function GameList({ gameList }) {
           return (
             <Table.Row
               key={game.gameCounter}
-              positive={game.gameFlags.started}
+              positive={
+                game.gameFlags.started ||
+                game.gameCounter == selectedGame?.gameCounter
+              }
               error={game.gameFlags.hasGamePowerUp}
               warning={game.gameFlags.hasOtherGame}
               className={game.hidden ? "hidden" : ""}
+              onClick={() => {
+                if (selectedGame?.gameCounter == game.gameCounter)
+                  setSelectedGame(null);
+                else setSelectedGame(game);
+              }}
             >
               <Table.Cell>1.26</Table.Cell>
               <Table.Cell>
