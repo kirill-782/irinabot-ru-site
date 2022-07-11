@@ -1,3 +1,4 @@
+import { memo, useEffect } from "react";
 import ReactSlider from "react-slider";
 import { Button, Form } from "semantic-ui-react";
 import { FilterSettings } from "../../hooks/useGameListFilter";
@@ -201,4 +202,4 @@ function GameListFilter({
   );
 }
 
-export default GameListFilter;
+export default memo(GameListFilter);

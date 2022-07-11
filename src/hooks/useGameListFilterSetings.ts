@@ -64,24 +64,24 @@ export const useGameListFilterSetings = () => {
 
   // Authorization dependent filters
   useEffect(() => {
-    console.log(auth.currentAuth);
     if (auth.currentAuth) enableFilter("onlySelfGames");
     else if (!auth.authCredentials) disableFilter("onlySelfGames");
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auth]);
 
-  const updateFilters = (value: FilterSettings) => {
-    setFilterSettings(value);
-
-    localStorage.setItem(gameListFilterLocalStorageKey, JSON.stringify(value));
-  };
+  useEffect(() => {
+    localStorage.setItem(
+      gameListFilterLocalStorageKey,
+      JSON.stringify(filterSettings)
+    );
+  }, [filterSettings]);
 
   return {
     filterSettings,
     disabledFilters,
+    setFilterSettings,
     enableFilter,
     disableFilter,
-    setFilterSettings: updateFilters,
   };
 };

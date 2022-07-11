@@ -1,6 +1,6 @@
 import { Button, Grid, Icon, List, Popup } from "semantic-ui-react";
 import { GameListPlayer } from "../../models/websocket/ServerGameList";
-import { useState } from "react";
+import { memo, useState } from "react";
 import "./GameListPlayerItem.scss";
 
 const realmToText = {
@@ -155,4 +155,4 @@ function GameListPlayerItem({ player }: GameListPlayerItemProps) {
   );
 }
 
-export default GameListPlayerItem;
+export default memo(GameListPlayerItem);

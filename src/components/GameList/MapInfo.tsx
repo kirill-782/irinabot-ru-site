@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { memo, useContext, useState } from "react";
 import { Map } from "../../models/rest/Map";
 import { useEffect } from "react";
 import { RestContext } from "../../context";
@@ -14,8 +14,6 @@ function MapInfo({ mapId }: MapInfoProps) {
   const [isLoading, setLoading] = useState<Boolean>(true);
   const [hasError, setError] = useState<Boolean>(false);
   const { mapsApi } = useContext(RestContext);
-
-  console.log("qwerty");
 
   useEffect(() => {
     setLoading(true);
@@ -63,4 +61,4 @@ function MapInfo({ mapId }: MapInfoProps) {
   );
 }
 
-export default MapInfo;
+export default memo(MapInfo);

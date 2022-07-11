@@ -43,17 +43,6 @@ function GameListPage() {
     ignoreFocusCheck: false,
   });
 
-  // Cached render
-  const gameListComponent = useMemo(() => {
-    return (
-      <GameList
-        gameList={filtredGameList}
-        selectedGame={selectedGame}
-        setSelectedGame={setSelectedGame}
-      ></GameList>
-    );
-  }, [filtredGameList, selectedGame]);
-
   return (
     <Container className="game-list">
       <Grid columns="equal" stackable>
@@ -80,7 +69,11 @@ function GameListPage() {
           />
         </Grid.Column>
         <Grid.Column width="ten" className="game-list-column">
-          {gameListComponent}
+          <GameList
+            gameList={filtredGameList}
+            selectedGame={selectedGame}
+            setSelectedGame={setSelectedGame}
+          ></GameList>
         </Grid.Column>
         <Grid.Column width="three" className="online-stats-column">
           {selectedGame ? (

@@ -1,6 +1,6 @@
 import { Table } from "semantic-ui-react";
 import GameListPlayers from "./GameListPlayers";
-import React from "react";
+import React, { memo } from "react";
 import ConnectorAddButton from "./ConnectorAddButton";
 
 import "./GameList.scss";
@@ -72,4 +72,4 @@ function GameList({ gameList, selectedGame, setSelectedGame }: GameListProps) {
   );
 }
 
-export default GameList;
+export default memo(GameList);

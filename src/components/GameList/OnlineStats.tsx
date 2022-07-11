@@ -1,5 +1,5 @@
 import { Table } from "semantic-ui-react";
-import { useMemo } from "react";
+import { memo, useMemo } from "react";
 import { GameListGame } from "../../models/websocket/ServerGameList";
 import {
   categoryToString,
@@ -91,4 +91,4 @@ function OnlineStats({ gameList }: OnlineStatsProps) {
   );
 }
 
-export default OnlineStats;
+export default memo(OnlineStats);
