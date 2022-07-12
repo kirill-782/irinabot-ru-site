@@ -1,3 +1,4 @@
+import React from "react";
 import { Button, Item } from "semantic-ui-react";
 import { Map } from "../../models/rest/Map";
 import "./CreateGame.scss";
@@ -5,7 +6,7 @@ import "./CreateGame.scss";
 /** Карточка игры в dropdown */
 export const GameCard: React.FC<
   Map & { onClick?(): void; selected: boolean }
-> = ({ mapInfo, fileName, fileSize, onClick, selected }) => {
+> = ({ mapInfo, fileName, fileSize, onClick }) => {
   const { mapImageUrl, coverImageUrl, author, name, description } = mapInfo!;
 
   return (
@@ -18,7 +19,7 @@ export const GameCard: React.FC<
         <Item.Extra>
           <div>
             <Button type="button" floated="right" onClick={onClick}>
-              {selected ? "Выбрать другую карту " : "Выбрать"}
+              Выбрать
             </Button>
 
             <div>

@@ -13,8 +13,6 @@ import {
   Divider,
   DropdownItemProps,
   DropdownProps,
-  Button,
-  InputOnChangeData,
 } from "semantic-ui-react";
 import { RestContext } from "../../context";
 import { SearchFilters } from "../../models/rest/SearchFilters";
@@ -22,33 +20,7 @@ import "./CreateGame.scss";
 import { GameCard } from "./GameCard";
 import { Filters } from "./Filters";
 import { Map } from "../../models/rest/Map";
-
-const assemblyMapOptions = (
-  mapFlags: number,
-  mapSpeed: number,
-  mapVisibility: number,
-  mapObservers: number
-): number => {
-  return (
-    mapFlags | ((mapSpeed | (mapVisibility << 2) | (mapObservers << 5)) << 8)
-  );
-};
-
-const assemblyMapFlags = (
-  mapFlagTeamsTogether,
-  mapFlagFixedTeams,
-  mapFlagUnitShare,
-  mapFlagRandomHero,
-  mapFlagRandomRaces
-) => {
-  return (
-    mapFlagTeamsTogether * 1 +
-    mapFlagFixedTeams * 2 +
-    mapFlagUnitShare * 4 +
-    mapFlagRandomHero * 8 +
-    mapFlagRandomRaces * 16
-  );
-};
+import { SelectedGameCard } from "./SelectedGameCard";
 
 const visibilityOptions = [
   { key: "4", text: "По умочланию", value: 4 },
@@ -73,9 +45,6 @@ function CreateGame() {
   const [searchValue, setSearchValue] = useState("");
   const { mapsApi } = useContext(RestContext);
   const [patchesOption, setPatchesOption] = useState<DropdownItemProps[]>([]);
-  const [selectedPatch, setSelectedPatch] = useState<DropdownItemProps>();
-  const [canCreateGame, setCanCreateGame] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
 
   const [mapFlagTeamsTogether, setMapFlagTeamsTogether] = useState(0);
   const [mapFlagFixedTeams, setMapFlagFixedTeams] = useState(0);
@@ -83,78 +52,14 @@ function CreateGame() {
   const [mapFlagRandomHero, setMapFlagRandomHero] = useState(0);
   const [mapFlagRandomRaces, setMapFlagRandomRaces] = useState(0);
 
-  const [mapSpeed, setMapSpeed] = useState(0);
+  const [mapSpeed] = useState(0);
   const [mapVisibility, setMapVisibility] = useState(4);
   const [mapObservers, setMapObservers] = useState(1);
-  const [mapName, setMapName] = useState("");
 
   console.log("m", searchedMaps);
 
-  const searchMap = ({ target }: BaseSyntheticEvent) => {
-    const value = target.value;
+  const handleSearchChange = ({ target: { value } }: BaseSyntheticEvent) =>
     setSearchValue(value);
-
-    if (value.length < 3) return;
-
-    setLoading(true);
-    setSearchedMaps([]);
-    mapsApi.searchMap(value, filters).then((maps) => {
-      setSearchedMaps(maps);
-      setLoading(false);
-    });
-  };
-
-  const handleCreateGame = (ev: React.SyntheticEvent) => {
-    console.log("name", mapName);
-    console.log("map", selectedMap);
-    console.log("patch", selectedPatch);
-    const mapFlags = assemblyMapFlags(
-      mapFlagTeamsTogether,
-      mapFlagFixedTeams,
-      mapFlagUnitShare,
-      mapFlagRandomHero,
-      mapFlagRandomRaces
-    );
-    console.log("FLAGS", mapFlags);
-    console.log(
-      "mapSpeed",
-      mapSpeed,
-      "mapVisibility",
-      mapVisibility,
-      "mapObservers",
-      mapObservers
-    );
-    console.log(
-      "map options",
-      assemblyMapOptions(mapFlags, mapSpeed, mapVisibility, mapObservers)
-    );
-
-    const mapId: number | undefined = selectedMap?.id;
-    const patch: string = selectedPatch?.value as string;
-
-    if (mapId && patch)
-      mapsApi.getMapInfo(mapId).then((mapRes) => {
-        const matchConfigInfo = mapRes?.configs?.find(
-          (el) => el.version === patch
-        );
-        if (matchConfigInfo?.status === 1) {
-          mapsApi.getMapConfig(mapId, patch).then((res) => {
-            console.log("send config", res);
-          });
-        }
-        console.log("map config", mapRes);
-      });
-
-    ev.preventDefault();
-    return false;
-  };
-
-  useEffect(() => {
-    if (searchValue) {
-      searchMap({ target: { value: searchValue } } as BaseSyntheticEvent);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filters]);
 
   useEffect(() => {
     mapsApi.getMaps().then((res) => setDefaultMaps(res));
@@ -166,13 +71,29 @@ function CreateGame() {
         text: el,
       }));
       setPatchesOption(patches);
-      setSelectedPatch(patches[0]);
     });
   }, [mapsApi]);
 
-  const handlePatchChange = (_, { value }: DropdownProps) => {
-    setSelectedPatch(patchesOption.find((el) => el.value === value));
-  };
+  useEffect(() => {
+    const searchMap = (value: string) => {
+      if (value.length < 3) return;
+
+      setLoading(true);
+      setSearchedMaps([]);
+      mapsApi.searchMap(value, filters).then((maps) => {
+        setSearchedMaps(maps);
+        setLoading(false);
+      });
+    };
+
+    const timer = setTimeout(() => {
+      if (searchValue) {
+        searchMap(searchValue);
+      }
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [searchValue, filters, mapsApi]);
 
   const handleVisibilityChange = (_, { value }: DropdownProps) => {
     setMapVisibility(value as number);
@@ -182,13 +103,8 @@ function CreateGame() {
     setMapObservers(value as number);
   };
 
-  const handleMapNameChange = (_, { value }: InputOnChangeData) => {
-    setMapName(value);
-  };
-
   const handleMapSelect = (map: Map) => {
     setSelectedMap(map);
-    setCanCreateGame(false);
   };
 
   return (
@@ -203,44 +119,22 @@ function CreateGame() {
             </Grid.Column>
             <Grid.Column width={9}>
               <Header size="small">Основные параметры</Header>
-              {selectedMap && (
-                <Form.Group widths="equal">
-                  <Form.Input
-                    fluid
-                    name="name"
-                    label="Название игры"
-                    placeholder="Название игры"
-                    value={mapName}
-                    onChange={handleMapNameChange}
-                  />
-                  <Form.Select
-                    fluid
-                    name="patch"
-                    label="Патч"
-                    onChange={handlePatchChange}
-                    options={patchesOption}
-                    value={selectedPatch?.value}
-                  />
-                </Form.Group>
-              )}
-
               {selectedMap ? (
                 <Item.Group className="map-group">
-                  <GameCard
-                    {...selectedMap}
+                  <SelectedGameCard
+                    map={selectedMap}
                     selected={true}
                     onClick={() => setSelectedMap(undefined)}
+                    mapFlagFixedTeams={mapFlagFixedTeams}
+                    mapFlagRandomHero={mapFlagRandomHero}
+                    mapFlagRandomRaces={mapFlagRandomRaces}
+                    mapObservers={mapObservers}
+                    mapFlagTeamsTogether={mapFlagTeamsTogether}
+                    mapFlagUnitShare={mapFlagUnitShare}
+                    mapSpeed={mapSpeed}
+                    mapVisibility={mapVisibility}
+                    patches={patchesOption}
                   />
-                  <Grid.Row>
-                    <Button
-                      role="button"
-                      type="button"
-                      onClick={handleCreateGame}
-                      disabled={canCreateGame}
-                    >
-                      Создать
-                    </Button>
-                  </Grid.Row>
                 </Item.Group>
               ) : (
                 <>
@@ -248,7 +142,7 @@ function CreateGame() {
                     search
                     fluid
                     selection
-                    onChange={searchMap}
+                    onChange={handleSearchChange}
                     loading={isLoading}
                     value={searchValue}
                     label="Поиск карты"
