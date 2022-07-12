@@ -1,6 +1,6 @@
 import { Button, Grid, Icon, List, Popup } from "semantic-ui-react";
 import { GameListPlayer } from "../../models/websocket/ServerGameList";
-import { useState } from "react";
+import { memo, useState } from "react";
 import "./GameListPlayerItem.scss";
 
 const realmToText = {
@@ -23,7 +23,7 @@ interface GamePlayerStats {
 
 function GameListPlayerItem({ player }: GameListPlayerItemProps) {
   const [gamePlayerStats, setGamePlayerStats] =
-    useState<GamePlayerStats>(undefined);
+    useState<GamePlayerStats | null>(null);
   //https://nwc3l.com/irinabot_profile?id=zsef_He_yIIaJI&json
 
   const getClassColorByPlayer = ({ colour }) => {
@@ -155,4 +155,4 @@ function GameListPlayerItem({ player }: GameListPlayerItemProps) {
   );
 }
 
-export default GameListPlayerItem;
+export default memo(GameListPlayerItem);

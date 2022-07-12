@@ -1,3 +1,4 @@
+import { memo, useEffect } from "react";
 import ReactSlider from "react-slider";
 import { Button, Form } from "semantic-ui-react";
 import { FilterSettings } from "../../hooks/useGameListFilter";
@@ -48,7 +49,7 @@ function GameListFilter({
           onChange={(event, data) => {
             onFilterChange({
               ...filterSettings,
-              noLoadStarted: data.checked,
+              noLoadStarted: !!data.checked,
             });
           }}
         ></Form.Checkbox>
@@ -59,7 +60,7 @@ function GameListFilter({
           onChange={(event, data) => {
             onFilterChange({
               ...filterSettings,
-              onlySelfGames: data.checked,
+              onlySelfGames: !!data.checked,
             });
           }}
           label="Только мои игры"
@@ -132,7 +133,7 @@ function GameListFilter({
             icon="exchange"
             name="reverseOrder"
             disabled={disabledFilters.indexOf("reverseOrder") > -1}
-            color={filterSettings.reverseOrder ? "green" : null}
+            color={filterSettings.reverseOrder ? "green" : undefined}
             onClick={() =>
               onFilterChange({
                 ...filterSettings,
@@ -153,7 +154,7 @@ function GameListFilter({
               });
             }}
             max={24}
-            min={1}
+            min={0}
             step={1}
             renderThumb={(props, state) => (
               <div {...props}>{state.valueNow}</div>
@@ -171,7 +172,7 @@ function GameListFilter({
               });
             }}
             max={24}
-            min={1}
+            min={0}
             step={1}
             renderThumb={(props, state) => (
               <div {...props}>{state.valueNow}</div>
@@ -189,7 +190,7 @@ function GameListFilter({
               });
             }}
             max={24}
-            min={1}
+            min={0}
             step={1}
             renderThumb={(props, state) => (
               <div {...props}>{state.valueNow}</div>
@@ -201,4 +202,4 @@ function GameListFilter({
   );
 }
 
-export default GameListFilter;
+export default memo(GameListFilter);

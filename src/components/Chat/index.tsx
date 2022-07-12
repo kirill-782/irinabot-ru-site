@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Card, Divider, Feed, Form, Icon, Label } from "semantic-ui-react";
+import { Card, Icon } from "semantic-ui-react";
 import { User, ChatProps, Message, SelectionType } from "./interfaces";
 import "./chat.scss";
 import { UserChat } from "./UserChat";
@@ -72,7 +72,7 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages }) => {
 
   const onNewUser = (user: User) => {
     const existUser = users.find((i) => {
-      if (user.name == i.name) return true;
+      if (user.name === i.name) return true;
 
       return false;
     });
@@ -90,8 +90,8 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages }) => {
   };
 
   const onSelectonChange = (type: SelectionType, user?: User) => {
-    if (type == SelectionType.CONSOLE) setOpenedChat("console");
-    else if (type == SelectionType.USER && user) {
+    if (type === SelectionType.CONSOLE) setOpenedChat("console");
+    else if (type === SelectionType.USER && user) {
       setOpenedChat("chat");
       setSelectedUser(user);
     }

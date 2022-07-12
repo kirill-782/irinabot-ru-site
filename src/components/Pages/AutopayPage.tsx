@@ -44,13 +44,13 @@ const availablePlaces: Place[] = [
 function AutopayPage() {
   const authContext = useContext(AuthContext);
 
-  const [selectedPlaces, setSelectedPlaces] = useState([]);
+  const [selectedPlaces, setSelectedPlaces] = useState<number[]>([]);
   const [connectroId, setConnectorId] = useState<string>("");
   const [duration, setDuration] = useState<string>("1");
 
-  const formRef = useRef(null);
-  const paymentTypeRef = useRef(null);
-  const paylentLabelRef = useRef(null);
+  const formRef = useRef<HTMLFormElement>(null);
+  const paymentTypeRef = useRef<HTMLInputElement>(null);
+  const paylentLabelRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     setConnectorId(authContext.auth.currentAuth?.connectorId.toString());
@@ -119,12 +119,14 @@ function AutopayPage() {
   console.log(renerErrorMessage());
 
   const pay = (payType: string) => {
-    paymentTypeRef.current.value = payType;
-    paylentLabelRef.current.value = JSON.stringify([
-      connectroId,
-      selectedPlaces,
-    ]);
-    formRef.current.submit();
+    if (paymentTypeRef.current && paylentLabelRef.current && formRef.current) {
+      paymentTypeRef.current.value = payType;
+      paylentLabelRef.current.value = JSON.stringify([
+        connectroId,
+        selectedPlaces,
+      ]);
+      formRef.current.submit();
+    }
   };
 
   return (

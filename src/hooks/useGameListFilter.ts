@@ -51,6 +51,7 @@ export const useGameListFilter = ({
 
       // Game Type Filter
 
+
       if (filters.gameType) {
         if (filters.gameType === 1 && game.orderID === 0)
           return { ...game, hidden: true };
@@ -92,20 +93,6 @@ export const useGameListFilter = ({
 
       if (
         game.name
-          .toLocaleLowerCase()
-          .indexOf(filters.quicFilter.toLowerCase()) >= 0
-      )
-        return { ...game, hidden: false };
-
-      if (
-        game.mapName
-          .toLocaleLowerCase()
-          .indexOf(filters.quicFilter.toLowerCase()) >= 0
-      )
-        return { ...game, hidden: false };
-
-      if (
-        game.mapFileName
           .toLocaleLowerCase()
           .indexOf(filters.quicFilter.toLowerCase()) >= 0
       )

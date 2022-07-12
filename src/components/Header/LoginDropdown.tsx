@@ -25,26 +25,33 @@ function LoginDropdown() {
       "popup"
     );
 
+    if (!oauthWindow) return;
+
     const onStorage = (e: StorageEvent) => {
-      if (e.key.startsWith(state)) {
-        if (e.key.substring(state.length + 1) === "token") {
-          window.localStorage.setItem("authTokenType", data.type.toString());
-          window.localStorage.setItem("authToken", e.newValue);
+      const storegeKey = e.key;
+      const storegeNewValue = e.newValue;
 
-          authContext.dispatchAuth({
-            action: "saveCredentials",
-            payload: { token: e.newValue, type: data.type },
-          });
-        } else {
-          toast({
-            title: "Ошибка",
-            description: e.newValue,
-            type: "error",
-            time: 10000,
-          });
+      if (storegeKey && storegeNewValue) {
+        if (e.key.startsWith(state)) {
+          if (e.key.substring(state.length + 1) === "token") {
+            window.localStorage.setItem("authTokenType", data.type.toString());
+            window.localStorage.setItem("authToken", e.newValue);
+
+            authContext.dispatchAuth({
+              action: "saveCredentials",
+              payload: { token: e.newValue, type: data.type },
+            });
+          } else {
+            toast({
+              title: "Ошибка",
+              description: e.newValue,
+              type: "error",
+              time: 10000,
+            });
+          }
+
+          window.localStorage.removeItem(e.key);
         }
-
-        window.localStorage.removeItem(e.key);
       }
     };
 

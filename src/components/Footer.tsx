@@ -29,7 +29,9 @@ function Footer(props) {
         <Menu.Item title="Отображает состояние соединения с хостботом.">
           <Icon
             name="plug"
-            color={websocketContext.isGHostSocketConnected ? "green" : null}
+            color={
+              websocketContext.isGHostSocketConnected ? "green" : undefined
+            }
           ></Icon>
         </Menu.Item>
         <Menu.Item position="right" onClick={refreshButtonOnClick}>

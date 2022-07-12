@@ -54,6 +54,7 @@ export const useGameListSubscribe = ({
     const onPackage = (event: GHostPackageEvent) => {
       if (event.detail.package.type === DEFAULT_GAME_LIST) {
         const gameList: ServerGameList = event.detail.package as ServerGameList;
+        console.log(gameList);
         onGameList(gameList.games);
 
         clearTimeout(intervalId);
@@ -85,5 +86,5 @@ export const useGameListSubscribe = ({
       ghostSocket.removeEventListener("open", onConnectOpen);
       ghostSocket.removeEventListener("close", onConnectClose);
     };
-  }, [ghostSocket, isGameListLocked, filters, onGameList, ignoreFocusCheck]);
+  }, [ghostSocket, isGameListLocked, filters.noLoadStarted, onGameList, ignoreFocusCheck]);
 };

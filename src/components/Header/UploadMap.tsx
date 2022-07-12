@@ -54,7 +54,7 @@ function UploadMap() {
         else if (event.detail.map)
           toast({
             title: `Карта загружена.`,
-            description: `Карта ${event.detail.map.mapInfo.name} загружена.`,
+            description: `Карта ${event.detail.map.mapInfo?.name} загружена.`,
             type: "success",
           });
       }
@@ -148,7 +148,7 @@ function UploadMap() {
             : "Карты не загружаются"
         }
       >
-        <Icon color={isMapUploading ? "green" : null} name="upload" />
+        <Icon color={isMapUploading ? "green" : undefined} name="upload" />
         Загрузка карт
       </Menu.Item>
     </>

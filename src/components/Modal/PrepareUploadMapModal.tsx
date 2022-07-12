@@ -153,7 +153,7 @@ function PrepareUploadMapModal({
                     multiple
                     accept=".w3x , .w3m"
                     onChange={(e) => {
-                      emitMapSelected(e.target.files);
+                      if (e.target.files) emitMapSelected(e.target.files);
                     }}
                     type="file"
                     hidden
@@ -168,7 +168,8 @@ function PrepareUploadMapModal({
                           : "Нажмите сюда для загрузки карты или перетащите файл в область окна"
                       }
                       onClick={() => {
-                        !selectedCategories.length && fileInput.current.click();
+                        !selectedCategories.length &&
+                          fileInput.current?.click();
                       }}
                     />
                   </Grid.Row>

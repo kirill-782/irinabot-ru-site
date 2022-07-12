@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { List } from "semantic-ui-react";
 import { GameListPlayer } from "../../models/websocket/ServerGameList";
 import GameListPlayerItem from "./GameListPlayerItem";
@@ -20,4 +20,4 @@ function GameListPlayers({ players }: GameListPlayerProps) {
   );
 }
 
-export default GameListPlayers;
+export default memo(GameListPlayers);

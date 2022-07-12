@@ -1,5 +1,5 @@
 import { Table } from "semantic-ui-react";
-import { useMemo } from "react";
+import { memo, useMemo } from "react";
 import { GameListGame } from "../../models/websocket/ServerGameList";
 import {
   categoryToString,
@@ -51,7 +51,7 @@ function OnlineStats({ gameList }: OnlineStatsProps) {
           });
       });
 
-      if (game.started)
+      if (game.gameFlags.started)
         appendToStats({ categoryId: "started", lobbyCount: 1, playersCount });
       else appendToStats({ categoryId: "lobby", lobbyCount: 1, playersCount });
 
@@ -91,4 +91,4 @@ function OnlineStats({ gameList }: OnlineStatsProps) {
   );
 }
 
-export default OnlineStats;
+export default memo(OnlineStats);

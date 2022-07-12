@@ -4,7 +4,7 @@ function OauthStubPage() {
   if (urlParser.has("access_token"))
     localStorage.setItem(
       urlParser.get("state") + "_token",
-      urlParser.get("access_token")
+      urlParser.get("access_token") || ""
     );
   else {
     localStorage.setItem(
