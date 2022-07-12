@@ -114,7 +114,7 @@ export class MapService {
       },
     };
 
-    const response = await Axios.request<ConfigInfo>(request);
+    const response = await Axios.request<string>(request);
 
     return response.data;
   };

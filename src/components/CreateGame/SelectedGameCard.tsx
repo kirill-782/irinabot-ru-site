@@ -7,8 +7,10 @@ import {
   Grid,
   InputOnChangeData,
   Item,
+  Message,
 } from "semantic-ui-react";
-import { RestContext } from "../../context";
+import { RestContext, WebsocketContext } from "../../context";
+import { ClientCreateGameConverter } from "../../models/websocket/ClientCreateGame";
 import "./CreateGame.scss";
 import { GameCardProps } from "./interfaces";
 
@@ -51,24 +53,23 @@ export const SelectedGameCard: React.FC<GameCardProps> = ({
   mapSpeed,
   mapVisibility,
   mapObservers,
-  selected,
   patches,
+  privateGame,
 }) => {
   const [canCreateGame, setCanCreateGame] = useState(false);
   const [selectedPatch, setSelectedPatch] = useState<
     DropdownItemProps | undefined
   >(patches[0]);
-  const [mapName, setMapName] = useState("");
+  const [configPatches, setConfigPatches] = useState<DropdownItemProps[]>([]);
+  const [gameName, setGameName] = useState("");
   const { mapsApi } = useContext(RestContext);
+  const sockets = useContext(WebsocketContext);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const { mapInfo, fileName, fileSize } = map;
+  const { mapInfo, fileName, fileSize, id } = map;
   const { mapImageUrl, coverImageUrl, author, name, description } = mapInfo!;
 
   const handleCreateGame = (ev: React.SyntheticEvent) => {
-    console.log("name", mapName);
-    console.log("map", map);
-    console.log("patch", selectedPatch);
     const mapFlags = assemblyMapFlags(
       mapFlagTeamsTogether,
       mapFlagFixedTeams,
@@ -76,76 +77,121 @@ export const SelectedGameCard: React.FC<GameCardProps> = ({
       mapFlagRandomHero,
       mapFlagRandomRaces
     );
-    console.log("FLAGS", mapFlags);
-    console.log(
-      "mapSpeed",
+
+    const flags = assemblyMapOptions(
+      mapFlags,
       mapSpeed,
-      "mapVisibility",
       mapVisibility,
-      "mapObservers",
       mapObservers
     );
-    console.log(
-      "map options",
-      assemblyMapOptions(mapFlags, mapSpeed, mapVisibility, mapObservers)
-    );
 
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    useEffect(() => {
-      setCanCreateGame(true);
-      setErrorMessage("");
-    }, []);
+    const patchId = selectedPatch?.value as string;
 
-    const mapId: number | undefined = map?.id;
-    const patch: string = selectedPatch?.value as string;
+    console.log("id", id, patchId);
 
-    if (mapId && patch)
-      mapsApi.getMapInfo(mapId).then((mapRes) => {
-        const matchConfigInfo = mapRes?.configs?.find(
-          (el) => el.version === patch
-        );
-        if (matchConfigInfo?.status === 1) {
-          mapsApi.getMapConfig(mapId, patch).then((res) => {
-            console.log("send config", res);
-          });
-        }
-        console.log("map config", mapRes);
+    if (!id || !patchId) return;
+
+    mapsApi.getMapConfig(id, patchId).then((mapData) => {
+      const clientCreateGame = new ClientCreateGameConverter();
+
+      console.log("data?", {
+        flags,
+        gameName,
+        mapData,
+        slotPreset: "",
+        privateGame: !!privateGame,
       });
+
+      const data = clientCreateGame.assembly({
+        flags,
+        gameName,
+        mapData,
+        slotPreset: "",
+        privateGame: !!privateGame,
+      });
+      sockets.ghostSocket.send(data);
+    });
 
     ev.preventDefault();
     return false;
   };
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  useEffect(() => {
+    setCanCreateGame(false);
+    setErrorMessage("");
+
+    const mapId: number | undefined = map?.id;
+
+    if (mapId) {
+      mapsApi.getMapInfo(mapId).then((mapRes) => {
+        const newPatches = patches.map((patch) => {
+          const matchConfigInfo = mapRes?.configs?.find(
+            (el) => el.version === patch.value
+          );
+          const isOk = matchConfigInfo?.status === 1;
+
+          return {
+            ...patch,
+            isOk,
+            content: (
+              <div className={isOk ? "ok-patch" : "error-patch"}>
+                {patch.text}
+              </div>
+            ),
+            status: matchConfigInfo?.status,
+          };
+        });
+
+        setConfigPatches(newPatches);
+        setSelectedPatch(newPatches[0]);
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const handleMapNameChange = (_, { value }: InputOnChangeData) => {
-    setMapName(value);
+    setGameName(value);
   };
 
-  const handlePatchChange = (_, { value }: DropdownProps) => {
-    setSelectedPatch(patches.find((el) => el.value === value));
-  };
+  const handlePatchChange = (_, { value }: DropdownProps) =>
+    setSelectedPatch(configPatches.find((el) => el.value === value));
+
+  useEffect(() => {
+    setCanCreateGame(selectedPatch?.isOk && gameName);
+
+    if (!selectedPatch?.isOk) {
+      setErrorMessage(
+        "Дождитесь окончания загрузки конфига и попробуйте создать игру через 10 минут."
+      );
+    }
+  }, [selectedPatch, gameName]);
 
   return (
     <>
-      <Form>
-        <Form.Group widths="equal">
-          <Form.Input
-            fluid
-            name="name"
-            label="Название игры"
-            placeholder="Название игры"
-            value={mapName}
-            onChange={handleMapNameChange}
-          />
-          <Form.Select
-            fluid
-            name="patch"
-            label="Патч"
-            onChange={handlePatchChange}
-            options={patches}
-            value={selectedPatch?.value}
-          />
-        </Form.Group>
-      </Form>
+      {configPatches.length && (
+        <Form>
+          <Form.Group widths="equal">
+            <Form.Input
+              fluid
+              name="name"
+              label="Название игры"
+              placeholder="Название игры"
+              value={gameName}
+              onChange={handleMapNameChange}
+            />
+            <Form.Select
+              fluid
+              name="patch"
+              label="Патч"
+              onChange={handlePatchChange}
+              options={configPatches}
+              value={selectedPatch?.value}
+            />
+          </Form.Group>
+        </Form>
+      )}
+
       <Item>
         <Item.Image size="tiny" src={coverImageUrl || mapImageUrl} />
 
@@ -155,28 +201,29 @@ export const SelectedGameCard: React.FC<GameCardProps> = ({
           <Item.Extra>
             <Grid>
               <Grid.Row>
-                <Button type="button" floated="right" onClick={onClick}>
-                  {selected ? "Выбрать другую карту " : "Выбрать"}
-                </Button>
-
-                <div>
-                  {fileName} ({fileSize})
-                </div>
-                <Item.Extra className="map-description">
-                  {description}
-                </Item.Extra>
+                {fileName} ({fileSize})
               </Grid.Row>
+              <Grid.Row className="map-description">{description}</Grid.Row>
               <Grid.Row>
+                <Button type="button" onClick={onClick}>
+                  Выбрать другую карту
+                </Button>
                 <Button
                   role="button"
                   type="button"
                   onClick={handleCreateGame}
-                  disabled={canCreateGame}
+                  disabled={!canCreateGame}
                 >
                   Создать
                 </Button>
               </Grid.Row>
-              <Grid.Row>{errorMessage}</Grid.Row>
+              {errorMessage && (
+                <Grid.Row>
+                  <Message negative>
+                    <p>{errorMessage}</p>
+                  </Message>
+                </Grid.Row>
+              )}
             </Grid>
           </Item.Extra>
         </Item.Content>

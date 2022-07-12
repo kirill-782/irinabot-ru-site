@@ -17,7 +17,7 @@ export interface GameCardProps {
   mapSpeed: number;
   mapVisibility: number;
   mapObservers: number;
+  privateGame: number;
   onClick?(): void;
-  selected: boolean;
   patches: DropdownItemProps[];
 }

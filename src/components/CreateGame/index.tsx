@@ -51,12 +51,11 @@ function CreateGame() {
   const [mapFlagUnitShare, setMapFlagUnitShare] = useState(0);
   const [mapFlagRandomHero, setMapFlagRandomHero] = useState(0);
   const [mapFlagRandomRaces, setMapFlagRandomRaces] = useState(0);
+  const [privateGame, setPrivateGame] = useState(0);
 
   const [mapSpeed] = useState(0);
   const [mapVisibility, setMapVisibility] = useState(4);
   const [mapObservers, setMapObservers] = useState(1);
-
-  console.log("m", searchedMaps);
 
   const handleSearchChange = ({ target: { value } }: BaseSyntheticEvent) =>
     setSearchValue(value);
@@ -123,7 +122,6 @@ function CreateGame() {
                 <Item.Group className="map-group">
                   <SelectedGameCard
                     map={selectedMap}
-                    selected={true}
                     onClick={() => setSelectedMap(undefined)}
                     mapFlagFixedTeams={mapFlagFixedTeams}
                     mapFlagRandomHero={mapFlagRandomHero}
@@ -134,6 +132,7 @@ function CreateGame() {
                     mapSpeed={mapSpeed}
                     mapVisibility={mapVisibility}
                     patches={patchesOption}
+                    privateGame={privateGame}
                   />
                 </Item.Group>
               ) : (
@@ -168,6 +167,9 @@ function CreateGame() {
               <Form.Checkbox
                 label="Вход по паролю (будет выдан после создания игры)"
                 name="enter-with-password"
+                onChange={() =>
+                  setPrivateGame(privateGame ? 0 : 1)
+                }
               />
               <Divider />
               <Form.Checkbox
