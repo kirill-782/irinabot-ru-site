@@ -2,18 +2,12 @@ import { useContext, useEffect, useReducer, useState } from "react";
 import { toast } from "react-semantic-toasts";
 import { AuthAction, AuthData, WebsocketContext } from "../context";
 import { ClientUserAuthConverter } from "../models/websocket/ClientUserAuth";
+import { ServerApiToken } from "../models/websocket/ServerApiToken";
 import { ServerError } from "../models/websocket/ServerError";
 import { ServerUserAuth } from "../models/websocket/ServerUserAuth";
-import {
-  GHostPackageEvent,
-  GHostWebSocket,
-} from "./../services/GHostWebsocket";
-import {
-  GLOBAL_ADD_INTEGRATION_RESPONSE,
-  GLOBAL_CONTEXT_HEADER_CONSTANT,
-  GLOBAL_GET_ERROR,
-  GLOBAL_USER_AUTH_RESPONSE,
-} from "./../models/websocket/HeaderConstants";
+import { GLOBAL_ADD_INTEGRATION_RESPONSE, GLOBAL_API_TOKEN, GLOBAL_CONTEXT_HEADER_CONSTANT, GLOBAL_GET_ERROR, GLOBAL_USER_AUTH_RESPONSE } from "./../models/websocket/HeaderConstants";
+import { GHostWebSocket, GHostPackageEvent } from "./../services/GHostWebsocket";
+
 
 interface WebsocketAuthOptions {
   ghostSocket: GHostWebSocket;
@@ -144,6 +138,14 @@ export const useWebsocketAuth = ({
             time: 10000,
           });
         }
+      }
+      else if (
+        e.detail.package.context === GLOBAL_CONTEXT_HEADER_CONSTANT &&
+        e.detail.package.type === GLOBAL_API_TOKEN
+      )
+      {
+        const token = e.detail.package as ServerApiToken;
+        console.log(token);
       }
     };
 

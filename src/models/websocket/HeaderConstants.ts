@@ -6,6 +6,7 @@ export const GLOBAL_PONG = 0x02;
 export const GLOBAL_USER_AUTH_RESPONSE = 0x03;
 export const GLOBAL_BNET_KEY = 0x04;
 export const GLOBAL_ADD_INTEGRATION_RESPONSE = 0x05;
+export const GLOBAL_API_TOKEN = 0x06;
 
 // Client request constant
 export const GLOBAL_SEND_ERROR = 0x00;

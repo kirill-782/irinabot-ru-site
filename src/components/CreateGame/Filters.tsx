@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { SyntheticEvent, useEffect, useState, useContext } from "react";
 import { DropdownItemProps, DropdownProps, Form } from "semantic-ui-react";
 import { RestContext } from "../../context";
@@ -9,7 +9,7 @@ const orderOptions = [
   { key: "1", text: "Убыванию", value: "desc" },
 ];
 
-export const Filters: React.FC<FiltersProps> = ({ onFitlerChange }) => {
+export const Filters: React.FC<FiltersProps> = memo(({ onFitlerChange }) => {
   const [verified, setVerified] = useState<boolean>();
   const [minPlayers, setMinPlayers] = useState<number>();
   const [maxPlayers, setMaxPlayers] = useState<number>();
@@ -87,4 +87,4 @@ export const Filters: React.FC<FiltersProps> = ({ onFitlerChange }) => {
       </Form.Button>
     </Form>
   );
-};
+});

@@ -8,6 +8,7 @@ import {
   DEFAULT_UDP_ANSWER,
   DEFAULT_WEBSOCKET_CONNECT_STATS,
   GLOBAL_ADD_INTEGRATION_RESPONSE,
+  GLOBAL_API_TOKEN,
   GLOBAL_BNET_KEY,
   GLOBAL_GET_ERROR,
   GLOBAL_USER_AUTH_RESPONSE,
@@ -24,10 +25,8 @@ import { ServerUDPAnswerConverter } from "./../models/websocket/ServerUDPAnswer"
 import { ServerAddIntegrationResponseConverter } from "./../models/websocket/ServerAddIntegrationResponse";
 import { ServerBnetKeyConverter } from "./../models/websocket/ServerBnetKey";
 import { ServerTextMessageConverter } from "./../models/websocket/ServerTextMessage";
-import {
-  ServerCreateGame,
-  ServerCreateGameConverter,
-} from "./../models/websocket/ServerCreateGame";
+import { ServerCreateGameConverter } from "./../models/websocket/ServerCreateGame";
+import { ServerApiTokenConverter } from "../models/websocket/ServerApiToken";
 
 export interface GHostWebSocketOptions {
   url: string;
@@ -61,6 +60,8 @@ const packageHandlers = (() => {
     new ServerAddIntegrationResponseConverter();
   handlers[GLOBAL_CONTEXT_HEADER_CONSTANT][GLOBAL_BNET_KEY] =
     new ServerBnetKeyConverter();
+  handlers[GLOBAL_CONTEXT_HEADER_CONSTANT][GLOBAL_API_TOKEN] =
+    new ServerApiTokenConverter();
 
   return handlers;
 })();
