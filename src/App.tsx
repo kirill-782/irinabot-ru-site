@@ -30,6 +30,10 @@ import {
   WEBSOCKET_ENDPOINT,
 } from "./config/ApplicationConfig";
 
+import { DEFAULT_CONFIG } from "./config/ApiConfig";
+import { useApiAuth } from "./hooks/useApiAuth";
+import AfterContextApp from "./AfterContextApp";
+
 function App() {
   useEffect(loadTheme, []);
 
@@ -70,28 +74,32 @@ function App() {
         >
           <RestContext.Provider
             value={{
-              mapsApi: new MapService(),
-              mapUploader: new MapUploaderService(new MapService()),
+              mapsApi: new MapService(DEFAULT_CONFIG),
+              mapUploader: new MapUploaderService(
+                new MapService(DEFAULT_CONFIG)
+              ),
             }}
           >
-            <Routes>
-              <Route path="/*" element={<Layout />}>
-                <Route index element={<GameListPage />} />
-                <Route path="gamelist" element={<GameListPage />} />
-                <Route path="autopay" element={<AutopayPage />} />
-                <Route path="create" element={<CreateGame />} />
-              </Route>
-              <Route path="/oauth" element={<OauthStubPage />} />
-            </Routes>
-            <RegisterAccountModal
-              open={needRegisterModal}
-              onApprove={() => {
-                authDispatcher({ action: "setForce", payload: true });
-              }}
-              onReject={() => {
-                authDispatcher({ action: "clearCredentials" });
-              }}
-            ></RegisterAccountModal>
+            <AfterContextApp>
+              <Routes>
+                <Route path="/*" element={<Layout />}>
+                  <Route index element={<GameListPage />} />
+                  <Route path="gamelist" element={<GameListPage />} />
+                  <Route path="autopay" element={<AutopayPage />} />
+                  <Route path="create" element={<CreateGame />} />
+                </Route>
+                <Route path="/oauth" element={<OauthStubPage />} />
+              </Routes>
+              <RegisterAccountModal
+                open={needRegisterModal}
+                onApprove={() => {
+                  authDispatcher({ action: "setForce", payload: true });
+                }}
+                onReject={() => {
+                  authDispatcher({ action: "clearCredentials" });
+                }}
+              ></RegisterAccountModal>
+            </AfterContextApp>
           </RestContext.Provider>
         </AuthContext.Provider>
       </AppRuntimeSettingsContext.Provider>

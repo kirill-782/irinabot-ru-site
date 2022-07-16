@@ -3,6 +3,7 @@ import { ConnectorWebsocket } from "../services/ConnectorWebsocket";
 import { GHostWebSocket } from "../services/GHostWebsocket";
 import { MapService } from "../services/MapService";
 import { MapUploaderService } from "../services/MapUploaderService";
+import { ApiTokenHolder } from "../utils/ApiTokenHolder";
 import { ServerUserAuth } from "./../models/websocket/ServerUserAuth";
 
 // Socket Context
@@ -39,6 +40,7 @@ export type AuthData = {
   currentAuth: ServerUserAuth;
   authCredentials: AuthCredentials;
   forceLogin: boolean;
+  apiToken: ApiTokenHolder;
 };
 
 // Actions
@@ -51,6 +53,11 @@ type SaveCredentialsActionType = {
 type SaveAuthActionType = {
   action: "saveAuth";
   payload: ServerUserAuth;
+};
+
+type SaveTokenActionType = {
+  action: "saveToken";
+  payload: string;
 };
 
 type ClearCredentialsActionType = {
@@ -69,6 +76,7 @@ type SetForcehActionType = {
 export type AuthAction =
   | SaveAuthActionType
   | SaveCredentialsActionType
+  | SaveTokenActionType
   | ClearCredentialsActionType
   | ClearAuthActionType
   | SetForcehActionType;

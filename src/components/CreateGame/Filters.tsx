@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo } from "react";
 import { SyntheticEvent, useEffect, useState, useContext } from "react";
 import { DropdownItemProps, DropdownProps, Form } from "semantic-ui-react";
 import { RestContext } from "../../context";

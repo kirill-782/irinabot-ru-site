@@ -1,4 +1,11 @@
-import { SyntheticEvent, useEffect, useRef, useState, useMemo } from "react";
+import {
+  SyntheticEvent,
+  useEffect,
+  useRef,
+  useState,
+  useMemo,
+  useContext,
+} from "react";
 import {
   Dropdown,
   Form,
@@ -13,6 +20,7 @@ import { Flags } from "../../models/rest/Flags";
 import { AdditionalFlags, MapService } from "../../services/MapService";
 import { useCategoryFilter } from "../../hooks/useCategoryFilter";
 import { DragAndDropField } from "./DragAndDropField";
+import { RestContext } from "./../../context/index";
 
 interface PrepareUploadMapModalProps {
   onMapSelected: (
@@ -39,9 +47,9 @@ function PrepareUploadMapModal({
   const [isDragging, setDragging] = useState(false);
   const dragCounter = useMemo(() => ({ value: 0 }), []);
 
-  useEffect(() => {
-    const mapService = new MapService();
+  const mapService = useContext(RestContext).mapsApi;
 
+  useEffect(() => {
     mapService
       .getCategories()
       .then((categories) => {
@@ -53,7 +61,7 @@ function PrepareUploadMapModal({
         setLoading(false);
         setLoadingError(true);
       });
-  }, []);
+  }, [mapService]);
 
   const dropdownOptions = useCategoryFilter(selectedCategories, categories, 5);
 

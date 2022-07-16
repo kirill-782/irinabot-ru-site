@@ -83,57 +83,6 @@ function GameListPage() {
           )}
         </Grid.Column>
       </Grid>
-      <div
-        style={{
-          width: 300,
-          height: 200,
-          position: "absolute",
-          zIndex: 1000,
-          backgroundColor: "gray",
-          top: 100,
-          left: 50,
-        }}
-      >
-        <input id="gameName-asuna" placeholder="gameName"></input>
-        <br />
-        <br />
-        <textarea id="mapData-asuna" placeholder="mapData"></textarea>
-        <br />
-        <br />
-        <input id="mapFlags-asuna" placeholder="mapFlags"></input>
-        <br />
-        <br />
-        <button
-          value="Создать"
-          onClick={() => {
-            sockets.ghostSocket.send(
-              new ClientCreateGameConverter().assembly({
-                gameName: (
-                  window.document.getElementById(
-                    "gameName-asuna"
-                  ) as HTMLInputElement
-                ).value,
-                mapData: (
-                  window.document.getElementById(
-                    "mapData-asuna"
-                  ) as HTMLInputElement
-                ).value,
-                flags: parseInt(
-                  (
-                    window.document.getElementById(
-                      "mapFlags-asuna"
-                    ) as HTMLInputElement
-                  ).value
-                ),
-                privateGame: false,
-                slotPreset: "",
-              })
-            );
-          }}
-        >
-          Создать
-        </button>
-      </div>
     </Container>
   );
 }

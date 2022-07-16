@@ -68,7 +68,7 @@ export const useGameListFilterSetings = () => {
     else if (!auth.authCredentials) disableFilter("onlySelfGames");
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [auth]);
+  }, [auth.currentAuth, auth.authCredentials]);
 
   useEffect(() => {
     localStorage.setItem(

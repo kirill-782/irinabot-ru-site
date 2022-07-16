@@ -167,9 +167,7 @@ function CreateGame() {
               <Form.Checkbox
                 label="Вход по паролю (будет выдан после создания игры)"
                 name="enter-with-password"
-                onChange={() =>
-                  setPrivateGame(privateGame ? 0 : 1)
-                }
+                onChange={() => setPrivateGame(privateGame ? 0 : 1)}
               />
               <Divider />
               <Form.Checkbox

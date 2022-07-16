@@ -88,6 +88,10 @@ export class MapUploaderService extends EventTarget {
     this.mapsApi = mapsApi;
   }
 
+  public setMapService(mapsApi: MapService) {
+    this.mapsApi = mapsApi;
+  }
+
   public queueUploadMap(mapEntry: UploadMapEntry) {
     this.uploadQueue[this.uploadQueue.length] = mapEntry;
 

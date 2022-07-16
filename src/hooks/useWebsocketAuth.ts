@@ -5,9 +5,18 @@ import { ClientUserAuthConverter } from "../models/websocket/ClientUserAuth";
 import { ServerApiToken } from "../models/websocket/ServerApiToken";
 import { ServerError } from "../models/websocket/ServerError";
 import { ServerUserAuth } from "../models/websocket/ServerUserAuth";
-import { GLOBAL_ADD_INTEGRATION_RESPONSE, GLOBAL_API_TOKEN, GLOBAL_CONTEXT_HEADER_CONSTANT, GLOBAL_GET_ERROR, GLOBAL_USER_AUTH_RESPONSE } from "./../models/websocket/HeaderConstants";
-import { GHostWebSocket, GHostPackageEvent } from "./../services/GHostWebsocket";
-
+import { ApiTokenJwtHolder } from "../utils/ApiTokenHolder";
+import {
+  GLOBAL_ADD_INTEGRATION_RESPONSE,
+  GLOBAL_API_TOKEN,
+  GLOBAL_CONTEXT_HEADER_CONSTANT,
+  GLOBAL_GET_ERROR,
+  GLOBAL_USER_AUTH_RESPONSE,
+} from "./../models/websocket/HeaderConstants";
+import {
+  GHostWebSocket,
+  GHostPackageEvent,
+} from "./../services/GHostWebsocket";
 
 interface WebsocketAuthOptions {
   ghostSocket: GHostWebSocket;
@@ -16,8 +25,6 @@ interface WebsocketAuthOptions {
 export const useWebsocketAuth = ({
   ghostSocket,
 }: WebsocketAuthOptions): [AuthData, React.Dispatch<AuthAction>, boolean] => {
-  useContext(WebsocketContext);
-
   const [needRegistryModal, setNeedRegistryModal] = useState<boolean>(false);
 
   const [authState, authDispatcher] = useReducer(
@@ -46,11 +53,22 @@ export const useWebsocketAuth = ({
           forceLogin: action.payload,
         };
         return newState;
+      } else if (action.action === "saveToken") {
+        const newState: AuthData = {
+          ...state,
+          apiToken: new ApiTokenJwtHolder(action.payload),
+        };
+        return newState;
       }
 
       return state;
     },
-    { authCredentials: null, currentAuth: null, forceLogin: false }
+    {
+      authCredentials: null,
+      currentAuth: null,
+      forceLogin: false,
+      apiToken: null,
+    }
   );
 
   // Load localStorage auth
@@ -138,14 +156,13 @@ export const useWebsocketAuth = ({
             time: 10000,
           });
         }
-      }
-      else if (
+      } else if (
         e.detail.package.context === GLOBAL_CONTEXT_HEADER_CONSTANT &&
         e.detail.package.type === GLOBAL_API_TOKEN
-      )
-      {
+      ) {
         const token = e.detail.package as ServerApiToken;
-        console.log(token);
+
+        authDispatcher({ action: "saveToken", payload: token.token });
       }
     };
 

@@ -54,7 +54,7 @@ function AutopayPage() {
 
   useEffect(() => {
     setConnectorId(authContext.auth.currentAuth?.connectorId.toString());
-  }, [authContext]);
+  }, [authContext.auth.currentAuth]);
 
   const togglePlaceCheckbox = (placeId) => {
     if (selectedPlaces.find((el) => el === placeId) === undefined)

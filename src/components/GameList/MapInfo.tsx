@@ -47,16 +47,29 @@ function MapInfo({ mapId }: MapInfoProps) {
 
   return (
     <div style={{ position: "sticky", top: "50px" }}>
-      <p dangerouslySetInnerHTML={{__html: parseWC3Tags(mapInfo?.mapInfo?.name || "")}} style={{ textAlign: "center", fontWeight: 600 }}>
-      </p>
+      <p
+        dangerouslySetInnerHTML={{
+          __html: parseWC3Tags(mapInfo?.mapInfo?.name || ""),
+        }}
+        style={{ textAlign: "center", fontWeight: 600 }}
+      ></p>
       <img
         style={{ border: "solid blue 2px;", width: 256, height: 256 }}
         src={mapInfo?.mapInfo?.coverImageUrl || mapInfo?.mapInfo?.mapImageUrl}
       />
       <p>
-        <b>Кол-во игроков:</b> <span dangerouslySetInnerHTML={{__html: parseWC3Tags(mapInfo?.mapInfo?.playerRecommendation || "")}}></span>
+        <b>Кол-во игроков:</b>{" "}
+        <span
+          dangerouslySetInnerHTML={{
+            __html: parseWC3Tags(mapInfo?.mapInfo?.playerRecommendation || ""),
+          }}
+        ></span>
       </p>
-      <p dangerouslySetInnerHTML={{__html: parseWC3Tags(mapInfo?.mapInfo?.description || "")}}></p>
+      <p
+        dangerouslySetInnerHTML={{
+          __html: parseWC3Tags(mapInfo?.mapInfo?.description || ""),
+        }}
+      ></p>
     </div>
   );
 }

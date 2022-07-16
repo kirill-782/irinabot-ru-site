@@ -1,11 +1,9 @@
-import { ApiConfig, BASE_PATH } from "../config/ApiConfig";
 import { Flags } from "../models/rest/Flags";
 
 import Axios, { AxiosRequestConfig } from "axios";
 import { Map } from "../models/rest/Map";
 import { Category } from "../models/rest/Category";
 import { SearchFilters } from "../models/rest/SearchFilters";
-import { ConfigInfo } from "../models/rest/ConfigInfo";
 
 export interface RequestOptions {
   onUploadProgress?: (progressEvent: any) => void;
@@ -14,12 +12,10 @@ export interface RequestOptions {
 }
 
 export class MapService {
-  public config: ApiConfig;
+  public defaultConfig: AxiosRequestConfig;
 
-  constructor(config?: ApiConfig) {
-    this.config = config || {};
-
-    if (!this.config.basePath) this.config.basePath = BASE_PATH;
+  constructor(defaultConfig?: AxiosRequestConfig) {
+    this.defaultConfig = defaultConfig || {};
   }
 
   public uploadMap = async (
@@ -27,7 +23,8 @@ export class MapService {
     options?: RequestOptions
   ) => {
     let request: AxiosRequestConfig<FormData> = {
-      url: this.config.basePath + "/v1/maps",
+      ...this.defaultConfig,
+      url: "/v1/maps",
       method: "POST",
       validateStatus: (status) => {
         return status === 200 || status === 201;
@@ -63,7 +60,8 @@ export class MapService {
     options?: RequestOptions
   ) => {
     let request: AxiosRequestConfig<FormData> = {
-      url: this.config.basePath + "/v1/maps/categories",
+      ...this.defaultConfig,
+      url: "/v1/maps/categories",
       method: "GET",
     };
 
@@ -76,7 +74,8 @@ export class MapService {
 
   public getMaps = async () => {
     const request: AxiosRequestConfig<FormData> = {
-      url: this.config.basePath + "/v1/maps",
+      ...this.defaultConfig,
+      url: "/v1/maps",
       method: "GET",
       params: {
         count: 20,
@@ -91,7 +90,8 @@ export class MapService {
 
   public getMapInfo = async (mapId: number) => {
     const request: AxiosRequestConfig<FormData> = {
-      url: this.config.basePath + "/v1/maps/" + mapId,
+      ...this.defaultConfig,
+      url: `/v1/maps/${mapId}`,
       method: "GET",
     };
 
@@ -102,12 +102,8 @@ export class MapService {
 
   public getMapConfig = async (mapId: number, patchId: string) => {
     const request: AxiosRequestConfig<FormData> = {
-      url:
-        this.config.basePath +
-        "/v1/maps/" +
-        mapId +
-        "/defaultConfigs/" +
-        patchId,
+      ...this.defaultConfig,
+      url: `/v1/maps/${mapId}/defaultConfigs/${patchId}`,
       method: "GET",
       headers: {
         Accept: `application/jose`,
@@ -121,7 +117,8 @@ export class MapService {
 
   public searchMap = async (mapName: string, filters: SearchFilters) => {
     const request: AxiosRequestConfig<FormData> = {
-      url: this.config.basePath + "/v1/maps/search",
+      ...this.defaultConfig,
+      url: "/v1/maps/search",
       method: "GET",
       params: {
         q: mapName,
@@ -136,7 +133,8 @@ export class MapService {
 
   public getVersions = async () => {
     const request: AxiosRequestConfig<FormData> = {
-      url: this.config.basePath + "/v1/configs/versions",
+      ...this.defaultConfig,
+      url: "/v1/configs/versions",
       method: "GET",
     };
 

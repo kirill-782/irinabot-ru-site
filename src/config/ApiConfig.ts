@@ -1,13 +1,5 @@
-export const BASE_PATH = "https://api.irinabot.ru";
+import { AxiosRequestConfig } from "axios";
 
-export interface ApiConfig {
-  // Basic Auth
-  username?: string;
-  password?: string;
-
-  bearerToken?: string;
-
-  type?: "basic" | "bearer";
-
-  basePath?: string;
+export const DEFAULT_CONFIG: AxiosRequestConfig = {
+  baseURL: "https://api.irinabot.ru/"
 }
