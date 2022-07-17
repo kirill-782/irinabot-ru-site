@@ -64,6 +64,7 @@ function App() {
       <AppRuntimeSettingsContext.Provider
         value={{
           gameList: { locked: gameListLocked, setLocked: setGameListLocked },
+          chat: {}
         }}
       >
         <AuthContext.Provider

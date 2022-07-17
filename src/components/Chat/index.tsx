@@ -1,10 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { Card, Icon } from "semantic-ui-react";
 import { User, ChatProps, Message, SelectionType } from "./interfaces";
 import "./chat.scss";
 import { UserChat } from "./UserChat";
 import { ConsoleBot } from "./ConsoleBot";
-import { WebsocketContext } from "./../../context";
+import { AppRuntimeSettingsContext, WebsocketContext } from "./../../context";
 import { ClientTextMessageConverter } from "./../../models/websocket/ClientTextMessage";
 import { GHostPackageEvent } from "../../services/GHostWebsocket";
 import {
@@ -44,6 +44,30 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages }) => {
 
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [openedChat, setOpenedChat] = useState<"chat" | "console" | "">("");
+
+  const openChat = useCallback((nickname: string) =>  {
+    setOpenedChat("chat");
+
+    const user = users.find((user)=>{
+      if(user.name.toLocaleLowerCase( ) == nickname.toLocaleLowerCase( ))
+        return true;
+    });
+
+    if(user)
+      setSelectedUser( user );
+    else
+      setSelectedUser( {
+        newMessages: false,
+        name: nickname,
+        messages: []
+      } );
+  }, [setOpenedChat, setSelectedUser, users]);
+
+  const appContext = useContext(AppRuntimeSettingsContext);
+
+  useEffect(() => {
+    appContext.chat.selectUser = openChat;
+  }, [openChat]);
 
   const sendMessage = (user: User, message: string) => {
     const newUsers = [...users];

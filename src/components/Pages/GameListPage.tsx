@@ -17,6 +17,7 @@ import {
   ClientCreateGameConverter,
 } from "./../../models/websocket/ClientCreateGame";
 import MapInfo from "../GameList/MapInfo";
+import { Link, NavLink } from "react-router-dom";
 
 function GameListPage() {
   const sockets = useContext(WebsocketContext);
@@ -46,21 +47,6 @@ function GameListPage() {
   return (
     <Container className="game-list">
       <Grid columns="equal" stackable>
-        <Grid.Column width="three" />
-        <Grid.Column width="ten">
-          <Input
-            onChange={(event, data) =>
-              setFilterSettings({ ...filterSettings, quicFilter: data.value })
-            }
-            value={filterSettings.quicFilter}
-            style={{ width: "50%" }}
-            placeholder="Быстрый фильтр"
-          />
-          <Button floated="right" basic icon="bell" size="large" />
-        </Grid.Column>
-      </Grid>
-
-      <Grid columns="equal" stackable>
         <Grid.Column width="three">
           <GameListFilter
             disabledFilters={disabledFilters}
@@ -69,6 +55,15 @@ function GameListPage() {
           />
         </Grid.Column>
         <Grid.Column width="ten" className="game-list-column">
+        <Input
+            onChange={(event, data) =>
+              setFilterSettings({ ...filterSettings, quicFilter: data.value })
+            }
+            value={filterSettings.quicFilter}
+            style={{ width: "50%" }}
+            placeholder="Быстрый фильтр"
+          />
+          <Button as={Link} to="/create" floated="right" basic icon="plus" color="green" size="large" />
           <GameList
             gameList={filtredGameList}
             selectedGame={selectedGame}

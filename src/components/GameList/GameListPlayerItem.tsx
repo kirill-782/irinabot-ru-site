@@ -1,7 +1,8 @@
 import { Button, Grid, Icon, List, Popup } from "semantic-ui-react";
 import { GameListPlayer } from "../../models/websocket/ServerGameList";
-import { memo, useState } from "react";
+import { memo, useContext, useState } from "react";
 import "./GameListPlayerItem.scss";
+import { AppRuntimeSettingsContext } from "../../context";
 
 const realmToText = {
   "178.218.214.114": "iCCup",
@@ -21,64 +22,71 @@ interface GamePlayerStats {
   apm: string;
 }
 
+const getClassColorByPlayer = ({ colour }) => {
+  switch (colour) {
+    case 0:
+      return "red";
+    case 1:
+      return "blue";
+    case 2:
+      return "teal";
+    case 3:
+      return "purple";
+    case 4:
+      return "yellow";
+    case 5:
+      return "orange";
+    case 6:
+      return "green";
+    case 7:
+      return "pink";
+    case 8:
+      return "gray";
+    case 9:
+      return "light-blue";
+    case 10:
+      return "dark-green";
+    case 11:
+      return "brown";
+    case 12:
+      return "maroon";
+    case 13:
+      return "navy";
+    case 14:
+      return "turquoise";
+    case 15:
+      return "violet";
+    case 16:
+      return "wheat";
+    case 17:
+      return "peach";
+    case 18:
+      return "mint";
+    case 19:
+      return "leavender";
+    case 20:
+      return "coal";
+    case 21:
+      return "snow";
+    case 22:
+      return "emerald";
+    case 23:
+      return "peanut";
+    default:
+      return "";
+  }
+};
+
 function GameListPlayerItem({ player }: GameListPlayerItemProps) {
   const [gamePlayerStats, setGamePlayerStats] =
     useState<GamePlayerStats | null>(null);
   //https://nwc3l.com/irinabot_profile?id=zsef_He_yIIaJI&json
 
-  const getClassColorByPlayer = ({ colour }) => {
-    switch (colour) {
-      case 0:
-        return "red";
-      case 1:
-        return "blue";
-      case 2:
-        return "teal";
-      case 3:
-        return "purple";
-      case 4:
-        return "yellow";
-      case 5:
-        return "orange";
-      case 6:
-        return "green";
-      case 7:
-        return "pink";
-      case 8:
-        return "gray";
-      case 9:
-        return "light-blue";
-      case 10:
-        return "dark-green";
-      case 11:
-        return "brown";
-      case 12:
-        return "maroon";
-      case 13:
-        return "navy";
-      case 14:
-        return "turquoise";
-      case 15:
-        return "violet";
-      case 16:
-        return "wheat";
-      case 17:
-        return "peach";
-      case 18:
-        return "mint";
-      case 19:
-        return "leavender";
-      case 20:
-        return "coal";
-      case 21:
-        return "snow";
-      case 22:
-        return "emerald";
-      case 23:
-        return "peanut";
-      default:
-        return "";
-    }
+  const chatContext = useContext(AppRuntimeSettingsContext).chat;
+
+  const openUserChat = () => {
+    if(chatContext.selectUser)
+      chatContext.selectUser(player.name);
   };
 
   const loadStats = () => {
@@ -146,7 +154,12 @@ function GameListPlayerItem({ player }: GameListPlayerItemProps) {
       <Grid centered>
         <Grid.Row>{renderStats()}</Grid.Row>
         <Grid.Row>
-          <Button size="mini">
+          <Button
+            size="mini"
+            onClick={() => {
+              openUserChat();
+            }}
+          >
             <Icon name="envelope"></Icon> Написать сообщение
           </Button>
         </Grid.Row>
