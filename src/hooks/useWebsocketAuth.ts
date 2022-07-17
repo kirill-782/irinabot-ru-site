@@ -22,54 +22,53 @@ interface WebsocketAuthOptions {
   ghostSocket: GHostWebSocket;
 }
 
+const authReducer = (state: AuthData, action: AuthAction) => {
+  if (action.action === "clearCredentials") {
+    const newState: AuthData = { ...state, authCredentials: null };
+    return newState;
+  } else if (action.action === "clearAuth") {
+    const newState: AuthData = { ...state, currentAuth: null };
+    return newState;
+  } else if (action.action === "saveAuth") {
+    const newState: AuthData = {
+      ...state,
+      currentAuth: action.payload,
+    };
+    return newState;
+  } else if (action.action === "saveCredentials") {
+    const newState: AuthData = {
+      ...state,
+      authCredentials: action.payload,
+    };
+    return newState;
+  } else if (action.action === "setForce") {
+    const newState: AuthData = {
+      ...state,
+      forceLogin: action.payload,
+    };
+    return newState;
+  } else if (action.action === "saveToken") {
+    const newState: AuthData = {
+      ...state,
+      apiToken: new ApiTokenJwtHolder(action.payload),
+    };
+    return newState;
+  }
+
+  return state;
+};
+
 export const useWebsocketAuth = ({
   ghostSocket,
 }: WebsocketAuthOptions): [AuthData, React.Dispatch<AuthAction>, boolean] => {
   const [needRegistryModal, setNeedRegistryModal] = useState<boolean>(false);
 
-  const [authState, authDispatcher] = useReducer(
-    (state: AuthData, action: AuthAction) => {
-      if (action.action === "clearCredentials") {
-        const newState: AuthData = { ...state, authCredentials: null };
-        return newState;
-      } else if (action.action === "clearAuth") {
-        const newState: AuthData = { ...state, currentAuth: null };
-        return newState;
-      } else if (action.action === "saveAuth") {
-        const newState: AuthData = {
-          ...state,
-          currentAuth: action.payload,
-        };
-        return newState;
-      } else if (action.action === "saveCredentials") {
-        const newState: AuthData = {
-          ...state,
-          authCredentials: action.payload,
-        };
-        return newState;
-      } else if (action.action === "setForce") {
-        const newState: AuthData = {
-          ...state,
-          forceLogin: action.payload,
-        };
-        return newState;
-      } else if (action.action === "saveToken") {
-        const newState: AuthData = {
-          ...state,
-          apiToken: new ApiTokenJwtHolder(action.payload),
-        };
-        return newState;
-      }
-
-      return state;
-    },
-    {
-      authCredentials: null,
-      currentAuth: null,
-      forceLogin: false,
-      apiToken: null,
-    }
-  );
+  const [authState, authDispatcher] = useReducer(authReducer, {
+    authCredentials: null,
+    currentAuth: null,
+    forceLogin: false,
+    apiToken: null,
+  });
 
   // Load localStorage auth
 

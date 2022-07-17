@@ -34,11 +34,9 @@ export class ApiTokenJwtHolder extends ApiTokenHolder {
       const jwtPayload = JSON.parse( new TextDecoder().decode(toByteArray( data )) );
 
       this.authorities = jwtPayload.authorities;
-
-      console.log(this.authorities);
     }
     catch(e) {
-      console.log(e);
+      console.error(e);
     }
   }
 }
