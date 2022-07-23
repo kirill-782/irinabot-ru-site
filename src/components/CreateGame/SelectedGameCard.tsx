@@ -59,7 +59,7 @@ export const SelectedGameCard: React.FC<GameCardProps> = ({
   const [canCreateGame, setCanCreateGame] = useState(false);
   const [selectedPatch, setSelectedPatch] = useState<
     DropdownItemProps | undefined
-  >(patches[0]);
+  >();
   const [configPatches, setConfigPatches] = useState<DropdownItemProps[]>([]);
   const [gameName, setGameName] = useState("");
   const { mapsApi } = useContext(RestContext);
@@ -87,20 +87,10 @@ export const SelectedGameCard: React.FC<GameCardProps> = ({
 
     const patchId = selectedPatch?.value as string;
 
-    console.log("id", id, patchId);
-
     if (!id || !patchId) return;
 
     mapsApi.getMapConfig(id, patchId).then((mapData) => {
       const clientCreateGame = new ClientCreateGameConverter();
-
-      console.log("data?", {
-        flags,
-        gameName,
-        mapData,
-        slotPreset: "",
-        privateGame: !!privateGame,
-      });
 
       const data = clientCreateGame.assembly({
         flags,
@@ -160,11 +150,33 @@ export const SelectedGameCard: React.FC<GameCardProps> = ({
   useEffect(() => {
     setCanCreateGame(selectedPatch?.isOk && gameName);
 
-    if (!selectedPatch?.isOk) {
+    if (selectedPatch?.isOk) {
+      setErrorMessage("");
+      return;
+    }
+
+    if (!selectedPatch?.value || !id) return;
+
+    const { status } = selectedPatch;
+
+    if (status === undefined) {
+      mapsApi.parseMapConfig(id, selectedPatch.value as string).then((res) => {
+        console.log("res", res);
+        selectedPatch.status = res.status;
+        setErrorMessage(
+          "Карта отправлена на анализ. Дождитесь завершения загрузки конфига."
+        );
+      });
+    } else if (status === 0) {
       setErrorMessage(
         "Дождитесь окончания загрузки конфига и попробуйте создать игру через 10 минут."
       );
+    } else if (status === 2) {
+      setErrorMessage(
+        "Ошибка загрузки конфига."
+      );
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedPatch, gameName]);
 
   return (
