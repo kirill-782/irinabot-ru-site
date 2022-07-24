@@ -4,6 +4,7 @@ import Axios, { AxiosRequestConfig } from "axios";
 import { Map } from "../models/rest/Map";
 import { Category } from "../models/rest/Category";
 import { SearchFilters } from "../models/rest/SearchFilters";
+import { ParseMap } from "../models/rest/ParseMap";
 
 export interface RequestOptions {
   onUploadProgress?: (progressEvent: any) => void;
@@ -111,6 +112,25 @@ export class MapService {
     };
 
     const response = await Axios.request<string>(request);
+
+    return response.data;
+  };
+
+  public parseMapConfig = async (mapId: number, patchId: string) => {
+    const request: AxiosRequestConfig<FormData> = {
+      ...this.defaultConfig,
+      url: "/v1/maps/" + mapId + "/parse",
+      method: "POST",
+    };
+
+    const body = new FormData();
+
+    body.set('mapId', String(mapId));
+    body.set('version', patchId);
+
+    request.data = body;
+
+    const response = await Axios.request<ParseMap>(request);
 
     return response.data;
   };
