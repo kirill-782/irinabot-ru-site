@@ -5,7 +5,10 @@ import { ClientUserAuthConverter } from "../models/websocket/ClientUserAuth";
 import { ServerApiToken } from "../models/websocket/ServerApiToken";
 import { ServerError } from "../models/websocket/ServerError";
 import { ServerUserAuth } from "../models/websocket/ServerUserAuth";
-import { ApiTokenJwtHolder } from "../utils/ApiTokenHolder";
+import {
+  AnonymousTokenHolder,
+  ApiTokenJwtHolder,
+} from "../utils/ApiTokenHolder";
 import {
   GLOBAL_ADD_INTEGRATION_RESPONSE,
   GLOBAL_API_TOKEN,
@@ -27,7 +30,11 @@ const authReducer = (state: AuthData, action: AuthAction) => {
     const newState: AuthData = { ...state, authCredentials: null };
     return newState;
   } else if (action.action === "clearAuth") {
-    const newState: AuthData = { ...state, currentAuth: null };
+    const newState: AuthData = {
+      ...state,
+      currentAuth: null,
+      apiToken: new AnonymousTokenHolder(),
+    };
     return newState;
   } else if (action.action === "saveAuth") {
     const newState: AuthData = {
@@ -67,7 +74,7 @@ export const useWebsocketAuth = ({
     authCredentials: null,
     currentAuth: null,
     forceLogin: false,
-    apiToken: null,
+    apiToken: new AnonymousTokenHolder(),
   });
 
   // Load localStorage auth
@@ -77,10 +84,11 @@ export const useWebsocketAuth = ({
       const tokenType = parseInt(window.localStorage.getItem("authTokenType"));
       const token = window.localStorage.getItem("authToken");
 
-      authDispatcher({
-        action: "saveCredentials",
-        payload: { type: tokenType, token },
-      });
+      if (tokenType && token)
+        authDispatcher({
+          action: "saveCredentials",
+          payload: { type: tokenType, token },
+        });
     }
   }, []);
 

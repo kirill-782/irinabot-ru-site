@@ -4,13 +4,9 @@ import { Flags } from "../../models/rest/Flags";
 import { AdditionalFlags } from "../../services/MapService";
 import PrepareUploadMapModal from "../Modal/PrepareUploadMapModal";
 import ProgressUploadMapModal from "../Modal/ProgressUploadMapModal";
-import { RestContext } from "../../context";
+import { AuthContext, RestContext } from "../../context";
 import { toast } from "react-semantic-toasts";
-import {
-  UploadMapCompleteEvent,
-  UploadMapProgressEvent,
-  UploadMapStartEvent,
-} from "./../../services/MapUploaderService";
+import { UploadMapCompleteEvent, UploadMapProgressEvent, UploadMapStartEvent } from "../../services/MapUploaderService";
 
 // interface UploadState {
 //   file: FileList;
@@ -29,6 +25,8 @@ function UploadMap() {
   const [modalOpen, setModalOpen] = useState(false);
 
   const [isMapUploading, setMapUploadind] = useState(mapUploader.isUploading());
+
+  const apiToken = useContext(AuthContext).auth.apiToken;
 
   const [currentUpload, setCurrentUpload] =
     useState<CurrentMapUploadDescription>({
@@ -138,7 +136,7 @@ function UploadMap() {
   return (
     <>
       {renderModal()}
-      <Menu.Item
+      <Menu.Item disabled={!apiToken.hasAuthority( "MAP_CREATE" )}
         onClick={onItemClick}
         title={
           isMapUploading

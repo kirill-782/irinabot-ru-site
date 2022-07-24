@@ -1,4 +1,5 @@
 import { toByteArray } from "base64-js";
+import { ANONYMOUS_AUTHORITIES } from "../config/ApiConfig";
 
 export class ApiTokenHolder {
   private token;
@@ -38,5 +39,24 @@ export class ApiTokenJwtHolder extends ApiTokenHolder {
     catch(e) {
       console.error(e);
     }
+  }
+
+  public hasAuthority(authority: string) {
+    return !!this.authorities.find( (value: string) => {
+      return value.toLocaleLowerCase( ) == authority.toLocaleLowerCase( );
+    } );
+
+  }
+}
+
+export class AnonymousTokenHolder extends ApiTokenHolder {
+  constructor() {
+    super("");
+  }
+
+  public hasAuthority(authority: string) {
+    return !!ANONYMOUS_AUTHORITIES.find( (value: string) => {
+      return value.toLocaleLowerCase( ) == authority.toLocaleLowerCase( );
+    } );
   }
 }
