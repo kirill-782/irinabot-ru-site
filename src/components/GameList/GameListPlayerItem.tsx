@@ -85,8 +85,7 @@ function GameListPlayerItem({ player }: GameListPlayerItemProps) {
   const chatContext = useContext(AppRuntimeSettingsContext).chat;
 
   const openUserChat = () => {
-    if(chatContext.selectUser)
-      chatContext.selectUser(player.name);
+    if (chatContext.selectUser) chatContext.selectUser(player.name);
   };
 
   const loadStats = () => {

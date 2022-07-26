@@ -9,15 +9,21 @@ export interface FiltersProps {
 
 export interface GameCardProps {
   map: Map;
-  mapFlagTeamsTogether: number;
-  mapFlagFixedTeams: number;
-  mapFlagUnitShare: number;
-  mapFlagRandomHero: number;
-  mapFlagRandomRaces: number;
+  options: GameOptionsData;
+  onClick?(): void;
+  patches: DropdownItemProps[];
+}
+
+export interface GameOptionsData {
+  mask: number;
+  slotPreset: string;
+  privateGame: boolean;
   mapSpeed: number;
   mapVisibility: number;
   mapObservers: number;
-  privateGame: number;
-  onClick?(): void;
-  patches: DropdownItemProps[];
+}
+
+export interface GameOptionsProps {
+  options: GameOptionsData;
+  onOptionsChange: (options: GameOptionsData) => void;
 }

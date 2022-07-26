@@ -1,8 +1,7 @@
 import { useApiAuth } from "./hooks/useApiAuth";
 
 function AfterContextApp(props) {
-  
-  useApiAuth( );
+  useApiAuth();
 
   return props.children;
 }

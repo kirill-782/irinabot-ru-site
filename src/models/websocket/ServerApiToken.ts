@@ -1,7 +1,9 @@
 import { DataBuffer } from "../../utils/DataBuffer";
 import { AbstractConverter, AbstractPackage } from "./AbstractPackage";
-import { GLOBAL_API_TOKEN, GLOBAL_CONTEXT_HEADER_CONSTANT } from "./HeaderConstants";
-
+import {
+  GLOBAL_API_TOKEN,
+  GLOBAL_CONTEXT_HEADER_CONSTANT,
+} from "./HeaderConstants";
 
 export interface ServerApiToken extends AbstractPackage {
   token: string;

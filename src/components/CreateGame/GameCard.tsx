@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Item } from "semantic-ui-react";
 import { Map } from "../../models/rest/Map";
 import "./CreateGame.scss";
@@ -8,6 +8,17 @@ export const GameCard: React.FC<
   Map & { onClick?(): void; selected: boolean }
 > = ({ mapInfo, fileName, fileSize, onClick }) => {
   const { mapImageUrl, coverImageUrl, author, name, description } = mapInfo!;
+
+  const [fullText, setFullText] = useState(false);
+
+  let displayDesctiption = description;
+  let needFulltextLink = false;
+
+  if (!fullText && description?.length && description?.length > 500) {
+    displayDesctiption = description?.substring(0, 500) + "...";
+
+    needFulltextLink = true;
+  }
 
   return (
     <Item>
@@ -25,7 +36,18 @@ export const GameCard: React.FC<
             <div>
               {fileName} ({fileSize})
             </div>
-            <Item.Extra className="map-description">{description}</Item.Extra>
+            <Item.Extra className="map-description">
+              {displayDesctiption}
+              {needFulltextLink && (
+                <a
+                  onClick={() => {
+                    setFullText(true);
+                  }}
+                >
+                  Показать весь текст
+                </a>
+              )}
+            </Item.Extra>
           </div>
         </Item.Extra>
       </Item.Content>

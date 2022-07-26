@@ -25,36 +25,12 @@ const assemblyMapOptions = (
   );
 };
 
-const assemblyMapFlags = (
-  mapFlagTeamsTogether,
-  mapFlagFixedTeams,
-  mapFlagUnitShare,
-  mapFlagRandomHero,
-  mapFlagRandomRaces
-) => {
-  return (
-    mapFlagTeamsTogether * 1 +
-    mapFlagFixedTeams * 2 +
-    mapFlagUnitShare * 4 +
-    mapFlagRandomHero * 8 +
-    mapFlagRandomRaces * 16
-  );
-};
-
 /** Карточка игры в dropdown */
 export const SelectedGameCard: React.FC<GameCardProps> = ({
   map,
   onClick,
-  mapFlagFixedTeams,
-  mapFlagRandomHero,
-  mapFlagRandomRaces,
-  mapFlagTeamsTogether,
-  mapFlagUnitShare,
-  mapSpeed,
-  mapVisibility,
-  mapObservers,
   patches,
-  privateGame,
+  options,
 }) => {
   const [canCreateGame, setCanCreateGame] = useState(false);
   const [selectedPatch, setSelectedPatch] = useState<
@@ -70,21 +46,6 @@ export const SelectedGameCard: React.FC<GameCardProps> = ({
   const { mapImageUrl, coverImageUrl, author, name, description } = mapInfo!;
 
   const handleCreateGame = (ev: React.SyntheticEvent) => {
-    const mapFlags = assemblyMapFlags(
-      mapFlagTeamsTogether,
-      mapFlagFixedTeams,
-      mapFlagUnitShare,
-      mapFlagRandomHero,
-      mapFlagRandomRaces
-    );
-
-    const flags = assemblyMapOptions(
-      mapFlags,
-      mapSpeed,
-      mapVisibility,
-      mapObservers
-    );
-
     const patchId = selectedPatch?.value as string;
 
     if (!id || !patchId) return;
@@ -93,11 +54,16 @@ export const SelectedGameCard: React.FC<GameCardProps> = ({
       const clientCreateGame = new ClientCreateGameConverter();
 
       const data = clientCreateGame.assembly({
-        flags,
+        flags: assemblyMapOptions(
+          options.mask,
+          options.mapSpeed,
+          options.mapVisibility,
+          options.mapObservers
+        ),
         gameName,
         mapData,
-        slotPreset: "",
-        privateGame: !!privateGame,
+        slotPreset: options.slotPreset,
+        privateGame: !!options.privateGame,
       });
       sockets.ghostSocket.send(data);
     });
@@ -172,9 +138,7 @@ export const SelectedGameCard: React.FC<GameCardProps> = ({
         "Дождитесь окончания загрузки конфига и попробуйте создать игру через 10 минут."
       );
     } else if (status === 2) {
-      setErrorMessage(
-        "Ошибка загрузки конфига."
-      );
+      setErrorMessage("Ошибка загрузки конфига.");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedPatch, gameName]);

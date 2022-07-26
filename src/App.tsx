@@ -24,7 +24,6 @@ import { MapService } from "./services/MapService";
 import { MapUploaderService } from "./services/MapUploaderService";
 import AutopayPage from "./components/Pages/AutopayPage";
 import RegisterAccountModal from "./components/Modal/RegisterAccountModal";
-import CreateGame from "./components/CreateGame";
 import {
   CONNECTOR_WEBSOCKET_ENDPOINT,
   WEBSOCKET_ENDPOINT,
@@ -33,6 +32,7 @@ import {
 import { DEFAULT_CONFIG } from "./config/ApiConfig";
 import { useApiAuth } from "./hooks/useApiAuth";
 import AfterContextApp from "./AfterContextApp";
+import CreateGamePage from "./components/Pages/CreateGamePage";
 
 function App() {
   useEffect(loadTheme, []);
@@ -64,7 +64,7 @@ function App() {
       <AppRuntimeSettingsContext.Provider
         value={{
           gameList: { locked: gameListLocked, setLocked: setGameListLocked },
-          chat: {}
+          chat: {},
         }}
       >
         <AuthContext.Provider
@@ -87,7 +87,7 @@ function App() {
                   <Route index element={<GameListPage />} />
                   <Route path="gamelist" element={<GameListPage />} />
                   <Route path="autopay" element={<AutopayPage />} />
-                  <Route path="create" element={<CreateGame />} />
+                  <Route path="create" element={<CreateGamePage />} />
                 </Route>
                 <Route path="/oauth" element={<OauthStubPage />} />
               </Routes>

@@ -25,8 +25,8 @@ export type AppRuntimeSettingsContextType = {
     setLocked: (locked: ((locked: boolean) => boolean) | boolean) => void;
   };
   chat: {
-    selectUser?: (nickname: string) => void
-  }
+    selectUser?: (nickname: string) => void;
+  };
 };
 
 export const AppRuntimeSettingsContext =

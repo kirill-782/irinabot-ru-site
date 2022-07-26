@@ -18,7 +18,6 @@ export class ApiTokenHolder {
 }
 
 export class ApiTokenJwtHolder extends ApiTokenHolder {
-
   private authorities: string[];
 
   constructor(token: string) {
@@ -29,23 +28,22 @@ export class ApiTokenJwtHolder extends ApiTokenHolder {
     try {
       let data = token.split(".")[1];
 
-      if(data.length % 4 != 0)
-        data += "=".repeat(4 - data.length % 4 );
+      if (data.length % 4 != 0) data += "=".repeat(4 - (data.length % 4));
 
-      const jwtPayload = JSON.parse( new TextDecoder().decode(toByteArray( data )) );
+      const jwtPayload = JSON.parse(
+        new TextDecoder().decode(toByteArray(data))
+      );
 
       this.authorities = jwtPayload.authorities;
-    }
-    catch(e) {
+    } catch (e) {
       console.error(e);
     }
   }
 
   public hasAuthority(authority: string) {
-    return !!this.authorities.find( (value: string) => {
-      return value.toLocaleLowerCase( ) == authority.toLocaleLowerCase( );
-    } );
-
+    return !!this.authorities.find((value: string) => {
+      return value.toLocaleLowerCase() == authority.toLocaleLowerCase();
+    });
   }
 }
 
@@ -55,8 +53,8 @@ export class AnonymousTokenHolder extends ApiTokenHolder {
   }
 
   public hasAuthority(authority: string) {
-    return !!ANONYMOUS_AUTHORITIES.find( (value: string) => {
-      return value.toLocaleLowerCase( ) == authority.toLocaleLowerCase( );
-    } );
+    return !!ANONYMOUS_AUTHORITIES.find((value: string) => {
+      return value.toLocaleLowerCase() == authority.toLocaleLowerCase();
+    });
   }
 }

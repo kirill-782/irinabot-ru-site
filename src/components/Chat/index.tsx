@@ -45,23 +45,25 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages }) => {
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [openedChat, setOpenedChat] = useState<"chat" | "console" | "">("");
 
-  const openChat = useCallback((nickname: string) =>  {
-    setOpenedChat("chat");
+  const openChat = useCallback(
+    (nickname: string) => {
+      setOpenedChat("chat");
 
-    const user = users.find((user)=>{
-      if(user.name.toLocaleLowerCase( ) == nickname.toLocaleLowerCase( ))
-        return true;
-    });
+      const user = users.find((user) => {
+        if (user.name.toLocaleLowerCase() == nickname.toLocaleLowerCase())
+          return true;
+      });
 
-    if(user)
-      setSelectedUser( user );
-    else
-      setSelectedUser( {
-        newMessages: false,
-        name: nickname,
-        messages: []
-      } );
-  }, [setOpenedChat, setSelectedUser, users]);
+      if (user) setSelectedUser(user);
+      else
+        setSelectedUser({
+          newMessages: false,
+          name: nickname,
+          messages: [],
+        });
+    },
+    [setOpenedChat, setSelectedUser, users]
+  );
 
   const appContext = useContext(AppRuntimeSettingsContext);
 

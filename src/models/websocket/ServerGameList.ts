@@ -128,7 +128,7 @@ class GameListGameConverter {
   public parse(dataBuffer: DataBuffer): GameListGame {
     const name = dataBuffer.getNullTerminatedString();
     const gameFlags = new GameListGameFlags(dataBuffer.getUint16());
-    const mapId = dataBuffer.getUint32( );
+    const mapId = dataBuffer.getUint32();
     const gamePosition = dataBuffer.getUint8();
     const gameCounter = dataBuffer.getUint32();
     const gameTicks = dataBuffer.getUint32();

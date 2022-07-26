@@ -125,8 +125,8 @@ export class MapService {
 
     const body = new FormData();
 
-    body.set('mapId', String(mapId));
-    body.set('version', patchId);
+    body.set("mapId", String(mapId));
+    body.set("version", patchId);
 
     request.data = body;
 

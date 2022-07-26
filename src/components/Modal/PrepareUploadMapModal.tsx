@@ -176,8 +176,7 @@ function PrepareUploadMapModal({
                           : "Нажмите сюда для загрузки карты или перетащите файл в область окна"
                       }
                       onClick={() => {
-                        !selectedCategories.length &&
-                          fileInput.current?.click();
+                        selectedCategories.length && fileInput.current?.click();
                       }}
                     />
                   </Grid.Row>

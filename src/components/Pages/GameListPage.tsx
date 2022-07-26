@@ -11,13 +11,9 @@ import { useGameListFilter } from "../../hooks/useGameListFilter";
 import GameListFilter from "../GameList/GameListFilter";
 import { useDebounce } from "./../../hooks/useDebounce";
 
-import "./GameListPage.scss";
-import {
-  ClientCreateGame,
-  ClientCreateGameConverter,
-} from "./../../models/websocket/ClientCreateGame";
+import "../GameList/GameList.scss";
 import MapInfo from "../GameList/MapInfo";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function GameListPage() {
   const sockets = useContext(WebsocketContext);
@@ -55,7 +51,7 @@ function GameListPage() {
           />
         </Grid.Column>
         <Grid.Column width="ten" className="game-list-column">
-        <Input
+          <Input
             onChange={(event, data) =>
               setFilterSettings({ ...filterSettings, quicFilter: data.value })
             }
@@ -63,7 +59,15 @@ function GameListPage() {
             style={{ width: "50%" }}
             placeholder="Быстрый фильтр"
           />
-          <Button as={Link} to="/create" floated="right" basic icon="plus" color="green" size="large" />
+          <Button
+            as={Link}
+            to="/create"
+            floated="right"
+            basic
+            icon="plus"
+            color="green"
+            size="large"
+          />
           <GameList
             gameList={filtredGameList}
             selectedGame={selectedGame}
@@ -71,6 +75,9 @@ function GameListPage() {
           ></GameList>
         </Grid.Column>
         <Grid.Column width="three" className="online-stats-column">
+          <Button style={{ width: "100%" }} basic color="green" size="large">
+            Как играть
+          </Button>
           {selectedGame ? (
             <MapInfo mapId={selectedGame.mapId}></MapInfo>
           ) : (
