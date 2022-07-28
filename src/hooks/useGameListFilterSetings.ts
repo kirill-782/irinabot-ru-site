@@ -11,9 +11,9 @@ const defaultFilterSettings: FilterSettings = {
   gameType: 0,
   orderBy: "default",
   reverseOrder: false,
-  players: [1, 24],
-  slots: [1, 24],
-  freeSlots: [1, 24],
+  players: [0, 24],
+  slots: [0, 24],
+  freeSlots: [0, 24],
 };
 
 export const useGameListFilterSetings = () => {

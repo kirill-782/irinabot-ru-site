@@ -11,8 +11,11 @@ import {
   Container,
   Item,
   DropdownItemProps,
+  Modal,
+  Button,
+  Input,
 } from "semantic-ui-react";
-import { RestContext } from "../../context";
+import { RestContext, WebsocketContext } from "../../context";
 import { SearchFilters } from "../../models/rest/SearchFilters";
 import "../CreateGame/CreateGame.scss";
 import { GameCard } from "../CreateGame/GameCard";
@@ -25,6 +28,14 @@ import {
   MAP_FLAG_FIXED_TEAMS,
   MAP_FLAG_TEAMS_TOGETHER,
 } from "../CreateGame/GameOptions";
+import { GHostPackageEvent } from "../../services/GHostWebsocket";
+import {
+  DEFAULT_CONTEXT_HEADER_CONSTANT,
+  DEFAULT_CREATE_GAME_RESPONSE,
+} from "./../../models/websocket/HeaderConstants";
+import { ServerCreateGame } from "./../../models/websocket/ServerCreateGame";
+import { toast } from "react-semantic-toasts";
+import copy from "clipboard-copy";
 
 function CreateGamePage() {
   const [searchedMaps, setSearchedMaps] = useState<Map[]>([]);
@@ -36,6 +47,8 @@ function CreateGamePage() {
   const { mapsApi } = useContext(RestContext);
   const [patchesOption, setPatchesOption] = useState<DropdownItemProps[]>([]);
 
+  const [lastPassword, setLastPassword] = useState("");
+
   const [options, setOptions] = useState<GameOptionsData>({
     mask: MAP_FLAG_TEAMS_TOGETHER | MAP_FLAG_FIXED_TEAMS,
     privateGame: false,
@@ -44,6 +57,8 @@ function CreateGamePage() {
     mapSpeed: 3,
     mapVisibility: 4,
   });
+
+  const sockets = useContext(WebsocketContext);
 
   const handleSearchChange = ({ target: { value } }: BaseSyntheticEvent) =>
     setSearchValue(value);
@@ -85,6 +100,46 @@ function CreateGamePage() {
   const handleMapSelect = (map: Map) => {
     setSelectedMap(map);
   };
+
+  useEffect(() => {
+    const onPacket = (packet: GHostPackageEvent) => {
+      const packetData = packet.detail.package;
+
+      if (
+        packetData.context == DEFAULT_CONTEXT_HEADER_CONSTANT &&
+        packetData.type == DEFAULT_CREATE_GAME_RESPONSE
+      ) {
+        const createGameResponse = packetData as ServerCreateGame;
+
+        if (createGameResponse.status == 0) {
+          if (!createGameResponse.password) {
+            toast({
+              title: "Игра создана",
+              description: "TODO: Скоприровать описание",
+              icon: "check",
+              color: "green",
+            });
+          } else {
+            setLastPassword(createGameResponse.password);
+          }
+        }
+        else {
+          toast({
+            title: "Ошибка при создании игры",
+            description: createGameResponse.description,
+            icon: "x",
+            color: "red",
+          });
+        }
+      }
+    };
+
+    sockets.ghostSocket.addEventListener("package", onPacket);
+
+    return () => {
+      sockets.ghostSocket.removeEventListener("package", onPacket);
+    };
+  }, [sockets.ghostSocket]);
 
   return (
     <Container className="create-game">
@@ -144,6 +199,39 @@ function CreateGamePage() {
           </Grid.Row>
         </Grid>
       </Form>
+      <Modal
+        open={!!lastPassword}
+        onClose={() => {
+          setLastPassword("");
+        }}
+      >
+        <Modal.Header>Пароль для входа в игру</Modal.Header>
+        <Modal.Content>
+          <p>Скопируйте этот пароль, чтобы попасть в игру.</p>
+          <Input
+            action={{
+              icon: "copy",
+              content: "Копировать",
+              onClick: () => {
+                copy(lastPassword);
+              },
+            }}
+            disabled
+            fluid
+            value={lastPassword}
+          />
+        </Modal.Content>
+        <Modal.Actions>
+          <Button
+            positive
+            onClick={() => {
+              setLastPassword("");
+            }}
+          >
+            Закрыть
+          </Button>
+        </Modal.Actions>
+      </Modal>
     </Container>
   );
 }

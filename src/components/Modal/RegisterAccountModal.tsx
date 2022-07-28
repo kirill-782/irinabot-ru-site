@@ -30,7 +30,7 @@ function RegisterAccountModal({
             onReject();
           }}
         >
-          <Icon name="remove" /> Да
+          <Icon name="remove" /> Нет
         </Button>
         <Button
           color="green"
@@ -38,7 +38,7 @@ function RegisterAccountModal({
             onApprove();
           }}
         >
-          <Icon name="checkmark" /> Нет
+          <Icon name="checkmark" /> Да
         </Button>
       </Modal.Actions>
     </Modal>

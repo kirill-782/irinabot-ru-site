@@ -53,6 +53,8 @@ export const SelectedGameCard: React.FC<GameCardProps> = ({
     mapsApi.getMapConfig(id, patchId).then((mapData) => {
       const clientCreateGame = new ClientCreateGameConverter();
 
+      console.log( options.mask );
+
       const data = clientCreateGame.assembly({
         flags: assemblyMapOptions(
           options.mask,
