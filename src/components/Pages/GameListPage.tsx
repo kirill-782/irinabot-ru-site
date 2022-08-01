@@ -75,7 +75,7 @@ function GameListPage() {
           ></GameList>
         </Grid.Column>
         <Grid.Column width="three" className="online-stats-column">
-          <Button style={{ width: "100%" }} basic color="green" size="large">
+          <Button className="how-btn" basic color="green" size="large">
             Как играть
           </Button>
           {selectedGame ? (

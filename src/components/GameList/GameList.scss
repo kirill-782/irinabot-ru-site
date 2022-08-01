@@ -36,8 +36,34 @@
   }
 }
 
+.online-stats-column .how-btn,
+.online-stats-column .ui.how-btn {
+  width: 100%;
+  margin-bottom: 3px;
+  height: 35px;
+  padding: 0;
+}
+
+.online-stats-column {
+  .ui.table {
+
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .online-stats-column .how-btn,
+  .online-stats-column .ui.how-btn {
+    width: 220px;
+  } 
+}
+
 @media only screen and (min-width: 1450px) {
   .ui.container.game-list {
     width: 1400px;
   }
+
+  .online-stats-column .how-btn,
+  .online-stats-column .ui.how-btn {
+    width: 239px;
+  } 
 }

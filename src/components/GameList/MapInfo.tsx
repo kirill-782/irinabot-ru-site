@@ -2,8 +2,9 @@ import { memo, useContext, useState } from "react";
 import { Map } from "../../models/rest/Map";
 import { useEffect } from "react";
 import { RestContext } from "../../context";
-import { Container, Icon, Loader } from "semantic-ui-react";
+import { Container, Icon, Loader, Image } from "semantic-ui-react";
 import { parseWC3Tags } from "../../utils/WC3TestUtils";
+import "./MapInfo.scss"
 
 interface MapInfoProps {
   mapId: number;
@@ -38,39 +39,32 @@ function MapInfo({ mapId }: MapInfoProps) {
       </Loader>
     );
 
-  if (hasError)
+  if (true)
     return (
-      <Icon size="big" color="red" name="close">
-        Ошибка
-      </Icon>
+      <div class="map-info-error">
+        <Icon size="big" color="red" name="close"></Icon>
+        <span className="text">Ошибка</span>
+      </div>
     );
 
   return (
-    <div style={{ position: "sticky", top: "50px" }}>
-      <p
-        dangerouslySetInnerHTML={{
+    <Container className="map-info">
+      <h3 className="map-title" dangerouslySetInnerHTML={{
           __html: parseWC3Tags(mapInfo?.mapInfo?.name || ""),
         }}
-        style={{ textAlign: "center", fontWeight: 600 }}
-      ></p>
-      <img
-        style={{ border: "solid blue 2px;", width: 256, height: 256 }}
-        src={mapInfo?.mapInfo?.coverImageUrl || mapInfo?.mapInfo?.mapImageUrl}
-      />
-      <p>
-        <b>Кол-во игроков:</b>{" "}
-        <span
-          dangerouslySetInnerHTML={{
+      ></h3>
+      <Image src={mapInfo?.mapInfo?.coverImageUrl || mapInfo?.mapInfo?.mapImageUrl} />
+      <div>
+        <span className="map-players-title">Кол-во игроков:</span>
+        <span dangerouslySetInnerHTML={{
             __html: parseWC3Tags(mapInfo?.mapInfo?.playerRecommendation || ""),
+          }}></span>
+        <div dangerouslySetInnerHTML={{
+            __html: parseWC3Tags(mapInfo?.mapInfo?.description || ""),
           }}
-        ></span>
-      </p>
-      <p
-        dangerouslySetInnerHTML={{
-          __html: parseWC3Tags(mapInfo?.mapInfo?.description || ""),
-        }}
-      ></p>
-    </div>
+        ></div>
+      </div>
+    </Container>
   );
 }
 
