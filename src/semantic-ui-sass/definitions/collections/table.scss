@@ -488,17 +488,6 @@ $element: "table";
    Selectable
 ---------------*/
 
-.ui.selectable.table tbody tr:hover,
-.ui.table tbody tr td.selectable:hover {
-  background: $selectableBackground !important;
-  color: $selectableTextColor !important;
-}
-.ui.selectable.inverted.table tbody tr:hover,
-.ui.inverted.table tbody tr td.selectable:hover {
-  background: $selectableInvertedBackground !important;
-  color: $selectableInvertedTextColor !important;
-}
-
 /* Selectable Cell Link */
 .ui.table tbody tr td.selectable {
   padding: 0em;

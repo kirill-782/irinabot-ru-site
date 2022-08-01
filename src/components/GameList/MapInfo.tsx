@@ -39,7 +39,7 @@ function MapInfo({ mapId }: MapInfoProps) {
       </Loader>
     );
 
-  if (true)
+  if (hasError)
     return (
       <div class="map-info-error">
         <Icon size="big" color="red" name="close"></Icon>
