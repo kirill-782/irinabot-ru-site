@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import {
   Button,
   DropdownItemProps,
@@ -11,8 +11,19 @@ import {
 } from "semantic-ui-react";
 import { RestContext, WebsocketContext } from "../../context";
 import { ClientCreateGameConverter } from "../../models/websocket/ClientCreateGame";
+import CreateAutohostModal, {
+  AuthostModalData,
+} from "../Modal/CreateAutohostModal";
 import "./CreateGame.scss";
 import { GameCardProps } from "./interfaces";
+import { ClientAddAutohostConverter } from "./../../models/websocket/ClientAddAutohost";
+import { ServerAutohostAddResponse } from "./../../models/websocket/ServerAutohostAddResponse";
+import { GHostPackageEvent } from "../../services/GHostWebsocket";
+import {
+  DEFAULT_AUTOHOST_ADD_RESPONSE,
+  DEFAULT_CONTEXT_HEADER_CONSTANT,
+} from "../../models/websocket/HeaderConstants";
+import { toast } from "react-semantic-toasts";
 
 const assemblyMapOptions = (
   mapFlags: number,
@@ -43,7 +54,10 @@ export const SelectedGameCard: React.FC<GameCardProps> = ({
   const [errorMessage, setErrorMessage] = useState("");
 
   const { mapInfo, fileName, fileSize, id } = map;
-  const { mapImageUrl, coverImageUrl, author, name, description } = mapInfo!;
+  const { mapImageUrl, coverImageUrl, author, name, description, numPlayers } =
+    mapInfo!;
+
+  const [autohostModalOpen, setAutohostModalOpen] = useState(false);
 
   const handleCreateGame = (ev: React.SyntheticEvent) => {
     const patchId = selectedPatch?.value as string;
@@ -53,7 +67,7 @@ export const SelectedGameCard: React.FC<GameCardProps> = ({
     mapsApi.getMapConfig(id, patchId).then((mapData) => {
       const clientCreateGame = new ClientCreateGameConverter();
 
-      console.log( options.mask );
+      console.log(options.mask);
 
       const data = clientCreateGame.assembly({
         flags: assemblyMapOptions(
@@ -108,6 +122,38 @@ export const SelectedGameCard: React.FC<GameCardProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const handleAutohostCreate = useCallback(
+    (autohostData: AuthostModalData) => {
+      const patchId = selectedPatch?.value as string;
+
+      console.log(id, patchId);
+
+      if (!id || !patchId) return;
+
+      mapsApi.getMapConfig(id, patchId).then((mapData) => {
+        console.log(mapData);
+
+        sockets.ghostSocket.send(
+          new ClientAddAutohostConverter().assembly({
+            gameLimit: autohostData.countGames,
+            autostart: autohostData.autostart,
+            flags: assemblyMapOptions(
+              options.mask,
+              options.mapSpeed,
+              options.mapVisibility,
+              options.mapObservers
+            ),
+            hcl: "",
+            slotPreset: "",
+            name: autohostData.gameName,
+            mapData: mapData,
+          })
+        );
+      });
+    },
+    [sockets.ghostSocket]
+  );
+
   const handleMapNameChange = (_, { value }: InputOnChangeData) => {
     setGameName(value);
   };
@@ -144,6 +190,45 @@ export const SelectedGameCard: React.FC<GameCardProps> = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedPatch, gameName]);
+
+  useEffect(() => {
+    const onPacket = (packet: GHostPackageEvent) => {
+      const packetData = packet.detail.package;
+
+      console.log(packetData);
+
+      if (
+        packetData.context == DEFAULT_CONTEXT_HEADER_CONSTANT &&
+        packetData.type == DEFAULT_AUTOHOST_ADD_RESPONSE
+      ) {
+        const createGameResponse = packetData as ServerAutohostAddResponse;
+
+        if (createGameResponse.status == 0) {
+          toast({
+            title: "Автохост создан",
+            description: "TODO: Скоприровать описание",
+            icon: "check",
+            color: "green",
+          });
+
+          setAutohostModalOpen(false);
+        } else {
+          toast({
+            title: "Автохост не создан",
+            description: createGameResponse.description,
+            icon: "check",
+            color: "red",
+          });
+        }
+      }
+    };
+
+    sockets.ghostSocket.addEventListener("package", onPacket);
+
+    return () => {
+      sockets.ghostSocket.removeEventListener("package", onPacket);
+    };
+  }, [sockets.ghostSocket]);
 
   return (
     <>
@@ -186,13 +271,16 @@ export const SelectedGameCard: React.FC<GameCardProps> = ({
                 <Button type="button" onClick={onClick}>
                   Выбрать другую карту
                 </Button>
+                <Button onClick={handleCreateGame} disabled={!canCreateGame}>
+                  Создать
+                </Button>
                 <Button
-                  role="button"
-                  type="button"
-                  onClick={handleCreateGame}
+                  onClick={() => {
+                    setAutohostModalOpen(true);
+                  }}
                   disabled={!canCreateGame}
                 >
-                  Создать
+                  Создать автохост
                 </Button>
               </Grid.Row>
               {errorMessage && (
@@ -206,6 +294,17 @@ export const SelectedGameCard: React.FC<GameCardProps> = ({
           </Item.Extra>
         </Item.Content>
       </Item>
+      {autohostModalOpen && (
+        <CreateAutohostModal
+          open={autohostModalOpen}
+          onClose={() => {
+            setAutohostModalOpen(false);
+          }}
+          onCreate={handleAutohostCreate}
+          defaultGameName={gameName}
+          defaultAutostart={numPlayers}
+        ></CreateAutohostModal>
+      )}
     </>
   );
 };

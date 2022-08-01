@@ -25,7 +25,7 @@ function GameList({ gameList, selectedGame, setSelectedGame }: GameListProps) {
   };
   
   return (
-    <Table>
+    <Table selectable>
       <Table.Header>
         <Table.Row>
           <Table.HeaderCell>Патч</Table.HeaderCell>

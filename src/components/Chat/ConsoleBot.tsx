@@ -1,5 +1,5 @@
 import { Comment, Form, Button } from "semantic-ui-react";
-import { useState } from "react";
+import { SyntheticEvent, useState } from "react";
 
 interface ConsoleProps {
   sendConsoleMessage(message: string): void;
@@ -20,6 +20,16 @@ export const ConsoleBot: React.FC<ConsoleProps> = ({
     sendConsoleMessage(message);
   };
 
+  const handleKeyTextarea = (e: KeyboardEvent) => {
+    if (e.code == "Enter" && !e.shiftKey) {
+      if (!message) {
+        return;
+      }
+      setMessage("");
+      sendConsoleMessage(message);
+    }
+  };
+
   return (
     <Comment.Group>
       {messages.map((message, index) => (
@@ -36,6 +46,7 @@ export const ConsoleBot: React.FC<ConsoleProps> = ({
           rows={2}
           className="chat-textarea"
           onChange={(ev) => setMessage(ev.target.value)}
+          onKeyPress={handleKeyTextarea}
           value={message}
         />
         <Button

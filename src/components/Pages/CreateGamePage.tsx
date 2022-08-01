@@ -36,6 +36,7 @@ import {
 import { ServerCreateGame } from "./../../models/websocket/ServerCreateGame";
 import { toast } from "react-semantic-toasts";
 import copy from "clipboard-copy";
+import CreateAutohostModal from "../Modal/CreateAutohostModal";
 
 function CreateGamePage() {
   const [searchedMaps, setSearchedMaps] = useState<Map[]>([]);
@@ -122,8 +123,7 @@ function CreateGamePage() {
           } else {
             setLastPassword(createGameResponse.password);
           }
-        }
-        else {
+        } else {
           toast({
             title: "Ошибка при создании игры",
             description: createGameResponse.description,
