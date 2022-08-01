@@ -23,7 +23,7 @@ function GameList({ gameList, selectedGame, setSelectedGame }: GameListProps) {
 
     return usedSlots;
   };
-
+  
   return (
     <Table>
       <Table.Header>
@@ -37,18 +37,19 @@ function GameList({ gameList, selectedGame, setSelectedGame }: GameListProps) {
       </Table.Header>
       <Table.Body>
         {gameList.map((game: GameListGameFilterExtends) => {
+          console.log(game);
+          
+          const started = game.gameFlags.started ? 'game-started' : '';
+          const vip = game.gameFlags.hasGamePowerUp ? 'game-vip' : '';
+          const external = game.gameFlags.hasOtherGame ? 'game-external' : '';
+          const hidden = game.hidden ? 'hidden' : '';
+          const selected = game.gameCounter === selectedGame?.gameCounter ? 'game-selected' : '';
           return (
             <Table.Row
               key={game.gameCounter}
-              positive={
-                game.gameFlags.started ||
-                game.gameCounter == selectedGame?.gameCounter
-              }
-              error={game.gameFlags.hasGamePowerUp}
-              warning={game.gameFlags.hasOtherGame}
-              className={game.hidden ? "hidden" : ""}
+              className={`${started} ${vip} ${external} ${hidden} ${selected}`} 
               onClick={() => {
-                if (selectedGame?.gameCounter == game.gameCounter)
+                if (selectedGame?.gameCounter === game.gameCounter)
                   setSelectedGame(null);
                 else setSelectedGame(game);
               }}

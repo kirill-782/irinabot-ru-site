@@ -2,6 +2,40 @@
   display: none;
 }
 
+.game-vip {
+  background: #ffc1c1;
+}
+
+.game-started {
+  background: #c1c6ff;
+}
+
+.game-selected {
+  background: #c1ffc1;
+}
+
+.game-external {
+  background: #feffc1;
+}
+
+.dark {
+  .game-vip {
+    background: #ffc1c12e;
+  }
+
+  .game-started {
+    background: #c1c6ff2e;
+  }
+
+  .game-selected {
+    background: #c1ffc12e;
+  }
+
+  .game-external {
+    background: #feffc12e;
+  }
+}
+
 @media only screen and (min-width: 1450px) {
   .ui.container.game-list {
     width: 1400px;
