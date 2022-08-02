@@ -37,13 +37,13 @@ function GameList({ gameList, selectedGame, setSelectedGame }: GameListProps) {
       </Table.Header>
       <Table.Body>
         {gameList.map((game: GameListGameFilterExtends) => {
-          console.log(game);
           
           const started = game.gameFlags.started ? 'game-started' : '';
           const vip = game.gameFlags.hasGamePowerUp ? 'game-vip' : '';
           const external = game.gameFlags.hasOtherGame ? 'game-external' : '';
           const hidden = game.hidden ? 'hidden' : '';
           const selected = game.gameCounter === selectedGame?.gameCounter ? 'game-selected' : '';
+
           return (
             <Table.Row
               key={game.gameCounter}

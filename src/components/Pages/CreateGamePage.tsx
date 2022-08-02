@@ -118,7 +118,7 @@ function CreateGamePage() {
               title: "Игра создана",
               description: "TODO: Скоприровать описание",
               icon: "check",
-              color: "green",
+              color: "success",
             });
           } else {
             setLastPassword(createGameResponse.password);
@@ -128,7 +128,8 @@ function CreateGamePage() {
             title: "Ошибка при создании игры",
             description: createGameResponse.description,
             icon: "x",
-            color: "red",
+            color: "error",
+            class: "error"
           });
         }
       }
