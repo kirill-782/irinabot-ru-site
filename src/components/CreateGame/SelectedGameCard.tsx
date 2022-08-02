@@ -151,7 +151,7 @@ export const SelectedGameCard: React.FC<GameCardProps> = ({
         );
       });
     },
-    [sockets.ghostSocket]
+    [sockets.ghostSocket, selectedPatch]
   );
 
   const handleMapNameChange = (_, { value }: InputOnChangeData) => {

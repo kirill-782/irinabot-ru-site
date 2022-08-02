@@ -14,6 +14,7 @@ import { useDebounce } from "./../../hooks/useDebounce";
 import "../GameList/GameList.scss";
 import MapInfo from "../GameList/MapInfo";
 import { Link } from "react-router-dom";
+import AutohostListModal from "../Modal/AutohostListModal";
 
 function GameListPage() {
   const sockets = useContext(WebsocketContext);
@@ -39,6 +40,8 @@ function GameListPage() {
     filters: debouncedFilterSettings,
     ignoreFocusCheck: false,
   });
+
+  const [autohostModalOpened, setAutohostModalOpened] = useState(false);
 
   return (
     <Container className="game-list">
@@ -68,6 +71,16 @@ function GameListPage() {
             color="green"
             size="large"
           />
+          <Button
+            floated="right"
+            icon="list"
+            basic
+            color="green"
+            size="large"
+            onClick={() => {
+              setAutohostModalOpened(true);
+            }}
+          />
           <GameList
             gameList={filtredGameList}
             selectedGame={selectedGame}
@@ -85,6 +98,14 @@ function GameListPage() {
           )}
         </Grid.Column>
       </Grid>
+      {autohostModalOpened && (
+        <AutohostListModal
+          open={autohostModalOpened}
+          onClose={() => {
+            setAutohostModalOpened(false);
+          }}
+        ></AutohostListModal>
+      )}
     </Container>
   );
 }

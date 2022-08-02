@@ -41,7 +41,7 @@ function MapInfo({ mapId }: MapInfoProps) {
 
   if (hasError)
     return (
-      <div class="map-info-error">
+      <div className="map-info-error">
         <Icon size="big" color="red" name="close"></Icon>
         <span className="text">Ошибка</span>
       </div>
