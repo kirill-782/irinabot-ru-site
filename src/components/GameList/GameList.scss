@@ -50,11 +50,29 @@
   }
 }
 
+@media only screen and (min-width: 768px) {
+  .game-list {
+  .game-title {
+      overflow: hidden;
+      display: inline-block;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 160px;
+    }
+  }
+}
+
 @media only screen and (min-width: 1200px) {
   .online-stats-column .how-btn,
   .online-stats-column .ui.how-btn {
     width: 220px;
-  } 
+  }
+
+  .game-list {
+  .game-title {
+      width: 210px;
+    }
+  }
 }
 
 @media only screen and (min-width: 1450px) {
@@ -65,5 +83,11 @@
   .online-stats-column .how-btn,
   .online-stats-column .ui.how-btn {
     width: 239px;
-  } 
+  }
+
+  .game-list {
+  .game-title {
+      width: 250px;
+    }
+  }
 }
