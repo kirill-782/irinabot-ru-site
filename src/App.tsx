@@ -4,6 +4,7 @@ import {
   AuthAction,
   AuthContext,
   AuthData,
+  CacheContext,
   RestContext,
   WebsocketContext,
 } from "./context";
@@ -17,6 +18,7 @@ import GameListPage from "./components/Pages/GameListPage";
 import "./semantic-ui-sass/template/_index.scss";
 import { useGHostSocket } from "./hooks/useGHostSocket";
 import { useWebsocketAuth } from "./hooks/useWebsocketAuth";
+import { useConnectorIdCache } from "./hooks/useConnectorIdCache";
 import OauthStubPage from "./components/Pages/OauthStubPage";
 import { useConnectorSocket } from "./hooks/useConnectorSocket";
 import { useConnectorGameAdd } from "./hooks/useConnectorGameAdd";
@@ -52,6 +54,8 @@ function App() {
 
   useConnectorGameAdd({ ghostSocket, connectorSocket });
 
+  const [cachedConnectorIds, cacheConnectorIdsDispatcher] = useConnectorIdCache({ghostSocket});
+
   return (
     <WebsocketContext.Provider
       value={{
@@ -81,26 +85,28 @@ function App() {
               ),
             }}
           >
-            <AfterContextApp>
-              <Routes>
-                <Route path="/*" element={<Layout />}>
-                  <Route index element={<GameListPage />} />
-                  <Route path="gamelist" element={<GameListPage />} />
-                  <Route path="autopay" element={<AutopayPage />} />
-                  <Route path="create" element={<CreateGamePage />} />
-                </Route>
-                <Route path="/oauth" element={<OauthStubPage />} />
-              </Routes>
-              <RegisterAccountModal
-                open={needRegisterModal}
-                onApprove={() => {
-                  authDispatcher({ action: "setForce", payload: true });
-                }}
-                onReject={() => {
-                  authDispatcher({ action: "clearCredentials" });
-                }}
-              ></RegisterAccountModal>
-            </AfterContextApp>
+            <CacheContext.Provider value={{cachedConnectorIds, cacheConnectorIdsDispatcher}}>
+              <AfterContextApp>
+                <Routes>
+                  <Route path="/*" element={<Layout />}>
+                    <Route index element={<GameListPage />} />
+                    <Route path="gamelist" element={<GameListPage />} />
+                    <Route path="autopay" element={<AutopayPage />} />
+                    <Route path="create" element={<CreateGamePage />} />
+                  </Route>
+                  <Route path="/oauth" element={<OauthStubPage />} />
+                </Routes>
+                <RegisterAccountModal
+                  open={needRegisterModal}
+                  onApprove={() => {
+                    authDispatcher({ action: "setForce", payload: true });
+                  }}
+                  onReject={() => {
+                    authDispatcher({ action: "clearCredentials" });
+                  }}
+                ></RegisterAccountModal>
+              </AfterContextApp>
+            </CacheContext.Provider>
           </RestContext.Provider>
         </AuthContext.Provider>
       </AppRuntimeSettingsContext.Provider>

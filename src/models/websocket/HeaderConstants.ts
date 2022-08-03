@@ -30,6 +30,7 @@ export const DEFAULT_MAP_INFO = 0x0d;
 export const DEFAULT_AUTOHOST_LIST_RESPONSE = 0x10;
 export const DEFAULT_AUTOHOST_ADD_RESPONSE = 0x11;
 export const DEFAULT_AUTOHOST_REMOVE_RESPONSE = 0x12;
+export const DEFAULT_RESOLVE_CONNECTOR_IDS_RESPONSE = 0x13;
 
 // Client request constant
 export const DEFAULT_CONTEXT_REQEST = 0x00;
@@ -43,6 +44,7 @@ export const DEFAULT_GET_MAPINFO = 0x0d;
 export const DEFAULT_AUTOHOST_LIST = 0x10;
 export const DEFAULT_AUTOHOST_ADD = 0x11;
 export const DEFAULT_AUTOHOST_REMOVE = 0x12;
+export const DEFAULT_RESOLVE_CONNECTOR_IDS = 0x13;
 
 // Connector constants
 

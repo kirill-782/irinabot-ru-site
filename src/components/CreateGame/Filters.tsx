@@ -50,7 +50,7 @@ export const Filters: React.FC<FiltersProps> = memo(({ onFitlerChange }) => {
         label="Игроков больше чем"
         type="number"
         value={minPlayers}
-        max={32}
+        max={24}
         min={0}
         onChange={({ target: { value } }) => setMinPlayers(Number(value))}
       />
@@ -58,7 +58,7 @@ export const Filters: React.FC<FiltersProps> = memo(({ onFitlerChange }) => {
         label="Игроков меньше чем"
         type="number"
         value={maxPlayers}
-        max={32}
+        max={24}
         min={0}
         onChange={({ target: { value } }) => setMaxPlayers(Number(value))}
       />

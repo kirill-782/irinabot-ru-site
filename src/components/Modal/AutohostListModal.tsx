@@ -1,7 +1,7 @@
 import { Button, Grid, Header, Message, Modal, Table } from "semantic-ui-react";
 import { useContext, useEffect, useState } from "react";
 import { Autohost } from "../../models/websocket/ServerAutohostListResponse";
-import { WebsocketContext } from "../../context";
+import { CacheContext, WebsocketContext } from "../../context";
 import { GHostPackageEvent } from "../../services/GHostWebsocket";
 import {
   DEFAULT_AUTOHOST_REMOVE_RESPONSE,
@@ -13,6 +13,8 @@ import { ClientAutohostListConverter } from "./../../models/websocket/ClientAuto
 import { ServerAutohostRemoveResponse } from "./../../models/websocket/ServerAutohostRemoveResponse";
 import { toast } from "react-semantic-toasts";
 import { ClientAutohostRemoveConverter } from "./../../models/websocket/ClientAutohostRemove";
+import ConnectorId from "../ConnectorId";
+import { ClientResolveConnectorIdsConverter } from "../../models/websocket/ClientResolveConnectorIds";
 
 export interface AutohostListModalProps {
   open: boolean;
@@ -31,6 +33,28 @@ function AutohostListModal({ open, onClose }: AutohostListModalProps) {
       })
     );
   };
+
+  const connectorCache = useContext(CacheContext).cachedConnectorIds;
+
+  useEffect(() => {
+    if (!autohosts) return;
+
+    const uncachedConnectorIds = autohosts
+      .map((i) => {
+        return i.spaceId;
+      })
+      .filter((i) => {
+        return !connectorCache[i];
+      });
+
+    if (uncachedConnectorIds.length > 0) {
+      sockets.ghostSocket.send(
+        new ClientResolveConnectorIdsConverter().assembly({
+          connectorIds: uncachedConnectorIds,
+        })
+      );
+    }
+  }, [autohosts, connectorCache, sockets.ghostSocket]);
 
   useEffect(() => {
     sockets.ghostSocket.send(new ClientAutohostListConverter().assembly({}));
@@ -105,7 +129,9 @@ function AutohostListModal({ open, onClose }: AutohostListModalProps) {
                     <Table.Cell>{autohost.autostart}</Table.Cell>
                     <Table.Cell>{autohost.gamesLimit}</Table.Cell>
                     <Table.Cell>{autohost.increment}</Table.Cell>
-                    <Table.Cell>{autohost.spaceId}</Table.Cell>
+                    <Table.Cell>
+                      <ConnectorId id={autohost.spaceId}></ConnectorId>
+                    </Table.Cell>
                     <Table.Cell>
                       <Grid textAlign="center">
                         <Button

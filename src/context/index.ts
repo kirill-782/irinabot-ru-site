@@ -99,3 +99,36 @@ export type RestContextType = {
 };
 
 export const RestContext = createContext<RestContextType>(null);
+
+// Cache Context
+
+export const CacheContext = createContext<CacheContextType>(null);
+
+export type CachedConnetcorIds = { [key: number]: string };
+
+interface CacheContextType {
+  cachedConnectorIds: CachedConnetcorIds;
+
+  cacheConnectorIdsDispatcher: React.Dispatch<CacheConnectorIdAction>;
+}
+
+type CacheConnectorId = {
+  action: "cache";
+  payload: {
+    [key: number]: string;
+  };
+};
+
+type RemoveConnectorId = {
+  action: "remove";
+  payload: number[];
+};
+
+type ClearConnectorId = {
+  action: "clear";
+};
+
+export type CacheConnectorIdAction =
+  | ClearConnectorId
+  | RemoveConnectorId
+  | CacheConnectorId;

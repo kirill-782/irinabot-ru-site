@@ -8,6 +8,7 @@ import {
   DEFAULT_GAME_LIST,
   DEFAULT_MAP_INFO,
   DEFAULT_NEW_MESSAGE,
+  DEFAULT_RESOLVE_CONNECTOR_IDS_RESPONSE,
   DEFAULT_UDP_ANSWER,
   DEFAULT_WEBSOCKET_CONNECT_STATS,
   GLOBAL_ADD_INTEGRATION_RESPONSE,
@@ -36,6 +37,7 @@ import {
   ServerAutohostListResponseConverter,
 } from "./../models/websocket/ServerAutohostListResponse";
 import { ServerAutohostRemoveResponseConverter } from "../models/websocket/ServerAutohostRemoveResponse";
+import { ServerResolveConnectorIdsConverter } from "../models/websocket/ServerResolveConnectorIds";
 
 export interface GHostWebSocketOptions {
   url: string;
@@ -65,6 +67,8 @@ const packageHandlers = (() => {
     new ServerAutohostAddResponseConverter();
   handlers[DEFAULT_CONTEXT_HEADER_CONSTANT][DEFAULT_AUTOHOST_REMOVE_RESPONSE] =
     new ServerAutohostRemoveResponseConverter();
+  handlers[DEFAULT_CONTEXT_HEADER_CONSTANT][DEFAULT_RESOLVE_CONNECTOR_IDS_RESPONSE] =
+    new ServerResolveConnectorIdsConverter();
 
   handlers[GLOBAL_CONTEXT_HEADER_CONSTANT] = [];
   handlers[GLOBAL_CONTEXT_HEADER_CONSTANT][GLOBAL_GET_ERROR] =

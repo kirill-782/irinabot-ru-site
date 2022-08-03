@@ -6,6 +6,7 @@ import ConnectorAddButton from "./ConnectorAddButton";
 import "./GameList.scss";
 import { GameListGameFilterExtends } from "../../hooks/useGameListFilter";
 import { GameListGame } from "./../../models/websocket/ServerGameList";
+import ConnectorId from "../ConnectorId";
 
 interface GameListProps {
   gameList: GameListGame[];
@@ -28,11 +29,11 @@ function GameList({ gameList, selectedGame, setSelectedGame }: GameListProps) {
     <Table selectable>
       <Table.Header>
         <Table.Row>
-          <Table.HeaderCell>Патч</Table.HeaderCell>
-          <Table.HeaderCell>Слоты</Table.HeaderCell>
-          <Table.HeaderCell>Игра</Table.HeaderCell>
+          <Table.HeaderCell width={2}>Слоты</Table.HeaderCell>
+          <Table.HeaderCell width={2}>Владелец</Table.HeaderCell>
+          <Table.HeaderCell width={4}>Игра</Table.HeaderCell>
           <Table.HeaderCell>Игроки</Table.HeaderCell>
-          <Table.HeaderCell></Table.HeaderCell>
+          <Table.HeaderCell width={2}></Table.HeaderCell>
         </Table.Row>
       </Table.Header>
       <Table.Body>
@@ -54,10 +55,10 @@ function GameList({ gameList, selectedGame, setSelectedGame }: GameListProps) {
                 else setSelectedGame(game);
               }}
             >
-              <Table.Cell>1.26</Table.Cell>
               <Table.Cell>
                 {getPlayerSlots(game) + "/" + game.players.length}
               </Table.Cell>
+              <Table.Cell><ConnectorId id={game.creatorID}/></Table.Cell>
               <Table.Cell className="game-title">{game.name}</Table.Cell>
               <Table.Cell>
                 <GameListPlayers players={game.players} />

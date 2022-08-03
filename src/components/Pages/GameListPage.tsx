@@ -1,4 +1,4 @@
-import React, { useContext, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { Button, Container, Grid, Input } from "semantic-ui-react";
 import { AppRuntimeSettingsContext, WebsocketContext } from "../../context";
 import { GameListGame } from "../../models/websocket/ServerGameList";
@@ -10,11 +10,16 @@ import { useGameListFilterSetings } from "../../hooks/useGameListFilterSetings";
 import { useGameListFilter } from "../../hooks/useGameListFilter";
 import GameListFilter from "../GameList/GameListFilter";
 import { useDebounce } from "./../../hooks/useDebounce";
+import { CacheContext } from "../../context";
 
 import "../GameList/GameList.scss";
 import MapInfo from "../GameList/MapInfo";
 import { Link } from "react-router-dom";
 import AutohostListModal from "../Modal/AutohostListModal";
+import {
+  ClientResolveConnectorIds,
+  ClientResolveConnectorIdsConverter,
+} from "./../../models/websocket/ClientResolveConnectorIds";
 
 function GameListPage() {
   const sockets = useContext(WebsocketContext);
@@ -42,6 +47,26 @@ function GameListPage() {
   });
 
   const [autohostModalOpened, setAutohostModalOpened] = useState(false);
+
+  const connectorCache = useContext(CacheContext).cachedConnectorIds;
+
+  useEffect(() => {
+    const uncachedConnectorIds = gameList
+      .map((i) => {
+        return i.creatorID;
+      })
+      .filter((i) => {
+        return !connectorCache[i];
+      });
+
+    if (uncachedConnectorIds.length > 0) {
+      sockets.ghostSocket.send(
+        new ClientResolveConnectorIdsConverter().assembly({
+          connectorIds: uncachedConnectorIds,
+        })
+      );
+    }
+  }, [gameList, connectorCache, sockets.ghostSocket]);
 
   return (
     <Container className="game-list">
