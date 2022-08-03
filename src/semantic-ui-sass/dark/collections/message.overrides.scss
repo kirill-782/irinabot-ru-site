@@ -4,6 +4,7 @@
 .ui.message {
   color: #c5c5c5;
   background: #0e0e0e;
+  margin-bottom: 15px;
 }
 
 .ui.error.message .header,
@@ -19,6 +20,7 @@
 .ui.attached.error.info.message {
   box-shadow: 0px 0px 0px 1px #d62420 inset, 0px 0px 0px 0px rgb(0 0 0 / 0%);
   color: #ff201b;
+  background: #0c0c0c;
 }
 
 .ui.info.message,
@@ -44,4 +46,17 @@
 .ui.success.message,
 .ui.success.message .header {
   color: #3dc03f;
+}
+
+.ui.warning.message, 
+.ui.attached.warning.message {
+  background-color: #0c0c0c;
+  color: #c9ba9b;
+}
+
+@media screen and (max-width: 768px) {
+  .ui.message,
+  .ui.message:last-child {
+    margin-bottom: 15px;
+  }
 }
