@@ -1,6 +1,8 @@
 import { AbstractConverter } from "../models/websocket/AbstractPackage";
 import {
   DEFAULT_AUTOHOST_ADD_RESPONSE,
+  DEFAULT_AUTOHOST_LIST_RESPONSE,
+  DEFAULT_AUTOHOST_REMOVE_RESPONSE,
   DEFAULT_CONTEXT_HEADER_CONSTANT,
   DEFAULT_CREATE_GAME_RESPONSE,
   DEFAULT_GAME_LIST,
@@ -29,6 +31,11 @@ import { ServerTextMessageConverter } from "./../models/websocket/ServerTextMess
 import { ServerCreateGameConverter } from "./../models/websocket/ServerCreateGame";
 import { ServerApiTokenConverter } from "../models/websocket/ServerApiToken";
 import { ServerAutohostAddResponseConverter } from "../models/websocket/ServerAutohostAddResponse";
+import {
+  ServerAutohostListResponse,
+  ServerAutohostListResponseConverter,
+} from "./../models/websocket/ServerAutohostListResponse";
+import { ServerAutohostRemoveResponseConverter } from "../models/websocket/ServerAutohostRemoveResponse";
 
 export interface GHostWebSocketOptions {
   url: string;
@@ -52,8 +59,12 @@ const packageHandlers = (() => {
     new ServerTextMessageConverter();
   handlers[DEFAULT_CONTEXT_HEADER_CONSTANT][DEFAULT_CREATE_GAME_RESPONSE] =
     new ServerCreateGameConverter();
+  handlers[DEFAULT_CONTEXT_HEADER_CONSTANT][DEFAULT_AUTOHOST_LIST_RESPONSE] =
+    new ServerAutohostListResponseConverter();
   handlers[DEFAULT_CONTEXT_HEADER_CONSTANT][DEFAULT_AUTOHOST_ADD_RESPONSE] =
     new ServerAutohostAddResponseConverter();
+  handlers[DEFAULT_CONTEXT_HEADER_CONSTANT][DEFAULT_AUTOHOST_REMOVE_RESPONSE] =
+    new ServerAutohostRemoveResponseConverter();
 
   handlers[GLOBAL_CONTEXT_HEADER_CONSTANT] = [];
   handlers[GLOBAL_CONTEXT_HEADER_CONSTANT][GLOBAL_GET_ERROR] =

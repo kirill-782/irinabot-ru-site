@@ -27,7 +27,9 @@ export const DEFAULT_CREATE_GAME_RESPONSE = 0x04;
 export const DEFAULT_WEBSOCKET_CONNECT_STATS = 0x05;
 export const DEFAULT_NEW_MESSAGE = 0x0c;
 export const DEFAULT_MAP_INFO = 0x0d;
+export const DEFAULT_AUTOHOST_LIST_RESPONSE = 0x10;
 export const DEFAULT_AUTOHOST_ADD_RESPONSE = 0x11;
+export const DEFAULT_AUTOHOST_REMOVE_RESPONSE = 0x12;
 
 // Client request constant
 export const DEFAULT_CONTEXT_REQEST = 0x00;
@@ -38,7 +40,9 @@ export const DEFAULT_CREATE_GAME = 0x04;
 export const DEFAULT_GET_WEBSOCKETCONNECTS_STATS = 0x05;
 export const DEFAULT_SEND_MESSAGE = 0x0c;
 export const DEFAULT_GET_MAPINFO = 0x0d;
+export const DEFAULT_AUTOHOST_LIST = 0x10;
 export const DEFAULT_AUTOHOST_ADD = 0x11;
+export const DEFAULT_AUTOHOST_REMOVE = 0x12;
 
 // Connector constants
 
