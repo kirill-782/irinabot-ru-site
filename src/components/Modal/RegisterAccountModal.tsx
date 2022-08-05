@@ -13,7 +13,7 @@ function RegisterAccountModal({
   onReject,
 }: RegisterAccountModalProps) {
   return (
-    <Modal open={open}>
+    <Modal open={open} className="register-modal">
       <Modal.Header>Регистрация аккаунта</Modal.Header>
 
       <Modal.Content>

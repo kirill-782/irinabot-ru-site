@@ -97,7 +97,7 @@ function App() {
                   <Route path="/oauth" element={<OauthStubPage />} />
                 </Routes>
                 <RegisterAccountModal
-                  open={needRegisterModal}
+                  open={true}
                   onApprove={() => {
                     authDispatcher({ action: "setForce", payload: true });
                   }}
