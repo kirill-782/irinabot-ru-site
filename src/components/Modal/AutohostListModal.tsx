@@ -65,14 +65,14 @@ function AutohostListModal({ open, onClose }: AutohostListModalProps) {
       console.log(packetData);
 
       if (
-        packetData.context == DEFAULT_CONTEXT_HEADER_CONSTANT &&
-        packetData.type == DEFAULT_AUTOHOST_LIST_RESPONSE
+        packetData.context === DEFAULT_CONTEXT_HEADER_CONSTANT &&
+        packetData.type === DEFAULT_AUTOHOST_LIST_RESPONSE
       ) {
         const response = packetData as ServerAutohostListResponse;
         setAutohosts(response.autohosts);
       } else if (
-        packetData.context == DEFAULT_CONTEXT_HEADER_CONSTANT &&
-        packetData.type == DEFAULT_AUTOHOST_REMOVE_RESPONSE
+        packetData.context === DEFAULT_CONTEXT_HEADER_CONSTANT &&
+        packetData.type === DEFAULT_AUTOHOST_REMOVE_RESPONSE
       ) {
         const response = packetData as ServerAutohostRemoveResponse;
 

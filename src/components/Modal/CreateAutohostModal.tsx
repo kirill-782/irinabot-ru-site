@@ -28,7 +28,7 @@ function CreateAutohostModal({
   );
   const [countGames, setCountGames] = useState<string>("10");
 
-  const gameNameHasError = gameName.length > 30 || gameName.length == 0;
+  const gameNameHasError = gameName.length > 30 || gameName.length === 0;
   const autostartHasError = isNaN(parseInt(autostart));
   const countGamesHasError = isNaN(parseInt(countGames));
 

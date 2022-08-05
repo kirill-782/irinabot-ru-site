@@ -50,7 +50,7 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages }) => {
       setOpenedChat("chat");
 
       const user = users.find((user) => {
-        if (user.name.toLocaleLowerCase() == nickname.toLocaleLowerCase())
+        if (user.name.toLocaleLowerCase() === nickname.toLocaleLowerCase())
           return true;
       });
 

@@ -198,12 +198,12 @@ export const SelectedGameCard: React.FC<GameCardProps> = ({
       console.log(packetData);
 
       if (
-        packetData.context == DEFAULT_CONTEXT_HEADER_CONSTANT &&
-        packetData.type == DEFAULT_AUTOHOST_ADD_RESPONSE
+        packetData.context === DEFAULT_CONTEXT_HEADER_CONSTANT &&
+        packetData.type === DEFAULT_AUTOHOST_ADD_RESPONSE
       ) {
         const createGameResponse = packetData as ServerAutohostAddResponse;
 
-        if (createGameResponse.status == 0) {
+        if (createGameResponse.status === 0) {
           toast({
             title: "Автохост создан",
             description: "TODO: Скоприровать описание",

@@ -107,12 +107,12 @@ function CreateGamePage() {
       const packetData = packet.detail.package;
 
       if (
-        packetData.context == DEFAULT_CONTEXT_HEADER_CONSTANT &&
-        packetData.type == DEFAULT_CREATE_GAME_RESPONSE
+        packetData.context === DEFAULT_CONTEXT_HEADER_CONSTANT &&
+        packetData.type === DEFAULT_CREATE_GAME_RESPONSE
       ) {
         const createGameResponse = packetData as ServerCreateGame;
 
-        if (createGameResponse.status == 0) {
+        if (createGameResponse.status === 0) {
           if (!createGameResponse.password) {
             toast({
               title: "Игра создана",
