@@ -1,0 +1,10 @@
+.blurred-img {
+  filter: blur(8px);
+  -webkit-filter: blur(8px);
+  transition: all 0.2s ease-in-out;
+}
+
+.blurred-img:hover {
+  filter: blur(0px);
+  -webkit-filter: blur(0px);
+}
