@@ -14,6 +14,7 @@ import {
   Modal,
   Button,
   Input,
+  Message,
 } from "semantic-ui-react";
 import { RestContext, WebsocketContext } from "../../context";
 import { SearchFilters } from "../../models/rest/SearchFilters";
@@ -36,13 +37,13 @@ import {
 import { ServerCreateGame } from "./../../models/websocket/ServerCreateGame";
 import { toast } from "react-semantic-toasts";
 import copy from "clipboard-copy";
-import CreateAutohostModal from "../Modal/CreateAutohostModal";
 
 function CreateGamePage() {
-  const [searchedMaps, setSearchedMaps] = useState<Map[]>([]);
+  const [searchedMaps, setSearchedMaps] = useState<Map[] | null>(null);
   const [defalutMaps, setDefaultMaps] = useState<Map[]>([]);
   const [selectedMap, setSelectedMap] = useState<Map>();
   const [isLoading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
   const [filters, setFilters] = useState<SearchFilters | null>(null);
   const [searchValue, setSearchValue] = useState("");
   const { mapsApi } = useContext(RestContext);
@@ -78,24 +79,34 @@ function CreateGamePage() {
   }, [mapsApi]);
 
   useEffect(() => {
-    const searchMap = (value: string) => {
-      if (value.length < 3) return;
+    const searchMap = (value: string, filters: SearchFilters) => {
+      if (value.length < 2 && !filters) return;
 
       setLoading(true);
-      setSearchedMaps([]);
-      mapsApi.searchMap(value, filters || {}).then((maps) => {
-        setSearchedMaps(maps);
-        setLoading(false);
-      });
+      setSearchedMaps(null);
+      setErrorMessage("");
+      mapsApi
+        .searchMap(filters, value)
+        .then((maps) => {
+          setSearchedMaps(maps);
+          setLoading(false);
+        })
+        .catch((e) => {
+          setSearchedMaps([]);
+          setLoading(false);
+
+          if (e.response)
+            setErrorMessage("Unexcepted status " + e.response.status);
+        });
     };
 
-    const timer = setTimeout(() => {
-      if (searchValue) {
-        searchMap(searchValue);
-      }
-    }, 300);
+    if (searchValue || filters) {
+      const timer = setTimeout(() => {
+        searchMap(searchValue, filters || {});
+      }, 300);
 
-    return () => clearTimeout(timer);
+      return () => clearTimeout(timer);
+    } else setSearchedMaps(null);
   }, [searchValue, filters, mapsApi]);
 
   const handleMapSelect = (map: Map) => {
@@ -128,7 +139,7 @@ function CreateGamePage() {
             title: "Ошибка при создании игры",
             description: createGameResponse.description,
             icon: "x",
-            color: "red"
+            color: "red",
           });
         }
       }
@@ -140,6 +151,8 @@ function CreateGamePage() {
       sockets.ghostSocket.removeEventListener("package", onPacket);
     };
   }, [sockets.ghostSocket]);
+
+  const renderMapList = searchedMaps || defalutMaps;
 
   return (
     <Container className="create-game">
@@ -164,6 +177,11 @@ function CreateGamePage() {
                 </Item.Group>
               ) : (
                 <>
+                  {errorMessage.length > 0 && (
+                    <Message error>
+                      <p>Ошибка: {errorMessage}</p>
+                    </Message>
+                  )}
                   <Form.Input
                     search
                     fluid
@@ -171,20 +189,24 @@ function CreateGamePage() {
                     onChange={handleSearchChange}
                     loading={isLoading}
                     value={searchValue}
+                    error={!!errorMessage}
                     label="Поиск карты"
                     placeholder="Введите часть названия карты..."
                   />
+                  {!isLoading && renderMapList.length == 0 && (
+                    <Message>
+                      <p>Карты не найдены</p>
+                    </Message>
+                  )}
                   <Item.Group className="map-group">
-                    {(searchValue ? searchedMaps : defalutMaps).map(
-                      (map, key) => (
-                        <GameCard
-                          key={key}
-                          {...map}
-                          selected={false}
-                          onClick={() => handleMapSelect(map)}
-                        />
-                      )
-                    )}
+                    {renderMapList.map((map, key) => (
+                      <GameCard
+                        key={key}
+                        {...map}
+                        selected={false}
+                        onClick={() => handleMapSelect(map)}
+                      />
+                    ))}
                   </Item.Group>
                 </>
               )}

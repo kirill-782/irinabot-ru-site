@@ -135,13 +135,13 @@ export class MapService {
     return response.data;
   };
 
-  public searchMap = async (mapName: string, filters: SearchFilters) => {
+  public searchMap = async (filters: SearchFilters, mapName?: string) => {
     const request: AxiosRequestConfig<FormData> = {
       ...this.defaultConfig,
       url: "/v1/maps/search",
       method: "GET",
       params: {
-        q: mapName,
+        q: mapName ? mapName : undefined,
         ...filters,
       },
     };

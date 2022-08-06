@@ -1,5 +1,6 @@
 import React, { memo } from "react";
 import { SyntheticEvent, useEffect, useState, useContext } from "react";
+import ReactSlider from "react-slider";
 import { DropdownItemProps, DropdownProps, Form } from "semantic-ui-react";
 import { RestContext } from "../../context";
 import type { FiltersProps } from "./interfaces";
@@ -11,8 +12,8 @@ const orderOptions = [
 
 export const Filters: React.FC<FiltersProps> = memo(({ onFitlerChange }) => {
   const [verified, setVerified] = useState<boolean>();
-  const [minPlayers, setMinPlayers] = useState<number>();
-  const [maxPlayers, setMaxPlayers] = useState<number>();
+  const [minPlayers, setMinPlayers] = useState<number>(1);
+  const [maxPlayers, setMaxPlayers] = useState<number>(24);
   const [orderBy, setOrderBy] = useState<string>(orderOptions[0].value);
   const [categories, setCategories] = useState<DropdownItemProps[]>([]);
   const [selectedCategories, setSelectedCategories] = useState<number>();
@@ -46,22 +47,20 @@ export const Filters: React.FC<FiltersProps> = memo(({ onFitlerChange }) => {
 
   return (
     <Form>
-      <Form.Input
-        label="Игроков больше чем"
-        type="number"
-        value={minPlayers}
-        max={24}
-        min={0}
-        onChange={({ target: { value } }) => setMinPlayers(Number(value))}
-      />
-      <Form.Input
-        label="Игроков меньше чем"
-        type="number"
-        value={maxPlayers}
-        max={24}
-        min={0}
-        onChange={({ target: { value } }) => setMaxPlayers(Number(value))}
-      />
+      <Form.Field>
+        <label>Фильтр по свободным слотам</label>
+        <ReactSlider
+          value={[minPlayers, maxPlayers]}
+          onChange={(newValue) => {
+            setMinPlayers(newValue[0]);
+            setMaxPlayers(newValue[1]);
+          }}
+          max={24}
+          min={1}
+          step={1}
+          renderThumb={(props, state) => <div {...props}>{state.valueNow}</div>}
+        />
+      </Form.Field>
       <Form.Checkbox
         label="Только верифицированные карты"
         checked={verified}
