@@ -23,7 +23,7 @@ import { GameCard } from "../CreateGame/GameCard";
 import { Filters } from "../CreateGame/Filters";
 import { Map } from "../../models/rest/Map";
 import { SelectedGameCard } from "../CreateGame/SelectedGameCard";
-import { GameOptionsData } from "../CreateGame/interfaces";
+import { Filter, GameOptionsData } from "../CreateGame/interfaces";
 import {
   GameOptions,
   MAP_FLAG_FIXED_TEAMS,
@@ -37,6 +37,16 @@ import {
 import { ServerCreateGame } from "./../../models/websocket/ServerCreateGame";
 import { toast } from "react-semantic-toasts";
 import copy from "clipboard-copy";
+
+const defaultFilters: Filter = {
+  verify: false,
+  taggedOnly: false,
+  minPlayers: 1,
+  maxPlayers: 24,
+  sortBy: "creationDate",
+  orderBy: "desc",
+  category: 0,
+};
 
 function CreateGamePage() {
   const [searchedMaps, setSearchedMaps] = useState<Map[] | null>(null);
@@ -86,7 +96,7 @@ function CreateGamePage() {
       setSearchedMaps(null);
       setErrorMessage("");
       mapsApi
-        .searchMap(filters, value)
+        .searchMap(filters, value.length >= 2 ? value : undefined)
         .then((maps) => {
           setSearchedMaps(maps);
           setLoading(false);
@@ -162,7 +172,10 @@ function CreateGamePage() {
           <Grid.Row>
             <Grid.Column width={3}>
               <Header size="small">Фильтры</Header>
-              <Filters onFitlerChange={setFilters} />
+              <Filters
+                onFitlerChange={setFilters}
+                defaultFilters={defaultFilters}
+              />
             </Grid.Column>
             <Grid.Column width={9}>
               <Header size="small">Основные параметры</Header>

@@ -2,6 +2,8 @@
 export interface SearchFilters {
   /** Только верефицированные карты. */
   verify?: boolean;
+  /** Только с отместкой карты.*/
+  taggedOnly?: boolean;
   /** Игроков больше чем.  */
   minPlayers?: number;
   /** Игроков меньше чем.  */
