@@ -5,6 +5,12 @@ import { Map } from "../models/rest/Map";
 import { Category } from "../models/rest/Category";
 import { SearchFilters } from "../models/rest/SearchFilters";
 import { ParseMap } from "../models/rest/ParseMap";
+import { ConfigInfo } from "../models/rest/ConfigInfo";
+
+export interface PageOptions {
+  count?: number;
+  offset?: number;
+}
 
 export interface RequestOptions {
   onUploadProgress?: (progressEvent: any) => void;
@@ -73,7 +79,7 @@ export class MapService {
     return response.data;
   };
 
-  public getMaps = async () => {
+  public getMaps = async (options?: RequestOptions) => {
     const request: AxiosRequestConfig<FormData> = {
       ...this.defaultConfig,
       url: "/v1/maps",
@@ -89,20 +95,22 @@ export class MapService {
     return response.data;
   };
 
-  public getMapInfo = async (mapId: number) => {
-    const request: AxiosRequestConfig<FormData> = {
+  public getMapInfo = async (mapId: number, options?: RequestOptions) => {
+    let request: AxiosRequestConfig<FormData> = {
       ...this.defaultConfig,
       url: `/v1/maps/${mapId}`,
       method: "GET",
     };
+
+    request = this.appendOptions(request, options);
 
     const response = await Axios.request<Map>(request);
 
     return response.data;
   };
 
-  public getMapConfig = async (mapId: number, patchId: string) => {
-    const request: AxiosRequestConfig<FormData> = {
+  public getMapConfig = async (mapId: number, patchId: string, options?: RequestOptions) => {
+    let request: AxiosRequestConfig<FormData> = {
       ...this.defaultConfig,
       url: `/v1/maps/${mapId}/defaultConfigs/${patchId}`,
       method: "GET",
@@ -111,17 +119,38 @@ export class MapService {
       },
     };
 
+    request = this.appendOptions(request, options);
+
     const response = await Axios.request<string>(request);
 
     return response.data;
   };
 
-  public parseMapConfig = async (mapId: number, patchId: string) => {
-    const request: AxiosRequestConfig<FormData> = {
+  public getDefaultMapConfig = async (mapId: number, patchId: string, options?: RequestOptions) => {
+    let request: AxiosRequestConfig<FormData> = {
+      ...this.defaultConfig,
+      url: `/v1/maps/${mapId}/defaultConfigs/${patchId}`,
+      method: "GET",
+      headers: {
+        Accept: `application/json`,
+      },
+    };
+
+    request = this.appendOptions(request, options);
+
+    const response = await Axios.request<ConfigInfo>(request);
+
+    return response.data;
+  };
+
+  public parseMapConfig = async (mapId: number, patchId: string, options?: RequestOptions) => {
+    let request: AxiosRequestConfig<FormData> = {
       ...this.defaultConfig,
       url: "/v1/maps/" + mapId + "/parse",
       method: "POST",
     };
+
+    request = this.appendOptions(request, options);
 
     const body = new FormData();
 
@@ -135,28 +164,33 @@ export class MapService {
     return response.data;
   };
 
-  public searchMap = async (filters: SearchFilters, mapName?: string) => {
-    const request: AxiosRequestConfig<FormData> = {
+  public searchMap = async (filters: SearchFilters, mapName?: string, page?: PageOptions, options?: RequestOptions) => {
+    let request: AxiosRequestConfig<FormData> = {
       ...this.defaultConfig,
       url: "/v1/maps/search",
       method: "GET",
       params: {
         q: mapName ? mapName : undefined,
         ...filters,
+        ...page
       },
     };
+
+    request = this.appendOptions(request, options);
 
     const response = await Axios.request<Map[]>(request);
 
     return response.data;
   };
 
-  public getVersions = async () => {
-    const request: AxiosRequestConfig<FormData> = {
+  public getVersions = async (options?: RequestOptions) => {
+    let request: AxiosRequestConfig<FormData> = {
       ...this.defaultConfig,
       url: "/v1/configs/versions",
       method: "GET",
     };
+
+    request = this.appendOptions(request, options);
 
     const response = await Axios.request<string[]>(request);
 

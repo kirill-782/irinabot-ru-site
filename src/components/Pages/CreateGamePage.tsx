@@ -37,6 +37,8 @@ import {
 import { ServerCreateGame } from "./../../models/websocket/ServerCreateGame";
 import { toast } from "react-semantic-toasts";
 import copy from "clipboard-copy";
+import { useVisibility } from "../../hooks/useVisibility";
+import { useSearchMaps } from "../../hooks/useSearchMaps";
 
 const defaultFilters: Filter = {
   verify: false,
@@ -49,15 +51,16 @@ const defaultFilters: Filter = {
 };
 
 function CreateGamePage() {
-  const [searchedMaps, setSearchedMaps] = useState<Map[] | null>(null);
   const [defalutMaps, setDefaultMaps] = useState<Map[]>([]);
   const [selectedMap, setSelectedMap] = useState<Map>();
-  const [isLoading, setLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string>("");
   const [filters, setFilters] = useState<SearchFilters | null>(null);
   const [searchValue, setSearchValue] = useState("");
   const { mapsApi } = useContext(RestContext);
   const [patchesOption, setPatchesOption] = useState<DropdownItemProps[]>([]);
+  const [loadButton, setLoadButton] = useState<HTMLButtonElement | null>(null);
+
+  const [searchedMaps, isFull, isLoading, errorMessage, loadNextPage] =
+    useSearchMaps(filters, searchValue);
 
   const [lastPassword, setLastPassword] = useState("");
 
@@ -88,40 +91,16 @@ function CreateGamePage() {
     });
   }, [mapsApi]);
 
-  useEffect(() => {
-    const searchMap = (value: string, filters: SearchFilters) => {
-      if (value.length < 2 && !filters) return;
-
-      setLoading(true);
-      setSearchedMaps(null);
-      setErrorMessage("");
-      mapsApi
-        .searchMap(filters, value.length >= 2 ? value : undefined)
-        .then((maps) => {
-          setSearchedMaps(maps);
-          setLoading(false);
-        })
-        .catch((e) => {
-          setSearchedMaps([]);
-          setLoading(false);
-
-          if (e.response)
-            setErrorMessage("Unexcepted status " + e.response.status);
-        });
-    };
-
-    if (searchValue || filters) {
-      const timer = setTimeout(() => {
-        searchMap(searchValue, filters || {});
-      }, 300);
-
-      return () => clearTimeout(timer);
-    } else setSearchedMaps(null);
-  }, [searchValue, filters, mapsApi]);
-
   const handleMapSelect = (map: Map) => {
     setSelectedMap(map);
   };
+
+  const isVisible = useVisibility(loadButton);
+
+  useEffect(() => {
+    if (isVisible) loadNextPage();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isVisible]);
 
   useEffect(() => {
     const onPacket = (packet: GHostPackageEvent) => {
@@ -168,7 +147,7 @@ function CreateGamePage() {
     <Container className="create-game">
       <Header>Создание игры</Header>
       <Form>
-        <Grid columns="equal" divided>
+        <Grid columns="equal" stackable>
           <Grid.Row>
             <Grid.Column width={3}>
               <Header size="small">Фильтры</Header>
@@ -196,9 +175,7 @@ function CreateGamePage() {
                     </Message>
                   )}
                   <Form.Input
-                    search
                     fluid
-                    selection
                     onChange={handleSearchChange}
                     loading={isLoading}
                     value={searchValue}
@@ -220,6 +197,20 @@ function CreateGamePage() {
                         onClick={() => handleMapSelect(map)}
                       />
                     ))}
+                    {searchedMaps && !isFull && (
+                      <Grid textAlign="center">
+                        <button
+                          onClick={() => loadNextPage()}
+                          disabled={isLoading}
+                          className="ui floated button"
+                          ref={(el: HTMLButtonElement) => {
+                            setLoadButton(el);
+                          }}
+                        >
+                          {isLoading ? "Загрузка. . ." : "Загрузить еще"}
+                        </button>
+                      </Grid>
+                    )}
                   </Item.Group>
                 </>
               )}

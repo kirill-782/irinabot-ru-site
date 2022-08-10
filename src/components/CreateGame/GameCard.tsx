@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import { Button, Item } from "semantic-ui-react";
 import { Map } from "../../models/rest/Map";
 import "./CreateGame.scss";
+import { Link } from 'react-router-dom';
 
 /** Карточка игры в dropdown */
 export const GameCard: React.FC<
   Map & { onClick?(): void; selected: boolean }
-> = ({ mapInfo, fileName, fileSize, onClick }) => {
+> = ({ mapInfo, fileName, fileSize, onClick, id }) => {
   const { mapImageUrl, coverImageUrl, author, name, description } = mapInfo!;
 
   const [fullText, setFullText] = useState(false);
@@ -25,7 +26,7 @@ export const GameCard: React.FC<
       <Item.Image size="tiny" src={coverImageUrl || mapImageUrl} />
 
       <Item.Content>
-        <Item.Header as="a">{name}</Item.Header>
+        <Item.Header as={Link} to={`/maps/${id}`}>{name}</Item.Header>
         <Item.Meta>{author}</Item.Meta>
         <Item.Extra>
           <div>

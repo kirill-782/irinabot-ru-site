@@ -13,8 +13,8 @@ import type { FiltersProps } from "./interfaces";
 const sortOptions = [
   { key: "0", text: "Имя карты", value: "mapNameEscaped" },
   { key: "1", text: "Дата загрузки", value: "creationDate" },
-  { key: "1", text: "Дата обновления", value: "lastUpdateDate" },
-  { key: "1", text: "Игроков в карте", value: "numPlayers" },
+  { key: "2", text: "Дата обновления", value: "lastUpdateDate" },
+  { key: "3", text: "Игроков в карте", value: "numPlayers" },
 ];
 
 const orderOptions = [
@@ -55,22 +55,20 @@ export const Filters: React.FC<FiltersProps> = memo(
     };
 
     useEffect(() => {
-      mapsApi.getCategories().then((res) =>
+      mapsApi.getCategories().then((res) => {
         setCategories([
           {
             key: 0,
             value: 0,
             text: "(любая)",
-            singleton: true,
           },
           ...res.map((el) => ({
             key: el.id,
             value: el.id,
             text: el.name,
-            singleton: el.singleton,
           })),
-        ])
-      );
+        ]);
+      });
     }, [mapsApi]);
 
     const handleCategoryChange = (_, { value }: DropdownProps) => {
@@ -78,7 +76,7 @@ export const Filters: React.FC<FiltersProps> = memo(
     };
 
     return (
-      <Form>
+      <>
         <Form.Field>
           <label>Фильтр по свободным слотам</label>
           <ReactSlider
@@ -156,7 +154,7 @@ export const Filters: React.FC<FiltersProps> = memo(
             }}
           />
         </Form.Group>
-      </Form>
+      </>
     );
   }
 );

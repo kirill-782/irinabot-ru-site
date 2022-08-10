@@ -35,6 +35,7 @@ import { DEFAULT_CONFIG } from "./config/ApiConfig";
 import { useApiAuth } from "./hooks/useApiAuth";
 import AfterContextApp from "./AfterContextApp";
 import CreateGamePage from "./components/Pages/CreateGamePage";
+import MapPage from "./components/Pages/MapPage";
 
 function App() {
   useEffect(loadTheme, []);
@@ -93,6 +94,7 @@ function App() {
                     <Route path="gamelist" element={<GameListPage />} />
                     <Route path="autopay" element={<AutopayPage />} />
                     <Route path="create" element={<CreateGamePage />} />
+                    <Route path="maps/:id" element={<MapPage />} />
                   </Route>
                   <Route path="/oauth" element={<OauthStubPage />} />
                 </Routes>

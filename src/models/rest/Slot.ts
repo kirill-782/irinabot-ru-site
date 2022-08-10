@@ -2,10 +2,8 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import type { SlotStatus } from "./SlotStatus";
-
 export type Slot = {
-  status: SlotStatus;
+  status: number;
   team: number;
   colour: number;
   race: number;

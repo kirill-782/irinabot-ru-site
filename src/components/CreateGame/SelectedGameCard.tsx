@@ -274,6 +274,9 @@ export const SelectedGameCard: React.FC<GameCardProps> = ({
                 <Button onClick={handleCreateGame} disabled={!canCreateGame}>
                   Создать
                 </Button>
+              </Grid.Row>
+
+              <Grid.Row>
                 <Button
                   onClick={() => {
                     setAutohostModalOpen(true);
@@ -283,6 +286,7 @@ export const SelectedGameCard: React.FC<GameCardProps> = ({
                   Создать автохост
                 </Button>
               </Grid.Row>
+
               {errorMessage && (
                 <Grid.Row>
                   <Message negative>
