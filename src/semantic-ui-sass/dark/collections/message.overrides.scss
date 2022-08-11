@@ -12,6 +12,8 @@
   color: #d62420;
 }
 
+.ui.error.message,
+.ui.attached.error.message,
 .ui.red.message,
 .ui.red.message,
 .ui.red.info.message,
@@ -37,12 +39,16 @@
   color: #21adc8;
 }
 
+.ui.success.message, 
+.ui.attached.success.message,
 .ui.green.message, 
 .ui.attached.green.message {
   background-color: #0c0c0c;
   box-shadow: 0px 0px 0px 1px #339c34 inset, 0px 0px 0px 0px rgb(0 0 0 / 0%);
 }
 
+.ui.success.message,
+.ui.success.message .header,
 .ui.green.message,
 .ui.green.message .header {
   color: #3dc03f;
