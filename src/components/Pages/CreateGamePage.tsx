@@ -20,10 +20,10 @@ import { RestContext, WebsocketContext } from "../../context";
 import { SearchFilters } from "../../models/rest/SearchFilters";
 import "../CreateGame/CreateGame.scss";
 import { GameCard } from "../CreateGame/GameCard";
-import { Filters } from "../CreateGame/Filters";
+import { Filter, MapFilters } from "../MapListPage/MapFilters";
 import { Map } from "../../models/rest/Map";
 import { SelectedGameCard } from "../CreateGame/SelectedGameCard";
-import { Filter, GameOptionsData } from "../CreateGame/interfaces";
+import { GameOptionsData } from "../CreateGame/interfaces";
 import {
   GameOptions,
   MAP_FLAG_FIXED_TEAMS,
@@ -95,7 +95,7 @@ function CreateGamePage() {
     setSelectedMap(map);
   };
 
-  const isVisible = useVisibility(loadButton);
+  const isVisible = useVisibility(loadButton, {rootMargin: "100px"});
 
   useEffect(() => {
     if (isVisible) loadNextPage();
@@ -151,7 +151,7 @@ function CreateGamePage() {
           <Grid.Row>
             <Grid.Column width={3}>
               <Header size="small">Фильтры</Header>
-              <Filters
+              <MapFilters
                 onFitlerChange={setFilters}
                 defaultFilters={defaultFilters}
               />
@@ -170,7 +170,7 @@ function CreateGamePage() {
               ) : (
                 <>
                   {errorMessage.length > 0 && (
-                    <Message error>
+                    <Message className="red">
                       <p>Ошибка: {errorMessage}</p>
                     </Message>
                   )}

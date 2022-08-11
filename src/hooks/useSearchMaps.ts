@@ -23,7 +23,7 @@ export const useSearchMaps = (
 
     setLoading(true);
 
-    if (!page) setSearchedMaps(null);
+    if (!page) setSearchedMaps([]);
 
     setErrorMessage("");
     mapsApi
@@ -44,7 +44,8 @@ export const useSearchMaps = (
       })
       .catch((e) => {
         setCurrentPage(0);
-        setSearchedMaps([]);
+        setFull(false);
+        setSearchedMaps(null);
         setLoading(false);
         setErrorMessage(convertErrorResponseToString(e));
       });

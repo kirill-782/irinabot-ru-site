@@ -36,6 +36,7 @@ import { useApiAuth } from "./hooks/useApiAuth";
 import AfterContextApp from "./AfterContextApp";
 import CreateGamePage from "./components/Pages/CreateGamePage";
 import MapPage from "./components/Pages/MapPage";
+import MapListPage from "./components/Pages/MapListPage";
 
 function App() {
   useEffect(loadTheme, []);
@@ -55,7 +56,9 @@ function App() {
 
   useConnectorGameAdd({ ghostSocket, connectorSocket });
 
-  const [cachedConnectorIds, cacheConnectorIdsDispatcher] = useConnectorIdCache({ghostSocket});
+  const [cachedConnectorIds, cacheConnectorIdsDispatcher] = useConnectorIdCache(
+    { ghostSocket }
+  );
 
   return (
     <WebsocketContext.Provider
@@ -86,7 +89,9 @@ function App() {
               ),
             }}
           >
-            <CacheContext.Provider value={{cachedConnectorIds, cacheConnectorIdsDispatcher}}>
+            <CacheContext.Provider
+              value={{ cachedConnectorIds, cacheConnectorIdsDispatcher }}
+            >
               <AfterContextApp>
                 <Routes>
                   <Route path="/*" element={<Layout />}>
@@ -94,7 +99,10 @@ function App() {
                     <Route path="gamelist" element={<GameListPage />} />
                     <Route path="autopay" element={<AutopayPage />} />
                     <Route path="create" element={<CreateGamePage />} />
-                    <Route path="maps/:id" element={<MapPage />} />
+                    <Route path="maps">
+                      <Route index element={<MapListPage />} />
+                      <Route path=":id" element={<MapPage />} />
+                    </Route>
                   </Route>
                   <Route path="/oauth" element={<OauthStubPage />} />
                 </Routes>
