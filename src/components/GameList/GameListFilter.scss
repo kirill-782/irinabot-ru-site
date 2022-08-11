@@ -1,5 +1,5 @@
 .dark {
-  .sidebar-filter {
+  
     .slider {
       .thumb {
         background: rgb(16, 16, 16);
@@ -29,17 +29,17 @@
       box-shadow: 0px 0px 0px 1px #2a2a2a inset !important;
       color: #d3d3d3 !important;
     }
-  }
+  
 }
 
-.sidebar-filter {
+.slider {
   [type="radio"] {
     position: relative;
     top: 1px;
     margin-right: 5px;
   }
 
-  .slider {
+  
     position: relative;
     min-height: 20px;
 
@@ -56,11 +56,11 @@
         cursor: pointer;
       }
     }
-  }
+  
 }
 
 @media screen and (max-width: 1450px) {
-  .sidebar-filter {
+  .slider {
     .ui.basic.buttons .button,
     .ui.basic.button {
       padding: 8px;
@@ -69,7 +69,7 @@
 }
 
 @media screen and (max-width: 1200px) {
-  .sidebar-filter {
+  .slider {
     .ui.basic.buttons .button,
     .ui.basic.button {
       padding: 5px;
@@ -83,7 +83,7 @@
 }
 
 @media screen and (max-width: 991px) {
-  .sidebar-filter {
+  .slider {
     .ui.basic.buttons .button,
     .ui.basic.button {
       padding: 7px 3px;
@@ -116,7 +116,7 @@
 }
 
 @media screen and (max-width: 767px) {
-  .sidebar-filter {
+  .slider {
     .ui.basic.buttons .button,
     .ui.basic.button {
       padding: 10px 10px;

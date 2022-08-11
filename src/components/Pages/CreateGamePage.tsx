@@ -168,7 +168,7 @@ function CreateGamePage() {
                   />
                 </Item.Group>
               ) : (
-                <>
+                  <>
                   {errorMessage.length > 0 && (
                     <Message error>
                       <p>Ошибка: {errorMessage}</p>
