@@ -25,7 +25,7 @@ export const useSearchMaps = (
 
     if (!page) setSearchedMaps(null);
 
-    setErrorMessage("Error 12132");
+    setErrorMessage("Error");
     mapsApi
       .searchMap(filters, value.length >= 2 ? value : undefined, {
         count: PAGE_SIZE,
