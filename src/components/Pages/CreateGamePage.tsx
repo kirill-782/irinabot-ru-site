@@ -45,9 +45,10 @@ const defaultFilters: Filter = {
   taggedOnly: false,
   minPlayers: 1,
   maxPlayers: 24,
-  sortBy: "creationDate",
-  orderBy: "desc",
+  sortBy: "default",
+  orderBy: "default",
   category: 0,
+  owner: "",
 };
 
 function CreateGamePage() {

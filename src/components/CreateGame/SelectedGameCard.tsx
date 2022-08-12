@@ -24,6 +24,7 @@ import {
   DEFAULT_CONTEXT_HEADER_CONSTANT,
 } from "../../models/websocket/HeaderConstants";
 import { toast } from "react-semantic-toasts";
+import { parseWC3Tags } from "../../utils/WC3TestUtils";
 
 const assemblyMapOptions = (
   mapFlags: number,
@@ -266,7 +267,11 @@ export const SelectedGameCard: React.FC<GameCardProps> = ({
               <Grid.Row>
                 {fileName} ({fileSize})
               </Grid.Row>
-              <Grid.Row className="map-description">{description}</Grid.Row>
+              <Grid.Row
+              dangerouslySetInnerHTML={{
+                __html: parseWC3Tags(description || ""),
+              }}
+              className="map-description"></Grid.Row>
               <Grid.Row>
                 <Button type="button" onClick={onClick}>
                   Выбрать другую карту

@@ -1,27 +1,4 @@
 .dark {
-  
-    .slider {
-      .thumb {
-        background: rgb(16, 16, 16);
-        padding: 3px 7px;
-        border-radius: 4px;
-        border: 1px solid #2c2c2c;
-        color: white;
-
-        &:hover {
-          background: #2a2a2a;
-          border: 1px solid #878787;
-          cursor: pointer;
-        }
-      }
-    }
-
-    .ui.basic.green.buttons .button,
-    .ui.basic.green.button {
-      box-shadow: 0px 0px 0px 1px #101010 inset !important;
-      color: #e7e7e7 !important;
-    }
-
     .ui.basic.green.buttons .button:hover,
     .ui.basic.green.button:hover,
     .ui.basic.green.button:focus {
@@ -29,67 +6,16 @@
       box-shadow: 0px 0px 0px 1px #2a2a2a inset !important;
       color: #d3d3d3 !important;
     }
-  
 }
 
-.slider {
-  [type="radio"] {
-    position: relative;
-    top: 1px;
-    margin-right: 5px;
-  }
-
-  
-    position: relative;
-    min-height: 20px;
-
-    .thumb {
-      background: rgb(255 255 255);
-      padding: 3px 7px;
-      border-radius: 4px;
-      border: 1px solid #e8e9e9;
-      color: black;
-
-      &:hover {
-        background: #f9fafb;
-        border: 1px solid #d5d5d5;
-        cursor: pointer;
-      }
-    }
-  
-}
-
-@media screen and (max-width: 1450px) {
-  .slider {
-    .ui.basic.buttons .button,
-    .ui.basic.button {
-      padding: 8px;
-    }
-  }
-}
 
 @media screen and (max-width: 1200px) {
-  .slider {
-    .ui.basic.buttons .button,
-    .ui.basic.button {
-      padding: 5px;
-      font-size: 11px;
-    }
-  }
-
   .online-stats-column {
     font-size: 10px;
   }
 }
 
 @media screen and (max-width: 991px) {
-  .slider {
-    .ui.basic.buttons .button,
-    .ui.basic.button {
-      padding: 7px 3px;
-    }
-  }
-
   .ui.grid > [class*="three wide"].column.online-stats-column {
     order: -1;
     width: 100% !important;
@@ -116,14 +42,6 @@
 }
 
 @media screen and (max-width: 767px) {
-  .slider {
-    .ui.basic.buttons .button,
-    .ui.basic.button {
-      padding: 10px 10px;
-      font-size: 14px;
-    }
-  }
-
   .players-filter {
     margin-top: 15px;
   }

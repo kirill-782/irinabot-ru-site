@@ -10,8 +10,7 @@ function BlurImage({
   imageSrc,
   imageAlt
 }: BlurImageProps) {
-  console.log(imageSrc, 'src');
-  
+
   return (
     <img className="blurred-img" src={imageSrc} alt={imageAlt} />
   );

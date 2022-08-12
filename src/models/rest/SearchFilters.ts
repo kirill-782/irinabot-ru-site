@@ -14,4 +14,6 @@ export interface SearchFilters {
   orderBy?: string;
   /** Только карты из заданной категории */
   category?: number;
+  /** Фильтр по владельцу */
+  owner?: string;
 }

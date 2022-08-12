@@ -1,6 +1,6 @@
 import "./ConnectorId.scss";
 import { useContext } from 'react';
-import { CacheContext } from "../context";
+import { CacheContext } from "../../context";
 
 export interface ConnectorIdProps {
   id: number;

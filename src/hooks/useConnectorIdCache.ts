@@ -31,7 +31,7 @@ export const useConnectorIdCache = ({ ghostSocket }: ConnectorIdProps) : [Cached
 
   const [cachedConnectorIds, dispatchCacheConnectorId] = useReducer(
     authReducer,
-    {}
+    {"1" : "Sangonomiya Kokomi"}
   );
 
   useEffect(() => {

@@ -65,7 +65,7 @@ export const useSearchMaps = (
       return () => clearTimeout(timer);
     } else setSearchedMaps(null);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [q, filters, mapsApi]);
+  }, [q, filters]);
 
   return [searchedMaps, isFull, isLoading, errorMessage, loadNextPage];
 };

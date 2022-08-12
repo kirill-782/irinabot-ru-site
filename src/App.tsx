@@ -16,6 +16,7 @@ import Layout from "./components/Layout";
 import GameListPage from "./components/Pages/GameListPage";
 
 import "./semantic-ui-sass/template/_index.scss";
+import "./components/Slider.scss";
 import { useGHostSocket } from "./hooks/useGHostSocket";
 import { useWebsocketAuth } from "./hooks/useWebsocketAuth";
 import { useConnectorIdCache } from "./hooks/useConnectorIdCache";
@@ -32,7 +33,6 @@ import {
 } from "./config/ApplicationConfig";
 
 import { DEFAULT_CONFIG } from "./config/ApiConfig";
-import { useApiAuth } from "./hooks/useApiAuth";
 import AfterContextApp from "./AfterContextApp";
 import CreateGamePage from "./components/Pages/CreateGamePage";
 import MapPage from "./components/Pages/MapPage";
