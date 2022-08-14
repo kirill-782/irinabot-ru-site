@@ -39,6 +39,7 @@ import { toast } from "react-semantic-toasts";
 import copy from "clipboard-copy";
 import { useVisibility } from "../../hooks/useVisibility";
 import { useSearchMaps } from "../../hooks/useSearchMaps";
+import { SITE_TITLE } from "../../config/ApplicationConfig";
 
 const defaultFilters: Filter = {
   verify: false,
@@ -76,6 +77,22 @@ function CreateGamePage() {
 
   const sockets = useContext(WebsocketContext);
 
+  useEffect(() => {
+    window.document.title = `Создать игру - ${SITE_TITLE}`;
+
+    const description = document.createElement("meta");
+    description.setAttribute(
+      "description",
+      "На этой странице можно создать игру"
+    );
+
+    document.head.appendChild(description);
+
+    return () => {
+      document.head.removeChild(description);
+    };
+  }, []);
+
   const handleSearchChange = ({ target: { value } }: BaseSyntheticEvent) =>
     setSearchValue(value);
 
@@ -96,7 +113,7 @@ function CreateGamePage() {
     setSelectedMap(map);
   };
 
-  const isVisible = useVisibility(loadButton, {rootMargin: "100px"});
+  const isVisible = useVisibility(loadButton, { rootMargin: "100px" });
 
   useEffect(() => {
     if (isVisible) loadNextPage();
@@ -169,7 +186,7 @@ function CreateGamePage() {
                   />
                 </Item.Group>
               ) : (
-                  <>
+                <>
                   {errorMessage.length > 0 && (
                     <Message className="red">
                       <p>Ошибка: {errorMessage}</p>

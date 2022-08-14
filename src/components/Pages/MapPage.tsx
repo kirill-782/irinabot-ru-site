@@ -11,11 +11,14 @@ import {
   Table,
   Button,
 } from "semantic-ui-react";
+import { SITE_TITLE } from "../../config/ApplicationConfig";
 import { RestContext } from "../../context";
 import { Category } from "../../models/rest/Category";
 import { ConfigInfo } from "../../models/rest/ConfigInfo";
 import { Map } from "../../models/rest/Map";
 import { convertErrorResponseToString } from "../../utils/ApiUtils";
+import { escapeWC3Tags } from "./../../utils/WC3TestUtils";
+import WarcraftIIIText from "./../WarcraftIIIText";
 
 const convertSlotTypeToString = (type: number) => {
   switch (type) {
@@ -41,7 +44,6 @@ const convertSlotRaceToString = (type: number) => {
   if (type & 8) return "Нежить";
   if (type & 32) return "Случайная раса";
 
-
   return type.toString();
 };
 
@@ -59,6 +61,24 @@ function MapPage() {
       setCategories(categories);
     });
   }, [mapsApi]);
+
+  useEffect(() => {
+    window.document.title = `${escapeWC3Tags(
+      mapData?.mapInfo?.name || ""
+    )} - ${SITE_TITLE}`;
+
+    const description = document.createElement("meta");
+    description.setAttribute(
+      "description",
+      escapeWC3Tags(mapData?.mapInfo?.description || "")
+    );
+
+    document.head.appendChild(description);
+
+    return () => {
+      document.head.removeChild(description);
+    };
+  }, [mapData]);
 
   useEffect(() => {
     const abort = new AbortController();
@@ -135,16 +155,23 @@ function MapPage() {
             </Grid.Column>
             <Grid.Column width={10}>
               <Header>
-                {mapData.mapInfo?.name}
+                <WarcraftIIIText>:{mapData.mapInfo?.name}</WarcraftIIIText>
                 <u>#{mapData.id}</u>
               </Header>
-              <p>{mapData.mapInfo?.description}</p>
               <p>
-                <b>Автор:</b> {mapData.mapInfo?.author}
+                <WarcraftIIIText>
+                  :{mapData.mapInfo?.description}
+                </WarcraftIIIText>
               </p>
               <p>
-                <b>Рекомендации к игрокам:</b>{" "}
-                {mapData.mapInfo?.playerRecommendation}
+                <b>Автор:</b>
+                <WarcraftIIIText>:{mapData.mapInfo?.author}</WarcraftIIIText>
+              </p>
+              <p>
+                <b>Рекомендации к игрокам:</b>
+                <WarcraftIIIText>
+                  :{mapData.mapInfo?.playerRecommendation}
+                </WarcraftIIIText>
               </p>
             </Grid.Column>
             <Grid.Column width={3}>
@@ -206,9 +233,13 @@ function MapPage() {
                 {config?.config?.playableSlots.map((slot, index) => {
                   return (
                     <Table.Row key={index}>
-                      <Table.Cell>{convertSlotTypeToString(slot.status)}</Table.Cell>
+                      <Table.Cell>
+                        {convertSlotTypeToString(slot.status)}
+                      </Table.Cell>
                       <Table.Cell>Клан {slot.team + 1}</Table.Cell>
-                      <Table.Cell>{convertSlotRaceToString(slot.race)}</Table.Cell>
+                      <Table.Cell>
+                        {convertSlotRaceToString(slot.race)}
+                      </Table.Cell>
                       <Table.Cell>{slot.colour}</Table.Cell>
                       <Table.Cell>{slot.handicap}</Table.Cell>
                     </Table.Row>

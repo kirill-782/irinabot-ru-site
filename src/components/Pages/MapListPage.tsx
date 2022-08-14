@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Container, Form, Grid, Header, Message } from "semantic-ui-react";
+import { SITE_TITLE } from "../../config/ApplicationConfig";
 import { useSearchMaps } from "../../hooks/useSearchMaps";
 import { useVisibility } from "../../hooks/useVisibility";
 import { SearchFilters } from "../../models/rest/SearchFilters";
@@ -63,6 +64,22 @@ function MapListPage() {
 
   const navigate = useNavigate();
   const loc = useLocation();
+
+  useEffect(() => {
+    window.document.title = `Список карт - ${SITE_TITLE}`;
+
+    const description = document.createElement("meta");
+    description.setAttribute(
+      "description",
+      "Просмотреть список загруженных на бота карт."
+    );
+
+    document.head.appendChild(description);
+
+    return () => {
+      document.head.removeChild(description);
+    };
+  }, []);
 
   useEffect(() => {
     if (filters) {
