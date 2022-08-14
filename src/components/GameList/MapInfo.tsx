@@ -4,7 +4,8 @@ import { useEffect } from "react";
 import { RestContext } from "../../context";
 import { Container, Icon, Loader, Image } from "semantic-ui-react";
 import { parseWC3Tags } from "../../utils/WC3TestUtils";
-import "./MapInfo.scss"
+import "./MapInfo.scss";
+import WarcraftIIIText from "../WarcraftIIIText";
 
 interface MapInfoProps {
   mapId: number;
@@ -49,20 +50,22 @@ function MapInfo({ mapId }: MapInfoProps) {
 
   return (
     <Container className="map-info">
-      <h3 className="map-title" dangerouslySetInnerHTML={{
-          __html: parseWC3Tags(mapInfo?.mapInfo?.name || ""),
-        }}
-      ></h3>
-      <Image src={mapInfo?.mapInfo?.coverImageUrl || mapInfo?.mapInfo?.mapImageUrl} />
+      <h3 className="map-title">
+        <WarcraftIIIText>{mapInfo?.mapInfo?.name || ""}</WarcraftIIIText>
+      </h3>
+      <Image
+        src={mapInfo?.mapInfo?.coverImageUrl || mapInfo?.mapInfo?.mapImageUrl}
+      />
       <div>
         <span className="map-players-title">Кол-во игроков:</span>
-        <span dangerouslySetInnerHTML={{
-            __html: parseWC3Tags(mapInfo?.mapInfo?.playerRecommendation || ""),
-          }}></span>
-        <div dangerouslySetInnerHTML={{
-            __html: parseWC3Tags(mapInfo?.mapInfo?.description || ""),
-          }}
-        ></div>
+        <WarcraftIIIText>
+          {mapInfo?.mapInfo?.playerRecommendation || ""}
+        </WarcraftIIIText>
+        <div>
+          <WarcraftIIIText>
+            {mapInfo?.mapInfo?.description || ""}
+          </WarcraftIIIText>
+        </div>
       </div>
     </Container>
   );

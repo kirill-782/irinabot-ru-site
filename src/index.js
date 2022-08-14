@@ -4,12 +4,11 @@ import { BrowserRouter } from "react-router-dom";
 import { currentTheme } from "./utils/Theme";
 import SitePrepareLoader from "./components/SitePrepareLoader";
 
-const App = React.lazy(() => import('./App'));
-
+const App = React.lazy(() => import("./App"));
 
 ReactDOM.render(
   <BrowserRouter>
-   <Suspense fallback={<SitePrepareLoader/>}>
+    <Suspense fallback={<SitePrepareLoader />}>
       <div className={currentTheme}>
         <App />
       </div>

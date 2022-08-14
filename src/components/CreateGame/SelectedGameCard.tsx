@@ -25,6 +25,7 @@ import {
 } from "../../models/websocket/HeaderConstants";
 import { toast } from "react-semantic-toasts";
 import { parseWC3Tags } from "../../utils/WC3TestUtils";
+import WarcraftIIIText from "../WarcraftIIIText";
 
 const assemblyMapOptions = (
   mapFlags: number,
@@ -260,18 +261,20 @@ export const SelectedGameCard: React.FC<GameCardProps> = ({
         <Item.Image size="tiny" src={coverImageUrl || mapImageUrl} />
 
         <Item.Content>
-          <Item.Header as="a">{name}</Item.Header>
-          <Item.Meta>{author}</Item.Meta>
+          <Item.Header as="a">
+            <WarcraftIIIText>{name}</WarcraftIIIText>
+          </Item.Header>
+          <Item.Meta>
+            <WarcraftIIIText>{author}</WarcraftIIIText>
+          </Item.Meta>
           <Item.Extra>
             <Grid>
               <Grid.Row>
                 {fileName} ({fileSize})
               </Grid.Row>
-              <Grid.Row
-              dangerouslySetInnerHTML={{
-                __html: parseWC3Tags(description || ""),
-              }}
-              className="map-description"></Grid.Row>
+              <Grid.Row className="map-description">
+                <WarcraftIIIText>{description}</WarcraftIIIText>
+              </Grid.Row>
               <Grid.Row>
                 <Button type="button" onClick={onClick}>
                   Выбрать другую карту

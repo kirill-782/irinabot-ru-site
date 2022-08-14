@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { Button, Item } from "semantic-ui-react";
 import { Map } from "../../models/rest/Map";
 import "./CreateGame.scss";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
+import WarcraftIIIText from "../WarcraftIIIText";
 
 /** Карточка игры в dropdown */
 export const GameCard: React.FC<
@@ -26,8 +27,12 @@ export const GameCard: React.FC<
       <Item.Image size="tiny" src={coverImageUrl || mapImageUrl} />
 
       <Item.Content>
-        <Item.Header as={Link} to={`/maps/${id}`}>{name}</Item.Header>
-        <Item.Meta>{author}</Item.Meta>
+        <Item.Header as={Link} to={`/maps/${id}`}>
+          <WarcraftIIIText>{name}</WarcraftIIIText>
+        </Item.Header>
+        <Item.Meta>
+          <WarcraftIIIText>{author}</WarcraftIIIText>
+        </Item.Meta>
         <Item.Extra>
           <div>
             <Button type="button" floated="right" onClick={onClick}>
@@ -38,7 +43,7 @@ export const GameCard: React.FC<
               {fileName} ({fileSize})
             </div>
             <Item.Extra className="map-description">
-              {displayDesctiption}
+              <WarcraftIIIText>{displayDesctiption}</WarcraftIIIText>
               {needFulltextLink && (
                 <a
                   onClick={() => {
