@@ -11,7 +11,7 @@ import {
   Button,
 } from "semantic-ui-react";
 import { SITE_TITLE } from "../../config/ApplicationConfig";
-import { RestContext } from "../../context";
+import { RestContext, WebsocketContext } from "../../context";
 import { Category } from "../../models/rest/Category";
 import { ConfigInfo } from "../../models/rest/ConfigInfo";
 import { Map } from "../../models/rest/Map";
@@ -23,6 +23,9 @@ import WarcraftIIIText from "./../WarcraftIIIText";
 import MapFooter from "./../MapPage/MapFooter";
 import MapDescription from "../MapPage/MapDescription";
 import MapFlags from "./../MapPage/MapFlags";
+import { GameListGame } from "../../models/websocket/ServerGameList";
+import { useGameListSubscribe } from "../../hooks/useGameListSubscribe";
+import MapStats from "../MapPage/MapStats";
 
 function MapPage() {
   const { id } = useParams();
@@ -31,6 +34,16 @@ function MapPage() {
   const [isLoading, setLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [config, setConfig] = useState<ConfigInfo | undefined | null>();
+
+  const sockets = useContext(WebsocketContext);
+  const [gameList, setGameList] = useState<GameListGame[]>([]);
+
+  useGameListSubscribe({
+    ghostSocket: sockets.ghostSocket,
+    isGameListLocked: false,
+    onGameList: setGameList,
+    ignoreFocusCheck: false,
+  });
 
   useEffect(() => {
     window.document.title = `${escapeWC3Tags(
@@ -128,7 +141,7 @@ function MapPage() {
           <Grid.Row>
             <MapFlags {...mapData.additionalFlags} />
           </Grid.Row>
-          <MapFooter {...mapData} />
+          <MapFooter {...mapData} gameList={gameList} />
           <Grid.Row>
             {config === undefined && (
               <Loader size="big" active>
@@ -152,5 +165,6 @@ function MapPage() {
     </Container>
   );
 }
+
 
 export default MapPage;

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Container, Form, Grid, Header, Message } from "semantic-ui-react";
+import { Container, Form, Grid, Header, Message, Tab } from "semantic-ui-react";
 import { SITE_TITLE } from "../../config/ApplicationConfig";
 import { useSearchMaps } from "../../hooks/useSearchMaps";
 import { useVisibility } from "../../hooks/useVisibility";
@@ -46,6 +46,12 @@ const isNoFilters = (filters: SearchFilters | null) => {
 const defaultFilter = {
   verify: true,
 };
+
+const panes = [
+  { menuItem: 'Tab 1', render: () => <Tab.Pane>Tab 1 Content</Tab.Pane> },
+  { menuItem: 'Tab 2', render: () => <Tab.Pane>Tab 2 Content</Tab.Pane> },
+  { menuItem: 'Tab 3', render: () => <Tab.Pane>Tab 3 Content</Tab.Pane> },
+]
 
 function MapListPage() {
   const [filters, setFilters] = useState<SearchFilters | null>(null);
@@ -174,6 +180,7 @@ function MapListPage() {
 
   return (
     <Container className="create-game">
+      <Tab panes={panes} />
       <Form>
         <Grid columns="equal" stackable centered>
           {!disableFilters && (

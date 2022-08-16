@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { Table } from "semantic-ui-react";
 import { Slot } from "../../models/rest/Slot";
 import "./MapSlots.scss";
@@ -11,7 +12,7 @@ const convertSlotTypeToString = (type: number) => {
     case 2:
       return "Компьютер (слабый)";
     case 3:
-      return "Компьютер (срадний)";
+      return "Компьютер (средний)";
     case 4:
       return "Компьютер (сильный)";
   }
@@ -109,8 +110,8 @@ function MapSlots({ slots, options }: MapSlotsProps) {
           <Table.HeaderCell width={4}>Тип</Table.HeaderCell>
           <Table.HeaderCell width={3}>Клан</Table.HeaderCell>
           <Table.HeaderCell width={4}>Раса</Table.HeaderCell>
-          <Table.HeaderCell width={2}>Цвет</Table.HeaderCell>
-          <Table.HeaderCell width={2}>Фора</Table.HeaderCell>
+          <Table.HeaderCell width={1}>Цвет</Table.HeaderCell>
+          <Table.HeaderCell width={1}>Фора</Table.HeaderCell>
         </Table.Header>
       </Table>
       {teamSlots.map((slots, index) => {
@@ -128,14 +129,14 @@ function MapSlots({ slots, options }: MapSlotsProps) {
                     <Table.Cell width={4}>
                       {convertSlotRaceToString(slot.race)}
                     </Table.Cell>
-                    <Table.Cell width={2}>
+                    <Table.Cell width={1}>
                       <span
                         className={`slot-color ${getClassColorByIndex(
                           slot.colour
                         )}`}
                       ></span>
                     </Table.Cell>
-                    <Table.Cell width={2}>{slot.handicap}</Table.Cell>
+                    <Table.Cell width={1}>{slot.handicap}</Table.Cell>
                   </Table.Row>
                 );
               })}
@@ -147,4 +148,4 @@ function MapSlots({ slots, options }: MapSlotsProps) {
   );
 }
 
-export default MapSlots;
+export default memo(MapSlots);

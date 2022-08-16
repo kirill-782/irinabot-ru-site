@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { Grid, Header, Image } from "semantic-ui-react";
 import { Map } from "../../models/rest/Map";
 import WarcraftIIIText from "../WarcraftIIIText";
@@ -38,4 +39,4 @@ function MapHeader({mapInfo, id}: Map) {
   );
 }
 
-export default MapHeader;
+export default memo(MapHeader);

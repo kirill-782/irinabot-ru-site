@@ -18,7 +18,7 @@ interface GameListSubscribeOptions {
   ghostSocket: GHostWebSocket;
   isGameListLocked: boolean;
   onGameList: (games: GameListGame[]) => void;
-  filters: FilterSettings;
+  filters?: FilterSettings;
   ignoreFocusCheck: boolean;
 }
 
@@ -36,7 +36,7 @@ export const useGameListSubscribe = ({
       if (ghostSocket.isConnected()) {
         let filterFlags = 0xffffffff;
 
-        if (filters.noLoadStarted) filterFlags &= ~GAMELIST_FILTER_STARTED;
+        if (filters?.noLoadStarted) filterFlags &= ~GAMELIST_FILTER_STARTED;
 
         let clientGameListConverter = new ClientGameListConverter();
         ghostSocket.send(
@@ -88,7 +88,7 @@ export const useGameListSubscribe = ({
   }, [
     ghostSocket,
     isGameListLocked,
-    filters.noLoadStarted,
+    filters?.noLoadStarted,
     onGameList,
     ignoreFocusCheck,
   ]);

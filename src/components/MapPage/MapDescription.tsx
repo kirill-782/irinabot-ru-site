@@ -1,5 +1,6 @@
 import { Container, Segment } from "semantic-ui-react";
 import ReactMarkdown from 'react-markdown';
+import { memo } from "react";
 
 export interface MapDescriptionProps {
   desctiption: string
@@ -13,4 +14,4 @@ function MapDescription( {desctiption} : MapDescriptionProps) {
    );
 }
 
-export default MapDescription;
+export default memo(MapDescription);

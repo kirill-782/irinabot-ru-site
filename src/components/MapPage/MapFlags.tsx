@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { Container, Grid, Header, List, Segment } from "semantic-ui-react";
 import MapDescription from "./MapDescription";
 
@@ -42,4 +43,4 @@ function MapFlags({
   );
 }
 
-export default MapFlags;
+export default memo(MapFlags);

@@ -1,23 +1,26 @@
-import { useContext, useEffect, useState } from "react";
+import { memo, useContext, useEffect, useState } from "react";
 import { Button, Container, Form, Grid, Icon, Label } from "semantic-ui-react";
 import { RestContext } from "../../context";
 import { Category } from "../../models/rest/Category";
 import { Map } from "../../models/rest/Map";
 import byteSize from "byte-size";
 import { createMedia } from "@artsy/fresnel";
+import MapStats from "./MapStats";
+import { GameListGame } from "../../models/websocket/ServerGameList";
+import GameJoinButton from "./GameJoinButton";
 
-const AppMedia = createMedia({
-  breakpoints: {
-    mobile: 320,
-    tablet: 890,
-    computer: 992,
-    largeScreen: 1200,
-    widescreen: 1920,
-  },
-});
-const { Media, MediaContextProvider } = AppMedia;
+interface MapFooterProps {
+  gameList: GameListGame[];
+}
 
-function MapFooter({ categories, downloadUrl, fileName, fileSize, id }: Map) {
+function MapFooter({
+  categories,
+  downloadUrl,
+  fileName,
+  fileSize,
+  id,
+  gameList,
+}: Map & MapFooterProps) {
   const [categoriesDictionary, setCategoriesDictionary] = useState<Category[]>(
     []
   );
@@ -41,6 +44,7 @@ function MapFooter({ categories, downloadUrl, fileName, fileSize, id }: Map) {
           .map((category) => {
             return <Label key={category.id}>{category.name}</Label>;
           })}
+        <MapStats gameList={gameList} mapId={id || 0} />
       </Grid.Row>
       <Grid.Row>
         {downloadUrl && (
@@ -49,6 +53,7 @@ function MapFooter({ categories, downloadUrl, fileName, fileSize, id }: Map) {
             {`Скачать ${mapSize.value} ${mapSize.unit}`}
           </Button>
         )}
+        <GameJoinButton gameList={gameList} mapId={id || 0} />
         <Button color="green" basic icon="edit" floated="right" />
         <Button
           color="red"
@@ -63,4 +68,4 @@ function MapFooter({ categories, downloadUrl, fileName, fileSize, id }: Map) {
   );
 }
 
-export default MapFooter;
+export default memo(MapFooter);
