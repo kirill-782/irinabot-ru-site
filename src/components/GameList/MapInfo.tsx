@@ -3,9 +3,9 @@ import { Map } from "../../models/rest/Map";
 import { useEffect } from "react";
 import { RestContext } from "../../context";
 import { Container, Icon, Loader, Image } from "semantic-ui-react";
-import { parseWC3Tags } from "../../utils/WC3TestUtils";
 import "./MapInfo.scss";
 import WarcraftIIIText from "../WarcraftIIIText";
+import MapStatusIcons from "../MapStatusIcons"
 
 interface MapInfoProps {
   mapId: number;
@@ -51,7 +51,7 @@ function MapInfo({ mapId }: MapInfoProps) {
   return (
     <Container className="map-info">
       <h3 className="map-title">
-        <WarcraftIIIText>{mapInfo?.mapInfo?.name || ""}</WarcraftIIIText>
+        <WarcraftIIIText>{mapInfo?.mapInfo?.name || ""}</WarcraftIIIText><MapStatusIcons {...mapInfo} />
       </h3>
       <Image
         src={mapInfo?.mapInfo?.coverImageUrl || mapInfo?.mapInfo?.mapImageUrl}

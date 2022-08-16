@@ -24,8 +24,8 @@ import {
   DEFAULT_CONTEXT_HEADER_CONSTANT,
 } from "../../models/websocket/HeaderConstants";
 import { toast } from "react-semantic-toasts";
-import { parseWC3Tags } from "../../utils/WC3TestUtils";
 import WarcraftIIIText from "../WarcraftIIIText";
+import MapStatusIcons from '../MapStatusIcons';
 
 const assemblyMapOptions = (
   mapFlags: number,
@@ -196,9 +196,6 @@ export const SelectedGameCard: React.FC<GameCardProps> = ({
   useEffect(() => {
     const onPacket = (packet: GHostPackageEvent) => {
       const packetData = packet.detail.package;
-
-      console.log(packetData);
-
       if (
         packetData.context === DEFAULT_CONTEXT_HEADER_CONSTANT &&
         packetData.type === DEFAULT_AUTOHOST_ADD_RESPONSE
@@ -262,7 +259,7 @@ export const SelectedGameCard: React.FC<GameCardProps> = ({
 
         <Item.Content>
           <Item.Header as="a">
-            <WarcraftIIIText>{name}</WarcraftIIIText>
+            <WarcraftIIIText>{name}</WarcraftIIIText><MapStatusIcons {...map} />
           </Item.Header>
           <Item.Meta>
             <WarcraftIIIText>{author}</WarcraftIIIText>
