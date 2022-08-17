@@ -22,6 +22,7 @@ import {
 } from "./../../models/websocket/ClientResolveConnectorIds";
 import { toast } from "react-semantic-toasts";
 import { SITE_TITLE } from "../../config/ApplicationConfig";
+import MetaDescription from "../Meta/MetaDescription";
 
 function GameListPage() {
   const sockets = useContext(WebsocketContext);
@@ -54,18 +55,6 @@ function GameListPage() {
 
   useEffect(() => {
     window.document.title = `Список игр - ${SITE_TITLE}`;
-
-    const description = document.createElement("meta");
-    description.setAttribute(
-      "description",
-      "Просмотреть список созданных игр"
-    );
-
-    document.head.appendChild(description);
-
-    return () => {
-      document.head.removeChild(description);
-    };
   }, []);
 
   useEffect(() => {
@@ -88,6 +77,7 @@ function GameListPage() {
 
   return (
     <Container className="game-list">
+      <MetaDescription description="Просмотреть список созданных игр" />
       <Grid columns="equal" stackable>
         <Grid.Column width="three">
           <GameListFilter

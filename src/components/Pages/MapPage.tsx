@@ -1,31 +1,21 @@
 import { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import {
-  Container,
-  Grid,
-  Loader,
-  Message,
-  Image,
-  Header,
-  Label,
-  Button,
-} from "semantic-ui-react";
+import { Container, Grid, Loader, Message } from "semantic-ui-react";
 import { SITE_TITLE } from "../../config/ApplicationConfig";
 import { RestContext, WebsocketContext } from "../../context";
-import { Category } from "../../models/rest/Category";
 import { ConfigInfo } from "../../models/rest/ConfigInfo";
 import { Map } from "../../models/rest/Map";
 import { convertErrorResponseToString } from "../../utils/ApiUtils";
 import MapHeader from "../MapPage/MapHeader";
 import MapSlots from "../MapPage/MapSlots";
 import { escapeWC3Tags } from "./../../utils/WC3TestUtils";
-import WarcraftIIIText from "./../WarcraftIIIText";
 import MapFooter from "./../MapPage/MapFooter";
 import MapDescription from "../MapPage/MapDescription";
 import MapFlags from "./../MapPage/MapFlags";
 import { GameListGame } from "../../models/websocket/ServerGameList";
 import { useGameListSubscribe } from "../../hooks/useGameListSubscribe";
-import MapStats from "../MapPage/MapStats";
+import MetaDescription from "../Meta/MetaDescription";
+import MetaRobots from "../Meta/MetaRobots";
 
 function MapPage() {
   const { id } = useParams();
@@ -38,6 +28,8 @@ function MapPage() {
   const sockets = useContext(WebsocketContext);
   const [gameList, setGameList] = useState<GameListGame[]>([]);
 
+  const [noIndex, setNoIndex] = useState(false);
+
   useGameListSubscribe({
     ghostSocket: sockets.ghostSocket,
     isGameListLocked: false,
@@ -49,24 +41,13 @@ function MapPage() {
     window.document.title = `${escapeWC3Tags(
       mapData?.mapInfo?.name || ""
     )} - ${SITE_TITLE}`;
-
-    const description = document.createElement("meta");
-    description.setAttribute(
-      "description",
-      escapeWC3Tags(mapData?.mapInfo?.description || "")
-    );
-
-    document.head.appendChild(description);
-
-    return () => {
-      document.head.removeChild(description);
-    };
   }, [mapData]);
 
   useEffect(() => {
     const abort = new AbortController();
 
     setLoading(true);
+    setNoIndex(false);
 
     mapsApi
       .getMapInfo(parseInt(id || "0"), { signal: abort.signal })
@@ -78,6 +59,13 @@ function MapPage() {
         setLoading(false);
         if (e.message === "canceled") return;
         setErrorMessage(convertErrorResponseToString(e));
+
+        if (
+          e.response &&
+          (e.response.status === 404 || e.response.status === 403)
+        ) {
+          setNoIndex(true);
+        }
       });
 
     return () => {
@@ -118,6 +106,10 @@ function MapPage() {
 
   return (
     <Container>
+      {noIndex && <MetaRobots noIndex />}
+      <MetaDescription
+        description={escapeWC3Tags(mapData?.mapInfo?.description || "")}
+      />
       {errorMessage && (
         <Message error>
           <p>{errorMessage}</p>
@@ -165,6 +157,5 @@ function MapPage() {
     </Container>
   );
 }
-
 
 export default MapPage;

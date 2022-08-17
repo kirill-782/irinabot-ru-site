@@ -8,6 +8,7 @@ import { SearchFilters } from "../../models/rest/SearchFilters";
 import ConnectorId from "../ConnectorId";
 import { GameCard } from "../CreateGame/GameCard";
 import { Filter, MapFilters } from "../MapListPage/MapFilters";
+import MetaDescription from "../Meta/MetaDescription";
 
 const defaultFilters: Filter = {
   verify: false,
@@ -47,12 +48,6 @@ const defaultFilter = {
   verify: true,
 };
 
-const panes = [
-  { menuItem: 'Tab 1', render: () => <Tab.Pane>Tab 1 Content</Tab.Pane> },
-  { menuItem: 'Tab 2', render: () => <Tab.Pane>Tab 2 Content</Tab.Pane> },
-  { menuItem: 'Tab 3', render: () => <Tab.Pane>Tab 3 Content</Tab.Pane> },
-]
-
 function MapListPage() {
   const [filters, setFilters] = useState<SearchFilters | null>(null);
   const [loadButton, setLoadButton] = useState<HTMLButtonElement | null>(null);
@@ -73,18 +68,6 @@ function MapListPage() {
 
   useEffect(() => {
     window.document.title = `Список карт - ${SITE_TITLE}`;
-
-    const description = document.createElement("meta");
-    description.setAttribute(
-      "description",
-      "Просмотреть список загруженных на бота карт."
-    );
-
-    document.head.appendChild(description);
-
-    return () => {
-      document.head.removeChild(description);
-    };
   }, []);
 
   useEffect(() => {
@@ -179,8 +162,8 @@ function MapListPage() {
   }, [isVisible]);
 
   return (
-    <Container className="create-game">
-      <Tab panes={panes} />
+    <Container>
+      <MetaDescription description="Просмотреть список загруженных на бота карт." />
       <Form>
         <Grid columns="equal" stackable centered>
           {!disableFilters && (

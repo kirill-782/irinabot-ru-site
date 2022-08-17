@@ -1,40 +1,5 @@
 import React, { ReactNode } from "react";
 
-/** @deprecated */
-export const parseWC3Tags = (WC3String: string) => {
-  WC3String = WC3String.replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
-
-  WC3String = WC3String.replace(new RegExp("\\|n", "gi"), "<br>");
-  WC3String = WC3String.replace(new RegExp("\n", "gi"), "<br>");
-
-  let colourReplaces = 0;
-
-  WC3String = WC3String.replace(
-    new RegExp("\\|c([a-f0-9]{2})([a-f0-9]{6})", "gi"),
-    function (match, p1, p2) {
-      colourReplaces++;
-      return '<span style="color:#' + p2 + '">';
-    }
-  );
-
-  let stopColourReplaces = 0;
-
-  WC3String = WC3String.replace(new RegExp("\\|r", "gi"), function () {
-    stopColourReplaces++;
-    return "</span>";
-  });
-
-  if (colourReplaces >= stopColourReplaces)
-    WC3String =
-      WC3String + "</span>".repeat(colourReplaces - stopColourReplaces);
-
-  return WC3String;
-};
-
 export const parseWC3TagsReact = (WC3String: string, ignoreTags?: string[]) => {
   let components: ReactNode[] = [];
   let colorData:
@@ -86,7 +51,7 @@ export const parseWC3TagsReact = (WC3String: string, ignoreTags?: string[]) => {
     if (nextTagPosition === -1) {
       pushNode(plainText);
     } else {
-      const tagType = WC3String.at(nextTagPosition + 1) || "";
+      const tagType = WC3String.charAt(nextTagPosition + 1) || "";
 
       switch (tagType.toLocaleLowerCase()) {
         case "r":
@@ -176,7 +141,7 @@ export const escapeWC3Tags = (WC3String: string, ignoreTags?: string[]) => {
 
     if (tagPotition === -1) break;
 
-    const tag = WC3String.at(tagPotition + 1)?.toLocaleLowerCase();
+    const tag = WC3String.charAt(tagPotition + 1)?.toLocaleLowerCase();
 
     if (tag === "r" || tag === "n") {
       WC3String =

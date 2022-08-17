@@ -40,6 +40,8 @@ import copy from "clipboard-copy";
 import { useVisibility } from "../../hooks/useVisibility";
 import { useSearchMaps } from "../../hooks/useSearchMaps";
 import { SITE_TITLE } from "../../config/ApplicationConfig";
+import MetaDescription from "../Meta/MetaDescription";
+import MetaRobots from "../Meta/MetaRobots";
 
 const defaultFilters: Filter = {
   verify: false,
@@ -79,18 +81,6 @@ function CreateGamePage() {
 
   useEffect(() => {
     window.document.title = `Создать игру - ${SITE_TITLE}`;
-
-    const description = document.createElement("meta");
-    description.setAttribute(
-      "description",
-      "На этой странице можно создать игру"
-    );
-
-    document.head.appendChild(description);
-
-    return () => {
-      document.head.removeChild(description);
-    };
   }, []);
 
   const handleSearchChange = ({ target: { value } }: BaseSyntheticEvent) =>
@@ -163,6 +153,8 @@ function CreateGamePage() {
 
   return (
     <Container className="create-game">
+      <MetaDescription description="На этой странице можно создать игру" />
+      <MetaRobots noIndex />
       <Header>Создание игры</Header>
       <Form>
         <Grid columns="equal" stackable>

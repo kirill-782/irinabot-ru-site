@@ -2,6 +2,7 @@ import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { Container, Form, Grid, Header, Message } from "semantic-ui-react";
 import { AuthContext } from "./../../context/index";
 import { SITE_TITLE } from "../../config/ApplicationConfig";
+import MetaDescription from "../Meta/MetaDescription";
 
 interface Place {
   placeId: number;
@@ -59,18 +60,6 @@ function AutopayPage() {
 
   useEffect(() => {
     window.document.title = `Донат - ${SITE_TITLE}`;
-
-    const description = document.createElement("meta");
-    description.setAttribute(
-      "description",
-      "Здесь можно оплатить привилегии на боте."
-    );
-
-    document.head.appendChild(description);
-
-    return () => {
-      document.head.removeChild(description);
-    };
   }, []);
 
   const togglePlaceCheckbox = (placeId) => {
@@ -148,6 +137,7 @@ function AutopayPage() {
 
   return (
     <Container>
+      <MetaDescription description="Здесь можно оплатить привилегии на боте." />
       <Header>Калькулятор описания для автоподключения доната</Header>
       <Form ref={formRef} action="https://money.yandex.ru/quickpay/confirm.xml">
         <Grid columns="equal" stackable>

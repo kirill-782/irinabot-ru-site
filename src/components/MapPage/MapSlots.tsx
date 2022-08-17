@@ -1,3 +1,4 @@
+import React from "react";
 import { memo } from "react";
 import { Table } from "semantic-ui-react";
 import { Slot } from "../../models/rest/Slot";
@@ -105,20 +106,20 @@ function MapSlots({ slots, options }: MapSlotsProps) {
 
   return (
     <>
-      <Table>
-        <Table.Header>
-          <Table.HeaderCell width={4}>Тип</Table.HeaderCell>
-          <Table.HeaderCell width={3}>Клан</Table.HeaderCell>
-          <Table.HeaderCell width={4}>Раса</Table.HeaderCell>
-          <Table.HeaderCell width={1}>Цвет</Table.HeaderCell>
-          <Table.HeaderCell width={1}>Фора</Table.HeaderCell>
-        </Table.Header>
-      </Table>
       {teamSlots.map((slots, index) => {
         return (
-          <>
+          <React.Fragment key={index}>
             {customForces && <label>Клан {index + 1}</label>}
             <Table>
+              {index === 0 && (
+                <Table.Header>
+                  <Table.HeaderCell width={4}>Тип</Table.HeaderCell>
+                  <Table.HeaderCell width={3}>Клан</Table.HeaderCell>
+                  <Table.HeaderCell width={4}>Раса</Table.HeaderCell>
+                  <Table.HeaderCell width={1}>Цвет</Table.HeaderCell>
+                  <Table.HeaderCell width={1}>Фора</Table.HeaderCell>
+                </Table.Header>
+              )}
               {slots.map((slot, index) => {
                 return (
                   <Table.Row key={index}>
@@ -141,7 +142,7 @@ function MapSlots({ slots, options }: MapSlotsProps) {
                 );
               })}
             </Table>
-          </>
+          </React.Fragment>
         );
       })}
     </>

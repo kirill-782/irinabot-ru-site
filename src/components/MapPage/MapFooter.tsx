@@ -48,7 +48,7 @@ function MapFooter({
       </Grid.Row>
       <Grid.Row>
         {downloadUrl && (
-          <Button floated="left" color="green" as="a" href={downloadUrl}>
+          <Button floated="left" color="green" as="a" href={`${downloadUrl}?as=${fileName}`}>
             <Icon name="download" />
             {`Скачать ${mapSize.value} ${mapSize.unit}`}
           </Button>
