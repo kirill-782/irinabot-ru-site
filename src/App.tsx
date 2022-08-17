@@ -11,21 +11,17 @@ import {
 import { loadTheme } from "./utils/Theme";
 
 import "react-semantic-toasts/styles/react-semantic-alert.css";
-import { Route, Routes } from "react-router-dom";
-import Layout from "./components/Layout";
-import GameListPage from "./components/Pages/GameListPage";
+import { Routes } from "react-router-dom";
 
 import "./semantic-ui-sass/template/_index.scss";
 import "./components/Slider.scss";
 import { useGHostSocket } from "./hooks/useGHostSocket";
 import { useWebsocketAuth } from "./hooks/useWebsocketAuth";
 import { useConnectorIdCache } from "./hooks/useConnectorIdCache";
-import OauthStubPage from "./components/Pages/OauthStubPage";
 import { useConnectorSocket } from "./hooks/useConnectorSocket";
 import { useConnectorGameAdd } from "./hooks/useConnectorGameAdd";
 import { MapService } from "./services/MapService";
 import { MapUploaderService } from "./services/MapUploaderService";
-import AutopayPage from "./components/Pages/AutopayPage";
 import RegisterAccountModal from "./components/Modal/RegisterAccountModal";
 import {
   CONNECTOR_WEBSOCKET_ENDPOINT,
@@ -34,9 +30,7 @@ import {
 
 import { DEFAULT_CONFIG } from "./config/ApiConfig";
 import AfterContextApp from "./AfterContextApp";
-import CreateGamePage from "./components/Pages/CreateGamePage";
-import MapPage from "./components/Pages/MapPage";
-import MapListPage from "./components/Pages/MapListPage";
+import RouteList from "./components/RouteList";
 
 function App() {
   useEffect(loadTheme, []);
@@ -93,19 +87,8 @@ function App() {
               value={{ cachedConnectorIds, cacheConnectorIdsDispatcher }}
             >
               <AfterContextApp>
-                <Routes>
-                  <Route path="/*" element={<Layout />}>
-                    <Route index element={<GameListPage />} />
-                    <Route path="gamelist" element={<GameListPage />} />
-                    <Route path="autopay" element={<AutopayPage />} />
-                    <Route path="create" element={<CreateGamePage />} />
-                    <Route path="maps">
-                      <Route index element={<MapListPage />} />
-                      <Route path=":id" element={<MapPage />} />
-                    </Route>
-                  </Route>
-                  <Route path="/oauth" element={<OauthStubPage />} />
-                </Routes>
+                <RouteList />
+
                 <RegisterAccountModal
                   open={needRegisterModal}
                   onApprove={() => {

@@ -1,0 +1,14 @@
+
+
+.container.forbidden {
+  height: "90vh";
+}
+
+.container.forbidden > div.centerd {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: auto;
+  height: auto;
+  transform: translateX(-50%) translateY(-50%);
+}
