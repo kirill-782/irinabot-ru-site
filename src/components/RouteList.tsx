@@ -57,7 +57,6 @@ const routes: CondirionalRoute[] = [
         path: "create",
         element: <CreateGamePage />,
         requireAuth: true,
-        requiredAuthorities: ["MAPS_GEAT"]
       },
       {
         path: "maps",
