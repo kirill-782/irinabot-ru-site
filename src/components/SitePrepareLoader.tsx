@@ -6,6 +6,10 @@ function SitePrepareLoader() {
     const timerId = setTimeout(() => {
       setNeedRender(true);
     }, 500);
+
+    return () => {
+      clearTimeout( timerId );
+    }
   }, [setNeedRender]);
 
   return needRender ? (

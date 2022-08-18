@@ -60,7 +60,7 @@ const routes: CondirionalRoute[] = [
       },
       {
         path: "maps",
-        element: null,
+        element: undefined,
         routes: [
           {
             index: true,
@@ -139,6 +139,8 @@ function RouteList() {
 
     return routes.map(getRoutesNode);
   }, [auth.apiToken, auth.currentAuth, routes]);
+
+  console.log(resultRoutes);
 
   return <Routes>{resultRoutes}</Routes>;
 }
