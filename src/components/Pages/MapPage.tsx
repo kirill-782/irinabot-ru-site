@@ -16,6 +16,7 @@ import { GameListGame } from "../../models/websocket/ServerGameList";
 import { useGameListSubscribe } from "../../hooks/useGameListSubscribe";
 import MetaDescription from "../Meta/MetaDescription";
 import MetaRobots from "../Meta/MetaRobots";
+import React from "react";
 
 function MapPage() {
   const { id } = useParams();

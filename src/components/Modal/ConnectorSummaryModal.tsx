@@ -5,6 +5,7 @@ import { ConnectorGame } from "../../models/websocket/ConnectorSummary";
 import { WebsocketContext } from "../../context";
 import { ConnectorBrowserRemoveGameConverter } from "../../models/websocket/ConnectorBrowserDeleteGame";
 import { ConnectorBrowserResetConverter } from "../../models/websocket/ConnectorBrowserResetGames";
+import React from "react";
 
 interface ConnectorSummaryModalProps {
   open: boolean;

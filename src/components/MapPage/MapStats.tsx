@@ -1,6 +1,7 @@
 import { Icon, Label } from "semantic-ui-react";
 import { GameListGame } from "../../models/websocket/ServerGameList";
 import { memo, useMemo } from "react";
+import React from "react";
 
 export interface MapStatsProps {
   gameList: GameListGame[];

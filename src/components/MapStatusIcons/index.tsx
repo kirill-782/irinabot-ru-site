@@ -1,3 +1,4 @@
+import React from "react";
 import { Icon } from "semantic-ui-react";
 import { Map } from "../../models/rest/Map";
 import "./MapStatusIcons.scss"

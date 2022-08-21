@@ -3,6 +3,7 @@ import { Dropdown } from "semantic-ui-react";
 import { AuthMethod, AviableAuthMethods } from "../../config/AuthMethods";
 import { AuthContext } from "./../../context/index";
 import { authByOauth } from "../../utils/Oauth";
+import React from "react";
 
 function LoginDropdown() {
   const authContext = useContext(AuthContext);

@@ -1,6 +1,7 @@
 import { Comment, Form, Button } from "semantic-ui-react";
 import { User } from "./interfaces";
 import { useState } from "react";
+import React from "react";
 
 interface UserChatProps {
   user: User;

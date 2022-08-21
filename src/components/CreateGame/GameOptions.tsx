@@ -2,6 +2,7 @@ import { memo } from "react";
 import { Divider, Form } from "semantic-ui-react";
 import { GameOptionsProps } from "./interfaces";
 import { invertSelectedBits } from "../../utils/BitMaskUtils";
+import React from "react";
 
 const visibilityOptions = [
   { key: "4", text: "По умочланию", value: 4 },

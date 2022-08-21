@@ -11,6 +11,7 @@ import {
   UploadMapProgressEvent,
   UploadMapStartEvent,
 } from "../../services/MapUploaderService";
+import React from "react";
 
 // interface UploadState {
 //   file: FileList;

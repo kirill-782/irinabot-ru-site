@@ -15,6 +15,7 @@ import { toast } from "react-semantic-toasts";
 import { ClientAutohostRemoveConverter } from "./../../models/websocket/ClientAutohostRemove";
 import ConnectorId from "../ConnectorId";
 import { ClientResolveConnectorIdsConverter } from "../../models/websocket/ClientResolveConnectorIds";
+import React from "react";
 
 export interface AutohostListModalProps {
   open: boolean;
@@ -61,8 +62,6 @@ function AutohostListModal({ open, onClose }: AutohostListModalProps) {
 
     const onPacket = (packet: GHostPackageEvent) => {
       const packetData = packet.detail.package;
-
-      console.log(packetData);
 
       if (
         packetData.context === DEFAULT_CONTEXT_HEADER_CONSTANT &&

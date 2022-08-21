@@ -43,8 +43,6 @@ export class ConnectorSummaryConverter extends AbstractConverter {
         mapName: dataBuffer.getNullTerminatedString(),
       };
 
-      console.log(game);
-
       games[games.length] = game;
     }
 

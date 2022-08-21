@@ -4,6 +4,7 @@ import { useContext, useState } from "react";
 import { useEffect } from "react";
 import { AuthContext, WebsocketContext } from "../../context";
 import { ClientRequestUDPGameConverter } from "../../models/websocket/ClientRequestUDPGame";
+import React from "react";
 
 interface GameJoinButtonProps {
   gameList: GameListGame[];

@@ -9,7 +9,7 @@ import {
   Item,
   Message,
 } from "semantic-ui-react";
-import { RestContext, WebsocketContext } from "../../context";
+import { AuthContext, RestContext, WebsocketContext } from "../../context";
 import { ClientCreateGameConverter } from "../../models/websocket/ClientCreateGame";
 import CreateAutohostModal, {
   AuthostModalData,
@@ -54,6 +54,7 @@ export const SelectedGameCard: React.FC<GameCardProps> = ({
   const { mapsApi } = useContext(RestContext);
   const sockets = useContext(WebsocketContext);
   const [errorMessage, setErrorMessage] = useState("");
+  const { auth } = useContext( AuthContext );
 
   const { mapInfo, fileName, fileSize, id } = map;
   const { mapImageUrl, coverImageUrl, author, name, description, numPlayers } =
@@ -68,8 +69,6 @@ export const SelectedGameCard: React.FC<GameCardProps> = ({
 
     mapsApi.getMapConfig(id, patchId).then((mapData) => {
       const clientCreateGame = new ClientCreateGameConverter();
-
-      console.log(options.mask);
 
       const data = clientCreateGame.assembly({
         flags: assemblyMapOptions(
@@ -128,12 +127,9 @@ export const SelectedGameCard: React.FC<GameCardProps> = ({
     (autohostData: AuthostModalData) => {
       const patchId = selectedPatch?.value as string;
 
-      console.log(id, patchId);
-
       if (!id || !patchId) return;
 
       mapsApi.getMapConfig(id, patchId).then((mapData) => {
-        console.log(mapData);
 
         sockets.ghostSocket.send(
           new ClientAddAutohostConverter().assembly({
@@ -145,6 +141,7 @@ export const SelectedGameCard: React.FC<GameCardProps> = ({
               options.mapVisibility,
               options.mapObservers
             ),
+            spaceId: auth.currentAuth.connectorId,
             hcl: "",
             slotPreset: "",
             name: autohostData.gameName,
@@ -153,7 +150,7 @@ export const SelectedGameCard: React.FC<GameCardProps> = ({
         );
       });
     },
-    [sockets.ghostSocket, selectedPatch]
+    [sockets.ghostSocket, selectedPatch, auth]
   );
 
   const handleMapNameChange = (_, { value }: InputOnChangeData) => {
@@ -177,7 +174,6 @@ export const SelectedGameCard: React.FC<GameCardProps> = ({
 
     if (status === undefined) {
       mapsApi.parseMapConfig(id, selectedPatch.value as string).then((res) => {
-        console.log("res", res);
         selectedPatch.status = res.status;
         setErrorMessage(
           "Карта отправлена на анализ. Дождитесь завершения загрузки конфига."

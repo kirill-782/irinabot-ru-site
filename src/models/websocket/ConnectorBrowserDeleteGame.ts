@@ -10,8 +10,6 @@ export class ConnectorBrowserRemoveGameConverter extends AbstractConverter {
   public assembly(data: ConnectorBrowserRemoveGame) {
     const dataBuffer = new DataBuffer(new ArrayBuffer(9));
 
-    console.log(data);
-
     dataBuffer.putUint8(CONNECTOR_UDP_BROADCAST);
 
     dataBuffer.putUint8(247);

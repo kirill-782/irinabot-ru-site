@@ -1,3 +1,4 @@
+import React from "react";
 import { memo } from "react";
 import { Grid, Header, Image } from "semantic-ui-react";
 import { Map } from "../../models/rest/Map";

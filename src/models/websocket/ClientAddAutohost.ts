@@ -10,6 +10,7 @@ export interface ClientAddAutohost extends AbstractPackage {
   gameLimit: number;
   autostart: number;
   flags: number;
+  spaceId: number;
   name: string;
   slotPreset: string;
   hcl: string;
@@ -26,6 +27,7 @@ export class ClientAddAutohostConverter extends AbstractConverter {
     dataBuffer.putUint16(data.gameLimit);
     dataBuffer.putUint16(data.autostart);
     dataBuffer.putUint16(data.flags);
+    dataBuffer.putUint32(data.spaceId);
 
     dataBuffer.putNullTerminatedString(data.name);
     dataBuffer.putNullTerminatedString(data.slotPreset);
@@ -42,6 +44,7 @@ export class ClientAddAutohostConverter extends AbstractConverter {
       gameLimit: dataBuffer.getUint16(),
       autostart: dataBuffer.getUint16(),
       flags: dataBuffer.getUint16(),
+      spaceId: dataBuffer.getUint32(),
       name: dataBuffer.getNullTerminatedString(),
       slotPreset: dataBuffer.getNullTerminatedString(),
       hcl: dataBuffer.getNullTerminatedString(),

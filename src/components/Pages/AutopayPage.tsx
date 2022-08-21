@@ -3,6 +3,7 @@ import { Container, Form, Grid, Header, Message } from "semantic-ui-react";
 import { AuthContext } from "./../../context/index";
 import { SITE_TITLE } from "../../config/ApplicationConfig";
 import MetaDescription from "../Meta/MetaDescription";
+import React from "react";
 
 interface Place {
   placeId: number;
@@ -121,8 +122,6 @@ function AutopayPage() {
       </Message>
     );
   };
-
-  console.log(renerErrorMessage());
 
   const pay = (payType: string) => {
     if (paymentTypeRef.current && paylentLabelRef.current && formRef.current) {

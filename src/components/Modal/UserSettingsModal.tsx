@@ -23,6 +23,7 @@ import {
 } from "./../../models/websocket/HeaderConstants";
 import { ServerBnetKey } from "./../../models/websocket/ServerBnetKey";
 import { ClientRequestBnetKeyConverter } from "./../../models/websocket/ClientRequestBnetKey";
+import React from "react";
 
 const BNET_INTEGRATION_TYPE = 0;
 

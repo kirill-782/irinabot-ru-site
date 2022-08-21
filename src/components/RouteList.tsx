@@ -10,6 +10,7 @@ import Layout from "./Layout";
 import { useContext, useMemo } from "react";
 import { AuthContext } from "../context";
 import ForbiddenPage from "./Pages/ForbiddenPage";
+import React from "react";
 
 interface CondirionalRouteIndex {
   path?: undefined;
@@ -140,7 +141,6 @@ function RouteList() {
     return routes.map(getRoutesNode);
   }, [auth.apiToken, auth.currentAuth, routes]);
 
-  console.log(resultRoutes);
 
   return <Routes>{resultRoutes}</Routes>;
 }

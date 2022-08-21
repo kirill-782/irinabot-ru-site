@@ -36,8 +36,6 @@ export const useConnectorIdCache = ({ ghostSocket }: ConnectorIdProps) : [Cached
 
   useEffect(() => {
     const onPacket = (packet: GHostPackageEvent) => {
-      
-      console.log(packet.detail.package);
 
       if (
         packet.detail.package.context === DEFAULT_CONTEXT_HEADER_CONSTANT &&

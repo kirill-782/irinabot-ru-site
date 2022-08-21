@@ -6,6 +6,7 @@ import { Container, Icon, Loader, Image } from "semantic-ui-react";
 import "./MapInfo.scss";
 import WarcraftIIIText from "../WarcraftIIIText";
 import MapStatusIcons from "../MapStatusIcons"
+import React from "react";
 
 interface MapInfoProps {
   mapId: number;
@@ -29,7 +30,6 @@ function MapInfo({ mapId }: MapInfoProps) {
       .catch((e) => {
         setError(true);
         setLoading(false);
-        console.log(e);
       });
   }, [mapId]);
 

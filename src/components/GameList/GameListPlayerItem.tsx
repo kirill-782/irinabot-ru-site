@@ -3,6 +3,7 @@ import { GameListPlayer } from "../../models/websocket/ServerGameList";
 import { memo, useContext, useState } from "react";
 import "./GameListPlayerItem.scss";
 import { AppRuntimeSettingsContext } from "../../context";
+import React from "react";
 
 const realmToText = {
   "178.218.214.114": "iCCup",

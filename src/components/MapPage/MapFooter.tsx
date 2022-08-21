@@ -8,6 +8,7 @@ import { createMedia } from "@artsy/fresnel";
 import MapStats from "./MapStats";
 import { GameListGame } from "../../models/websocket/ServerGameList";
 import GameJoinButton from "./GameJoinButton";
+import React from "react";
 
 interface MapFooterProps {
   gameList: GameListGame[];

@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Button, Container, Grid, Header } from "semantic-ui-react";
 import "./NotFoundPage.scss";
 import MetaRobots from './../Meta/MetaRobots';
+import React from "react";
 
 function NotFoundPage() {
   return (

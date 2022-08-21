@@ -8,6 +8,7 @@ import {
   ConnectorSummary,
 } from "./../../models/websocket/ConnectorSummary";
 import ConnectorSummaryModal from "../Modal/ConnectorSummaryModal";
+import React from "react";
 
 function ConnectorIndicator() {
   const websocketContext = useContext(WebsocketContext);

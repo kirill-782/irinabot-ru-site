@@ -1,3 +1,4 @@
+import React from "react";
 import { memo, useEffect } from "react";
 import ReactSlider from "react-slider";
 import { Button, Form } from "semantic-ui-react";

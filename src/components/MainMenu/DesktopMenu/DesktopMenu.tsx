@@ -30,7 +30,6 @@ const DesktopMenu = () => {
   const currentAuth = authContext.auth.currentAuth;
 
   const handleMenuItemClick = () => {
-    console.log("menu item clicked");
   };
 
   return (

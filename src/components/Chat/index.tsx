@@ -166,8 +166,6 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages }) => {
       ) {
         const message = packet.detail.package as ServerTextMessage;
 
-        console.log(message);
-
         if (message.to === "chat") {
           setConsoleMessages((consoleMessages) => {
             const newConsoleMessages = [...consoleMessages];

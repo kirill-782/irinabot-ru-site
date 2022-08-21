@@ -1,3 +1,4 @@
+import React from "react";
 import "./DragAndDropField.scss";
 
 export const DragAndDropField = () => {

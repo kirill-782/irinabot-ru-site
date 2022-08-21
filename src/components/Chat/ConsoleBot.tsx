@@ -1,5 +1,6 @@
 import { Comment, Form, Button } from "semantic-ui-react";
 import { SyntheticEvent, useState } from "react";
+import React from "react";
 
 interface ConsoleProps {
   sendConsoleMessage(message: string): void;

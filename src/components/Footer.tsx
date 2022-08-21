@@ -1,3 +1,4 @@
+import React from "react";
 import { useContext, useState } from "react";
 import { Icon, Label, Menu } from "semantic-ui-react";
 import { AppRuntimeSettingsContext, WebsocketContext } from "../context";

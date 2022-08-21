@@ -7,7 +7,7 @@ export const useVisibility = (el: HTMLElement | null, options?: IntersectionObse
   useEffect(() => {
     if (el) {
       const callback = (entries, observer) => {
-        console.log(entries);
+
         if(entries[0].intersectionRatio > 0) {
           setVisible( true );
         }

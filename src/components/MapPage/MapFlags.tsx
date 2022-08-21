@@ -1,4 +1,4 @@
-import { memo } from "react";
+import React, { memo } from "react";
 import { Container, Grid, Header, List, Segment } from "semantic-ui-react";
 import MapDescription from "./MapDescription";
 
@@ -18,7 +18,7 @@ function MapFlags({
         <List as="ol">
           {hasCheats && (
             <List.Item style={{ color: "red" }} as="li" value="*">
-              Карта сожержит читпак
+              Карта содержит читпак
             </List.Item>
           )}
           {statsType && (

@@ -1,5 +1,6 @@
 import { Grid, Modal, Progress } from "semantic-ui-react";
 import { SyntheticEvent } from "react";
+import React from "react";
 
 interface UploadMapModalProps {
   open: boolean;

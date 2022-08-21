@@ -1,5 +1,6 @@
 import { Button, Form, Header, Message, Modal } from "semantic-ui-react";
 import { useState } from "react";
+import React from "react";
 
 export interface AuthostModalData {
   gameName: string;

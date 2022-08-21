@@ -1,6 +1,7 @@
 import { Container, Segment } from "semantic-ui-react";
 import ReactMarkdown from 'react-markdown';
 import { memo } from "react";
+import React from "react";
 
 export interface MapDescriptionProps {
   desctiption: string

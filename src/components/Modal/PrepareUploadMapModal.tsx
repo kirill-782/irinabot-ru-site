@@ -21,6 +21,7 @@ import { AdditionalFlags, MapService } from "../../services/MapService";
 import { useCategoryFilter } from "../../hooks/useCategoryFilter";
 import { DragAndDropField } from "./DragAndDropField";
 import { RestContext } from "./../../context/index";
+import React from "react";
 
 interface PrepareUploadMapModalProps {
   onMapSelected: (
@@ -57,7 +58,6 @@ function PrepareUploadMapModal({
         setCategories(categories);
       })
       .catch((error) => {
-        console.log(error);
         setLoading(false);
         setLoadingError(true);
       });

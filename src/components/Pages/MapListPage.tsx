@@ -1,3 +1,4 @@
+import React from "react";
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Container, Form, Grid, Header, Message, Tab } from "semantic-ui-react";
@@ -87,14 +88,12 @@ function MapListPage() {
         urlParams.delete(i);
       });
 
-      navigate("?" + urlParams.toString());
+      navigate("?" + urlParams.toString(), {state: {}});
     }
   }, [filters]);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(loc.search);
-
-    console.log(loc.search);
 
     setDisableFilters(urlParams.has("disableFilters"));
 

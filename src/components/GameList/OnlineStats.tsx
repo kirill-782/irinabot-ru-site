@@ -7,6 +7,7 @@ import {
   order,
   realmToCategory,
 } from "../../config/PvpGNConfig";
+import React from "react";
 
 interface OnlineStatsProps {
   gameList: GameListGame[];

@@ -40,7 +40,6 @@ const MobileMenu = () => {
   };
 
   const handleMenuItemClick = () => {
-    console.log("menu item clicked");
   };
 
   return (
