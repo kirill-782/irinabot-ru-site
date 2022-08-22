@@ -13,7 +13,7 @@ import UserDrowdown from "../../Header/UserDropdown";
 import { AuthContext } from "./../../../context/index";
 import { switchTheme, E_THEME, currentTheme } from "../../../utils/Theme";
 import "./DesktopMenu.scss";
-import UtilsDropDown from "../../Header/UtilsDropDown";
+import UtilsDropdown from "../../Header/UtilsDropdown";
 
 export interface MenuItem {
   type: string;
@@ -59,11 +59,12 @@ const DesktopMenu = () => {
       </Menu.Item>
 
       <Menu.Menu position="right">
+        <UtilsDropdown />
         <Menu.Item as={NavLink} to="/autopay">
           <Icon name="ruble sign" />
           Донат
         </Menu.Item>
-        <UtilsDropDown />
+
         {currentAuth !== null ? <UserDrowdown /> : <LoginDropdown />}
       </Menu.Menu>
     </Menu>

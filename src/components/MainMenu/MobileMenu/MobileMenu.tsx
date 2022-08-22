@@ -14,7 +14,7 @@ import { switchTheme, E_THEME, currentTheme } from "../../../utils/Theme";
 import "./MobileMenu.scss";
 import UploadMap from "../../Header/UploadMap";
 import { NavLink } from "react-router-dom";
-import UtilsDropDown from "./../../Header/UtilsDropDown";
+import UtilsDropdown from "../../Header/UtilsDropdown";
 
 export interface MenuItem {
   type: string;
@@ -58,7 +58,7 @@ const MobileMenu = () => {
               <Icon name={currentTheme === E_THEME.DARK ? "sun" : "moon"} />{" "}
               Сменить тему
             </Dropdown.Item>
-            <UtilsDropDown />
+            <UtilsDropdown />
           </Dropdown.Menu>
         </Dropdown>
       </Menu.Menu>

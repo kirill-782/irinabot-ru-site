@@ -1,12 +1,12 @@
 import { access } from "fs";
 import React, { useContext, useState } from "react";
-import { Dropdown } from "semantic-ui-react";
+import { Dropdown, Icon } from "semantic-ui-react";
 import { AuthContext } from "../../context";
 import AccessMaskModal, { AccessMaskBit } from "../Modal/AccessMaskModal";
 import AutohostListModal from "../Modal/AutohostListModal";
 import UploadMap from "./UploadMap";
 
-function UtilsDropDown() {
+function UtilsDropdown() {
   const authContext = useContext(AuthContext);
 
   const [autohostModalOpened, setAutohostModalOpened] = useState(false);
@@ -26,15 +26,17 @@ function UtilsDropDown() {
               )
             }
           >
+            <Icon name="list" />
             Список автохостов
           </Dropdown.Item>
           <UploadMap />
           <Dropdown.Item
+            icon="calc"
             onClick={() => {
               setAccessMaskModalOpened(true);
             }}
-
           >
+            <Icon name="check" />
             Калькулятор accessMask
           </Dropdown.Item>
         </Dropdown.Menu>
@@ -59,4 +61,4 @@ function UtilsDropDown() {
   );
 }
 
-export default UtilsDropDown;
+export default UtilsDropdown;
