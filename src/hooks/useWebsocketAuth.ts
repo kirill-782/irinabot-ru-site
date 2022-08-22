@@ -2,14 +2,20 @@ import { useContext, useEffect, useReducer, useState } from "react";
 import { toast } from "react-semantic-toasts";
 import { AuthAction, AuthData, WebsocketContext } from "../context";
 import { ClientUserAuthConverter } from "../models/websocket/ClientUserAuth";
+import { ServerAccessList } from "../models/websocket/ServerAccessList";
 import { ServerApiToken } from "../models/websocket/ServerApiToken";
 import { ServerError } from "../models/websocket/ServerError";
 import { ServerUserAuth } from "../models/websocket/ServerUserAuth";
+import {
+  AccessMaskHolderImpl,
+  AnonymousAccessMaskHolder,
+} from "../utils/AccessMaskHolder";
 import {
   AnonymousTokenHolder,
   ApiTokenJwtHolder,
 } from "../utils/ApiTokenHolder";
 import {
+  GLOBAL_ACCESS_LIST,
   GLOBAL_ADD_INTEGRATION_RESPONSE,
   GLOBAL_API_TOKEN,
   GLOBAL_CONTEXT_HEADER_CONSTANT,
@@ -60,6 +66,11 @@ const authReducer = (state: AuthData, action: AuthAction) => {
       apiToken: new ApiTokenJwtHolder(action.payload),
     };
     return newState;
+  } else if (action.action === "saveAccessMask") {
+    return {
+      ...state,
+      accessMask: new AccessMaskHolderImpl(action.payload),
+    };
   }
 
   return state;
@@ -75,6 +86,7 @@ export const useWebsocketAuth = ({
     currentAuth: null,
     forceLogin: false,
     apiToken: new AnonymousTokenHolder(),
+    accessMask: new AnonymousAccessMaskHolder(),
   });
 
   // Load localStorage auth
@@ -170,6 +182,13 @@ export const useWebsocketAuth = ({
         const token = e.detail.package as ServerApiToken;
 
         authDispatcher({ action: "saveToken", payload: token.token });
+      } else if (
+        e.detail.package.context === GLOBAL_CONTEXT_HEADER_CONSTANT &&
+        e.detail.package.type === GLOBAL_ACCESS_LIST
+      ) {
+        const records = e.detail.package as ServerAccessList;
+        
+        authDispatcher({ action: "saveAccessMask", payload: records.records });
       }
     };
 

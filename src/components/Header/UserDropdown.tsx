@@ -3,6 +3,7 @@ import { useContext, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { Dropdown } from "semantic-ui-react";
 import { AuthContext, WebsocketContext } from "../../context";
+import AccessListModal from "../Modal/AccessListModal";
 import UserSettingsModal from "../Modal/UserSettingsModal";
 
 function UserDrowdown() {
@@ -10,6 +11,7 @@ function UserDrowdown() {
   const sockets = useContext(WebsocketContext);
 
   const [userSettingsModalOpen, setUserSettingsModalOpen] = useState(false);
+  const [userAccessModalOpen, setUserAccessModalOpen] = useState(false);
 
   const currentAuth = authContext.auth.currentAuth;
 
@@ -44,6 +46,13 @@ function UserDrowdown() {
           >
             Настройки
           </Dropdown.Item>
+          <Dropdown.Item
+            onClick={() => {
+              setUserAccessModalOpen(true);
+            }}
+          >
+            Список прав
+          </Dropdown.Item>
           <Dropdown.Item onClick={logout}>Выйти</Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
@@ -54,6 +63,9 @@ function UserDrowdown() {
           setUserSettingsModalOpen(false);
         }}
       />
+      <AccessListModal open={userAccessModalOpen} onClose={() => {
+        setUserAccessModalOpen(false);
+      }}/>
     </>
   );
 }

@@ -31,6 +31,7 @@ import {
 import { DEFAULT_CONFIG } from "./config/ApiConfig";
 import AfterContextApp from "./AfterContextApp";
 import RouteList from "./components/RouteList";
+import AccessListModal from "./components/Modal/AccessListModal";
 
 function App() {
   useEffect(loadTheme, []);
@@ -88,7 +89,6 @@ function App() {
             >
               <AfterContextApp>
                 <RouteList />
-
                 <RegisterAccountModal
                   open={needRegisterModal}
                   onApprove={() => {

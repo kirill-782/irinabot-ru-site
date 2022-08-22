@@ -11,6 +11,7 @@ import {
   DEFAULT_RESOLVE_CONNECTOR_IDS_RESPONSE,
   DEFAULT_UDP_ANSWER,
   DEFAULT_WEBSOCKET_CONNECT_STATS,
+  GLOBAL_ACCESS_LIST,
   GLOBAL_ADD_INTEGRATION_RESPONSE,
   GLOBAL_API_TOKEN,
   GLOBAL_BNET_KEY,
@@ -38,6 +39,7 @@ import {
 } from "./../models/websocket/ServerAutohostListResponse";
 import { ServerAutohostRemoveResponseConverter } from "../models/websocket/ServerAutohostRemoveResponse";
 import { ServerResolveConnectorIdsConverter } from "../models/websocket/ServerResolveConnectorIds";
+import { ServerAccessListConverter } from "../models/websocket/ServerAccessList";
 
 export interface GHostWebSocketOptions {
   url: string;
@@ -67,8 +69,9 @@ const packageHandlers = (() => {
     new ServerAutohostAddResponseConverter();
   handlers[DEFAULT_CONTEXT_HEADER_CONSTANT][DEFAULT_AUTOHOST_REMOVE_RESPONSE] =
     new ServerAutohostRemoveResponseConverter();
-  handlers[DEFAULT_CONTEXT_HEADER_CONSTANT][DEFAULT_RESOLVE_CONNECTOR_IDS_RESPONSE] =
-    new ServerResolveConnectorIdsConverter();
+  handlers[DEFAULT_CONTEXT_HEADER_CONSTANT][
+    DEFAULT_RESOLVE_CONNECTOR_IDS_RESPONSE
+  ] = new ServerResolveConnectorIdsConverter();
 
   handlers[GLOBAL_CONTEXT_HEADER_CONSTANT] = [];
   handlers[GLOBAL_CONTEXT_HEADER_CONSTANT][GLOBAL_GET_ERROR] =
@@ -81,6 +84,8 @@ const packageHandlers = (() => {
     new ServerBnetKeyConverter();
   handlers[GLOBAL_CONTEXT_HEADER_CONSTANT][GLOBAL_API_TOKEN] =
     new ServerApiTokenConverter();
+  handlers[GLOBAL_CONTEXT_HEADER_CONSTANT][GLOBAL_ACCESS_LIST] =
+    new ServerAccessListConverter();
 
   return handlers;
 })();

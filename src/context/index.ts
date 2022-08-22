@@ -1,8 +1,10 @@
 import { createContext } from "react";
+import { AccessListRecord } from "../models/websocket/ServerAccessList";
 import { ConnectorWebsocket } from "../services/ConnectorWebsocket";
 import { GHostWebSocket } from "../services/GHostWebsocket";
 import { MapService } from "../services/MapService";
 import { MapUploaderService } from "../services/MapUploaderService";
+import { AccessMaskHolder } from "../utils/AccessMaskHolder";
 import { ApiTokenHolder } from "../utils/ApiTokenHolder";
 import { ServerUserAuth } from "./../models/websocket/ServerUserAuth";
 
@@ -44,6 +46,7 @@ export type AuthData = {
   authCredentials: AuthCredentials;
   forceLogin: boolean;
   apiToken: ApiTokenHolder;
+  accessMask: AccessMaskHolder;
 };
 
 // Actions
@@ -63,6 +66,11 @@ type SaveTokenActionType = {
   payload: string;
 };
 
+type SaveAccessMask = {
+  action: "saveAccessMask";
+  payload: AccessListRecord[];
+};
+
 type ClearCredentialsActionType = {
   action: "clearCredentials";
 };
@@ -80,6 +88,7 @@ export type AuthAction =
   | SaveAuthActionType
   | SaveCredentialsActionType
   | SaveTokenActionType
+  | SaveAccessMask
   | ClearCredentialsActionType
   | ClearAuthActionType
   | SetForcehActionType;
