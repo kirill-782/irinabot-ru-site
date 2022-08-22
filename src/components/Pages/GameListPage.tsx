@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button, Container, Grid, Input } from "semantic-ui-react";
 import { AppRuntimeSettingsContext, WebsocketContext } from "../../context";
 import { GameListGame } from "../../models/websocket/ServerGameList";
@@ -15,18 +15,16 @@ import { CacheContext } from "../../context";
 import "../GameList/GameList.scss";
 import MapInfo from "../GameList/MapInfo";
 import { Link } from "react-router-dom";
-import AutohostListModal from "../Modal/AutohostListModal";
-import {
-  ClientResolveConnectorIds,
-  ClientResolveConnectorIdsConverter,
-} from "./../../models/websocket/ClientResolveConnectorIds";
-import { toast } from "react-semantic-toasts";
+import { ClientResolveConnectorIdsConverter } from "./../../models/websocket/ClientResolveConnectorIds";
 import { SITE_TITLE } from "../../config/ApplicationConfig";
 import MetaDescription from "../Meta/MetaDescription";
+import { AuthContext } from "./../../context/index";
+import { AccessMaskBit } from "../Modal/AccessMaskModal";
 
 function GameListPage() {
   const sockets = useContext(WebsocketContext);
   const runtimeContext = useContext(AppRuntimeSettingsContext);
+  const auth = useContext(AuthContext).auth;
 
   const [gameList, setGameList] = useState<GameListGame[]>([]);
   const [selectedGame, setSelectedGame] = useState<GameListGame | null>(null);
@@ -48,8 +46,6 @@ function GameListPage() {
     filters: debouncedFilterSettings,
     ignoreFocusCheck: false,
   });
-
-  const [autohostModalOpened, setAutohostModalOpened] = useState(false);
 
   const connectorCache = useContext(CacheContext).cachedConnectorIds;
 
@@ -95,25 +91,17 @@ function GameListPage() {
             style={{ width: "50%" }}
             placeholder="Быстрый фильтр"
           />
-          <Button
-            as={Link}
-            to="/create"
-            floated="right"
-            basic
-            icon="plus"
-            color="green"
-            size="large"
-          />
-          <Button
-            floated="right"
-            icon="list"
-            basic
-            color="green"
-            size="large"
-            onClick={() => {
-              setAutohostModalOpened(true);
-            }}
-          />
+          {auth.accessMask.hasAccess(AccessMaskBit.GAME_CREATE) && (
+            <Button
+              as={Link}
+              to="/create"
+              floated="right"
+              basic
+              icon="plus"
+              color="green"
+              size="large"
+            />
+          )}
           <GameList
             gameList={filtredGameList}
             selectedGame={selectedGame}
@@ -131,14 +119,6 @@ function GameListPage() {
           )}
         </Grid.Column>
       </Grid>
-      {autohostModalOpened && (
-        <AutohostListModal
-          open={autohostModalOpened}
-          onClose={() => {
-            setAutohostModalOpened(false);
-          }}
-        ></AutohostListModal>
-      )}
     </Container>
   );
 }

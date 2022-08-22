@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom";
 import { Dropdown } from "semantic-ui-react";
 import { AuthContext, WebsocketContext } from "../../context";
 import AccessListModal from "../Modal/AccessListModal";
+import { AccessMaskBit } from "../Modal/AccessMaskModal";
 import UserSettingsModal from "../Modal/UserSettingsModal";
 
 function UserDrowdown() {
@@ -36,7 +37,7 @@ function UserDrowdown() {
         item
       >
         <Dropdown.Menu>
-          <Dropdown.Item as={NavLink} to="/create">
+          <Dropdown.Item disabled={!authContext.auth.accessMask.hasAccess(AccessMaskBit.GAME_CREATE)} as={NavLink} to="/create">
             Создать игру
           </Dropdown.Item>
           <Dropdown.Item

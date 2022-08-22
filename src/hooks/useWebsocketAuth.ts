@@ -7,6 +7,7 @@ import { ServerApiToken } from "../models/websocket/ServerApiToken";
 import { ServerError } from "../models/websocket/ServerError";
 import { ServerUserAuth } from "../models/websocket/ServerUserAuth";
 import {
+  AccessMaskHolder,
   AccessMaskHolderImpl,
   AnonymousAccessMaskHolder,
 } from "../utils/AccessMaskHolder";
@@ -40,6 +41,7 @@ const authReducer = (state: AuthData, action: AuthAction) => {
       ...state,
       currentAuth: null,
       apiToken: new AnonymousTokenHolder(),
+      accessMask: new AnonymousAccessMaskHolder(),
     };
     return newState;
   } else if (action.action === "saveAuth") {
@@ -187,7 +189,7 @@ export const useWebsocketAuth = ({
         e.detail.package.type === GLOBAL_ACCESS_LIST
       ) {
         const records = e.detail.package as ServerAccessList;
-        
+
         authDispatcher({ action: "saveAccessMask", payload: records.records });
       }
     };
