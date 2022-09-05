@@ -263,6 +263,20 @@ export class MapService {
 
     return request;
   }
+
+  public getConfigs = async (options?: RequestOptions) => {
+    let request: AxiosRequestConfig<FormData> = {
+      ...this.defaultConfig,
+      url: "/v1/configs",
+      method: "GET",
+    };
+
+    request = this.appendOptions(request, options);
+
+    const response = await Axios.request<ConfigInfo[]>(request);
+
+    return response.data;
+  };
 }
 
 interface UploadMapParametres {

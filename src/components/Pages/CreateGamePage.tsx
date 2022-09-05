@@ -4,6 +4,7 @@ import MapSelectTab from "../CreateGame/MapSelectTab";
 import "../CreateGame/CreateGame.scss";
 import MetaDescription from "../Meta/MetaDescription";
 import MetaRobots from "../Meta/MetaRobots";
+import ConfigSelectTab from "../CreateGame/ConfigSelectTab";
 
 const panes = [
   {
@@ -12,7 +13,7 @@ const panes = [
   },
   {
     menuItem: "Конфиг",
-    render: () => null,
+    render: () => <ConfigSelectTab />,
   },
 ];
 

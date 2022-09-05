@@ -29,8 +29,6 @@ function MapSelectTab() {
     loadNextPage();
   }, [isVisible]);
 
-  const go = useNavigate();
-
   const renderMapList = searchedMaps || defalutMaps;
 
   return (
