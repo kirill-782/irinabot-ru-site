@@ -62,13 +62,14 @@ const routes: CondirionalRoute[] = [
           {
             index: true,
             element: <CreateGamePage />,
+            requireAuth: true,
           },
           {
             path: "confirm",
             element: <CreateGameConfirmPage />,
+            requireAuth: true,
           },
         ],
-        requireAuth: true,
       },
       {
         path: "maps",

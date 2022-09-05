@@ -11,6 +11,8 @@ import GameJoinButton from "./GameJoinButton";
 import React from "react";
 import MapDownloadButton from "./MapDownloadButton";
 import MapCategoryList from "./MapCategoryList";
+import { Link } from "react-router-dom";
+import { AuthContext } from "./../../context/index";
 
 interface MapFooterProps {
   gameList: GameListGame[];
@@ -25,6 +27,11 @@ function MapFooter({
   gameList,
 }: Map & MapFooterProps) {
   const mapSize = byteSize(fileSize);
+
+  const { accessMask, apiToken } = useContext(AuthContext).auth;
+
+  const showCreateButton =
+    apiToken.hasAuthority("MAP_READ") && accessMask.hasAccess(64);
 
   return (
     <>
@@ -41,6 +48,16 @@ function MapFooter({
           />
         )}
         <GameJoinButton gameList={gameList} mapId={id || 0} />
+        {showCreateButton && (
+          <Button
+            color="green"
+            basic
+            icon="plus"
+            as={Link}
+            to={`/create/confirm?mapId=${id}`}
+          />
+        )}
+
         <Button color="green" basic icon="edit" floated="right" />
         <Button
           color="red"

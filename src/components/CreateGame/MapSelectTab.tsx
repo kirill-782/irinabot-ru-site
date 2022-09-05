@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Form, Grid, Header } from "semantic-ui-react";
+import { Button, Form, Grid, Header } from "semantic-ui-react";
 import { SearchFilters, SearchOrder } from "../../models/rest/SearchFilters";
 import { Filter, MapFilters, Order } from "../MapListPage/MapFilters";
 import { useDefaultMaps } from "../../hooks/useDefaultMaps";
@@ -8,7 +8,7 @@ import { useVisibility } from "../../hooks/useVisibility";
 import { GameCard } from "../MapListPage/MapCard";
 
 import "./MapSelectTab.scss";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function MapSelectTab() {
   const [searchOptions, setSearchOptions] = useState<
@@ -67,7 +67,11 @@ function MapSelectTab() {
               key={key}
               {...map}
               selected={false}
-              onClick={() => go(`/create/confirm?mapId=${map.id}`)}
+              selectElement={
+                <Button as={Link} to={`/create/confirm?mapId=${map.id}`}>
+                  Выбрать
+                </Button>
+              }
             />
           ))}
         </Grid.Row>

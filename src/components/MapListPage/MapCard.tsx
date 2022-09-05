@@ -10,12 +10,12 @@ import MapDownloadButton from "../MapPage/MapDownloadButton";
 
 /** Карточка игры в dropdown */
 export const GameCard: React.FC<
-  Map & { onClick?(): void; selected: boolean }
+  Map & { selectElement?: React.ReactNode; selected: boolean }
 > = ({
   mapInfo,
   fileName,
   fileSize,
-  onClick,
+  selectElement,
   id,
   categories,
   downloadUrl,
@@ -67,9 +67,7 @@ export const GameCard: React.FC<
       </Grid.Column>
       <Grid.Column className="action-buttons" width={3}>
         <Grid.Row>
-          <Button type="button" onClick={onClick}>
-            Выбрать
-          </Button>
+          {selectElement}
           {downloadUrl && (
             <MapDownloadButton
               downloadUrl={downloadUrl}
