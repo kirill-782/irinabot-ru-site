@@ -37,7 +37,13 @@ function UserDrowdown() {
         item
       >
         <Dropdown.Menu>
-          <Dropdown.Item disabled={!authContext.auth.accessMask.hasAccess(AccessMaskBit.GAME_CREATE)} as={NavLink} to="/create">
+          <Dropdown.Item
+            disabled={
+              !authContext.auth.accessMask.hasAccess(AccessMaskBit.GAME_CREATE)
+            }
+            as={NavLink}
+            to="/create"
+          >
             Создать игру
           </Dropdown.Item>
           <Dropdown.Item
@@ -64,9 +70,12 @@ function UserDrowdown() {
           setUserSettingsModalOpen(false);
         }}
       />
-      <AccessListModal open={userAccessModalOpen} onClose={() => {
-        setUserAccessModalOpen(false);
-      }}/>
+      <AccessListModal
+        open={userAccessModalOpen}
+        onClose={() => {
+          setUserAccessModalOpen(false);
+        }}
+      />
     </>
   );
 }

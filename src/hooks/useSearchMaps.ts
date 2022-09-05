@@ -1,25 +1,44 @@
 import { useContext, useEffect, useState } from "react";
 import { RestContext } from "../context";
 import { Map } from "../models/rest/Map";
-import { SearchFilters } from "../models/rest/SearchFilters";
+import { SearchFilters, SearchOrder } from "../models/rest/SearchFilters";
 import { convertErrorResponseToString } from "../utils/ApiUtils";
 
 const PAGE_SIZE = 20;
 
+const isNoFilters = (filters: SearchFilters | null) => {
+  if (!filters || !Object.keys(filters).length) return true;
+
+  let found = false;
+
+  Object.keys(filters).forEach((i) => {
+    if (filters[i] !== undefined) found = true;
+  });
+
+  return !found;
+};
+
 export const useSearchMaps = (
   filters: SearchFilters | null,
+  order: SearchOrder | null,
   q?: string
 ): [Map[], boolean, boolean, string, () => void] => {
   const [searchedMaps, setSearchedMaps] = useState<Map[] | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [isFull, setFull] = useState<boolean>(false);
+
   const [isLoading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
 
   const { mapsApi } = useContext(RestContext);
 
-  const searchMaps = (value: string, filters: SearchFilters, page: number) => {
-    if (value.length < 2 && !filters) return;
+  const searchMaps = (
+    value: string,
+    filters: SearchFilters,
+    order: SearchOrder,
+    page: number
+  ) => {
+    if (value.length < 2 && isNoFilters(filters)) return;
 
     setLoading(true);
 
@@ -27,7 +46,7 @@ export const useSearchMaps = (
 
     setErrorMessage("");
     mapsApi
-      .searchMap(filters, value.length >= 2 ? value : undefined, {
+      .searchMap(filters, order, value.length >= 2 ? value : undefined, {
         count: PAGE_SIZE,
         offset: page * PAGE_SIZE,
       })
@@ -53,19 +72,19 @@ export const useSearchMaps = (
 
   const loadNextPage = () => {
     if (!isFull && !isLoading && (q || filters))
-      searchMaps(q, filters || {}, currentPage + 1);
+      searchMaps(q, filters || {}, order || {}, currentPage + 1);
   };
 
   useEffect(() => {
-    if (q || filters) {
+    if (q || !isNoFilters(filters)) {
       const timer = setTimeout(() => {
-        searchMaps(q, filters || {}, 0);
+        searchMaps(q, filters || {}, order || {}, 0);
       }, 300);
 
       return () => clearTimeout(timer);
     } else setSearchedMaps(null);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [q, filters]);
+  }, [q, filters, order]);
 
   return [searchedMaps, isFull, isLoading, errorMessage, loadNextPage];
 };

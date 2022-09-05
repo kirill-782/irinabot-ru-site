@@ -3,7 +3,7 @@ import { Flags } from "../models/rest/Flags";
 import Axios, { AxiosRequestConfig } from "axios";
 import { Map } from "../models/rest/Map";
 import { Category } from "../models/rest/Category";
-import { SearchFilters } from "../models/rest/SearchFilters";
+import { SearchFilters, SearchOrder } from "../models/rest/SearchFilters";
 import { ParseMap } from "../models/rest/ParseMap";
 import { ConfigInfo } from "../models/rest/ConfigInfo";
 
@@ -15,7 +15,7 @@ export interface PageOptions {
 export interface RequestOptions {
   onUploadProgress?: (progressEvent: any) => void;
   onDownloadProgress?: (progressEvent: any) => void;
-  signal: AbortSignal;
+  signal?: AbortSignal;
 }
 
 export class MapService {
@@ -109,12 +109,17 @@ export class MapService {
     return response.data;
   };
 
-  public getMapConfig = async (mapId: number, patchId: string, options?: RequestOptions) => {
+  public getMapConfig = async (
+    mapId: number,
+    patchId: string,
+    options?: RequestOptions
+  ) => {
     let request: AxiosRequestConfig<FormData> = {
       ...this.defaultConfig,
       url: `/v1/maps/${mapId}/defaultConfigs/${patchId}`,
       method: "GET",
       headers: {
+        ...this.defaultConfig.headers,
         Accept: `application/jose`,
       },
     };
@@ -126,7 +131,11 @@ export class MapService {
     return response.data;
   };
 
-  public getDefaultMapConfig = async (mapId: number, patchId: string, options?: RequestOptions) => {
+  public getDefaultMapConfig = async (
+    mapId: number,
+    patchId: string,
+    options?: RequestOptions
+  ) => {
     let request: AxiosRequestConfig<FormData> = {
       ...this.defaultConfig,
       url: `/v1/maps/${mapId}/defaultConfigs/${patchId}`,
@@ -143,7 +152,11 @@ export class MapService {
     return response.data;
   };
 
-  public parseMapConfig = async (mapId: number, patchId: string, options?: RequestOptions) => {
+  public parseMapConfig = async (
+    mapId: number,
+    patchId: string,
+    options?: RequestOptions
+  ) => {
     let request: AxiosRequestConfig<FormData> = {
       ...this.defaultConfig,
       url: "/v1/maps/" + mapId + "/parse",
@@ -164,7 +177,13 @@ export class MapService {
     return response.data;
   };
 
-  public searchMap = async (filters: SearchFilters, mapName?: string, page?: PageOptions, options?: RequestOptions) => {
+  public searchMap = async (
+    filters: SearchFilters,
+    order: SearchOrder,
+    mapName?: string,
+    page?: PageOptions,
+    options?: RequestOptions
+  ) => {
     let request: AxiosRequestConfig<FormData> = {
       ...this.defaultConfig,
       url: "/v1/maps/search",
@@ -172,13 +191,49 @@ export class MapService {
       params: {
         q: mapName ? mapName : undefined,
         ...filters,
-        ...page
+        ...order,
+        ...page,
       },
     };
 
     request = this.appendOptions(request, options);
 
     const response = await Axios.request<Map[]>(request);
+
+    return response.data;
+  };
+
+  public getConfigInfo = async (configId: number, options?: RequestOptions) => {
+    let request: AxiosRequestConfig = {
+      ...this.defaultConfig,
+      url: `/v1/configs/${configId}`,
+      method: "GET",
+    };
+
+    request = this.appendOptions(request, options);
+
+    const response = await Axios.request<ConfigInfo>(request);
+
+    return response.data;
+  };
+
+  public getConfigInfoToken = async (
+    configId: number,
+    options?: RequestOptions
+  ) => {
+    let request: AxiosRequestConfig = {
+      ...this.defaultConfig,
+      url: `/v1/configs/${configId}`,
+      method: "GET",
+      headers: {
+        ...this.defaultConfig.headers,
+        Accept: `application/jose`,
+      },
+    };
+
+    request = this.appendOptions(request, options);
+
+    const response = await Axios.request<string>(request);
 
     return response.data;
   };

@@ -11,6 +11,7 @@ import { useContext, useMemo } from "react";
 import { AuthContext } from "../context";
 import ForbiddenPage from "./Pages/ForbiddenPage";
 import React from "react";
+import CreateGameConfirmPage from "./Pages/CreateGameConfirmPage";
 
 interface CondirionalRouteIndex {
   path?: undefined;
@@ -56,7 +57,17 @@ const routes: CondirionalRoute[] = [
       },
       {
         path: "create",
-        element: <CreateGamePage />,
+        element: undefined,
+        routes: [
+          {
+            index: true,
+            element: <CreateGamePage />,
+          },
+          {
+            path: "confirm",
+            element: <CreateGameConfirmPage />,
+          },
+        ],
         requireAuth: true,
       },
       {
@@ -97,7 +108,6 @@ function RouteList() {
         hasAccess: true,
       };
 
-
       if (requiredAuthorities && requiredAuthorities.length > 0) {
         const missingAuthorities = requiredAuthorities.filter((i) => {
           return !auth.apiToken.hasAuthority(i);
@@ -115,7 +125,6 @@ function RouteList() {
     };
 
     const getRoutesNode = (i: CondirionalRoute, key: number) => {
-
       const checkResult = hasAccessToRoute(i);
 
       if (checkResult.hasAccess) {
@@ -140,7 +149,6 @@ function RouteList() {
 
     return routes.map(getRoutesNode);
   }, [auth.apiToken, auth.currentAuth, routes]);
-
 
   return <Routes>{resultRoutes}</Routes>;
 }

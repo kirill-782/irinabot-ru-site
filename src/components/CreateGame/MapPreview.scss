@@ -1,0 +1,33 @@
+.map-preview {
+  a.header:hover {
+    color: rgba(77, 161, 209, 0.664);
+  }
+
+  .author {
+    font-style: italic;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  .description {
+    margin-top: 5px;
+  }
+
+  .categories {
+    margin-top: 10px;
+  }
+}
+
+.dark {
+  a.header:hover {
+    color: #c7c7c7;
+  }
+
+  .author {
+    color: #797979;
+  }
+
+  .description {
+    color: hsla(0, 0%, 100%, 0.7);
+  }
+}

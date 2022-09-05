@@ -31,7 +31,6 @@ function UtilsDropdown() {
           </Dropdown.Item>
           <UploadMap />
           <Dropdown.Item
-            icon="calc"
             onClick={() => {
               setAccessMaskModalOpened(true);
             }}

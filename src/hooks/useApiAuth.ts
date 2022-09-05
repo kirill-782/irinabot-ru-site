@@ -1,13 +1,16 @@
-import { useEffect } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useContext } from "react";
 import { AuthContext, RestContext } from "./../context/index";
 
 import { MapService } from "../services/MapService";
 import { DEFAULT_CONFIG } from "../config/ApiConfig";
 
-export const useApiAuth = () => {
+export interface ApiAuthOptions {
+  setMapService: Dispatch<SetStateAction<MapService>>;
+}
+
+export const useApiAuth = ({ setMapService }: ApiAuthOptions) => {
   const authContext = useContext(AuthContext);
-  const restContext = useContext(RestContext);
 
   useEffect(() => {
     let newConfig = {};
@@ -25,8 +28,6 @@ export const useApiAuth = () => {
       };
     }
 
-    restContext.mapsApi = new MapService(newConfig);
-
-    restContext.mapUploader.setMapService(restContext.mapsApi);
-  }, [authContext.auth.apiToken, restContext]);
+    setMapService(new MapService(newConfig));
+  }, [authContext.auth.apiToken]);
 };

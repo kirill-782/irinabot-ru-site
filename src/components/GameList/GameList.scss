@@ -46,13 +46,12 @@
 
 .online-stats-column {
   .ui.table {
-
   }
 }
 
 @media only screen and (min-width: 768px) {
   .game-list {
-  .game-title {
+    .game-title {
       overflow: hidden;
       display: inline-block;
       text-overflow: ellipsis;
@@ -69,7 +68,7 @@
   }
 
   .game-list {
-  .game-title {
+    .game-title {
       width: 210px;
     }
   }
@@ -86,7 +85,7 @@
   }
 
   .game-list {
-  .game-title {
+    .game-title {
       width: 250px;
     }
   }

@@ -9,8 +9,9 @@ import {
   Grid,
   GridRow,
 } from "semantic-ui-react";
-import { RestContext } from "../../context";
+import { CacheContext, RestContext } from "../../context";
 import { SearchFilters } from "../../models/rest/SearchFilters";
+import { SearchOrder } from "./../../models/rest/SearchFilters";
 
 const sortOptions = [
   { key: "0", text: "(по умолчанию)", value: "default" },
@@ -31,22 +32,26 @@ export interface Filter {
   taggedOnly: boolean;
   minPlayers: number;
   maxPlayers: number;
-  sortBy: string;
-  orderBy: string;
   category: number;
   owner: string;
 }
 
+export interface Order {
+  sortBy: string;
+  orderBy: string;
+}
+
 /** Параметры, принимаемые компонентом фильтра. */
 export interface FiltersProps {
-  onFitlerChange(filters: SearchFilters | null): void;
+  onFitlerChange(filters: [SearchFilters | null, SearchOrder | null]): void;
   defaultFilters?: Filter;
-  value?: SearchFilters | null;
+  defaultOrder?: Order;
+  value?: [SearchFilters | null, SearchOrder | null];
   autoCommit?: boolean;
 }
 
 export const MapFilters: React.FC<FiltersProps> = memo(
-  ({ onFitlerChange, defaultFilters, value, autoCommit }) => {
+  ({ onFitlerChange, defaultFilters, defaultOrder, value, autoCommit }) => {
     const [verified, setVerified] = useState<boolean>(
       defaultFilters?.verify || false
     );
@@ -60,10 +65,10 @@ export const MapFilters: React.FC<FiltersProps> = memo(
       defaultFilters?.maxPlayers || 24
     );
     const [sortBy, setSortBy] = useState<string>(
-      defaultFilters?.sortBy || "default"
+      defaultOrder?.sortBy || "default"
     );
     const [orderBy, setOrderBy] = useState<string>(
-      defaultFilters?.orderBy || "default"
+      defaultOrder?.orderBy || "default"
     );
     const [selectedCategories, setSelectedCategories] = useState<number>(
       defaultFilters?.category || 0
@@ -73,31 +78,45 @@ export const MapFilters: React.FC<FiltersProps> = memo(
 
     const [categories, setCategories] = useState<DropdownItemProps[]>([]);
 
-    const { mapsApi } = useContext(RestContext);
+    const cacheContext = useContext(CacheContext);
+
+    useEffect(() => {
+      if (cacheContext.cachedCategories.length === 0)
+        cacheContext.cacheCategories();
+    }, [cacheContext.cachedCategories, cacheContext.cacheCategories]);
 
     const commitFilters = () => {
-      onFitlerChange({
-        verify: verified ? true : undefined,
-        minPlayers: minPlayers === 1 ? undefined : minPlayers,
-        maxPlayers: maxPlayers === 24 ? undefined : maxPlayers,
-        sortBy: sortBy === "default" ? undefined : sortBy,
-        orderBy: orderBy === "default" ? undefined : orderBy,
-        taggedOnly: taggedOnly ? true : undefined,
-        category: selectedCategories || undefined,
-        owner: owner || undefined,
-      });
+      onFitlerChange([
+        {
+          verify: verified ? true : undefined,
+          minPlayers: minPlayers === 1 ? undefined : minPlayers,
+          maxPlayers: maxPlayers === 24 ? undefined : maxPlayers,
+
+          taggedOnly: taggedOnly ? true : undefined,
+          category: selectedCategories || undefined,
+          owner: owner || undefined,
+        },
+        {
+          sortBy: sortBy === "default" ? undefined : sortBy,
+          orderBy: orderBy === "default" ? undefined : orderBy,
+        },
+      ]);
     };
 
     useEffect(() => {
       if (value) {
-        setVerified(value.verify || false);
-        setTaggedOnly(value.taggedOnly || false);
-        setMinPlayers(value.minPlayers || 1);
-        setMaxPlayers(value.maxPlayers || 24);
-        setSortBy(value.sortBy || "default");
-        setOrderBy(value.orderBy || "default");
-        setSelectedCategories(value.category || 0);
-        setOwner(value.owner || "");
+        if (value[0]) {
+          setVerified(value[0].verify || false);
+          setTaggedOnly(value[0].taggedOnly || false);
+          setMinPlayers(value[0].minPlayers || 1);
+          setMaxPlayers(value[0].maxPlayers || 24);
+          setSelectedCategories(value[0].category || 0);
+          setOwner(value[0].owner || "");
+        }
+        if (value[1]) {
+          setSortBy(value[1].sortBy || "default");
+          setOrderBy(value[1].orderBy || "default");
+        }
       }
     }, [value]);
 
@@ -112,7 +131,6 @@ export const MapFilters: React.FC<FiltersProps> = memo(
       sortBy,
       orderBy,
       selectedCategories,
-      categories,
       owner,
     ]);
 
@@ -122,28 +140,38 @@ export const MapFilters: React.FC<FiltersProps> = memo(
         setTaggedOnly(defaultFilters.taggedOnly);
         setMinPlayers(defaultFilters.minPlayers);
         setMaxPlayers(defaultFilters.maxPlayers);
-        setSortBy(defaultFilters.sortBy);
-        setOrderBy(defaultFilters.orderBy);
         setSelectedCategories(defaultFilters.category);
+      } else {
+        setVerified(false);
+        setTaggedOnly(false);
+        setMinPlayers(1);
+        setMaxPlayers(24);
+        setSelectedCategories(0);
+      }
+
+      if (defaultOrder) {
+        setSortBy(defaultOrder.sortBy);
+        setOrderBy(defaultOrder.orderBy);
+      } else {
+        setSortBy("default");
+        setOrderBy("default");
       }
     };
 
     useEffect(() => {
-      mapsApi.getCategories().then((res) => {
-        setCategories([
-          {
-            key: 0,
-            value: 0,
-            text: "(любая)",
-          },
-          ...res.map((el) => ({
-            key: el.id,
-            value: el.id,
-            text: el.name,
-          })),
-        ]);
-      });
-    }, [mapsApi]);
+      setCategories([
+        {
+          key: 0,
+          value: 0,
+          text: "(любая)",
+        },
+        ...cacheContext.cachedCategories.map((el) => ({
+          key: el.id,
+          value: el.id,
+          text: el.name,
+        })),
+      ]);
+    }, [cacheContext.cachedCategories]);
 
     const handleCategoryChange = (_, { value }: DropdownProps) => {
       setSelectedCategories(value as number);
@@ -224,7 +252,7 @@ export const MapFilters: React.FC<FiltersProps> = memo(
             title="Сбросить фильтры"
             onClick={(ev) => {
               ev.preventDefault();
-              onFitlerChange(null);
+              onFitlerChange([null, null]);
               resetFilters();
             }}
           />

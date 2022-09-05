@@ -5,7 +5,7 @@ import { Map } from "../../models/rest/Map";
 import MapStatusIcons from "../MapStatusIcons";
 import WarcraftIIIText from "../WarcraftIIIText";
 
-function MapHeader({...map}: Map) {
+function MapHeader({ ...map }: Map) {
   return (
     <>
       <Grid.Column width={3}>
@@ -16,7 +16,8 @@ function MapHeader({...map}: Map) {
       <Grid.Column width={10}>
         <Header>
           <WarcraftIIIText>{map.mapInfo?.name}</WarcraftIIIText>
-          <u>#{map.id}</u><MapStatusIcons {...map} />
+          <u>#{map.id}</u>
+          <MapStatusIcons {...map} />
         </Header>
         <p>
           <WarcraftIIIText>{map.mapInfo?.description}</WarcraftIIIText>
@@ -27,15 +28,11 @@ function MapHeader({...map}: Map) {
         </p>
         <p>
           <b>Рекомендации к игрокам: </b>
-          <WarcraftIIIText>
-            {map.mapInfo?.playerRecommendation}
-          </WarcraftIIIText>
+          <WarcraftIIIText>{map.mapInfo?.playerRecommendation}</WarcraftIIIText>
         </p>
       </Grid.Column>
       <Grid.Column width={3}>
-        {map.mapInfo?.mapImageUrl && (
-          <Image src={map.mapInfo?.mapImageUrl} />
-        )}
+        {map.mapInfo?.mapImageUrl && <Image src={map.mapInfo?.mapImageUrl} />}
       </Grid.Column>
     </>
   );

@@ -1,13 +1,12 @@
 .dark {
-    .ui.basic.green.buttons .button:hover,
-    .ui.basic.green.button:hover,
-    .ui.basic.green.button:focus {
-      background: #2a2a2a !important;
-      box-shadow: 0px 0px 0px 1px #2a2a2a inset !important;
-      color: #d3d3d3 !important;
-    }
+  .ui.basic.green.buttons .button:hover,
+  .ui.basic.green.button:hover,
+  .ui.basic.green.button:focus {
+    background: #2a2a2a !important;
+    box-shadow: 0px 0px 0px 1px #2a2a2a inset !important;
+    color: #d3d3d3 !important;
+  }
 }
-
 
 @media screen and (max-width: 1200px) {
   .online-stats-column {

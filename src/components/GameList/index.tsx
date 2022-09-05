@@ -24,7 +24,7 @@ function GameList({ gameList, selectedGame, setSelectedGame }: GameListProps) {
 
     return usedSlots;
   };
-  
+
   return (
     <Table selectable>
       <Table.Header>
@@ -38,17 +38,19 @@ function GameList({ gameList, selectedGame, setSelectedGame }: GameListProps) {
       </Table.Header>
       <Table.Body>
         {gameList.map((game: GameListGameFilterExtends) => {
-          
-          const started = game.gameFlags.started ? 'game-started' : '';
-          const vip = game.gameFlags.hasGamePowerUp ? 'game-vip' : '';
-          const external = game.gameFlags.hasOtherGame ? 'game-external' : '';
-          const hidden = game.hidden ? 'hidden' : '';
-          const selected = game.gameCounter === selectedGame?.gameCounter ? 'game-selected' : '';
+          const started = game.gameFlags.started ? "game-started" : "";
+          const vip = game.gameFlags.hasGamePowerUp ? "game-vip" : "";
+          const external = game.gameFlags.hasOtherGame ? "game-external" : "";
+          const hidden = game.hidden ? "hidden" : "";
+          const selected =
+            game.gameCounter === selectedGame?.gameCounter
+              ? "game-selected"
+              : "";
 
           return (
             <Table.Row
               key={game.gameCounter}
-              className={`${started} ${vip} ${external} ${hidden} ${selected}`} 
+              className={`${started} ${vip} ${external} ${hidden} ${selected}`}
               onClick={() => {
                 if (selectedGame?.gameCounter === game.gameCounter)
                   setSelectedGame(null);
@@ -58,7 +60,9 @@ function GameList({ gameList, selectedGame, setSelectedGame }: GameListProps) {
               <Table.Cell>
                 {getPlayerSlots(game) + "/" + game.players.length}
               </Table.Cell>
-              <Table.Cell><ConnectorId id={game.creatorID}/></Table.Cell>
+              <Table.Cell>
+                <ConnectorId id={game.creatorID} />
+              </Table.Cell>
               <Table.Cell className="game-title">{game.name}</Table.Cell>
               <Table.Cell>
                 <GameListPlayers players={game.players} />

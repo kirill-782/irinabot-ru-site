@@ -37,10 +37,12 @@ function MapStats({ gameList, mapId }: MapStatsProps) {
   return gameList.length === 0 ? null : (
     <>
       <Label title="Игроков в играх">
-        <Icon name="user"></Icon>{allPlayers}
+        <Icon name="user"></Icon>
+        {allPlayers}
       </Label>
       <Label title="Игроков в лобби">
-        <Icon name="wait"></Icon>{lobbyPlayers}
+        <Icon name="wait"></Icon>
+        {lobbyPlayers}
       </Label>
     </>
   );

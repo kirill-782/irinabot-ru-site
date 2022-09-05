@@ -1,7 +1,15 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Container, Form, Grid, Header, Message, Tab } from "semantic-ui-react";
+import {
+  Container,
+  Form,
+  Grid,
+  Header,
+  Message,
+  Sticky,
+  Tab,
+} from "semantic-ui-react";
 import { SITE_TITLE } from "../../config/ApplicationConfig";
 import { useSearchMaps } from "../../hooks/useSearchMaps";
 import { useVisibility } from "../../hooks/useVisibility";
@@ -10,6 +18,8 @@ import ConnectorId from "../ConnectorId";
 import { GameCard } from "../CreateGame/GameCard";
 import { Filter, MapFilters } from "../MapListPage/MapFilters";
 import MetaDescription from "../Meta/MetaDescription";
+
+interface MapListPageHistory {}
 
 const defaultFilters: Filter = {
   verify: false,
@@ -33,18 +43,6 @@ const filtersUrlParams = [
   "owner",
 ];
 
-const isNoFilters = (filters: SearchFilters | null) => {
-  if (!filters || !Object.keys(filters).length) return true;
-
-  let found = false;
-
-  Object.keys(filters).forEach((i) => {
-    if (filters[i] !== undefined) found = true;
-  });
-
-  return !found;
-};
-
 const defaultFilter = {
   verify: true,
 };
@@ -53,15 +51,12 @@ function MapListPage() {
   const [filters, setFilters] = useState<SearchFilters | null>(null);
   const [loadButton, setLoadButton] = useState<HTMLButtonElement | null>(null);
 
-  let searchFilters = filters;
-
-  if (isNoFilters(filters)) searchFilters = defaultFilter;
+  let searchFilters = isNoFilters(filters) ? defaultFilter : filters;
 
   const [searchedMaps, isFull, isLoading, errorMessage, loadNextPage] =
     useSearchMaps(searchFilters, "");
 
   const isVisible = useVisibility(loadButton, { rootMargin: "100px" });
-
   const [disableFilters, setDisableFilters] = useState<boolean>(false);
 
   const navigate = useNavigate();
@@ -88,7 +83,7 @@ function MapListPage() {
         urlParams.delete(i);
       });
 
-      navigate("?" + urlParams.toString(), {state: {}});
+      navigate("?" + urlParams.toString(), { state: {} });
     }
   }, [filters]);
 
@@ -166,7 +161,7 @@ function MapListPage() {
       <Form>
         <Grid columns="equal" stackable centered>
           {!disableFilters && (
-            <Grid.Column width={3}>
+            <Grid.Column width={3} style={{ position: "sticky" }}>
               <Header size="small">Фильтры</Header>
               <MapFilters
                 onFitlerChange={setFilters}
@@ -183,7 +178,7 @@ function MapListPage() {
             </Message>
             {searchedMaps &&
               searchedMaps.map((map, key) => (
-                <div key={map.id} >
+                <div key={map.id}>
                   <Link to={`/maps/${map.id}`}>{map.mapInfo?.name}</Link>
                 </div>
               ))}

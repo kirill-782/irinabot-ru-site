@@ -9,8 +9,8 @@ function SitePrepareLoader() {
     }, 500);
 
     return () => {
-      clearTimeout( timerId );
-    }
+      clearTimeout(timerId);
+    };
   }, [setNeedRender]);
 
   return needRender ? (

@@ -1,5 +1,5 @@
 import "./ConnectorId.scss";
-import { useContext } from 'react';
+import { useContext } from "react";
 import { CacheContext } from "../../context";
 import React from "react";
 
@@ -8,14 +8,16 @@ export interface ConnectorIdProps {
   resolve?: boolean;
 }
 
-function ConnectorId({id} : ConnectorIdProps) {
-
+function ConnectorId({ id }: ConnectorIdProps) {
   const connectorCache = useContext(CacheContext).cachedConnectorIds;
 
-  if(connectorCache[id])
-    return <span className="connectorId" title={`#${id}`}>{connectorCache[id]}</span>;
-  else
-    return <span className="connectorId">#{id}</span>;
+  if (connectorCache[id])
+    return (
+      <span className="connectorId" title={`#${id}`}>
+        {connectorCache[id]}
+      </span>
+    );
+  else return <span className="connectorId">#{id}</span>;
 }
 
 export default ConnectorId;

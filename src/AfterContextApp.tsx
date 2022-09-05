@@ -1,9 +1,56 @@
+import { CacheContext, RestContext, WebsocketContext } from "./context";
 import { useApiAuth } from "./hooks/useApiAuth";
+import { useCategoriesCache } from "./hooks/useCategoriesCache";
+import { useConnectorIdCache } from "./hooks/useConnectorIdCache";
+import { useVersionsCache } from "./hooks/useVersionsCache";
+import React, { useContext, useEffect, useState } from "react";
+import { DEFAULT_CONFIG } from "./config/ApiConfig";
+import { MapService } from "./services/MapService";
+import { MapUploaderService } from "./services/MapUploaderService";
 
 function AfterContextApp(props) {
-  useApiAuth();
+  const [mapsApi, setMapsApi] = useState(new MapService(DEFAULT_CONFIG));
+  const [mapUploader, setMapUploader] = useState(
+    new MapUploaderService(new MapService(DEFAULT_CONFIG))
+  );
 
-  return props.children;
+  useEffect(() => {
+    mapUploader.setMapService(mapsApi);
+  }, [mapsApi, mapUploader]);
+
+  useApiAuth({ setMapService: setMapsApi });
+
+  const { ghostSocket } = useContext(WebsocketContext);
+
+  const [cachedConnectorIds, cacheConnectorIdsDispatcher] = useConnectorIdCache(
+    { ghostSocket }
+  );
+
+  const [cachedCategories, cacheCategories] = useCategoriesCache(mapsApi);
+
+  const [cachedVersions, cacheVersions] = useVersionsCache(mapsApi);
+
+  return (
+    <RestContext.Provider
+      value={{
+        mapsApi,
+        mapUploader,
+      }}
+    >
+      <CacheContext.Provider
+        value={{
+          cachedConnectorIds,
+          cacheConnectorIdsDispatcher,
+          cachedCategories,
+          cacheCategories,
+          cachedVersions,
+          cacheVersions,
+        }}
+      >
+        {props.children}
+      </CacheContext.Provider>
+    </RestContext.Provider>
+  );
 }
 
 export default AfterContextApp;

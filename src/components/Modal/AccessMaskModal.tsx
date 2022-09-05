@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Form, Modal } from "semantic-ui-react";
 
-import "./AccessMaskModal.scss"
+import "./AccessMaskModal.scss";
 
 export enum AccessMaskBit {
   VIP_COMMANDS = 1,
@@ -112,7 +112,7 @@ const AccessMaskCheckBoxs: AccessMaskCheckbox[] = [
 export interface AccessMaskModalProps {
   defaultAccessMask?: number;
   onChange?: (number) => void;
-  readOnly?: boolean
+  readOnly?: boolean;
 
   onClose?: () => void;
   open?: boolean;
@@ -132,7 +132,13 @@ function AccessMaskModal({
   }, [accessMask]);
 
   return (
-    <Modal className="access-mask-modal" open={open} size="mini" onClose={onClose} closeIcon>
+    <Modal
+      className="access-mask-modal"
+      open={open}
+      size="mini"
+      onClose={onClose}
+      closeIcon
+    >
       <Modal.Header>Редактор админ прав</Modal.Header>
       <Modal.Content>
         <Form>

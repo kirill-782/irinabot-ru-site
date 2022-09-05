@@ -37,7 +37,11 @@ function GameJoinButton({ gameList, mapId }: GameJoinButtonProps) {
     let game: GameListGame | undefined;
 
     gameList.forEach((i) => {
-      if (!i.gameFlags.started && i.mapId === mapId && !i.gameFlags.hasPassword) {
+      if (
+        !i.gameFlags.started &&
+        i.mapId === mapId &&
+        !i.gameFlags.hasPassword
+      ) {
         game = i;
       }
     });

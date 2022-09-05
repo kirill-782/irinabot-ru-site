@@ -23,24 +23,22 @@
     margin-right: 5px;
   }
 
-  
-    position: relative;
-    min-height: 20px;
+  position: relative;
+  min-height: 20px;
 
-    .thumb {
-      background: rgb(255 255 255);
-      padding: 3px 7px;
-      border-radius: 4px;
-      border: 1px solid #e8e9e9;
-      color: black;
+  .thumb {
+    background: rgb(255 255 255);
+    padding: 3px 7px;
+    border-radius: 4px;
+    border: 1px solid #e8e9e9;
+    color: black;
 
-      &:hover {
-        background: #f9fafb;
-        border: 1px solid #d5d5d5;
-        cursor: pointer;
-      }
+    &:hover {
+      background: #f9fafb;
+      border: 1px solid #d5d5d5;
+      cursor: pointer;
     }
-  
+  }
 }
 
 @media screen and (max-width: 1450px) {
@@ -52,7 +50,6 @@
   }
 }
 
-
 @media screen and (max-width: 1200px) {
   .slider {
     .ui.basic.buttons .button,
@@ -63,7 +60,6 @@
   }
 }
 
-
 @media screen and (max-width: 991px) {
   .slider {
     .ui.basic.buttons .button,
@@ -72,7 +68,6 @@
     }
   }
 }
-
 
 @media screen and (max-width: 767px) {
   .slider {

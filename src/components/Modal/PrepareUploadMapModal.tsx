@@ -20,7 +20,7 @@ import { Flags } from "../../models/rest/Flags";
 import { AdditionalFlags, MapService } from "../../services/MapService";
 import { useCategoryFilter } from "../../hooks/useCategoryFilter";
 import { DragAndDropField } from "./DragAndDropField";
-import { RestContext } from "./../../context/index";
+import { CacheContext, RestContext } from "./../../context/index";
 import React from "react";
 
 interface PrepareUploadMapModalProps {
@@ -38,32 +38,23 @@ function PrepareUploadMapModal({
   open,
   onClose,
 }: PrepareUploadMapModalProps) {
-  const [categories, setCategories] = useState<Category[]>([]);
-
-  const [loadding, setLoading] = useState<boolean>(true);
-  const [loadingError, setLoadingError] = useState<boolean>(false);
-
   const [selectedCategories, setSelectedCategories] = useState<any>([]);
 
   const [isDragging, setDragging] = useState(false);
   const dragCounter = useMemo(() => ({ value: 0 }), []);
 
-  const mapService = useContext(RestContext).mapsApi;
+  const cacheContext = useContext(CacheContext);
 
   useEffect(() => {
-    mapService
-      .getCategories()
-      .then((categories) => {
-        setLoading(false);
-        setCategories(categories);
-      })
-      .catch((error) => {
-        setLoading(false);
-        setLoadingError(true);
-      });
-  }, [mapService]);
+    if (cacheContext.cachedCategories.length === 0)
+      cacheContext.cacheCategories();
+  }, [cacheContext.cachedCategories, cacheContext.cacheCategories]);
 
-  const dropdownOptions = useCategoryFilter(selectedCategories, categories, 5);
+  const dropdownOptions = useCategoryFilter(
+    selectedCategories,
+    cacheContext.cachedCategories,
+    5
+  );
 
   const fileInput = useRef<HTMLInputElement>(null);
 
@@ -121,7 +112,7 @@ function PrepareUploadMapModal({
   };
 
   return (
-    <Modal open={open} onClose={onClose}>
+    <Modal open={open} onClose={onClose} closeIcon>
       <Modal.Header>Выберите карту</Modal.Header>
 
       <Modal.Content
@@ -146,8 +137,7 @@ function PrepareUploadMapModal({
                 placeholder="Категории"
                 selection
                 options={dropdownOptions}
-                error={loadingError}
-                loading={loadding}
+                loading={cacheContext.cachedCategories.length === 0}
                 onChange={(e, p) => {
                   setSelectedCategories(p.value);
                 }}

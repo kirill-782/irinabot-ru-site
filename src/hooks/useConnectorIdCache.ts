@@ -11,13 +11,18 @@ interface ConnectorIdProps {
   ghostSocket: GHostWebSocket;
 }
 
-export const useConnectorIdCache = ({ ghostSocket }: ConnectorIdProps) : [CachedConnetcorIds, React.Dispatch<CacheConnectorIdAction>] => {
+export const useConnectorIdCache = ({
+  ghostSocket,
+}: ConnectorIdProps): [
+  CachedConnetcorIds,
+  React.Dispatch<CacheConnectorIdAction>
+] => {
   const authReducer = (
     state: CachedConnetcorIds,
     action: CacheConnectorIdAction
   ) => {
     if (action.action === "cache") return { ...state, ...action.payload };
-    else if (action.action === "clear") return {};
+    else if (action.action === "clear") return { "0": "Global Scope" };
     else if (action.action === "remove") {
       action.payload.forEach((i) => {
         delete state[i];
@@ -31,12 +36,11 @@ export const useConnectorIdCache = ({ ghostSocket }: ConnectorIdProps) : [Cached
 
   const [cachedConnectorIds, dispatchCacheConnectorId] = useReducer(
     authReducer,
-    {"1" : "Sangonomiya Kokomi"}
+    { "0": "Global Scope" }
   );
 
   useEffect(() => {
     const onPacket = (packet: GHostPackageEvent) => {
-
       if (
         packet.detail.package.context === DEFAULT_CONTEXT_HEADER_CONSTANT &&
         packet.detail.package.type === DEFAULT_RESOLVE_CONNECTOR_IDS_RESPONSE

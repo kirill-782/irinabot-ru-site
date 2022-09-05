@@ -10,7 +10,10 @@ function LoginDropdown() {
 
   const onSuccess = useCallback(
     (token: string, type: number) => {
-      authContext.dispatchAuth({action: "saveCredentials", payload: {token, type}});
+      authContext.dispatchAuth({
+        action: "saveCredentials",
+        payload: { token, type },
+      });
     },
     [authContext]
   );

@@ -10,7 +10,6 @@ export interface ServerAutohostListResponse extends AbstractPackage {
   autohosts: Array<Autohost>;
 }
 
-
 export interface Autohost {
   autohostId: number;
   name: string;
@@ -19,7 +18,6 @@ export interface Autohost {
   increment: number;
   spaceId: number;
 }
-
 
 export class ServerAutohostListResponseConverter extends AbstractConverter {
   public assembly(data: ServerAutohostListResponse) {
@@ -50,7 +48,7 @@ export class ServerAutohostListResponseConverter extends AbstractConverter {
     let autohostsConverter = new AutohostConverter();
 
     for (let i = 0; i < countAutohosts; ++i)
-    autohosts[autohosts.length] = autohostsConverter.parse(dataBuffer);
+      autohosts[autohosts.length] = autohostsConverter.parse(dataBuffer);
 
     return {
       context: DEFAULT_CONTEXT_HEADER_CONSTANT,
@@ -63,24 +61,24 @@ export class ServerAutohostListResponseConverter extends AbstractConverter {
 class AutohostConverter {
   public assembly(data: Autohost) {
     const dataBuffer = new DataBuffer(new ArrayBuffer(10));
-    dataBuffer.putUint32( data.autohostId );
-    dataBuffer.putNullTerminatedString( data.name );
-    dataBuffer.putUint32( data.autostart );
-    dataBuffer.putUint32( data.gamesLimit );
-    dataBuffer.putUint32( data.increment );
-    dataBuffer.putUint32( data.spaceId );
+    dataBuffer.putUint32(data.autohostId);
+    dataBuffer.putNullTerminatedString(data.name);
+    dataBuffer.putUint32(data.autostart);
+    dataBuffer.putUint32(data.gamesLimit);
+    dataBuffer.putUint32(data.increment);
+    dataBuffer.putUint32(data.spaceId);
 
     return dataBuffer.toArrayBuffer();
   }
 
   public parse(dataBuffer: DataBuffer): Autohost {
     return {
-      autohostId: dataBuffer.getUint32( ),
-      name: dataBuffer.getNullTerminatedString( ),
-      autostart: dataBuffer.getUint32( ),
-      gamesLimit: dataBuffer.getUint32( ),
-      increment: dataBuffer.getUint32( ),
-      spaceId: dataBuffer.getUint32( ),
-    }
+      autohostId: dataBuffer.getUint32(),
+      name: dataBuffer.getNullTerminatedString(),
+      autostart: dataBuffer.getUint32(),
+      gamesLimit: dataBuffer.getUint32(),
+      increment: dataBuffer.getUint32(),
+      spaceId: dataBuffer.getUint32(),
+    };
   }
 }

@@ -1,4 +1,5 @@
 import { createContext } from "react";
+import { Category } from "../models/rest/Category";
 import { AccessListRecord } from "../models/websocket/ServerAccessList";
 import { ConnectorWebsocket } from "../services/ConnectorWebsocket";
 import { GHostWebSocket } from "../services/GHostWebsocket";
@@ -117,8 +118,13 @@ export type CachedConnetcorIds = { [key: number]: string };
 
 interface CacheContextType {
   cachedConnectorIds: CachedConnetcorIds;
-
   cacheConnectorIdsDispatcher: React.Dispatch<CacheConnectorIdAction>;
+
+  cachedCategories: Category[];
+  cacheCategories: () => void;
+
+  cachedVersions: string[];
+  cacheVersions: () => void;
 }
 
 type CacheConnectorId = {

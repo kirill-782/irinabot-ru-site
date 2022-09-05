@@ -16,7 +16,7 @@ function ProgressUploadMapModal({
   onClose,
 }: UploadMapModalProps) {
   return (
-    <Modal open={open} onClose={onClose}>
+    <Modal open={open} onClose={onClose} closeIcon>
       <Modal.Header>Загрузка карты</Modal.Header>
       <Modal.Content>
         <p>

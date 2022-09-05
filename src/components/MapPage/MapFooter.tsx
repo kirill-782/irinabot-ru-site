@@ -9,6 +9,8 @@ import MapStats from "./MapStats";
 import { GameListGame } from "../../models/websocket/ServerGameList";
 import GameJoinButton from "./GameJoinButton";
 import React from "react";
+import MapDownloadButton from "./MapDownloadButton";
+import MapCategoryList from "./MapCategoryList";
 
 interface MapFooterProps {
   gameList: GameListGame[];
@@ -22,37 +24,21 @@ function MapFooter({
   id,
   gameList,
 }: Map & MapFooterProps) {
-  const [categoriesDictionary, setCategoriesDictionary] = useState<Category[]>(
-    []
-  );
-  const mapsApi = useContext(RestContext).mapsApi;
-
-  useEffect(() => {
-    mapsApi.getCategories().then((categories) => {
-      setCategoriesDictionary(categories);
-    });
-  }, [mapsApi]);
-
   const mapSize = byteSize(fileSize);
 
   return (
     <>
       <Grid.Row>
-        {categoriesDictionary
-          .filter((category) => {
-            return categories?.indexOf(category.id || 0) !== -1;
-          })
-          .map((category) => {
-            return <Label key={category.id}>{category.name}</Label>;
-          })}
+        <MapCategoryList categories={categories} />
         <MapStats gameList={gameList} mapId={id || 0} />
       </Grid.Row>
       <Grid.Row>
         {downloadUrl && (
-          <Button floated="left" color="green" as="a" href={`${downloadUrl}?as=${fileName}`}>
-            <Icon name="download" />
-            {`Скачать ${mapSize.value} ${mapSize.unit}`}
-          </Button>
+          <MapDownloadButton
+            downloadUrl={downloadUrl}
+            fileSize={fileSize}
+            fileName={fileName}
+          />
         )}
         <GameJoinButton gameList={gameList} mapId={id || 0} />
         <Button color="green" basic icon="edit" floated="right" />

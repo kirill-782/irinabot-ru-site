@@ -5,7 +5,7 @@ import { RestContext } from "../../context";
 import { Container, Icon, Loader, Image } from "semantic-ui-react";
 import "./MapInfo.scss";
 import WarcraftIIIText from "../WarcraftIIIText";
-import MapStatusIcons from "../MapStatusIcons"
+import MapStatusIcons from "../MapStatusIcons";
 import React from "react";
 
 interface MapInfoProps {
@@ -51,7 +51,8 @@ function MapInfo({ mapId }: MapInfoProps) {
   return (
     <Container className="map-info">
       <h3 className="map-title">
-        <WarcraftIIIText>{mapInfo?.mapInfo?.name || ""}</WarcraftIIIText><MapStatusIcons {...mapInfo} />
+        <WarcraftIIIText>{mapInfo?.mapInfo?.name || ""}</WarcraftIIIText>
+        <MapStatusIcons {...mapInfo} />
       </h3>
       <Image
         src={mapInfo?.mapInfo?.coverImageUrl || mapInfo?.mapInfo?.mapImageUrl}
