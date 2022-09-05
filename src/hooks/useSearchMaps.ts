@@ -6,7 +6,7 @@ import { convertErrorResponseToString } from "../utils/ApiUtils";
 
 const PAGE_SIZE = 20;
 
-const isNoFilters = (filters: SearchFilters | null) => {
+export const isNoFilters = (filters: SearchFilters | null) => {
   if (!filters || !Object.keys(filters).length) return true;
 
   let found = false;

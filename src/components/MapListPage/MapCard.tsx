@@ -9,9 +9,7 @@ import MapCategoryList from "../MapPage/MapCategoryList";
 import MapDownloadButton from "../MapPage/MapDownloadButton";
 
 /** Карточка игры в dropdown */
-export const GameCard: React.FC<
-  Map & { selectElement?: React.ReactNode; selected: boolean }
-> = ({
+export const GameCard: React.FC<Map & { selectElement?: React.ReactNode }> = ({
   mapInfo,
   fileName,
   fileSize,

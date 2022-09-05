@@ -66,7 +66,6 @@ function MapSelectTab() {
             <GameCard
               key={key}
               {...map}
-              selected={false}
               selectElement={
                 <Button as={Link} to={`/create/confirm?mapId=${map.id}`}>
                   Выбрать
