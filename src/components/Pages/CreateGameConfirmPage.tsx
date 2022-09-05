@@ -48,6 +48,7 @@ import { GHostPackageEvent } from "../../services/GHostWebsocket";
 import { ServerCreateGame } from "../../models/websocket/ServerCreateGame";
 import copy from "clipboard-copy";
 import "./CreateGameConfirmPage.scss";
+import MetaRobots from "./../Meta/MetaRobots";
 
 const assemblyMapOptions = (
   mapFlags: number,
@@ -110,6 +111,7 @@ function CreateGameConfirmPage({}) {
 
   return (
     <Container className="create-game-confirm">
+      <MetaRobots noIndex></MetaRobots>
       {error && <Message error>{error}</Message>}
       {hasLoading && (
         <Loader active size="massive">
@@ -250,7 +252,13 @@ function useLocalMapCategories(): [
 
           mapsApi
             .getMapInfo(mapId, { signal: abortController.signal })
-            .then(setMap)
+            .then((map) => {
+              setMap(map);
+              setError("");
+            })
+            .catch((e) => {
+              setError(convertErrorResponseToString(e));
+            })
             .finally(() => {
               setLoading(false);
             });
@@ -276,6 +284,7 @@ function useLocalMapCategories(): [
             .then((config) => {
               setMap(config.map || null);
               setConfig(config);
+              setError("");
             })
             .catch((e) => {
               setError(convertErrorResponseToString(e));
@@ -287,6 +296,8 @@ function useLocalMapCategories(): [
       } else {
         setError("NaN");
       }
+    } else {
+      setError("Параметры не переданы");
     }
 
     return () => {
