@@ -20,6 +20,8 @@ export interface User {
 export interface ChatProps {
   /** Изменить иконку непрочитанных сообщений в footer */
   setUnreadMessages(val: boolean): void;
+
+  open: boolean;
 }
 
 export enum SelectionType {

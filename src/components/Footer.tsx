@@ -23,7 +23,7 @@ function Footer(props) {
 
   return (
     <>
-      {showChat && <Chat setUnreadMessages={setUnreadMessages} />}
+      <Chat open={showChat} setUnreadMessages={setUnreadMessages} />
       <Menu text fixed="bottom" size="massive" className="footer-menu">
         <OnlineStatsCounter />
         <ConnectorIndicator />

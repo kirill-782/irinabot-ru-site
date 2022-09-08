@@ -37,7 +37,7 @@ const saveUsers = (users: User[]) => {
   localStorage.setItem("chat-users", stringifyUsers);
 };
 
-export const Chat: React.FC<ChatProps> = ({ setUnreadMessages }) => {
+export const Chat: React.FC<ChatProps> = ({ setUnreadMessages, open }) => {
   const sockets = useContext(WebsocketContext);
   const [users, setUsers] = useState(getUsers());
   const [consoleMessages, setConsoleMessages] = useState<string[]>([]);
@@ -81,7 +81,7 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages }) => {
         isIncoming: false,
       });
     }
-    // const converter = new ServerTextMessageConverter();
+
     const converter = new ClientTextMessageConverter();
     sockets.ghostSocket.send(
       converter.assembly({ from: "whisper", to: user.name, text: message })
@@ -120,6 +120,12 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages }) => {
     else if (type === SelectionType.USER && user) {
       setOpenedChat("chat");
       setSelectedUser(user);
+      setUsers((users) => {
+        return users.map((i) => {
+          if (i.name === user.name) i.newMessages = false;
+          return i;
+        });
+      });
     }
   };
 
@@ -155,6 +161,7 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages }) => {
   }
 
   useEffect(() => {
+    setUnreadMessages(users.some((el) => el.newMessages));
     saveUsers(users);
   }, [users]);
 
@@ -197,8 +204,7 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages }) => {
                 matchUser.newMessages = true;
               }
             }
-            setUnreadMessages(newUsers.some((el) => el.newMessages));
-            saveUsers(newUsers);
+
             return newUsers;
           });
         }
@@ -216,6 +222,8 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages }) => {
     setSelectedUser(null);
     setOpenedChat("");
   };
+
+  if (!open) return null;
 
   return (
     <Card className="chat">

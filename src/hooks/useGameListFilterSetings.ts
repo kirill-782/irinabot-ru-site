@@ -26,7 +26,9 @@ export const useGameListFilterSetings = () => {
 
   const disableFilter = (filterName: string, value?: any) => {
     setDisabledFilters((disabledFilters) => {
-      return [...disabledFilters, filterName];
+      if (disabledFilters.indexOf(filterName) === -1)
+        return [...disabledFilters, filterName];
+      return disabledFilters;
     });
 
     if (value !== undefined) {
@@ -44,7 +46,7 @@ export const useGameListFilterSetings = () => {
     }
 
     setDisabledFilters((disabledFilters) => {
-      return [...disabledFilters]
+      return [...disabledFilters];
     });
   };
 
@@ -72,9 +74,15 @@ export const useGameListFilterSetings = () => {
     else if (!auth.authCredentials) disableFilter("onlySelfGames");
 
     if (!auth.accessMask.hasAccess(1)) {
-      disableFilter("gameType");
-      disableFilter("orderBy");
-      disableFilter("reverseOrder");
+      if (auth.accessMask.getRecords().length === 0) {
+        disableFilter("gameType");
+        disableFilter("orderBy");
+        disableFilter("reverseOrder");
+      } else {
+        disableFilter("gameType", defaultFilterSettings.gameType);
+        disableFilter("orderBy", defaultFilterSettings.orderBy);
+        disableFilter("reverseOrder", defaultFilterSettings.reverseOrder);
+      }
     } else {
       enableFilter("gameType");
       enableFilter("orderBy");
