@@ -31,7 +31,7 @@ const convertSlotRaceToString = (type: number) => {
   return type.toString();
 };
 
-const getClassColorByIndex = (colour) => {
+export const getClassColorByIndex = (colour) => {
   switch (colour) {
     case 0:
       return "red";

@@ -7,7 +7,7 @@ import { useSearchMaps } from "../../hooks/useSearchMaps";
 import { useVisibility } from "../../hooks/useVisibility";
 import { SearchFilters, SearchOrder } from "../../models/rest/SearchFilters";
 import ConnectorId from "../ConnectorId";
-import { GameCard } from "../MapListPage/MapCard";
+import { MapCard } from "../MapListPage/MapCard";
 import { Filter, MapFilters } from "../MapListPage/MapFilters";
 import MetaDescription from "../Meta/MetaDescription";
 import { isNoFilters } from "./../../hooks/useSearchMaps";
@@ -196,7 +196,7 @@ function MapListPage() {
             </Message>
             {searchedMaps &&
               searchedMaps.map((map, key) => (
-                <GameCard key={map.id} {...map} />
+                <MapCard key={map.id} {...map} />
               ))}
             {searchedMaps && !isFull && (
               <Grid textAlign="center">

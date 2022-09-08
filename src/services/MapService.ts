@@ -6,6 +6,7 @@ import { Category } from "../models/rest/Category";
 import { SearchFilters, SearchOrder } from "../models/rest/SearchFilters";
 import { ParseMap } from "../models/rest/ParseMap";
 import { ConfigInfo } from "../models/rest/ConfigInfo";
+import { Config } from "../models/rest/Config";
 
 export interface PageOptions {
   count?: number;
@@ -274,6 +275,79 @@ export class MapService {
     request = this.appendOptions(request, options);
 
     const response = await Axios.request<ConfigInfo[]>(request);
+
+    return response.data;
+  };
+
+  public createConfig = async (
+    mapId: number,
+    name: string,
+    version: string,
+    config: Config,
+    options?: RequestOptions
+  ) => {
+    let request: AxiosRequestConfig<string> = {
+      ...this.defaultConfig,
+      url: `/v1/maps/${mapId}/configs`,
+      method: "POST",
+      params: {
+        version,
+        name,
+      },
+      headers: {
+        ...this.defaultConfig.headers,
+        "content-type": "application/json",
+      },
+      data: JSON.stringify(config),
+    };
+
+    request = this.appendOptions(request, options);
+
+    const response = await Axios.request<ConfigInfo>(request);
+
+    return response.data;
+  };
+
+  public editConfig = async (
+    configId: number,
+    name: string,
+    config: Config,
+    options?: RequestOptions
+  ) => {
+    let request: AxiosRequestConfig<string> = {
+      ...this.defaultConfig,
+      url: `/v1/configs/${configId}`,
+      method: "PUT",
+      params: {
+        name,
+      },
+      headers: {
+        ...this.defaultConfig.headers,
+        "content-type": "application/json",
+      },
+      data: JSON.stringify(config),
+    };
+
+    request = this.appendOptions(request, options);
+
+    const response = await Axios.request<ConfigInfo>(request);
+
+    return response.data;
+  };
+
+  public deleteConfig = async (
+    configId: number,
+    options?: RequestOptions
+  ) => {
+    let request: AxiosRequestConfig<string> = {
+      ...this.defaultConfig,
+      url: `/v1/configs/${configId}`,
+      method: "DELETE",
+    };
+
+    request = this.appendOptions(request, options);
+
+    const response = await Axios.request<void>(request);
 
     return response.data;
   };

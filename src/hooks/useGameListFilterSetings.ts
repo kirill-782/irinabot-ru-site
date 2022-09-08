@@ -25,10 +25,12 @@ export const useGameListFilterSetings = () => {
   const [disabledFilters, setDisabledFilters] = useState<string[]>([]);
 
   const disableFilter = (filterName: string, value?: any) => {
-    setDisabledFilters([...disabledFilters, filterName]);
+    setDisabledFilters((disabledFilters) => {
+      return [...disabledFilters, filterName];
+    });
 
     if (value !== undefined) {
-      filterSettings["filterName"] = value;
+      filterSettings[filterName] = value;
       setFilterSettings({ ...filterSettings });
     }
   };
@@ -41,7 +43,9 @@ export const useGameListFilterSetings = () => {
       disabledFilterIndex = disabledFilters.indexOf(filterName);
     }
 
-    setDisabledFilters([...disabledFilters]);
+    setDisabledFilters((disabledFilters) => {
+      return [...disabledFilters]
+    });
   };
 
   // Load filters from localStorage
@@ -67,8 +71,18 @@ export const useGameListFilterSetings = () => {
     if (auth.currentAuth) enableFilter("onlySelfGames");
     else if (!auth.authCredentials) disableFilter("onlySelfGames");
 
+    if (!auth.accessMask.hasAccess(1)) {
+      disableFilter("gameType");
+      disableFilter("orderBy");
+      disableFilter("reverseOrder");
+    } else {
+      enableFilter("gameType");
+      enableFilter("orderBy");
+      enableFilter("reverseOrder");
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [auth.currentAuth, auth.authCredentials]);
+  }, [auth.currentAuth, auth.authCredentials, auth.accessMask]);
 
   useEffect(() => {
     localStorage.setItem(

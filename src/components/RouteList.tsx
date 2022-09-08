@@ -12,6 +12,7 @@ import { AuthContext } from "../context";
 import ForbiddenPage from "./Pages/ForbiddenPage";
 import React from "react";
 import CreateGameConfirmPage from "./Pages/CreateGameConfirmPage";
+import EditConfigPage from "./Pages/EditConfigPage";
 
 interface CondirionalRouteIndex {
   path?: undefined;
@@ -70,6 +71,12 @@ const routes: CondirionalRoute[] = [
             requireAuth: true,
           },
         ],
+      },
+      {
+        path: "config/:id/edit",
+        element: <EditConfigPage />,
+        requireAuth: true,
+        requiredAuthorities: ["CONFIG_READ", "CONFIG_EDIT"],
       },
       {
         path: "maps",

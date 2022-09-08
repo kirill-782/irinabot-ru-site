@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Button, Form, Grid, Header } from "semantic-ui-react";
 import { SearchFilters, SearchOrder } from "../../models/rest/SearchFilters";
-import { Filter, MapFilters, Order } from "../MapListPage/MapFilters";
+import { MapFilters } from "../MapListPage/MapFilters";
 import { useDefaultMaps } from "../../hooks/useDefaultMaps";
 import { useSearchMaps } from "../../hooks/useSearchMaps";
 import { useVisibility } from "../../hooks/useVisibility";
-import { GameCard } from "../MapListPage/MapCard";
+import { MapCard } from "../MapListPage/MapCard";
 
 import "./MapSelectTab.scss";
 import { Link, useNavigate } from "react-router-dom";
@@ -61,7 +61,7 @@ function MapSelectTab() {
         </Grid.Row>
         <Grid.Row className="map-list">
           {renderMapList.map((map, key) => (
-            <GameCard
+            <MapCard
               key={key}
               {...map}
               selectElement={

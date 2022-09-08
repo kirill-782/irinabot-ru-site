@@ -13,6 +13,7 @@ import MapDownloadButton from "./MapDownloadButton";
 import MapCategoryList from "./MapCategoryList";
 import { Link } from "react-router-dom";
 import { AuthContext } from "./../../context/index";
+import CloneConfigButton from "./CloneConfigButton";
 
 interface MapFooterProps {
   gameList: GameListGame[];
@@ -25,6 +26,7 @@ function MapFooter({
   fileSize,
   id,
   gameList,
+  configs,
 }: Map & MapFooterProps) {
   const mapSize = byteSize(fileSize);
 
@@ -57,6 +59,7 @@ function MapFooter({
             to={`/create/confirm?mapId=${id}`}
           />
         )}
+        <CloneConfigButton mapId={id || 0} configs={configs} />
 
         <Button color="green" basic icon="edit" floated="right" />
         <Button

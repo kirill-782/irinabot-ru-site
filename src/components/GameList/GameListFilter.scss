@@ -16,12 +16,7 @@
 
 @media screen and (max-width: 991px) {
   .ui.grid > [class*="three wide"].column.online-stats-column {
-    order: -1;
     width: 100% !important;
-  }
-
-  .ui.grid > [class*="ten wide"].column.game-list-column {
-    width: 81.2% !important;
   }
 
   .online-stats-column {
