@@ -140,7 +140,13 @@ function UploadMap() {
 
   return (
     <>
-      {renderModal()}
+      <div
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+      >
+        {renderModal()}
+      </div>
       <Menu.Item
         disabled={!apiToken.hasAuthority("MAP_CREATE")}
         onClick={onItemClick}
