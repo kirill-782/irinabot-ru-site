@@ -1,4 +1,4 @@
-import { Table } from "semantic-ui-react";
+import { Button, Dropdown, Form, Table } from "semantic-ui-react";
 import GameListPlayers from "./GameListPlayers";
 import React, { memo } from "react";
 import ConnectorAddButton from "./ConnectorAddButton";
@@ -7,6 +7,7 @@ import "./GameList.scss";
 import { GameListGameFilterExtends } from "../../hooks/useGameListFilter";
 import { GameListGame } from "./../../models/websocket/ServerGameList";
 import ConnectorId from "../ConnectorId";
+import SendSignalButton from "./SendSignalButton";
 
 interface GameListProps {
   gameList: GameListGame[];
@@ -63,12 +64,15 @@ function GameList({ gameList, selectedGame, setSelectedGame }: GameListProps) {
               <Table.Cell>
                 <ConnectorId id={game.creatorID} />
               </Table.Cell>
-              <Table.Cell className="game-title">{game.name}</Table.Cell>
+              <Table.Cell>
+                <div className="game-title">{game.name}</div>
+              </Table.Cell>
               <Table.Cell>
                 <GameListPlayers players={game.players} />
               </Table.Cell>
               <Table.Cell>
                 <ConnectorAddButton game={game} />
+                <SendSignalButton game={game} />
               </Table.Cell>
             </Table.Row>
           );
