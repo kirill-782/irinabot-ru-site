@@ -114,6 +114,13 @@ function ConfigSelectTab() {
           </Grid.Row>
         </Grid.Column>
       )}
+      {configList.length === 0 && !hasError && !isLoading && (
+        <Grid.Column>
+          <Grid.Row className="config-list">
+            <Message info>Вы не создали еще ниодного конфига. Создать конфиг можно на странице карты.</Message>
+          </Grid.Row>
+        </Grid.Column>
+      )}
     </Grid>
   );
 }

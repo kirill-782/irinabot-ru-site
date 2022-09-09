@@ -54,6 +54,9 @@ function GameJoinButton({ gameList, mapId }: GameJoinButtonProps) {
       disabled={!foundGame || !isEnabled}
       icon="gamepad"
       title="Войти в игру"
+      onClick={() => {
+        requestConnectorGame();
+      }}
     ></Button>
   );
 }

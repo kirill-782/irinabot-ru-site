@@ -6,6 +6,7 @@ import {
   AuthData,
   CacheContext,
   RestContext,
+  SelectUserFunctionHolder,
   WebsocketContext,
 } from "./context";
 import { loadTheme } from "./utils/Theme";
@@ -45,6 +46,12 @@ function App() {
 
   useConnectorGameAdd({ ghostSocket, connectorSocket });
 
+  const [selectUser, setSelectUser] = useState<SelectUserFunctionHolder>({
+    selectUser: () => {},
+  });
+
+  console.log(selectUser, setSelectUser);
+
   return (
     <WebsocketContext.Provider
       value={{
@@ -57,7 +64,10 @@ function App() {
       <AppRuntimeSettingsContext.Provider
         value={{
           gameList: { locked: gameListLocked, setLocked: setGameListLocked },
-          chat: {},
+          chat: {
+            selectUser,
+            setSelectUser,
+          },
         }}
       >
         <AuthContext.Provider

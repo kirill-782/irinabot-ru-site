@@ -34,6 +34,7 @@ function ChatList({
       {users.map((user) => {
         return (
           <ChatRow
+            key={user.name}
             user={user}
             onSelectonChange={onSelectonChange}
             onDeleteUser={onDeleteUser}

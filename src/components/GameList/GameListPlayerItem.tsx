@@ -83,10 +83,11 @@ function GameListPlayerItem({ player }: GameListPlayerItemProps) {
     useState<GamePlayerStats | null>(null);
   //https://nwc3l.com/irinabot_profile?id=zsef_He_yIIaJI&json
 
-  const chatContext = useContext(AppRuntimeSettingsContext).chat;
+  const { chat } = useContext(AppRuntimeSettingsContext);
 
   const openUserChat = () => {
-    if (chatContext.selectUser) chatContext.selectUser(player.name);
+    console.log(chat.selectUser.selectUser);
+    if (chat.selectUser.selectUser) chat.selectUser.selectUser(player.name);
   };
 
   const loadStats = () => {
@@ -156,7 +157,9 @@ function GameListPlayerItem({ player }: GameListPlayerItemProps) {
         <Grid.Row>
           <Button
             size="mini"
-            onClick={() => {
+            onClick={(e) => {
+              console.log("asuna");
+              e.stopPropagation();
               openUserChat();
             }}
           >

@@ -37,7 +37,11 @@ const saveUsers = (users: User[]) => {
   localStorage.setItem("chat-users", stringifyUsers);
 };
 
-export const Chat: React.FC<ChatProps> = ({ setUnreadMessages, open }) => {
+export const Chat: React.FC<ChatProps> = ({
+  setUnreadMessages,
+  open,
+  setOpen,
+}) => {
   const sockets = useContext(WebsocketContext);
   const [users, setUsers] = useState(getUsers());
   const [consoleMessages, setConsoleMessages] = useState<string[]>([]);
@@ -55,21 +59,27 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages, open }) => {
       });
 
       if (user) setSelectedUser(user);
-      else
-        setSelectedUser({
+      else {
+        const newUser = {
           newMessages: false,
           name: nickname,
           messages: [],
-        });
+        };
+
+        onNewUser(newUser);
+        setSelectedUser(newUser);
+      }
+
+      setOpen(true);
     },
-    [setOpenedChat, setSelectedUser, users]
+    [setOpenedChat, setSelectedUser, users, setOpen]
   );
 
-  const appContext = useContext(AppRuntimeSettingsContext);
+  const { chat } = useContext(AppRuntimeSettingsContext);
 
   useEffect(() => {
-    appContext.chat.selectUser = openChat;
-  }, [openChat]);
+    chat.setSelectUser({ selectUser: openChat });
+  }, [openChat, chat.setSelectUser]);
 
   const sendMessage = (user: User, message: string) => {
     const newUsers = [...users];
@@ -207,6 +217,12 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages, open }) => {
 
             return newUsers;
           });
+
+          // Play Sound
+
+          const audio = new Audio("/sound/162464__kastenfrosch__message.mp3");
+          audio.volume = 0.8;
+          audio.play();
         }
       }
     };

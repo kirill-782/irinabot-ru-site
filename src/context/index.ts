@@ -22,13 +22,18 @@ export const WebsocketContext = createContext<WebsocketContextType>(null);
 
 // Config Context
 
+export type SelectUserFunctionHolder = {
+  selectUser: (nickname: string) => void;
+};
+
 export type AppRuntimeSettingsContextType = {
   gameList: {
     locked: boolean;
     setLocked: (locked: ((locked: boolean) => boolean) | boolean) => void;
   };
   chat: {
-    selectUser?: (nickname: string) => void;
+    selectUser: SelectUserFunctionHolder;
+    setSelectUser: React.Dispatch<SelectUserFunctionHolder>;
   };
 };
 
