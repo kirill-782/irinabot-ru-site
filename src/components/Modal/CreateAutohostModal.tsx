@@ -6,6 +6,7 @@ export interface AuthostModalData {
   gameName: string;
   autostart: number;
   countGames: number;
+  hcl: string;
 }
 
 interface CreateAutohostModalProps {
@@ -28,6 +29,7 @@ function CreateAutohostModal({
     defaultAutostart?.toString() || ""
   );
   const [countGames, setCountGames] = useState<string>("10");
+  const [hcl, setHcl] = useState<string>("");
 
   const gameNameHasError = gameName.length > 30 || gameName.length === 0;
   const autostartHasError = isNaN(parseInt(autostart));
@@ -80,6 +82,15 @@ function CreateAutohostModal({
               }}
             />
           </Form.Group>
+          <Form.Input
+            fluid
+            label="HCL строка"
+            placeholder="HCL строка"
+            value={hcl}
+            onChange={(e, data) => {
+              setHcl(data.value);
+            }}
+          />
           <Button
             fluid
             color="green"
@@ -88,6 +99,7 @@ function CreateAutohostModal({
                 gameName,
                 countGames: parseInt(countGames),
                 autostart: parseInt(autostart),
+                hcl
               });
             }}
           >

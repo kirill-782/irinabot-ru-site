@@ -73,6 +73,7 @@ function CreateGameConfirmPage({}) {
     mapSpeed: 3,
     mapVisibility: 4,
     mapObservers: 1,
+    configName: "",
   });
 
   const [gameName, setGameName] = useState("");
@@ -474,10 +475,11 @@ function useLocalAutohostCreateCallback(
                 options.mapObservers
               ),
               spaceId: auth.currentAuth.connectorId,
-              hcl: "",
+              hcl: autohostData.hcl,
               slotPreset: "",
               name: autohostData.gameName,
-              mapData: mapData,
+              mapData,
+              configName: options.configName,
             })
           );
         })
@@ -568,6 +570,7 @@ function useLocalCreateGameCallback(
               gameName,
               mapData: mapData,
               privateGame: options.privateGame,
+              configName: options.configName,
             })
           );
         })

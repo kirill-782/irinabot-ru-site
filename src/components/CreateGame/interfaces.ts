@@ -5,6 +5,7 @@ export interface GameOptionsData {
   mapSpeed: number;
   mapVisibility: number;
   mapObservers: number;
+  configName: string;
 }
 
 export interface GameOptionsProps {

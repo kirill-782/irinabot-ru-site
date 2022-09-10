@@ -36,10 +36,16 @@ export const GameOptions: React.FC<GameOptionsProps> = memo(
       <>
         <Form.Checkbox
           label="Вход по паролю (будет выдан после создания игры)"
-          name="enter-with-password"
           checked={options.privateGame}
           onChange={() => {
             onOptionsChange({ ...options, privateGame: !options.privateGame });
+          }}
+        />
+        <Form.Input
+          label="Имя конфига"
+          value={options.configName}
+          onChange={(_, data) => {
+            onOptionsChange({ ...options, configName: data.value as string });
           }}
         />
         <Divider />

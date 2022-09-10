@@ -11,6 +11,7 @@ export interface ClientCreateGame extends AbstractPackage {
   slotPreset: string;
   gameName: string;
   mapData: string;
+  configName: string;
 }
 
 export class ClientCreateGameConverter extends AbstractConverter {
@@ -25,6 +26,7 @@ export class ClientCreateGameConverter extends AbstractConverter {
     dataBuffer.putNullTerminatedString(data.slotPreset);
     dataBuffer.putNullTerminatedString(data.gameName);
     dataBuffer.putNullTerminatedString(data.mapData);
+    dataBuffer.putNullTerminatedString(data.configName);
 
     return dataBuffer.toArrayBuffer();
   }
@@ -38,6 +40,7 @@ export class ClientCreateGameConverter extends AbstractConverter {
       slotPreset: dataBuffer.getNullTerminatedString(),
       gameName: dataBuffer.getNullTerminatedString(),
       mapData: dataBuffer.getNullTerminatedString(),
+      configName: dataBuffer.getNullTerminatedString(),
     };
   }
 }

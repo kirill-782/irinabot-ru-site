@@ -15,6 +15,7 @@ export interface ClientAddAutohost extends AbstractPackage {
   slotPreset: string;
   hcl: string;
   mapData: string;
+  configName: string;
 }
 
 export class ClientAddAutohostConverter extends AbstractConverter {
@@ -33,6 +34,7 @@ export class ClientAddAutohostConverter extends AbstractConverter {
     dataBuffer.putNullTerminatedString(data.slotPreset);
     dataBuffer.putNullTerminatedString(data.hcl);
     dataBuffer.putNullTerminatedString(data.mapData);
+    dataBuffer.putNullTerminatedString(data.configName);
 
     return dataBuffer.toArrayBuffer();
   }
@@ -49,6 +51,7 @@ export class ClientAddAutohostConverter extends AbstractConverter {
       slotPreset: dataBuffer.getNullTerminatedString(),
       hcl: dataBuffer.getNullTerminatedString(),
       mapData: dataBuffer.getNullTerminatedString(),
+      configName: dataBuffer.getNullTerminatedString(),
     };
   }
 }
