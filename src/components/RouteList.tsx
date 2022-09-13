@@ -13,6 +13,7 @@ import ForbiddenPage from "./Pages/ForbiddenPage";
 import React from "react";
 import CreateGameConfirmPage from "./Pages/CreateGameConfirmPage";
 import EditConfigPage from "./Pages/EditConfigPage";
+import DebugPage from "./Pages/DebugPage";
 
 interface CondirionalRouteIndex {
   path?: undefined;
@@ -47,6 +48,10 @@ const routes: CondirionalRoute[] = [
       {
         index: true,
         element: <GameListPage />,
+      },
+      {
+        path: "debug",
+        element: <DebugPage />
       },
       {
         path: "gamelist",
