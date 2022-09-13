@@ -71,6 +71,7 @@ export const MapCard: React.FC<Map & { selectElement?: React.ReactNode }> = ({
               downloadUrl={downloadUrl}
               fileSize={fileSize}
               fileName={fileName}
+              id={id || 0}
             />
           )}
         </Grid.Row>

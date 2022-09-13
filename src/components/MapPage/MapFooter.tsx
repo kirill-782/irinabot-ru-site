@@ -47,6 +47,7 @@ function MapFooter({
             downloadUrl={downloadUrl}
             fileSize={fileSize}
             fileName={fileName}
+            id={id || 0}
           />
         )}
         <GameJoinButton gameList={gameList} mapId={id || 0} />
