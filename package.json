@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@artsy/fresnel": "^3.5.0",
+    "@kokomi/react-semantic-toasts": "^0.7.0",
     "@testing-library/jest-dom": "^5.16.3",
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
@@ -24,7 +25,6 @@
     "react-observer-api": "^1.0.14",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.0",
-    "react-semantic-toasts": "^0.6.6",
     "react-slider": "^2.0.0",
     "semantic-ui-css": "2.4.1",
     "semantic-ui-react": "^2.1.2",

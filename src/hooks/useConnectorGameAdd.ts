@@ -5,7 +5,7 @@ import {
   DEFAULT_CONTEXT_HEADER_CONSTANT,
   DEFAULT_UDP_ANSWER,
 } from "../models/websocket/HeaderConstants";
-import { toast } from "react-semantic-toasts";
+import { toast } from "@kokomi/react-semantic-toasts";
 import { ServerUDPAnswer } from "../models/websocket/ServerUDPAnswer";
 import { ConnectorBrowserAddGameConverter } from "../models/websocket/ConnectorBrowserGameAdd";
 interface useConnectorGameAddOptions {

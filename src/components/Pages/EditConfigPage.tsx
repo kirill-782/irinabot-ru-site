@@ -8,7 +8,7 @@ import { Config } from "../../models/rest/Config";
 import { JsonEditor as Editor } from "jsoneditor-react";
 import ConfigEdit from "../MapPage/ConfigEdit";
 import "./EditConfigPage.scss";
-import { toast } from "react-semantic-toasts";
+import { toast } from "@kokomi/react-semantic-toasts";
 
 function EditConfigPage() {
   const { id } = useParams();

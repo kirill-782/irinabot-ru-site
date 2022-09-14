@@ -13,7 +13,7 @@ import {
   List,
 } from "semantic-ui-react";
 import GameListPlayerItem from "../GameList/GameListPlayerItem";
-import { toast } from "react-semantic-toasts";
+import { toast } from "@kokomi/react-semantic-toasts";
 
 function DebugPage() {
   const avialableColors: SemanticCOLORS[] = [

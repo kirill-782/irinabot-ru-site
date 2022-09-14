@@ -1,6 +1,6 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import { SemanticToastContainer } from "react-semantic-toasts";
+import { SemanticToastContainer } from "@kokomi/react-semantic-toasts";
 import Footer from "./Footer";
 import Header from "./Header";
 

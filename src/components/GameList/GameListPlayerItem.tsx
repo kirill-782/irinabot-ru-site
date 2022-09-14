@@ -86,7 +86,6 @@ function GameListPlayerItem({ player }: GameListPlayerItemProps) {
   const { chat } = useContext(AppRuntimeSettingsContext);
 
   const openUserChat = () => {
-    console.log(chat.selectUser.selectUser);
     if (chat.selectUser.selectUser) chat.selectUser.selectUser(player.name);
   };
 
@@ -101,14 +100,8 @@ function GameListPlayerItem({ player }: GameListPlayerItemProps) {
             .then((data) => {
               setGamePlayerStats(data.playerInfo);
             })
-            .catch((e) => {
-              console.log(e);
-            });
         } else setGamePlayerStats(null);
       })
-      .catch((e) => {
-        console.log(e);
-      });
   };
 
   const renderStats = () => {
@@ -158,7 +151,6 @@ function GameListPlayerItem({ player }: GameListPlayerItemProps) {
           <Button
             size="mini"
             onClick={(e) => {
-              console.log("asuna");
               e.stopPropagation();
               openUserChat();
             }}

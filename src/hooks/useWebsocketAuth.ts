@@ -1,5 +1,5 @@
 import { useContext, useEffect, useReducer, useState } from "react";
-import { toast } from "react-semantic-toasts";
+import { toast } from "@kokomi/react-semantic-toasts";
 import { AuthAction, AuthData, WebsocketContext } from "../context";
 import { ClientUserAuthConverter } from "../models/websocket/ClientUserAuth";
 import { ServerAccessList } from "../models/websocket/ServerAccessList";

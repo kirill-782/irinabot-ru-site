@@ -12,7 +12,7 @@ import {
 import { useContext, useEffect, useState } from "react";
 import { AuthContext, WebsocketContext } from "./../../context/index";
 import { AuthMethod, AviableAuthMethods } from "../../config/AuthMethods";
-import { toast } from "react-semantic-toasts";
+import { toast } from "@kokomi/react-semantic-toasts";
 import { ClientDeleteIntegrationConverter } from "./../../models/websocket/ClientDeleteIntegration";
 import { ClientAddIntegrationByTokenConverter } from "./../../models/websocket/ClientAddIntegrationByToken";
 import { ClientSetConnectorNameConverter } from "./../../models/websocket/ClientSetConnectorName";

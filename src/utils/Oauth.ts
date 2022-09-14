@@ -1,4 +1,4 @@
-import { toast } from "react-semantic-toasts";
+import { toast } from "@kokomi/react-semantic-toasts";
 import { AuthMethod } from "../config/AuthMethods";
 
 export const authByOauth = (data: AuthMethod, onSuccess: (token: string, type: number) => void) => {

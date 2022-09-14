@@ -11,7 +11,7 @@ import { DEFAULT_AUTOHOST_LIST_RESPONSE } from "./../../models/websocket/HeaderC
 import { ServerAutohostListResponse } from "./../../models/websocket/ServerAutohostListResponse";
 import { ClientAutohostListConverter } from "./../../models/websocket/ClientAutohostList";
 import { ServerAutohostRemoveResponse } from "./../../models/websocket/ServerAutohostRemoveResponse";
-import { toast } from "react-semantic-toasts";
+import { toast } from "@kokomi/react-semantic-toasts";
 import { ClientAutohostRemoveConverter } from "./../../models/websocket/ClientAutohostRemove";
 import ConnectorId from "../ConnectorId";
 import { ClientResolveConnectorIdsConverter } from "../../models/websocket/ClientResolveConnectorIds";

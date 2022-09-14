@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-semantic-toasts";
+import { toast } from "@kokomi/react-semantic-toasts";
 import { Button, Grid, Header, Loader, Message } from "semantic-ui-react";
 import { RestContext } from "../../context";
 import { ConfigInfo } from "../../models/rest/ConfigInfo";

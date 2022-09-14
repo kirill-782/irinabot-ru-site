@@ -1,5 +1,4 @@
 export const convertErrorResponseToString = (error) => {
-  console.log(error.response);
   if (error.response) {
     try {
       const errorMessage = error.response.data;

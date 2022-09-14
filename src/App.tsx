@@ -11,7 +11,7 @@ import {
 } from "./context";
 import { loadTheme } from "./utils/Theme";
 
-import "react-semantic-toasts/styles/react-semantic-alert.css";
+import "@kokomi/react-semantic-toasts/styles/react-semantic-alert.css";
 
 import "./semantic-ui-sass/template/_index.scss";
 import "./components/Slider.scss";
@@ -49,8 +49,6 @@ function App() {
   const [selectUser, setSelectUser] = useState<SelectUserFunctionHolder>({
     selectUser: () => {},
   });
-
-  console.log(selectUser, setSelectUser);
 
   return (
     <WebsocketContext.Provider

@@ -2,7 +2,7 @@ import React, { memo, useContext, useState } from "react";
 import { Button, Dropdown, Form, Icon, Modal } from "semantic-ui-react";
 import { ConfigInfo } from "../../models/rest/ConfigInfo";
 import { RestContext } from "./../../context/index";
-import { toast } from "react-semantic-toasts";
+import { toast } from "@kokomi/react-semantic-toasts";
 import { useNavigate } from "react-router-dom";
 import { convertErrorResponseToString } from "../../utils/ApiUtils";
 

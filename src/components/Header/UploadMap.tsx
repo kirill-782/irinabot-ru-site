@@ -5,7 +5,7 @@ import { AdditionalFlags } from "../../services/MapService";
 import PrepareUploadMapModal from "../Modal/PrepareUploadMapModal";
 import ProgressUploadMapModal from "../Modal/ProgressUploadMapModal";
 import { AuthContext, RestContext } from "../../context";
-import { toast } from "react-semantic-toasts";
+import { toast } from "@kokomi/react-semantic-toasts";
 import {
   UploadMapCompleteEvent,
   UploadMapProgressEvent,

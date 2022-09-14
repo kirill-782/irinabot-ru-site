@@ -37,7 +37,7 @@ import CreateAutohostModal, {
 } from "../Modal/CreateAutohostModal";
 import { ClientAddAutohostConverter } from "./../../models/websocket/ClientAddAutohost";
 import { ClientCreateGameConverter } from "./../../models/websocket/ClientCreateGame";
-import { toast } from "react-semantic-toasts";
+import { toast } from "@kokomi/react-semantic-toasts";
 import {
   DEFAULT_CONTEXT_HEADER_CONSTANT,
   DEFAULT_AUTOHOST_ADD_RESPONSE,
