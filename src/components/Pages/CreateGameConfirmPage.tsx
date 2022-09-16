@@ -428,7 +428,6 @@ function useLocalAutohostCreateCallback(
         if (createGameResponse.status === 0) {
           toast({
             title: "Автохост создан",
-            description: "TODO: Скоприровать описание",
             icon: "check",
             color: "green",
           });
@@ -436,7 +435,7 @@ function useLocalAutohostCreateCallback(
           setAutohostModalOpen(false);
         } else {
           toast({
-            title: "Автохост не создан",
+            title: "Автохост не создан " + createGameResponse.status,
             description: createGameResponse.description,
             icon: "check",
             color: "red",
@@ -474,7 +473,7 @@ function useLocalAutohostCreateCallback(
                 options.mapVisibility,
                 options.mapObservers
               ),
-              spaceId: auth.currentAuth.connectorId,
+              spaceId: autohostData.spaceId,
               hcl: autohostData.hcl,
               slotPreset: "",
               name: autohostData.gameName,
@@ -521,7 +520,7 @@ function useLocalCreateGameCallback(
           if (!createGameResponse.password) {
             toast({
               title: "Игра создана",
-              description: "TODO: Скоприровать описание",
+              description: "Исполдьзуйте коннектор, чтобы войти в игру",
               icon: "check",
               color: "green",
             });

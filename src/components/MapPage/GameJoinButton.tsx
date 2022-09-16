@@ -9,9 +9,10 @@ import React from "react";
 interface GameJoinButtonProps {
   gameList: GameListGame[];
   mapId: number;
+  className?: string;
 }
 
-function GameJoinButton({ gameList, mapId }: GameJoinButtonProps) {
+function GameJoinButton({ gameList, mapId, className }: GameJoinButtonProps) {
   const [foundGame, setFoundGame] = useState<GameListGame>();
 
   const sockets = useContext(WebsocketContext);
@@ -51,6 +52,7 @@ function GameJoinButton({ gameList, mapId }: GameJoinButtonProps) {
 
   return (
     <Button
+      className={className}
       disabled={!foundGame || !isEnabled}
       icon="gamepad"
       title="Войти в игру"

@@ -44,7 +44,13 @@ const MobileMenu = () => {
               <Icon name="ruble sign" />
               Донат
             </Dropdown.Item>
-            <Dropdown.Item>
+            <Dropdown.Item
+              as="a"
+              href="https://xgm.guru/p/irina"
+              onClick={(e) => {
+                if (window.open("https://xgm.guru/p/irina")) e.preventDefault();
+              }}
+            >
               <Icon name="help" />
               Справка
             </Dropdown.Item>

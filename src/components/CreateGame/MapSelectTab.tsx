@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Button, Form, Grid, Header } from "semantic-ui-react";
 import { SearchFilters, SearchOrder } from "../../models/rest/SearchFilters";
 import { MapFilters } from "../MapListPage/MapFilters";
@@ -6,9 +6,18 @@ import { useDefaultMaps } from "../../hooks/useDefaultMaps";
 import { useSearchMaps } from "../../hooks/useSearchMaps";
 import { useVisibility } from "../../hooks/useVisibility";
 import { MapCard } from "../MapListPage/MapCard";
+import { SessionStorage } from "../../services/SessionStorage"; 
 
 import "./MapSelectTab.scss";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+
+const SESSION_KEY = "mapSelectTab";
+
+interface SesstionSaveOptions {
+  searchOptions: [SearchFilters | null, SearchOrder | null];
+  searchValue: string;
+}
+
 
 function MapSelectTab() {
   const [searchOptions, setSearchOptions] = useState<
@@ -24,6 +33,34 @@ function MapSelectTab() {
   const [loadButton, setLoadButton] = useState<HTMLButtonElement | null>(null);
 
   const isVisible = useVisibility(loadButton, { rootMargin: "100px" });
+
+  const location = useLocation();
+
+  const storageState = useRef<SesstionSaveOptions>({
+    searchOptions,
+    searchValue,
+  });
+
+  storageState.current = {
+    searchOptions,
+    searchValue,
+  };
+
+  useEffect(() => {
+    const savedState = SessionStorage.get<SesstionSaveOptions>(
+      location.key,
+      SESSION_KEY
+    );
+
+    if (savedState) {
+      setSearchOptions(savedState.searchOptions);
+      setSearchValue(savedState.searchValue);
+    }
+
+    return () => {
+      SessionStorage.save(location.key, SESSION_KEY, storageState.current);
+    };
+  }, [location.hash]);
 
   useEffect(() => {
     loadNextPage();

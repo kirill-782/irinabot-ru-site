@@ -9,9 +9,14 @@ import { convertErrorResponseToString } from "../../utils/ApiUtils";
 interface CloneConfigButtonProps {
   configs?: ConfigInfo[];
   mapId: number;
+  className?: string;
 }
 
-function CloneConfigButton({ configs, mapId }: CloneConfigButtonProps) {
+function CloneConfigButton({
+  configs,
+  mapId,
+  className,
+}: CloneConfigButtonProps) {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
   const [selectedVersion, setSelectedVersion] = useState("");
@@ -59,10 +64,10 @@ function CloneConfigButton({ configs, mapId }: CloneConfigButtonProps) {
   return (
     <>
       <Button
+        className={className}
         color="green"
         basic
         icon="copy"
-        floated="right"
         title="Клонировать конфиг"
         disabled={!enabled}
         onClick={() => {

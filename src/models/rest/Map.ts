@@ -21,4 +21,5 @@ export type Map = {
   additionalFlags?: Record<string, any>;
   configs?: Array<ConfigInfo>;
   verified?: boolean;
+  semanticCheckError?: boolean
 };

@@ -11,7 +11,7 @@ import { MapCard } from "../MapListPage/MapCard";
 import { Filter, MapFilters } from "../MapListPage/MapFilters";
 import MetaDescription from "../Meta/MetaDescription";
 import { isNoFilters } from "./../../hooks/useSearchMaps";
-import "./MapListPage.scss"
+import "./MapListPage.scss";
 
 const defaultFilters: Filter = {
   verify: false,
@@ -57,7 +57,7 @@ function MapListPage() {
   const loc = useLocation();
 
   useEffect(() => {
-    window.document.title = `Список карт - ${SITE_TITLE}`;
+    window.document.title = `${SITE_TITLE}`;
   }, []);
 
   useEffect(() => {
@@ -192,12 +192,12 @@ function MapListPage() {
           <Grid.Column width={13}>
             <Header>Список карт</Header>
             <Message>
-              Карты, загруженные пользователем <ConnectorId id={1} />
+              IrInA Host Bot - хостбот, при помощи которого можно хостить игры
+              для Warcraft III. Выберите карту, чтобы создать игру, либо
+              перейтите к списку лобби через шапку сайта.
             </Message>
             {searchedMaps &&
-              searchedMaps.map((map, key) => (
-                <MapCard key={map.id} {...map} />
-              ))}
+              searchedMaps.map((map, key) => <MapCard key={map.id} {...map} />)}
             {searchedMaps && !isFull && (
               <Grid textAlign="center">
                 <button

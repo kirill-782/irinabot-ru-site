@@ -41,7 +41,13 @@ const DesktopMenu = () => {
         <Icon name="gamepad" />
         Активные Игры
       </Menu.Item>
-      <Menu.Item onClick={handleMenuItemClick}>
+      <Menu.Item
+        as="a"
+        href="https://xgm.guru/p/irina"
+        onClick={(e) => {
+          if (window.open("https://xgm.guru/p/irina")) e.preventDefault();
+        }}
+      >
         <Icon name="help" />
         Справка
       </Menu.Item>

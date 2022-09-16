@@ -16,13 +16,13 @@ function CreateGameConfirmPatchNotifications({
     <>
       {!Number.isInteger(selectedPatch?.status) &&
         !apiToken.hasAuthority("DEFAULT_CONFIG_PARSE") && (
-          <Message color="red">
+          <Message error>
             У вас отсуствуют права парсить конфиги. Выберите другую версию с
             готовым конфигом.
           </Message>
         )}
       {(selectedPatch?.status === 0 || selectedPatch?.status === 2) && (
-        <Message color="blue">
+        <Message info>
           {selectedPatch?.status === 0
             ? "Конфиг создается. Вернитесь на страницу создания игры позже."
             : "Карта не совместима с выбранной версией"}

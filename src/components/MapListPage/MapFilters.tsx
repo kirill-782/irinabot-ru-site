@@ -1,15 +1,8 @@
 import React, { memo } from "react";
 import { useEffect, useState, useContext } from "react";
 import ReactSlider from "react-slider";
-import {
-  Container,
-  DropdownItemProps,
-  DropdownProps,
-  Form,
-  Grid,
-  GridRow,
-} from "semantic-ui-react";
-import { CacheContext, RestContext } from "../../context";
+import { DropdownItemProps, DropdownProps, Form } from "semantic-ui-react";
+import { CacheContext } from "../../context";
 import { SearchFilters } from "../../models/rest/SearchFilters";
 import { SearchOrder } from "./../../models/rest/SearchFilters";
 
@@ -83,7 +76,7 @@ export const MapFilters: React.FC<FiltersProps> = memo(
     useEffect(() => {
       if (cacheContext.cachedCategories.length === 0)
         cacheContext.cacheCategories();
-    }, [cacheContext.cachedCategories, cacheContext.cacheCategories]);
+    }, [cacheContext]);
 
     const commitFilters = () => {
       onFitlerChange([
@@ -221,7 +214,7 @@ export const MapFilters: React.FC<FiltersProps> = memo(
         />
         <Form.Select
           fluid
-          loading={categories.length == 0}
+          loading={categories.length === 0}
           label="Тип карты"
           options={categories}
           onChange={handleCategoryChange}

@@ -1,12 +1,15 @@
 import { Button, Form, Header, Message, Modal } from "semantic-ui-react";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import React from "react";
+import SpaceId from "../SpaceId";
+import { AuthContext } from "../../context";
 
 export interface AuthostModalData {
   gameName: string;
   autostart: number;
   countGames: number;
   hcl: string;
+  spaceId: number;
 }
 
 interface CreateAutohostModalProps {
@@ -24,12 +27,15 @@ function CreateAutohostModal({
   open,
   onClose,
 }: CreateAutohostModalProps) {
+  const { currentAuth } = useContext(AuthContext).auth;
+
   const [gameName, setGameName] = useState<string>(defaultGameName || "");
   const [autostart, setAutostart] = useState<string>(
     defaultAutostart?.toString() || ""
   );
   const [countGames, setCountGames] = useState<string>("10");
   const [hcl, setHcl] = useState<string>("");
+  const [spaceId, setSpaceId] = useState<number>(currentAuth?.connectorId || 0);
 
   const gameNameHasError = gameName.length > 30 || gameName.length === 0;
   const autostartHasError = isNaN(parseInt(autostart));
@@ -82,15 +88,26 @@ function CreateAutohostModal({
               }}
             />
           </Form.Group>
-          <Form.Input
-            fluid
-            label="HCL строка"
-            placeholder="HCL строка"
-            value={hcl}
-            onChange={(e, data) => {
-              setHcl(data.value);
-            }}
-          />
+          <Form.Group widths="equal">
+            <Form.Input
+              fluid
+              label="HCL строка"
+              placeholder="HCL строка"
+              value={hcl}
+              onChange={(e, data) => {
+                setHcl(data.value);
+              }}
+            />
+            <SpaceId
+              fluid
+              requiredAccessMask={32}
+              label="SpaceId"
+              value={spaceId}
+              onChange={(spaceID) => {
+                setSpaceId(spaceID);
+              }}
+            />
+          </Form.Group>
           <Button
             fluid
             color="green"
@@ -99,7 +116,8 @@ function CreateAutohostModal({
                 gameName,
                 countGames: parseInt(countGames),
                 autostart: parseInt(autostart),
-                hcl
+                hcl,
+                spaceId,
               });
             }}
           >

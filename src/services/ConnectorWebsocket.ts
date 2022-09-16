@@ -78,7 +78,7 @@ export class ConnectorWebsocket extends EventTarget {
   }
 
   public isConnected() {
-    if (this.socketConnect != null)
+    if (this.socketConnect !== null)
       return this.socketConnect.readyState === WebSocket.OPEN;
 
     return false;

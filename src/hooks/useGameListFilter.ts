@@ -120,9 +120,24 @@ export const useGameListFilter = ({
 
     // Order
 
+    const creatorComparator = (a: GameListGame, b: GameListGame) => {
+      if (
+        a.creatorID === b.creatorID &&
+        a.creatorID === currentAuth?.connectorId
+      )
+        return 0;
+
+      if (a.creatorID === currentAuth?.connectorId) return -1;
+
+      if (b.creatorID === currentAuth?.connectorId) return 1;
+
+      return 0;
+    };
+
     return filtredGames.sort((a, b) => {
       return (
         gameTypeComparator(a, b) ||
+        creatorComparator(a, b) ||
         getCompareFunction(filters.orderBy)(a, b) *
           (filters.reverseOrder ? -1 : 1)
       );

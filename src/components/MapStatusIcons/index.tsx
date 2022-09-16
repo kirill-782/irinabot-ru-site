@@ -3,7 +3,7 @@ import { Icon } from "semantic-ui-react";
 import { Map } from "../../models/rest/Map";
 import "./MapStatusIcons.scss";
 
-function MapStatusIcons({ verified, additionalFlags }: Map) {
+function MapStatusIcons({ verified, additionalFlags, semanticCheckError }: Map) {
   if (verified)
     return (
       <Icon
@@ -21,6 +21,16 @@ function MapStatusIcons({ verified, additionalFlags }: Map) {
         name="warning"
         color="red"
         title="В карте найден читпак"
+      />
+    );
+
+  if (semanticCheckError)
+    return (
+      <Icon
+        className="status-icon"
+        name="warning"
+        color="red"
+        title="Скрипт карты содержит семантические ошибки. Возможно карта эксплуатирует уязвимости игры"
       />
     );
 

@@ -122,7 +122,7 @@ function MapPage() {
         </Loader>
       )}
       {mapData && (
-        <Grid columns="equal" stackable>
+        <Grid columns="equal" stackable padded="vertically">
           <Grid.Row>
             <MapHeader {...mapData} />
           </Grid.Row>

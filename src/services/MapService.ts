@@ -86,7 +86,7 @@ export class MapService {
       url: "/v1/maps",
       method: "GET",
       params: {
-        count: 20,
+        count: 50,
         offset: 0,
       },
     };
