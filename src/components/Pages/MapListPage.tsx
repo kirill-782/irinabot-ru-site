@@ -1,14 +1,20 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Container, Form, Grid, Header, Message } from "semantic-ui-react";
 import { SITE_TITLE } from "../../config/ApplicationConfig";
+import { AppRuntimeSettingsContext, WebsocketContext } from "../../context";
+import { useGameListSubscribe } from "../../hooks/useGameListSubscribe";
 import { useSearchMaps } from "../../hooks/useSearchMaps";
 import { useVisibility } from "../../hooks/useVisibility";
 import { SearchFilters, SearchOrder } from "../../models/rest/SearchFilters";
+import { GameListGame } from "../../models/websocket/ServerGameList";
 import ConnectorId from "../ConnectorId";
 import { MapCard } from "../MapListPage/MapCard";
 import { Filter, MapFilters } from "../MapListPage/MapFilters";
+import MapStats from "../MapPage/MapStats";
+import GameJoinButton from "../MapPage/GameJoinButton";
+
 import MetaDescription from "../Meta/MetaDescription";
 import { isNoFilters } from "./../../hooks/useSearchMaps";
 import "./MapListPage.scss";
@@ -47,6 +53,17 @@ function MapListPage() {
       searchOptions[1],
       ""
     );
+
+  const sockets = useContext(WebsocketContext);
+  const runtimeContext = useContext(AppRuntimeSettingsContext);
+  const [gameList, setGameList] = useState<GameListGame[]>([]);
+
+  useGameListSubscribe({
+    ghostSocket: sockets.ghostSocket,
+    isGameListLocked: runtimeContext.gameList.locked,
+    onGameList: setGameList,
+    ignoreFocusCheck: false,
+  });
 
   const [loadButton, setLoadButton] = useState<HTMLButtonElement | null>(null);
 
@@ -197,7 +214,22 @@ function MapListPage() {
               перейтите к списку лобби через шапку сайта.
             </Message>
             {searchedMaps &&
-              searchedMaps.map((map, key) => <MapCard key={map.id} {...map} />)}
+              searchedMaps.map((map, key) => {
+                return (
+                  <>
+                    <MapCard key={map.id} {...map} />
+                    <Grid padded="vertically">
+                      <Grid.Row className="player-stats">
+                        <MapStats className="centred" gameList={gameList} mapId={map.id || 0} />
+                        <GameJoinButton
+                          gameList={gameList}
+                          mapId={map.id || 0}
+                        />
+                      </Grid.Row>
+                    </Grid>
+                  </>
+                );
+              })}
             {searchedMaps && !isFull && (
               <Grid textAlign="center">
                 <button

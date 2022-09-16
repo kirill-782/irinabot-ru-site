@@ -3,3 +3,14 @@
     width: 1400px;
   }
 }
+
+.player-stats {
+  display: flex !important;
+  flex-direction: row-reverse !important;
+
+  .label.centred {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

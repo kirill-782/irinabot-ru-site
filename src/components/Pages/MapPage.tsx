@@ -2,7 +2,11 @@ import { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Container, Grid, Loader, Message } from "semantic-ui-react";
 import { SITE_TITLE } from "../../config/ApplicationConfig";
-import { RestContext, WebsocketContext } from "../../context";
+import {
+  AppRuntimeSettingsContext,
+  RestContext,
+  WebsocketContext,
+} from "../../context";
 import { ConfigInfo } from "../../models/rest/ConfigInfo";
 import { Map } from "../../models/rest/Map";
 import { convertErrorResponseToString } from "../../utils/ApiUtils";
@@ -21,6 +25,7 @@ import React from "react";
 function MapPage() {
   const { id } = useParams();
   const mapsApi = useContext(RestContext).mapsApi;
+  const runtimeContext = useContext(AppRuntimeSettingsContext);
   const [mapData, setMapData] = useState<Map | null>(null);
   const [isLoading, setLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
@@ -33,7 +38,7 @@ function MapPage() {
 
   useGameListSubscribe({
     ghostSocket: sockets.ghostSocket,
-    isGameListLocked: false,
+    isGameListLocked: runtimeContext.gameList.locked,
     onGameList: setGameList,
     ignoreFocusCheck: false,
   });

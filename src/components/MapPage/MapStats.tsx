@@ -6,6 +6,7 @@ import React from "react";
 export interface MapStatsProps {
   gameList: GameListGame[];
   mapId: number;
+  className?: string;
 }
 
 const getPlayerSlots = (game: GameListGame): number => {
@@ -18,7 +19,7 @@ const getPlayerSlots = (game: GameListGame): number => {
   return usedSlots;
 };
 
-function MapStats({ gameList, mapId }: MapStatsProps) {
+function MapStats({ gameList, mapId, className }: MapStatsProps) {
   const [allPlayers, lobbyPlayers] = useMemo(() => {
     let allPlayers = 0;
     let lobbyPlayers = 0;
@@ -36,11 +37,11 @@ function MapStats({ gameList, mapId }: MapStatsProps) {
 
   return gameList.length === 0 ? null : (
     <>
-      <Label title="Игроков в играх">
+      <Label className={className} title="Игроков в играх">
         <Icon name="user"></Icon>
         {allPlayers}
       </Label>
-      <Label title="Игроков в лобби">
+      <Label className={className} title="Игроков в лобби">
         <Icon name="wait"></Icon>
         {lobbyPlayers}
       </Label>
