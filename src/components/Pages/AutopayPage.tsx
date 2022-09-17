@@ -138,7 +138,7 @@ function AutopayPage() {
     <Container>
       <MetaDescription description="Здесь можно оплатить привилегии на боте." />
       <Header>Калькулятор описания для автоподключения доната</Header>
-      <Form ref={formRef} action="https://money.yandex.ru/quickpay/confirm.xml">
+      <Form ref={formRef} method="POST" action="https://yoomoney.ru/quickpay/confirm.xml">
         <Grid columns="equal" stackable>
           <Grid.Column width="two">
             {availablePlaces.map((place) => {
