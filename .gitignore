@@ -11,6 +11,9 @@
 # production
 /build
 
+#images
+/public/kaisa
+
 # misc
 .DS_Store
 .env.local

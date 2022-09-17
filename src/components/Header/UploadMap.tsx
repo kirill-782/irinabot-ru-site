@@ -12,6 +12,7 @@ import {
   UploadMapStartEvent,
 } from "../../services/MapUploaderService";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 // interface UploadState {
 //   file: FileList;
@@ -32,6 +33,8 @@ function UploadMap() {
   const [isMapUploading, setMapUploadind] = useState(mapUploader.isUploading());
 
   const apiToken = useContext(AuthContext).auth.apiToken;
+
+  const go = useNavigate();
 
   const [currentUpload, setCurrentUpload] =
     useState<CurrentMapUploadDescription>({
@@ -55,11 +58,17 @@ function UploadMap() {
             type: "error",
           });
         else if (event.detail.map)
-          toast({
-            title: `Карта загружена.`,
-            description: `Карта ${event.detail.map.mapInfo?.name} загружена.`,
-            type: "success",
-          });
+          toast(
+            {
+              title: `Карта загружена.`,
+              description: `Карта ${event.detail.map.mapInfo?.name} загружена.`,
+              type: "success",
+            },
+            undefined,
+            () => {
+              go(`/maps/${event.detail.map.id}`);
+            }
+          );
       }
     };
 
@@ -91,7 +100,7 @@ function UploadMap() {
       mapUploader.removeEventListener("progress", onUploadProgress);
       mapUploader.removeEventListener("start", onUploadStart);
     };
-  }, [mapUploader, modalOpen]);
+  }, [mapUploader, modalOpen, go]);
 
   const onMapSelected = (
     files: FileList,

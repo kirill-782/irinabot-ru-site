@@ -1,4 +1,4 @@
-import { Button, Dropdown, Form, Table } from "semantic-ui-react";
+import { Image, Table } from "semantic-ui-react";
 import GameListPlayers from "./GameListPlayers";
 import React, { memo } from "react";
 import ConnectorAddButton from "./ConnectorAddButton";
@@ -8,6 +8,16 @@ import { GameListGameFilterExtends } from "../../hooks/useGameListFilter";
 import { GameListGame } from "./../../models/websocket/ServerGameList";
 import ConnectorId from "../ConnectorId";
 import SendSignalButton from "./SendSignalButton";
+
+// TODO AdsFile
+
+const ADS = [
+  {
+    img: "https://irinabot.ru/kaisa/XGMLogo.png",
+    link: "https://xgm.guru/p/wc3/xgm-irina-autohost",
+    index: 10,
+  },
+];
 
 interface GameListProps {
   gameList: GameListGame[];
@@ -38,7 +48,7 @@ function GameList({ gameList, selectedGame, setSelectedGame }: GameListProps) {
         </Table.Row>
       </Table.Header>
       <Table.Body>
-        {gameList.map((game: GameListGameFilterExtends) => {
+        {gameList.map((game: GameListGameFilterExtends, index) => {
           const started = game.gameFlags.started ? "game-started" : "";
           const vip = game.gameFlags.hasGamePowerUp ? "game-vip" : "";
           const external = game.gameFlags.hasOtherGame ? "game-external" : "";
@@ -48,33 +58,45 @@ function GameList({ gameList, selectedGame, setSelectedGame }: GameListProps) {
               ? "game-selected"
               : "";
 
+          const adsRow = ADS.filter((i) => i.index === index)[0];
+
           return (
-            <Table.Row
-              key={game.gameCounter}
-              className={`${started} ${vip} ${external} ${hidden} ${selected}`}
-              onClick={() => {
-                if (selectedGame?.gameCounter === game.gameCounter)
-                  setSelectedGame(null);
-                else setSelectedGame(game);
-              }}
-            >
-              <Table.Cell>
-                {getPlayerSlots(game) + "/" + game.players.length}
-              </Table.Cell>
-              <Table.Cell>
-                <ConnectorId id={game.creatorID} />
-              </Table.Cell>
-              <Table.Cell>
-                <div className="game-title">{game.name}</div>
-              </Table.Cell>
-              <Table.Cell>
-                <GameListPlayers players={game.players} />
-              </Table.Cell>
-              <Table.Cell>
-                <ConnectorAddButton game={game} />
-                <SendSignalButton game={game} />
-              </Table.Cell>
-            </Table.Row>
+            <React.Fragment key={game.gameCounter}>
+              <Table.Row
+                className={`${started} ${vip} ${external} ${hidden} ${selected}`}
+                onClick={() => {
+                  if (selectedGame?.gameCounter === game.gameCounter)
+                    setSelectedGame(null);
+                  else setSelectedGame(game);
+                }}
+              >
+                <Table.Cell>
+                  {getPlayerSlots(game) + "/" + game.players.length}
+                </Table.Cell>
+                <Table.Cell>
+                  <ConnectorId id={game.creatorID} />
+                </Table.Cell>
+                <Table.Cell>
+                  <div className="game-title">{game.name}</div>
+                </Table.Cell>
+                <Table.Cell>
+                  <GameListPlayers players={game.players} />
+                </Table.Cell>
+                <Table.Cell>
+                  <ConnectorAddButton game={game} />
+                  <SendSignalButton game={game} />
+                </Table.Cell>
+              </Table.Row>
+              {adsRow && (
+                <Table.Row>
+                  <Table.Cell colspan="5">
+                    <a href={adsRow.link}>
+                      <Image style={{ width: "100%" }} src={adsRow.img}></Image>
+                    </a>
+                  </Table.Cell>
+                </Table.Row>
+              )}
+            </React.Fragment>
           );
         })}
       </Table.Body>
