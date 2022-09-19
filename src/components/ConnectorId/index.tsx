@@ -2,6 +2,7 @@ import "./ConnectorId.scss";
 import { useContext } from "react";
 import { CacheContext } from "../../context";
 import React from "react";
+import WarcraftIIIText from "../WarcraftIIIText";
 
 export interface ConnectorIdProps {
   id: number;
@@ -14,7 +15,7 @@ function ConnectorId({ id }: ConnectorIdProps) {
   if (connectorCache[id])
     return (
       <span className="connectorId" title={`#${id}`}>
-        {connectorCache[id]}
+        <WarcraftIIIText ignoreTags={["|n"]}>{connectorCache[id]}</WarcraftIIIText>
       </span>
     );
   else return <span className="connectorId">#{id}</span>;

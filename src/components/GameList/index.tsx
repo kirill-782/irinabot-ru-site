@@ -9,6 +9,8 @@ import { GameListGame } from "./../../models/websocket/ServerGameList";
 import ConnectorId from "../ConnectorId";
 import SendSignalButton from "./SendSignalButton";
 
+import classnames from "classnames";
+
 // TODO AdsFile
 
 const ADS = [
@@ -49,21 +51,30 @@ function GameList({ gameList, selectedGame, setSelectedGame }: GameListProps) {
       </Table.Header>
       <Table.Body>
         {gameList.map((game: GameListGameFilterExtends, index) => {
-          const started = game.gameFlags.started ? "game-started" : "";
-          const vip = game.gameFlags.hasGamePowerUp ? "game-vip" : "";
-          const external = game.gameFlags.hasOtherGame ? "game-external" : "";
-          const hidden = game.hidden ? "hidden" : "";
-          const selected =
-            game.gameCounter === selectedGame?.gameCounter
-              ? "game-selected"
-              : "";
+          const classList = classnames("game-list-row",
+            {
+              "game-started": game.gameFlags.started,
+            },
+            {
+              "game-vip": game.gameFlags.hasGamePowerUp,
+            },
+            {
+              "game-external": game.gameFlags.hasOtherGame,
+            },
+            {
+              hidden: game.hidden,
+            },
+            {
+              "game-selected": game.gameCounter === selectedGame?.gameCounter,
+            }
+          );
 
           const adsRow = ADS.filter((i) => i.index === index)[0];
 
           return (
             <React.Fragment key={game.gameCounter}>
               <Table.Row
-                className={`${started} ${vip} ${external} ${hidden} ${selected}`}
+                className={classList}
                 onClick={() => {
                   if (selectedGame?.gameCounter === game.gameCounter)
                     setSelectedGame(null);
@@ -89,7 +100,7 @@ function GameList({ gameList, selectedGame, setSelectedGame }: GameListProps) {
               </Table.Row>
               {adsRow && (
                 <Table.Row>
-                  <Table.Cell colspan="5">
+                  <Table.Cell colSpan="5">
                     <a href={adsRow.link}>
                       <Image style={{ width: "100%" }} src={adsRow.img}></Image>
                     </a>

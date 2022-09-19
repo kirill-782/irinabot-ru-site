@@ -4,6 +4,7 @@ import { memo, useContext, useState } from "react";
 import "./GameListPlayerItem.scss";
 import { AppRuntimeSettingsContext } from "../../context";
 import React from "react";
+import WarcraftIIIText from "../WarcraftIIIText";
 
 const realmToText = {
   "178.218.214.114": "iCCup",
@@ -93,15 +94,15 @@ function GameListPlayerItem({ player }: GameListPlayerItemProps) {
     const urlParser = new URLSearchParams();
     urlParser.append("id", player.name);
     urlParser.append("json", "");
-    fetch("https://nwc3l.com/irinabot_profile?" + urlParser.toString())
-      .then((e) => {
+    fetch("https://nwc3l.com/irinabot_profile?" + urlParser.toString()).then(
+      (e) => {
         if (e.status === 200) {
-          e.json()
-            .then((data) => {
-              setGamePlayerStats(data.playerInfo);
-            })
+          e.json().then((data) => {
+            setGamePlayerStats(data.playerInfo);
+          });
         } else setGamePlayerStats(null);
-      })
+      }
+    );
   };
 
   const renderStats = () => {
@@ -141,7 +142,7 @@ function GameListPlayerItem({ player }: GameListPlayerItemProps) {
           }
           className={`player-name ${getClassColorByPlayer(player)}`}
         >
-          {player.name}
+          <WarcraftIIIText ignoreTags={["|n"]}>{player.name}</WarcraftIIIText>
         </List.Item>
       }
     >

@@ -10,12 +10,16 @@
   background: #c1c6ff;
 }
 
-.game-selected {
-  background: #c1ffc1;
-}
-
 .game-external {
   background: #feffc1;
+}
+
+.game-list-row:hover {
+  background: #d1ffd1;
+}
+
+.game-selected {
+  background: #c1ffc1 !important;
 }
 
 .dark {
@@ -27,12 +31,16 @@
     background: #c1c6ff2e;
   }
 
-  .game-selected {
-    background: #c1ffc12e;
-  }
-
   .game-external {
     background: #feffc12e;
+  }
+
+  .game-list-row:hover {
+    background: #d1ffd12e;
+  }
+
+  .game-selected {
+    background: #c1ffc160 !important;
   }
 }
 
