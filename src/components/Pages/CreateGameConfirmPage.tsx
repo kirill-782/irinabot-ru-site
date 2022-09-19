@@ -108,7 +108,7 @@ function CreateGameConfirmPage({}) {
 
   const canCreateGame =
     gameName.length > 0 && (config || selectedPatch?.status === 1);
-  const canCreateAutohost = canCreateGame && accessMask.hasAccess(32);
+  const canCreateAutohost = (config || selectedPatch?.status === 1) && accessMask.hasAccess(32);
 
   return (
     <Container className="create-game-confirm">
