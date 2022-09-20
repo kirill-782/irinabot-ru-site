@@ -40,6 +40,10 @@ const MobileMenu = () => {
               <Icon name="gamepad" />
               Активные Игры
             </Dropdown.Item>
+            <Dropdown.Item as={NavLink} to="/maps">
+              <Icon name="file" />
+              Список карт
+            </Dropdown.Item>
             <Dropdown.Item as={NavLink} to="/autopay">
               <Icon name="ruble sign" />
               Донат

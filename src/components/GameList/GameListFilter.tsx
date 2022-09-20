@@ -178,6 +178,11 @@ function GameListFilter({
             renderThumb={(props, state) => (
               <div {...props}>{state.valueNow}</div>
             )}
+            renderTrack={
+              (props, state) => (
+                <div {...props}></div>
+              )
+            }
           />
         </Form.Field>
         <Form.Field>

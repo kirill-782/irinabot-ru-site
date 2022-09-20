@@ -9,7 +9,6 @@ import { useSearchMaps } from "../../hooks/useSearchMaps";
 import { useVisibility } from "../../hooks/useVisibility";
 import { SearchFilters, SearchOrder } from "../../models/rest/SearchFilters";
 import { GameListGame } from "../../models/websocket/ServerGameList";
-import ConnectorId from "../ConnectorId";
 import { MapCard } from "../MapListPage/MapCard";
 import { Filter, MapFilters } from "../MapListPage/MapFilters";
 import MapStats from "../MapPage/MapStats";
@@ -47,11 +46,16 @@ function MapListPage() {
   const [searchOptions, setSearchOptions] = useState<
     [SearchFilters | null, SearchOrder | null]
   >([null, null]);
+
+  const [searchValue, setSearchValue] = useState("");
+
   const [searchedMaps, isFull, isLoading, errorMessage, loadNextPage] =
     useSearchMaps(
-      isNoFilters(searchOptions[0]) ? defaultFilter : searchOptions[0],
+      isNoFilters(searchOptions[0]) && !searchValue
+        ? defaultFilter
+        : searchOptions[0],
       searchOptions[1],
-      ""
+      searchValue
     );
 
   const sockets = useContext(WebsocketContext);
@@ -208,11 +212,19 @@ function MapListPage() {
           )}
           <Grid.Column width={13}>
             <Header>Список карт</Header>
-            <Message>
-              IrInA Host Bot - хостбот, при помощи которого можно хостить игры
-              для Warcraft III. Выберите карту, чтобы создать игру, либо
-              перейтите к списку лобби через шапку сайта.
-            </Message>
+            <Grid.Row className="map-list-page-search-field">
+              <Form.Input
+                fluid
+                onChange={(_, data) => {
+                  setSearchValue(data.value);
+                }}
+                loading={isLoading}
+                value={searchValue}
+                error={!!errorMessage}
+                label="Поиск карты"
+                placeholder="Введите часть названия карты..."
+              />
+            </Grid.Row>
             {searchedMaps &&
               searchedMaps.map((map, key) => {
                 return (
@@ -220,7 +232,11 @@ function MapListPage() {
                     <MapCard key={map.id} {...map} />
                     <Grid padded="vertically">
                       <Grid.Row className="player-stats">
-                        <MapStats className="centred" gameList={gameList} mapId={map.id || 0} />
+                        <MapStats
+                          className="centred"
+                          gameList={gameList}
+                          mapId={map.id || 0}
+                        />
                         <GameJoinButton
                           gameList={gameList}
                           mapId={map.id || 0}

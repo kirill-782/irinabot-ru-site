@@ -13,7 +13,8 @@ export const ConsoleBot: React.FC<ConsoleProps> = ({
 }) => {
   const [message, setMessage] = useState("");
 
-  const handleClickSend = () => {
+  const handleClickSend = (e: SyntheticEvent) => {
+    e.preventDefault();
     if (!message) {
       return;
     }

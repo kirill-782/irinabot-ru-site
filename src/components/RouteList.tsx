@@ -47,7 +47,7 @@ const routes: CondirionalRoute[] = [
     routes: [
       {
         index: true,
-        element: <MapListPage />,
+        element: <GameListPage />,
       },
       {
         path: "debug",
@@ -87,10 +87,10 @@ const routes: CondirionalRoute[] = [
         path: "maps",
         element: undefined,
         routes: [
-//          {
-//            index: true,
-//            element: <MapListPage />,
-//          },
+          {
+            index: true,
+            element: <MapListPage />,
+          },
           {
             path: ":id",
             element: <MapPage />,

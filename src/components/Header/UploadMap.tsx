@@ -50,26 +50,24 @@ function UploadMap() {
         setModalOpen(false);
       }
 
-      if (!modalOpen) {
-        if (event.detail.error)
-          toast({
-            title: "Ошибка загрузки карты",
-            description: event.detail.error.toString(),
-            type: "error",
-          });
-        else if (event.detail.map)
-          toast(
-            {
-              title: `Карта загружена.`,
-              description: `Карта ${event.detail.map.mapInfo?.name} загружена.`,
-              type: "success",
-            },
-            undefined,
-            () => {
-              go(`/maps/${event.detail.map.id}`);
-            }
-          );
-      }
+      if (event.detail.error)
+        toast({
+          title: "Ошибка загрузки карты",
+          description: event.detail.error.toString(),
+          type: "error",
+        });
+      else if (event.detail.map)
+        toast(
+          {
+            title: `Карта загружена.`,
+            description: `Карта ${event.detail.map.mapInfo?.name} загружена.`,
+            type: "success",
+          },
+          undefined,
+          () => {
+            go(`/maps/${event.detail.map.id}`);
+          }
+        );
     };
 
     const onUploadProgress = (event: UploadMapProgressEvent) => {

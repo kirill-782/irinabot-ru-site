@@ -3,11 +3,11 @@
 }
 
 .game-vip {
-  background: #ffc1c1;
+  background: #c1c6ff;
 }
 
 .game-started {
-  background: #c1c6ff;
+  background: #ffc1c1;
 }
 
 .game-external {
@@ -24,11 +24,11 @@
 
 .dark {
   .game-vip {
-    background: #ffc1c12e;
+    background: #c1c6ff2e;
   }
 
   .game-started {
-    background: #c1c6ff2e;
+    background: #ffc1c12e;
   }
 
   .game-external {
@@ -51,7 +51,6 @@
   height: 35px;
   padding: 0;
 }
-
 
 @media only screen and (min-width: 768px) {
   .game-list {

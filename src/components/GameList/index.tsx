@@ -43,9 +43,9 @@ function GameList({ gameList, selectedGame, setSelectedGame }: GameListProps) {
       <Table.Header>
         <Table.Row>
           <Table.HeaderCell width={2}>Слоты</Table.HeaderCell>
-          <Table.HeaderCell width={2}>Владелец</Table.HeaderCell>
           <Table.HeaderCell width={4}>Игра</Table.HeaderCell>
           <Table.HeaderCell>Игроки</Table.HeaderCell>
+          <Table.HeaderCell width={2}>Владелец</Table.HeaderCell>
           <Table.HeaderCell width={2}></Table.HeaderCell>
         </Table.Row>
       </Table.Header>
@@ -85,13 +85,13 @@ function GameList({ gameList, selectedGame, setSelectedGame }: GameListProps) {
                   {getPlayerSlots(game) + "/" + game.players.length}
                 </Table.Cell>
                 <Table.Cell>
-                  <ConnectorId id={game.creatorID} />
-                </Table.Cell>
-                <Table.Cell>
                   <div className="game-title">{game.name}</div>
                 </Table.Cell>
                 <Table.Cell>
                   <GameListPlayers players={game.players} />
+                </Table.Cell>
+                <Table.Cell>
+                  <ConnectorId id={game.creatorID} />
                 </Table.Cell>
                 <Table.Cell>
                   <ConnectorAddButton game={game} />

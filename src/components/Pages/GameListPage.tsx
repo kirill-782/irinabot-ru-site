@@ -109,7 +109,9 @@ function GameListPage() {
           ></GameList>
         </Grid.Column>
         <Grid.Column width="three" className="online-stats-column">
-          <Button className="how-btn" basic color="green" size="large">
+          <Button className="how-btn" basic color="green" size="large" onClick={()=>{
+            window.open("https://xgm.guru/p/irina/gamecreate")
+          }}>
             Как играть
           </Button>
           {selectedGame ? (

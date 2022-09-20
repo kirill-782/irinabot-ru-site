@@ -1,6 +1,6 @@
 import { Comment, Form, Button } from "semantic-ui-react";
 import { User } from "./interfaces";
-import { useState } from "react";
+import { SyntheticEvent, useState } from "react";
 import React from "react";
 
 interface UserChatProps {
@@ -11,7 +11,8 @@ interface UserChatProps {
 export const UserChat: React.FC<UserChatProps> = ({ user, sendMessage }) => {
   const [message, setMessage] = useState("");
 
-  const handleClickSend = () => {
+  const handleClickSend = (e: SyntheticEvent) => {
+    e.preventDefault();
     if (!message) {
       return;
     }

@@ -37,20 +37,27 @@ const DesktopMenu = () => {
       <Menu.Item as={NavLink} to="/">
         IrInA Host B<Icon name="circle" style={{ margin: 0 }} />T
       </Menu.Item>
-      <Menu.Item as={NavLink} to="/gamelist">
-        <Icon name="gamepad" />
-        Активные Игры
-      </Menu.Item>
+      <Menu.Item
+        as={NavLink}
+        icon="gamepad"
+        to="/gamelist"
+        title="Активные игры"
+      />
+      <Menu.Item
+        as={NavLink}
+        icon="file"
+        to="/maps"
+        title="Список карт"
+      />
       <Menu.Item
         as="a"
+        title="Справка"
+        icon="help"
         href="https://xgm.guru/p/irina"
         onClick={(e) => {
           if (window.open("https://xgm.guru/p/irina")) e.preventDefault();
         }}
-      >
-        <Icon name="help" />
-        Справка
-      </Menu.Item>
+      />
       <Menu.Item
         onClick={() => {
           switchTheme(
