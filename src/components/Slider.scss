@@ -13,6 +13,10 @@
         cursor: pointer;
       }
     }
+
+    .track {
+      background: #aaa;
+    }
   }
 }
 
@@ -26,6 +30,9 @@
   position: relative;
   min-height: 20px;
 
+  display: flex;
+  align-items: center;
+
   .thumb {
     background: rgb(255 255 255);
     padding: 3px 7px;
@@ -38,6 +45,15 @@
       border: 1px solid #d5d5d5;
       cursor: pointer;
     }
+  }
+
+  .track.track-1 {
+    background: #1c6826;
+  }
+
+  .track {
+    height: 10%;
+    background: #ddd;
   }
 }
 
