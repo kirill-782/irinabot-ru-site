@@ -24,6 +24,7 @@ export const ConsoleBot: React.FC<ConsoleProps> = ({
 
   const handleKeyTextarea = (e: KeyboardEvent) => {
     if (e.code === "Enter" && !e.shiftKey) {
+      e.preventDefault( );
       if (!message) {
         return;
       }
