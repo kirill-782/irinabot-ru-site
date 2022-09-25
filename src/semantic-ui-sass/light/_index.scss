@@ -1,0 +1,375 @@
+/** globals */
+
+@import "../default/globals/reset.variables";
+@import "globals/reset.variables";
+@import "../definitions/globals/reset";
+@import "../default/globals/reset.overrides";
+@import "globals/reset.overrides";
+
+@import "../default/globals/site.variables";
+@import "globals/site.variables";
+@import "../definitions/globals/site";
+@import "../default/globals/site.overrides";
+@import "globals/site.overrides";
+
+/** collections menu **/
+
+@import "../default/globals/site.variables";
+@import "globals/site.variables";
+@import "../default/collections/menu.variables";
+@import "collections/menu.variables";
+@import "../definitions/collections/menu";
+@import "../default/collections/menu.overrides";
+@import "collections/menu.overrides";
+
+/** elements */
+
+@import "../default/globals/site.variables";
+@import "globals/site.variables";
+@import "../default/elements/button.variables";
+@import "elements/button.variables";
+@import "../definitions/elements/button";
+@import "../default/elements/button.overrides";
+@import "elements/button.overrides";
+
+@import "../default/globals/site.variables";
+@import "globals/site.variables";
+@import "../default/elements/container.variables";
+@import "elements/container.variables";
+@import "../definitions/elements/container";
+@import "../default/elements/container.overrides";
+@import "elements/container.overrides";
+
+@import "../default/globals/site.variables";
+@import "globals/site.variables";
+@import "../default/elements/divider.variables";
+@import "elements/divider.variables";
+@import "../definitions/elements/divider";
+@import "../default/elements/divider.overrides";
+@import "elements/divider.overrides";
+
+@import "../default/globals/site.variables";
+@import "globals/site.variables";
+@import "../default/elements/flag.variables";
+@import "elements/flag.variables";
+@import "../definitions/elements/flag";
+@import "../default/elements/flag.overrides";
+@import "elements/flag.overrides";
+
+@import "../default/globals/site.variables";
+@import "globals/site.variables";
+@import "../default/elements/header.variables";
+@import "elements/header.variables";
+@import "../definitions/elements/header";
+@import "../default/elements/header.overrides";
+@import "elements/header.overrides";
+
+@import "../default/globals/site.variables";
+@import "globals/site.variables";
+@import "../default/elements/icon.variables";
+@import "elements/icon.variables";
+@import "../definitions/elements/icon";
+@import "../default/elements/icon.overrides";
+@import "elements/icon.overrides";
+
+@import "../default/globals/site.variables";
+@import "globals/site.variables";
+@import "../default/elements/image.variables";
+@import "elements/image.variables";
+@import "../definitions/elements/image";
+@import "../default/elements/image.overrides";
+@import "elements/image.overrides";
+
+@import "../default/globals/site.variables";
+@import "globals/site.variables";
+@import "../default/elements/input.variables";
+@import "elements/input.variables";
+@import "../definitions/elements/input";
+@import "../default/elements/input.overrides";
+@import "elements/input.overrides";
+
+@import "../default/globals/site.variables";
+@import "globals/site.variables";
+@import "../default/elements/label.variables";
+@import "elements/label.variables";
+@import "../definitions/elements/label";
+@import "../default/elements/label.overrides";
+@import "elements/label.overrides";
+
+@import "../default/globals/site.variables";
+@import "globals/site.variables";
+@import "../default/elements/list.variables";
+@import "elements/list.variables";
+@import "../definitions/elements/list";
+@import "../default/elements/list.overrides";
+@import "elements/list.overrides";
+
+@import "../default/globals/site.variables";
+@import "globals/site.variables";
+@import "../default/elements/loader.variables";
+@import "elements/loader.variables";
+@import "../definitions/elements/loader";
+@import "../default/elements/loader.overrides";
+@import "elements/loader.overrides";
+
+@import "../default/globals/site.variables";
+@import "globals/site.variables";
+@import "../default/elements/rail.variables";
+@import "elements/rail.variables";
+@import "../definitions/elements/rail";
+@import "../default/elements/rail.overrides";
+@import "elements/rail.overrides";
+
+@import "../default/globals/site.variables";
+@import "globals/site.variables";
+@import "../default/elements/reveal.variables";
+@import "elements/reveal.variables";
+@import "../definitions/elements/reveal";
+@import "../default/elements/reveal.overrides";
+@import "elements/reveal.overrides";
+
+@import "../default/globals/site.variables";
+@import "globals/site.variables";
+@import "../default/elements/segment.variables";
+@import "elements/segment.variables";
+@import "../definitions/elements/segment";
+@import "../default/elements/segment.overrides";
+@import "elements/segment.overrides";
+
+@import "../default/globals/site.variables";
+@import "globals/site.variables";
+@import "../default/elements/step.variables";
+@import "elements/step.variables";
+@import "../definitions/elements/step";
+@import "../default/elements/step.overrides";
+@import "elements/step.overrides";
+
+/** collections */
+
+@import "../default/globals/site.variables";
+@import "globals/site.variables";
+@import "../default/collections/breadcrumb.variables";
+@import "collections/breadcrumb.variables";
+@import "../definitions/collections/breadcrumb";
+@import "../default/collections/breadcrumb.overrides";
+@import "collections/breadcrumb.overrides";
+
+@import "../default/globals/site.variables";
+@import "globals/site.variables";
+@import "../default/collections/form.variables";
+@import "collections/form.variables";
+@import "../definitions/collections/form";
+@import "../default/collections/form.overrides";
+@import "collections/form.overrides";
+
+@import "../default/globals/site.variables";
+@import "globals/site.variables";
+@import "../default/collections/grid.variables";
+@import "collections/grid.variables";
+@import "../definitions/collections/grid";
+@import "../default/collections/grid.overrides";
+@import "collections/grid.overrides";
+
+@import "../default/globals/site.variables";
+@import "globals/site.variables";
+@import "../default/collections/message.variables";
+@import "collections/message.variables";
+@import "../definitions/collections/message";
+@import "../default/collections/message.overrides";
+@import "collections/message.overrides";
+
+@import "../default/globals/site.variables";
+@import "globals/site.variables";
+@import "../default/collections/table.variables";
+@import "collections/table.variables";
+@import "../definitions/collections/table";
+@import "../default/collections/table.overrides";
+@import "collections/table.overrides";
+
+/** modules */
+
+@import "../default/globals/site.variables";
+@import "globals/site.variables";
+@import "../default/modules/accordion.variables";
+@import "modules/accordion.variables";
+@import "../definitions/modules/accordion";
+@import "../default/modules/accordion.overrides";
+@import "modules/accordion.overrides";
+
+@import "../default/globals/site.variables";
+@import "globals/site.variables";
+@import "../default/modules/chatroom.variables";
+@import "modules/chatroom.variables";
+// @import "../definitions/modules/chatroom";
+@import "../default/modules/chatroom.overrides";
+@import "modules/chatroom.overrides";
+
+@import "../default/globals/site.variables";
+@import "globals/site.variables";
+@import "../default/modules/checkbox.variables";
+@import "modules/checkbox.variables";
+@import "../definitions/modules/checkbox";
+@import "../default/modules/checkbox.overrides";
+@import "modules/checkbox.overrides";
+
+@import "../default/globals/site.variables";
+@import "globals/site.variables";
+@import "../default/modules/dimmer.variables";
+@import "modules/dimmer.variables";
+@import "../definitions/modules/dimmer";
+@import "../default/modules/dimmer.overrides";
+@import "modules/dimmer.overrides";
+
+@import "../default/globals/site.variables";
+@import "globals/site.variables";
+@import "../default/modules/dropdown.variables";
+@import "modules/dropdown.variables";
+@import "../definitions/modules/dropdown";
+@import "../default/modules/dropdown.overrides";
+@import "modules/dropdown.overrides";
+
+@import "../default/globals/site.variables";
+@import "globals/site.variables";
+@import "../default/modules/embed.variables";
+@import "modules/embed.variables";
+@import "../definitions/modules/embed";
+@import "../default/modules/embed.overrides";
+@import "modules/embed.overrides";
+
+@import "../default/globals/site.variables";
+@import "globals/site.variables";
+@import "../default/modules/modal.variables";
+@import "modules/modal.variables";
+@import "../definitions/modules/modal";
+@import "../default/modules/modal.overrides";
+@import "modules/modal.overrides";
+
+@import "../default/globals/site.variables";
+@import "globals/site.variables";
+@import "../default/modules/nag.variables";
+@import "modules/nag.variables";
+@import "../definitions/modules/nag";
+@import "../default/modules/nag.overrides";
+@import "modules/nag.overrides";
+
+@import "../default/globals/site.variables";
+@import "globals/site.variables";
+@import "../default/modules/popup.variables";
+@import "modules/popup.variables";
+@import "../definitions/modules/popup";
+@import "../default/modules/popup.overrides";
+@import "modules/popup.overrides";
+
+@import "../default/globals/site.variables";
+@import "globals/site.variables";
+@import "../default/modules/progress.variables";
+@import "modules/progress.variables";
+@import "../definitions/modules/progress";
+@import "../default/modules/progress.overrides";
+@import "modules/progress.overrides";
+
+@import "../default/globals/site.variables";
+@import "globals/site.variables";
+@import "../default/modules/rating.variables";
+@import "modules/rating.variables";
+@import "../definitions/modules/rating";
+@import "../default/modules/rating.overrides";
+@import "modules/rating.overrides";
+
+@import "../default/globals/site.variables";
+@import "globals/site.variables";
+@import "../default/modules/search.variables";
+@import "modules/search.variables";
+@import "../definitions/modules/search";
+@import "../default/modules/search.overrides";
+@import "modules/search.overrides";
+
+@import "../default/globals/site.variables";
+@import "globals/site.variables";
+@import "../default/modules/shape.variables";
+@import "modules/shape.variables";
+@import "../definitions/modules/shape";
+@import "../default/modules/shape.overrides";
+@import "modules/shape.overrides";
+
+@import "../default/globals/site.variables";
+@import "globals/site.variables";
+@import "../default/modules/sidebar.variables";
+@import "modules/sidebar.variables";
+@import "../definitions/modules/sidebar";
+@import "../default/modules/sidebar.overrides";
+@import "modules/sidebar.overrides";
+
+@import "../default/globals/site.variables";
+@import "globals/site.variables";
+@import "../default/modules/sticky.variables";
+@import "modules/sticky.variables";
+@import "../definitions/modules/sticky";
+@import "../default/modules/sticky.overrides";
+@import "modules/sticky.overrides";
+
+@import "../default/globals/site.variables";
+@import "globals/site.variables";
+@import "../default/modules/tab.variables";
+@import "modules/tab.variables";
+@import "../definitions/modules/tab";
+@import "../default/modules/tab.overrides";
+@import "modules/tab.overrides";
+
+@import "../default/globals/site.variables";
+@import "globals/site.variables";
+@import "../default/modules/transition.variables";
+@import "modules/transition.variables";
+@import "../definitions/modules/transition";
+@import "../default/modules/transition.overrides";
+@import "modules/transition.overrides";
+
+/** views */
+
+@import "../default/globals/site.variables";
+@import "globals/site.variables";
+@import "../default/views/ad.variables";
+@import "views/ad.variables";
+@import "../definitions/views/ad";
+@import "../default/views/ad.overrides";
+@import "views/ad.overrides";
+
+@import "../default/globals/site.variables";
+@import "globals/site.variables";
+@import "../default/views/card.variables";
+@import "views/card.variables";
+@import "../definitions/views/card";
+@import "../default/views/card.overrides";
+@import "views/card.overrides";
+
+@import "../default/globals/site.variables";
+@import "globals/site.variables";
+@import "../default/views/comment.variables";
+@import "views/comment.variables";
+@import "../definitions/views/comment";
+@import "../default/views/comment.overrides";
+@import "views/comment.overrides";
+
+@import "../default/globals/site.variables";
+@import "globals/site.variables";
+@import "../default/views/feed.variables";
+@import "views/feed.variables";
+@import "../definitions/views/feed";
+@import "../default/views/feed.overrides";
+@import "views/feed.overrides";
+
+@import "../default/globals/site.variables";
+@import "globals/site.variables";
+@import "../default/views/item.variables";
+@import "views/item.variables";
+@import "../definitions/views/item";
+@import "../default/views/item.overrides";
+@import "views/item.overrides";
+
+@import "../default/globals/site.variables";
+@import "globals/site.variables";
+@import "../default/views/statistic.variables";
+@import "views/statistic.variables";
+@import "../definitions/views/statistic";
+@import "../default/views/statistic.overrides";
+@import "views/statistic.overrides";

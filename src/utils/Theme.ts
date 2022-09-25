@@ -21,11 +21,7 @@ export const currentTheme = (() => {
  * @param {E_THEME} themeName Название темы (dark, light и т.д)
  */
 export const loadTheme = () => {
-  if (currentTheme === E_THEME.LIGHT) {
-    return;
-  }
-
-  import(`../semantic-ui-sass/${currentTheme}/_index.scss`);
+  return import(`../semantic-ui-sass/${currentTheme}/_index.scss`);
 };
 
 /** Переключение темы сайта

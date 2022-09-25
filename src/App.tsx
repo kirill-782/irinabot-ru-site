@@ -9,11 +9,8 @@ import {
   SelectUserFunctionHolder,
   WebsocketContext,
 } from "./context";
-import { loadTheme } from "./utils/Theme";
-
 import "@kokomi/react-semantic-toasts/styles/react-semantic-alert.css";
 
-import "./semantic-ui-sass/template/_index.scss";
 import "./components/Slider.scss";
 import { useGHostSocket } from "./hooks/useGHostSocket";
 import { useWebsocketAuth } from "./hooks/useWebsocketAuth";
@@ -31,13 +28,13 @@ import RouteList from "./components/RouteList";
 import TimeAgo from "javascript-time-ago";
 
 import ru from "javascript-time-ago/locale/ru.json";
+import { loadTheme } from "./utils/Theme";
+import SitePrepareLoader from "./components/SitePrepareLoader";
 
 TimeAgo.addDefaultLocale(ru);
 TimeAgo.addLocale(ru);
 
 function App() {
-  useEffect(loadTheme, []);
-
   const [ghostSocket, isGHostSocketConnected] = useGHostSocket({
     url: WEBSOCKET_ENDPOINT,
   });
@@ -56,6 +53,20 @@ function App() {
   const [selectUser, setSelectUser] = useState<SelectUserFunctionHolder>({
     selectUser: () => {},
   });
+
+  // Фиксики останутся пока не загрузятся стили
+
+  const [stylesLoaded, setStylesLoaded] = useState(false);
+
+  useEffect(() => {
+    loadTheme().then(() => {
+      setStylesLoaded(true);
+    });
+  }, []);
+
+  if (!stylesLoaded) {
+    return <SitePrepareLoader noWait />;
+  }
 
   return (
     <WebsocketContext.Provider

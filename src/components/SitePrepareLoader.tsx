@@ -1,8 +1,12 @@
 import React from "react";
 import { useEffect, useState } from "react";
 
-function SitePrepareLoader() {
-  const [needRender, setNeedRender] = useState<boolean>(false);
+interface SitePrepareLoaderProps {
+  noWait?: boolean;
+}
+
+function SitePrepareLoader({ noWait }: SitePrepareLoaderProps) {
+  const [needRender, setNeedRender] = useState<boolean>(noWait || false);
   useEffect(() => {
     const timerId = setTimeout(() => {
       setNeedRender(true);
