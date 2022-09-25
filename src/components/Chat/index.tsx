@@ -253,6 +253,13 @@ export const Chat: React.FC<ChatProps> = ({
           ) : (
             label
           )}
+          <Icon
+            style={{ float: "right", cursor: "pointer" }}
+            name="x"
+            onClick={() => {
+              setOpen(false);
+            }}
+          />
         </Card.Header>
       </Card.Content>
       <Card.Content>{content}</Card.Content>
