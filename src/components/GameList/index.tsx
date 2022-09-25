@@ -8,8 +8,9 @@ import { GameListGameFilterExtends } from "../../hooks/useGameListFilter";
 import { GameListGame } from "./../../models/websocket/ServerGameList";
 import ConnectorId from "../ConnectorId";
 import SendSignalButton from "./SendSignalButton";
-
+import ReactTimeAgo from "react-time-ago";
 import classnames from "classnames";
+import copy from "clipboard-copy";
 
 // TODO AdsFile
 
@@ -51,7 +52,8 @@ function GameList({ gameList, selectedGame, setSelectedGame }: GameListProps) {
       </Table.Header>
       <Table.Body>
         {gameList.map((game: GameListGameFilterExtends, index) => {
-          const classList = classnames("game-list-row",
+          const classList = classnames(
+            "game-list-row",
             {
               "game-started": game.gameFlags.started,
             },
@@ -86,6 +88,24 @@ function GameList({ gameList, selectedGame, setSelectedGame }: GameListProps) {
                 </Table.Cell>
                 <Table.Cell>
                   <div className="game-title">{game.name}</div>
+                  {game.gameFlags.started && (
+                    <span className="duration">
+                      (
+                      <ReactTimeAgo
+                        date={new Date(Date.now() - game.gameTicks)}
+                      />
+                      )
+                    </span>
+                  )}
+                  {game.iccupHost && !game.gameFlags.started && (
+                    <span
+                      className="iccup"
+                      title="Копировать"
+                      onClick={() => copy(game.iccupHost)}
+                    >
+                      ({game.iccupHost})
+                    </span>
+                  )}
                 </Table.Cell>
                 <Table.Cell>
                   <GameListPlayers players={game.players} />

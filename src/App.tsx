@@ -28,6 +28,13 @@ import {
 import AfterContextApp from "./AfterContextApp";
 import RouteList from "./components/RouteList";
 
+import TimeAgo from "javascript-time-ago";
+
+import ru from "javascript-time-ago/locale/ru.json";
+
+TimeAgo.addDefaultLocale(ru);
+TimeAgo.addLocale(ru);
+
 function App() {
   useEffect(loadTheme, []);
 
