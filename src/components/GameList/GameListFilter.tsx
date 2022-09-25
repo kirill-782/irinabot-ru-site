@@ -28,7 +28,7 @@ const options = [
   },
 ];
 
-interface GameListFilterProps {
+export interface GameListFilterProps {
   filterSettings: FilterSettings;
   onFilterChange: (filterState: FilterSettings) => void;
   disabledFilters: string[];

@@ -20,6 +20,7 @@ import { SITE_TITLE } from "../../config/ApplicationConfig";
 import MetaDescription from "../Meta/MetaDescription";
 import { AuthContext } from "./../../context/index";
 import { AccessMaskBit } from "../Modal/AccessMaskModal";
+import GameListFiltersModal from "../Modal/GameListFiltersModal";
 
 function GameListPage() {
   const sockets = useContext(WebsocketContext);
@@ -28,6 +29,7 @@ function GameListPage() {
 
   const [gameList, setGameList] = useState<GameListGame[]>([]);
   const [selectedGame, setSelectedGame] = useState<GameListGame | null>(null);
+  const [filterModalOpen, setFilterModalOpen] = useState(false);
 
   const { filterSettings, setFilterSettings, disabledFilters } =
     useGameListFilterSetings();
@@ -75,14 +77,7 @@ function GameListPage() {
     <Container className="game-list">
       <MetaDescription description="Просмотреть список созданных игр" />
       <Grid columns="equal" stackable>
-        <Grid.Column width="three">
-          <GameListFilter
-            disabledFilters={disabledFilters}
-            filterSettings={filterSettings}
-            onFilterChange={setFilterSettings}
-          />
-        </Grid.Column>
-        <Grid.Column width="ten" className="game-list-column">
+        <Grid.Column width={13} className="game-list-column">
           <Input
             onChange={(event, data) =>
               setFilterSettings({ ...filterSettings, quicFilter: data.value })
@@ -102,6 +97,15 @@ function GameListPage() {
               size="large"
             />
           )}
+          <Button
+            basic
+            icon="filter"
+            floated="right"
+            size="large"
+            onClick={() => {
+              setFilterModalOpen(true);
+            }}
+          />
           <GameList
             gameList={filtredGameList}
             selectedGame={selectedGame}
@@ -109,9 +113,15 @@ function GameListPage() {
           ></GameList>
         </Grid.Column>
         <Grid.Column width="three" className="online-stats-column">
-          <Button className="how-btn" basic color="green" size="large" onClick={()=>{
-            window.open("https://xgm.guru/p/irina/gamecreate")
-          }}>
+          <Button
+            className="how-btn"
+            basic
+            color="green"
+            size="large"
+            onClick={() => {
+              window.open("https://xgm.guru/p/irina/gamecreate");
+            }}
+          >
             Как играть
           </Button>
           {selectedGame ? (
@@ -121,6 +131,15 @@ function GameListPage() {
           )}
         </Grid.Column>
       </Grid>
+      <GameListFiltersModal
+        open={filterModalOpen}
+        onClose={() => {
+          setFilterModalOpen(false);
+        }}
+        disabledFilters={disabledFilters}
+        filterSettings={filterSettings}
+        onFilterChange={setFilterSettings}
+      />
     </Container>
   );
 }

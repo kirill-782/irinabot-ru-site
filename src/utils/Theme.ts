@@ -24,6 +24,7 @@ export const loadTheme = () => {
   if (currentTheme === E_THEME.LIGHT) {
     return;
   }
+
   import(`../semantic-ui-sass/${currentTheme}/_index.scss`);
 };
 
