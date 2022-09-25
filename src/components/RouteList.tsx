@@ -1,19 +1,23 @@
 import { Route, Routes } from "react-router-dom";
-import AutopayPage from "./Pages/AutopayPage";
-import CreateGamePage from "./Pages/CreateGamePage";
-import GameListPage from "./Pages/GameListPage";
-import MapListPage from "./Pages/MapListPage";
-import MapPage from "./Pages/MapPage";
-import NotFoundPage from "./Pages/NotFoundPage";
-import OauthStubPage from "./Pages/OauthStubPage";
-import Layout from "./Layout";
 import { useContext, useMemo } from "react";
 import { AuthContext } from "../context";
-import ForbiddenPage from "./Pages/ForbiddenPage";
 import React from "react";
-import CreateGameConfirmPage from "./Pages/CreateGameConfirmPage";
-import EditConfigPage from "./Pages/EditConfigPage";
-import DebugPage from "./Pages/DebugPage";
+import ForbiddenPage from "./Pages/ForbiddenPage";
+import Layout from "./Layout";
+
+const AutopayPage = React.lazy(() => import("./Pages/AutopayPage"));
+const CreateGamePage = React.lazy(() => import("./Pages/CreateGamePage"));
+const GameListPage = React.lazy(() => import("./Pages/GameListPage"));
+const MapListPage = React.lazy(() => import("./Pages/MapListPage"));
+const MapPage = React.lazy(() => import("./Pages/MapPage"));
+const NotFoundPage = React.lazy(() => import("./Pages/NotFoundPage"));
+const OauthStubPage = React.lazy(() => import("./Pages/OauthStubPage"));
+
+const CreateGameConfirmPage = React.lazy(
+  () => import("./Pages/CreateGameConfirmPage")
+);
+const EditConfigPage = React.lazy(() => import("./Pages/EditConfigPage"));
+const DebugPage = React.lazy(() => import("./Pages/DebugPage"));
 
 interface CondirionalRouteIndex {
   path?: undefined;
@@ -51,7 +55,7 @@ const routes: CondirionalRoute[] = [
       },
       {
         path: "debug",
-        element: <DebugPage />
+        element: <DebugPage />,
       },
       {
         path: "gamelist",
