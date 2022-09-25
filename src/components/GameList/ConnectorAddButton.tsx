@@ -5,6 +5,8 @@ import { AuthContext } from "./../../context/index";
 import { GameListGame } from "../../models/websocket/ServerGameList";
 import { ClientRequestUDPGameConverter } from "../../models/websocket/ClientRequestUDPGame";
 
+declare function ym(id: number, type: string, event: string): void;
+
 interface ConnectorAddButtonProps {
   game: GameListGame;
 }
@@ -28,6 +30,7 @@ function ConnectorAddButton({ game }: ConnectorAddButtonProps) {
   };
 
   const onButtonClick = () => {
+    ym(54068152, "reachGoal", "GAMELIST_CONNECTOR_BROADCAST");
     if (game.gameFlags.hasPassword) setPasswordModalOpen(true);
     else requestConnectorGame();
   };

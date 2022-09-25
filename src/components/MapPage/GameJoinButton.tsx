@@ -12,6 +12,8 @@ interface GameJoinButtonProps {
   className?: string;
 }
 
+declare function ym(id: number, type: string, event: string): void;
+
 function GameJoinButton({ gameList, mapId, className }: GameJoinButtonProps) {
   const [foundGame, setFoundGame] = useState<GameListGame>();
 
@@ -20,6 +22,8 @@ function GameJoinButton({ gameList, mapId, className }: GameJoinButtonProps) {
 
   const requestConnectorGame = () => {
     if (!foundGame) return;
+
+    ym(54068152, "reachGoal", "MAP_GAMEJOIN_BUTTON");
 
     const converter = new ClientRequestUDPGameConverter();
     sockets.ghostSocket.send(
