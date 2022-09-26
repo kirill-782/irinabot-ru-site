@@ -1,6 +1,6 @@
 import { Image, Table } from "semantic-ui-react";
 import GameListPlayers from "./GameListPlayers";
-import React, { memo } from "react";
+import React, { memo, useContext } from "react";
 import ConnectorAddButton from "./ConnectorAddButton";
 
 import "./GameList.scss";
@@ -11,6 +11,7 @@ import SendSignalButton from "./SendSignalButton";
 import ReactTimeAgo from "react-time-ago";
 import classnames from "classnames";
 import copy from "clipboard-copy";
+import { AppRuntimeSettingsContext } from "../../context";
 
 // TODO AdsFile
 
@@ -29,6 +30,9 @@ interface GameListProps {
 }
 
 function GameList({ gameList, selectedGame, setSelectedGame }: GameListProps) {
+
+  const { language } = useContext(AppRuntimeSettingsContext);
+
   const getPlayerSlots = (game: GameListGameFilterExtends): number => {
     let usedSlots = 0;
 
@@ -93,6 +97,7 @@ function GameList({ gameList, selectedGame, setSelectedGame }: GameListProps) {
                       (
                       <ReactTimeAgo
                         date={new Date(Date.now() - game.gameTicks)}
+                        locale={language.currentLocale}
                       />
                       )
                     </span>

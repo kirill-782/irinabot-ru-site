@@ -14,6 +14,7 @@ import { AuthContext } from "./../../../context/index";
 import { switchTheme, E_THEME, currentTheme } from "../../../utils/Theme";
 import "./DesktopMenu.scss";
 import UtilsDropdown from "../../Header/UtilsDropdown";
+import LanguageDropdown from "../../Header/LanguageDropdown";
 
 export interface MenuItem {
   type: string;
@@ -78,6 +79,7 @@ const DesktopMenu = () => {
           Донат
         </Menu.Item>
 
+        <LanguageDropdown />
         {currentAuth !== null ? <UserDrowdown /> : <LoginDropdown />}
       </Menu.Menu>
     </Menu>

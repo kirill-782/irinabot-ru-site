@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Form, Header } from "semantic-ui-react";
 import { Config } from "../../models/rest/Config";
 import SlotsEdit from "./SlotsEdit";
+import { AppRuntimeSettingsContext } from "./../../context/index";
 
 interface ConfigEditProps {
   configPayload: Config;
@@ -9,9 +10,12 @@ interface ConfigEditProps {
 }
 
 function ConfigEdit({ configPayload, onConfigChange }: ConfigEditProps) {
+  const { language } = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
+
   return (
     <>
-      <Header size="large">Редактирование конфига</Header>
+      <Header size="large">{t("page.map.config.edit")}</Header>
       <Form>
         <Form.Group widths="equal">
           <Form.Input

@@ -24,15 +24,13 @@ import {
 
 import AfterContextApp from "./AfterContextApp";
 import RouteList from "./components/RouteList";
+import { importLocales, getLocale } from "./utils/LocaleUtils";
 
 import TimeAgo from "javascript-time-ago";
 
-import ru from "javascript-time-ago/locale/ru.json";
 import { loadTheme } from "./utils/Theme";
 import SitePrepareLoader from "./components/SitePrepareLoader";
-
-TimeAgo.addDefaultLocale(ru);
-TimeAgo.addLocale(ru);
+import { useLanguage } from "./hooks/useLanguage";
 
 function App() {
   const [ghostSocket, isGHostSocketConnected] = useGHostSocket({
@@ -54,17 +52,21 @@ function App() {
     selectUser: () => {},
   });
 
-  // Фиксики останутся пока не загрузятся стили
+  const [selectLanguage, pushLanguageData, getString, currentLocale] =
+    useLanguage();
 
-  const [stylesLoaded, setStylesLoaded] = useState(false);
+  // Фиксики останутся пока не загрузятся стили и языки
+
+  const [dynamicImportReady, setDynamicImportReady] = useState(false);
 
   useEffect(() => {
-    loadTheme().then(() => {
-      setStylesLoaded(true);
+    const locale = getLocale();
+    Promise.all([loadTheme(), selectLanguage(locale)]).then(() => {
+      setDynamicImportReady(true);
     });
   }, []);
 
-  if (!stylesLoaded) {
+  if (!dynamicImportReady) {
     return <SitePrepareLoader noWait />;
   }
 
@@ -83,6 +85,11 @@ function App() {
           chat: {
             selectUser,
             setSelectUser,
+          },
+          language: {
+            selectLanguage,
+            getString,
+            currentLocale,
           },
         }}
       >

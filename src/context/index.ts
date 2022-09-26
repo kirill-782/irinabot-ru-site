@@ -1,4 +1,5 @@
 import { createContext } from "react";
+import { GetLanguageStaring } from "../hooks/useLanguage";
 import { Category } from "../models/rest/Category";
 import { AccessListRecord } from "../models/websocket/ServerAccessList";
 import { ConnectorWebsocket } from "../services/ConnectorWebsocket";
@@ -34,6 +35,11 @@ export type AppRuntimeSettingsContextType = {
   chat: {
     selectUser: SelectUserFunctionHolder;
     setSelectUser: React.Dispatch<SelectUserFunctionHolder>;
+  };
+  language: {
+    getString: GetLanguageStaring;
+    selectLanguage: React.Dispatch<string>;
+    currentLocale: string;
   };
 };
 
