@@ -69,6 +69,16 @@ function Footer(props) {
         >
           <Icon name="vk"></Icon>
         </Menu.Item>
+        <Menu.Item
+          as="a"
+          href="https://github.com/kirill-782/irinabot-ru-site"
+          onClick={(e) => {
+            window.open("https://github.com/kirill-782/irinabot-ru-site");
+            e.preventDefault();
+          }}
+        >
+          <Icon name="github"></Icon>
+        </Menu.Item>
       </Menu>
     </>
   );
