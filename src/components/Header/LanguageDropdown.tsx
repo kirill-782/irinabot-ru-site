@@ -6,6 +6,9 @@ import { AppRuntimeSettingsContext } from "./../../context/index";
 function LanguageDropdown() {
   const { language } = useContext(AppRuntimeSettingsContext);
 
+  // Temporarily hidden 
+  return null;
+
   return (
     <Dropdown text="Язык" item>
       <Dropdown.Menu>
