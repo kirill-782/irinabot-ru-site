@@ -19,6 +19,8 @@ const CreateGameConfirmPage = React.lazy(
 const EditConfigPage = React.lazy(() => import("./Pages/EditConfigPage"));
 const DebugPage = React.lazy(() => import("./Pages/DebugPage"));
 
+const ReplayParserPage = React.lazy(() => import("./Pages/ReplayParserPage"));
+
 interface CondirionalRouteIndex {
   path?: undefined;
   index?: true;
@@ -100,6 +102,10 @@ const routes: CondirionalRoute[] = [
             element: <MapPage />,
           },
         ],
+      },
+      {
+        path: "replay",
+        element: <ReplayParserPage />,
       },
       {
         path: "*",
