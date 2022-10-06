@@ -7,6 +7,8 @@ interface SitePrepareLoaderProps {
 
 function SitePrepareLoader({ noWait }: SitePrepareLoaderProps) {
   const [needRender, setNeedRender] = useState<boolean>(noWait || false);
+  const [timer, setTimer] = useState<number>(0);
+
   useEffect(() => {
     const timerId = setTimeout(() => {
       setNeedRender(true);
@@ -15,10 +17,20 @@ function SitePrepareLoader({ noWait }: SitePrepareLoaderProps) {
     return () => {
       clearTimeout(timerId);
     };
-  }, [setNeedRender]);
+  }, []);
+
+  useEffect(() => {
+    const timerId = setInterval(() => {
+      setTimer((timer) => ++timer);
+    }, 100);
+
+    return () => {
+      clearInterval(timerId);
+    };
+  }, []);
 
   return needRender ? (
-    <h1>Фиксики размещают теги по местам, ожидайте</h1>
+    <h1>Фиксики размещают теги по местам, ожидайте {timer}</h1>
   ) : null;
 }
 
