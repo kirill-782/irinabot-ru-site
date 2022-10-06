@@ -1,0 +1,14 @@
+.w3mmd-tab {
+
+  flex-wrap: nowrap !important;
+
+  .block-list {
+    width: 20%;
+    flex-shrink: 0;
+  }
+
+  .state {
+    width: 100%;
+    min-width: 1px;
+  }
+}

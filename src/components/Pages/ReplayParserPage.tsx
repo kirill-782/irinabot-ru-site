@@ -22,12 +22,14 @@ export type ActionData = {
   commandBlocks: ActionCommandBlock[];
   time: number;
   errorMessage?: string;
+  seqenceNumber: number;
 };
 
 export interface ReplayContextData {
   replayData: ReplayResult;
   replayActions: ActionData[];
   name: string;
+  getShortBlockDescription: (block: ActionData) => string;
 }
 
 function ReplayParserPage({}) {
@@ -42,25 +44,29 @@ function ReplayParserPage({}) {
 
     const actionParser = new ActionParser();
 
-    debugger;
-
-    data.records.actions.forEach((i) => {
+    data.records.actions.forEach((i, k) => {
       try {
         const result = actionParser.processActionData(i.rawData);
         actions.push({
           commandBlocks: result,
           time: i.time,
+          seqenceNumber: k,
         });
       } catch (e) {
         actions.push({
           commandBlocks: [],
           time: i.time,
           errorMessage: e.toString(),
+          seqenceNumber: k,
         });
       }
     });
 
     setReplayActions(actions);
+  };
+
+  const getShortBlockDescription = (block: ActionData) => {
+    return `Блок ${block.seqenceNumber}`;
   };
 
   return (
@@ -70,7 +76,8 @@ function ReplayParserPage({}) {
           value={{
             replayData,
             replayActions,
-            name
+            name,
+            getShortBlockDescription,
           }}
         >
           <ReplayInfo></ReplayInfo>

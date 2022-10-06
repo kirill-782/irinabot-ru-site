@@ -42,8 +42,8 @@ $d_emerald: #029527;
       padding: 3px;
       border-radius: 4px;
 
-      margin: 0 5px 0 5px ;
-      
+      margin: 0 5px 0 5px;
+
       color: #000000;
 
       &.red {
@@ -146,8 +146,12 @@ $d_emerald: #029527;
         background: rgba($peanut, $opacity);
       }
     }
+  }
+}
 
-    .dark {
+.dark {
+  .replay-chat-tab {
+    .chat-row {
       a.item.player-name {
         color: #e0e0e0;
 
