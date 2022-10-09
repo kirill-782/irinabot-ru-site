@@ -17,7 +17,7 @@ import {
   Message,
   Modal,
 } from "semantic-ui-react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Map } from "../../models/rest/Map";
 import { ConfigInfo } from "../../models/rest/ConfigInfo";
 import {
@@ -50,6 +50,8 @@ import copy from "clipboard-copy";
 import "./CreateGameConfirmPage.scss";
 import MetaRobots from "./../Meta/MetaRobots";
 
+const GAME_NAME_LOCALSTORAGE_PATH = "lastSuccessGameName";
+
 const assemblyMapOptions = (
   mapFlags: number,
   mapSpeed: number,
@@ -76,7 +78,9 @@ function CreateGameConfirmPage({}) {
     configName: "",
   });
 
-  const [gameName, setGameName] = useState("");
+  const [gameName, setGameName] = useState(
+    localStorage.getItem(GAME_NAME_LOCALSTORAGE_PATH) || ""
+  );
   const [autohostModalOpen, setAutohostModalOpen] = useState(false);
   const [lastPassword, setLastPassword] = useState("");
 
@@ -108,7 +112,8 @@ function CreateGameConfirmPage({}) {
 
   const canCreateGame =
     gameName.length > 0 && (config || selectedPatch?.status === 1);
-  const canCreateAutohost = (config || selectedPatch?.status === 1) && accessMask.hasAccess(32);
+  const canCreateAutohost =
+    (config || selectedPatch?.status === 1) && accessMask.hasAccess(32);
 
   return (
     <Container className="create-game-confirm">
@@ -505,6 +510,7 @@ function useLocalCreateGameCallback(
   const { mapsApi } = useContext(RestContext);
   const { ghostSocket } = useContext(WebsocketContext);
   const { auth } = useContext(AuthContext);
+  const go = useNavigate();
 
   useEffect(() => {
     const onPacket = (packet: GHostPackageEvent) => {
@@ -517,13 +523,16 @@ function useLocalCreateGameCallback(
         const createGameResponse = packetData as ServerCreateGame;
 
         if (createGameResponse.status === 0) {
+          localStorage.setItem(GAME_NAME_LOCALSTORAGE_PATH, gameName);
+
           if (!createGameResponse.password) {
             toast({
               title: "Игра создана",
-              description: "Исполдьзуйте коннектор, чтобы войти в игру",
+              description: "Используйте коннектор, чтобы войти в игру",
               icon: "check",
               color: "green",
             });
+            go("/gamelist");
           } else {
             setLastPassword(createGameResponse.password);
           }
@@ -543,7 +552,7 @@ function useLocalCreateGameCallback(
     return () => {
       ghostSocket.removeEventListener("package", onPacket);
     };
-  }, [ghostSocket]);
+  }, [ghostSocket, gameName]);
 
   return useCallback(
     (event: SyntheticEvent, data: any) => {
