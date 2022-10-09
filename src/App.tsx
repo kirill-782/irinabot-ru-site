@@ -31,6 +31,7 @@ import TimeAgo from "javascript-time-ago";
 import { loadTheme } from "./utils/Theme";
 import SitePrepareLoader from "./components/SitePrepareLoader";
 import { useLanguage } from "./hooks/useLanguage";
+import { Header } from "semantic-ui-react";
 
 function App() {
   const [ghostSocket, isGHostSocketConnected] = useGHostSocket({
@@ -58,13 +59,27 @@ function App() {
   // Фиксики останутся пока не загрузятся стили и языки
 
   const [dynamicImportReady, setDynamicImportReady] = useState(false);
+  const [dynamicImportError, setDynamicImportError] = useState("");
 
   useEffect(() => {
-    const locale = getLocale();
-    Promise.all([loadTheme(), selectLanguage(locale)]).then(() => {
-      setDynamicImportReady(true);
+    const theme = new Promise((resolve, reject) => {
+      loadTheme().finally(() => {
+        resolve(undefined);
+      });
     });
+    const locale = getLocale();
+    Promise.all([theme, selectLanguage(locale)])
+      .then(() => {
+        setDynamicImportReady(true);
+      })
+      .catch((e) => {
+        setDynamicImportError(JSON.stringify(e));
+      });
   }, []);
+
+  if (dynamicImportError) {
+    return <Header>{dynamicImportError}</Header>;
+  }
 
   if (!dynamicImportReady) {
     return <SitePrepareLoader noWait />;

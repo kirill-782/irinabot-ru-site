@@ -15,6 +15,8 @@ import {
 } from "@kokomi/w3g-parser-browser";
 import OpenReplay from "../ReplayParser/OpenReplay";
 import ReplayInfo from "../ReplayParser/ReplayInfo";
+import MetaDescription from "../Meta/MetaDescription";
+import MetaRobots from "./../Meta/MetaRobots";
 
 export const ReplayContext = createContext<ReplayContextData | null>(null);
 
@@ -71,6 +73,7 @@ function ReplayParserPage({}) {
 
   return (
     <Container className="replay-parser">
+      <MetaRobots noIndex />
       {replayData ? (
         <ReplayContext.Provider
           value={{

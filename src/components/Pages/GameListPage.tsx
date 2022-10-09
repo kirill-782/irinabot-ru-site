@@ -52,7 +52,7 @@ function GameListPage() {
   const connectorCache = useContext(CacheContext).cachedConnectorIds;
 
   useEffect(() => {
-    window.document.title = `Список игр - ${SITE_TITLE}`;
+    window.document.title = `Список игр | ${SITE_TITLE}`;
   }, []);
 
   useEffect(() => {
@@ -75,7 +75,7 @@ function GameListPage() {
 
   return (
     <Container className="game-list">
-      <MetaDescription description="Просмотреть список созданных игр" />
+      <MetaDescription description="Просмотреть список созданных игр, к которым можно присоедениться." />
       <Grid columns="equal" stackable>
         <Grid.Column width={13} className="game-list-column">
           <Input

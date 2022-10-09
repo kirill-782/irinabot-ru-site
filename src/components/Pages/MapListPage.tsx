@@ -78,7 +78,7 @@ function MapListPage() {
   const loc = useLocation();
 
   useEffect(() => {
-    window.document.title = `${SITE_TITLE}`;
+    window.document.title = `Карты Warcraft III | ${SITE_TITLE}`;
   }, []);
 
   useEffect(() => {

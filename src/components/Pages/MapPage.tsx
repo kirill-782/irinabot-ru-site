@@ -44,9 +44,13 @@ function MapPage() {
   });
 
   useEffect(() => {
-    window.document.title = `${escapeWC3Tags(
-      mapData?.mapInfo?.name || ""
-    )} - ${SITE_TITLE}`;
+    if (mapData?.mapInfo?.name) {
+      window.document.title = `${escapeWC3Tags(
+        mapData.mapInfo.name
+      )} | Карты Warcraft III | ${SITE_TITLE}`;
+    } else {
+      window.document.title = SITE_TITLE;
+    }
   }, [mapData]);
 
   useEffect(() => {
@@ -112,7 +116,7 @@ function MapPage() {
 
   return (
     <Container>
-      {noIndex && <MetaRobots noIndex />}
+      <MetaRobots noIndex={!!noIndex || !mapData?.mapInfo?.name} />
       <MetaDescription
         description={escapeWC3Tags(mapData?.mapInfo?.description || "")}
       />
