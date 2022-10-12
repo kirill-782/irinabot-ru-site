@@ -8,6 +8,7 @@ import WarcraftIIIText from "../WarcraftIIIText";
 import MapStatusIcons from "../MapStatusIcons";
 import React from "react";
 import { Link } from "react-router-dom";
+import LazyLoadedImage from "../LazyLoadedImage";
 
 interface MapInfoProps {
   mapId: number;
@@ -55,7 +56,8 @@ function MapInfo({ mapId }: MapInfoProps) {
         <WarcraftIIIText>{mapInfo?.mapInfo?.name || ""}</WarcraftIIIText>
         <MapStatusIcons {...mapInfo} />
       </Header>
-      <Image
+      <LazyLoadedImage
+        blured={mapInfo?.additionalFlags?.["nsfw_images"]}
         src={mapInfo?.mapInfo?.coverImageUrl || mapInfo?.mapInfo?.mapImageUrl}
       />
       <div>

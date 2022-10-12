@@ -3,6 +3,7 @@ import { memo } from "react";
 import { Grid, Header, Image } from "semantic-ui-react";
 import { Map } from "../../models/rest/Map";
 import { getBotFileName } from "../../utils/MapFileUtils";
+import LazyLoadedImage from "../LazyLoadedImage";
 import MapStatusIcons from "../MapStatusIcons";
 import WarcraftIIIText from "../WarcraftIIIText";
 
@@ -11,7 +12,10 @@ function MapHeader({ ...map }: Map) {
     <>
       <Grid.Column width={3}>
         {map.mapInfo?.coverImageUrl && (
-          <Image src={map.mapInfo?.coverImageUrl} />
+          <LazyLoadedImage
+            blured={map?.additionalFlags?.["nsfw_images"]}
+            src={map.mapInfo?.coverImageUrl}
+          />
         )}
       </Grid.Column>
       <Grid.Column width={10}>
@@ -40,7 +44,12 @@ function MapHeader({ ...map }: Map) {
         </p>
       </Grid.Column>
       <Grid.Column width={3}>
-        {map.mapInfo?.mapImageUrl && <Image src={map.mapInfo?.mapImageUrl} />}
+        {map.mapInfo?.mapImageUrl && (
+          <LazyLoadedImage
+            blured={map?.additionalFlags?.["nsfw_images"]}
+            src={map.mapInfo?.mapImageUrl}
+          />
+        )}
       </Grid.Column>
     </>
   );

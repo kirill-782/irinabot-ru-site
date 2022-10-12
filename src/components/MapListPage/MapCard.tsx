@@ -7,6 +7,7 @@ import WarcraftIIIText from "../WarcraftIIIText";
 import MapStatusIcons from "../MapStatusIcons";
 import MapCategoryList from "../MapPage/MapCategoryList";
 import MapDownloadButton from "../MapPage/MapDownloadButton";
+import LazyLoadedImage from "../LazyLoadedImage";
 
 /** Карточка игры в dropdown */
 export const MapCard: React.FC<Map & { selectElement?: React.ReactNode }> = ({
@@ -35,7 +36,11 @@ export const MapCard: React.FC<Map & { selectElement?: React.ReactNode }> = ({
   return (
     <Grid className="map-card" stackable>
       <Grid.Column width={2}>
-        <Image size="medium" src={coverImageUrl || mapImageUrl} />
+        <LazyLoadedImage
+          blured={map?.additionalFlags?.["nsfw_images"]}
+          size="medium"
+          src={coverImageUrl || mapImageUrl}
+        />
       </Grid.Column>
 
       <Grid.Column width={11}>

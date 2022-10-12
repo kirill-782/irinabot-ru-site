@@ -350,7 +350,7 @@ function useLocalPatchSelector(
           value: version,
           status,
           disabled: status === 2,
-          content: version + " S: " + status,
+          content: version,
         };
       })
     );
@@ -360,6 +360,8 @@ function useLocalPatchSelector(
 
   useEffect(() => {
     if (configPatches.length === 0) return;
+
+    if(selectedPatch) return;
 
     if (config)
       setSelectedPatch(configPatches.find((i) => config.version === i.value));
@@ -389,15 +391,6 @@ function useLocalPatchSelector(
 
               return [...configPatches];
             });
-
-            // По хорошему надо перезапросить объект
-
-            if (Array.isArray(map.configs)) {
-              for (let i = 0; i < map.configs.length; ++i) {
-                if (map.configs[i].version === selectedPatch.value)
-                  map.configs[i].status = result.status;
-              }
-            }
           });
       }
     }
