@@ -22,6 +22,7 @@ $element: "icon";
 *******************************/
 
 @font-face {
+  font-display: swap;
   font-family: "Icons";
   src: $fallbackSRC;
   src: $src;

@@ -9,8 +9,9 @@ interface MetaRobotsProps {
 function MetaRobots({ robot, noIndex, noFlow }: MetaRobotsProps) {
   useEffect(() => {
     const descriptionTag = document.createElement("meta");
+    descriptionTag.setAttribute("name", robot || "robots");
     descriptionTag.setAttribute(
-      robot || "robots",
+      "content",
       `${noIndex ? "noindex" : "index"}, ${noFlow ? "nofollow" : "flow"}`
     );
 
