@@ -339,6 +339,8 @@ function useLocalPatchSelector(
   // Config list select
 
   useEffect(() => {
+    if (!map) return;
+
     setConfigPatches(
       cachedVersions.map((version) => {
         const status = map?.configs?.find(
@@ -361,7 +363,7 @@ function useLocalPatchSelector(
   useEffect(() => {
     if (configPatches.length === 0) return;
 
-    if(selectedPatch) return;
+    if (selectedPatch) return;
 
     if (config)
       setSelectedPatch(configPatches.find((i) => config.version === i.value));
