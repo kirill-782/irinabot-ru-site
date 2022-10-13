@@ -9,10 +9,12 @@ import WarcraftIIIText from "../WarcraftIIIText";
 
 function MapHeader({ ...map }: Map) {
   return (
-    <>
-      <Grid.Column width={3}>
+    <Grid stackable className="map-header">
+      <Grid.Column className="cover-image" width={3}>
         {map.mapInfo?.coverImageUrl && (
           <LazyLoadedImage
+            size="medium"
+            centered
             blured={map?.additionalFlags?.["nsfw_images"]}
             src={map.mapInfo?.coverImageUrl}
           />
@@ -46,12 +48,15 @@ function MapHeader({ ...map }: Map) {
       <Grid.Column width={3}>
         {map.mapInfo?.mapImageUrl && (
           <LazyLoadedImage
+            className="map-image"
+            centered
+            size="medium"
             blured={map?.additionalFlags?.["nsfw_images"]}
             src={map.mapInfo?.mapImageUrl}
           />
         )}
       </Grid.Column>
-    </>
+    </Grid>
   );
 }
 
