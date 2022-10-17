@@ -9,7 +9,7 @@ import WarcraftIIIText from "../WarcraftIIIText";
 
 function MapHeader({ ...map }: Map) {
   return (
-    <Grid stackable className="map-header">
+    <>
       <Grid.Column className="cover-image" width={3}>
         {map.mapInfo?.coverImageUrl && (
           <LazyLoadedImage
@@ -56,7 +56,7 @@ function MapHeader({ ...map }: Map) {
           />
         )}
       </Grid.Column>
-    </Grid>
+    </>
   );
 }
 

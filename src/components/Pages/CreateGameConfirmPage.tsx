@@ -49,6 +49,7 @@ import { ServerCreateGame } from "../../models/websocket/ServerCreateGame";
 import copy from "clipboard-copy";
 import "./CreateGameConfirmPage.scss";
 import MetaRobots from "./../Meta/MetaRobots";
+import { SITE_TITLE } from "../../config/ApplicationConfig";
 
 const GAME_NAME_LOCALSTORAGE_PATH = "lastSuccessGameName";
 
@@ -90,6 +91,10 @@ function CreateGameConfirmPage({}) {
     map,
     config
   );
+
+  useEffect(() => {
+    window.document.title = `Создать игру | ${SITE_TITLE}`;
+  }, []);
 
   const { accessMask } = useContext(AuthContext).auth;
 

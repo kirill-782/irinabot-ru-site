@@ -1,10 +1,11 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import { Container, Header, Tab } from "semantic-ui-react";
 import MapSelectTab from "../CreateGame/MapSelectTab";
 import "../CreateGame/CreateGame.scss";
 import MetaDescription from "../Meta/MetaDescription";
 import MetaRobots from "../Meta/MetaRobots";
 import ConfigSelectTab from "../CreateGame/ConfigSelectTab";
+import { SITE_TITLE } from "../../config/ApplicationConfig";
 
 const panes = [
   {
@@ -18,6 +19,12 @@ const panes = [
 ];
 
 function CreateGamePage() {
+
+  useEffect(() => {
+    window.document.title = `Создать игру | ${SITE_TITLE}`;
+  }, []);
+
+
   return (
     <Container className="create-game">
       <MetaDescription description="На этой странице можно создать игру" />
