@@ -4,6 +4,7 @@ import { AuthContext } from "../context";
 import React from "react";
 import ForbiddenPage from "./Pages/ForbiddenPage";
 import Layout from "./Layout";
+import MapEditPage from "./Pages/MapEditPage";
 
 const AutopayPage = React.lazy(() => import("./Pages/AutopayPage"));
 const CreateGamePage = React.lazy(() => import("./Pages/CreateGamePage"));
@@ -101,6 +102,10 @@ const routes: CondirionalRoute[] = [
             path: ":id",
             element: <MapPage />,
           },
+          {
+            path: ":id/edit",
+            element: <MapEditPage />
+          }
         ],
       },
       {
