@@ -21,8 +21,6 @@ import GameJoinButton from "../MapPage/GameJoinButton";
 import MetaDescription from "../Meta/MetaDescription";
 import { isNoFilters } from "./../../hooks/useSearchMaps";
 import "./MapListPage.scss";
-import MapFavoriteButton from "../MapPage/FavoriteButton";
-import { Map } from "../../models/rest/Map";
 
 const defaultFilters: Filter = {
   verify: false,
@@ -43,6 +41,7 @@ const filtersUrlParams = [
   "sortBy",
   "orderBy",
   "owner",
+  "favorite",
 ];
 
 const defaultFilter = {
@@ -142,6 +141,12 @@ function MapListPage() {
           if (i === "true") urlFilters.taggedOnly = true;
 
           break;
+
+        case "favorite":
+          if (i === "true") urlFilters.favorite = true;
+
+          break;
+
         case "minPlayers":
           urlFilters.minPlayers = parseInt(i);
 

@@ -110,6 +110,7 @@ export const MapFilters: React.FC<FiltersProps> = memo(
           setMaxPlayers(value[0].maxPlayers || 24);
           setSelectedCategories(value[0].category || 0);
           setOwner(value[0].owner || "");
+          setFavoriteOnly(value[0].favorite || false);
         }
         if (value[1]) {
           setSortBy(value[1].sortBy || "default");
