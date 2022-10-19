@@ -20,4 +20,6 @@ export interface SearchFilters {
   category?: number;
   /** Фильтр по владельцу */
   owner?: string;
+  /** Только избранные карты */
+  favorite?: boolean
 }

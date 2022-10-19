@@ -21,6 +21,7 @@ import MetaDescription from "../Meta/MetaDescription";
 import { AuthContext } from "./../../context/index";
 import { AccessMaskBit } from "../Modal/AccessMaskModal";
 import GameListFiltersModal from "../Modal/GameListFiltersModal";
+import MetaCanonical from "../Meta/MetaCanonical";
 
 function GameListPage() {
   const sockets = useContext(WebsocketContext);
@@ -52,7 +53,7 @@ function GameListPage() {
   const connectorCache = useContext(CacheContext).cachedConnectorIds;
 
   useEffect(() => {
-    window.document.title = `Список игр - ${SITE_TITLE}`;
+    window.document.title = `Список игр | ${SITE_TITLE}`;
   }, []);
 
   useEffect(() => {
@@ -75,7 +76,8 @@ function GameListPage() {
 
   return (
     <Container className="game-list">
-      <MetaDescription description="Просмотреть список созданных игр" />
+      <MetaDescription description="Просмотреть список созданных игр, к которым можно присоедениться." />
+      <MetaCanonical hostPath="/" />
       <Grid columns="equal" stackable>
         <Grid.Column width={13} className="game-list-column">
           <Input

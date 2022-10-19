@@ -17,7 +17,7 @@ import {
   Message,
   Modal,
 } from "semantic-ui-react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Map } from "../../models/rest/Map";
 import { ConfigInfo } from "../../models/rest/ConfigInfo";
 import {
@@ -49,6 +49,9 @@ import { ServerCreateGame } from "../../models/websocket/ServerCreateGame";
 import copy from "clipboard-copy";
 import "./CreateGameConfirmPage.scss";
 import MetaRobots from "./../Meta/MetaRobots";
+import { SITE_TITLE } from "../../config/ApplicationConfig";
+
+const GAME_NAME_LOCALSTORAGE_PATH = "lastSuccessGameName";
 
 const assemblyMapOptions = (
   mapFlags: number,
@@ -76,7 +79,9 @@ function CreateGameConfirmPage({}) {
     configName: "",
   });
 
-  const [gameName, setGameName] = useState("");
+  const [gameName, setGameName] = useState(
+    localStorage.getItem(GAME_NAME_LOCALSTORAGE_PATH) || ""
+  );
   const [autohostModalOpen, setAutohostModalOpen] = useState(false);
   const [lastPassword, setLastPassword] = useState("");
 
@@ -86,6 +91,10 @@ function CreateGameConfirmPage({}) {
     map,
     config
   );
+
+  useEffect(() => {
+    window.document.title = `Создать игру | ${SITE_TITLE}`;
+  }, []);
 
   const { accessMask } = useContext(AuthContext).auth;
 
@@ -108,7 +117,8 @@ function CreateGameConfirmPage({}) {
 
   const canCreateGame =
     gameName.length > 0 && (config || selectedPatch?.status === 1);
-  const canCreateAutohost = (config || selectedPatch?.status === 1) && accessMask.hasAccess(32);
+  const canCreateAutohost =
+    (config || selectedPatch?.status === 1) && accessMask.hasAccess(32);
 
   return (
     <Container className="create-game-confirm">
@@ -334,6 +344,8 @@ function useLocalPatchSelector(
   // Config list select
 
   useEffect(() => {
+    if (!map) return;
+
     setConfigPatches(
       cachedVersions.map((version) => {
         const status = map?.configs?.find(
@@ -345,7 +357,7 @@ function useLocalPatchSelector(
           value: version,
           status,
           disabled: status === 2,
-          content: version + " S: " + status,
+          content: version,
         };
       })
     );
@@ -355,6 +367,8 @@ function useLocalPatchSelector(
 
   useEffect(() => {
     if (configPatches.length === 0) return;
+
+    if (selectedPatch) return;
 
     if (config)
       setSelectedPatch(configPatches.find((i) => config.version === i.value));
@@ -384,15 +398,6 @@ function useLocalPatchSelector(
 
               return [...configPatches];
             });
-
-            // По хорошему надо перезапросить объект
-
-            if (Array.isArray(map.configs)) {
-              for (let i = 0; i < map.configs.length; ++i) {
-                if (map.configs[i].version === selectedPatch.value)
-                  map.configs[i].status = result.status;
-              }
-            }
           });
       }
     }
@@ -505,6 +510,7 @@ function useLocalCreateGameCallback(
   const { mapsApi } = useContext(RestContext);
   const { ghostSocket } = useContext(WebsocketContext);
   const { auth } = useContext(AuthContext);
+  const go = useNavigate();
 
   useEffect(() => {
     const onPacket = (packet: GHostPackageEvent) => {
@@ -517,13 +523,16 @@ function useLocalCreateGameCallback(
         const createGameResponse = packetData as ServerCreateGame;
 
         if (createGameResponse.status === 0) {
+          localStorage.setItem(GAME_NAME_LOCALSTORAGE_PATH, gameName);
+
           if (!createGameResponse.password) {
             toast({
               title: "Игра создана",
-              description: "Исполдьзуйте коннектор, чтобы войти в игру",
+              description: "Используйте коннектор, чтобы войти в игру",
               icon: "check",
               color: "green",
             });
+            go("/gamelist");
           } else {
             setLastPassword(createGameResponse.password);
           }
@@ -543,7 +552,7 @@ function useLocalCreateGameCallback(
     return () => {
       ghostSocket.removeEventListener("package", onPacket);
     };
-  }, [ghostSocket]);
+  }, [ghostSocket, gameName]);
 
   return useCallback(
     (event: SyntheticEvent, data: any) => {

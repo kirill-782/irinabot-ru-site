@@ -27,6 +27,7 @@ export interface Filter {
   maxPlayers: number;
   category: number;
   owner: string;
+  favoritedOnly: boolean;
 }
 
 export interface Order {
@@ -50,6 +51,9 @@ export const MapFilters: React.FC<FiltersProps> = memo(
     );
     const [taggedOnly, setTaggedOnly] = useState<boolean>(
       defaultFilters?.taggedOnly || false
+    );
+    const [favoriteOnly, setFavoriteOnly] = useState<boolean>(
+      defaultFilters?.favoritedOnly || false
     );
     const [minPlayers, setMinPlayers] = useState<number>(
       defaultFilters?.minPlayers || 1
@@ -88,6 +92,7 @@ export const MapFilters: React.FC<FiltersProps> = memo(
           taggedOnly: taggedOnly ? true : undefined,
           category: selectedCategories || undefined,
           owner: owner || undefined,
+          favorite: favoriteOnly || undefined,
         },
         {
           sortBy: sortBy === "default" ? undefined : sortBy,
@@ -125,6 +130,7 @@ export const MapFilters: React.FC<FiltersProps> = memo(
       orderBy,
       selectedCategories,
       owner,
+      favoriteOnly,
     ]);
 
     const resetFilters = () => {
@@ -134,12 +140,14 @@ export const MapFilters: React.FC<FiltersProps> = memo(
         setMinPlayers(defaultFilters.minPlayers);
         setMaxPlayers(defaultFilters.maxPlayers);
         setSelectedCategories(defaultFilters.category);
+        setFavoriteOnly(defaultFilters.favoritedOnly);
       } else {
         setVerified(false);
         setTaggedOnly(false);
         setMinPlayers(1);
         setMaxPlayers(24);
         setSelectedCategories(0);
+        setFavoriteOnly(false);
       }
 
       if (defaultOrder) {
@@ -197,6 +205,11 @@ export const MapFilters: React.FC<FiltersProps> = memo(
           label="Только отмеченные карты"
           checked={taggedOnly}
           onChange={() => setTaggedOnly(!taggedOnly)}
+        />
+        <Form.Checkbox
+          label="Только избранные карты"
+          checked={favoriteOnly}
+          onChange={() => setFavoriteOnly(!favoriteOnly)}
         />
         <Form.Select
           fluid

@@ -24,7 +24,7 @@ function MapCategoryList({ categories }: MapCategoryListProps) {
           return categories?.indexOf(category.id || 0) !== -1;
         })
         .map((category) => {
-          return <Label as={Link} to={`/?category=${category.id}`} key={category.id}>{category.name}</Label>;
+          return <Label as={Link} to={`/maps?category=${category.id}`} key={category.id}>{category.name}</Label>;
         })}
     </div>
   );

@@ -60,7 +60,7 @@ function AutopayPage() {
   }, [authContext.auth.currentAuth]);
 
   useEffect(() => {
-    window.document.title = `Донат - ${SITE_TITLE}`;
+    window.document.title = `Донат | ${SITE_TITLE}`;
   }, []);
 
   const togglePlaceCheckbox = (placeId) => {

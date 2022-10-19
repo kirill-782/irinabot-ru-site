@@ -21,6 +21,7 @@ import { useGameListSubscribe } from "../../hooks/useGameListSubscribe";
 import MetaDescription from "../Meta/MetaDescription";
 import MetaRobots from "../Meta/MetaRobots";
 import React from "react";
+import { MapContext } from "./../../context/index";
 
 function MapPage() {
   const { id } = useParams();
@@ -44,9 +45,13 @@ function MapPage() {
   });
 
   useEffect(() => {
-    window.document.title = `${escapeWC3Tags(
-      mapData?.mapInfo?.name || ""
-    )} - ${SITE_TITLE}`;
+    if (mapData?.mapInfo?.name) {
+      window.document.title = `${escapeWC3Tags(
+        mapData.mapInfo.name
+      )} | Карты Warcraft III | ${SITE_TITLE}`;
+    } else {
+      window.document.title = SITE_TITLE;
+    }
   }, [mapData]);
 
   useEffect(() => {
@@ -112,7 +117,7 @@ function MapPage() {
 
   return (
     <Container>
-      {noIndex && <MetaRobots noIndex />}
+      <MetaRobots noIndex={!!noIndex || !mapData?.mapInfo?.name} />
       <MetaDescription
         description={escapeWC3Tags(mapData?.mapInfo?.description || "")}
       />
@@ -127,38 +132,45 @@ function MapPage() {
         </Loader>
       )}
       {mapData && (
-        <Grid columns="equal" stackable padded="vertically">
-          <Grid.Row>
-            <MapHeader {...mapData} />
-          </Grid.Row>
-          {mapData?.additionalFlags?.mapDescription && (
-            <MapDescription
-              desctiption={mapData?.additionalFlags?.mapDescription}
-            />
-          )}
-          <Grid.Row>
-            <MapFlags {...mapData.additionalFlags} />
-          </Grid.Row>
-          <MapFooter {...mapData} gameList={gameList} />
-          <Grid.Row>
-            {config === undefined && (
-              <Loader size="big" active>
-                Конфиг загружается
-              </Loader>
+        <MapContext.Provider
+          value={{
+            map: mapData,
+            setMap: setMapData,
+          }}
+        >
+          <Grid columns="equal" stackable padded="vertically">
+            <Grid.Row>
+              <MapHeader />
+            </Grid.Row>
+            {mapData?.additionalFlags?.mapDescription && (
+              <MapDescription
+                desctiption={mapData?.additionalFlags?.mapDescription}
+              />
             )}
-            {config === null && (
-              <Message style={{ width: "100%" }} info>
-                Слоты не парсились
-              </Message>
-            )}
-            {config?.config && (
-              <MapSlots
-                slots={config?.config.playableSlots}
-                options={config?.config.options}
-              ></MapSlots>
-            )}
-          </Grid.Row>
-        </Grid>
+            <Grid.Row>
+              <MapFlags/>
+            </Grid.Row>
+            <MapFooter gameList={gameList} />
+            <Grid.Row>
+              {config === undefined && (
+                <Loader size="big" active>
+                  Конфиг загружается
+                </Loader>
+              )}
+              {config === null && (
+                <Message style={{ width: "100%" }} info>
+                  Слоты не парсились
+                </Message>
+              )}
+              {config?.config && (
+                <MapSlots
+                  slots={config?.config.playableSlots}
+                  options={config?.config.options}
+                ></MapSlots>
+              )}
+            </Grid.Row>
+          </Grid>
+        </MapContext.Provider>
       )}
     </Container>
   );

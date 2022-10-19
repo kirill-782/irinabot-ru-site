@@ -19,18 +19,8 @@ function SitePrepareLoader({ noWait }: SitePrepareLoaderProps) {
     };
   }, []);
 
-  useEffect(() => {
-    const timerId = setInterval(() => {
-      setTimer((timer) => ++timer);
-    }, 100);
-
-    return () => {
-      clearInterval(timerId);
-    };
-  }, []);
-
   return needRender ? (
-    <h1>Фиксики размещают теги по местам, ожидайте {timer}</h1>
+    <h1>Фиксики размещают теги по местам, ожидайте</h1>
   ) : null;
 }
 

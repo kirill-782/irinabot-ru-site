@@ -3555,6 +3555,7 @@ i.icon.youtube.play:before {
   @if ($importOutlineIcons) {
     /* Load & Define Icon Font */
     @font-face {
+      font-display: swap;
       font-family: $outlineFontName;
       src: $outlineFallbackSRC;
       src: $outlineSrc;
@@ -3943,6 +3944,7 @@ i.icon.youtube.play:before {
   @if ($importBrandIcons) {
     /* Load & Define Brand Font */
     @font-face {
+      font-display: swap;
       font-family: $brandFontName;
       src: $brandFallbackSRC;
       src: $brandSrc;

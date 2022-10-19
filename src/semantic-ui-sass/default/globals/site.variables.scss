@@ -20,7 +20,7 @@ $googleFontSizes: "400,700,400italic,700italic";
 $googleSubset: "latin";
 
 $googleProtocol: "https://";
-$googleFontRequest: "#{$googleFontName}:#{$googleFontSizes}&subset=#{$googleSubset}";
+$googleFontRequest: "#{$googleFontName}:#{$googleFontSizes}&subset=#{$googleSubset}&display=swap";
 
 $bold: bold;
 $normal: normal;

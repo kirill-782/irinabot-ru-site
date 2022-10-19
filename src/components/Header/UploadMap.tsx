@@ -60,8 +60,9 @@ function UploadMap() {
         toast(
           {
             title: `Карта загружена.`,
-            description: `Карта ${event.detail.map.mapInfo?.name} загружена.`,
+            description: `Карта ${event.detail.map.mapInfo?.name} загружена. Кликните по уведомлению, чтобы перейти к карте.`,
             type: "success",
+            time: 10000,
           },
           undefined,
           () => {

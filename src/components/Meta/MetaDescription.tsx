@@ -7,7 +7,9 @@ interface MetaDescriptionProps {
 function MetaDescription({ description }: MetaDescriptionProps) {
   useEffect(() => {
     const descriptionTag = document.createElement("meta");
-    descriptionTag.setAttribute("description", description);
+
+    descriptionTag.setAttribute("name", "description");
+    descriptionTag.setAttribute("content", description);
 
     document.head.appendChild(descriptionTag);
 

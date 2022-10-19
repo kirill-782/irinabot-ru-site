@@ -90,6 +90,10 @@ export const useGameListFilter = ({
 
       if (filters.quicFilter.length === 0) return { ...game, hidden: false };
 
+      if (game.mapId.toString() === filters.quicFilter) {
+        return { ...game, hidden: false };
+      }
+
       if (
         game.name
           .toLocaleLowerCase()

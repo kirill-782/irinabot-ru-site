@@ -1,17 +1,27 @@
-import React from "react";
+import React, { useContext } from "react";
 import { memo } from "react";
 import { Grid, Header, Image } from "semantic-ui-react";
+import { MapContext } from "../../context";
 import { Map } from "../../models/rest/Map";
 import { getBotFileName } from "../../utils/MapFileUtils";
+import LazyLoadedImage from "../LazyLoadedImage";
 import MapStatusIcons from "../MapStatusIcons";
 import WarcraftIIIText from "../WarcraftIIIText";
 
-function MapHeader({ ...map }: Map) {
+function MapHeader() {
+
+  const map = useContext(MapContext).map;
+
   return (
     <>
-      <Grid.Column width={3}>
+      <Grid.Column className="cover-image" width={3}>
         {map.mapInfo?.coverImageUrl && (
-          <Image src={map.mapInfo?.coverImageUrl} />
+          <LazyLoadedImage
+            size="medium"
+            centered
+            blured={map?.additionalFlags?.["nsfw_images"]}
+            src={map.mapInfo?.coverImageUrl}
+          />
         )}
       </Grid.Column>
       <Grid.Column width={10}>
@@ -40,7 +50,15 @@ function MapHeader({ ...map }: Map) {
         </p>
       </Grid.Column>
       <Grid.Column width={3}>
-        {map.mapInfo?.mapImageUrl && <Image src={map.mapInfo?.mapImageUrl} />}
+        {map.mapInfo?.mapImageUrl && (
+          <LazyLoadedImage
+            className="map-image"
+            centered
+            size="medium"
+            blured={map?.additionalFlags?.["nsfw_images"]}
+            src={map.mapInfo?.mapImageUrl}
+          />
+        )}
       </Grid.Column>
     </>
   );

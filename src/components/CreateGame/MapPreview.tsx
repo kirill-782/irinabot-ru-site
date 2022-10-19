@@ -2,6 +2,7 @@ import React, { memo } from "react";
 import { Link } from "react-router-dom";
 import { Grid, Header, Image } from "semantic-ui-react";
 import { Map } from "../../models/rest/Map";
+import LazyLoadedImage from "../LazyLoadedImage";
 import MapCategoryList from "../MapPage/MapCategoryList";
 import MapStatusIcons from "../MapStatusIcons";
 import WarcraftIIIText from "../WarcraftIIIText";
@@ -15,7 +16,8 @@ function MapPreview({ map }: MapPreviewProps) {
   return (
     <Grid className="map-preview" stackable>
       <Grid.Column width={4}>
-        <Image
+        <LazyLoadedImage
+          blured={map?.additionalFlags?.["nsfw_images"]}
           size="medium"
           src={map.mapInfo?.coverImageUrl || map.mapInfo?.mapImageUrl}
         />
