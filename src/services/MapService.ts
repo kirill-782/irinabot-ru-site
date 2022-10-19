@@ -178,6 +178,32 @@ export class MapService {
     return response.data;
   };
 
+  public addMapToFavorite = async (mapId: number, options?: RequestOptions) => {
+    let request: AxiosRequestConfig<FormData> = {
+      ...this.defaultConfig,
+      url: "/v1/maps/" + mapId + "/favorite",
+      method: "PUT",
+    };
+
+    request = this.appendOptions(request, options);
+    const response = await Axios.request<void>(request);
+
+    return response.data;
+  };
+
+  public deleteMapFromFavorite = async (mapId: number, options?: RequestOptions) => {
+    let request: AxiosRequestConfig<FormData> = {
+      ...this.defaultConfig,
+      url: "/v1/maps/" + mapId + "/favorite",
+      method: "DELETE",
+    };
+
+    request = this.appendOptions(request, options);
+    const response = await Axios.request<void>(request);
+
+    return response.data;
+  };
+
   public searchMap = async (
     filters: SearchFilters,
     order: SearchOrder,
@@ -335,10 +361,7 @@ export class MapService {
     return response.data;
   };
 
-  public deleteConfig = async (
-    configId: number,
-    options?: RequestOptions
-  ) => {
+  public deleteConfig = async (configId: number, options?: RequestOptions) => {
     let request: AxiosRequestConfig<string> = {
       ...this.defaultConfig,
       url: `/v1/configs/${configId}`,

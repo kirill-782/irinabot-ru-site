@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, useContext } from "react";
 import {
   Container,
   Grid,
@@ -7,41 +7,28 @@ import {
   List,
   Segment,
 } from "semantic-ui-react";
+import { MapContext } from "../../context";
 import "./MapFlags.scss";
 
-function MapFlags({
-  mapDescription,
-  hasCheats,
-  statsType,
-  hclSupport,
-  sematicCheckError,
-  ...otherFlags
-}: {
-  [key: string]: any;
-}) {
+function MapFlags() {
+  const {
+    mapDescription,
+    hasCheats,
+    statsType,
+    hclSupport,
+    sematicCheckError,
+    ...otherFlags
+  } = useContext(MapContext).map.additionalFlags || {};
+
   return (
     <div className="map-flags">
       {hasCheats && <Label color="red">Карта содержит читпак</Label>}
-      {sematicCheckError && <Label color="red">Скрипт карты содержит семантические ошибки</Label>}
+      {sematicCheckError && (
+        <Label color="red">Скрипт карты содержит семантические ошибки</Label>
+      )}
       {statsType && <Label>Тип статистики: {statsType}</Label>}
       {hclSupport && <Label>Карта поддерживает HCL</Label>}
     </div>
-  );
-
-  return (
-    <Grid className="map-flags">
-      <Header>Флаги карты</Header>
-      <Grid.Row>
-        <Container style={{ width: "100% !important" }}>
-          {Object.keys(otherFlags).length > 0 && (
-            <>
-              <Grid.Row>Неизвестные флаги</Grid.Row>
-              <Segment>{JSON.stringify(otherFlags)}</Segment>
-            </>
-          )}
-        </Container>
-      </Grid.Row>
-    </Grid>
   );
 }
 

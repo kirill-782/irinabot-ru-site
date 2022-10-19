@@ -1,6 +1,7 @@
 import { createContext } from "react";
 import { GetLanguageStaring } from "../hooks/useLanguage";
 import { Category } from "../models/rest/Category";
+import { Map } from "../models/rest/Map";
 import { AccessListRecord } from "../models/websocket/ServerAccessList";
 import { ConnectorWebsocket } from "../services/ConnectorWebsocket";
 import { GHostWebSocket } from "../services/GHostWebsocket";
@@ -158,3 +159,12 @@ export type CacheConnectorIdAction =
   | ClearConnectorId
   | RemoveConnectorId
   | CacheConnectorId;
+
+// Map Context
+
+export type MapContextType = {
+  map: Map;
+  setMap: React.Dispatch<Map>;
+};
+
+export const MapContext = createContext<MapContextType>(null);

@@ -3,7 +3,11 @@ import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Container, Form, Grid, Header, Message } from "semantic-ui-react";
 import { SITE_TITLE } from "../../config/ApplicationConfig";
-import { AppRuntimeSettingsContext, WebsocketContext } from "../../context";
+import {
+  AppRuntimeSettingsContext,
+  MapContext,
+  WebsocketContext,
+} from "../../context";
 import { useGameListSubscribe } from "../../hooks/useGameListSubscribe";
 import { useSearchMaps } from "../../hooks/useSearchMaps";
 import { useVisibility } from "../../hooks/useVisibility";
@@ -17,6 +21,8 @@ import GameJoinButton from "../MapPage/GameJoinButton";
 import MetaDescription from "../Meta/MetaDescription";
 import { isNoFilters } from "./../../hooks/useSearchMaps";
 import "./MapListPage.scss";
+import MapFavoriteButton from "../MapPage/FavoriteButton";
+import { Map } from "../../models/rest/Map";
 
 const defaultFilters: Filter = {
   verify: false,
@@ -25,6 +31,7 @@ const defaultFilters: Filter = {
   maxPlayers: 24,
   category: 0,
   owner: "",
+  favoritedOnly: false,
 };
 
 const filtersUrlParams = [
@@ -228,8 +235,8 @@ function MapListPage() {
             {searchedMaps &&
               searchedMaps.map((map, key) => {
                 return (
-                  <>
-                    <MapCard key={map.id} {...map} />
+                  <React.Fragment key={map.id}>
+                    <MapCard {...map} />
                     <Grid padded="vertically">
                       <Grid.Row className="player-stats">
                         <MapStats
@@ -243,7 +250,7 @@ function MapListPage() {
                         />
                       </Grid.Row>
                     </Grid>
-                  </>
+                  </React.Fragment>
                 );
               })}
             {searchedMaps && !isFull && (

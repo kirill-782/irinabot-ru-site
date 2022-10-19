@@ -8,25 +8,21 @@ import React from "react";
 import MapDownloadButton from "./MapDownloadButton";
 import MapCategoryList from "./MapCategoryList";
 import { Link } from "react-router-dom";
-import { AuthContext } from "./../../context/index";
+import { AuthContext, MapContext } from "./../../context/index";
 import CloneConfigButton from "./CloneConfigButton";
 import "./MapFooter.scss";
 import MapReportModal from "./../Modal/MapReportModal";
+import MapFavoriteButton from "./FavoriteButton";
 
 interface MapFooterProps {
   gameList: GameListGame[];
 }
 
-function MapFooter({
-  categories,
-  downloadUrl,
-  fileName,
-  fileSize,
-  id,
-  gameList,
-  configs,
-}: Map & MapFooterProps) {
+function MapFooter({ gameList }: MapFooterProps) {
   const { accessMask, apiToken } = useContext(AuthContext).auth;
+
+  const { categories, downloadUrl, fileName, fileSize, id, configs, favorite } =
+    useContext(MapContext).map;
 
   const showCreateButton =
     apiToken.hasAuthority("MAP_READ") && accessMask.hasAccess(64);
@@ -65,6 +61,8 @@ function MapFooter({
           />
         )}
         <div className="divider"></div>
+
+        <MapFavoriteButton />
         <CloneConfigButton
           className="centred"
           mapId={id || 0}

@@ -3,8 +3,24 @@ import { Icon } from "semantic-ui-react";
 import { Map } from "../../models/rest/Map";
 import "./MapStatusIcons.scss";
 
-function MapStatusIcons({ verified, additionalFlags, semanticCheckError }: Map) {
-  if (verified)
+function MapStatusIcons({
+  verified,
+  additionalFlags,
+  semanticCheckError,
+  favorite,
+}: Map) {
+  if (favorite) {
+    return (
+      <Icon
+        className="status-icon"
+        name="star"
+        color="orange"
+        title="Карта у вас в списке избранного"
+      />
+    );
+  }
+
+  if (verified) {
     return (
       <Icon
         className="status-icon"
@@ -13,8 +29,9 @@ function MapStatusIcons({ verified, additionalFlags, semanticCheckError }: Map) 
         title="Карта проверена"
       />
     );
+  }
 
-  if (additionalFlags?.hasCheats)
+  if (additionalFlags?.hasCheats) {
     return (
       <Icon
         className="status-icon"
@@ -23,8 +40,9 @@ function MapStatusIcons({ verified, additionalFlags, semanticCheckError }: Map) 
         title="В карте найден читпак"
       />
     );
+  }
 
-  if (semanticCheckError)
+  if (semanticCheckError) {
     return (
       <Icon
         className="status-icon"
@@ -33,6 +51,7 @@ function MapStatusIcons({ verified, additionalFlags, semanticCheckError }: Map) 
         title="Скрипт карты содержит семантические ошибки. Возможно карта эксплуатирует уязвимости игры"
       />
     );
+  }
 
   return null;
 }
