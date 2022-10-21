@@ -1,7 +1,14 @@
 import React, { useContext } from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Container, Form, Grid, Header, Message } from "semantic-ui-react";
+import {
+  Checkbox,
+  Container,
+  Form,
+  Grid,
+  Header,
+  Message,
+} from "semantic-ui-react";
 import { SITE_TITLE } from "../../config/ApplicationConfig";
 import {
   AppRuntimeSettingsContext,
@@ -48,21 +55,17 @@ const defaultFilter = {
   verify: true,
 };
 
+const unique = (value, index, self) => {
+  return self.indexOf(value) === index;
+};
+
 function MapListPage() {
   const [searchOptions, setSearchOptions] = useState<
     [SearchFilters | null, SearchOrder | null]
   >([null, null]);
 
   const [searchValue, setSearchValue] = useState("");
-
-  const [searchedMaps, isFull, isLoading, errorMessage, loadNextPage] =
-    useSearchMaps(
-      isNoFilters(searchOptions[0]) && !searchValue
-        ? defaultFilter
-        : searchOptions[0],
-      searchOptions[1],
-      searchValue
-    );
+  const [mapIds, setMapsId] = useState("");
 
   const sockets = useContext(WebsocketContext);
   const runtimeContext = useContext(AppRuntimeSettingsContext);
@@ -79,6 +82,20 @@ function MapListPage() {
 
   const isVisible = useVisibility(loadButton, { rootMargin: "100px" });
   const [disableFilters, setDisableFilters] = useState<boolean>(false);
+
+  const requestFilter = useMemo(() => {
+    if (mapIds || searchValue || !isNoFilters(searchOptions[0])) {
+      return {
+        mapIds: mapIds || undefined,
+        ...searchOptions[0],
+      };
+    }
+
+    return defaultFilter;
+  }, [searchValue, searchOptions[0], defaultFilter, mapIds]); 
+
+  const [searchedMaps, isFull, isLoading, errorMessage, loadNextPage] =
+    useSearchMaps(requestFilter, searchOptions[1], searchValue);
 
   const navigate = useNavigate();
   const loc = useLocation();
@@ -206,6 +223,17 @@ function MapListPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isVisible]);
 
+  const onLobbyGamesClick = (checked?: boolean) => {
+    if (checked) {
+      setMapsId(
+        gameList
+          .map((i) => i.mapId)
+          .filter(unique)
+          .join(",")
+      );
+    } else setMapsId("");
+  };
+
   return (
     <Container className="map-list-page">
       <MetaDescription description="Просмотреть список загруженных на бота карт." />
@@ -219,6 +247,13 @@ function MapListPage() {
                 value={searchOptions}
                 autoCommit
                 defaultFilters={defaultFilters}
+              />
+              <Checkbox
+                label="Ограничить поиск картами из списка с играми"
+                checked={mapIds.length > 0}
+                onChange={(_, data) => {
+                  onLobbyGamesClick(data.checked);
+                }}
               />
             </Grid.Column>
           )}

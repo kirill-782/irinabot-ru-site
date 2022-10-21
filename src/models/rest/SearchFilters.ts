@@ -21,5 +21,7 @@ export interface SearchFilters {
   /** Фильтр по владельцу */
   owner?: string;
   /** Только избранные карты */
-  favorite?: boolean
+  favorite?: boolean;
+  /** Получить карты с заданным ID */
+  mapIds?: string;
 }
