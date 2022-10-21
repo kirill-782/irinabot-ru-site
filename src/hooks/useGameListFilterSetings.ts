@@ -1,5 +1,6 @@
+import { abort } from "process";
 import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../context";
+import { AuthContext, RestContext } from "../context";
 import { FilterSettings } from "./useGameListFilter";
 
 const gameListFilterLocalStorageKey = "gameListFilters";
@@ -8,6 +9,7 @@ const defaultFilterSettings: FilterSettings = {
   quicFilter: "",
   noLoadStarted: true,
   onlySelfGames: false,
+  onlyFavoritedMaps: false,
   gameType: 0,
   orderBy: "default",
   reverseOrder: false,
@@ -18,6 +20,7 @@ const defaultFilterSettings: FilterSettings = {
 
 export const useGameListFilterSetings = () => {
   const auth = useContext(AuthContext).auth;
+
 
   const [filterSettings, setFilterSettings] = useState<FilterSettings>(
     defaultFilterSettings
@@ -70,8 +73,13 @@ export const useGameListFilterSetings = () => {
 
   // Authorization dependent filters
   useEffect(() => {
-    if (auth.currentAuth) enableFilter("onlySelfGames");
-    else if (!auth.authCredentials) disableFilter("onlySelfGames");
+    if (auth.currentAuth) {
+      enableFilter("onlySelfGames");
+      enableFilter("onlyFavoritedMaps");
+    } else if (!auth.authCredentials) {
+      disableFilter("onlySelfGames");
+      disableFilter("onlyFavoritedMaps");
+    }
 
     if (!auth.accessMask.hasAccess(1)) {
       if (auth.accessMask.getRecords().length === 0) {

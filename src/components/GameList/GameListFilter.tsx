@@ -66,6 +66,18 @@ function GameListFilter({
           }}
           label="Только мои игры"
         ></Form.Checkbox>
+        <Form.Checkbox
+          name="onlyFavoritedMaps"
+          disabled={disabledFilters.indexOf("onlyFavoritedMaps") > -1}
+          checked={filterSettings.onlyFavoritedMaps}
+          onChange={(event, data) => {
+            onFilterChange({
+              ...filterSettings,
+              onlyFavoritedMaps: !!data.checked,
+            });
+          }}
+          label="Только избранные карты"
+        ></Form.Checkbox>
         <Form.Group grouped>
           <label>Игры по типу</label>
           <Form.Field
@@ -178,11 +190,7 @@ function GameListFilter({
             renderThumb={(props, state) => (
               <div {...props}>{state.valueNow}</div>
             )}
-            renderTrack={
-              (props, state) => (
-                <div {...props}></div>
-              )
-            }
+            renderTrack={(props, state) => <div {...props}></div>}
           />
         </Form.Field>
         <Form.Field>

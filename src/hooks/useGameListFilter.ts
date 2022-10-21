@@ -1,5 +1,5 @@
-import { useContext, useMemo } from "react";
-import { AuthContext } from "../context";
+import { useContext, useEffect, useMemo, useState } from "react";
+import { AuthContext, RestContext } from "../context";
 import { GameListGame } from "../models/websocket/ServerGameList";
 import {
   allSlotsComparator,
@@ -9,16 +9,11 @@ import {
   playersOccupiedComparator,
 } from "../utils/GameListComparators";
 
-const REMOVE_FILTRED = true;
-
-export interface GameListGameFilterExtends extends GameListGame {
-  hidden?: boolean;
-}
-
 export interface FilterSettings {
   quicFilter: string;
   noLoadStarted: boolean;
   onlySelfGames: boolean;
+  onlyFavoritedMaps: boolean;
   gameType: 0 | 1 | 2;
   orderBy: string;
   reverseOrder: boolean;
@@ -35,11 +30,37 @@ interface useGameListFilterOptions {
 export const useGameListFilter = ({
   gameList,
   filters,
-}: useGameListFilterOptions): GameListGameFilterExtends[] => {
+}: useGameListFilterOptions): GameListGame[] => {
   const currentAuth = useContext(AuthContext).auth.currentAuth;
 
+  const [allowMapIds, setAllowMapIds] = useState<number[] | null>(null);
+
+  const { mapsApi } = useContext(RestContext);
+
+  useEffect(() => {
+    if (filters.onlyFavoritedMaps) {
+      let abort = new AbortController();
+
+      mapsApi
+        .searchMap(
+          { favorite: true },
+          {},
+          undefined,
+          { count: 200 },
+          { signal: abort.signal }
+        )
+        .then((maps) => {
+          setAllowMapIds(maps.map((i) => i.id));
+        });
+
+      return () => {
+        abort.abort();
+      };
+    } else setAllowMapIds(null);
+  }, [mapsApi, filters]);
+
   return useMemo(() => {
-    let filtredGames = gameList.map((game) => {
+    let filtredGames = gameList.filter((game) => {
       const playersCount = (() => {
         let playersCount = 0;
         game.players.forEach((player) => {
@@ -52,11 +73,9 @@ export const useGameListFilter = ({
       // Game Type Filter
 
       if (filters.gameType) {
-        if (filters.gameType === 1 && game.orderID === 0)
-          return { ...game, hidden: true };
+        if (filters.gameType === 1 && game.orderID === 0) return false;
 
-        if (filters.gameType === 2 && game.orderID !== 0)
-          return { ...game, hidden: true };
+        if (filters.gameType === 2 && game.orderID !== 0) return false;
       }
 
       if (
@@ -64,7 +83,7 @@ export const useGameListFilter = ({
         filters.onlySelfGames &&
         currentAuth.connectorId !== game.creatorID
       )
-        return { ...game, hidden: true };
+        return false;
 
       // Slots filter
 
@@ -72,26 +91,34 @@ export const useGameListFilter = ({
         game.players.length < filters.slots[0] ||
         game.players.length > filters.slots[1]
       )
-        return { ...game, hidden: true };
+        return false;
 
       if (
         playersCount < filters.players[0] ||
         playersCount > filters.players[1]
       )
-        return { ...game, hidden: true };
+        return false;
 
       if (
         game.players.length - playersCount < filters.freeSlots[0] ||
         game.players.length - playersCount > filters.freeSlots[1]
       )
-        return { ...game, hidden: true };
+        return false;
+
+      // Favorited maps only filter
+
+      if (filters.onlyFavoritedMaps && allowMapIds) {
+        if (allowMapIds.indexOf(game.mapId) === -1) {
+          return false;
+        }
+      }
 
       // Quic filter
 
-      if (filters.quicFilter.length === 0) return { ...game, hidden: false };
+      if (filters.quicFilter.length === 0) return true;
 
       if (game.mapId.toString() === filters.quicFilter) {
-        return { ...game, hidden: false };
+        return true;
       }
 
       if (
@@ -99,7 +126,7 @@ export const useGameListFilter = ({
           .toLocaleLowerCase()
           .indexOf(filters.quicFilter.toLowerCase()) >= 0
       )
-        return { ...game, hidden: false };
+        return true;
 
       const players = game.players.filter((player) => {
         if (player.name.length === 0) return false;
@@ -112,15 +139,10 @@ export const useGameListFilter = ({
         return false;
       });
 
-      if (players.length > 0) return { ...game, hidden: false };
+      if (players.length > 0) return true;
 
-      return { ...game, hidden: true };
+      return { ...game };
     });
-
-    if (REMOVE_FILTRED)
-      filtredGames = filtredGames.filter((game) => {
-        return !game.hidden;
-      });
 
     // Order
 
@@ -146,7 +168,7 @@ export const useGameListFilter = ({
           (filters.reverseOrder ? -1 : 1)
       );
     });
-  }, [gameList, filters, currentAuth]);
+  }, [gameList, filters, currentAuth, allowMapIds]);
 };
 
 const getCompareFunction = (value) => {
