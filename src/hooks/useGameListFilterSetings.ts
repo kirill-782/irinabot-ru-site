@@ -21,7 +21,6 @@ const defaultFilterSettings: FilterSettings = {
 export const useGameListFilterSetings = () => {
   const auth = useContext(AuthContext).auth;
 
-
   const [filterSettings, setFilterSettings] = useState<FilterSettings>(
     defaultFilterSettings
   );
@@ -35,8 +34,9 @@ export const useGameListFilterSetings = () => {
     });
 
     if (value !== undefined) {
-      filterSettings[filterName] = value;
-      setFilterSettings({ ...filterSettings });
+      setFilterSettings((filterSettings) => {
+        return { ...filterSettings, [filterName]: value };
+      });
     }
   };
 
