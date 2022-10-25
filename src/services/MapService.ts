@@ -191,7 +191,10 @@ export class MapService {
     return response.data;
   };
 
-  public deleteMapFromFavorite = async (mapId: number, options?: RequestOptions) => {
+  public deleteMapFromFavorite = async (
+    mapId: number,
+    options?: RequestOptions
+  ) => {
     let request: AxiosRequestConfig<FormData> = {
       ...this.defaultConfig,
       url: "/v1/maps/" + mapId + "/favorite",
@@ -240,6 +243,43 @@ export class MapService {
     request = this.appendOptions(request, options);
 
     const response = await Axios.request<ConfigInfo>(request);
+
+    return response.data;
+  };
+
+  public getMapFlags = async (mapId: number, options?: RequestOptions) => {
+    let request: AxiosRequestConfig = {
+      ...this.defaultConfig,
+      url: `/v1/maps/${mapId}/flags`,
+      method: "GET",
+    };
+
+    request = this.appendOptions(request, options);
+
+    const response = await Axios.request<Flags>(request);
+
+    return response.data;
+  };
+
+  public patchMapFlags = async (
+    mapId: number,
+    flags: Flags,
+    options?: RequestOptions
+  ) => {
+    let request: AxiosRequestConfig = {
+      ...this.defaultConfig,
+      url: `/v1/maps/${mapId}/flags`,
+      method: "PATCH",
+      headers: {
+        ...this.defaultConfig.headers,
+        "content-type": "application/json",
+      },
+      data: JSON.stringify(flags),
+    };
+
+    request = this.appendOptions(request, options);
+
+    const response = await Axios.request<Flags>(request);
 
     return response.data;
   };
