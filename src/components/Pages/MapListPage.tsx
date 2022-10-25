@@ -92,7 +92,7 @@ function MapListPage() {
     }
 
     return defaultFilter;
-  }, [searchValue, searchOptions[0], defaultFilter, mapIds]); 
+  }, [searchValue, searchOptions[0], defaultFilter, mapIds]);
 
   const [searchedMaps, isFull, isLoading, errorMessage, loadNextPage] =
     useSearchMaps(requestFilter, searchOptions[1], searchValue);
@@ -122,7 +122,8 @@ function MapListPage() {
         });
       }
 
-      navigate("?" + urlParams.toString());
+      if (loc.search.substring(1) !== urlParams.toString())
+        navigate("?" + urlParams.toString());
     } else {
       const urlParams = new URLSearchParams(loc.search);
 
@@ -130,7 +131,8 @@ function MapListPage() {
         urlParams.delete(i);
       });
 
-      navigate("?" + urlParams.toString(), { state: {} });
+      if (loc.search.substring(1) !== urlParams.toString())
+        navigate("?" + urlParams.toString(), { state: {} });
     }
   }, [searchOptions]);
 
@@ -176,14 +178,17 @@ function MapListPage() {
           if (isNaN(urlFilters.maxPlayers)) urlFilters.maxPlayers = undefined;
 
           break;
+
         case "sortBy":
           urlOrder.sortBy = i;
 
           break;
+
         case "orderBy":
           urlOrder.orderBy = i;
 
           break;
+
         case "owner":
           urlFilters.owner = i;
 
@@ -195,6 +200,7 @@ function MapListPage() {
       !Object.entries(urlFilters).length &&
       !Object.entries(urlOrder).length
     ) {
+      setSearchOptions([{}, {}]);
     } else if (!searchOptions[0] && !searchOptions[1])
       setSearchOptions([urlFilters, urlOrder]);
     else {
