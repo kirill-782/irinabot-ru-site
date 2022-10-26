@@ -141,7 +141,7 @@ export const useGameListFilter = ({
 
       if (players.length > 0) return true;
 
-      return { ...game };
+      return false;
     });
 
     // Order
