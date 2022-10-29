@@ -39,7 +39,7 @@ function MapReportModal({ open, onClose, mapId }: MapReportModalProps) {
       })[0].text +
       "\r\n";
 
-    string += `**Номер карты:** ${mapId}\r\n`;
+    string += `**Ссылка на карту:** __#${mapId}__ (https://irinabot.ru/maps/${mapId})\r\n`;
 
     if (source) string += `**Источник:** ${source}\r\n`;
 
