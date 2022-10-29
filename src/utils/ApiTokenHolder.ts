@@ -2,7 +2,7 @@ import { toByteArray } from "base64-js";
 import { ANONYMOUS_AUTHORITIES } from "../config/ApiConfig";
 
 export class ApiTokenHolder {
-  private token;
+  private token: string;
 
   constructor(token: string) {
     this.token = token;
@@ -14,6 +14,10 @@ export class ApiTokenHolder {
 
   public hasAuthority(authority: string) {
     return false;
+  }
+
+  public hasToken() {
+    return this.token.length > 0;
   }
 }
 

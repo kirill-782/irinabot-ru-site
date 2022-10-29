@@ -39,12 +39,14 @@ type CondirionalRoute = {
   requiredAuthorities?: string[];
   requireWebsocketConnect?: boolean;
   requireAuth?: boolean;
+  requireToken?: boolean;
 } & (CondirionalRouteIndex | CondirionalRoutePath);
 
 interface CheckRouteResult {
   hasAccess: boolean;
   missingAuthorities?: string[];
   noAuth?: boolean;
+  noToken?: boolean;
 }
 
 const routes: CondirionalRoute[] = [
@@ -88,7 +90,8 @@ const routes: CondirionalRoute[] = [
         path: "config/:id/edit",
         element: <EditConfigPage />,
         requireAuth: true,
-        requiredAuthorities: ["CONFIG_READ", "CONFIG_EDIT"],
+        requireToken: true,
+        requiredAuthorities: ["MAP_READ", "CONFIG_EDIT"],
       },
       {
         path: "maps",
@@ -104,8 +107,10 @@ const routes: CondirionalRoute[] = [
           },
           {
             path: ":id/edit",
-            element: <MapEditPage />
-          }
+            requireAuth: true,
+            requireToken: true,
+            element: <MapEditPage />,
+          },
         ],
       },
       {
@@ -131,10 +136,15 @@ function RouteList() {
     const hasAccessToRoute = ({
       requiredAuthorities,
       requireAuth,
+      requireToken,
     }: CondirionalRoute): CheckRouteResult => {
       let result: CheckRouteResult = {
         hasAccess: true,
       };
+
+      if (requireToken && !auth.apiToken.hasToken()) {
+        result = { ...result, hasAccess: false, noToken: true };
+      }
 
       if (requiredAuthorities && requiredAuthorities.length > 0) {
         const missingAuthorities = requiredAuthorities.filter((i) => {

@@ -1,11 +1,9 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   AppRuntimeSettingsContext,
   AuthAction,
   AuthContext,
   AuthData,
-  CacheContext,
-  RestContext,
   SelectUserFunctionHolder,
   WebsocketContext,
 } from "./context";
@@ -24,9 +22,7 @@ import {
 
 import AfterContextApp from "./AfterContextApp";
 import RouteList from "./components/RouteList";
-import { importLocales, getLocale } from "./utils/LocaleUtils";
-
-import TimeAgo from "javascript-time-ago";
+import { getLocale } from "./utils/LocaleUtils";
 
 import { loadTheme } from "./utils/Theme";
 import SitePrepareLoader from "./components/SitePrepareLoader";

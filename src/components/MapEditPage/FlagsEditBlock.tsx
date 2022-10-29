@@ -28,7 +28,7 @@ function FlagsEditBlock({
   );
   const [mapLocked, setMapLocked] = useState<boolean | undefined>(false);
   const [mapVerified, setMapVerified] = useState<boolean | undefined>(false);
-  const [shortTag, setShortTag] = useState<string | undefined>();
+  const [shortTag, setShortTag] = useState<string>("");
 
   const dropdownOptions = useCategoryFilter(
     selectedCategories,
@@ -48,7 +48,7 @@ function FlagsEditBlock({
       setImagesAvailable(flags.imagesAvailable);
       setMapLocked(flags.mapLocked);
       setMapVerified(flags.mapVerified);
-      setShortTag(flags.shortTag);
+      setShortTag(flags.shortTag || "");
     }
   }, [flags]);
 

@@ -1,66 +1,70 @@
-import React, { useContext, useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
-import { Container, Header, Message } from "semantic-ui-react";
-import { RestContext } from "../../context";
-import { Flags } from "../../models/rest/Flags";
-import FlagsEditBlock from "../MapEditPage/FlagsEditBlock";
-import { convertErrorResponseToString } from "./../../utils/ApiUtils";
+import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
+import { useParams } from "react-router-dom";
+import { Container, Grid, Loader, Message } from "semantic-ui-react";
+import { MapContext, RestContext } from "../../context";
+import { convertErrorResponseToString } from "../../utils/ApiUtils";
+import { Map } from "../../models/rest/Map";
+import MapEditPageContent from "../MapEditPage";
 
 function MapEditPage() {
   const { id } = useParams();
   const { mapsApi } = useContext(RestContext);
 
-  const [flags, setFlags] = useState<Flags>();
-  const [flagsLoading, setFlagsLoading] = useState<boolean>(false);
-  const [flagsLoadError, setFlagsLoadError] = useState<string>("");
+  const [mapData, setMapData] = useState<Map | null>(null);
+  const [isMapLoading, setMapLoading] = useState<boolean>(false);
+  const [mapLoadErrorMessage, setMapLoadErrorMessage] = useState<string>("");
 
-  const updateFlags = (flags: Flags) => {
-    setFlagsLoading(true);
-    mapsApi
-      .patchMapFlags(parseInt(id || "0"), flags)
-      .then((flags) => {
-        setFlags(flags);
-      })
-      .finally(() => {
-        setFlagsLoading(false);
-      });
-  };
+  const mapLoadRef = useRef<AbortController | null>();
+
+  const reloadMap = useMemo(() => {
+    return () => {
+      if (mapLoadRef.current) mapLoadRef.current.abort();
+
+      mapLoadRef.current = new AbortController();
+
+      setMapLoading(true);
+
+      mapsApi
+        .getMapInfo(parseInt(id!!), { signal: mapLoadRef.current.signal })
+        .then((map) => {
+          setMapData(map);
+        })
+        .catch((e) => {
+          if (e.message === "canceled") return;
+          setMapLoadErrorMessage(convertErrorResponseToString(e));
+        })
+        .finally(() => {
+          mapLoadRef.current = null;
+          setMapLoading(false);
+        });
+    };
+  }, [mapsApi, id]);
 
   useEffect(() => {
-    // Load flags
-
-    setFlagsLoading(true);
-    setFlagsLoadError("");
-    setFlags(undefined);
-
-    mapsApi
-      .getMapFlags(parseInt(id || "0"))
-      .then((e) => {
-        setFlags(e);
-      })
-      .catch((e) => {
-        setFlagsLoadError(convertErrorResponseToString(e));
-      })
-      .finally(() => {
-        setFlagsLoading(false);
-      });
-  }, [id, mapsApi]);
+    reloadMap();
+  }, [id]);
 
   return (
     <Container>
-      <Message info>
-        <p>
-          Данные флаги влияют на поведение объекта карты. Обратите внимание, что
-          тег уникален и не может задан для не верефицированных карт.
-        </p>
-      </Message>
-      <FlagsEditBlock
-        flags={flags}
-        loading={flagsLoading}
-        onFlagsChange={(flags) => {
-          if (flags) updateFlags(flags);
-        }}
-      ></FlagsEditBlock>
+      {mapLoadErrorMessage && (
+        <Message error>
+          <p>{mapLoadErrorMessage}</p>
+        </Message>
+      )}
+      {mapData ? (
+        <MapContext.Provider
+          value={{
+            map: mapData,
+            setMap: () => {},
+          }}
+        >
+          <MapEditPageContent updateMap={reloadMap} />
+        </MapContext.Provider>
+      ) : (
+        <Loader active size="big">
+          Карта загружается
+        </Loader>
+      )}
     </Container>
   );
 }

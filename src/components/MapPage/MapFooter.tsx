@@ -21,13 +21,27 @@ interface MapFooterProps {
 function MapFooter({ gameList }: MapFooterProps) {
   const { accessMask, apiToken } = useContext(AuthContext).auth;
 
-  const { categories, downloadUrl, fileName, fileSize, id, configs, favorite } =
-    useContext(MapContext).map;
+  const {
+    categories,
+    downloadUrl,
+    fileName,
+    fileSize,
+    id,
+    configs,
+    favorite,
+    owner,
+  } = useContext(MapContext).map;
 
   const showCreateButton =
     apiToken.hasAuthority("MAP_READ") && accessMask.hasAccess(64);
 
   const [reportModalOpen, setReportModalOpen] = useState(false);
+
+  const flagsRequiredAccess = owner
+    ? "MAP_FLAGS_EDIT"
+    : "MAP_FLAGS_EDIT_GLOBAL";
+
+  const canEdit = apiToken.hasAuthority(flagsRequiredAccess);
 
   return (
     <>
@@ -62,12 +76,25 @@ function MapFooter({ gameList }: MapFooterProps) {
         )}
         <div className="divider"></div>
 
-        <MapFavoriteButton />
-        <CloneConfigButton
-          className="centred"
-          mapId={id || 0}
-          configs={configs}
-        />
+        {apiToken.hasToken() && <MapFavoriteButton />}
+        {canEdit && (
+          <Button
+            className="centred"
+            color="green"
+            basic
+            icon="pencil"
+            as={Link}
+            to={`/maps/${id}/edit`}
+          />
+        )}
+
+        {apiToken.hasAuthority("CONFIG_CREATE") && (
+          <CloneConfigButton
+            className="centred"
+            mapId={id || 0}
+            configs={configs}
+          />
+        )}
         <Button
           className="centred"
           color="red"

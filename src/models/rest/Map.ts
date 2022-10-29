@@ -23,4 +23,5 @@ export type Map = {
   verified?: boolean;
   semanticCheckError?: boolean;
   favorite?: boolean;
+  owner?: boolean;
 };
