@@ -1,14 +1,7 @@
 import React, { useEffect, useState } from "react";
-import ReactMarkdown from "react-markdown";
-import {
-  Button,
-  Form,
-  Grid,
-  Icon,
-  Input,
-  Modal,
-  TextArea,
-} from "semantic-ui-react";
+
+import { Button, Form, Icon, Modal } from "semantic-ui-react";
+import Markdown from "../Markdown";
 
 import "./MapExternalDescriptionEdit.scss";
 
@@ -26,7 +19,6 @@ function MapExternalDescriptionEdit({
   const [formValue, setFormValue] = useState<string>(value || "");
 
   const [previewModalOpen, setPreviewModalOpen] = useState(false);
-
 
   console.log(value);
 
@@ -74,9 +66,9 @@ function MapExternalDescriptionEdit({
           setPreviewModalOpen(false);
         }}
       >
-        <Modal.Header>Предпросмотр</Modal.Header>
+        <Modal.Header>Предпросмотры</Modal.Header>
         <Modal.Content>
-          <ReactMarkdown>{formValue}</ReactMarkdown>
+          <Markdown>{formValue}</Markdown>
         </Modal.Content>
       </Modal>
     </>

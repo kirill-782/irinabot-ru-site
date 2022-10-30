@@ -1,7 +1,7 @@
-import { Container, Segment } from "semantic-ui-react";
-import ReactMarkdown from "react-markdown";
+import { Segment } from "semantic-ui-react";
 import { memo } from "react";
 import React from "react";
+import Markdown from "../Markdown";
 
 export interface MapDescriptionProps {
   desctiption: string;
@@ -10,7 +10,7 @@ export interface MapDescriptionProps {
 function MapDescription({ desctiption }: MapDescriptionProps) {
   return (
     <Segment style={{ width: "100%" }}>
-      <ReactMarkdown>{desctiption}</ReactMarkdown>
+      <Markdown>{desctiption}</Markdown>
     </Segment>
   );
 }
