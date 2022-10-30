@@ -10,6 +10,8 @@ import {
   TextArea,
 } from "semantic-ui-react";
 
+import "./MapExternalDescriptionEdit.scss";
+
 interface MapExternalDescriptionEditProps {
   value?: string;
   onChange?: (value: string | null) => void;
@@ -31,34 +33,37 @@ function MapExternalDescriptionEdit({
 
   return (
     <>
-      <Form style={{ width: "100%" }}>
-        <Form.TextArea
-          value={formValue}
-          onChange={(_, data) => {
-            setFormValue(data.value?.toString() || "");
-          }}
-        ></Form.TextArea>
-        {onChange && (
+      <div className="map-external-description">
+        <Form>
+          <Form.TextArea
+            value={formValue}
+            onChange={(_, data) => {
+              setFormValue(data.value?.toString() || "");
+            }}
+          ></Form.TextArea>
+          {onChange && (
+            <Button
+              loading={loading}
+              onClick={() => {
+                onChange(formValue || null);
+              }}
+              color="green"
+            >
+              <Icon name="save" />
+              Сохранить
+            </Button>
+          )}
           <Button
-            loading={loading}
             onClick={() => {
-              onChange(formValue || null);
+              setPreviewModalOpen(true);
             }}
             color="green"
           >
-            <Icon name="save" />
-            Сохранить
+            Предпросмотр
           </Button>
-        )}
-        <Button
-          onClick={() => {
-            setPreviewModalOpen(true);
-          }}
-          color="green"
-        >
-          Предпросмотр
-        </Button>
-      </Form>
+        </Form>
+      </div>
+
       <Modal
         open={previewModalOpen}
         closeIcon
