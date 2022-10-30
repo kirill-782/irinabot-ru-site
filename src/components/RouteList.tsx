@@ -40,6 +40,7 @@ type CondirionalRoute = {
   requireWebsocketConnect?: boolean;
   requireAuth?: boolean;
   requireToken?: boolean;
+  waitAuth?: boolean;
 } & (CondirionalRouteIndex | CondirionalRoutePath);
 
 interface CheckRouteResult {
@@ -47,6 +48,7 @@ interface CheckRouteResult {
   missingAuthorities?: string[];
   noAuth?: boolean;
   noToken?: boolean;
+  waitAuth?: boolean;
 }
 
 const routes: CondirionalRoute[] = [
@@ -104,6 +106,7 @@ const routes: CondirionalRoute[] = [
           {
             path: ":id",
             element: <MapPage />,
+            waitAuth: true,
           },
           {
             path: ":id/edit",
@@ -137,9 +140,11 @@ function RouteList() {
       requiredAuthorities,
       requireAuth,
       requireToken,
+      waitAuth,
     }: CondirionalRoute): CheckRouteResult => {
       let result: CheckRouteResult = {
         hasAccess: true,
+        waitAuth: waitAuth,
       };
 
       if (requireToken && !auth.apiToken.hasToken()) {
@@ -162,10 +167,16 @@ function RouteList() {
       return result;
     };
 
+    const authReady = auth.currentAuth && auth.apiToken.hasToken();
+
     const getRoutesNode = (i: CondirionalRoute, key: number) => {
       const checkResult = hasAccessToRoute(i);
 
-      if (checkResult.hasAccess) {
+      const canAccess =
+        checkResult.hasAccess &&
+        (!checkResult.waitAuth || authReady || !auth.authCredentials);
+
+      if (canAccess) {
         const chilldren = i.routes ? i.routes.map(getRoutesNode) : null;
 
         return (

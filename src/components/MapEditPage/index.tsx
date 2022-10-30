@@ -1,12 +1,13 @@
-import React, { useContext, useEffect } from "react";
-import { Grid, Loader, Message } from "semantic-ui-react";
+import React, { useContext, useEffect, useState } from "react";
+import { Grid, Header, Loader, Message } from "semantic-ui-react";
 import { useMapFlags } from "../../hooks/useMapFlags";
 import MapHeader from "../MapPage/MapHeader";
 import AccessControl from "./AccessControl";
 import FlagsEditBlock from "./FlagsEditBlock";
-import { AuthContext, MapContext } from "./../../context/index";
+import { AuthContext, MapContext, RestContext } from "./../../context/index";
 import usePrevious from "../../hooks/usePrevious";
 import ForbiddenPage from "../Pages/ForbiddenPage";
+import MapExternalDescriptionEdit from "./MapExternalDescriptionEdit";
 
 interface MapEditPageProps {
   updateMap: () => void;
@@ -15,6 +16,8 @@ interface MapEditPageProps {
 function MapEditPage({ updateMap }: MapEditPageProps) {
   const { map } = useContext(MapContext);
   const { apiToken } = useContext(AuthContext).auth;
+
+  const { mapsApi } = useContext(RestContext);
 
   const [flags, updateFlags, flagsLoading, flagsLoadError] = useMapFlags({
     mapId: map.id!!,
@@ -30,15 +33,37 @@ function MapEditPage({ updateMap }: MapEditPageProps) {
     ? "MAP_FLAGS_EDIT"
     : "MAP_FLAGS_EDIT_GLOBAL";
 
-  if(!apiToken.hasAuthority(flagsRequiredAccess)) {
-    return <ForbiddenPage />
+  const externalMapDescriptionAccess = "MAP_VERIFY";
+
+  const [mapDescriptionLoading, setMapDescriptionLoading] = useState(false);
+
+  const updateMapDescription = (description: string | null) => {
+    setMapDescriptionLoading(true);
+
+    mapsApi
+      .patchAdditionalMapFlags(map.id!!, {
+        mapDescription: description,
+      })
+      .then(() => {
+        updateMap();
+      })
+      .finally(() => {
+        setMapDescriptionLoading(false);
+      });
+  };
+
+  if (
+    !apiToken.hasAuthority(flagsRequiredAccess) &&
+    !apiToken.hasAuthority(externalMapDescriptionAccess)
+  ) {
+    return <ForbiddenPage />;
   }
 
   return (
     <Grid stackable>
       <MapHeader></MapHeader>
-      <Grid.Row stretched>
-        <AccessControl requeredAuthority={flagsRequiredAccess}>
+      <AccessControl requeredAuthority={flagsRequiredAccess}>
+        <Grid.Row stretched>
           {flagsLoadError && (
             <Message error className="fluid">
               <p>{flagsLoadError}</p>
@@ -67,8 +92,24 @@ function MapEditPage({ updateMap }: MapEditPageProps) {
               Флаги загружаются
             </Loader>
           )}
-        </AccessControl>
-      </Grid.Row>
+        </Grid.Row>
+      </AccessControl>
+      <AccessControl requeredAuthority="MAP_VERIFY">
+        <Grid.Row stretched>
+          <Header>Дополнительное описание</Header>
+          <Message info className="fluid">
+            <p>
+              Вы в тексте можете использовать разметку Markdown. Старайтесь
+              указывать уникальную информацию о карте.
+            </p>
+          </Message>
+          <MapExternalDescriptionEdit
+            value={map.additionalFlags?.["mapDescription"]}
+            loading={mapDescriptionLoading}
+            onChange={updateMapDescription}
+          />
+        </Grid.Row>
+      </AccessControl>
     </Grid>
   );
 }

@@ -284,6 +284,29 @@ export class MapService {
     return response.data;
   };
 
+  public patchAdditionalMapFlags = async (
+    mapId: number,
+    flags: { [key: string]: number | string | boolean | null },
+    options?: RequestOptions
+  ) => {
+    let request: AxiosRequestConfig = {
+      ...this.defaultConfig,
+      url: `/v1/maps/${mapId}/additionalFlags`,
+      method: "PATCH",
+      headers: {
+        ...this.defaultConfig.headers,
+        "content-type": "application/json",
+      },
+      data: JSON.stringify(flags),
+    };
+
+    request = this.appendOptions(request, options);
+
+    const response = await Axios.request<void>(request);
+
+    return response.data;
+  };
+
   public getConfigInfoToken = async (
     configId: number,
     options?: RequestOptions
