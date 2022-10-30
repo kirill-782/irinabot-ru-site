@@ -27,6 +27,9 @@ function MapExternalDescriptionEdit({
 
   const [previewModalOpen, setPreviewModalOpen] = useState(false);
 
+
+  console.log(value);
+
   useEffect(() => {
     setFormValue(value || "");
   }, [value]);

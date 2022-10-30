@@ -42,7 +42,7 @@ function MapEditPage() {
 
   useEffect(() => {
     reloadMap();
-  }, [id]);
+  }, [id, reloadMap]);
 
   return (
     <Container>
