@@ -4,7 +4,6 @@ import React, { memo, useContext } from "react";
 import ConnectorAddButton from "./ConnectorAddButton";
 
 import "./GameList.scss";
-import { GameListGameFilterExtends } from "../../hooks/useGameListFilter";
 import { GameListGame } from "./../../models/websocket/ServerGameList";
 import ConnectorId from "../ConnectorId";
 import SendSignalButton from "./SendSignalButton";
@@ -17,9 +16,17 @@ import { AppRuntimeSettingsContext } from "../../context";
 
 const ADS = [
   {
+    img: "https://irinabot.ru/kaisa/ZBRestored.png",
+    link: "https://discord.com/invite/bfkq5JcDPT",
+    index: undefined,
+    creatorId: 171118,
+    expire: 1670706000000,
+  },
+  {
     img: "https://irinabot.ru/kaisa/XGMLogo.png",
     link: "https://xgm.guru/p/wc3/xgm-irina-autohost",
-    index: 10,
+    index: undefined,
+    creatorId: 170246,
   },
 ];
 
@@ -30,10 +37,9 @@ interface GameListProps {
 }
 
 function GameList({ gameList, selectedGame, setSelectedGame }: GameListProps) {
-
   const { language } = useContext(AppRuntimeSettingsContext);
 
-  const getPlayerSlots = (game: GameListGameFilterExtends): number => {
+  const getPlayerSlots = (game: GameListGame): number => {
     let usedSlots = 0;
 
     game.players.forEach((player) => {
@@ -42,6 +48,8 @@ function GameList({ gameList, selectedGame, setSelectedGame }: GameListProps) {
 
     return usedSlots;
   };
+
+  let remaingAdsRow = ADS.filter((i) => !i.expire || i.expire > Date.now());
 
   return (
     <Table selectable>
@@ -55,7 +63,7 @@ function GameList({ gameList, selectedGame, setSelectedGame }: GameListProps) {
         </Table.Row>
       </Table.Header>
       <Table.Body>
-        {gameList.map((game: GameListGameFilterExtends, index) => {
+        {gameList.map((game: GameListGame, index) => {
           const classList = classnames(
             "game-list-row",
             {
@@ -68,14 +76,17 @@ function GameList({ gameList, selectedGame, setSelectedGame }: GameListProps) {
               "game-external": game.gameFlags.hasOtherGame,
             },
             {
-              hidden: game.hidden,
-            },
-            {
               "game-selected": game.gameCounter === selectedGame?.gameCounter,
             }
           );
 
-          const adsRow = ADS.filter((i) => i.index === index)[0];
+          const rowIndex =
+            (remaingAdsRow.findIndex((i) => i.index === index) + 1 ||
+              remaingAdsRow.findIndex((i) => i.creatorId === game.creatorID) +
+                1) - 1;
+
+          const adsRow =
+            rowIndex === -1 ? null : remaingAdsRow.splice(rowIndex, 1)[0];
 
           return (
             <React.Fragment key={game.gameCounter}>
