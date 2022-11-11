@@ -55,7 +55,7 @@
     color: #df2121;
     cursor: pointer;
   }
-  
+
   .duration {
     color: #df2121;
   }
@@ -79,6 +79,15 @@
       vertical-align: middle;
       width: 160px;
     }
+  }
+}
+
+a.gachi {
+  display: flex;
+  justify-content: center;
+
+  & > img {
+    max-height: 75px;
   }
 }
 

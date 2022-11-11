@@ -137,8 +137,8 @@ function GameList({ gameList, selectedGame, setSelectedGame }: GameListProps) {
               {adsRow && (
                 <Table.Row>
                   <Table.Cell colSpan="5">
-                    <a href={adsRow.link}>
-                      <Image style={{ width: "100%" }} src={adsRow.img}></Image>
+                    <a href={adsRow.link} className="gachi">
+                      <Image src={adsRow.img}></Image>
                     </a>
                   </Table.Cell>
                 </Table.Row>
