@@ -10,7 +10,8 @@ import SendSignalButton from "./SendSignalButton";
 import ReactTimeAgo from "react-time-ago";
 import classnames from "classnames";
 import copy from "clipboard-copy";
-import { AppRuntimeSettingsContext } from "../../context";
+import { AppRuntimeSettingsContext, AuthContext } from "../../context";
+import { AccessMaskBit } from "../Modal/AccessMaskModal";
 
 // TODO AdsFile
 
@@ -38,6 +39,8 @@ interface GameListProps {
 
 function GameList({ gameList, selectedGame, setSelectedGame }: GameListProps) {
   const { language } = useContext(AppRuntimeSettingsContext);
+
+  const { accessMask } = useContext(AuthContext).auth;
 
   const getPlayerSlots = (game: GameListGame): number => {
     let usedSlots = 0;
@@ -134,7 +137,7 @@ function GameList({ gameList, selectedGame, setSelectedGame }: GameListProps) {
                   <SendSignalButton game={game} />
                 </Table.Cell>
               </Table.Row>
-              {adsRow && (
+              {adsRow && !accessMask.hasAccess(AccessMaskBit.VIP_COMMANDS) && (
                 <Table.Row>
                   <Table.Cell colSpan="5">
                     <a href={adsRow.link} className="gachi">

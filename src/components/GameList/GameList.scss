@@ -87,7 +87,9 @@ a.gachi {
   justify-content: center;
 
   & > img {
+    display: block;
     max-height: 75px;
+    max-width: 100% !important;
   }
 }
 
