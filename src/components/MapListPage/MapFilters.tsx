@@ -254,6 +254,7 @@ export const MapFilters: React.FC<FiltersProps> = memo(
             />
           )}
           <Form.Button
+            type="button"
             icon="x"
             color="red"
             title="Сбросить фильтры"
