@@ -12,12 +12,15 @@ import {
 import { SITE_TITLE } from "../../config/ApplicationConfig";
 import {
   AppRuntimeSettingsContext,
+  CacheContext,
   MapContext,
   WebsocketContext,
 } from "../../context";
 import { useGameListSubscribe } from "../../hooks/useGameListSubscribe";
+import { useQueryState } from "../../hooks/useQueryState";
 import { useSearchMaps } from "../../hooks/useSearchMaps";
 import { useVisibility } from "../../hooks/useVisibility";
+import { useSearchFiltersQuerySync } from "../../hooks/useSearchFiltersQuerySync";
 import { SearchFilters, SearchOrder } from "../../models/rest/SearchFilters";
 import { GameListGame } from "../../models/websocket/ServerGameList";
 import { MapCard } from "../MapListPage/MapCard";
@@ -28,6 +31,7 @@ import GameJoinButton from "../MapPage/GameJoinButton";
 import MetaDescription from "../Meta/MetaDescription";
 import { isNoFilters } from "./../../hooks/useSearchMaps";
 import "./MapListPage.scss";
+import FilterDescription from "./../MapListPage/FilterDescription";
 
 const defaultFilters: Filter = {
   verify: false,
@@ -64,6 +68,8 @@ function MapListPage() {
     [SearchFilters | null, SearchOrder | null]
   >([null, null]);
 
+  useSearchFiltersQuerySync(searchOptions, setSearchOptions);
+
   const [searchValue, setSearchValue] = useState("");
   const [mapIds, setMapsId] = useState("");
 
@@ -81,7 +87,7 @@ function MapListPage() {
   const [loadButton, setLoadButton] = useState<HTMLButtonElement | null>(null);
 
   const isVisible = useVisibility(loadButton, { rootMargin: "100px" });
-  const [disableFilters, setDisableFilters] = useState<boolean>(false);
+  const [disableFilters, setDisableFilters] = useQueryState("disableFilters");
 
   const requestFilter = useMemo(() => {
     if (mapIds || searchValue || !isNoFilters(searchOptions[0])) {
@@ -97,132 +103,9 @@ function MapListPage() {
   const [searchedMaps, isFull, isLoading, errorMessage, loadNextPage] =
     useSearchMaps(requestFilter, searchOptions[1], searchValue);
 
-  const navigate = useNavigate();
-  const loc = useLocation();
-
   useEffect(() => {
     window.document.title = `Карты Warcraft III | ${SITE_TITLE}`;
   }, []);
-
-  useEffect(() => {
-    if (searchOptions[0] || searchOptions[1]) {
-      const urlParams = new URLSearchParams(loc.search);
-
-      if (searchOptions[0]) {
-        Object.entries(searchOptions[0]).forEach((entry) => {
-          if (entry[1]) urlParams.set(entry[0], entry[1].toString());
-          else urlParams.delete(entry[0]);
-        });
-      }
-
-      if (searchOptions[1]) {
-        Object.entries(searchOptions[1]).forEach((entry) => {
-          if (entry[1]) urlParams.set(entry[0], entry[1].toString());
-          else urlParams.delete(entry[0]);
-        });
-      }
-
-      if (loc.search.substring(1) !== urlParams.toString())
-        navigate("?" + urlParams.toString());
-    } else {
-      const urlParams = new URLSearchParams(loc.search);
-
-      filtersUrlParams.forEach((i) => {
-        urlParams.delete(i);
-      });
-
-      if (loc.search.substring(1) !== urlParams.toString())
-        navigate("?" + urlParams.toString(), { state: {} });
-    }
-  }, [searchOptions]);
-
-  useEffect(() => {
-    const urlParams = new URLSearchParams(loc.search);
-
-    setDisableFilters(urlParams.has("disableFilters"));
-
-    let urlFilters: SearchFilters = {};
-    let urlOrder: SearchOrder = {};
-
-    urlParams.forEach((i, k) => {
-      switch (k) {
-        case "category":
-          urlFilters.category = parseInt(i);
-
-          if (isNaN(urlFilters.category)) urlFilters.category = undefined;
-
-          break;
-        case "verify":
-          if (i === "true") urlFilters.verify = true;
-
-          break;
-        case "taggedOnly":
-          if (i === "true") urlFilters.taggedOnly = true;
-
-          break;
-
-        case "favorite":
-          if (i === "true") urlFilters.favorite = true;
-
-          break;
-
-        case "minPlayers":
-          urlFilters.minPlayers = parseInt(i);
-
-          if (isNaN(urlFilters.minPlayers)) urlFilters.minPlayers = undefined;
-
-          break;
-        case "maxPlayers":
-          urlFilters.maxPlayers = parseInt(i);
-
-          if (isNaN(urlFilters.maxPlayers)) urlFilters.maxPlayers = undefined;
-
-          break;
-
-        case "sortBy":
-          urlOrder.sortBy = i;
-
-          break;
-
-        case "orderBy":
-          urlOrder.orderBy = i;
-
-          break;
-
-        case "owner":
-          urlFilters.owner = i;
-
-          break;
-      }
-    });
-
-    if (
-      !Object.entries(urlFilters).length &&
-      !Object.entries(urlOrder).length
-    ) {
-      setSearchOptions([{}, {}]);
-    } else if (!searchOptions[0] && !searchOptions[1])
-      setSearchOptions([urlFilters, urlOrder]);
-    else {
-      let equals = true;
-
-      if (searchOptions[0]) {
-        Object.keys(searchOptions[0]).forEach((i) => {
-          if (!searchOptions[0]) return;
-          if (searchOptions[0][i] !== urlFilters[i]) equals = false;
-        });
-      }
-
-      if (searchOptions[1]) {
-        Object.keys(searchOptions[1]).forEach((i) => {
-          if (!searchOptions[1]) return;
-          if (searchOptions[1][i] !== urlOrder[i]) equals = false;
-        });
-      }
-
-      if (!equals) setSearchOptions([urlFilters, urlOrder]);
-    }
-  }, [loc.search]);
 
   useEffect(() => {
     if (isVisible) loadNextPage();
@@ -245,13 +128,12 @@ function MapListPage() {
       <MetaDescription description="Просмотреть список загруженных на бота карт." />
       <Form>
         <Grid columns="equal" stackable centered>
-          {!disableFilters && (
+          {disableFilters !== "true" && (
             <Grid.Column width={3} style={{ position: "sticky" }}>
               <Header size="small">Фильтры</Header>
               <MapFilters
                 onFitlerChange={setSearchOptions}
                 value={searchOptions}
-                autoCommit
                 defaultFilters={defaultFilters}
               />
               <Checkbox
@@ -264,6 +146,7 @@ function MapListPage() {
             </Grid.Column>
           )}
           <Grid.Column width={13}>
+            {disableFilters === "true" && <FilterDescription filters={searchOptions} />}
             <Header>Список карт</Header>
             <Grid.Row className="map-list-page-search-field">
               <Form.Input

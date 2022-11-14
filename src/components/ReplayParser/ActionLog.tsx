@@ -51,11 +51,6 @@ function ActionLog({}) {
     setPage(0);
   }, [syncIntegerOnly, chatCommandOnly, nonEmpty]);
 
-  console.log(
-    Math.max(0, (page - PAGE_WINDOW) * PAGE_SIZE),
-    Math.min(filterResult?.length || 0, (page + PAGE_WINDOW + 1) * PAGE_SIZE)
-  );
-
   const renderBlocks = filterResult?.slice(
     Math.max(0, (page - PAGE_WINDOW) * PAGE_SIZE),
     Math.min(filterResult.length, (page + PAGE_WINDOW + 1) * PAGE_SIZE)
