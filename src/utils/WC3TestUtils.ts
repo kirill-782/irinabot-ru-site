@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 
 export const parseWC3TagsReact = (WC3String: string, ignoreTags?: string[]) => {
-  WC3String = WC3String.replaceAll("\r\n", "|n");
+  WC3String = WC3String.replace(/\r\n/g, "|n");
 
   let components: ReactNode[] = [];
   let colorData:

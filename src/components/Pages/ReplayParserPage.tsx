@@ -25,6 +25,7 @@ export type ActionData = {
   time: number;
   errorMessage?: string;
   seqenceNumber: number;
+  rawData?: Uint8Array;
 };
 
 export interface ReplayContextData {
@@ -60,6 +61,7 @@ function ReplayParserPage({}) {
           time: i.time,
           errorMessage: e.toString(),
           seqenceNumber: k,
+          rawData: i.rawData,
         });
       }
     });

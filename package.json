@@ -5,7 +5,7 @@
   "dependencies": {
     "@artsy/fresnel": "^3.5.0",
     "@kokomi/react-semantic-toasts": "^0.7.2",
-    "@kokomi/w3g-parser-browser": "^0.0.8",
+    "@kokomi/w3g-parser-browser": "^0.0.14",
     "@mavrin/remark-typograf": "^2.2.0",
     "@testing-library/jest-dom": "^5.16.3",
     "@testing-library/react": "^12.1.4",
