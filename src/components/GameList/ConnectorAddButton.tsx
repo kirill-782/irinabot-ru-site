@@ -35,8 +35,7 @@ function ConnectorAddButton({ game }: ConnectorAddButtonProps) {
     else requestConnectorGame();
   };
 
-  const isEnabled =
-    auth.currentAuth !== null && sockets.isConnectorSocketConnected;
+  const isEnabled = auth.currentAuth !== null;
 
   if (game.gameFlags.started) return null;
 
