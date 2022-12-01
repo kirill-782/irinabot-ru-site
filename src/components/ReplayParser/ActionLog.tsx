@@ -12,6 +12,7 @@ function ActionLog({}) {
   const [syncIntegerOnly, setSyncIntegerOnly] = useState(true);
   const [chatCommandOnly, setChatCommandOnly] = useState(false);
   const [nonEmpty, setNonEmpty] = useState(true);
+  const [errorBlock, setErrorBlock] = useState(false);
 
   const [pageScroll, setPageScroll] = useState(true);
 
@@ -47,9 +48,19 @@ function ActionLog({}) {
         });
       });
 
+    if (errorBlock)
+      actions = actions?.filter((i) => {
+        return (
+          i.errorMessage ||
+          i.commandBlocks.some((i) => {
+            return i.remaingBuffer.length > 0;
+          })
+        );
+      });
+
     setFilterResult(actions);
     setPage(0);
-  }, [syncIntegerOnly, chatCommandOnly, nonEmpty]);
+  }, [syncIntegerOnly, chatCommandOnly, nonEmpty, errorBlock]);
 
   const renderBlocks = filterResult?.slice(
     Math.max(0, (page - PAGE_WINDOW) * PAGE_SIZE),
@@ -86,6 +97,13 @@ function ActionLog({}) {
             checked={chatCommandOnly}
             onChange={(_, data) => {
               setChatCommandOnly(!!data.checked);
+            }}
+          ></Form.Checkbox>
+          <Form.Checkbox
+            label="Блоки с ошибками парсера"
+            checked={errorBlock}
+            onChange={(_, data) => {
+              setErrorBlock(!!data.checked);
             }}
           ></Form.Checkbox>
         </Form.Group>
