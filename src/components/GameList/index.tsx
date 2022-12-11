@@ -17,11 +17,11 @@ import { AccessMaskBit } from "../Modal/AccessMaskModal";
 
 const ADS = [
   {
-    img: "https://irinabot.ru/kaisa/ZBRestored.png?1",
+    img: "https://irinabot.ru/kaisa/ZBRestored.png?2",
     link: "https://discord.com/invite/bfkq5JcDPT",
     index: undefined,
     creatorId: 171118,
-    expire: 1670706000000,
+    expire: 1673454314000,
   },
   {
     img: "https://irinabot.ru/kaisa/XGMLogo.png",
