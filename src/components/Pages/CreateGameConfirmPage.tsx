@@ -495,7 +495,7 @@ function useLocalAutohostCreateCallback(
           });
         });
     },
-    [ghostSocket, selectedPatch, auth, options]
+    [ghostSocket, selectedPatch, auth, options, config]
   );
 }
 
