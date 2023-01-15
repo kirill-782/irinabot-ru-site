@@ -14,6 +14,7 @@ export interface FilterSettings {
   noLoadStarted: boolean;
   onlySelfGames: boolean;
   onlyFavoritedMaps: boolean;
+  forceReorder: boolean;
   gameType: 0 | 1 | 2;
   orderBy: string;
   reverseOrder: boolean;

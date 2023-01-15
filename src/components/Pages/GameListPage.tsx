@@ -8,6 +8,8 @@ import OnlineStats from "../GameList/OnlineStats";
 import { useGameListSubscribe } from "../../hooks/useGameListSubscribe";
 import { useGameListFilterSetings } from "../../hooks/useGameListFilterSetings";
 import { useGameListFilter } from "../../hooks/useGameListFilter";
+import { useDisplayedGameList } from "../../hooks/useDisplayedGameList";
+
 import GameListFilter from "../GameList/GameListFilter";
 import { useDebounce } from "./../../hooks/useDebounce";
 import { CacheContext } from "../../context";
@@ -49,6 +51,8 @@ function GameListPage() {
     filters: debouncedFilterSettings,
     ignoreFocusCheck: false,
   });
+
+  const displayedGameList = useDisplayedGameList({gameList: filtredGameList, filters: debouncedFilterSettings});
 
   const connectorCache = useContext(CacheContext).cachedConnectorIds;
 
@@ -109,7 +113,7 @@ function GameListPage() {
             }}
           />
           <GameList
-            gameList={filtredGameList}
+            gameList={displayedGameList}
             selectedGame={selectedGame}
             setSelectedGame={setSelectedGame}
           ></GameList>

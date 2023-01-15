@@ -13,6 +13,7 @@ const defaultFilterSettings: FilterSettings = {
   gameType: 0,
   orderBy: "default",
   reverseOrder: false,
+  forceReorder: true,
   players: [0, 24],
   slots: [0, 24],
   freeSlots: [0, 24],

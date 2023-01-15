@@ -55,6 +55,18 @@ function GameListFilter({
           }}
         ></Form.Checkbox>
         <Form.Checkbox
+          label="Принудительно пересортировывать список"
+          checked={filterSettings.forceReorder}
+          name="forceReorder"
+          disabled={disabledFilters.indexOf("forceReorder") > -1}
+          onChange={(event, data) => {
+            onFilterChange({
+              ...filterSettings,
+              forceReorder: !!data.checked,
+            });
+          }}
+        ></Form.Checkbox>
+        <Form.Checkbox
           name="onlySelfGames"
           disabled={disabledFilters.indexOf("onlySelfGames") > -1}
           checked={filterSettings.onlySelfGames}

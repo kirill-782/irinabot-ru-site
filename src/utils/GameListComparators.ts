@@ -22,7 +22,7 @@ export const defaultComparator = (a: GameListGame, b: GameListGame): number => {
     compareByPassword(a, b) ||
     compareByGamePatch(a, b) ||
     compareByPinnedGamePosition(a, b) ||
-    compareByOrderID(a, b)
+    compareByOrderID(a, b) * -1
   );
 };
 
