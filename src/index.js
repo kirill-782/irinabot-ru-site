@@ -9,7 +9,7 @@ import { DEFAULT_CONFIG } from "./config/ApiConfig";
 const App = React.lazy(() => import("./App"));
 
 loadTheme();
-document.body.classList.add(currentTheme);
+document.documentElement.classList.add(currentTheme);
 
 // Prepare connect
 if (DEFAULT_CONFIG.url) fetch(DEFAULT_CONFIG.url + "v1");

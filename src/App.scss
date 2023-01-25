@@ -1,9 +1,22 @@
-body.dark {
-  background-color: #1c1c1c;
-  color: #dadada;
+
+html.dark {
+  color-scheme: dark;
+
+  body {
+    background-color: #1c1c1c;
+    color: #dadada;
+    
+  }
 }
 
-body.light {
-  background-color: #fff;
-  color: rgba(0, 0, 0, 0.87);
+html.light {
+  body {
+    background-color: #fff;
+    color: rgba(0, 0, 0, 0.87);
+  }
+}
+
+body {
+  overflow: -moz-scrollbars-vertical;
+  overflow-y: scroll;
 }
