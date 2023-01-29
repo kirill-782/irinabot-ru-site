@@ -1,7 +1,7 @@
 import { useCallback, useContext } from "react";
 import { Dropdown } from "semantic-ui-react";
 import { AuthMethod, AviableAuthMethods } from "../../config/AuthMethods";
-import { AuthContext } from "./../../context/index";
+import { AppRuntimeSettingsContext, AuthContext } from "./../../context/index";
 import { authByOauth } from "../../utils/Oauth";
 import React from "react";
 
@@ -18,8 +18,11 @@ function LoginDropdown() {
     [authContext]
   );
 
+  const { language } = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
+  
   return (
-    <Dropdown text="Войти" item>
+    <Dropdown text={t("menu.user.login")} item>
       <Dropdown.Menu>
         {AviableAuthMethods.map((method: AuthMethod) => {
           return (

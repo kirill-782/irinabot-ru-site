@@ -17,6 +17,7 @@ import React from "react";
 import prettyMilliseconds from "pretty-ms";
 
 import "./ReplayMainInfo.scss";
+import { AppRuntimeSettingsContext } from "../../context";
 
 const PRODUCT_ID_TO_STRING = {
   1462982736: "Warcraft III TFT",
@@ -31,13 +32,16 @@ function ReplayMainInfo() {
     });
   };
 
+  const {language} = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
+  
   return (
     <Grid className="replay-main-info">
       <Grid.Row stretched>
-        <Header>Основное:</Header>
+        <Header>{t("page.replay.info.map.base")}:</Header>
         <Segment className="fluid">
           <div>
-            <b>Имя игры:</b>
+            <b>{t("page.replay.info.map.gamename")}:</b>
             {replayData?.records.gameInfo?.gameName}
           </div>
           <div>
@@ -45,25 +49,25 @@ function ReplayMainInfo() {
             {PRODUCT_ID_TO_STRING[replayData?.subHeader.productId || 0]}
           </div>
           <div>
-            <b>Версия:</b>
+            <b>{t("page.replay.info.map.version")}:</b>
             {replayData?.subHeader.version} build{" "}
             {replayData?.subHeader.buildNumber}
           </div>
           <div>
-            <b>Продолжительность: </b>
+            <b>{t("page.replay.info.map.duration")}: </b>
             {prettyMilliseconds(replayData?.subHeader.lengthMilis || 0)}
           </div>
           <div>
-            <b>Хост: </b>
+            <b>{t("page.replay.info.map.host")}: </b>
             {replayData?.records.gameInfo?.hostPlayer.playerName}
           </div>
         </Segment>
-        <Header>Игроки:</Header>
+        <Header>{t("page.replay.info.map.players")}:</Header>
         <Table>
           <TableHeader>
-            <TableHeaderCell>Ник</TableHeaderCell>
-            <TableHeaderCell>Время в игре</TableHeaderCell>
-            <TableHeaderCell>Код выхода</TableHeaderCell>
+            <TableHeaderCell>{t("page.replay.info.map.nickname")}</TableHeaderCell>
+            <TableHeaderCell>{t("page.replay.info.map.gametime")}</TableHeaderCell>
+            <TableHeaderCell>{t("page.replay.info.map.exitcode")}</TableHeaderCell>
           </TableHeader>
           <TableBody>
             {[
@@ -88,8 +92,7 @@ function ReplayMainInfo() {
       </Grid.Row>
       <Grid.Row>
         <Message warning>
-          Мне стало дальше лень парсить это все дело, так что добро пожаловать в
-          GitHub
+        {t("page.replay.info.map.aqua")}
         </Message>
       </Grid.Row>
     </Grid>

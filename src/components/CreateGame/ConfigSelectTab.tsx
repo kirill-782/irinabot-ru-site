@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "@kokomi/react-semantic-toasts";
 import { Button, Grid, Header, Loader, Message } from "semantic-ui-react";
-import { RestContext } from "../../context";
+import { AppRuntimeSettingsContext, RestContext } from "../../context";
 import { ConfigInfo } from "../../models/rest/ConfigInfo";
 import { convertErrorResponseToString } from "../../utils/ApiUtils";
 import "./ConfigSelectTab.scss";
@@ -15,6 +15,9 @@ function ConfigSelectTab() {
   const [hasError, setError] = useState<string>("");
 
   const go = useNavigate();
+  
+  const { language } = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
 
   const deleteConfig = (configId: number) => {
     mapsApi
@@ -26,7 +29,7 @@ function ConfigSelectTab() {
       })
       .catch((e) => {
         toast({
-          title: "Ошибка удаления",
+          title: t("other.config.selectTAB.removeError"),
           description: convertErrorResponseToString(e),
           color: "red",
         });
@@ -54,7 +57,7 @@ function ConfigSelectTab() {
       {hasError && <Message color="red">{hasError}</Message>}
       {isLoading && (
         <Loader active size="massive">
-          Загрузка
+          {t("other.config.selectTAB.loading")}
         </Loader>
       )}
       {configList.length > 0 && (
@@ -71,12 +74,12 @@ function ConfigSelectTab() {
                         </Header>
                       </Grid.Row>
                       <Grid.Row>
-                        Дата обновления:
+                      {t("other.config.selectTAB.update")}:
                         {new Date(config.lastUpdateDate || 0).toLocaleString()}
                       </Grid.Row>
                       <Grid.Row>
                         <Link to={`/maps/${config.mapId}`}>
-                          Перейти к карте
+                        {t("other.config.selectTAB.tomap")}
                         </Link>
                       </Grid.Row>
                     </Grid.Column>
@@ -86,7 +89,7 @@ function ConfigSelectTab() {
                         as={Link}
                         to={`/create/confirm?configId=${config.id}`}
                       >
-                        Выбрать
+                        {t("other.config.selectTAB.choose")}
                       </Button>
                     </Grid.Column>
                   </Grid.Row>
@@ -97,7 +100,7 @@ function ConfigSelectTab() {
                         go(`/config/${config.id}/edit`);
                       }}
                     >
-                      Редактировать
+                      {t("other.config.selectTAB.edit")}
                     </Button>
                     <Button
                       color="red"
@@ -105,7 +108,7 @@ function ConfigSelectTab() {
                         deleteConfig(config.id || 0);
                       }}
                     >
-                      Удалить
+                      {t("other.config.selectTAB.delete")}
                     </Button>
                   </Grid.Row>
                 </Grid>
@@ -117,7 +120,7 @@ function ConfigSelectTab() {
       {configList.length === 0 && !hasError && !isLoading && (
         <Grid.Column>
           <Grid.Row className="config-list">
-            <Message info>Вы не создали еще ниодного конфига. Создать конфиг можно на странице карты.</Message>
+            <Message info>{t("other.config.selectTAB.noconfig")}.</Message>
           </Grid.Row>
         </Grid.Column>
       )}

@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Button } from "semantic-ui-react";
 import { MapContext, RestContext } from "../../context";
+import { AppRuntimeSettingsContext } from "./../../context/index";
 import { toast } from "@kokomi/react-semantic-toasts";
 import { convertErrorResponseToString } from "../../utils/ApiUtils";
 
@@ -9,6 +10,10 @@ function MapFavoriteButton() {
   const { mapsApi } = useContext(RestContext);
 
   const favorite = map.favorite;
+  
+  const { language } = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
+
 
   const onButtonClick = () => {
     if (favorite) {
@@ -19,7 +24,7 @@ function MapFavoriteButton() {
         })
         .catch((e) => {
           toast({
-            title: "Ошибка",
+            title: t("page.map.button.favour.error"),
             description: convertErrorResponseToString(e),
           });
         });
@@ -31,7 +36,7 @@ function MapFavoriteButton() {
         })
         .catch((e) => {
           toast({
-            title: "Ошибка",
+            title: t("page.map.button.favour.error"),
             description: convertErrorResponseToString(e),
           });
         });

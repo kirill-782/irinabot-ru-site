@@ -1,6 +1,6 @@
 import { Button, Form, Icon, Modal } from "semantic-ui-react";
 import React, { useContext, useState } from "react";
-import { WebsocketContext } from "../../context";
+import { AppRuntimeSettingsContext, WebsocketContext } from "../../context";
 import { AuthContext } from "./../../context/index";
 import { GameListGame } from "../../models/websocket/ServerGameList";
 import { ClientRequestUDPGameConverter } from "../../models/websocket/ClientRequestUDPGame";
@@ -17,6 +17,9 @@ function ConnectorAddButton({ game }: ConnectorAddButtonProps) {
 
   const [passwordModalOpen, setPasswordModalOpen] = useState(false);
   const [password, setPassword] = useState("");
+
+  const { language } = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
 
   const requestConnectorGame = (password?: string) => {
     const converter = new ClientRequestUDPGameConverter();
@@ -54,11 +57,11 @@ function ConnectorAddButton({ game }: ConnectorAddButtonProps) {
             setPasswordModalOpen(false);
           }}
         >
-          <Modal.Header>Вход в закрытую игру</Modal.Header>
+          <Modal.Header>{t("page.game.list.button.add.private")}</Modal.Header>
           <Modal.Content>
             <Form>
               <Form.Input
-                label="Пароль"
+                label={t("page.game.list.button.add.password")}
                 value={password}
                 onChange={(_, data) => {
                   setPassword(data.value);
@@ -71,7 +74,7 @@ function ConnectorAddButton({ game }: ConnectorAddButtonProps) {
                   setPasswordModalOpen(false);
                 }}
               >
-                <Icon name="check"></Icon>Войти
+                <Icon name="check"></Icon>{t("page.game.list.button.add.login")}
               </Form.Button>
             </Form>
           </Modal.Content>

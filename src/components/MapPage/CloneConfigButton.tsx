@@ -1,7 +1,7 @@
 import React, { memo, useContext, useState } from "react";
 import { Button, Dropdown, Form, Icon, Modal } from "semantic-ui-react";
 import { ConfigInfo } from "../../models/rest/ConfigInfo";
-import { RestContext } from "./../../context/index";
+import { AppRuntimeSettingsContext, RestContext } from "./../../context/index";
 import { toast } from "@kokomi/react-semantic-toasts";
 import { useNavigate } from "react-router-dom";
 import { convertErrorResponseToString } from "../../utils/ApiUtils";
@@ -27,6 +27,9 @@ function CloneConfigButton({
   const { mapsApi } = useContext(RestContext);
 
   const go = useNavigate();
+  
+  const { language } = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
 
   const cloneConfigRequests = async (): Promise<ConfigInfo> => {
     const defaultConfig = await mapsApi.getDefaultMapConfig(
@@ -35,7 +38,7 @@ function CloneConfigButton({
     );
     if (defaultConfig.status !== 1 || !defaultConfig.config)
       throw new Error(
-        "Конфиг для данной версии не готов или карта с данной версией не совместима"
+        t("page.map.cloneConfig.error")
       );
     else {
       return await mapsApi.createConfig(
@@ -54,7 +57,7 @@ function CloneConfigButton({
       })
       .catch((e) => {
         toast({
-          title: "Ошибка копирования",
+          title: t("page.map.cloneConfing.copyError"),
           description: convertErrorResponseToString(e),
           color: "red",
         });
@@ -68,7 +71,7 @@ function CloneConfigButton({
         color="green"
         basic
         icon="copy"
-        title="Клонировать конфиг"
+        title={t("page.map.cloneConfing.buttonClone")}
         disabled={!enabled}
         onClick={() => {
           setModalOpen(true);
@@ -83,11 +86,11 @@ function CloneConfigButton({
             setModalOpen(false);
           }}
         >
-          <Modal.Header>Клонировать конфиг</Modal.Header>
+          <Modal.Header>{t("page.map.cloneConfing.modal.caption")}</Modal.Header>
           <Modal.Content>
             <Form>
               <Form.Select
-                label="Версия"
+                label={t("page.map.cloneConfing.modal.version")}
                 value={selectedVersion}
                 onChange={(_, data) => {
                   setSelectedVersion((data.value as string) || "");
@@ -97,7 +100,7 @@ function CloneConfigButton({
                     .filter((i) => i.status === 1)
                     .map((i) => {
                       return {
-                        text: "Стандартный конфиг " + i.version,
+                        text: t("page.map.cloneConfing.modal.standardCfg") +" " + i.version,
                         value: i.version,
                       };
                     }) || []
@@ -108,7 +111,7 @@ function CloneConfigButton({
                 onChange={(_, data) => {
                   setConfigName(data.value);
                 }}
-                label="Название конфига"
+                label={t("page.map.cloneConfing.modal.nameCfg")}
               />
               <Form.Button
                 color="green"
@@ -117,7 +120,7 @@ function CloneConfigButton({
                 }}
               >
                 <Icon name="copy" />
-                Копировать
+                {t("page.map.cloneConfing.modal.tocopy")}
               </Form.Button>
             </Form>
           </Modal.Content>

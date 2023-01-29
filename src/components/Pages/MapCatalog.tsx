@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Container, Header } from "semantic-ui-react";
-import { RestContext } from "../../context";
+import { AppRuntimeSettingsContext, RestContext } from "../../context";
 import { Map } from "../../models/rest/Map";
 
 function MapCatalog() {
@@ -11,6 +11,9 @@ function MapCatalog() {
   const [searchedMaps, setSearchedMaps] = useState<Map[] | null>(null);
 
   const pageNum = parseInt(page || "1");
+  
+  const {language} = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
 
   useEffect(() => {
     mapsApi
@@ -41,7 +44,7 @@ function MapCatalog() {
 
   return (
     <Container>
-      <Header>Каталог карт</Header>
+      <Header>{t("page.map.catalog")}</Header>
       {searchedMaps?.map((i) => {
         return (
           <div>

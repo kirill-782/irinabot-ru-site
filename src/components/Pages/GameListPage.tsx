@@ -56,8 +56,11 @@ function GameListPage() {
 
   const connectorCache = useContext(CacheContext).cachedConnectorIds;
 
+  const {language} = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
+  
   useEffect(() => {
-    window.document.title = `Список игр | ${SITE_TITLE}`;
+    window.document.title = `${t("page.game.list.list")} | ${SITE_TITLE}`;
   }, []);
 
   useEffect(() => {
@@ -80,7 +83,7 @@ function GameListPage() {
 
   return (
     <Container className="game-list">
-      <MetaDescription description="Просмотреть список созданных игр, к которым можно присоедениться." />
+      <MetaDescription description={t("page.game.list.watch")+"."} />
       <MetaCanonical hostPath="/" />
       <Grid columns="equal" stackable>
         <Grid.Column width={13} className="game-list-column">
@@ -90,7 +93,7 @@ function GameListPage() {
             }
             value={filterSettings.quicFilter}
             style={{ width: "50%" }}
-            placeholder="Быстрый фильтр"
+            placeholder={t("page.game.list.fastfilter")}
           />
           {auth.accessMask.hasAccess(AccessMaskBit.GAME_CREATE) && (
             <Button
@@ -128,7 +131,7 @@ function GameListPage() {
               window.open("https://xgm.guru/p/irina/gamecreate");
             }}
           >
-            Как играть
+            {t("page.game.list.howToPlay")}
           </Button>
           {selectedGame ? (
             <MapInfo mapId={selectedGame.mapId}></MapInfo>

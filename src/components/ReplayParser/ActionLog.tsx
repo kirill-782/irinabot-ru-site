@@ -4,6 +4,7 @@ import { ActionData, ReplayContext } from "../Pages/ReplayParserPage";
 
 import ExternalBlockCard from "./ExternalBlockCard";
 import { useVisibility } from "../../hooks/useVisibility";
+import { AppRuntimeSettingsContext } from "../../context";
 
 const PAGE_SIZE = 500;
 const PAGE_WINDOW = 0;
@@ -21,6 +22,9 @@ function ActionLog({}) {
 
   const [filterResult, setFilterResult] = useState<ActionData[]>();
 
+  const {language} = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
+  
   useEffect(() => {
     let actions = replayActions;
 
@@ -60,14 +64,14 @@ function ActionLog({}) {
     <>
       <Form>
         <Form.Checkbox
-          label="Прогручивать страницу к началу блоков"
+          label={t("page.replay.parser.actionLog.toBegin")}
           checked={pageScroll}
           onChange={(_, data) => {
             setPageScroll(!!data.checked);
           }}
         ></Form.Checkbox>
         <Form.Checkbox
-          label="Не пустые блоки"
+          label={t("page.replay.parser.actionLog.nonEmpty")}
           checked={nonEmpty}
           onChange={(_, data) => {
             setNonEmpty(!!data.checked);
@@ -75,14 +79,14 @@ function ActionLog({}) {
         ></Form.Checkbox>
         <Form.Group>
           <Form.Checkbox
-            label="Только SyncStoredInteger"
+            label={t("page.replay.parser.actionLog.syncIntegerOnly")}
             checked={syncIntegerOnly}
             onChange={(_, data) => {
               setSyncIntegerOnly(!!data.checked);
             }}
           ></Form.Checkbox>
           <Form.Checkbox
-            label="Срабатывания TriggerRegisterPlayerChatEvent"
+            label={t("page.replay.parser.actionLog.chatCommandOnly")}
             checked={chatCommandOnly}
             onChange={(_, data) => {
               setChatCommandOnly(!!data.checked);
@@ -103,7 +107,7 @@ function ActionLog({}) {
                   });
               }}
             >
-              Загрузить блоки сверху
+              {t("page.replay.parser.actionLog.loadTopBlocks")}
             </button>
           </Grid.Row>
           <Grid.Row>
@@ -123,7 +127,7 @@ function ActionLog({}) {
                   });
               }}
             >
-              Загрузить блоки снизу
+              {t("page.replay.parser.actionLog.loadBottomBlocks")}
             </button>
           </Grid.Row>
         </Grid>

@@ -12,6 +12,9 @@ function Footer(props) {
 
   const [showChat, setShowShat] = useState(false);
   const [hasUnreadMessages, setUnreadMessages] = useState(false);
+  
+  const {language} = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
 
   const refreshButtonOnClick = () => {
     runTimeContext.gameList.setLocked((locked) => {
@@ -31,7 +34,7 @@ function Footer(props) {
       <Menu text fixed="bottom" size="massive" className="footer-menu">
         <OnlineStatsCounter />
         <ConnectorIndicator />
-        <Menu.Item title="Отображает состояние соединения с хостботом.">
+        <Menu.Item title={t("footer.hostbot")+"."}>
           <Icon
             name="plug"
             color={

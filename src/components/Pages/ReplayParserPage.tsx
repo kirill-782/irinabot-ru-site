@@ -1,6 +1,7 @@
 import React, {
   createContext,
   SyntheticEvent,
+  useContext,
   useEffect,
   useState,
 } from "react";
@@ -17,6 +18,7 @@ import OpenReplay from "../ReplayParser/OpenReplay";
 import ReplayInfo from "../ReplayParser/ReplayInfo";
 import MetaDescription from "../Meta/MetaDescription";
 import MetaRobots from "./../Meta/MetaRobots";
+import { AppRuntimeSettingsContext } from "../../context";
 
 export const ReplayContext = createContext<ReplayContextData | null>(null);
 
@@ -40,6 +42,9 @@ function ReplayParserPage({}) {
   const [replayActions, setReplayActions] = useState<ActionData[]>([]);
   const [name, setName] = useState<string>("");
 
+  const {language} = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
+  
   const onReplayData = (name: string, data: ReplayResult) => {
     setReplayData(data);
     setName(name);
@@ -70,7 +75,7 @@ function ReplayParserPage({}) {
   };
 
   const getShortBlockDescription = (block: ActionData) => {
-    return `Блок ${block.seqenceNumber}`;
+    return `${t("page.replay.parser.block")} ${block.seqenceNumber}`;
   };
 
   return (

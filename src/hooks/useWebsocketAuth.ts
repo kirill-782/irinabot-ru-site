@@ -108,6 +108,9 @@ export const useWebsocketAuth = ({
 
   // Register socket event listeners
 
+  //const {language} = useContext(AppRuntimeSettingsContext);
+  //const t = language.getString;
+
   useEffect(() => {
     const onOpen = () => {
       if (authState.authCredentials !== null) {
@@ -151,7 +154,7 @@ export const useWebsocketAuth = ({
 
         if (errorData.errorCode === 0)
           toast({
-            title: "Ошибка",
+            title: "Ошибка", // title: t("hook.useWebsocketAuth.error"),
             description: errorData.description,
             type: "error",
             time: 10000,
@@ -159,8 +162,8 @@ export const useWebsocketAuth = ({
         else if (errorData.errorCode === 0x10) setNeedRegistryModal(true);
         else if (errorData.errorCode === 1 && errorData.description === "") {
           toast({
-            title: "Ошибка входа",
-            description: "Сессия просрочена. Войдите заново",
+            title: "Ошибка входа", // title: t("hook.useWebsocketAuth.errorLogin"),
+            description: "Сессия просрочена. Войдите заново", // description: t("hook.useWebsocketAuth.errorSessionTimeout"),
             type: "error",
             time: 10000,
           });
@@ -171,8 +174,8 @@ export const useWebsocketAuth = ({
           authDispatcher({ action: "clearCredentials" });
         } else if (errorData.errorCode === 1 && errorData.description === "") {
           toast({
-            title: "Ошибка входа",
-            description: "Сессия просрочена. Войдите заново",
+            title: "Ошибка входа", // title: t("hook.useWebsocketAuth.errorLogin"),
+            description: "Сессия просрочена. Войдите заново", // description: t("hook.useWebsocketAuth.errorSessionTimeout"),
             type: "error",
             time: 10000,
           });

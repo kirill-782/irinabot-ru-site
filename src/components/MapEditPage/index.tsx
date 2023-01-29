@@ -4,7 +4,7 @@ import { useMapFlags } from "../../hooks/useMapFlags";
 import MapHeader from "../MapPage/MapHeader";
 import AccessControl from "./AccessControl";
 import FlagsEditBlock from "./FlagsEditBlock";
-import { AuthContext, MapContext, RestContext } from "./../../context/index";
+import { AppRuntimeSettingsContext, AuthContext, MapContext, RestContext } from "./../../context/index";
 import usePrevious from "../../hooks/usePrevious";
 import ForbiddenPage from "../Pages/ForbiddenPage";
 import MapExternalDescriptionEdit from "./MapExternalDescriptionEdit";
@@ -19,6 +19,9 @@ function MapEditPage({ updateMap }: MapEditPageProps) {
 
   const { mapsApi } = useContext(RestContext);
 
+  const { language } = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
+  
   const [flags, updateFlags, flagsLoading, flagsLoadError] = useMapFlags({
     mapId: map.id!!,
   });
@@ -73,9 +76,7 @@ function MapEditPage({ updateMap }: MapEditPageProps) {
             <>
               <Message info className="fluid">
                 <p>
-                  Данные флаги влияют на поведение объекта карты. Обратите
-                  внимание, что тег уникален и не может задан для не
-                  верефицированных карт.
+                  {t("page.map.edit.informer")}
                 </p>
               </Message>
               <FlagsEditBlock
@@ -89,18 +90,17 @@ function MapEditPage({ updateMap }: MapEditPageProps) {
           )}
           {!flags && flagsLoading && (
             <Loader active size="big">
-              Флаги загружаются
+              {t("page.map.edit.flagLoads")}
             </Loader>
           )}
         </Grid.Row>
       </AccessControl>
       <AccessControl requeredAuthority="MAP_VERIFY">
         <Grid.Row stretched>
-          <Header>Дополнительное описание</Header>
+          <Header>{t("page.map.edit.xdesc")}</Header>
           <Message info className="fluid">
             <p>
-              Вы в тексте можете использовать разметку Markdown. Старайтесь
-              указывать уникальную информацию о карте.
+              {t("page.map.edit.descripton")}
             </p>
           </Message>
           <MapExternalDescriptionEdit

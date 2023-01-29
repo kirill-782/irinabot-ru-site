@@ -1,6 +1,7 @@
 import { Comment, Form, Button } from "semantic-ui-react";
 import { User } from "./interfaces";
-import { SyntheticEvent, useState } from "react";
+import { SyntheticEvent, useContext, useState } from "react";
+import {AppRuntimeSettingsContext} from "./../../context";
 import React from "react";
 
 interface UserChatProps {
@@ -20,13 +21,16 @@ export const UserChat: React.FC<UserChatProps> = ({ user, sendMessage }) => {
     sendMessage(user, message);
   };
 
+  const { language } = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
+  
   return (
     <Comment.Group>
       {user.messages.map((message, index) => (
         <Comment key={index}>
           <Comment.Content>
             <Comment.Author as="a">
-              {message.isIncoming ? user.name : "Вы"}
+              {message.isIncoming ? user.name : t("chat.you")}
             </Comment.Author>
             <Comment.Metadata>
               <div>{message.date}</div>
@@ -44,7 +48,7 @@ export const UserChat: React.FC<UserChatProps> = ({ user, sendMessage }) => {
           value={message}
         />
         <Button
-          content="Отправить"
+          content={t("chat.send")}
           labelPosition="left"
           icon="edit"
           primary

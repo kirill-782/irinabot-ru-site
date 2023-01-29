@@ -37,6 +37,9 @@ function MapPage() {
 
   const [noIndex, setNoIndex] = useState(false);
 
+  const {language} = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
+
   useGameListSubscribe({
     ghostSocket: sockets.ghostSocket,
     isGameListLocked: runtimeContext.gameList.locked,
@@ -48,7 +51,7 @@ function MapPage() {
     if (mapData?.mapInfo?.name) {
       window.document.title = `${escapeWC3Tags(
         mapData.mapInfo.name
-      )} | Карты Warcraft III | ${SITE_TITLE}`;
+      )} | ${t("page.map.maps")} | ${SITE_TITLE}`;
     } else {
       window.document.title = SITE_TITLE;
     }
@@ -128,7 +131,7 @@ function MapPage() {
       )}
       {isLoading && (
         <Loader active size="big">
-          Загрузка
+          {t("page.map.loading")}
         </Loader>
       )}
       {mapData && (
@@ -154,12 +157,12 @@ function MapPage() {
             <Grid.Row>
               {config === undefined && (
                 <Loader size="big" active>
-                  Конфиг загружается
+                  {t("page.map.lconfig")}
                 </Loader>
               )}
               {config === null && (
                 <Message style={{ width: "100%" }} info>
-                  Слоты не парсились
+                  {t("page.map.snparsed")}
                 </Message>
               )}
               {config?.config && (
