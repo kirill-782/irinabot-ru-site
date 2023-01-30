@@ -21,7 +21,7 @@ function ChatList({
 
   const { language } = useContext(AppRuntimeSettingsContext);
   const t = language.getString;
-  
+
   const handleNewChat = () => {
     const newUser: User = {
       name: newUsername,

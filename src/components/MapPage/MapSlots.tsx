@@ -94,7 +94,7 @@ interface MapSlotsProps {
 
 function MapSlots({ slots, options }: MapSlotsProps) {
   const customForces = ((options || 0) & 64) === 64;
-  
+
   const { language } = useContext(AppRuntimeSettingsContext);
   const t = language.getString;
 
@@ -113,15 +113,29 @@ function MapSlots({ slots, options }: MapSlotsProps) {
       {teamSlots.map((slots, index) => {
         return (
           <React.Fragment key={index}>
-            {customForces && <label>{t("page.map.slots.force")} {index + 1}</label>}
+            {customForces && (
+              <label>
+                {t("page.map.slots.force")} {index + 1}
+              </label>
+            )}
             <Table>
               {index === 0 && (
                 <Table.Header>
-                  <Table.HeaderCell width={4}>{t("page.map.slots.slot.type")}</Table.HeaderCell>
-                  <Table.HeaderCell width={3}>{t("page.map.slots.slot.team")}</Table.HeaderCell>
-                  <Table.HeaderCell width={4}>{t("page.map.slots.slot.race")}</Table.HeaderCell>
-                  <Table.HeaderCell width={1}>{t("page.map.slots.slot.teamcolor")}</Table.HeaderCell>
-                  <Table.HeaderCell width={1}>{t("page.map.slots.slot.handicap")}</Table.HeaderCell>
+                  <Table.HeaderCell width={4}>
+                    {t("page.map.slots.slot.type")}
+                  </Table.HeaderCell>
+                  <Table.HeaderCell width={3}>
+                    {t("page.map.slots.slot.team")}
+                  </Table.HeaderCell>
+                  <Table.HeaderCell width={4}>
+                    {t("page.map.slots.slot.race")}
+                  </Table.HeaderCell>
+                  <Table.HeaderCell width={1}>
+                    {t("page.map.slots.slot.teamcolor")}
+                  </Table.HeaderCell>
+                  <Table.HeaderCell width={1}>
+                    {t("page.map.slots.slot.handicap")}
+                  </Table.HeaderCell>
                 </Table.Header>
               )}
               {slots.map((slot, index) => {
@@ -130,7 +144,9 @@ function MapSlots({ slots, options }: MapSlotsProps) {
                     <Table.Cell width={4}>
                       {t(convertSlotTypeToString(slot.status) as string)}
                     </Table.Cell>
-                    <Table.Cell width={3}>{t("page.map.slots.slot.team")} {slot.team + 1}</Table.Cell>
+                    <Table.Cell width={3}>
+                      {t("page.map.slots.slot.team")} {slot.team + 1}
+                    </Table.Cell>
                     <Table.Cell width={4}>
                       {t(convertSlotRaceToString(slot.race))}
                     </Table.Cell>

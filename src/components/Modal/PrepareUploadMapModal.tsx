@@ -20,7 +20,11 @@ import { Flags } from "../../models/rest/Flags";
 import { AdditionalFlags, MapService } from "../../services/MapService";
 import { useCategoryFilter } from "../../hooks/useCategoryFilter";
 import { DragAndDropField } from "./DragAndDropField";
-import { AppRuntimeSettingsContext, CacheContext, RestContext } from "./../../context/index";
+import {
+  AppRuntimeSettingsContext,
+  CacheContext,
+  RestContext,
+} from "./../../context/index";
 import React from "react";
 
 interface PrepareUploadMapModalProps {
@@ -44,7 +48,7 @@ function PrepareUploadMapModal({
   const dragCounter = useMemo(() => ({ value: 0 }), []);
 
   const cacheContext = useContext(CacheContext);
-  
+
   const { language } = useContext(AppRuntimeSettingsContext);
   const t = language.getString;
 
@@ -127,9 +131,7 @@ function PrepareUploadMapModal({
         {isDragging && <DragAndDropField />}
         <Modal.Description>
           <Header>{t("modal.mapUploader.whichUploadLabel")}</Header>
-          <p>
-            {t("modal.mapUploader.whichUploadHint")}
-          </p>
+          <p>{t("modal.mapUploader.whichUploadHint")}</p>
           <Form>
             <Form.Field>
               <label>{t("modal.mapUploader.categoryLabel")}</label>

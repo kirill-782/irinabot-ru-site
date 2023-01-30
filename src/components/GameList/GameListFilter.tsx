@@ -42,7 +42,7 @@ function GameListFilter({
 }: GameListFilterProps) {
   const { language } = useContext(AppRuntimeSettingsContext);
   const t = language.getString;
-  
+
   return (
     <>
       <Form className="sidebar-filter">
@@ -154,7 +154,7 @@ function GameListFilter({
             basic
             floating
             options={options.map((i) => {
-              return { ...i, text: t(i.text)}
+              return { ...i, text: t(i.text) };
             })}
             value={filterSettings.orderBy}
           />

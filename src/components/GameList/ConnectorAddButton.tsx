@@ -74,7 +74,8 @@ function ConnectorAddButton({ game }: ConnectorAddButtonProps) {
                   setPasswordModalOpen(false);
                 }}
               >
-                <Icon name="check"></Icon>{t("page.game.list.button.add.login")}
+                <Icon name="check"></Icon>
+                {t("page.game.list.button.add.login")}
               </Form.Button>
             </Form>
           </Modal.Content>

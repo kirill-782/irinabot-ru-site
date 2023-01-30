@@ -24,7 +24,7 @@ const reasonOptions = [
     value: 2,
   },
   {
-    text: "modal.mapReport.options.errorCategory", // Ошибка при заполнении категории 
+    text: "modal.mapReport.options.errorCategory", // Ошибка при заполнении категории
     value: 3,
   },
 ];
@@ -33,23 +33,31 @@ function MapReportModal({ open, onClose, mapId }: MapReportModalProps) {
   const [type, setType] = useState(0);
   const [comment, setComment] = useState("");
   const [source, setSource] = useState("");
-  
+
   const { language } = useContext(AppRuntimeSettingsContext);
   const t = language.getString;
 
   const send = () => {
     let string =
-      "**"+t("modal.mapReport.send.type")+":**" +
-      t(reasonOptions.filter((i) => {
-        return i.value === type;
-      })[0].text) +
+      "**" +
+      t("modal.mapReport.send.type") +
+      ":**" +
+      t(
+        reasonOptions.filter((i) => {
+          return i.value === type;
+        })[0].text
+      ) +
       "\r\n";
 
-    string += `**${t("modal.mapReport.send.link")}:** __#${mapId}__ (https://irinabot.ru/maps/${mapId})\r\n`;
+    string += `**${t(
+      "modal.mapReport.send.link"
+    )}:** __#${mapId}__ (https://irinabot.ru/maps/${mapId})\r\n`;
 
-    if (source) string += `**${t("modal.mapReport.send.source")}:** ${source}\r\n`;
+    if (source)
+      string += `**${t("modal.mapReport.send.source")}:** ${source}\r\n`;
 
-    if (comment) string += `**${t("modal.mapReport.send.comment")}:** ${comment}\r\n`;
+    if (comment)
+      string += `**${t("modal.mapReport.send.comment")}:** ${comment}\r\n`;
 
     window.location.href = `https://xgm.guru/p/irina/add/219?initial-text=${encodeURIComponent(
       string
@@ -67,15 +75,13 @@ function MapReportModal({ open, onClose, mapId }: MapReportModalProps) {
       <Modal.Header>{t("modal.mapReport.caption")}</Modal.Header>
       <Modal.Content>
         <Message info>
-          <p>
-          {t("modal.mapReport.info")}
-          </p>
+          <p>{t("modal.mapReport.info")}</p>
         </Message>
         <Form>
           <Form.Select
             label={t("modal.mapReport.type")}
-            options={reasonOptions.map((i)=>{
-              return { ...i, text: t(i.text) }
+            options={reasonOptions.map((i) => {
+              return { ...i, text: t(i.text) };
             })}
             value={type}
             onChange={(_, data) => {

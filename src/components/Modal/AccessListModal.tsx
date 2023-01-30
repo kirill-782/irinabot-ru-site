@@ -18,7 +18,7 @@ function AccessListModal({ open, onClose }: AccessListModalProps) {
   const [showAccessMask, setShowAccessMask] = useState<number | undefined>(
     undefined
   );
-    
+
   const { language } = useContext(AppRuntimeSettingsContext);
   const t = language.getString;
 
@@ -40,14 +40,18 @@ function AccessListModal({ open, onClose }: AccessListModalProps) {
           <Message info>{t("modal.accessList.norights")}</Message>
         ) : (
           <>
-            <Message info>
-            {t("modal.accessList.info")}
-            </Message>
+            <Message info>{t("modal.accessList.info")}</Message>
             <Table>
               <Table.Header>
-                <Table.HeaderCell>{t("modal.accessList.table.playerID")}</Table.HeaderCell>
-                <Table.HeaderCell>{t("modal.accessList.table.accessMask")}</Table.HeaderCell>
-                <Table.HeaderCell>{t("modal.accessList.table.playerID")}</Table.HeaderCell>
+                <Table.HeaderCell>
+                  {t("modal.accessList.table.playerID")}
+                </Table.HeaderCell>
+                <Table.HeaderCell>
+                  {t("modal.accessList.table.accessMask")}
+                </Table.HeaderCell>
+                <Table.HeaderCell>
+                  {t("modal.accessList.table.playerID")}
+                </Table.HeaderCell>
               </Table.Header>
               {accessRows.map((i) => {
                 return (

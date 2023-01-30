@@ -15,7 +15,7 @@ function ConfigSelectTab() {
   const [hasError, setError] = useState<string>("");
 
   const go = useNavigate();
-  
+
   const { language } = useContext(AppRuntimeSettingsContext);
   const t = language.getString;
 
@@ -74,12 +74,12 @@ function ConfigSelectTab() {
                         </Header>
                       </Grid.Row>
                       <Grid.Row>
-                      {t("other.config.selectTAB.update")}:
+                        {t("other.config.selectTAB.update")}:
                         {new Date(config.lastUpdateDate || 0).toLocaleString()}
                       </Grid.Row>
                       <Grid.Row>
                         <Link to={`/maps/${config.mapId}`}>
-                        {t("other.config.selectTAB.tomap")}
+                          {t("other.config.selectTAB.tomap")}
                         </Link>
                       </Grid.Row>
                     </Grid.Column>

@@ -11,7 +11,11 @@ import {
   Segment,
 } from "semantic-ui-react";
 import { AuthMethod, AviableAuthMethods } from "../../config/AuthMethods";
-import { AppRuntimeSettingsContext, AuthContext, WebsocketContext } from "../../context";
+import {
+  AppRuntimeSettingsContext,
+  AuthContext,
+  WebsocketContext,
+} from "../../context";
 import { authByOauth } from "../../utils/Oauth";
 import MetaRobots from "../Meta/MetaRobots";
 
@@ -27,9 +31,9 @@ function ForbiddenPage({
   const authContext = useContext(AuthContext);
   const { isGHostSocketConnected } = useContext(WebsocketContext);
 
-  const {language} = useContext(AppRuntimeSettingsContext);
+  const { language } = useContext(AppRuntimeSettingsContext);
   const t = language.getString;
-  
+
   const onSuccess = useCallback(
     (token: string, type: number) => {
       authContext.dispatchAuth({
@@ -61,12 +65,12 @@ function ForbiddenPage({
 
   const waitLoader = (
     <>
-      <p>
-      {t("page.forbidden.wait")}
-      </p>
+      <p>{t("page.forbidden.wait")}</p>
       <Grid.Row>
         <Header>
-          {isGHostSocketConnected ? t("page.forbidden.authorization") : t("page.forbidden.connecting") }
+          {isGHostSocketConnected
+            ? t("page.forbidden.authorization")
+            : t("page.forbidden.connecting")}
         </Header>
       </Grid.Row>
     </>
@@ -88,15 +92,13 @@ function ForbiddenPage({
             )
           ) : (
             <Grid.Row>
-              <p>
-              {t("page.forbidden.norights")}
-              </p>
+              <p>{t("page.forbidden.norights")}</p>
             </Grid.Row>
           )}
 
           <Grid.Row>
             <Button to="/" as={Link} color="green">
-            {t("page.forbidden.main")}
+              {t("page.forbidden.main")}
             </Button>
           </Grid.Row>
         </Grid>

@@ -4,7 +4,11 @@ import { Flags } from "../../models/rest/Flags";
 import { AdditionalFlags } from "../../services/MapService";
 import PrepareUploadMapModal from "../Modal/PrepareUploadMapModal";
 import ProgressUploadMapModal from "../Modal/ProgressUploadMapModal";
-import { AppRuntimeSettingsContext, AuthContext, RestContext } from "../../context";
+import {
+  AppRuntimeSettingsContext,
+  AuthContext,
+  RestContext,
+} from "../../context";
 import { toast } from "@kokomi/react-semantic-toasts";
 import {
   UploadMapCompleteEvent,
@@ -35,7 +39,7 @@ function UploadMap() {
   const apiToken = useContext(AuthContext).auth.apiToken;
 
   const go = useNavigate();
-  
+
   const { language } = useContext(AppRuntimeSettingsContext);
   const t = language.getString;
 
@@ -63,7 +67,9 @@ function UploadMap() {
         toast(
           {
             title: `${t("menu.map.isUploaded")}.`,
-            description: `${t("menu.map.map")} ${event.detail.map.mapInfo?.name} ${t("menu.map.isUploaded2")}.`,
+            description: `${t("menu.map.map")} ${
+              event.detail.map.mapInfo?.name
+            } ${t("menu.map.isUploaded2")}.`,
             type: "success",
             time: 10000,
           },

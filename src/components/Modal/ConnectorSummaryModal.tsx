@@ -32,7 +32,7 @@ function ConnectorSummaryModal({
   const handleRemoveAll = () => {
     websocketContext.connectorSocket.send(resetAllConverter.assembly({}));
   };
-  
+
   const { language } = useContext(AppRuntimeSettingsContext);
   const t = language.getString;
 
@@ -42,9 +42,7 @@ function ConnectorSummaryModal({
 
       <Modal.Content>
         <Modal.Description>
-          <Message>
-            {t("modal.connectorSummary.description")}
-          </Message>
+          <Message>{t("modal.connectorSummary.description")}</Message>
           {connectorGames.length > 0 ? (
             <List divided relaxed>
               {connectorGames.map((el, index) => (

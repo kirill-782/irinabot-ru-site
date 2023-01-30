@@ -18,8 +18,7 @@
 .ui.red.message,
 .ui.red.info.message,
 .ui.attached.red.message,
-.ui.attached.red.message
-.ui.attached.red.info.message {
+.ui.attached.red.message .ui.attached.red.info.message {
   box-shadow: 0px 0px 0px 1px #d62420 inset, 0px 0px 0px 0px rgb(0 0 0 / 0%);
   color: #ff201b;
   background: #0c0c0c;
@@ -31,7 +30,7 @@
 }
 
 .ui.info.message .header {
-    color: #1c8ca2;
+  color: #1c8ca2;
 }
 
 .ui.info.message {
@@ -39,9 +38,9 @@
   color: #21adfb;
 }
 
-.ui.success.message, 
+.ui.success.message,
 .ui.attached.success.message,
-.ui.green.message, 
+.ui.green.message,
 .ui.attached.green.message {
   background-color: #0c0c0c;
   box-shadow: 0px 0px 0px 1px #339c34 inset, 0px 0px 0px 0px rgb(0 0 0 / 0%);
@@ -54,7 +53,7 @@
   color: #3dc03f;
 }
 
-.ui.orange.message, 
+.ui.orange.message,
 .ui.attached.orange.message {
   background-color: #0c0c0c;
   color: #c9ba9b;

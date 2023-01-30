@@ -2,7 +2,11 @@ import { Button } from "semantic-ui-react";
 import { GameListGame } from "../../models/websocket/ServerGameList";
 import { useContext, useState } from "react";
 import { useEffect } from "react";
-import { AppRuntimeSettingsContext, AuthContext, WebsocketContext } from "../../context";
+import {
+  AppRuntimeSettingsContext,
+  AuthContext,
+  WebsocketContext,
+} from "../../context";
 import { ClientRequestUDPGameConverter } from "../../models/websocket/ClientRequestUDPGame";
 import React from "react";
 
@@ -22,7 +26,7 @@ function GameJoinButton({ gameList, mapId, className }: GameJoinButtonProps) {
 
   const { language } = useContext(AppRuntimeSettingsContext);
   const t = language.getString;
-  
+
   const requestConnectorGame = () => {
     if (!foundGame) return;
 

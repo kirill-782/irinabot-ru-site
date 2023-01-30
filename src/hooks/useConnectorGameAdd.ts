@@ -17,7 +17,6 @@ export const useConnectorGameAdd = ({
   ghostSocket,
   connectorSocket,
 }: useConnectorGameAddOptions) => {
-
   //const {language} = useContext(AppRuntimeSettingsContext);
   //const t = language.getString;
 

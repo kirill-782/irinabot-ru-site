@@ -37,7 +37,7 @@ function MapPage() {
 
   const [noIndex, setNoIndex] = useState(false);
 
-  const {language} = useContext(AppRuntimeSettingsContext);
+  const { language } = useContext(AppRuntimeSettingsContext);
   const t = language.getString;
 
   useGameListSubscribe({
@@ -49,9 +49,9 @@ function MapPage() {
 
   useEffect(() => {
     if (mapData?.mapInfo?.name) {
-      window.document.title = `${escapeWC3Tags(
-        mapData.mapInfo.name
-      )} | ${t("page.map.maps")} | ${SITE_TITLE}`;
+      window.document.title = `${escapeWC3Tags(mapData.mapInfo.name)} | ${t(
+        "page.map.maps"
+      )} | ${SITE_TITLE}`;
     } else {
       window.document.title = SITE_TITLE;
     }
@@ -151,7 +151,7 @@ function MapPage() {
               />
             )}
             <Grid.Row>
-              <MapFlags/>
+              <MapFlags />
             </Grid.Row>
             <MapFooter gameList={gameList} />
             <Grid.Row>

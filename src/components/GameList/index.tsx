@@ -59,10 +59,18 @@ function GameList({ gameList, selectedGame, setSelectedGame }: GameListProps) {
     <Table selectable>
       <Table.Header>
         <Table.Row>
-          <Table.HeaderCell width={2}>{t("page.game.list.index.slots")}</Table.HeaderCell>
-          <Table.HeaderCell width={4}>{t("page.game.list.index.game")}</Table.HeaderCell>
-          <Table.HeaderCell>{t("page.game.list.index.players")}</Table.HeaderCell>
-          <Table.HeaderCell width={2}>{t("page.game.list.index.owner")}</Table.HeaderCell>
+          <Table.HeaderCell width={2}>
+            {t("page.game.list.index.slots")}
+          </Table.HeaderCell>
+          <Table.HeaderCell width={4}>
+            {t("page.game.list.index.game")}
+          </Table.HeaderCell>
+          <Table.HeaderCell>
+            {t("page.game.list.index.players")}
+          </Table.HeaderCell>
+          <Table.HeaderCell width={2}>
+            {t("page.game.list.index.owner")}
+          </Table.HeaderCell>
           <Table.HeaderCell width={2}></Table.HeaderCell>
         </Table.Row>
       </Table.Header>

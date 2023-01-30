@@ -9,7 +9,7 @@ interface SitePrepareLoaderProps {
 function SitePrepareLoader({ noWait }: SitePrepareLoaderProps) {
   const [needRender, setNeedRender] = useState<boolean>(noWait || false);
   const [timer, setTimer] = useState<number>(0);
-  
+
   //const {language} = useContext(AppRuntimeSettingsContext);
   //const t = language.getString;
 

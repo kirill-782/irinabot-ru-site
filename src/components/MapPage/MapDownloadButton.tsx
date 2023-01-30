@@ -23,7 +23,7 @@ function MapDownloadButton({
   const mapSize = byteSize(fileSize);
   const { language } = useContext(AppRuntimeSettingsContext);
   const t = language.getString;
-  
+
   return (
     <Button
       className={className}

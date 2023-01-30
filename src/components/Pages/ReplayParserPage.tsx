@@ -42,9 +42,9 @@ function ReplayParserPage({}) {
   const [replayActions, setReplayActions] = useState<ActionData[]>([]);
   const [name, setName] = useState<string>("");
 
-  const {language} = useContext(AppRuntimeSettingsContext);
+  const { language } = useContext(AppRuntimeSettingsContext);
   const t = language.getString;
-  
+
   const onReplayData = (name: string, data: ReplayResult) => {
     setReplayData(data);
     setName(name);

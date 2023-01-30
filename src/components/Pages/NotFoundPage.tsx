@@ -6,10 +6,9 @@ import React, { useContext } from "react";
 import { AppRuntimeSettingsContext } from "../../context";
 
 function NotFoundPage() {
-
-  const {language} = useContext(AppRuntimeSettingsContext);
+  const { language } = useContext(AppRuntimeSettingsContext);
   const t = language.getString;
-  
+
   return (
     <Container className="not-found">
       <MetaRobots noIndex />
@@ -20,7 +19,7 @@ function NotFoundPage() {
           </Grid.Row>
           <Grid.Row>
             <Button to="/" as={Link} color="green">
-            {t("page.tomain")}
+              {t("page.tomain")}
             </Button>
           </Grid.Row>
         </Grid>

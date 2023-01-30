@@ -23,7 +23,7 @@ function MapExternalDescriptionEdit({
 
   const { language } = useContext(AppRuntimeSettingsContext);
   const t = language.getString;
-  
+
   useEffect(() => {
     setFormValue(value || "");
   }, [value]);

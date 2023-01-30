@@ -40,7 +40,7 @@ function CreateAutohostModal({
   const gameNameHasError = gameName.length > 30 || gameName.length === 0;
   const autostartHasError = isNaN(parseInt(autostart));
   const countGamesHasError = isNaN(parseInt(countGames));
-  
+
   const { language } = useContext(AppRuntimeSettingsContext);
   const t = language.getString;
 
@@ -49,9 +49,7 @@ function CreateAutohostModal({
       <Header content={t("modal.createAutohost.caption")} />
       <Modal.Content>
         <Message>
-          <p>
-            {t("modal.createAutohost.description")}
-          </p>
+          <p>{t("modal.createAutohost.description")}</p>
         </Message>
         <Form>
           <Form.Input

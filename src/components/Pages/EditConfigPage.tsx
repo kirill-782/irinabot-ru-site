@@ -22,9 +22,9 @@ function EditConfigPage() {
 
   const { mapsApi } = useContext(RestContext);
 
-  const {language} = useContext(AppRuntimeSettingsContext);
+  const { language } = useContext(AppRuntimeSettingsContext);
   const t = language.getString;
-  
+
   useEffect(() => {
     if (!configData) {
       setConfigPayload(undefined);
@@ -96,7 +96,8 @@ function EditConfigPage() {
       {configPayload && (
         <>
           <Message>
-          {t("page.edit.config.madeFor")} <strong>{configData?.version}</strong>
+            {t("page.edit.config.madeFor")}{" "}
+            <strong>{configData?.version}</strong>
           </Message>
           <Form>
             <Form.Field>

@@ -52,13 +52,16 @@ function GameListPage() {
     ignoreFocusCheck: false,
   });
 
-  const displayedGameList = useDisplayedGameList({gameList: filtredGameList, filters: debouncedFilterSettings});
+  const displayedGameList = useDisplayedGameList({
+    gameList: filtredGameList,
+    filters: debouncedFilterSettings,
+  });
 
   const connectorCache = useContext(CacheContext).cachedConnectorIds;
 
-  const {language} = useContext(AppRuntimeSettingsContext);
+  const { language } = useContext(AppRuntimeSettingsContext);
   const t = language.getString;
-  
+
   useEffect(() => {
     window.document.title = `${t("page.game.list.list")} | ${SITE_TITLE}`;
   }, []);
@@ -83,7 +86,7 @@ function GameListPage() {
 
   return (
     <Container className="game-list">
-      <MetaDescription description={t("page.game.list.watch")+"."} />
+      <MetaDescription description={t("page.game.list.watch") + "."} />
       <MetaCanonical hostPath="/" />
       <Grid columns="equal" stackable>
         <Grid.Column width={13} className="game-list-column">

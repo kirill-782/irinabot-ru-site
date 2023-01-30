@@ -1,7 +1,11 @@
 import { Button, Grid, Header, Message, Modal, Table } from "semantic-ui-react";
 import { useContext, useEffect, useState } from "react";
 import { Autohost } from "../../models/websocket/ServerAutohostListResponse";
-import { AppRuntimeSettingsContext, CacheContext, WebsocketContext } from "../../context";
+import {
+  AppRuntimeSettingsContext,
+  CacheContext,
+  WebsocketContext,
+} from "../../context";
 import { GHostPackageEvent } from "../../services/GHostWebsocket";
 import {
   DEFAULT_AUTOHOST_REMOVE_RESPONSE,
@@ -85,7 +89,9 @@ function AutohostListModal({ open, onClose }: AutohostListModalProps) {
         } else {
           toast({
             title: t("modal.autohostList.toast.deletingError"),
-            description: `${t("modal.autohostList.toast.deletingErrorReason")} ${response.status}`,
+            description: `${t(
+              "modal.autohostList.toast.deletingErrorReason"
+            )} ${response.status}`,
             icon: "check",
             color: "red",
           });
@@ -114,12 +120,24 @@ function AutohostListModal({ open, onClose }: AutohostListModalProps) {
           <Table celled>
             <Table.Header>
               <Table.Row>
-                <Table.HeaderCell width={9}>{t("modal.autohostList.table.name")}</Table.HeaderCell>
-                <Table.HeaderCell width={2}>{t("modal.autohostList.table.autostart")}</Table.HeaderCell>
-                <Table.HeaderCell width={2}>{t("modal.autohostList.table.gamelimit")}</Table.HeaderCell>
-                <Table.HeaderCell width={5}>{t("modal.autohostList.table.gamecreated")}</Table.HeaderCell>
-                <Table.HeaderCell width={3}>{t("modal.autohostList.table.owner")}</Table.HeaderCell>
-                <Table.HeaderCell width={1}>{t("modal.autohostList.table.actions")}</Table.HeaderCell>
+                <Table.HeaderCell width={9}>
+                  {t("modal.autohostList.table.name")}
+                </Table.HeaderCell>
+                <Table.HeaderCell width={2}>
+                  {t("modal.autohostList.table.autostart")}
+                </Table.HeaderCell>
+                <Table.HeaderCell width={2}>
+                  {t("modal.autohostList.table.gamelimit")}
+                </Table.HeaderCell>
+                <Table.HeaderCell width={5}>
+                  {t("modal.autohostList.table.gamecreated")}
+                </Table.HeaderCell>
+                <Table.HeaderCell width={3}>
+                  {t("modal.autohostList.table.owner")}
+                </Table.HeaderCell>
+                <Table.HeaderCell width={1}>
+                  {t("modal.autohostList.table.actions")}
+                </Table.HeaderCell>
               </Table.Row>
             </Table.Header>
 

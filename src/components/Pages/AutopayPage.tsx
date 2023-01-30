@@ -57,7 +57,7 @@ function AutopayPage() {
 
   const { language } = useContext(AppRuntimeSettingsContext);
   const t = language.getString;
-  
+
   useEffect(() => {
     setConnectorId(authContext.auth.currentAuth?.connectorId.toString());
   }, [authContext.auth.currentAuth]);
@@ -118,9 +118,7 @@ function AutopayPage() {
     return (
       <Message color="red">
         <Message.Header>{t("page.autopay.incorrectedID")}</Message.Header>
-        <p>
-         {t("page.autopay.incorrectedIDEx")}
-        </p>
+        <p>{t("page.autopay.incorrectedIDEx")}</p>
       </Message>
     );
   };
@@ -138,9 +136,13 @@ function AutopayPage() {
 
   return (
     <Container>
-      <MetaDescription description={t("page.autopay.payhere")+"."} />
+      <MetaDescription description={t("page.autopay.payhere") + "."} />
       <Header>{t("page.autopay.donuteCalc")}</Header>
-      <Form ref={formRef} method="POST" action="https://yoomoney.ru/quickpay/confirm.xml">
+      <Form
+        ref={formRef}
+        method="POST"
+        action="https://yoomoney.ru/quickpay/confirm.xml"
+      >
         <Grid columns="equal" stackable>
           <Grid.Column width="two">
             {availablePlaces.map((place) => {
@@ -198,9 +200,9 @@ function AutopayPage() {
             </Form.Group>
             <Message info>
               <p>
-              {t("page.autopay.infoA")} (
+                {t("page.autopay.infoA")} (
                 <a href="https://vk.com/irina_bot">https://vk.com/irina_bot</a>)
-                {t("page.autopay.infoA")}  (
+                {t("page.autopay.infoA")} (
                 <a href="https://discord.gg/cTfyEZT">
                   https://discord.gg/cTfyEZT
                 </a>
@@ -213,12 +215,12 @@ function AutopayPage() {
         <input
           type="hidden"
           name="formcomment"
-          value={t("page.autopay.paying")+"."}
+          value={t("page.autopay.paying") + "."}
         />
         <input
           type="hidden"
           name="short-dest"
-          value={t("page.autopay.paying")+"."}
+          value={t("page.autopay.paying") + "."}
         />
         <input type="hidden" name="label" ref={paylentLabelRef} />
         <input type="hidden" name="quickpay-form" value="shop" />

@@ -27,7 +27,7 @@ export const MapCard: React.FC<Map & { selectElement?: React.ReactNode }> = ({
 
   const { language } = useContext(AppRuntimeSettingsContext);
   const t = language.getString;
-  
+
   let displayDesctiption = description;
   let needFulltextLink = false;
 

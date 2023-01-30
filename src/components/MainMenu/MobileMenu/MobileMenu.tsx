@@ -9,7 +9,10 @@ import {
 } from "semantic-ui-react";
 import LoginDropdown from "../../Header/LoginDropdown";
 import UserDrowdown from "../../Header/UserDropdown";
-import { AppRuntimeSettingsContext, AuthContext } from "./../../../context/index";
+import {
+  AppRuntimeSettingsContext,
+  AuthContext,
+} from "./../../../context/index";
 import { switchTheme, E_THEME, currentTheme } from "../../../utils/Theme";
 import "./MobileMenu.scss";
 import UploadMap from "../../Header/UploadMap";
@@ -33,7 +36,7 @@ const MobileMenu = () => {
 
   const { language } = useContext(AppRuntimeSettingsContext);
   const t = language.getString;
-  
+
   return (
     <Menu fixed="top" inverted className="main-menu mobile-menu">
       <Menu.Menu position="left">

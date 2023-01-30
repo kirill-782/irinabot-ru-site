@@ -109,20 +109,29 @@ function GameListPlayerItem({ player }: GameListPlayerItemProps) {
   };
 
   const renderStats = () => {
-    if (gamePlayerStats === undefined) return <span>{t("page.game.list.playerItem.renderStats.undefined")}</span>;
+    if (gamePlayerStats === undefined)
+      return (
+        <span>{t("page.game.list.playerItem.renderStats.undefined")}</span>
+      );
 
-    if (gamePlayerStats === null) return <span>{t("page.game.list.playerItem.renderStats.null")}</span>;
+    if (gamePlayerStats === null)
+      return <span>{t("page.game.list.playerItem.renderStats.null")}</span>;
 
     return (
       <List horizontal>
         <List.Item style={{ color: "green" }}>
-        {t("page.game.list.playerItem.wins")}: {gamePlayerStats.win}
+          {t("page.game.list.playerItem.wins")}: {gamePlayerStats.win}
         </List.Item>
         <List.Item style={{ color: "red" }}>
-        {t("page.game.list.playerItem.defeats")}: {gamePlayerStats.lose}
+          {t("page.game.list.playerItem.defeats")}: {gamePlayerStats.lose}
         </List.Item>{" "}
-        <List.Item>{t("page.game.list.playerItem.winrate")}: {gamePlayerStats.percent}%</List.Item>
-        <List.Item>{t("page.game.list.playerItem.totalTime")}: {gamePlayerStats.totalTime} {t("page.game.list.playerItem.h")}.</List.Item>
+        <List.Item>
+          {t("page.game.list.playerItem.winrate")}: {gamePlayerStats.percent}%
+        </List.Item>
+        <List.Item>
+          {t("page.game.list.playerItem.totalTime")}:{" "}
+          {gamePlayerStats.totalTime} {t("page.game.list.playerItem.h")}.
+        </List.Item>
         <List.Item style={{ color: "blue" }}>
           APM: {gamePlayerStats.apm}
         </List.Item>
@@ -159,7 +168,8 @@ function GameListPlayerItem({ player }: GameListPlayerItemProps) {
               openUserChat();
             }}
           >
-            <Icon name="envelope"></Icon>{t("page.game.list.playerItem.writeMessage")} 
+            <Icon name="envelope"></Icon>
+            {t("page.game.list.playerItem.writeMessage")}
           </Button>
         </Grid.Row>
       </Grid>

@@ -4,7 +4,12 @@ import { useMapFlags } from "../../hooks/useMapFlags";
 import MapHeader from "../MapPage/MapHeader";
 import AccessControl from "./AccessControl";
 import FlagsEditBlock from "./FlagsEditBlock";
-import { AppRuntimeSettingsContext, AuthContext, MapContext, RestContext } from "./../../context/index";
+import {
+  AppRuntimeSettingsContext,
+  AuthContext,
+  MapContext,
+  RestContext,
+} from "./../../context/index";
 import usePrevious from "../../hooks/usePrevious";
 import ForbiddenPage from "../Pages/ForbiddenPage";
 import MapExternalDescriptionEdit from "./MapExternalDescriptionEdit";
@@ -21,7 +26,7 @@ function MapEditPage({ updateMap }: MapEditPageProps) {
 
   const { language } = useContext(AppRuntimeSettingsContext);
   const t = language.getString;
-  
+
   const [flags, updateFlags, flagsLoading, flagsLoadError] = useMapFlags({
     mapId: map.id!!,
   });
@@ -75,9 +80,7 @@ function MapEditPage({ updateMap }: MapEditPageProps) {
           {flags && (
             <>
               <Message info className="fluid">
-                <p>
-                  {t("page.map.edit.informer")}
-                </p>
+                <p>{t("page.map.edit.informer")}</p>
               </Message>
               <FlagsEditBlock
                 flags={flags}
@@ -99,9 +102,7 @@ function MapEditPage({ updateMap }: MapEditPageProps) {
         <Grid.Row stretched>
           <Header>{t("page.map.edit.xdesc")}</Header>
           <Message info className="fluid">
-            <p>
-              {t("page.map.edit.descripton")}
-            </p>
+            <p>{t("page.map.edit.descripton")}</p>
           </Message>
           <MapExternalDescriptionEdit
             value={map.additionalFlags?.["mapDescription"]}

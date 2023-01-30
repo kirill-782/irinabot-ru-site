@@ -32,9 +32,9 @@ function ReplayMainInfo() {
     });
   };
 
-  const {language} = useContext(AppRuntimeSettingsContext);
+  const { language } = useContext(AppRuntimeSettingsContext);
   const t = language.getString;
-  
+
   return (
     <Grid className="replay-main-info">
       <Grid.Row stretched>
@@ -65,9 +65,15 @@ function ReplayMainInfo() {
         <Header>{t("page.replay.info.map.players")}:</Header>
         <Table>
           <TableHeader>
-            <TableHeaderCell>{t("page.replay.info.map.nickname")}</TableHeaderCell>
-            <TableHeaderCell>{t("page.replay.info.map.gametime")}</TableHeaderCell>
-            <TableHeaderCell>{t("page.replay.info.map.exitcode")}</TableHeaderCell>
+            <TableHeaderCell>
+              {t("page.replay.info.map.nickname")}
+            </TableHeaderCell>
+            <TableHeaderCell>
+              {t("page.replay.info.map.gametime")}
+            </TableHeaderCell>
+            <TableHeaderCell>
+              {t("page.replay.info.map.exitcode")}
+            </TableHeaderCell>
           </TableHeader>
           <TableBody>
             {[
@@ -91,9 +97,7 @@ function ReplayMainInfo() {
         </Table>
       </Grid.Row>
       <Grid.Row>
-        <Message warning>
-        {t("page.replay.info.map.aqua")}
-        </Message>
+        <Message warning>{t("page.replay.info.map.aqua")}</Message>
       </Grid.Row>
     </Grid>
   );

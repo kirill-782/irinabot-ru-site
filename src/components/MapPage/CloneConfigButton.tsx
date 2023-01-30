@@ -27,7 +27,7 @@ function CloneConfigButton({
   const { mapsApi } = useContext(RestContext);
 
   const go = useNavigate();
-  
+
   const { language } = useContext(AppRuntimeSettingsContext);
   const t = language.getString;
 
@@ -37,9 +37,7 @@ function CloneConfigButton({
       selectedVersion
     );
     if (defaultConfig.status !== 1 || !defaultConfig.config)
-      throw new Error(
-        t("page.map.cloneConfig.error")
-      );
+      throw new Error(t("page.map.cloneConfig.error"));
     else {
       return await mapsApi.createConfig(
         mapId,
@@ -86,7 +84,9 @@ function CloneConfigButton({
             setModalOpen(false);
           }}
         >
-          <Modal.Header>{t("page.map.cloneConfing.modal.caption")}</Modal.Header>
+          <Modal.Header>
+            {t("page.map.cloneConfing.modal.caption")}
+          </Modal.Header>
           <Modal.Content>
             <Form>
               <Form.Select
@@ -100,7 +100,10 @@ function CloneConfigButton({
                     .filter((i) => i.status === 1)
                     .map((i) => {
                       return {
-                        text: t("page.map.cloneConfing.modal.standardCfg") +" " + i.version,
+                        text:
+                          t("page.map.cloneConfing.modal.standardCfg") +
+                          " " +
+                          i.version,
                         value: i.version,
                       };
                     }) || []

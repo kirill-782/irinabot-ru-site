@@ -12,8 +12,8 @@ function Footer(props) {
 
   const [showChat, setShowShat] = useState(false);
   const [hasUnreadMessages, setUnreadMessages] = useState(false);
-  
-  const {language} = useContext(AppRuntimeSettingsContext);
+
+  const { language } = useContext(AppRuntimeSettingsContext);
   const t = language.getString;
 
   const refreshButtonOnClick = () => {
@@ -34,7 +34,7 @@ function Footer(props) {
       <Menu text fixed="bottom" size="massive" className="footer-menu">
         <OnlineStatsCounter />
         <ConnectorIndicator />
-        <Menu.Item title={t("footer.hostbot")+"."}>
+        <Menu.Item title={t("footer.hostbot") + "."}>
           <Icon
             name="plug"
             color={

@@ -12,7 +12,7 @@ function MapStatusIcons({
 }: Map) {
   const { language } = useContext(AppRuntimeSettingsContext);
   const t = language.getString;
-  
+
   if (favorite) {
     return (
       <Icon

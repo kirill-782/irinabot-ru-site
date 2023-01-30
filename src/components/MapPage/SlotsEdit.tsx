@@ -60,7 +60,7 @@ const slotTeamsOptions = (() => {
 
   for (let i = 0; i < 25; ++i) {
     result[i] = {
-      teamNumber: (i + 1),
+      teamNumber: i + 1,
       text: "page.map.slots.slot.team",
       value: i,
     };
@@ -151,16 +151,30 @@ function SlotsEdit({ slots, options, onSlotsChange }: SlotsEditProps) {
       {teamSlots.map((slots, index) => {
         return (
           <React.Fragment key={index}>
-            {customForces && <label>{t("page.map.slots.force")} {index + 1}</label>}
+            {customForces && (
+              <label>
+                {t("page.map.slots.force")} {index + 1}
+              </label>
+            )}
             <Table>
               {index === 0 && (
                 <Table.Header>
                   <Table.HeaderCell width={1}>SID</Table.HeaderCell>
-                  <Table.HeaderCell width={4}>{t("page.map.slots.slot.type")} </Table.HeaderCell>
-                  <Table.HeaderCell width={3}>{t("page.map.slots.slot.team")}</Table.HeaderCell>
-                  <Table.HeaderCell width={4}>{t("page.map.slots.slot.race")}</Table.HeaderCell>
-                  <Table.HeaderCell width={1}>{t("page.map.slots.slot.teamcolor")}</Table.HeaderCell>
-                  <Table.HeaderCell width={2}>{t("page.map.slots.slot.handicap")}</Table.HeaderCell>
+                  <Table.HeaderCell width={4}>
+                    {t("page.map.slots.slot.type")}{" "}
+                  </Table.HeaderCell>
+                  <Table.HeaderCell width={3}>
+                    {t("page.map.slots.slot.team")}
+                  </Table.HeaderCell>
+                  <Table.HeaderCell width={4}>
+                    {t("page.map.slots.slot.race")}
+                  </Table.HeaderCell>
+                  <Table.HeaderCell width={1}>
+                    {t("page.map.slots.slot.teamcolor")}
+                  </Table.HeaderCell>
+                  <Table.HeaderCell width={2}>
+                    {t("page.map.slots.slot.handicap")}
+                  </Table.HeaderCell>
                 </Table.Header>
               )}
               {slots.map((slot, index) => {
@@ -170,7 +184,7 @@ function SlotsEdit({ slots, options, onSlotsChange }: SlotsEditProps) {
                     <Table.Cell width={4}>
                       <Form.Dropdown
                         options={slotStatusOptions.map((i) => {
-                          return { ...i, text: t(i.text)   }
+                          return { ...i, text: t(i.text) };
                         })}
                         value={slot.status}
                         onChange={(_, data) => {
@@ -186,8 +200,8 @@ function SlotsEdit({ slots, options, onSlotsChange }: SlotsEditProps) {
                     </Table.Cell>
                     <Table.Cell width={3}>
                       <Form.Dropdown
-                        options={slotTeamsOptions.map((i)=> {
-                          return { ...i, text: t(i.text) + " " + i.teamNumber}
+                        options={slotTeamsOptions.map((i) => {
+                          return { ...i, text: t(i.text) + " " + i.teamNumber };
                         })}
                         value={slot.team}
                         onChange={(_, data) => {
@@ -203,8 +217,8 @@ function SlotsEdit({ slots, options, onSlotsChange }: SlotsEditProps) {
                     </Table.Cell>
                     <Table.Cell width={4}>
                       <Form.Dropdown
-                        options={slotRacesOptions.map((i)=>{
-                          return { ...i, text: t(i.text)}
+                        options={slotRacesOptions.map((i) => {
+                          return { ...i, text: t(i.text) };
                         })}
                         value={slot.race & ALL_RACES_FLAGS}
                         onChange={(_, data) => {

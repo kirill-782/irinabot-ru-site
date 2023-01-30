@@ -22,7 +22,7 @@ function MapInfo({ mapId }: MapInfoProps) {
 
   const { language } = useContext(AppRuntimeSettingsContext);
   const t = language.getString;
-  
+
   useEffect(() => {
     setLoading(true);
     setError(false);
@@ -64,7 +64,9 @@ function MapInfo({ mapId }: MapInfoProps) {
         src={mapInfo?.mapInfo?.coverImageUrl || mapInfo?.mapInfo?.mapImageUrl}
       />
       <div>
-        <span className="map-players-title">{t("page.map.info.qplayers")}:</span>
+        <span className="map-players-title">
+          {t("page.map.info.qplayers")}:
+        </span>
         <WarcraftIIIText>
           {mapInfo?.mapInfo?.playerRecommendation || ""}
         </WarcraftIIIText>

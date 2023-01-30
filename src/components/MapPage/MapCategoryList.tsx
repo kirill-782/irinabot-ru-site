@@ -2,8 +2,8 @@ import React from "react";
 import { useContext, useEffect } from "react";
 import { Label } from "semantic-ui-react";
 import { CacheContext } from "../../context";
-import { Link } from 'react-router-dom';
-import "./MapCategoryList.scss"
+import { Link } from "react-router-dom";
+import "./MapCategoryList.scss";
 
 interface MapCategoryListProps {
   categories?: number[];
@@ -24,7 +24,15 @@ function MapCategoryList({ categories }: MapCategoryListProps) {
           return categories?.indexOf(category.id || 0) !== -1;
         })
         .map((category) => {
-          return <Label as={Link} to={`/maps?category=${category.id}`} key={category.id}>{category.name}</Label>;
+          return (
+            <Label
+              as={Link}
+              to={`/maps?category=${category.id}`}
+              key={category.id}
+            >
+              {category.name}
+            </Label>
+          );
         })}
     </div>
   );

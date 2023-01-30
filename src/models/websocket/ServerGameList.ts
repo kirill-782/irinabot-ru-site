@@ -134,8 +134,7 @@ class GameListGameConverter {
 
     // Todo
 
-    if(gamePosition > 2)
-      gamePosition = 0;
+    if (gamePosition > 2) gamePosition = 0;
 
     const gameCounter = dataBuffer.getUint32();
     const gameTicks = dataBuffer.getUint32();

@@ -10,7 +10,10 @@ import {
 import LoginDropdown from "../../Header/LoginDropdown";
 import UploadMap from "../../Header/UploadMap";
 import UserDrowdown from "../../Header/UserDropdown";
-import { AppRuntimeSettingsContext, AuthContext } from "./../../../context/index";
+import {
+  AppRuntimeSettingsContext,
+  AuthContext,
+} from "./../../../context/index";
 import { switchTheme, E_THEME, currentTheme } from "../../../utils/Theme";
 import "./DesktopMenu.scss";
 import UtilsDropdown from "../../Header/UtilsDropdown";
@@ -33,7 +36,7 @@ const DesktopMenu = () => {
 
   const { language } = useContext(AppRuntimeSettingsContext);
   const t = language.getString;
-  
+
   const handleMenuItemClick = () => {};
 
   return (

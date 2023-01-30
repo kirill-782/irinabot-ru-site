@@ -11,8 +11,8 @@ function MapCatalog() {
   const [searchedMaps, setSearchedMaps] = useState<Map[] | null>(null);
 
   const pageNum = parseInt(page || "1");
-  
-  const {language} = useContext(AppRuntimeSettingsContext);
+
+  const { language } = useContext(AppRuntimeSettingsContext);
   const t = language.getString;
 
   useEffect(() => {
@@ -53,12 +53,17 @@ function MapCatalog() {
         );
       })}
       <div>
-        {searchedMaps?.length > 0 && pageNavigator.map((i) => {
-          if (i === pageNum) {
-            return <b style={{ marginRight: 5 }}>{i}</b>;
-          }
-          return <Link style={{ marginRight: 5 }} to={`/maps/catalog/${i}`}>{i}</Link>;
-        })}
+        {searchedMaps?.length > 0 &&
+          pageNavigator.map((i) => {
+            if (i === pageNum) {
+              return <b style={{ marginRight: 5 }}>{i}</b>;
+            }
+            return (
+              <Link style={{ marginRight: 5 }} to={`/maps/catalog/${i}`}>
+                {i}
+              </Link>
+            );
+          })}
       </div>
     </Container>
   );

@@ -73,7 +73,7 @@ function MapListPage() {
   const [searchValue, setSearchValue] = useState("");
   const [mapIds, setMapsId] = useState("");
 
-  const {language} = useContext(AppRuntimeSettingsContext);
+  const { language } = useContext(AppRuntimeSettingsContext);
   const t = language.getString;
 
   const sockets = useContext(WebsocketContext);
@@ -128,7 +128,7 @@ function MapListPage() {
 
   return (
     <Container className="map-list-page">
-      <MetaDescription description={t("page.map.list.maps")+"."} />
+      <MetaDescription description={t("page.map.list.maps") + "."} />
       <Form>
         <Grid columns="equal" stackable centered>
           {disableFilters !== "true" && (
@@ -149,7 +149,9 @@ function MapListPage() {
             </Grid.Column>
           )}
           <Grid.Column width={13}>
-            {disableFilters === "true" && <FilterDescription filters={searchOptions} />}
+            {disableFilters === "true" && (
+              <FilterDescription filters={searchOptions} />
+            )}
             <Header>{t("page.map.list.list")}</Header>
             <Grid.Row className="map-list-page-search-field">
               <Form.Input
@@ -195,7 +197,9 @@ function MapListPage() {
                     setLoadButton(el);
                   }}
                 >
-                  {isLoading ? t("page.map.list.loading") :t("page.map.list.loadYet")}
+                  {isLoading
+                    ? t("page.map.list.loading")
+                    : t("page.map.list.loadYet")}
                 </button>
               </Grid>
             )}

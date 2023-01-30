@@ -7,15 +7,39 @@ import { SearchFilters } from "../../models/rest/SearchFilters";
 import { SearchOrder } from "./../../models/rest/SearchFilters";
 
 const sortOptions = [
-  { key: "0", text: "page.map.list.filter.options.sort.default", value: "default" },
-  { key: "1", text: "page.map.list.filter.options.sort.name", value: "mapNameEscaped" },
-  { key: "2", text: "page.map.list.filter.options.sort.creationDate", value: "creationDate" },
-  { key: "3", text: "page.map.list.filter.options.sort.updateDate", value: "lastUpdateDate" },
-  { key: "4", text: "page.map.list.filter.options.sort.numPlayers", value: "numPlayers" },
+  {
+    key: "0",
+    text: "page.map.list.filter.options.sort.default",
+    value: "default",
+  },
+  {
+    key: "1",
+    text: "page.map.list.filter.options.sort.name",
+    value: "mapNameEscaped",
+  },
+  {
+    key: "2",
+    text: "page.map.list.filter.options.sort.creationDate",
+    value: "creationDate",
+  },
+  {
+    key: "3",
+    text: "page.map.list.filter.options.sort.updateDate",
+    value: "lastUpdateDate",
+  },
+  {
+    key: "4",
+    text: "page.map.list.filter.options.sort.numPlayers",
+    value: "numPlayers",
+  },
 ];
 
 const orderOptions = [
-  { key: "0", text: "page.map.list.filter.options.order.default", value: "default" },
+  {
+    key: "0",
+    text: "page.map.list.filter.options.order.default",
+    value: "default",
+  },
   { key: "1", text: "page.map.list.filter.options.order.asc", value: "asc" },
   { key: "2", text: "page.map.list.filter.options.order.desc", value: "desc" },
 ];
@@ -103,7 +127,7 @@ export const MapFilters: React.FC<FiltersProps> = memo(
 
     const { language } = useContext(AppRuntimeSettingsContext);
     const t = language.getString;
-    
+
     useEffect(() => {
       if (value) {
         if (value[0]) {
@@ -218,8 +242,8 @@ export const MapFilters: React.FC<FiltersProps> = memo(
         <Form.Select
           fluid
           label={t("page.map.list.filter.form.label.sortBy")}
-          options={sortOptions.map((i)=>{
-            return { ...i, text: t(i.text)}
+          options={sortOptions.map((i) => {
+            return { ...i, text: t(i.text) };
           })}
           value={sortBy}
           onChange={(_, data) => setSortBy(String(data.value))}
@@ -227,8 +251,8 @@ export const MapFilters: React.FC<FiltersProps> = memo(
         <Form.Select
           fluid
           label={t("page.map.list.filter.form.label.orderBy")}
-          options={orderOptions.map((i)=>{
-            return { ...i, text: t(i.text)}
+          options={orderOptions.map((i) => {
+            return { ...i, text: t(i.text) };
           })}
           value={orderBy}
           onChange={(_, data) => setOrderBy(String(data.value))}

@@ -13,7 +13,7 @@ function ExternalBlockCard({ actionsBlock }: ExternalBlockCardProps) {
   const { getShortBlockDescription, replayData } = useContext(ReplayContext)!!;
   const [isModalOpen, setModalOpen] = useState(false);
 
-  const {language} = useContext(AppRuntimeSettingsContext);
+  const { language } = useContext(AppRuntimeSettingsContext);
   const t = language.getString;
 
   const getPlayerName = (pid: number) => {
@@ -36,7 +36,8 @@ function ExternalBlockCard({ actionsBlock }: ExternalBlockCardProps) {
         <Card.Content>
           <Card.Header>{getShortBlockDescription(actionsBlock)}</Card.Header>
           <Card.Meta>
-            {prettyMilliseconds(actionsBlock.time)} {t("page.replay.parser.external.after")}
+            {prettyMilliseconds(actionsBlock.time)}{" "}
+            {t("page.replay.parser.external.after")}
           </Card.Meta>
           <Card.Description>
             {actionsBlock.errorMessage && (
@@ -51,11 +52,14 @@ function ExternalBlockCard({ actionsBlock }: ExternalBlockCardProps) {
                   return (
                     <React.Fragment key={k}>
                       <Label>
-                        {i.actions.length} {t("page.replay.parser.external.cmdFrom")}{" "}
+                        {i.actions.length}{" "}
+                        {t("page.replay.parser.external.cmdFrom")}{" "}
                         {getPlayerName(i.playerId)}
                       </Label>
                       {i.remaingBuffer.length > 0 && (
-                        <Label color="orange">{t("page.replay.parser.external.unknownActs")}</Label>
+                        <Label color="orange">
+                          {t("page.replay.parser.external.unknownActs")}
+                        </Label>
                       )}
                     </React.Fragment>
                   );

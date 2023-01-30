@@ -15,7 +15,6 @@ interface OnlineStatsProps {
 }
 
 function OnlineStats({ gameList }: OnlineStatsProps) {
-
   const { language } = useContext(AppRuntimeSettingsContext);
   const t = language.getString;
 

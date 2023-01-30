@@ -9,9 +9,9 @@ import { AppRuntimeSettingsContext } from "../../context";
 
 function ReplayInfo() {
   const { replayData, replayActions, name } = useContext(ReplayContext) || {};
-  const {language} = useContext(AppRuntimeSettingsContext);
+  const { language } = useContext(AppRuntimeSettingsContext);
   const t = language.getString;
-  
+
   return (
     <Container>
       <Header>{name}</Header>

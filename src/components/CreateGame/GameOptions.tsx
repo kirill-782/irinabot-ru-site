@@ -33,7 +33,6 @@ export const MAP_FLAG_RANDOM_RACES = 16;
 
 export const GameOptions: React.FC<GameOptionsProps> = memo(
   ({ options, onOptionsChange }) => {
-    
     const { language } = useContext(AppRuntimeSettingsContext);
     const t = language.getString;
 
@@ -123,8 +122,8 @@ export const GameOptions: React.FC<GameOptionsProps> = memo(
               mapObservers: data.value as number,
             })
           }
-          options={observersOptions.map((i)=>{
-            return { ...i, text: t(i.text)}
+          options={observersOptions.map((i) => {
+            return { ...i, text: t(i.text) };
           })}
           value={options.mapObservers}
         />
@@ -132,8 +131,8 @@ export const GameOptions: React.FC<GameOptionsProps> = memo(
           fluid
           name="visibility"
           label={t("page.game.options.map")}
-          options={visibilityOptions.map((i)=>{
-            return { ...i, text: t(i.text)}
+          options={visibilityOptions.map((i) => {
+            return { ...i, text: t(i.text) };
           })}
           onChange={(_, data) =>
             onOptionsChange({
@@ -147,8 +146,8 @@ export const GameOptions: React.FC<GameOptionsProps> = memo(
           fluid
           name="speed"
           label={t("page.game.options.speed")}
-          options={speedOptions.map((i)=>{
-            return { ...i, text: t(i.text)}
+          options={speedOptions.map((i) => {
+            return { ...i, text: t(i.text) };
           })}
           onChange={(_, data) =>
             onOptionsChange({

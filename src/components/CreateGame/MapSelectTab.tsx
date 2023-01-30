@@ -6,7 +6,7 @@ import { useDefaultMaps } from "../../hooks/useDefaultMaps";
 import { useSearchMaps } from "../../hooks/useSearchMaps";
 import { useVisibility } from "../../hooks/useVisibility";
 import { MapCard } from "../MapListPage/MapCard";
-import { SessionStorage } from "../../services/SessionStorage"; 
+import { SessionStorage } from "../../services/SessionStorage";
 
 import "./MapSelectTab.scss";
 import { Link, useLocation } from "react-router-dom";
@@ -18,7 +18,6 @@ interface SesstionSaveOptions {
   searchOptions: [SearchFilters | null, SearchOrder | null];
   searchValue: string;
 }
-
 
 function MapSelectTab() {
   const [searchOptions, setSearchOptions] = useState<
@@ -49,7 +48,7 @@ function MapSelectTab() {
 
   const { language } = useContext(AppRuntimeSettingsContext);
   const t = language.getString;
-  
+
   useEffect(() => {
     const savedState = SessionStorage.get<SesstionSaveOptions>(
       location.key,
@@ -123,7 +122,9 @@ function MapSelectTab() {
                 setLoadButton(el);
               }}
             >
-              {isLoading ? t("page.map.selectTab.loadingZZZ") : t("page.map.selectTab.loadMore") }
+              {isLoading
+                ? t("page.map.selectTab.loadingZZZ")
+                : t("page.map.selectTab.loadMore")}
             </button>
           </Grid>
         )}

@@ -22,9 +22,9 @@ function ActionLog({}) {
 
   const [filterResult, setFilterResult] = useState<ActionData[]>();
 
-  const {language} = useContext(AppRuntimeSettingsContext);
+  const { language } = useContext(AppRuntimeSettingsContext);
   const t = language.getString;
-  
+
   useEffect(() => {
     let actions = replayActions;
 

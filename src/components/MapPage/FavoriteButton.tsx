@@ -10,10 +10,9 @@ function MapFavoriteButton() {
   const { mapsApi } = useContext(RestContext);
 
   const favorite = map.favorite;
-  
+
   const { language } = useContext(AppRuntimeSettingsContext);
   const t = language.getString;
-
 
   const onButtonClick = () => {
     if (favorite) {

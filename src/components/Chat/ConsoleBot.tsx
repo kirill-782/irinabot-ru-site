@@ -16,7 +16,7 @@ export const ConsoleBot: React.FC<ConsoleProps> = ({
 
   const { language } = useContext(AppRuntimeSettingsContext);
   const t = language.getString;
-  
+
   const handleClickSend = (e: SyntheticEvent) => {
     e.preventDefault();
     if (!message) {
@@ -28,7 +28,7 @@ export const ConsoleBot: React.FC<ConsoleProps> = ({
 
   const handleKeyTextarea = (e: KeyboardEvent) => {
     if (e.code === "Enter" && !e.shiftKey) {
-      e.preventDefault( );
+      e.preventDefault();
       if (!message) {
         return;
       }

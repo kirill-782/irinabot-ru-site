@@ -23,7 +23,8 @@ function ProgressUploadMapModal({
       <Modal.Header>{t("uploading.cation")}</Modal.Header>
       <Modal.Content>
         <p>
-          {t("uploading.description.partOne")} <b>{filename}</b> {t("uploading.description.partTwo")}
+          {t("uploading.description.partOne")} <b>{filename}</b>{" "}
+          {t("uploading.description.partTwo")}
         </p>
         <Grid.Row></Grid.Row>
         <Progress

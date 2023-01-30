@@ -10,7 +10,11 @@ import {
   Form,
 } from "semantic-ui-react";
 import { useContext, useEffect, useState } from "react";
-import { AppRuntimeSettingsContext, AuthContext, WebsocketContext } from "./../../context/index";
+import {
+  AppRuntimeSettingsContext,
+  AuthContext,
+  WebsocketContext,
+} from "./../../context/index";
 import { AuthMethod, AviableAuthMethods } from "../../config/AuthMethods";
 import { toast } from "@kokomi/react-semantic-toasts";
 import { ClientDeleteIntegrationConverter } from "./../../models/websocket/ClientDeleteIntegration";
@@ -46,9 +50,7 @@ function UserSettingsModal(props) {
 
         toast({
           title: t("modal.settings.linkingPVPGn"),
-          description:
-          t("modal.settings.linkingPVPGnHint") +
-            bnetKey.key,
+          description: t("modal.settings.linkingPVPGnHint") + bnetKey.key,
           time: 20000,
         });
       }

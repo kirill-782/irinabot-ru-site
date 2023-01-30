@@ -20,23 +20,24 @@ const panes = [
 ];
 
 function CreateGamePage() {
-
-  const {language} = useContext(AppRuntimeSettingsContext);
+  const { language } = useContext(AppRuntimeSettingsContext);
   const t = language.getString;
-  
+
   useEffect(() => {
     window.document.title = `${t("page.game.create.new")} | ${SITE_TITLE}`;
   }, []);
-
 
   return (
     <Container className="create-game">
       <MetaDescription description={t("page.game.create.tab.creationEx")} />
       <MetaRobots noIndex />
       <Header as="h2">{t("page.game.create.tab.creation")}</Header>
-      <Tab renderActiveOnly panes={panes.map((i) => {
-        return { ...i, menuItem: t(i.menuItem)}
-      })}></Tab>
+      <Tab
+        renderActiveOnly
+        panes={panes.map((i) => {
+          return { ...i, menuItem: t(i.menuItem) };
+        })}
+      ></Tab>
     </Container>
   );
 }

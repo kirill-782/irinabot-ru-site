@@ -21,10 +21,9 @@ const getPlayerSlots = (game: GameListGame): number => {
 };
 
 function MapStats({ gameList, mapId, className }: MapStatsProps) {
-
   const { language } = useContext(AppRuntimeSettingsContext);
   const t = language.getString;
-  
+
   const [allPlayers, lobbyPlayers] = useMemo(() => {
     let allPlayers = 0;
     let lobbyPlayers = 0;

@@ -1,9 +1,7 @@
 import { AccessListRecord } from "../models/websocket/ServerAccessList";
 
 export class AccessMaskHolder {
-
-  constructor() {
-  }
+  constructor() {}
 
   public getRecords(): AccessListRecord[] {
     return [];
@@ -38,7 +36,6 @@ export class AccessMaskHolderImpl extends AccessMaskHolder {
     return (resultAccessMask & accessMask) === accessMask;
   }
 }
-
 
 export class AnonymousAccessMaskHolder extends AccessMaskHolder {
   constructor() {

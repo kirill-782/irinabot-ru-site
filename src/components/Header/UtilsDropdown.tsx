@@ -11,7 +11,7 @@ function UtilsDropdown() {
 
   const { language } = useContext(AppRuntimeSettingsContext);
   const t = language.getString;
-  
+
   const [autohostModalOpened, setAutohostModalOpened] = useState(false);
   const [accessMaskModalOpened, setAccessMaskModalOpened] = useState(false);
 

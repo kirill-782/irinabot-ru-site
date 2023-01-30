@@ -13,7 +13,6 @@ function RegisterAccountModal({
   onApprove,
   onReject,
 }: RegisterAccountModalProps) {
-  
   const { language } = useContext(AppRuntimeSettingsContext);
   const t = language.getString;
 
@@ -22,9 +21,7 @@ function RegisterAccountModal({
       <Modal.Header>{t("modal.register.caption")}</Modal.Header>
 
       <Modal.Content>
-        <Modal.Description>
-        {t("modal.register.description")}
-        </Modal.Description>
+        <Modal.Description>{t("modal.register.description")}</Modal.Description>
       </Modal.Content>
       <Modal.Actions>
         <Button

@@ -15,7 +15,9 @@ function ConnectorId({ id }: ConnectorIdProps) {
   if (connectorCache[id])
     return (
       <span className="connectorId" title={`#${id}`}>
-        <WarcraftIIIText ignoreTags={["|n"]}>{connectorCache[id]}</WarcraftIIIText>
+        <WarcraftIIIText ignoreTags={["|n"]}>
+          {connectorCache[id]}
+        </WarcraftIIIText>
       </span>
     );
   else return <span className="connectorId">#{id}</span>;

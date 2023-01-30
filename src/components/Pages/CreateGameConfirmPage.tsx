@@ -82,7 +82,7 @@ function CreateGameConfirmPage({}) {
 
   const { language } = useContext(AppRuntimeSettingsContext);
   const t = language.getString;
-  
+
   const [gameName, setGameName] = useState(
     localStorage.getItem(GAME_NAME_LOCALSTORAGE_PATH) || ""
   );
@@ -225,7 +225,7 @@ function CreateGameConfirmPage({}) {
               setLastPassword("");
             }}
           >
-           {t("page.game.create.close")} 
+            {t("page.game.create.close")}
           </Button>
         </Modal.Actions>
       </Modal>
@@ -428,7 +428,7 @@ function useLocalAutohostCreateCallback(
   const { ghostSocket } = useContext(WebsocketContext);
   const { auth } = useContext(AuthContext);
 
-  const {language} = useContext( AppRuntimeSettingsContext );
+  const { language } = useContext(AppRuntimeSettingsContext);
   const t = language.getString;
 
   useEffect(() => {
@@ -442,7 +442,9 @@ function useLocalAutohostCreateCallback(
 
         if (createGameResponse.status === 0) {
           toast({
-            title: t("page.game.create.useLocal.autohostCreateCallback.isCreated"),
+            title: t(
+              "page.game.create.useLocal.autohostCreateCallback.isCreated"
+            ),
             icon: "check",
             color: "green",
           });
@@ -450,7 +452,10 @@ function useLocalAutohostCreateCallback(
           setAutohostModalOpen(false);
         } else {
           toast({
-            title: t("page.game.create.useLocal.autohostCreateCallback.isNotCreated") + createGameResponse.status,
+            title:
+              t(
+                "page.game.create.useLocal.autohostCreateCallback.isNotCreated"
+              ) + createGameResponse.status,
             description: createGameResponse.description,
             icon: "check",
             color: "red",
@@ -499,7 +504,9 @@ function useLocalAutohostCreateCallback(
         })
         .catch((e) => {
           toast({
-            title: t("page.game.create.useLocal.autohostCreateCallback.mapErrorParam"),
+            title: t(
+              "page.game.create.useLocal.autohostCreateCallback.mapErrorParam"
+            ),
             description: convertErrorResponseToString(e),
             color: "red",
           });
@@ -522,7 +529,7 @@ function useLocalCreateGameCallback(
   const { auth } = useContext(AuthContext);
   const go = useNavigate();
 
-  const {language} = useContext(AppRuntimeSettingsContext);
+  const { language } = useContext(AppRuntimeSettingsContext);
   const t = language.getString;
 
   useEffect(() => {
@@ -540,8 +547,12 @@ function useLocalCreateGameCallback(
 
           if (!createGameResponse.password) {
             toast({
-              title: t("page.game.create.useLocal.CreateGameCallback.isCreated"),
-              description: t("page.game.create.useLocal.CreateGameCallback.useConnector"),
+              title: t(
+                "page.game.create.useLocal.CreateGameCallback.isCreated"
+              ),
+              description: t(
+                "page.game.create.useLocal.CreateGameCallback.useConnector"
+              ),
               icon: "check",
               color: "green",
             });

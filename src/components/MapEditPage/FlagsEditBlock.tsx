@@ -1,6 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Button, Form, Grid, Icon } from "semantic-ui-react";
-import { AppRuntimeSettingsContext, AuthContext, CacheContext } from "../../context";
+import {
+  AppRuntimeSettingsContext,
+  AuthContext,
+  CacheContext,
+} from "../../context";
 import { useCategoryFilter } from "../../hooks/useCategoryFilter";
 import { Flags } from "../../models/rest/Flags";
 
@@ -23,7 +27,7 @@ function FlagsEditBlock({
 
   const { language } = useContext(AppRuntimeSettingsContext);
   const t = language.getString;
-  
+
   const [selectedCategories, setSelectedCategories] = useState<number[]>([]);
   const [canDownload, setCanDownload] = useState<boolean | undefined>(true);
   const [imagesAvailable, setImagesAvailable] = useState<boolean | undefined>(

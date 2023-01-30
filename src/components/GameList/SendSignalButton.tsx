@@ -1,6 +1,10 @@
 import React, { SyntheticEvent, useContext, useEffect, useState } from "react";
 import { Button, Icon, Input, Modal } from "semantic-ui-react";
-import { AppRuntimeSettingsContext, AuthContext, WebsocketContext } from "../../context";
+import {
+  AppRuntimeSettingsContext,
+  AuthContext,
+  WebsocketContext,
+} from "../../context";
 import { GameListGame } from "../../models/websocket/ServerGameList";
 import { AccessMaskBit } from "../Modal/AccessMaskModal";
 import { ClientExternalSignalConverter } from "../../models/websocket/ClientExternalSignal";
@@ -27,7 +31,7 @@ function SendSignalButton({ game }: SendSignalButtonProps) {
 
   const { language } = useContext(AppRuntimeSettingsContext);
   const t = language.getString;
-  
+
   useEffect(() => {
     setSignal("");
   }, []);

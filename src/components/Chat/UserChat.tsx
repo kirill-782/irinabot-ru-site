@@ -1,7 +1,7 @@
 import { Comment, Form, Button } from "semantic-ui-react";
 import { User } from "./interfaces";
 import { SyntheticEvent, useContext, useState } from "react";
-import {AppRuntimeSettingsContext} from "./../../context";
+import { AppRuntimeSettingsContext } from "./../../context";
 import React from "react";
 
 interface UserChatProps {
@@ -23,7 +23,7 @@ export const UserChat: React.FC<UserChatProps> = ({ user, sendMessage }) => {
 
   const { language } = useContext(AppRuntimeSettingsContext);
   const t = language.getString;
-  
+
   return (
     <Comment.Group>
       {user.messages.map((message, index) => (

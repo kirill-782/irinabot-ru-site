@@ -86,7 +86,6 @@ function ChatTab() {
         const player = getPlayerByPid(i.playerId);
         const slot = getSlotFromPid(i.playerId);
 
-
         return (
           <div key={k} className="chat-row">
             <span className="time">({prettyMilliseconds(i.time)})</span>
@@ -96,9 +95,7 @@ function ChatTab() {
             >
               {player?.playerName}
             </Item>
-            <span>
-              {i.message}
-            </span>
+            <span>{i.message}</span>
           </div>
         );
       })}

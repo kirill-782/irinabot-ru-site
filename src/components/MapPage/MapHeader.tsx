@@ -9,11 +9,10 @@ import MapStatusIcons from "../MapStatusIcons";
 import WarcraftIIIText from "../WarcraftIIIText";
 
 function MapHeader() {
-
   const map = useContext(MapContext).map;
   const { language } = useContext(AppRuntimeSettingsContext);
   const t = language.getString;
-  
+
   return (
     <>
       <Grid.Column className="cover-image" width={3}>

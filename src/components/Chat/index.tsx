@@ -76,7 +76,7 @@ export const Chat: React.FC<ChatProps> = ({
   );
 
   const { chat } = useContext(AppRuntimeSettingsContext);
-  
+
   const { language } = useContext(AppRuntimeSettingsContext);
   const t = language.getString;
 

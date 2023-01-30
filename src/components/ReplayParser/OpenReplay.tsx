@@ -26,9 +26,9 @@ function OpenReplay({ setReplayData }: OpenReplayProps) {
   const [error, setError] = useState<string>("");
   const [progress, setProgress] = useState<number>(0);
 
-  const {language} = useContext(AppRuntimeSettingsContext);
+  const { language } = useContext(AppRuntimeSettingsContext);
   const t = language.getString;
-  
+
   const openFromFile = (file: File) => {
     setError("");
 
@@ -45,7 +45,7 @@ function OpenReplay({ setReplayData }: OpenReplayProps) {
   const openFromUrl = (file: string) => {
     xhr.current = new XMLHttpRequest();
     xhr.current.responseType = "arraybuffer";
-    
+
     xhr.current.onreadystatechange = () => {
       if (xhr.current?.readyState === 4) {
         try {

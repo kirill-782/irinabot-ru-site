@@ -3,9 +3,9 @@ import { AppRuntimeSettingsContext } from "../../context";
 
 function OauthStubPage() {
   const urlParser = new URLSearchParams(window.location.hash.substring(1));
-  const {language} = useContext(AppRuntimeSettingsContext);
+  const { language } = useContext(AppRuntimeSettingsContext);
   const t = language.getString;
-  
+
   if (urlParser.has("access_token"))
     localStorage.setItem(
       urlParser.get("state") + "_token",
@@ -20,11 +20,7 @@ function OauthStubPage() {
 
   window.close();
 
-  return (
-    <span>
-      {t("introvert")}
-    </span>
-  );
+  return <span>{t("introvert")}</span>;
 }
 
 export default OauthStubPage;

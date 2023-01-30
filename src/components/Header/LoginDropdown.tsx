@@ -20,7 +20,7 @@ function LoginDropdown() {
 
   const { language } = useContext(AppRuntimeSettingsContext);
   const t = language.getString;
-  
+
   return (
     <Dropdown text={t("menu.user.login")} item>
       <Dropdown.Menu>
