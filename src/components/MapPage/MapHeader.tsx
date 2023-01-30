@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { memo } from "react";
 import { Grid, Header, Image } from "semantic-ui-react";
-import { MapContext } from "../../context";
+import { AppRuntimeSettingsContext, MapContext } from "../../context";
 import { Map } from "../../models/rest/Map";
 import { getBotFileName } from "../../utils/MapFileUtils";
 import LazyLoadedImage from "../LazyLoadedImage";
@@ -11,7 +11,9 @@ import WarcraftIIIText from "../WarcraftIIIText";
 function MapHeader() {
 
   const map = useContext(MapContext).map;
-
+  const { language } = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
+  
   return (
     <>
       <Grid.Column className="cover-image" width={3}>
@@ -34,18 +36,18 @@ function MapHeader() {
           <WarcraftIIIText>{map.mapInfo?.description}</WarcraftIIIText>
         </p>
         <p>
-          <b>Автор: </b>
+          <b>{t("page.map.header.author")}: </b>
           <WarcraftIIIText>{map.mapInfo?.author}</WarcraftIIIText>
         </p>
         <p>
-          <b>Рекомендации к игрокам: </b>
+          <b>{t("page.map.header.playerRecommendation")}: </b>
           <WarcraftIIIText>{map.mapInfo?.playerRecommendation}</WarcraftIIIText>
         </p>
         <p>
-          <b>Имя загруженного файла: </b> {map.fileName}
+          <b>{t("page.map.header.uploadedFileName")}: </b> {map.fileName}
         </p>
         <p>
-          <b>Имя файла на боте: </b>
+          <b>{t("page.map.header.fileNameOnBot")}: </b>
           {getBotFileName(map.fileName || "", map.id || 0)}
         </p>
       </Grid.Column>

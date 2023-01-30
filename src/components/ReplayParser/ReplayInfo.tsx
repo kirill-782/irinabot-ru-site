@@ -5,25 +5,28 @@ import ReplayMainInfo from "./ReplayMainInfo";
 import ChatTab from "./ChatTab";
 import ActionLog from "./ActionLog";
 import W3MMDStats from "./W3MMDStats";
+import { AppRuntimeSettingsContext } from "../../context";
 
 function ReplayInfo() {
   const { replayData, replayActions, name } = useContext(ReplayContext) || {};
-
+  const {language} = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
+  
   return (
     <Container>
       <Header>{name}</Header>
       <Tab
         panes={[
           {
-            menuItem: "Основная информация",
+            menuItem: t("page.replay.info.base"),
             render: () => <ReplayMainInfo />,
           },
           {
-            menuItem: "Чат",
+            menuItem: t("page.replay.info.chat"),
             render: () => <ChatTab />,
           },
           {
-            menuItem: "Блоки",
+            menuItem: t("page.replay.info.blocks"),
             render: () => <ActionLog />,
           },
           {

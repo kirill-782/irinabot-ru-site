@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Button, Icon, Modal } from "semantic-ui-react";
+import { AppRuntimeSettingsContext } from "../../context";
 
 interface RegisterAccountModalProps {
   open: boolean;
@@ -12,15 +13,17 @@ function RegisterAccountModal({
   onApprove,
   onReject,
 }: RegisterAccountModalProps) {
+  
+  const { language } = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
+
   return (
     <Modal open={open} className="register-modal">
-      <Modal.Header>Регистрация аккаунта</Modal.Header>
+      <Modal.Header>{t("modal.register.caption")}</Modal.Header>
 
       <Modal.Content>
         <Modal.Description>
-          Вы с данного акканта входите впервые. Выполнить регистрацию аккаунта с
-          помощью данного способа входа? В будущем вы не сможете отвязать
-          аккаунт социальной сети от аккаунта бота.
+        {t("modal.register.description")}
         </Modal.Description>
       </Modal.Content>
       <Modal.Actions>
@@ -30,7 +33,7 @@ function RegisterAccountModal({
             onReject();
           }}
         >
-          <Icon name="remove" /> Нет
+          <Icon name="remove" /> {t("modal.register.no")}
         </Button>
         <Button
           color="green"
@@ -38,7 +41,7 @@ function RegisterAccountModal({
             onApprove();
           }}
         >
-          <Icon name="checkmark" /> Да
+          <Icon name="checkmark" /> {t("modal.register.yes")}
         </Button>
       </Modal.Actions>
     </Modal>

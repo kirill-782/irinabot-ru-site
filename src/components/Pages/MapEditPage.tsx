@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Container, Grid, Loader, Message } from "semantic-ui-react";
-import { MapContext, RestContext } from "../../context";
+import { AppRuntimeSettingsContext, MapContext, RestContext } from "../../context";
 import { convertErrorResponseToString } from "../../utils/ApiUtils";
 import { Map } from "../../models/rest/Map";
 import MapEditPageContent from "../MapEditPage";
@@ -16,6 +16,9 @@ function MapEditPage() {
 
   const mapLoadRef = useRef<AbortController | null>();
 
+  const {language} = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
+  
   const reloadMap = useMemo(() => {
     return () => {
       if (mapLoadRef.current) mapLoadRef.current.abort();
@@ -62,7 +65,7 @@ function MapEditPage() {
         </MapContext.Provider>
       ) : (
         <Loader active size="big">
-          Карта загружается
+          {t("page.map.edit.loading")}
         </Loader>
       )}
     </Container>

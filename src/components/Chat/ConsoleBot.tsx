@@ -1,6 +1,7 @@
 import { Comment, Form, Button } from "semantic-ui-react";
-import { SyntheticEvent, useState } from "react";
+import { SyntheticEvent, useContext, useState } from "react";
 import React from "react";
+import { AppRuntimeSettingsContext } from "../../context";
 
 interface ConsoleProps {
   sendConsoleMessage(message: string): void;
@@ -13,6 +14,9 @@ export const ConsoleBot: React.FC<ConsoleProps> = ({
 }) => {
   const [message, setMessage] = useState("");
 
+  const { language } = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
+  
   const handleClickSend = (e: SyntheticEvent) => {
     e.preventDefault();
     if (!message) {
@@ -53,7 +57,7 @@ export const ConsoleBot: React.FC<ConsoleProps> = ({
           value={message}
         />
         <Button
-          content="Отправить"
+          content={t("chat.consoleSend")}
           labelPosition="left"
           icon="edit"
           primary

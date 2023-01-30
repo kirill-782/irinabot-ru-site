@@ -9,7 +9,7 @@ import {
 } from "semantic-ui-react";
 import LoginDropdown from "../../Header/LoginDropdown";
 import UserDrowdown from "../../Header/UserDropdown";
-import { AuthContext } from "./../../../context/index";
+import { AppRuntimeSettingsContext, AuthContext } from "./../../../context/index";
 import { switchTheme, E_THEME, currentTheme } from "../../../utils/Theme";
 import "./MobileMenu.scss";
 import UploadMap from "../../Header/UploadMap";
@@ -31,6 +31,9 @@ const MobileMenu = () => {
   const authContext = useContext(AuthContext);
   const currentAuth = authContext.auth.currentAuth;
 
+  const { language } = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
+  
   return (
     <Menu fixed="top" inverted className="main-menu mobile-menu">
       <Menu.Menu position="left">
@@ -38,15 +41,15 @@ const MobileMenu = () => {
           <Dropdown.Menu>
             <Dropdown.Item as={NavLink} to="/gamelist">
               <Icon name="gamepad" />
-              Активные Игры
+              {t("menu.gamelist")}
             </Dropdown.Item>
             <Dropdown.Item as={NavLink} to="/maps">
               <Icon name="file" />
-              Список карт
+              {t("menu.maplist")}
             </Dropdown.Item>
             <Dropdown.Item as={NavLink} to="/autopay">
               <Icon name="ruble sign" />
-              Донат
+              {t("menu.donate")}
             </Dropdown.Item>
             <Dropdown.Item
               as="a"
@@ -56,7 +59,7 @@ const MobileMenu = () => {
               }}
             >
               <Icon name="help" />
-              Справка
+              {t("menu.help")}
             </Dropdown.Item>
             <Dropdown.Item
               onClick={() => {
@@ -66,7 +69,7 @@ const MobileMenu = () => {
               }}
             >
               <Icon name={currentTheme === E_THEME.DARK ? "sun" : "moon"} />{" "}
-              Сменить тему
+              {t("menu.changeTheme")}
             </Dropdown.Item>
             <UtilsDropdown />
           </Dropdown.Menu>

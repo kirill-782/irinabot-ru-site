@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Icon } from "semantic-ui-react";
+import { AppRuntimeSettingsContext } from "../../context";
 import { Map } from "../../models/rest/Map";
 import "./MapStatusIcons.scss";
 
@@ -9,13 +10,16 @@ function MapStatusIcons({
   semanticCheckError,
   favorite,
 }: Map) {
+  const { language } = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
+  
   if (favorite) {
     return (
       <Icon
         className="status-icon"
         name="star"
         color="orange"
-        title="Карта у вас в списке избранного"
+        title={t("page.map.status.icon.favour")}
       />
     );
   }
@@ -26,7 +30,7 @@ function MapStatusIcons({
         className="status-icon"
         name="check"
         color="green"
-        title="Карта проверена"
+        title={t("page.map.status.icon.verified")}
       />
     );
   }
@@ -37,7 +41,7 @@ function MapStatusIcons({
         className="status-icon"
         name="warning"
         color="red"
-        title="В карте найден читпак"
+        title={t("page.map.status.icon.cheatPack")}
       />
     );
   }
@@ -48,7 +52,7 @@ function MapStatusIcons({
         className="status-icon"
         name="warning"
         color="red"
-        title="Скрипт карты содержит семантические ошибки. Возможно карта эксплуатирует уязвимости игры"
+        title={t("page.map.status.icon.semanticError")}
       />
     );
   }

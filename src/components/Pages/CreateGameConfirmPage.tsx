@@ -21,6 +21,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Map } from "../../models/rest/Map";
 import { ConfigInfo } from "../../models/rest/ConfigInfo";
 import {
+  AppRuntimeSettingsContext,
   AuthContext,
   CacheContext,
   RestContext,
@@ -79,6 +80,9 @@ function CreateGameConfirmPage({}) {
     configName: "",
   });
 
+  const { language } = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
+  
   const [gameName, setGameName] = useState(
     localStorage.getItem(GAME_NAME_LOCALSTORAGE_PATH) || ""
   );
@@ -93,7 +97,7 @@ function CreateGameConfirmPage({}) {
   );
 
   useEffect(() => {
-    window.document.title = `Создать игру | ${SITE_TITLE}`;
+    window.document.title = `${t("page.game.create.new")} | ${SITE_TITLE}`;
   }, []);
 
   const { accessMask } = useContext(AuthContext).auth;
@@ -126,7 +130,7 @@ function CreateGameConfirmPage({}) {
       {error && <Message error>{error}</Message>}
       {hasLoading && (
         <Loader active size="massive">
-          Загрузка . . .
+          {t("page.game.create.loadingZZZ")}
         </Loader>
       )}
       {(map || config) && (
@@ -136,8 +140,8 @@ function CreateGameConfirmPage({}) {
               <Form.Group widths="equal">
                 <Form.Input
                   fluid
-                  label="Название игры"
-                  placeholder="Название игры"
+                  label={t("page.game.create.name")}
+                  placeholder={t("page.game.create.name")}
                   value={gameName}
                   onChange={(_, data) => {
                     setGameName(data.value);
@@ -145,7 +149,7 @@ function CreateGameConfirmPage({}) {
                 />
                 <Form.Select
                   fluid
-                  label="Патч"
+                  label={t("page.game.create.patch")}
                   onChange={updatePatch}
                   options={configPatches}
                   value={selectedPatch?.value}
@@ -162,7 +166,7 @@ function CreateGameConfirmPage({}) {
             {map && <MapPreview map={map} />}
             <Grid.Row className="cretae-buttons-rows">
               <Button onClick={handleCreateGame} disabled={!canCreateGame}>
-                Создать
+                {t("page.game.create.create")}
               </Button>
               <Button
                 onClick={() => {
@@ -170,7 +174,7 @@ function CreateGameConfirmPage({}) {
                 }}
                 disabled={!canCreateAutohost}
               >
-                Создать автохост
+                {t("page.game.create.autohost")}
               </Button>
             </Grid.Row>
           </Grid.Column>
@@ -198,13 +202,13 @@ function CreateGameConfirmPage({}) {
           setLastPassword("");
         }}
       >
-        <Modal.Header>Пароль для входа в игру</Modal.Header>
+        <Modal.Header>{t("page.game.create.passgame")}</Modal.Header>
         <Modal.Content>
-          <p>Скопируйте этот пароль, чтобы попасть в игру.</p>
+          <p>{t("page.game.create.passgameInfo")}.</p>
           <Input
             action={{
               icon: "copy",
-              content: "Копировать",
+              content: t("page.game.create.copy"),
               onClick: () => {
                 copy(lastPassword);
               },
@@ -221,7 +225,7 @@ function CreateGameConfirmPage({}) {
               setLastPassword("");
             }}
           >
-            Закрыть
+           {t("page.game.create.close")} 
           </Button>
         </Modal.Actions>
       </Modal>
@@ -239,6 +243,9 @@ function useLocalMapCategories(): [
   const [config, setConfig] = useState<ConfigInfo | null>(null);
   const [hasLoading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
+
+  const { language } = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
 
   const location = useLocation();
   const { mapsApi } = useContext(RestContext);
@@ -308,7 +315,7 @@ function useLocalMapCategories(): [
         setError("NaN");
       }
     } else {
-      setError("Параметры не переданы");
+      setError(t("page.game.create.useLocal.mapCategories.errorParam"));
     }
 
     return () => {
@@ -421,6 +428,9 @@ function useLocalAutohostCreateCallback(
   const { ghostSocket } = useContext(WebsocketContext);
   const { auth } = useContext(AuthContext);
 
+  const {language} = useContext( AppRuntimeSettingsContext );
+  const t = language.getString;
+
   useEffect(() => {
     const onPacket = (packet: GHostPackageEvent) => {
       const packetData = packet.detail.package;
@@ -432,7 +442,7 @@ function useLocalAutohostCreateCallback(
 
         if (createGameResponse.status === 0) {
           toast({
-            title: "Автохост создан",
+            title: t("page.game.create.useLocal.autohostCreateCallback.isCreated"),
             icon: "check",
             color: "green",
           });
@@ -440,7 +450,7 @@ function useLocalAutohostCreateCallback(
           setAutohostModalOpen(false);
         } else {
           toast({
-            title: "Автохост не создан " + createGameResponse.status,
+            title: t("page.game.create.useLocal.autohostCreateCallback.isNotCreated") + createGameResponse.status,
             description: createGameResponse.description,
             icon: "check",
             color: "red",
@@ -489,7 +499,7 @@ function useLocalAutohostCreateCallback(
         })
         .catch((e) => {
           toast({
-            title: "Ошибка получения параметров карты",
+            title: t("page.game.create.useLocal.autohostCreateCallback.mapErrorParam"),
             description: convertErrorResponseToString(e),
             color: "red",
           });
@@ -512,6 +522,9 @@ function useLocalCreateGameCallback(
   const { auth } = useContext(AuthContext);
   const go = useNavigate();
 
+  const {language} = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
+
   useEffect(() => {
     const onPacket = (packet: GHostPackageEvent) => {
       const packetData = packet.detail.package;
@@ -527,8 +540,8 @@ function useLocalCreateGameCallback(
 
           if (!createGameResponse.password) {
             toast({
-              title: "Игра создана",
-              description: "Используйте коннектор, чтобы войти в игру",
+              title: t("page.game.create.useLocal.CreateGameCallback.isCreated"),
+              description: t("page.game.create.useLocal.CreateGameCallback.useConnector"),
               icon: "check",
               color: "green",
             });
@@ -538,7 +551,7 @@ function useLocalCreateGameCallback(
           }
         } else {
           toast({
-            title: "Ошибка при создании игры",
+            title: t("page.game.create.useLocal.CreateGameCallback.isError"),
             description: createGameResponse.description,
             icon: "x",
             color: "red",
@@ -584,7 +597,7 @@ function useLocalCreateGameCallback(
         })
         .catch((e) => {
           toast({
-            title: "Ошибка получения параметров карты",
+            title: t("page.game.create.useLocal.CreateGameCallback.isMapError"),
             description: convertErrorResponseToString(e),
             color: "red",
           });

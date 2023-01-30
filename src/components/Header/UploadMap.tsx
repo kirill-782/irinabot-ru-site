@@ -4,7 +4,7 @@ import { Flags } from "../../models/rest/Flags";
 import { AdditionalFlags } from "../../services/MapService";
 import PrepareUploadMapModal from "../Modal/PrepareUploadMapModal";
 import ProgressUploadMapModal from "../Modal/ProgressUploadMapModal";
-import { AuthContext, RestContext } from "../../context";
+import { AppRuntimeSettingsContext, AuthContext, RestContext } from "../../context";
 import { toast } from "@kokomi/react-semantic-toasts";
 import {
   UploadMapCompleteEvent,
@@ -35,6 +35,9 @@ function UploadMap() {
   const apiToken = useContext(AuthContext).auth.apiToken;
 
   const go = useNavigate();
+  
+  const { language } = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
 
   const [currentUpload, setCurrentUpload] =
     useState<CurrentMapUploadDescription>({
@@ -52,15 +55,15 @@ function UploadMap() {
 
       if (event.detail.error)
         toast({
-          title: "Ошибка загрузки карты",
+          title: t("menu.map.error"),
           description: event.detail.error.toString(),
           type: "error",
         });
       else if (event.detail.map)
         toast(
           {
-            title: `Карта загружена.`,
-            description: `Карта ${event.detail.map.mapInfo?.name} загружена. Кликните по уведомлению, чтобы перейти к карте.`,
+            title: `${t("menu.map.isUploaded")}.`,
+            description: `${t("menu.map.map")} ${event.detail.map.mapInfo?.name} ${t("menu.map.isUploaded2")}.`,
             type: "success",
             time: 10000,
           },
@@ -160,14 +163,14 @@ function UploadMap() {
         onClick={onItemClick}
         title={
           isMapUploading
-            ? `Загрузка: ${currentUpload.fillename} ${
+            ? `${t("menu.map.uploading")}: ${currentUpload.fillename} ${
                 (currentUpload.loadedSize / currentUpload.totalSize) * 100
               }%`
-            : "Карты не загружаются"
+            : t("menu.map.notUploading")
         }
       >
         <Icon color={isMapUploading ? "green" : undefined} name="upload" />
-        Загрузка карт
+        {t("menu.utils.mapUploading")}
       </Menu.Item>
     </>
   );

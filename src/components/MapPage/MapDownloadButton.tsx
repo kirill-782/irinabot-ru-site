@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Button, Icon } from "semantic-ui-react";
 
 import byteSize from "byte-size";
 import { getBotFileName } from "../../utils/MapFileUtils";
+import { AppRuntimeSettingsContext } from "../../context";
 
 interface MapDownloadButtonProps {
   downloadUrl: string;
@@ -20,7 +21,9 @@ function MapDownloadButton({
   id,
 }: MapDownloadButtonProps) {
   const mapSize = byteSize(fileSize);
-
+  const { language } = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
+  
   return (
     <Button
       className={className}
@@ -30,7 +33,7 @@ function MapDownloadButton({
       href={`${downloadUrl}?as=${getBotFileName(fileName || "", id)}`}
     >
       <Icon name="download" />
-      {`Скачать ${mapSize.value} ${mapSize.unit}`}
+      {`${t("page.map.button.download")} ${mapSize.value} ${mapSize.unit}`}
     </Button>
   );
 }

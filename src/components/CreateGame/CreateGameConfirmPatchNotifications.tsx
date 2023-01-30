@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Message } from "semantic-ui-react";
-import { AuthContext } from "../../context";
+import { AppRuntimeSettingsContext, AuthContext } from "../../context";
 import { DropdownItemPropsConfirmExtends } from "../Pages/CreateGameConfirmPage";
 
 interface CreateGameConfirmPatchNotificationsProps {
@@ -11,21 +11,23 @@ function CreateGameConfirmPatchNotifications({
   selectedPatch,
 }: CreateGameConfirmPatchNotificationsProps) {
   const { apiToken } = useContext(AuthContext).auth;
+  
+  const { language } = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
 
   return (
     <>
       {!Number.isInteger(selectedPatch?.status) &&
         !apiToken.hasAuthority("DEFAULT_CONFIG_PARSE") && (
           <Message error>
-            У вас отсуствуют права парсить конфиги. Выберите другую версию с
-            готовым конфигом.
+            {t("page.game.create.confirm.pathNotification.error")}
           </Message>
         )}
       {(selectedPatch?.status === 0 || selectedPatch?.status === 2) && (
         <Message info>
           {selectedPatch?.status === 0
-            ? "Конфиг создается. Вернитесь на страницу создания игры позже."
-            : "Карта не совместима с выбранной версией"}
+            ? t("page.game.create.confirm.pathNotification.configuring")
+            : t("page.game.create.confirm.pathNotification.incompatibleVersion")}
         </Message>
       )}
     </>

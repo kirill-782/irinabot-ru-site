@@ -1,32 +1,33 @@
-import React from "react";
+import React, { useContext } from "react";
 import { memo } from "react";
 import { Table } from "semantic-ui-react";
+import { AppRuntimeSettingsContext } from "../../context";
 import { Slot } from "../../models/rest/Slot";
 import "./MapSlots.scss";
 
 const convertSlotTypeToString = (type: number) => {
   switch (type) {
     case 0:
-      return "Открыто";
+      return "page.map.slots.type.open";
     case 1:
-      return "Закрыто";
+      return "page.map.slots.type.closed";
     case 2:
-      return "Компьютер (слабый)";
+      return "page.map.slots.type.aiEasy";
     case 3:
-      return "Компьютер (средний)";
+      return "page.map.slots.type.aiMedium";
     case 4:
-      return "Компьютер (сильный)";
+      return "page.map.slots.type.aiInsane";
   }
 
   return type;
 };
 
 const convertSlotRaceToString = (type: number) => {
-  if (type & 1) return "Альянс";
-  if (type & 2) return "Орда";
-  if (type & 4) return "Ночные эльфы";
-  if (type & 8) return "Нежить";
-  if (type & 32) return "Случайная раса";
+  if (type & 1) return "page.map.slots.race.human";
+  if (type & 2) return "page.map.slots.race.orc";
+  if (type & 4) return "page.map.slots.race.nightelf";
+  if (type & 8) return "page.map.slots.race.undead";
+  if (type & 32) return "page.map.slots.race.random";
 
   return type.toString();
 };
@@ -93,6 +94,9 @@ interface MapSlotsProps {
 
 function MapSlots({ slots, options }: MapSlotsProps) {
   const customForces = ((options || 0) & 64) === 64;
+  
+  const { language } = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
 
   let teamSlots: Slot[][] = [];
 
@@ -109,26 +113,26 @@ function MapSlots({ slots, options }: MapSlotsProps) {
       {teamSlots.map((slots, index) => {
         return (
           <React.Fragment key={index}>
-            {customForces && <label>Клан {index + 1}</label>}
+            {customForces && <label>{t("page.map.slots.force")} {index + 1}</label>}
             <Table>
               {index === 0 && (
                 <Table.Header>
-                  <Table.HeaderCell width={4}>Тип</Table.HeaderCell>
-                  <Table.HeaderCell width={3}>Клан</Table.HeaderCell>
-                  <Table.HeaderCell width={4}>Раса</Table.HeaderCell>
-                  <Table.HeaderCell width={1}>Цвет</Table.HeaderCell>
-                  <Table.HeaderCell width={1}>Фора</Table.HeaderCell>
+                  <Table.HeaderCell width={4}>{t("page.map.slots.slot.type")}</Table.HeaderCell>
+                  <Table.HeaderCell width={3}>{t("page.map.slots.slot.team")}</Table.HeaderCell>
+                  <Table.HeaderCell width={4}>{t("page.map.slots.slot.race")}</Table.HeaderCell>
+                  <Table.HeaderCell width={1}>{t("page.map.slots.slot.teamcolor")}</Table.HeaderCell>
+                  <Table.HeaderCell width={1}>{t("page.map.slots.slot.handicap")}</Table.HeaderCell>
                 </Table.Header>
               )}
               {slots.map((slot, index) => {
                 return (
                   <Table.Row key={index}>
                     <Table.Cell width={4}>
-                      {convertSlotTypeToString(slot.status)}
+                      {t(convertSlotTypeToString(slot.status) as string)}
                     </Table.Cell>
-                    <Table.Cell width={3}>Клан {slot.team + 1}</Table.Cell>
+                    <Table.Cell width={3}>{t("page.map.slots.slot.team")} {slot.team + 1}</Table.Cell>
                     <Table.Cell width={4}>
-                      {convertSlotRaceToString(slot.race)}
+                      {t(convertSlotRaceToString(slot.race))}
                     </Table.Cell>
                     <Table.Cell width={1}>
                       <span

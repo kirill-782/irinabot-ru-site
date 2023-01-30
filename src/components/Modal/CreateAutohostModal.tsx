@@ -2,7 +2,7 @@ import { Button, Form, Header, Message, Modal } from "semantic-ui-react";
 import { useContext, useState } from "react";
 import React from "react";
 import SpaceId from "../SpaceId";
-import { AuthContext } from "../../context";
+import { AppRuntimeSettingsContext, AuthContext } from "../../context";
 
 export interface AuthostModalData {
   gameName: string;
@@ -40,23 +40,25 @@ function CreateAutohostModal({
   const gameNameHasError = gameName.length > 30 || gameName.length === 0;
   const autostartHasError = isNaN(parseInt(autostart));
   const countGamesHasError = isNaN(parseInt(countGames));
+  
+  const { language } = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
 
   return (
     <Modal open={open} onClose={onClose} closeIcon size="tiny">
-      <Header content="Создание автохоста" />
+      <Header content={t("modal.createAutohost.caption")} />
       <Modal.Content>
         <Message>
           <p>
-            Бот будет автоматически создавать игры с настроенным автостартом.
-            Один автохост создает одно лобби.
+            {t("modal.createAutohost.description")}
           </p>
         </Message>
         <Form>
           <Form.Input
             fluid
             error={gameNameHasError}
-            label="Имя игры"
-            placeholder="Имя игры"
+            label={t("modal.createAutohost.label.gamename")}
+            placeholder={t("modal.createAutohost.placeholder.gamename")}
             value={gameName}
             onChange={(e, data) => {
               setGameName(data.value);
@@ -66,8 +68,8 @@ function CreateAutohostModal({
             <Form.Input
               fluid
               error={autostartHasError}
-              label="Автостарт при игроках"
-              placeholder="Автостарт"
+              label={t("modal.createAutohost.label.autostart")}
+              placeholder={t("modal.createAutohost.placeholder.autostart")}
               pattern="[0-9]*"
               type="number"
               value={autostart}
@@ -78,8 +80,8 @@ function CreateAutohostModal({
             <Form.Input
               fluid
               error={countGamesHasError}
-              label="Лимит игр"
-              placeholder="Лимит игр"
+              label={t("modal.createAutohost.label.gamelimit")}
+              placeholder={t("modal.createAutohost.placeholder.gamelimit")}
               pattern="[0-9]*"
               value={countGames}
               type="number"
@@ -91,8 +93,8 @@ function CreateAutohostModal({
           <Form.Group widths="equal">
             <Form.Input
               fluid
-              label="HCL строка"
-              placeholder="HCL строка"
+              label={t("modal.createAutohost.label.hcl")}
+              placeholder={t("modal.createAutohost.placeholder.hcl")}
               value={hcl}
               onChange={(e, data) => {
                 setHcl(data.value);
@@ -121,7 +123,7 @@ function CreateAutohostModal({
               });
             }}
           >
-            Создать
+            {t("modal.createAutohost.tocreate")}
           </Button>
         </Form>
       </Modal.Content>

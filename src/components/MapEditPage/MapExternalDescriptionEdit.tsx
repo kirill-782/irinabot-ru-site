@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import { Button, Form, Icon, Modal } from "semantic-ui-react";
+import { AppRuntimeSettingsContext } from "../../context";
 import Markdown from "../Markdown";
 
 import "./MapExternalDescriptionEdit.scss";
@@ -20,6 +21,9 @@ function MapExternalDescriptionEdit({
 
   const [previewModalOpen, setPreviewModalOpen] = useState(false);
 
+  const { language } = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
+  
   useEffect(() => {
     setFormValue(value || "");
   }, [value]);
@@ -43,7 +47,7 @@ function MapExternalDescriptionEdit({
               color="green"
             >
               <Icon name="save" />
-              Сохранить
+              {t("page.map.edit.xdescription.save")}
             </Button>
           )}
           <Button
@@ -52,7 +56,7 @@ function MapExternalDescriptionEdit({
             }}
             color="green"
           >
-            Предпросмотр
+            {t("page.map.edit.xdescription.preview")}
           </Button>
         </Form>
       </div>
@@ -64,7 +68,7 @@ function MapExternalDescriptionEdit({
           setPreviewModalOpen(false);
         }}
       >
-        <Modal.Header>Предпросмотры</Modal.Header>
+        <Modal.Header>{t("page.map.edit.xdescription.previews")}</Modal.Header>
         <Modal.Content>
           <Markdown>{formValue}</Markdown>
         </Modal.Content>

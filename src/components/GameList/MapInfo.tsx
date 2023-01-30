@@ -1,7 +1,7 @@
 import { memo, useContext, useState } from "react";
 import { Map } from "../../models/rest/Map";
 import { useEffect } from "react";
-import { RestContext } from "../../context";
+import { AppRuntimeSettingsContext, RestContext } from "../../context";
 import { Container, Icon, Loader, Image, Header } from "semantic-ui-react";
 import "./MapInfo.scss";
 import WarcraftIIIText from "../WarcraftIIIText";
@@ -20,6 +20,9 @@ function MapInfo({ mapId }: MapInfoProps) {
   const [hasError, setError] = useState<Boolean>(false);
   const { mapsApi } = useContext(RestContext);
 
+  const { language } = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
+  
   useEffect(() => {
     setLoading(true);
     setError(false);
@@ -38,7 +41,7 @@ function MapInfo({ mapId }: MapInfoProps) {
   if (isLoading)
     return (
       <Loader active size="big">
-        Загрузка
+        {t("page.map.info.loading")}
       </Loader>
     );
 
@@ -46,7 +49,7 @@ function MapInfo({ mapId }: MapInfoProps) {
     return (
       <div className="map-info-error">
         <Icon size="big" color="red" name="close"></Icon>
-        <span className="text">Ошибка</span>
+        <span className="text">{t("page.map.info.hasError")}</span>
       </div>
     );
 
@@ -61,7 +64,7 @@ function MapInfo({ mapId }: MapInfoProps) {
         src={mapInfo?.mapInfo?.coverImageUrl || mapInfo?.mapInfo?.mapImageUrl}
       />
       <div>
-        <span className="map-players-title">Кол-во игроков:</span>
+        <span className="map-players-title">{t("page.map.info.qplayers")}:</span>
         <WarcraftIIIText>
           {mapInfo?.mapInfo?.playerRecommendation || ""}
         </WarcraftIIIText>

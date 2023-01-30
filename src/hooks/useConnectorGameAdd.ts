@@ -17,6 +17,10 @@ export const useConnectorGameAdd = ({
   ghostSocket,
   connectorSocket,
 }: useConnectorGameAddOptions) => {
+
+  //const {language} = useContext(AppRuntimeSettingsContext);
+  //const t = language.getString;
+
   useEffect(() => {
     const onUDPGameAddPackage = (data) => {
       if (
@@ -25,8 +29,8 @@ export const useConnectorGameAdd = ({
       ) {
         if (connectorSocket.isConnected()) {
           toast({
-            title: "Игра в коннектор отправлена",
-            description: "Зайдите в LAN Warcraft III, чтобы войти",
+            title: "Игра в коннектор отправлена", //  title: t("hook.useConnectorGameAdd.sended"),
+            description: "Зайдите в LAN Warcraft III, чтобы войти", //  description: t("hook.useConnectorGameAdd.toLAN"),
             type: "success",
             time: 10000,
           });
