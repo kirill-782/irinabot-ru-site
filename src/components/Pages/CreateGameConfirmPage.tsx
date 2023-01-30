@@ -140,8 +140,8 @@ function CreateGameConfirmPage({}) {
               <Form.Group widths="equal">
                 <Form.Input
                   fluid
-                  label={t("page.game.create.name")}
-                  placeholder={t("page.game.create.name")}
+                  label={t("page.game.create.confirm.name")}
+                  placeholder={t("page.game.create.confirm.name")}
                   value={gameName}
                   onChange={(_, data) => {
                     setGameName(data.value);
@@ -149,7 +149,7 @@ function CreateGameConfirmPage({}) {
                 />
                 <Form.Select
                   fluid
-                  label={t("page.game.create.patch")}
+                  label={t("page.game.create.confirm.patch")}
                   onChange={updatePatch}
                   options={configPatches}
                   value={selectedPatch?.value}
@@ -166,7 +166,7 @@ function CreateGameConfirmPage({}) {
             {map && <MapPreview map={map} />}
             <Grid.Row className="cretae-buttons-rows">
               <Button onClick={handleCreateGame} disabled={!canCreateGame}>
-                {t("page.game.create.create")}
+                {t("page.game.create.confirm.create")}
               </Button>
               <Button
                 onClick={() => {
@@ -174,7 +174,7 @@ function CreateGameConfirmPage({}) {
                 }}
                 disabled={!canCreateAutohost}
               >
-                {t("page.game.create.autohost")}
+                {t("page.game.create.confirm.autohost")}
               </Button>
             </Grid.Row>
           </Grid.Column>

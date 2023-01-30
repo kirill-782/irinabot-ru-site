@@ -664,10 +664,7 @@
 
   "other": {
     "config": {
-      "preview": {
-        "part1": "Вы - конгфиг",
-        "part2": "для версии"
-      },
+      "preview" : "Вы - конгфиг **{configName}** для версии **{version}**",
       "selectTAB": {
         "removeError": "Ошибка удаления",
         "loading": "Загрузка",

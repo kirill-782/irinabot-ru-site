@@ -14,9 +14,10 @@ import { Image, Table } from "semantic-ui-react";
 
 interface MarkdownProps {
   children: string;
+  light?: boolean;
 }
 
-function Markdown({ children }: MarkdownProps) {
+function Markdown({ children, light }: MarkdownProps) {
   return (
     <ReactMarkdown
       remarkPlugins={[
@@ -52,6 +53,9 @@ function Markdown({ children }: MarkdownProps) {
         },
         table({ node, children, ...props }) {
           return <Table>{children}</Table>;
+        },
+        p({ node, children, ...props }) {
+          return light ? <>{children}</> : <p>{children}</p>;
         },
       }}
     >
