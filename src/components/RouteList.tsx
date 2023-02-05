@@ -22,6 +22,7 @@ const DebugPage = React.lazy(() => import("./Pages/DebugPage"));
 const ConnectorSettingsDebugPage = React.lazy(() => import("./Pages/ConnectorSettingsDebugPage"));
 
 const ReplayParserPage = React.lazy(() => import("./Pages/ReplayParserPage"));
+const MapCatalog = React.lazy(() => import("./Pages/MapCatalog"));
 
 
 interface CondirionalRouteIndex {
@@ -123,6 +124,10 @@ const routes: CondirionalRoute[] = [
             requireAuth: true,
             requireToken: true,
             element: <MapEditPage />,
+          },
+          {
+            path: "catalog/:page",
+            element: <MapCatalog />,
           },
         ],
       },

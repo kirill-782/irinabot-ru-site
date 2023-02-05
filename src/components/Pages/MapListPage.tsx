@@ -73,6 +73,9 @@ function MapListPage() {
   const [searchValue, setSearchValue] = useState("");
   const [mapIds, setMapsId] = useState("");
 
+  const { language } = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
+
   const sockets = useContext(WebsocketContext);
   const runtimeContext = useContext(AppRuntimeSettingsContext);
   const [gameList, setGameList] = useState<GameListGame[]>([]);
@@ -104,7 +107,7 @@ function MapListPage() {
     useSearchMaps(requestFilter, searchOptions[1], searchValue);
 
   useEffect(() => {
-    window.document.title = `Карты Warcraft III | ${SITE_TITLE}`;
+    window.document.title = `${t("page.map.list.maps")} | ${SITE_TITLE}`;
   }, []);
 
   useEffect(() => {
@@ -125,19 +128,19 @@ function MapListPage() {
 
   return (
     <Container className="map-list-page">
-      <MetaDescription description="Просмотреть список загруженных на бота карт." />
+      <MetaDescription description={t("page.map.list.maps") + "."} />
       <Form>
         <Grid columns="equal" stackable centered>
           {disableFilters !== "true" && (
             <Grid.Column width={3} style={{ position: "sticky" }}>
-              <Header size="small">Фильтры</Header>
+              <Header size="small">{t("page.map.list.filters")}</Header>
               <MapFilters
                 onFitlerChange={setSearchOptions}
                 value={searchOptions}
                 defaultFilters={defaultFilters}
               />
               <Checkbox
-                label="Ограничить поиск картами из списка с играми"
+                label={t("page.map.list.limitedSearching")}
                 checked={mapIds.length > 0}
                 onChange={(_, data) => {
                   onLobbyGamesClick(data.checked);
@@ -146,8 +149,10 @@ function MapListPage() {
             </Grid.Column>
           )}
           <Grid.Column width={13}>
-            {disableFilters === "true" && <FilterDescription filters={searchOptions} />}
-            <Header>Список карт</Header>
+            {disableFilters === "true" && (
+              <FilterDescription filters={searchOptions} />
+            )}
+            <Header>{t("page.map.list.list")}</Header>
             <Grid.Row className="map-list-page-search-field">
               <Form.Input
                 fluid
@@ -157,8 +162,8 @@ function MapListPage() {
                 loading={isLoading}
                 value={searchValue}
                 error={!!errorMessage}
-                label="Поиск карты"
-                placeholder="Введите часть названия карты..."
+                label={t("page.map.list.searching")}
+                placeholder={t("page.map.list.inputName")}
               />
             </Grid.Row>
             {searchedMaps &&
@@ -192,7 +197,9 @@ function MapListPage() {
                     setLoadButton(el);
                   }}
                 >
-                  {isLoading ? "Загрузка. . ." : "Загрузить еще"}
+                  {isLoading
+                    ? t("page.map.list.loading")
+                    : t("page.map.list.loadYet")}
                 </button>
               </Grid>
             )}

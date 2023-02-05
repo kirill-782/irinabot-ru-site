@@ -6,7 +6,7 @@ import { AppRuntimeSettingsContext } from "./../../context/index";
 function LanguageDropdown() {
   const { language } = useContext(AppRuntimeSettingsContext);
 
-  // Temporarily hidden 
+  // Temporarily hidden
   return null;
 
   return (

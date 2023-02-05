@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Button, Form, Grid, Header } from "semantic-ui-react";
 import { SearchFilters, SearchOrder } from "../../models/rest/SearchFilters";
 import { MapFilters } from "../MapListPage/MapFilters";
@@ -6,10 +6,11 @@ import { useDefaultMaps } from "../../hooks/useDefaultMaps";
 import { useSearchMaps } from "../../hooks/useSearchMaps";
 import { useVisibility } from "../../hooks/useVisibility";
 import { MapCard } from "../MapListPage/MapCard";
-import { SessionStorage } from "../../services/SessionStorage"; 
+import { SessionStorage } from "../../services/SessionStorage";
 
 import "./MapSelectTab.scss";
 import { Link, useLocation } from "react-router-dom";
+import { AppRuntimeSettingsContext } from "../../context";
 
 const SESSION_KEY = "mapSelectTab";
 
@@ -17,7 +18,6 @@ interface SesstionSaveOptions {
   searchOptions: [SearchFilters | null, SearchOrder | null];
   searchValue: string;
 }
-
 
 function MapSelectTab() {
   const [searchOptions, setSearchOptions] = useState<
@@ -46,6 +46,9 @@ function MapSelectTab() {
     searchValue,
   };
 
+  const { language } = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
+
   useEffect(() => {
     const savedState = SessionStorage.get<SesstionSaveOptions>(
       location.key,
@@ -71,7 +74,7 @@ function MapSelectTab() {
   return (
     <Grid columns="equal" stackable className="map-select-tab">
       <Grid.Column width={3}>
-        <Header size="small">Фильтры</Header>
+        <Header size="small">{t("page.map.selectTab.filters")}</Header>
         <Form className="filter-form">
           <MapFilters
             value={searchOptions}
@@ -91,8 +94,8 @@ function MapSelectTab() {
               loading={isLoading}
               value={searchValue}
               error={!!errorMessage}
-              label="Поиск карты"
-              placeholder="Введите часть названия карты..."
+              label={t("page.map.selectTab.mapSearch")}
+              placeholder={t("page.map.selectTab.mapSearchPlaceholder")}
             />
           </Form>
         </Grid.Row>
@@ -103,7 +106,7 @@ function MapSelectTab() {
               {...map}
               selectElement={
                 <Button as={Link} to={`/create/confirm?mapId=${map.id}`}>
-                  Выбрать
+                  {t("page.map.selectTab.select")}
                 </Button>
               }
             />
@@ -119,7 +122,9 @@ function MapSelectTab() {
                 setLoadButton(el);
               }}
             >
-              {isLoading ? "Загрузка. . ." : "Загрузить еще"}
+              {isLoading
+                ? t("page.map.selectTab.loadingZZZ")
+                : t("page.map.selectTab.loadMore")}
             </button>
           </Grid>
         )}

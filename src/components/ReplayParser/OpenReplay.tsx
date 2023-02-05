@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import {
   Button,
   Container,
@@ -12,6 +12,7 @@ import {
 
 import "./OpenReplay.scss";
 import ReplayParser, { ReplayResult } from "@kokomi/w3g-parser-browser";
+import { AppRuntimeSettingsContext } from "../../context";
 
 interface OpenReplayProps {
   setReplayData: (name: string, data: ReplayResult) => void;
@@ -24,6 +25,9 @@ function OpenReplay({ setReplayData }: OpenReplayProps) {
   const [url, setUrl] = useState<string>("");
   const [error, setError] = useState<string>("");
   const [progress, setProgress] = useState<number>(0);
+
+  const { language } = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
 
   const openFromFile = (file: File) => {
     setError("");
@@ -41,7 +45,7 @@ function OpenReplay({ setReplayData }: OpenReplayProps) {
   const openFromUrl = (file: string) => {
     xhr.current = new XMLHttpRequest();
     xhr.current.responseType = "arraybuffer";
-    
+
     xhr.current.onreadystatechange = () => {
       if (xhr.current?.readyState === 4) {
         try {
@@ -75,7 +79,7 @@ function OpenReplay({ setReplayData }: OpenReplayProps) {
       <div className="centerd">
         <Grid>
           <Grid.Row centered>
-            <Header>Вставьте ссылку на файл повтора</Header>
+            <Header>{t("page.replay.open.insert")}</Header>
           </Grid.Row>
           {error && (
             <Grid.Row centered>
@@ -99,7 +103,7 @@ function OpenReplay({ setReplayData }: OpenReplayProps) {
                   }}
                 >
                   <Icon name="linkify" />
-                  Открыть
+                  {t("page.replay.open.open")}
                 </Form.Button>
               </Form.Group>
             </Form>
@@ -115,7 +119,7 @@ function OpenReplay({ setReplayData }: OpenReplayProps) {
             </Grid.Row>
           )}
           <Grid.Row centered>
-            <Header>Или</Header>
+            <Header>{t("page.replay.open.or")}</Header>
           </Grid.Row>
           <Grid.Row centered>
             <Button
@@ -126,7 +130,7 @@ function OpenReplay({ setReplayData }: OpenReplayProps) {
               }}
             >
               <Icon name="file" />
-              Открыть файл
+              {t("page.replay.open.file")}
             </Button>
             <input
               multiple

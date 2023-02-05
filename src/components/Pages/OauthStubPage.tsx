@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
+import { AppRuntimeSettingsContext } from "../../context";
 
 function OauthStubPage() {
   const urlParser = new URLSearchParams(window.location.hash.substring(1));
+  const { language } = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
 
   if (urlParser.has("access_token"))
     localStorage.setItem(
@@ -17,12 +20,7 @@ function OauthStubPage() {
 
   window.close();
 
-  return (
-    <span>
-      Я окошко интроверт. Мне не нравится, что на меня кто то смотрит. Закрой
-      пожалуйста меня.
-    </span>
-  );
+  return <span>{t("introvert")}</span>;
 }
 
 export default OauthStubPage;

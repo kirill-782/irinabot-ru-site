@@ -2,22 +2,46 @@ import React, { memo } from "react";
 import { useEffect, useState, useContext } from "react";
 import ReactSlider from "react-slider";
 import { DropdownItemProps, DropdownProps, Form } from "semantic-ui-react";
-import { CacheContext } from "../../context";
+import { AppRuntimeSettingsContext, CacheContext } from "../../context";
 import { SearchFilters } from "../../models/rest/SearchFilters";
 import { SearchOrder } from "./../../models/rest/SearchFilters";
 
 const sortOptions = [
-  { key: "0", text: "(по умолчанию)", value: "default" },
-  { key: "1", text: "Имя карты", value: "mapNameEscaped" },
-  { key: "2", text: "Дата загрузки", value: "creationDate" },
-  { key: "3", text: "Дата обновления", value: "lastUpdateDate" },
-  { key: "4", text: "Игроков в карте", value: "numPlayers" },
+  {
+    key: "0",
+    text: "page.map.list.filter.options.sort.default",
+    value: "default",
+  },
+  {
+    key: "1",
+    text: "page.map.list.filter.options.sort.name",
+    value: "mapNameEscaped",
+  },
+  {
+    key: "2",
+    text: "page.map.list.filter.options.sort.creationDate",
+    value: "creationDate",
+  },
+  {
+    key: "3",
+    text: "page.map.list.filter.options.sort.updateDate",
+    value: "lastUpdateDate",
+  },
+  {
+    key: "4",
+    text: "page.map.list.filter.options.sort.numPlayers",
+    value: "numPlayers",
+  },
 ];
 
 const orderOptions = [
-  { key: "0", text: "(по умолчанию)", value: "default" },
-  { key: "1", text: "По возрастанию", value: "asc" },
-  { key: "2", text: "По убыванию", value: "desc" },
+  {
+    key: "0",
+    text: "page.map.list.filter.options.order.default",
+    value: "default",
+  },
+  { key: "1", text: "page.map.list.filter.options.order.asc", value: "asc" },
+  { key: "2", text: "page.map.list.filter.options.order.desc", value: "desc" },
 ];
 
 export interface Filter {
@@ -101,6 +125,9 @@ export const MapFilters: React.FC<FiltersProps> = memo(
       ]);
     };
 
+    const { language } = useContext(AppRuntimeSettingsContext);
+    const t = language.getString;
+
     useEffect(() => {
       if (value) {
         if (value[0]) {
@@ -165,7 +192,7 @@ export const MapFilters: React.FC<FiltersProps> = memo(
         {
           key: 0,
           value: 0,
-          text: "(любая)",
+          text: t("page.map.list.filter.options.any"),
         },
         ...cacheContext.cachedCategories.map((el) => ({
           key: el.id,
@@ -182,7 +209,7 @@ export const MapFilters: React.FC<FiltersProps> = memo(
     return (
       <>
         <Form.Field>
-          <label>Фильтр по свободным слотам</label>
+          <label>{t("page.map.list.filter.form.label.freeSlots")}</label>
           <ReactSlider
             value={[minPlayers, maxPlayers]}
             onChange={(newValue) => {
@@ -198,45 +225,49 @@ export const MapFilters: React.FC<FiltersProps> = memo(
           />
         </Form.Field>
         <Form.Checkbox
-          label="Только верифицированные карты"
+          label={t("page.map.list.filter.form.checkbox.verifiedOnly")}
           checked={verified}
           onChange={() => setVerified(!verified)}
         />
         <Form.Checkbox
-          label="Только отмеченные карты"
+          label={t("page.map.list.filter.form.checkbox.taggedOnly")}
           checked={taggedOnly}
           onChange={() => setTaggedOnly(!taggedOnly)}
         />
         <Form.Checkbox
-          label="Только избранные карты"
+          label={t("page.map.list.filter.form.checkbox.favoriteOnly")}
           checked={favoriteOnly}
           onChange={() => setFavoriteOnly(!favoriteOnly)}
         />
         <Form.Select
           fluid
-          label="Сортировка по"
-          options={sortOptions}
+          label={t("page.map.list.filter.form.label.sortBy")}
+          options={sortOptions.map((i) => {
+            return { ...i, text: t(i.text) };
+          })}
           value={sortBy}
           onChange={(_, data) => setSortBy(String(data.value))}
         />
         <Form.Select
           fluid
-          label="Порядок сортировки"
-          options={orderOptions}
+          label={t("page.map.list.filter.form.label.orderBy")}
+          options={orderOptions.map((i) => {
+            return { ...i, text: t(i.text) };
+          })}
           value={orderBy}
           onChange={(_, data) => setOrderBy(String(data.value))}
         />
         <Form.Select
           fluid
           loading={categories.length === 0}
-          label="Тип карты"
+          label={t("page.map.list.filter.form.label.category")}
           options={categories}
           onChange={handleCategoryChange}
           value={selectedCategories}
         />
         <Form.Input
           fluid
-          label="Владелец"
+          label={t("page.map.list.filter.form.label.owner")}
           value={owner}
           onChange={(_, data) => setOwner(data.value)}
           placeholder="8"
@@ -246,7 +277,7 @@ export const MapFilters: React.FC<FiltersProps> = memo(
             <Form.Button
               icon="check"
               color="green"
-              title="Применить фильтры"
+              title={t("page.map.list.filter.form.button.accept")}
               onClick={(ev) => {
                 ev.preventDefault();
                 commitFilters();
@@ -257,7 +288,7 @@ export const MapFilters: React.FC<FiltersProps> = memo(
             type="button"
             icon="x"
             color="red"
-            title="Сбросить фильтры"
+            title={t("page.map.list.filter.form.button.reset")}
             onClick={(ev) => {
               ev.preventDefault();
               onFitlerChange([null, null]);

@@ -1,7 +1,10 @@
 import { toast } from "@kokomi/react-semantic-toasts";
 import { AuthMethod } from "../config/AuthMethods";
 
-export const authByOauth = (data: AuthMethod, onSuccess: (token: string, type: number) => void) => {
+export const authByOauth = (
+  data: AuthMethod,
+  onSuccess: (token: string, type: number) => void
+) => {
   // Build oauth url
 
   const state = (Math.random() + 1).toString(36).substring(2);
@@ -31,7 +34,7 @@ export const authByOauth = (data: AuthMethod, onSuccess: (token: string, type: n
           window.localStorage.setItem("authTokenType", data.type.toString());
           window.localStorage.setItem("authToken", e.newValue);
 
-          onSuccess(e.newValue, data.type );
+          onSuccess(e.newValue, data.type);
         } else {
           toast({
             title: "Ошибка",

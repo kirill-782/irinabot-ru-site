@@ -20,7 +20,11 @@ import { Flags } from "../../models/rest/Flags";
 import { AdditionalFlags, MapService } from "../../services/MapService";
 import { useCategoryFilter } from "../../hooks/useCategoryFilter";
 import { DragAndDropField } from "./DragAndDropField";
-import { CacheContext, RestContext } from "./../../context/index";
+import {
+  AppRuntimeSettingsContext,
+  CacheContext,
+  RestContext,
+} from "./../../context/index";
 import React from "react";
 
 interface PrepareUploadMapModalProps {
@@ -44,6 +48,9 @@ function PrepareUploadMapModal({
   const dragCounter = useMemo(() => ({ value: 0 }), []);
 
   const cacheContext = useContext(CacheContext);
+
+  const { language } = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
 
   useEffect(() => {
     if (cacheContext.cachedCategories.length === 0)
@@ -113,7 +120,7 @@ function PrepareUploadMapModal({
 
   return (
     <Modal open={open} onClose={onClose} closeIcon>
-      <Modal.Header>Выберите карту</Modal.Header>
+      <Modal.Header>{t("modal.mapUploader.chooseMap")}</Modal.Header>
 
       <Modal.Content
         onDragEnter={handleDragEnter}
@@ -123,18 +130,15 @@ function PrepareUploadMapModal({
       >
         {isDragging && <DragAndDropField />}
         <Modal.Description>
-          <Header>Какую карту загрузить?</Header>
-          <p>
-            Укажите путь до w3x карты. Обычно карты находятся в папке maps,
-            которая находится там где Warcraft III.
-          </p>
+          <Header>{t("modal.mapUploader.whichUploadLabel")}</Header>
+          <p>{t("modal.mapUploader.whichUploadHint")}</p>
           <Form>
             <Form.Field>
-              <label>Выберите до 5 категорий для карты</label>
+              <label>{t("modal.mapUploader.categoryLabel")}</label>
               <Dropdown
                 fluid
                 multiple
-                placeholder="Категории"
+                placeholder={t("modal.mapUploader.category")}
                 selection
                 options={dropdownOptions}
                 loading={cacheContext.cachedCategories.length === 0}
@@ -159,11 +163,11 @@ function PrepareUploadMapModal({
                   />
                   <Grid.Row>
                     <Message
-                      header="Загрузка карты"
+                      header={t("modal.mapUploader.loading")}
                       content={
                         selectedCategories.length === 0
-                          ? "Перед загрузкой карты, выберите категорию"
-                          : "Нажмите сюда для загрузки карты или перетащите файл в область окна"
+                          ? t("modal.mapUploader.beforeLoading")
+                          : t("modal.mapUploader.loadingHint")
                       }
                       onClick={() => {
                         selectedCategories.length && fileInput.current?.click();

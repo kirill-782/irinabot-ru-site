@@ -18,6 +18,9 @@ export const useConnectorGameAdd = ({
   ghostSocket,
   connectorSocket,
 }: useConnectorGameAddOptions) => {
+  //const {language} = useContext(AppRuntimeSettingsContext);
+  //const t = language.getString;
+
   useEffect(() => {
     const onUDPGameAddPackage = (data) => {
       if (

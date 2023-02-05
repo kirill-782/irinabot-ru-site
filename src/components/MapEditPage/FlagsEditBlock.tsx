@@ -1,6 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Button, Form, Grid, Icon } from "semantic-ui-react";
-import { AuthContext, CacheContext } from "../../context";
+import {
+  AppRuntimeSettingsContext,
+  AuthContext,
+  CacheContext,
+} from "../../context";
 import { useCategoryFilter } from "../../hooks/useCategoryFilter";
 import { Flags } from "../../models/rest/Flags";
 
@@ -20,6 +24,9 @@ function FlagsEditBlock({
   const cacheContext = useContext(CacheContext);
 
   const { apiToken } = useContext(AuthContext).auth;
+
+  const { language } = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
 
   const [selectedCategories, setSelectedCategories] = useState<number[]>([]);
   const [canDownload, setCanDownload] = useState<boolean | undefined>(true);
@@ -76,14 +83,14 @@ function FlagsEditBlock({
                 onChange={(_, data) => {
                   setCanDownload(!!data.checked);
                 }}
-                label="Карту можно скачать"
+                label={t("page.map.edit.flagsBlock.canDownload")}
               />
               <Form.Checkbox
                 checked={mapLocked}
                 onChange={(_, data) => {
                   setMapLocked(!!data.checked);
                 }}
-                label="Карта заблокирована"
+                label={t("page.map.edit.flagsBlock.lock")}
               />
             </Form>
           </Grid.Column>
@@ -97,7 +104,7 @@ function FlagsEditBlock({
                 onChange={(_, data) => {
                   setImagesAvailable(!!data.checked);
                 }}
-                label="Изображения из карты доступны"
+                label={t("page.map.edit.flagsBlock.imagesAvailable")}
               />
             )}
             <Form.Checkbox
@@ -106,7 +113,7 @@ function FlagsEditBlock({
                 setMapVerified(!!data.checked);
               }}
               disabled={!apiToken.hasAuthority("MAP_VERIFY")}
-              label="Карта проверена"
+              label={t("page.map.edit.flagsBlock.isVerified")}
             />
           </Form>
         </Grid.Column>
@@ -115,10 +122,10 @@ function FlagsEditBlock({
         <Form>
           <Form.Group widths="equal">
             <Form.Dropdown
-              label="Категории"
+              label={t("page.map.edit.flagsBlock.category")}
               fluid
               multiple
-              placeholder="Категории"
+              placeholder={t("page.map.edit.flagsBlock.phcategory")}
               selection
               options={dropdownOptions}
               loading={cacheContext.cachedCategories.length === 0}
@@ -134,7 +141,7 @@ function FlagsEditBlock({
               }}
               disabled={!apiToken.hasAuthority("MAP_VERIFY") || !mapVerified}
               fluid
-              label="Тег карты (отметка)"
+              label={t("page.map.edit.flagsBlock.tag")}
             />
           </Form.Group>
         </Form>
@@ -142,7 +149,7 @@ function FlagsEditBlock({
       {onFlagsChange && (
         <Button loading={loading} onClick={updateFlags} color="green">
           <Icon name="save" />
-          Сохранить
+          {t("page.map.edit.flagsBlock.tosave")}
         </Button>
       )}
     </div>

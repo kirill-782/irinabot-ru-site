@@ -1,27 +1,28 @@
-import { memo } from "react";
+import { memo, useContext } from "react";
 import { Divider, Form } from "semantic-ui-react";
 import { GameOptionsProps } from "./interfaces";
 import { invertSelectedBits } from "../../utils/BitMaskUtils";
 import React from "react";
+import { AppRuntimeSettingsContext } from "../../context";
 
 const visibilityOptions = [
-  { key: "4", text: "По умочланию", value: 4 },
-  { key: "1", text: "Скрыта", value: 1 },
-  { key: "2", text: "Разведана", value: 2 },
-  { key: "3", text: "Открыта", value: 3 },
+  { key: "4", text: "page.game.options.visibility.default", value: 4 },
+  { key: "1", text: "page.game.options.visibility.masked", value: 1 },
+  { key: "2", text: "page.game.options.visibility.explored", value: 2 },
+  { key: "3", text: "page.game.options.visibility.open", value: 3 },
 ];
 
 const speedOptions = [
-  { key: "1", text: "Медленно", value: 1 },
-  { key: "2", text: "Средне", value: 2 },
-  { key: "3", text: "Быстро", value: 3 },
+  { key: "1", text: "page.game.options.gamespeed.slow", value: 1 },
+  { key: "2", text: "page.game.options.gamespeed.norm", value: 2 },
+  { key: "3", text: "page.game.options.gamespeed.fast", value: 3 },
 ];
 
 const observersOptions = [
-  { key: "1", text: "Нет", value: 1 },
-  { key: "3", text: "Все зрители", value: 3 },
-  { key: "2", text: "После поражения", value: 2 },
-  { key: "4", text: "Судьи", value: 4 },
+  { key: "1", text: "page.game.options.observers.none", value: 1 },
+  { key: "3", text: "page.game.options.observers.all", value: 3 },
+  { key: "2", text: "page.game.options.observers.after", value: 2 },
+  { key: "4", text: "page.game.options.observers.referees", value: 4 },
 ];
 
 export const MAP_FLAG_TEAMS_TOGETHER = 1;
@@ -32,17 +33,20 @@ export const MAP_FLAG_RANDOM_RACES = 16;
 
 export const GameOptions: React.FC<GameOptionsProps> = memo(
   ({ options, onOptionsChange }) => {
+    const { language } = useContext(AppRuntimeSettingsContext);
+    const t = language.getString;
+
     return (
       <>
         <Form.Checkbox
-          label="Вход по паролю (будет выдан после создания игры)"
+          label={t("page.game.options.needPassword")}
           checked={options.privateGame}
           onChange={() => {
             onOptionsChange({ ...options, privateGame: !options.privateGame });
           }}
         />
         <Form.Input
-          label="Имя конфига"
+          label={t("page.game.options.configName")}
           value={options.configName}
           onChange={(_, data) => {
             onOptionsChange({ ...options, configName: data.value as string });
@@ -50,7 +54,7 @@ export const GameOptions: React.FC<GameOptionsProps> = memo(
         />
         <Divider />
         <Form.Checkbox
-          label="Города союзников рядом"
+          label={t("page.game.options.teamsTogether")}
           checked={
             (options.mask & MAP_FLAG_TEAMS_TOGETHER) === MAP_FLAG_TEAMS_TOGETHER
           }
@@ -62,7 +66,7 @@ export const GameOptions: React.FC<GameOptionsProps> = memo(
           }
         />
         <Form.Checkbox
-          label="Фиксация кланов"
+          label={t("page.game.options.fixedTeams")}
           checked={
             (options.mask & MAP_FLAG_FIXED_TEAMS) === MAP_FLAG_FIXED_TEAMS
           }
@@ -74,7 +78,7 @@ export const GameOptions: React.FC<GameOptionsProps> = memo(
           }
         />
         <Form.Checkbox
-          label="Общие войска"
+          label={t("page.game.options.unitShare")}
           checked={(options.mask & MAP_FLAG_UNIT_SHARE) === MAP_FLAG_UNIT_SHARE}
           onChange={() =>
             onOptionsChange({
@@ -84,7 +88,7 @@ export const GameOptions: React.FC<GameOptionsProps> = memo(
           }
         />
         <Form.Checkbox
-          label="Случайные расы"
+          label={t("page.game.options.randomRaces")}
           checked={
             (options.mask & MAP_FLAG_RANDOM_RACES) === MAP_FLAG_RANDOM_RACES
           }
@@ -96,7 +100,7 @@ export const GameOptions: React.FC<GameOptionsProps> = memo(
           }
         />
         <Form.Checkbox
-          label="Случайные герои"
+          label={t("page.game.options.randomHero")}
           name="mapFlagRandomHero"
           checked={
             (options.mask & MAP_FLAG_RANDOM_HERO) === MAP_FLAG_RANDOM_HERO
@@ -111,21 +115,25 @@ export const GameOptions: React.FC<GameOptionsProps> = memo(
         <Form.Select
           fluid
           name="spectators"
-          label="Зрители"
+          label={t("page.game.options.mapObservers")}
           onChange={(_, data) =>
             onOptionsChange({
               ...options,
               mapObservers: data.value as number,
             })
           }
-          options={observersOptions}
+          options={observersOptions.map((i) => {
+            return { ...i, text: t(i.text) };
+          })}
           value={options.mapObservers}
         />
         <Form.Select
           fluid
           name="visibility"
-          label="Карта"
-          options={visibilityOptions}
+          label={t("page.game.options.map")}
+          options={visibilityOptions.map((i) => {
+            return { ...i, text: t(i.text) };
+          })}
           onChange={(_, data) =>
             onOptionsChange({
               ...options,
@@ -137,8 +145,10 @@ export const GameOptions: React.FC<GameOptionsProps> = memo(
         <Form.Select
           fluid
           name="speed"
-          label="Скорость"
-          options={speedOptions}
+          label={t("page.game.options.speed")}
+          options={speedOptions.map((i) => {
+            return { ...i, text: t(i.text) };
+          })}
           onChange={(_, data) =>
             onOptionsChange({
               ...options,

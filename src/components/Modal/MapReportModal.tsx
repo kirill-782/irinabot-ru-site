@@ -1,5 +1,8 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Button, Form, Message, Modal } from "semantic-ui-react";
+import { AppRuntimeSettingsContext } from "../../context";
+
+// TODO: Рассмотреть хорошенько..
 
 interface MapReportModalProps {
   mapId: number;
@@ -9,19 +12,19 @@ interface MapReportModalProps {
 
 const reasonOptions = [
   {
-    text: "(не указано)",
+    text: "modal.mapReport.options.defaulth", // Не указано
     value: 0,
   },
   {
-    text: "Заявка на верификацию",
+    text: "modal.mapReport.options.verify", // Заявка на верификацию
     value: 1,
   },
   {
-    text: "Ошибки автоматического обнаружения читпака",
+    text: "modal.mapReport.options.errorCheatPackDetector", // Ошибка авто-обнаружения читпака
     value: 2,
   },
   {
-    text: "Ошибки при заполнении категорий",
+    text: "modal.mapReport.options.errorCategory", // Ошибка при заполнении категории
     value: 3,
   },
 ];
@@ -31,19 +34,30 @@ function MapReportModal({ open, onClose, mapId }: MapReportModalProps) {
   const [comment, setComment] = useState("");
   const [source, setSource] = useState("");
 
+  const { language } = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
+
   const send = () => {
     let string =
-      "**Тип обращения:**" +
-      reasonOptions.filter((i) => {
-        return i.value === type;
-      })[0].text +
+      "**" +
+      t("modal.mapReport.send.type") +
+      ":**" +
+      t(
+        reasonOptions.filter((i) => {
+          return i.value === type;
+        })[0].text
+      ) +
       "\r\n";
 
-    string += `**Ссылка на карту:** __#${mapId}__ (https://irinabot.ru/maps/${mapId})\r\n`;
+    string += `**${t(
+      "modal.mapReport.send.link"
+    )}:** __#${mapId}__ (https://irinabot.ru/maps/${mapId})\r\n`;
 
-    if (source) string += `**Источник:** ${source}\r\n`;
+    if (source)
+      string += `**${t("modal.mapReport.send.source")}:** ${source}\r\n`;
 
-    if (comment) string += `**Комментарий:** ${comment}\r\n`;
+    if (comment)
+      string += `**${t("modal.mapReport.send.comment")}:** ${comment}\r\n`;
 
     window.location.href = `https://xgm.guru/p/irina/add/219?initial-text=${encodeURIComponent(
       string
@@ -58,18 +72,17 @@ function MapReportModal({ open, onClose, mapId }: MapReportModalProps) {
         onClose();
       }}
     >
-      <Modal.Header>Сообщить о карте</Modal.Header>
+      <Modal.Header>{t("modal.mapReport.caption")}</Modal.Header>
       <Modal.Content>
         <Message info>
-          <p>
-            Вас перенаправит на XGM. Заполните название ресурса и нажмите кнопку
-            создать
-          </p>
+          <p>{t("modal.mapReport.info")}</p>
         </Message>
         <Form>
           <Form.Select
-            label="Тип обращения"
-            options={reasonOptions}
+            label={t("modal.mapReport.type")}
+            options={reasonOptions.map((i) => {
+              return { ...i, text: t(i.text) };
+            })}
             value={type}
             onChange={(_, data) => {
               setType(parseInt(data.value?.toString() || "0"));
@@ -77,7 +90,7 @@ function MapReportModal({ open, onClose, mapId }: MapReportModalProps) {
           ></Form.Select>
           {type === 1 && (
             <Form.TextArea
-              label="Источник"
+              label={t("modal.mapReport.source")}
               value={source}
               onChange={(_, data) => {
                 setSource(data.value?.toString() || "");
@@ -86,7 +99,7 @@ function MapReportModal({ open, onClose, mapId }: MapReportModalProps) {
           )}
           {type !== 0 && (
             <Form.TextArea
-              label="Комментарий"
+              label={t("modal.mapReport.comment")}
               value={comment}
               onChange={(_, data) => {
                 setComment(data.value?.toString() || "");
@@ -99,7 +112,7 @@ function MapReportModal({ open, onClose, mapId }: MapReportModalProps) {
               send();
             }}
           >
-            Отправить
+            {t("modal.mapReport.tosend")}
           </Form.Button>
         </Form>
       </Modal.Content>

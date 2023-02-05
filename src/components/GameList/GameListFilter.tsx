@@ -1,29 +1,30 @@
-import React from "react";
+import React, { useContext } from "react";
 import { memo } from "react";
 import ReactSlider from "react-slider";
 import { Button, Form } from "semantic-ui-react";
+import { AppRuntimeSettingsContext } from "../../context";
 import { FilterSettings } from "../../hooks/useGameListFilter";
 import "./GameListFilter.scss";
 
 const options = [
   {
     key: "default",
-    text: "По умолчанию",
+    text: "page.game.list.filter.options.default",
     value: "default",
   },
   {
     key: "freeSlots",
-    text: "Свободно слотов",
+    text: "page.game.list.filter.options.freeSlots",
     value: "freeSlots",
   },
   {
     key: "allSlots",
-    text: "Всего слотов",
+    text: "page.game.list.filter.options.allSlots",
     value: "allSlots",
   },
   {
     key: "playerSlots",
-    text: "Игроков в игре",
+    text: "page.game.list.filter.options.playerSlots",
     value: "playerSlots",
   },
 ];
@@ -39,11 +40,14 @@ function GameListFilter({
   onFilterChange,
   disabledFilters,
 }: GameListFilterProps) {
+  const { language } = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
+
   return (
     <>
       <Form className="sidebar-filter">
         <Form.Checkbox
-          label="Не загружать начатые игры"
+          label={t("page.game.list.filter.noLoadStarted")}
           checked={filterSettings.noLoadStarted}
           name="noLoadStarted"
           disabled={disabledFilters.indexOf("noLoadStarted") > -1}
@@ -51,6 +55,18 @@ function GameListFilter({
             onFilterChange({
               ...filterSettings,
               noLoadStarted: !!data.checked,
+            });
+          }}
+        ></Form.Checkbox>
+        <Form.Checkbox
+          label={t("page.game.list.filter.noLoadStarted")}
+          checked={filterSettings.forceReorder}
+          name="forceReorder"
+          disabled={disabledFilters.indexOf("forceReorder") > -1}
+          onChange={(event, data) => {
+            onFilterChange({
+              ...filterSettings,
+              forceReorder: !!data.checked,
             });
           }}
         ></Form.Checkbox>
@@ -64,7 +80,7 @@ function GameListFilter({
               onlySelfGames: !!data.checked,
             });
           }}
-          label="Только мои игры"
+          label={t("page.game.list.filter.onlySelfGames")}
         ></Form.Checkbox>
         <Form.Checkbox
           name="onlyFavoritedMaps"
@@ -76,12 +92,12 @@ function GameListFilter({
               onlyFavoritedMaps: !!data.checked,
             });
           }}
-          label="Только избранные карты"
+          label={t("page.game.list.filter.onlyFavoritedMaps")}
         ></Form.Checkbox>
         <Form.Group grouped>
-          <label>Игры по типу</label>
+          <label>{t("page.game.list.filter.gameType")}</label>
           <Form.Field
-            label="Только обычные игры"
+            label={t("page.game.list.filter.normalType")}
             control="input"
             type="radio"
             name="gameType"
@@ -95,7 +111,7 @@ function GameListFilter({
             }}
           />
           <Form.Field
-            label="Все игры"
+            label={t("page.game.list.filter.allType")}
             control="input"
             type="radio"
             name="gameType"
@@ -109,7 +125,7 @@ function GameListFilter({
             }}
           />
           <Form.Field
-            label="Игры с переопределением позиции"
+            label={t("page.game.list.filter.reposeType")}
             control="input"
             type="radio"
             name="gameType"
@@ -137,7 +153,9 @@ function GameListFilter({
             button
             basic
             floating
-            options={options}
+            options={options.map((i) => {
+              return { ...i, text: t(i.text) };
+            })}
             value={filterSettings.orderBy}
           />
           <Button
@@ -157,7 +175,7 @@ function GameListFilter({
         </Form.Group>
 
         <Form.Field className="players-filter">
-          <label>Фильтр по игрокам в лобби</label>
+          <label>{t("page.game.list.filter.lobbyPlayers")}</label>
           <ReactSlider
             value={filterSettings.players}
             onChange={(newValue) => {
@@ -175,7 +193,7 @@ function GameListFilter({
           />
         </Form.Field>
         <Form.Field>
-          <label>Фильтр по свободным слотам</label>
+          <label>{t("page.game.list.filter.freeSlots")}</label>
           <ReactSlider
             value={filterSettings.freeSlots}
             onChange={(newValue) => {
@@ -194,7 +212,7 @@ function GameListFilter({
           />
         </Form.Field>
         <Form.Field>
-          <label>Фильтр по числу слотов</label>
+          <label>{t("page.game.list.filter.slots")}</label>
           <ReactSlider
             value={filterSettings.slots}
             onChange={(newValue) => {

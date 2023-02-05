@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useEffect, useState } from "react";
+import { AppRuntimeSettingsContext } from "../context";
 
 interface SitePrepareLoaderProps {
   noWait?: boolean;
@@ -8,6 +9,9 @@ interface SitePrepareLoaderProps {
 function SitePrepareLoader({ noWait }: SitePrepareLoaderProps) {
   const [needRender, setNeedRender] = useState<boolean>(noWait || false);
   const [timer, setTimer] = useState<number>(0);
+
+  //const {language} = useContext(AppRuntimeSettingsContext);
+  //const t = language.getString;
 
   useEffect(() => {
     const timerId = setTimeout(() => {
@@ -20,7 +24,7 @@ function SitePrepareLoader({ noWait }: SitePrepareLoaderProps) {
   }, []);
 
   return needRender ? (
-    <h1>Фиксики размещают теги по местам, ожидайте</h1>
+    <h1>Фиксики размещают теги по местам, ожидайте{/*t("fixics")*/}</h1>
   ) : null;
 }
 

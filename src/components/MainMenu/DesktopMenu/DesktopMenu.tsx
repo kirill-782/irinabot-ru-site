@@ -10,7 +10,10 @@ import {
 import LoginDropdown from "../../Header/LoginDropdown";
 import UploadMap from "../../Header/UploadMap";
 import UserDrowdown from "../../Header/UserDropdown";
-import { AuthContext } from "./../../../context/index";
+import {
+  AppRuntimeSettingsContext,
+  AuthContext,
+} from "./../../../context/index";
 import { switchTheme, E_THEME, currentTheme } from "../../../utils/Theme";
 import "./DesktopMenu.scss";
 import UtilsDropdown from "../../Header/UtilsDropdown";
@@ -31,6 +34,9 @@ const DesktopMenu = () => {
   const authContext = useContext(AuthContext);
   const currentAuth = authContext.auth.currentAuth;
 
+  const { language } = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
+
   const handleMenuItemClick = () => {};
 
   return (
@@ -42,17 +48,17 @@ const DesktopMenu = () => {
         as={NavLink}
         icon="gamepad"
         to="/gamelist"
-        title="Активные игры"
+        title={t("menu.gamelist")}
       />
       <Menu.Item
         as={NavLink}
         icon="file"
         to="/maps"
-        title="Список карт"
+        title={t("menu.maplist")}
       />
       <Menu.Item
         as="a"
-        title="Справка"
+        title={t("menu.help")}
         icon="help"
         href="https://xgm.guru/p/irina"
         onClick={(e) => {
@@ -76,7 +82,7 @@ const DesktopMenu = () => {
         <UtilsDropdown />
         <Menu.Item as={NavLink} to="/autopay">
           <Icon name="ruble sign" />
-          Донат
+          {t("menu.donate")}
         </Menu.Item>
 
         <LanguageDropdown />

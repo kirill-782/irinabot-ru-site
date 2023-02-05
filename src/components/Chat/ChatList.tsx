@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Divider, Feed, Form } from "semantic-ui-react";
+import { AppRuntimeSettingsContext } from "../../context";
 import ChatRow from "./ChatRow";
 import { SelectionType, User } from "./interfaces";
 
@@ -17,6 +18,9 @@ function ChatList({
   onSelectonChange,
 }: ChatListProps) {
   const [newUsername, setNewUsername] = useState<string>("");
+
+  const { language } = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
 
   const handleNewChat = () => {
     const newUser: User = {
@@ -44,20 +48,20 @@ function ChatList({
       <Feed.Event onClick={() => onSelectonChange(SelectionType.CONSOLE)}>
         <Feed.Label icon="pencil" />
         <Feed.Content
-          date="Консоль бота"
-          summary="Консоль бота для ввода команд"
+          date={t("chat.list.consoleTitle")}
+          summary={t("chat.list.consoleInfo")}
         />
       </Feed.Event>
       <Divider />
       <Form>
         <Form.Group widths="equal">
           <Form.Input
-            placeholder="Введите никнейм"
+            placeholder={t("chat.list.inputNickname")}
             value={newUsername}
             onChange={(ev) => setNewUsername(ev.target.value)}
           />
           <Form.Button
-            content="Начать чат"
+            content={t("chat.list.start")}
             labelPosition="left"
             icon="edit"
             primary

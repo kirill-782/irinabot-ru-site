@@ -11,7 +11,11 @@ import {
   Segment,
 } from "semantic-ui-react";
 import { AuthMethod, AviableAuthMethods } from "../../config/AuthMethods";
-import { AuthContext, WebsocketContext } from "../../context";
+import {
+  AppRuntimeSettingsContext,
+  AuthContext,
+  WebsocketContext,
+} from "../../context";
 import { authByOauth } from "../../utils/Oauth";
 import MetaRobots from "../Meta/MetaRobots";
 
@@ -27,6 +31,9 @@ function ForbiddenPage({
   const authContext = useContext(AuthContext);
   const { isGHostSocketConnected } = useContext(WebsocketContext);
 
+  const { language } = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
+
   const onSuccess = useCallback(
     (token: string, type: number) => {
       authContext.dispatchAuth({
@@ -39,7 +46,7 @@ function ForbiddenPage({
 
   const loginHint = (
     <>
-      <p>У вас нет доступа к этой странице. Попробуйте войти на сайт через:</p>
+      <p>{t("page.forbidden.thisPage")}:</p>
       <Grid.Row>
         {AviableAuthMethods.map((method: AuthMethod) => {
           return (
@@ -58,12 +65,12 @@ function ForbiddenPage({
 
   const waitLoader = (
     <>
-      <p>
-        Подолжите, когда завершится подключение к серверу, и пройдет авторизация
-      </p>
+      <p>{t("page.forbidden.wait")}</p>
       <Grid.Row>
         <Header>
-          {isGHostSocketConnected ? "Авторизация. . ." : "Подключение . . ."}
+          {isGHostSocketConnected
+            ? t("page.forbidden.authorization")
+            : t("page.forbidden.connecting")}
         </Header>
       </Grid.Row>
     </>
@@ -75,7 +82,7 @@ function ForbiddenPage({
       <div className="centerd">
         <Grid centered>
           <Grid.Row>
-            <Header>Отказано в доступе</Header>
+            <Header>{t("page.forbidden.denied")}</Header>
           </Grid.Row>
           {!authContext.auth.currentAuth ? (
             authContext.auth.authCredentials ? (
@@ -85,15 +92,13 @@ function ForbiddenPage({
             )
           ) : (
             <Grid.Row>
-              <p>
-                У вас отсуствую необходимые права для доступа к данной странице
-              </p>
+              <p>{t("page.forbidden.norights")}</p>
             </Grid.Row>
           )}
 
           <Grid.Row>
             <Button to="/" as={Link} color="green">
-              На главную
+              {t("page.forbidden.main")}
             </Button>
           </Grid.Row>
         </Grid>

@@ -2,7 +2,7 @@ import { Modal, Message, List, Icon, Button } from "semantic-ui-react";
 import type { SyntheticEvent } from "react";
 import { useContext } from "react";
 import { ConnectorGame } from "../../models/websocket/ConnectorSummary";
-import { WebsocketContext } from "../../context";
+import { AppRuntimeSettingsContext, WebsocketContext } from "../../context";
 import { ConnectorBrowserRemoveGameConverter } from "../../models/websocket/ConnectorBrowserDeleteGame";
 import { ConnectorBrowserResetConverter } from "../../models/websocket/ConnectorBrowserResetGames";
 import React from "react";
@@ -33,16 +33,16 @@ function ConnectorSummaryModal({
     websocketContext.connectorSocket.send(resetAllConverter.assembly({}));
   };
 
+  const { language } = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
+
   return (
     <Modal open={open} onClose={onClose}>
-      <Modal.Header>Сводка коннектора</Modal.Header>
+      <Modal.Header>{t("modal.connectorSummary.caption")}</Modal.Header>
 
       <Modal.Content>
         <Modal.Description>
-          <Message>
-            Эти игры будут отправлены в локальную сеть Warcraft III. Вы можете
-            убрать игру из списка, или очтистить его
-          </Message>
+          <Message>{t("modal.connectorSummary.description")}</Message>
           {connectorGames.length > 0 ? (
             <List divided relaxed>
               {connectorGames.map((el, index) => (
@@ -69,7 +69,7 @@ function ConnectorSummaryModal({
                     negative
                     onClick={handleRemoveAll}
                   >
-                    Убрать все
+                    {t("modal.connectorSummary.removeall")}
                   </Button>
                 </List.Content>
               </List.Item>
@@ -77,8 +77,8 @@ function ConnectorSummaryModal({
           ) : (
             <Message>
               {websocketContext.isConnectorSocketConnected
-                ? "Вы еще не добавили ни одной игруы"
-                : "Коннектор не запущен"}
+                ? t("modal.connectorSummary.notAddedAnyGamesYet")
+                : t("modal.connectorSummary.connectorNotRunning")}
             </Message>
           )}
         </Modal.Description>

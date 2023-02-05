@@ -8,6 +8,8 @@ import OnlineStats from "../GameList/OnlineStats";
 import { useGameListSubscribe } from "../../hooks/useGameListSubscribe";
 import { useGameListFilterSetings } from "../../hooks/useGameListFilterSetings";
 import { useGameListFilter } from "../../hooks/useGameListFilter";
+import { useDisplayedGameList } from "../../hooks/useDisplayedGameList";
+
 import GameListFilter from "../GameList/GameListFilter";
 import { useDebounce } from "./../../hooks/useDebounce";
 import { CacheContext } from "../../context";
@@ -50,10 +52,18 @@ function GameListPage() {
     ignoreFocusCheck: false,
   });
 
+  const displayedGameList = useDisplayedGameList({
+    gameList: filtredGameList,
+    filters: debouncedFilterSettings,
+  });
+
   const connectorCache = useContext(CacheContext).cachedConnectorIds;
 
+  const { language } = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
+
   useEffect(() => {
-    window.document.title = `Список игр | ${SITE_TITLE}`;
+    window.document.title = `${t("page.game.list.list")} | ${SITE_TITLE}`;
   }, []);
 
   useEffect(() => {
@@ -76,7 +86,7 @@ function GameListPage() {
 
   return (
     <Container className="game-list">
-      <MetaDescription description="Просмотреть список созданных игр, к которым можно присоедениться." />
+      <MetaDescription description={t("page.game.list.watch") + "."} />
       <MetaCanonical hostPath="/" />
       <Grid columns="equal" stackable>
         <Grid.Column width={13} className="game-list-column">
@@ -86,7 +96,7 @@ function GameListPage() {
             }
             value={filterSettings.quicFilter}
             style={{ width: "50%" }}
-            placeholder="Быстрый фильтр"
+            placeholder={t("page.game.list.fastfilter")}
           />
           {auth.accessMask.hasAccess(AccessMaskBit.GAME_CREATE) && (
             <Button
@@ -109,7 +119,7 @@ function GameListPage() {
             }}
           />
           <GameList
-            gameList={filtredGameList}
+            gameList={displayedGameList}
             selectedGame={selectedGame}
             setSelectedGame={setSelectedGame}
           ></GameList>
@@ -124,7 +134,7 @@ function GameListPage() {
               window.open("https://xgm.guru/p/irina/gamecreate");
             }}
           >
-            Как играть
+            {t("page.game.list.howToPlay")}
           </Button>
           {selectedGame ? (
             <MapInfo mapId={selectedGame.mapId}></MapInfo>

@@ -1,5 +1,5 @@
 import { Table } from "semantic-ui-react";
-import { memo, useMemo } from "react";
+import { memo, useContext, useMemo } from "react";
 import { GameListGame } from "../../models/websocket/ServerGameList";
 import {
   categoryToString,
@@ -8,12 +8,16 @@ import {
   realmToCategory,
 } from "../../config/PvpGNConfig";
 import React from "react";
+import { AppRuntimeSettingsContext } from "../../context";
 
 interface OnlineStatsProps {
   gameList: GameListGame[];
 }
 
 function OnlineStats({ gameList }: OnlineStatsProps) {
+  const { language } = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
+
   const gameStats = useMemo<OnlineStatsRow[]>(() => {
     let stats: Map<String, OnlineStatsRow> = new Map();
 
@@ -68,9 +72,9 @@ function OnlineStats({ gameList }: OnlineStatsProps) {
     <Table>
       <Table.Header>
         <Table.Row>
-          <Table.HeaderCell>Категория</Table.HeaderCell>
-          <Table.HeaderCell>Игр</Table.HeaderCell>
-          <Table.HeaderCell>Игроков</Table.HeaderCell>
+          <Table.HeaderCell>{t("online.category")}</Table.HeaderCell>
+          <Table.HeaderCell>{t("online.totalGame")}</Table.HeaderCell>
+          <Table.HeaderCell>{t("online.players")}</Table.HeaderCell>
         </Table.Row>
       </Table.Header>
       <Table.Body>

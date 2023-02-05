@@ -1,17 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useState } from "react";
 import { Container } from "semantic-ui-react";
+import { AppRuntimeSettingsContext } from "../context";
 
 function ErrorCatch({ children }) {
   const [hasError, setError] = useState(false);
 
-  if (hasError)
-    return (
-      <Container>
-        На сайте произошла ошибка. Проверьте интернет соединение, обновите
-        страницу или обратитесь к администратору
-      </Container>
-    );
+  const { language } = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
+
+  if (hasError) return <Container>{t("errorCatch")}</Container>;
 
   try {
     return children;

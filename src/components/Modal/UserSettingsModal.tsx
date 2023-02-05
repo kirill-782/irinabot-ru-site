@@ -10,7 +10,11 @@ import {
   Form,
 } from "semantic-ui-react";
 import { useContext, useEffect, useState } from "react";
-import { AuthContext, WebsocketContext } from "./../../context/index";
+import {
+  AppRuntimeSettingsContext,
+  AuthContext,
+  WebsocketContext,
+} from "./../../context/index";
 import { AuthMethod, AviableAuthMethods } from "../../config/AuthMethods";
 import { toast } from "@kokomi/react-semantic-toasts";
 import { ClientDeleteIntegrationConverter } from "./../../models/websocket/ClientDeleteIntegration";
@@ -33,6 +37,9 @@ function UserSettingsModal(props) {
 
   const [connectorName, setConnectorName] = useState("");
 
+  const { language } = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
+
   useEffect(() => {
     const onPackage = (data: GHostPackageEvent) => {
       if (
@@ -42,10 +49,8 @@ function UserSettingsModal(props) {
         const bnetKey = data.detail.package as ServerBnetKey;
 
         toast({
-          title: "Привязка PVPGn аккаунта",
-          description:
-            "Отправьте боту на канал следующую команду: !confirm " +
-            bnetKey.key,
+          title: t("modal.settings.linkingPVPGn"),
+          description: t("modal.settings.linkingPVPGnHint") + bnetKey.key,
           time: 20000,
         });
       }
@@ -94,7 +99,7 @@ function UserSettingsModal(props) {
             );
           } else {
             toast({
-              title: "Ошибка",
+              title: t("modal.settings.error"),
               description: storageNewValue,
               type: "error",
               time: 10000,
@@ -162,10 +167,10 @@ function UserSettingsModal(props) {
 
   return (
     <Modal {...props}>
-      <Modal.Header>Настройки</Modal.Header>
+      <Modal.Header>{t("modal.settings.caption")}</Modal.Header>
       <Modal.Content>
         <Modal.Description>
-          <Header>Подключение аккаунтов</Header>
+          <Header>{t("modal.settings.connection")}</Header>
           <Container>
             <Button onClick={onWarcraftIIIButtonClick} basic color="green">
               Warcraft III
@@ -234,7 +239,7 @@ function UserSettingsModal(props) {
                   style={{ marginLeft: 10 }}
                   color="green"
                 >
-                  Сохранить
+                  {t("modal.settings.save")}
                 </Button>
               </Form.Group>
             </Form.Field>

@@ -3,7 +3,7 @@ import { useCallback, useState } from "react";
 import { importLocales } from "../utils/LocaleUtils";
 
 type stringMap = {
-  [key: string]: string | boolean | number;
+  [key: string]: string | boolean | number | null | undefined;
 };
 
 export type GetLanguageStaring = (

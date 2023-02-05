@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Form, Modal } from "semantic-ui-react";
+import { AppRuntimeSettingsContext } from "../../context";
 
 import "./AccessMaskModal.scss";
 
@@ -33,79 +34,79 @@ interface AccessMaskCheckbox {
 const AccessMaskCheckBoxs: AccessMaskCheckbox[] = [
   {
     accessMask: AccessMaskBit.VIP_COMMANDS,
-    label: "Доступ к VIP командам",
+    label: "modal.accessMask.checkbox.vipCommands",
   },
   {
     accessMask: AccessMaskBit.CONFIG_MANGE,
-    label: "Управлять конфигом",
+    label: "modal.accessMask.checkbox.manageConfig",
   },
   {
     accessMask: AccessMaskBit.GAME_MANGE,
-    label: "Управлять игрой",
+    label: "modal.accessMask.checkbox.manageGame",
   },
   {
     accessMask: AccessMaskBit.PLAYERS_MANGE,
-    label: "Упровлять игроками",
+    label: "modal.accessMask.checkbox.managePlayers",
   },
   {
     accessMask: AccessMaskBit.AUTOHOST_MANGE,
-    label: "Управлять автохостом",
+    label: "modal.accessMask.checkbox.manageAutohost",
   },
   {
     accessMask: AccessMaskBit.GAME_CREATE,
-    label: "Создавать игры",
+    label: "modal.accessMask.checkbox.gameCreate",
   },
   {
     accessMask: AccessMaskBit.VIP_JOIN,
-    label: "Приоритетный вход",
+    label: "modal.accessMask.checkbox.vipJoin",
   },
   {
     accessMask: AccessMaskBit.GAME_POWER_UP,
-    label: "GAME_POWER_UP",
+    label: "modal.accessMask.checkbox.gamePowerUp",
   },
   {
     accessMask: AccessMaskBit.GAME_LIMITED_ADMINS,
-    label: "GAME_LIMITED_ADMINS",
+    label: "modal.accessMask.checkbox.gameLimitedAdmins",
   },
   {
     accessMask: AccessMaskBit.SCOPE_SETTINGS,
-    label: "SCOPE_SETTINGS",
+    label: "modal.accessMask.checkbox.scopeSettings",
   },
   {
     accessMask: AccessMaskBit.ADMIN_ACCESS_BAN_ADD,
-    label: "Банить",
+    label: "modal.accessMask.checkbox.adminAccessBanAdd",
   },
   {
     accessMask: AccessMaskBit.ADMIN_ACCESS_BAN_REMOVE,
-    label: "Снимать баны",
+    label: "modal.accessMask.checkbox.adminAccessBanRemove",
   },
   {
     accessMask: AccessMaskBit.ADMIN_ACCESS_BAN_LIST,
-    label: "Просматривать баны",
+    label: "modal.accessMask.checkbox.adminAccessBanList",
   },
   {
     accessMask: AccessMaskBit.ADMIN_ACCESS_ADMIN_ADD,
-    label: "Назначать администраторов",
+    label: "modal.accessMask.checkbox.adminAccessAdminAdd",
   },
   {
     accessMask: AccessMaskBit.ADMIN_ACCESS_ADMIN_REMOVE,
-    label: "Разжаловать администраторов",
+    label: "modal.accessMask.checkbox.adminAccessAdminRemove",
   },
   {
     accessMask: AccessMaskBit.ADMIN_ACCESS_ADMIN_LIST,
-    label: "Просматривать список администраторов",
+    label: "modal.accessMask.checkbox.adminAccessAdminList",
   },
   {
     accessMask: AccessMaskBit.ACCESS_SHARE,
-    label: "Разделение прав на связанные аккаунты",
+    label: "modal.accessMask.checkbox.accessShare",
   },
   {
     accessMask: AccessMaskBit.ACCESS_GLOBAL,
-    label: "Глобальный доступ",
+    label: "modal.accessMask.checkbox.accessGlobal",
   },
   {
     accessMask: AccessMaskBit.ACCESS_ROOT,
-    label: "Первородный",
+    label: "modal.accessMask.checkbox.accessRoot",
   },
 ];
 
@@ -127,6 +128,9 @@ function AccessMaskModal({
 }: AccessMaskModalProps) {
   const [accessMask, setAccessMask] = useState<number>(defaultAccessMask || 0);
 
+  const { language } = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
+
   useEffect(() => {
     setAccessMask(accessMask >>> 0);
   }, [accessMask]);
@@ -139,14 +143,14 @@ function AccessMaskModal({
       onClose={onClose}
       closeIcon
     >
-      <Modal.Header>Редактор админ прав</Modal.Header>
+      <Modal.Header>{t("modal.accessMask.caption")}</Modal.Header>
       <Modal.Content>
         <Form>
           {AccessMaskCheckBoxs.map((i) => {
             return (
               <Form.Checkbox
                 key={i.accessMask}
-                label={i.label}
+                label={t(i.label)}
                 disabled={readOnly}
                 checked={(accessMask & i.accessMask) === i.accessMask}
                 onChange={(_, data) => {
@@ -177,7 +181,7 @@ function AccessMaskModal({
                 setAccessMask((accessMask) => accessMask | 3841);
               }}
             >
-              Добавить 3 в 1
+              {t("modal.accessMask.add3in1")}
             </Form.Button>
             <Form.Button
               color="green"
@@ -187,7 +191,7 @@ function AccessMaskModal({
                 setAccessMask((accessMask) => accessMask | 3584);
               }}
             >
-              Добавить BanList
+              {t("modal.accessMask.addBanList")}
             </Form.Button>
             <Form.Button
               color="green"
@@ -197,7 +201,7 @@ function AccessMaskModal({
                 setAccessMask((accessMask) => accessMask | 536899804);
               }}
             >
-              Добавить AdminList
+              {t("modal.accessMask.addAdminList")}
             </Form.Button>
           </Form.Group>
           {onChange && (
@@ -207,7 +211,7 @@ function AccessMaskModal({
                 onChange(accessMask);
               }}
             >
-              Сохранить
+              {t("modal.accessMask.Сохранить")}
             </Form.Button>
           )}
         </Form>

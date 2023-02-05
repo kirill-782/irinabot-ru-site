@@ -1,7 +1,11 @@
 import { Button, Grid, Header, Message, Modal, Table } from "semantic-ui-react";
 import { useContext, useEffect, useState } from "react";
 import { Autohost } from "../../models/websocket/ServerAutohostListResponse";
-import { CacheContext, WebsocketContext } from "../../context";
+import {
+  AppRuntimeSettingsContext,
+  CacheContext,
+  WebsocketContext,
+} from "../../context";
 import { GHostPackageEvent } from "../../services/GHostWebsocket";
 import {
   DEFAULT_AUTOHOST_REMOVE_RESPONSE,
@@ -36,6 +40,9 @@ function AutohostListModal({ open, onClose }: AutohostListModalProps) {
   };
 
   const connectorCache = useContext(CacheContext).cachedConnectorIds;
+
+  const { language } = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
 
   useEffect(() => {
     if (!autohosts) return;
@@ -81,8 +88,10 @@ function AutohostListModal({ open, onClose }: AutohostListModalProps) {
           );
         } else {
           toast({
-            title: "Ошибка удаления",
-            description: `Автохост не удален почуму то ${response.status}`,
+            title: t("modal.autohostList.toast.deletingError"),
+            description: `${t(
+              "modal.autohostList.toast.deletingErrorReason"
+            )} ${response.status}`,
             icon: "check",
             color: "red",
           });
@@ -99,24 +108,36 @@ function AutohostListModal({ open, onClose }: AutohostListModalProps) {
 
   return (
     <Modal closeIcon open={open} onClose={onClose}>
-      <Header content="Список автохостов" />
+      <Header content={t("modal.autohostList.caption")} />
       <Modal.Content>
         {autohosts === null ? (
-          <Header>Список загружается</Header>
+          <Header>{t("modal.autohostList.isLoading")}</Header>
         ) : autohosts.length === 0 ? (
           <Message info>
-            <p>Список автохостов пуст</p>
+            <p>{t("modal.autohostList.isEmpty")}</p>
           </Message>
         ) : (
           <Table celled>
             <Table.Header>
               <Table.Row>
-                <Table.HeaderCell width={9}>Имя</Table.HeaderCell>
-                <Table.HeaderCell width={2}>Автостарт</Table.HeaderCell>
-                <Table.HeaderCell width={2}>Лимит игр</Table.HeaderCell>
-                <Table.HeaderCell width={5}>Создано игр</Table.HeaderCell>
-                <Table.HeaderCell width={3}>Владелец</Table.HeaderCell>
-                <Table.HeaderCell width={1}>Действия</Table.HeaderCell>
+                <Table.HeaderCell width={9}>
+                  {t("modal.autohostList.table.name")}
+                </Table.HeaderCell>
+                <Table.HeaderCell width={2}>
+                  {t("modal.autohostList.table.autostart")}
+                </Table.HeaderCell>
+                <Table.HeaderCell width={2}>
+                  {t("modal.autohostList.table.gamelimit")}
+                </Table.HeaderCell>
+                <Table.HeaderCell width={5}>
+                  {t("modal.autohostList.table.gamecreated")}
+                </Table.HeaderCell>
+                <Table.HeaderCell width={3}>
+                  {t("modal.autohostList.table.owner")}
+                </Table.HeaderCell>
+                <Table.HeaderCell width={1}>
+                  {t("modal.autohostList.table.actions")}
+                </Table.HeaderCell>
               </Table.Row>
             </Table.Header>
 

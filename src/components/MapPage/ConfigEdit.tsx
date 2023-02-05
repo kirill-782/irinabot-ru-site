@@ -198,7 +198,7 @@ function ConfigEdit({ configPayload, onConfigChange }: ConfigEditProps) {
             }}
           />
         </Form.Group>
-        <Header size="medium">Игровые слоты</Header>
+        <Header size="medium">{t("page.map.config.gameslots")}</Header>
         <SlotsEdit
           slots={configPayload.playableSlots}
           options={configPayload.options}
@@ -208,7 +208,7 @@ function ConfigEdit({ configPayload, onConfigChange }: ConfigEditProps) {
         />
         {configPayload.observerSlots && (
           <>
-            <Header size="medium">Зрители</Header>
+            <Header size="medium">{t("page.map.config.observerslots")}</Header>
             <SlotsEdit
               slots={configPayload.observerSlots}
               onSlotsChange={(slots) => {

@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Table, Form } from "semantic-ui-react";
+import { AppRuntimeSettingsContext } from "../../context";
 import { Slot } from "../../models/rest/Slot";
 import { getClassColorByIndex } from "./MapSlots";
 
@@ -10,46 +11,46 @@ const SELECTABLE_RACE = 64;
 
 const slotStatusOptions = [
   {
-    text: "Открыто",
+    text: "page.map.slots.type.open",
     value: 0,
   },
   {
-    text: "Закрыто",
+    text: "page.map.slots.type.closed",
     value: 1,
   },
   {
-    text: "Компьютер (слабый)",
+    text: "page.map.slots.type.aiEasy",
     value: 2,
   },
   {
-    text: "Компьютер (средний)",
+    text: "page.map.slots.type.aiMedium",
     value: 3,
   },
   {
-    text: "Компьютер (сильный)",
+    text: "page.map.slots.type.aiInsane",
     value: 4,
   },
 ];
 
 const slotRacesOptions = [
   {
-    text: "Альянс",
+    text: "page.map.slots.race.human",
     value: 1,
   },
   {
-    text: "Орда",
+    text: "page.map.slots.race.orc",
     value: 2,
   },
   {
-    text: "Ночные эльфы",
+    text: "page.map.slots.race.nightelf",
     value: 4,
   },
   {
-    text: "Нежить",
+    text: "page.map.slots.race.undead",
     value: 8,
   },
   {
-    text: "Случайная раса",
+    text: "page.map.slots.race.random",
     value: 32,
   },
 ];
@@ -59,7 +60,8 @@ const slotTeamsOptions = (() => {
 
   for (let i = 0; i < 25; ++i) {
     result[i] = {
-      text: "Клан " + (i + 1),
+      teamNumber: i + 1,
+      text: "page.map.slots.slot.team",
       value: i,
     };
   }
@@ -94,6 +96,9 @@ function SlotsEdit({ slots, options, onSlotsChange }: SlotsEditProps) {
   const customForces = ((options || 0) & 64) === 64;
 
   let teamSlots: SlotExtends[][] = [];
+
+  const { language } = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
 
   if (slots) {
     if (!customForces)
@@ -146,16 +151,30 @@ function SlotsEdit({ slots, options, onSlotsChange }: SlotsEditProps) {
       {teamSlots.map((slots, index) => {
         return (
           <React.Fragment key={index}>
-            {customForces && <label>Клан {index + 1}</label>}
+            {customForces && (
+              <label>
+                {t("page.map.slots.force")} {index + 1}
+              </label>
+            )}
             <Table>
               {index === 0 && (
                 <Table.Header>
                   <Table.HeaderCell width={1}>SID</Table.HeaderCell>
-                  <Table.HeaderCell width={4}>Тип</Table.HeaderCell>
-                  <Table.HeaderCell width={3}>Клан</Table.HeaderCell>
-                  <Table.HeaderCell width={4}>Раса</Table.HeaderCell>
-                  <Table.HeaderCell width={1}>Цвет</Table.HeaderCell>
-                  <Table.HeaderCell width={2}>Фора</Table.HeaderCell>
+                  <Table.HeaderCell width={4}>
+                    {t("page.map.slots.slot.type")}{" "}
+                  </Table.HeaderCell>
+                  <Table.HeaderCell width={3}>
+                    {t("page.map.slots.slot.team")}
+                  </Table.HeaderCell>
+                  <Table.HeaderCell width={4}>
+                    {t("page.map.slots.slot.race")}
+                  </Table.HeaderCell>
+                  <Table.HeaderCell width={1}>
+                    {t("page.map.slots.slot.teamcolor")}
+                  </Table.HeaderCell>
+                  <Table.HeaderCell width={2}>
+                    {t("page.map.slots.slot.handicap")}
+                  </Table.HeaderCell>
                 </Table.Header>
               )}
               {slots.map((slot, index) => {
@@ -164,7 +183,9 @@ function SlotsEdit({ slots, options, onSlotsChange }: SlotsEditProps) {
                     <Table.Cell width={1}>{slot.sid + 1}</Table.Cell>
                     <Table.Cell width={4}>
                       <Form.Dropdown
-                        options={slotStatusOptions}
+                        options={slotStatusOptions.map((i) => {
+                          return { ...i, text: t(i.text) };
+                        })}
                         value={slot.status}
                         onChange={(_, data) => {
                           if (onSlotsChange)
@@ -179,7 +200,9 @@ function SlotsEdit({ slots, options, onSlotsChange }: SlotsEditProps) {
                     </Table.Cell>
                     <Table.Cell width={3}>
                       <Form.Dropdown
-                        options={slotTeamsOptions}
+                        options={slotTeamsOptions.map((i) => {
+                          return { ...i, text: t(i.text) + " " + i.teamNumber };
+                        })}
                         value={slot.team}
                         onChange={(_, data) => {
                           if (onSlotsChange)
@@ -194,7 +217,9 @@ function SlotsEdit({ slots, options, onSlotsChange }: SlotsEditProps) {
                     </Table.Cell>
                     <Table.Cell width={4}>
                       <Form.Dropdown
-                        options={slotRacesOptions}
+                        options={slotRacesOptions.map((i) => {
+                          return { ...i, text: t(i.text) };
+                        })}
                         value={slot.race & ALL_RACES_FLAGS}
                         onChange={(_, data) => {
                           if (onSlotsChange)
@@ -210,7 +235,7 @@ function SlotsEdit({ slots, options, onSlotsChange }: SlotsEditProps) {
                       ></Form.Dropdown>
                       <Form.Checkbox
                         checked={!!(slot.race & SELECTABLE_RACE)}
-                        label="Можно менять"
+                        label={t("page.map.slotsEdit.allowChange")}
                         onChange={(_, data) => {
                           if (onSlotsChange) {
                             if (data.checked) {

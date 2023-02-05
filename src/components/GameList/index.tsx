@@ -17,14 +17,14 @@ import { AccessMaskBit } from "../Modal/AccessMaskModal";
 
 const ADS = [
   {
-    img: "https://irinabot.ru/kaisa/ZBRestored.png",
+    img: "/kaisa/ZBRestored-plain.png?1",
     link: "https://discord.com/invite/bfkq5JcDPT",
     index: undefined,
     creatorId: 171118,
-    expire: 1670706000000,
+    expire: 1676322000000,
   },
   {
-    img: "https://irinabot.ru/kaisa/XGMLogo.png",
+    img: "/kaisa/XGMLogo.png",
     link: "https://xgm.guru/p/wc3/xgm-irina-autohost",
     index: undefined,
     creatorId: 170246,
@@ -39,6 +39,7 @@ interface GameListProps {
 
 function GameList({ gameList, selectedGame, setSelectedGame }: GameListProps) {
   const { language } = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
 
   const { accessMask } = useContext(AuthContext).auth;
 
@@ -58,10 +59,18 @@ function GameList({ gameList, selectedGame, setSelectedGame }: GameListProps) {
     <Table selectable>
       <Table.Header>
         <Table.Row>
-          <Table.HeaderCell width={2}>Слоты</Table.HeaderCell>
-          <Table.HeaderCell width={4}>Игра</Table.HeaderCell>
-          <Table.HeaderCell>Игроки</Table.HeaderCell>
-          <Table.HeaderCell width={2}>Владелец</Table.HeaderCell>
+          <Table.HeaderCell width={2}>
+            {t("page.game.list.index.slots")}
+          </Table.HeaderCell>
+          <Table.HeaderCell width={4}>
+            {t("page.game.list.index.game")}
+          </Table.HeaderCell>
+          <Table.HeaderCell>
+            {t("page.game.list.index.players")}
+          </Table.HeaderCell>
+          <Table.HeaderCell width={2}>
+            {t("page.game.list.index.owner")}
+          </Table.HeaderCell>
           <Table.HeaderCell width={2}></Table.HeaderCell>
         </Table.Row>
       </Table.Header>
@@ -119,7 +128,7 @@ function GameList({ gameList, selectedGame, setSelectedGame }: GameListProps) {
                   {game.iccupHost && !game.gameFlags.started && (
                     <span
                       className="iccup"
-                      title="Копировать"
+                      title={t("page.game.list.index.copy")}
                       onClick={() => copy(game.iccupHost)}
                     >
                       ({game.iccupHost})

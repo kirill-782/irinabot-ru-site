@@ -1,6 +1,10 @@
 import React, { SyntheticEvent, useContext, useEffect, useState } from "react";
 import { Button, Icon, Input, Modal } from "semantic-ui-react";
-import { AuthContext, WebsocketContext } from "../../context";
+import {
+  AppRuntimeSettingsContext,
+  AuthContext,
+  WebsocketContext,
+} from "../../context";
 import { GameListGame } from "../../models/websocket/ServerGameList";
 import { AccessMaskBit } from "../Modal/AccessMaskModal";
 import { ClientExternalSignalConverter } from "../../models/websocket/ClientExternalSignal";
@@ -24,6 +28,9 @@ function SendSignalButton({ game }: SendSignalButtonProps) {
       })
     );
   };
+
+  const { language } = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
 
   useEffect(() => {
     setSignal("");
@@ -58,11 +65,11 @@ function SendSignalButton({ game }: SendSignalButtonProps) {
             setSignalModalOpen(false);
           }}
         >
-          <Modal.Header>Отправить сигнал</Modal.Header>
+          <Modal.Header>{t("modal.sendSignal.send")}</Modal.Header>
           <Modal.Content>
-            <p>Какой сигнал отправить в игру</p>
+            <p>{t("modal.sendSignal.what")}</p>
             <Input
-              placeholder="Сигнал"
+              placeholder={t("modal.sendSignal.sign")}
               value={signal}
               onChange={(_, data) => {
                 setSignal(data.value);
@@ -78,7 +85,7 @@ function SendSignalButton({ game }: SendSignalButtonProps) {
           <Modal.Actions>
             <Button color="red" onClick={() => setSignalModalOpen(false)}>
               <Icon name="x" />
-              Отмена
+              {t("modal.sendSignal.cancel")}
             </Button>
             <Button
               color="green"
@@ -88,7 +95,7 @@ function SendSignalButton({ game }: SendSignalButtonProps) {
               }}
             >
               <Icon name="checkmark" />
-              Отправить
+              {t("modal.sendSignal.submit")}
             </Button>
           </Modal.Actions>
         </Modal>

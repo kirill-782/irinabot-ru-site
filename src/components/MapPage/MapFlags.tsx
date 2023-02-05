@@ -7,7 +7,7 @@ import {
   List,
   Segment,
 } from "semantic-ui-react";
-import { MapContext } from "../../context";
+import { AppRuntimeSettingsContext, MapContext } from "../../context";
 import "./MapFlags.scss";
 
 function MapFlags() {
@@ -20,14 +20,22 @@ function MapFlags() {
     ...otherFlags
   } = useContext(MapContext).map.additionalFlags || {};
 
+  const { language } = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
   return (
     <div className="map-flags">
-      {hasCheats && <Label color="red">Карта содержит читпак</Label>}
-      {sematicCheckError && (
-        <Label color="red">Скрипт карты содержит семантические ошибки</Label>
+      {hasCheats && (
+        <Label color="red">{t("page.map.flags.hasCheatPack")}</Label>
       )}
-      {statsType && <Label>Тип статистики: {statsType}</Label>}
-      {hclSupport && <Label>Карта поддерживает HCL</Label>}
+      {sematicCheckError && (
+        <Label color="red">{t("page.map.flags.scriptHasSemanticErrors")}</Label>
+      )}
+      {statsType && (
+        <Label>
+          {t("page.map.flags.statsType")}: {statsType}
+        </Label>
+      )}
+      {hclSupport && <Label>{t("page.map.flags.hclSupport")}</Label>}
     </div>
   );
 }

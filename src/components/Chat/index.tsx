@@ -77,6 +77,9 @@ export const Chat: React.FC<ChatProps> = ({
 
   const { chat } = useContext(AppRuntimeSettingsContext);
 
+  const { language } = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
+
   useEffect(() => {
     chat.setSelectUser({ selectUser: openChat });
   }, [openChat, chat.setSelectUser]);
@@ -149,7 +152,7 @@ export const Chat: React.FC<ChatProps> = ({
       }
       break;
     case "console":
-      label = "Консоль";
+      label = t("chat.console");
       content = (
         <ConsoleBot
           messages={consoleMessages}
@@ -158,7 +161,7 @@ export const Chat: React.FC<ChatProps> = ({
       );
       break;
     default:
-      label = "Чат";
+      label = t("chat.chat");
       content = (
         <ChatList
           users={users}

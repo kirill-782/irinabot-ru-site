@@ -1,7 +1,7 @@
 import { access } from "fs";
 import React, { useContext, useState } from "react";
 import { Dropdown, Icon } from "semantic-ui-react";
-import { AuthContext } from "../../context";
+import { AppRuntimeSettingsContext, AuthContext } from "../../context";
 import AccessMaskModal, { AccessMaskBit } from "../Modal/AccessMaskModal";
 import AutohostListModal from "../Modal/AutohostListModal";
 import UploadMap from "./UploadMap";
@@ -9,12 +9,15 @@ import UploadMap from "./UploadMap";
 function UtilsDropdown() {
   const authContext = useContext(AuthContext);
 
+  const { language } = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
+
   const [autohostModalOpened, setAutohostModalOpened] = useState(false);
   const [accessMaskModalOpened, setAccessMaskModalOpened] = useState(false);
 
   return (
     <>
-      <Dropdown text="Утилиты" item>
+      <Dropdown text={t("menu.utils.utils")} item>
         <Dropdown.Menu>
           <Dropdown.Item
             onClick={() => {
@@ -27,7 +30,7 @@ function UtilsDropdown() {
             }
           >
             <Icon name="list" />
-            Список автохостов
+            {t("menu.utils.autohostList")}
           </Dropdown.Item>
           <UploadMap />
           <Dropdown.Item
@@ -36,7 +39,7 @@ function UtilsDropdown() {
             }}
           >
             <Icon name="check" />
-            Калькулятор accessMask
+            {t("menu.utils.accessMask")}
           </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>

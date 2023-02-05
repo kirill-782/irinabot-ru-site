@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Button, Grid, Item, Image, Header } from "semantic-ui-react";
 import { Map } from "../../models/rest/Map";
 import "./MapCard.scss";
@@ -8,6 +8,7 @@ import MapStatusIcons from "../MapStatusIcons";
 import MapCategoryList from "../MapPage/MapCategoryList";
 import MapDownloadButton from "../MapPage/MapDownloadButton";
 import LazyLoadedImage from "../LazyLoadedImage";
+import { AppRuntimeSettingsContext } from "../../context";
 
 /** Карточка игры в dropdown */
 export const MapCard: React.FC<Map & { selectElement?: React.ReactNode }> = ({
@@ -23,6 +24,9 @@ export const MapCard: React.FC<Map & { selectElement?: React.ReactNode }> = ({
   const { mapImageUrl, coverImageUrl, author, name, description } = mapInfo!;
 
   const [fullText, setFullText] = useState(false);
+
+  const { language } = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
 
   let displayDesctiption = description;
   let needFulltextLink = false;
@@ -60,7 +64,7 @@ export const MapCard: React.FC<Map & { selectElement?: React.ReactNode }> = ({
                 setFullText(true);
               }}
             >
-              Показать весь текст
+              {t("page.map.list.card.allText")}
             </a>
           )}
         </Grid.Row>

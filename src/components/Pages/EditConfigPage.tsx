@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Container, Form, Loader, Message } from "semantic-ui-react";
-import { RestContext } from "../../context";
+import { AppRuntimeSettingsContext, RestContext } from "../../context";
 import { ConfigInfo } from "../../models/rest/ConfigInfo";
 import { convertErrorResponseToString } from "../../utils/ApiUtils";
 import { Config } from "../../models/rest/Config";
@@ -21,6 +21,9 @@ function EditConfigPage() {
   const [configName, setConfigName] = useState<string>("");
 
   const { mapsApi } = useContext(RestContext);
+
+  const { language } = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
 
   useEffect(() => {
     if (!configData) {
@@ -65,13 +68,13 @@ function EditConfigPage() {
         .then((configData) => {
           setConfigData(configData);
           toast({
-            title: "Конфиг сохранен",
+            title: t("page.edit.config.saved"),
             icon: "check",
           });
         })
         .catch((e) => {
           toast({
-            title: "Ошибка сохранения",
+            title: t("page.edit.config.savingError"),
             description: convertErrorResponseToString(e),
             color: "red",
           });
@@ -87,19 +90,18 @@ function EditConfigPage() {
       )}
       {isLoading && (
         <Loader active size="big">
-          Загрузка
+          {t("page.edit.config.isLoading")}
         </Loader>
       )}
       {configPayload && (
         <>
           <Message>
-            Большая часть параметров предоставлена только для ознакомления. При
-            редактировании учитывайте особенности версии. Конфиг был создан для
-            версии <strong>{configData?.version}</strong>
+            {t("page.edit.config.madeFor")}{" "}
+            <strong>{configData?.version}</strong>
           </Message>
           <Form>
             <Form.Field>
-              <label>Имя конфига</label>
+              <label>{t("page.edit.config.name")}</label>
               <Form.Group widths="equal">
                 <Form.Input
                   fluid
@@ -114,11 +116,11 @@ function EditConfigPage() {
                     saveConfig();
                   }}
                 >
-                  Сохранить конфиг
+                  {t("page.edit.config.save")}
                 </Form.Button>
               </Form.Group>
               <Form.Checkbox
-                label="Редактор JSON"
+                label={t("page.edit.config.json")}
                 checked={jsonEditor}
                 onChange={(_, data) => {
                   setJsonEditor(data.checked);

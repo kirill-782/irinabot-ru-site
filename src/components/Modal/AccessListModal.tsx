@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Message, Modal, Table } from "semantic-ui-react";
 import ConnectorId from "../ConnectorId";
-import { AuthContext } from "./../../context/index";
+import { AppRuntimeSettingsContext, AuthContext } from "./../../context/index";
 import AccessMaskModal from "./AccessMaskModal";
 
 import "./AccessListModal.scss";
@@ -19,9 +19,12 @@ function AccessListModal({ open, onClose }: AccessListModalProps) {
     undefined
   );
 
+  const { language } = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
+
   return (
     <Modal open={open} onClose={onClose} closeIcon>
-      <Modal.Header>Список прав</Modal.Header>
+      <Modal.Header>{t("modal.accessList.caption")}</Modal.Header>
       <Modal.Content>
         {showAccessMask !== undefined && (
           <AccessMaskModal
@@ -34,18 +37,21 @@ function AccessListModal({ open, onClose }: AccessListModalProps) {
           />
         )}
         {accessRows.length === 0 ? (
-          <Message info>У вас нет прав. Прощайте</Message>
+          <Message info>{t("modal.accessList.norights")}</Message>
         ) : (
           <>
-            <Message info>
-              Не пугайся, бро. Отображается дата истечения ближайшего доната.
-              Как только он истечет - дата обновится.
-            </Message>
+            <Message info>{t("modal.accessList.info")}</Message>
             <Table>
               <Table.Header>
-                <Table.HeaderCell>ID игрока</Table.HeaderCell>
-                <Table.HeaderCell>Маска прав</Table.HeaderCell>
-                <Table.HeaderCell>Истекают</Table.HeaderCell>
+                <Table.HeaderCell>
+                  {t("modal.accessList.table.playerID")}
+                </Table.HeaderCell>
+                <Table.HeaderCell>
+                  {t("modal.accessList.table.accessMask")}
+                </Table.HeaderCell>
+                <Table.HeaderCell>
+                  {t("modal.accessList.table.playerID")}
+                </Table.HeaderCell>
               </Table.Header>
               {accessRows.map((i) => {
                 return (
@@ -64,7 +70,7 @@ function AccessListModal({ open, onClose }: AccessListModalProps) {
                     </Table.Cell>
                     <Table.Cell>
                       {i.expireTime === 0
-                        ? "Бессрочно"
+                        ? t("modal.accessList.table.indefinitely")
                         : new Date(i.expireTime * 1000).toLocaleString()}
                     </Table.Cell>
                   </Table.Row>

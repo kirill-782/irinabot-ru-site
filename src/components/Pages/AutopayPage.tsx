@@ -1,6 +1,6 @@
 import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { Container, Form, Grid, Header, Message } from "semantic-ui-react";
-import { AuthContext } from "./../../context/index";
+import { AppRuntimeSettingsContext, AuthContext } from "./../../context/index";
 import { SITE_TITLE } from "../../config/ApplicationConfig";
 import MetaDescription from "../Meta/MetaDescription";
 import React from "react";
@@ -55,12 +55,15 @@ function AutopayPage() {
   const paymentTypeRef = useRef<HTMLInputElement>(null);
   const paylentLabelRef = useRef<HTMLInputElement>(null);
 
+  const { language } = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
+
   useEffect(() => {
     setConnectorId(authContext.auth.currentAuth?.connectorId.toString());
   }, [authContext.auth.currentAuth]);
 
   useEffect(() => {
-    window.document.title = `Донат | ${SITE_TITLE}`;
+    window.document.title = `${t("page.autopay.donute")} | ${SITE_TITLE}`;
   }, []);
 
   const togglePlaceCheckbox = (placeId) => {
@@ -107,18 +110,15 @@ function AutopayPage() {
     if (totalPrice === 0)
       return (
         <Message color="red">
-          <Message.Header>Не выбран донат</Message.Header>
-          <p>Отметьте одну или несколько галочек выше</p>
+          <Message.Header>{t("page.autopay.donuteNotSelected")}</Message.Header>
+          <p>{t("page.autopay.needMark")}</p>
         </Message>
       );
 
     return (
       <Message color="red">
-        <Message.Header>ID connector неверный</Message.Header>
-        <p>
-          Неверно введен ID коннектора. Ведите числа напротив # в настройках на
-          сайте
-        </p>
+        <Message.Header>{t("page.autopay.incorrectedID")}</Message.Header>
+        <p>{t("page.autopay.incorrectedIDEx")}</p>
       </Message>
     );
   };
@@ -136,9 +136,13 @@ function AutopayPage() {
 
   return (
     <Container>
-      <MetaDescription description="Здесь можно оплатить привилегии на боте." />
-      <Header>Калькулятор описания для автоподключения доната</Header>
-      <Form ref={formRef} method="POST" action="https://yoomoney.ru/quickpay/confirm.xml">
+      <MetaDescription description={t("page.autopay.payhere") + "."} />
+      <Header>{t("page.autopay.donuteCalc")}</Header>
+      <Form
+        ref={formRef}
+        method="POST"
+        action="https://yoomoney.ru/quickpay/confirm.xml"
+      >
         <Grid columns="equal" stackable>
           <Grid.Column width="two">
             {availablePlaces.map((place) => {
@@ -152,25 +156,25 @@ function AutopayPage() {
                   onChange={() => {
                     togglePlaceCheckbox(place.placeId);
                   }}
-                  label={place.title}
+                  label={t(place.title)}
                 ></Form.Checkbox>
               );
             })}
           </Grid.Column>
           <Grid.Column width="three" floated="right">
             <Form.Input
-              label="Ваш ID"
+              label={t("page.autopay.yourID")}
               value={connectroId}
               onChange={(e) => checkAndSetConnectorId(e.target.value)}
             ></Form.Input>
             <Form.Input
-              label="Продолжительность (месяцы)"
+              label={t("page.autopay.duration")}
               value={duration}
               onChange={(e) => checkAndSetDuration(e.target.value)}
             ></Form.Input>
             <Form.Input
               name="sum"
-              label="Итого"
+              label={t("page.autopay.totalCost")}
               value={totalPrice}
             ></Form.Input>
           </Grid.Column>
@@ -183,7 +187,7 @@ function AutopayPage() {
                 basic
                 color="green"
               >
-                Оплата картой
+                {t("page.autopay.paycard")}
               </Form.Button>
               <Form.Button
                 onClick={() => pay("PC")}
@@ -191,18 +195,18 @@ function AutopayPage() {
                 basic
                 color="green"
               >
-                Оплата Yoo Money
+                {t("page.autopay.pcYoo")}
               </Form.Button>
             </Form.Group>
             <Message info>
               <p>
-                Если вы подключаете автохост впервые - напишите в группу ВК (
+                {t("page.autopay.infoA")} (
                 <a href="https://vk.com/irina_bot">https://vk.com/irina_bot</a>)
-                или на сервере Discord (
+                {t("page.autopay.infoA")} (
                 <a href="https://discord.gg/cTfyEZT">
                   https://discord.gg/cTfyEZT
                 </a>
-                ), чтобы получить информацию по его установке.
+                ) {t("page.autopay.infoC")}.
               </p>
             </Message>
           </Grid.Row>
@@ -211,16 +215,16 @@ function AutopayPage() {
         <input
           type="hidden"
           name="formcomment"
-          value="Irina Bot оплата платных услуг."
+          value={t("page.autopay.paying") + "."}
         />
         <input
           type="hidden"
           name="short-dest"
-          value="Irina Bot оплата платных услуг."
+          value={t("page.autopay.paying") + "."}
         />
         <input type="hidden" name="label" ref={paylentLabelRef} />
         <input type="hidden" name="quickpay-form" value="shop" />
-        <input type="hidden" name="targets" value="Оплата платных услуг" />
+        <input type="hidden" name="targets" value={t("page.autopay.payirka")} />
         <input
           type="hidden"
           name="paymentType"

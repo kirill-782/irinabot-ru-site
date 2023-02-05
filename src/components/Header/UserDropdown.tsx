@@ -2,7 +2,11 @@ import React from "react";
 import { useContext, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { Dropdown } from "semantic-ui-react";
-import { AuthContext, WebsocketContext } from "../../context";
+import {
+  AppRuntimeSettingsContext,
+  AuthContext,
+  WebsocketContext,
+} from "../../context";
 import AccessListModal from "../Modal/AccessListModal";
 import { AccessMaskBit } from "../Modal/AccessMaskModal";
 import UserSettingsModal from "../Modal/UserSettingsModal";
@@ -15,6 +19,9 @@ function UserDrowdown() {
   const [userAccessModalOpen, setUserAccessModalOpen] = useState(false);
 
   const currentAuth = authContext.auth.currentAuth;
+
+  const { language } = useContext(AppRuntimeSettingsContext);
+  const t = language.getString;
 
   const logout = () => {
     window.localStorage.removeItem("authTokenType");
@@ -44,23 +51,25 @@ function UserDrowdown() {
             as={NavLink}
             to="/create"
           >
-            Создать игру
+            {t("menu.user.create")}
           </Dropdown.Item>
           <Dropdown.Item
             onClick={() => {
               setUserSettingsModalOpen(true);
             }}
           >
-            Настройки
+            {t("menu.user.settings")}
           </Dropdown.Item>
           <Dropdown.Item
             onClick={() => {
               setUserAccessModalOpen(true);
             }}
           >
-            Список прав
+            {t("menu.user.accessList")}
           </Dropdown.Item>
-          <Dropdown.Item onClick={logout}>Выйти</Dropdown.Item>
+          <Dropdown.Item onClick={logout}>
+            {t("menu.user.logout")}
+          </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
       <UserSettingsModal
