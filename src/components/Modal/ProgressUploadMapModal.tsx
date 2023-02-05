@@ -20,15 +20,14 @@ function ProgressUploadMapModal({
   const t = language.getString;
   return (
     <Modal open={open} onClose={onClose} closeIcon>
-      <Modal.Header>{t("uploading.cation")}</Modal.Header>
+      <Modal.Header>{t("modal.uploading.caption")}</Modal.Header>
       <Modal.Content>
         <p>
-          {t("uploading.description.partOne")} <b>{filename}</b>{" "}
-          {t("uploading.description.partTwo")}
+          {t("modal.uploading.description")}
         </p>
         <Grid.Row></Grid.Row>
         <Progress
-          label={`${t("uploading.uploaded")} ${percent}%`}
+          label={`${t("modal.uploading.uploaded")} ${percent}%`}
           percent={percent}
           indicating
         />
