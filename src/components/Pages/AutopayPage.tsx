@@ -16,31 +16,31 @@ interface Place {
 const availablePlaces: Place[] = [
   {
     placeId: 1,
-    title: "page.autopay.place.vip",
+    title: "VIP доступ",
     description: "",
     imageUrl: "/images/vip.png",
-    price: 99,
+    price: 149,
   },
   {
     placeId: 5,
-    title: "page.autopay.place.banList",
+    title: "Ban list",
     description: "",
     imageUrl: "/images/ban_list.png",
-    price: 74,
+    price: 99,
   },
   {
     placeId: 6,
-    title: "page.autopay.place.adminList",
+    title: "Admin list",
     description: "",
     imageUrl: "/images/admin_lina.png",
-    price: 74,
+    price: 99,
   },
   {
     placeId: 4,
-    title: "page.autopay.place.autohost",
+    title: "Autohost",
     description: "",
     imageUrl: "/images/autohost.png",
-    price: 249,
+    price: 299,
   },
 ];
 
