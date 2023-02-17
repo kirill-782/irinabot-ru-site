@@ -1,3 +1,4 @@
+import { SlotInfo } from "@kokomi/w3g-parser-browser";
 import { DataBuffer } from "../../utils/DataBuffer";
 import { AbstractConverter, AbstractPackage } from "./AbstractPackage";
 import {
@@ -12,6 +13,15 @@ export interface ClientCreateGame extends AbstractPackage {
   gameName: string;
   mapData: string;
   configName: string;
+  saveGame?: SaveGameData;
+}
+
+export interface SaveGameData {
+  mapPath: string;
+  magicNumber: number;
+  randomSeed: number;
+  slots: SlotInfo[];
+  saveGameFileName: string;
 }
 
 export class ClientCreateGameConverter extends AbstractConverter {
@@ -28,6 +38,30 @@ export class ClientCreateGameConverter extends AbstractConverter {
     dataBuffer.putNullTerminatedString(data.mapData);
     dataBuffer.putNullTerminatedString(data.configName);
 
+    dataBuffer.putUint8(data.saveGame ? 1 : 0);
+
+    if (data.saveGame) {
+      dataBuffer.putNullTerminatedString(data.saveGame.mapPath);
+      dataBuffer.putUint32(data.saveGame.magicNumber);
+      dataBuffer.putUint32(data.saveGame.randomSeed);
+
+      dataBuffer.putUint8(data.saveGame.slots.length);
+
+      for (let i = 0; i < data.saveGame.slots.length; ++i) {
+        dataBuffer.putUint8(data.saveGame.slots[i].playerId);
+        dataBuffer.putUint8(data.saveGame.slots[i].downloadStatus);
+        dataBuffer.putUint8(data.saveGame.slots[i].slotStatus);
+        dataBuffer.putUint8(data.saveGame.slots[i].computer);
+        dataBuffer.putUint8(data.saveGame.slots[i].team);
+        dataBuffer.putUint8(data.saveGame.slots[i].color);
+        dataBuffer.putUint8(data.saveGame.slots[i].race);
+        dataBuffer.putUint8(data.saveGame.slots[i].computerType);
+        dataBuffer.putUint8(data.saveGame.slots[i].handicap);
+      }
+
+      dataBuffer.putNullTerminatedString(data.saveGame.saveGameFileName);
+    }
+
     return dataBuffer.toArrayBuffer();
   }
 
@@ -41,6 +75,41 @@ export class ClientCreateGameConverter extends AbstractConverter {
       gameName: dataBuffer.getNullTerminatedString(),
       mapData: dataBuffer.getNullTerminatedString(),
       configName: dataBuffer.getNullTerminatedString(),
+      saveGame: (() => {
+        if (dataBuffer.getUint8()) {
+          const mapPath = dataBuffer.getNullTerminatedString();
+          const magicNumber = dataBuffer.getUint32();
+          const randomSeed = dataBuffer.getUint32();
+
+          const slotsCount = dataBuffer.getUint8();
+
+          const slots = new Array<SlotInfo>();
+
+          for (let i = 0; i < slotsCount; ++i) {
+            slots.push({
+              playerId: dataBuffer.getUint8(),
+              downloadStatus: dataBuffer.getUint8(),
+              slotStatus: dataBuffer.getUint8(),
+              computer: dataBuffer.getUint8(),
+              team: dataBuffer.getUint8(),
+              color: dataBuffer.getUint8(),
+              race: dataBuffer.getUint8(),
+              computerType: dataBuffer.getUint8(),
+              handicap: dataBuffer.getUint8(),
+            });
+          }
+
+          return {
+            mapPath,
+            magicNumber,
+            randomSeed,
+            slots,
+            saveGameFileName: dataBuffer.getNullTerminatedString(),
+          };
+        }
+
+        return undefined;
+      })(),
     };
   }
 }

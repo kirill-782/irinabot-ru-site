@@ -22,6 +22,7 @@ interface ServerUDPAnswerBase extends AbstractPackage {
   mapFileSha1: number[];
   version: string;
   maxPlayers: number;
+  mapGameType: number;
 }
 
 interface ServerUDPAnswerBroadcastExtension {
@@ -73,6 +74,8 @@ export class ServerUDPAnswerConverter extends AbstractConverter {
       );
     }
 
+    dataBuffer.putUint32(data.mapGameType);
+
     return dataBuffer.toArrayBuffer();
   }
 
@@ -95,6 +98,7 @@ export class ServerUDPAnswerConverter extends AbstractConverter {
       mapFileSha1: dataBuffer.getArray(20),
       version: dataBuffer.getNullTerminatedString(),
       maxPlayers: dataBuffer.getUint32(),
+      mapGameType: 0,
     };
 
     if (dataBuffer.getUint8()) {
@@ -103,6 +107,7 @@ export class ServerUDPAnswerConverter extends AbstractConverter {
         broadcast: true,
         productId: dataBuffer.getArray(4),
         versionPrefix: dataBuffer.getArray(4),
+        mapGameType: dataBuffer.getUint32(),
       };
     }
 
@@ -110,6 +115,7 @@ export class ServerUDPAnswerConverter extends AbstractConverter {
       ...baseData,
       broadcast: false,
       domain: dataBuffer.getNullTerminatedString(),
+      mapGameType: dataBuffer.getUint32(),
     };
   }
 }

@@ -76,6 +76,8 @@ export const useConnectorGameAdd = ({
         } else if (gameData.broadcast === false)
           gameParams.append("domain", gameData.domain);
 
+        gameParams.append("mapGameType", gameData.mapGameType.toString());
+
         console.log("irinat://addgame?" + gameParams.toString());
 
         document.location.href = "irinat://addgame?" + gameParams.toString();

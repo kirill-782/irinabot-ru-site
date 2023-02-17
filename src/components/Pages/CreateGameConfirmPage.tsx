@@ -3,6 +3,7 @@ import React, {
   useCallback,
   useContext,
   useEffect,
+  useRef,
   useState,
 } from "react";
 import {
@@ -37,7 +38,10 @@ import CreateAutohostModal, {
   AuthostModalData,
 } from "../Modal/CreateAutohostModal";
 import { ClientAddAutohostConverter } from "./../../models/websocket/ClientAddAutohost";
-import { ClientCreateGameConverter } from "./../../models/websocket/ClientCreateGame";
+import {
+  ClientCreateGameConverter,
+  SaveGameData,
+} from "./../../models/websocket/ClientCreateGame";
 import { toast } from "@kokomi/react-semantic-toasts";
 import {
   DEFAULT_CONTEXT_HEADER_CONSTANT,
@@ -51,6 +55,7 @@ import copy from "clipboard-copy";
 import "./CreateGameConfirmPage.scss";
 import MetaRobots from "./../Meta/MetaRobots";
 import { SITE_TITLE } from "../../config/ApplicationConfig";
+import { SaveGameParser } from "@kokomi/w3g-parser-browser";
 
 const GAME_NAME_LOCALSTORAGE_PATH = "lastSuccessGameName";
 
@@ -95,6 +100,8 @@ function CreateGameConfirmPage({}) {
     map,
     config
   );
+
+  const saveGameInput = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     window.document.title = `${t("page.game.create.new")} | ${SITE_TITLE}`;
@@ -165,9 +172,32 @@ function CreateGameConfirmPage({}) {
             {config && <ConfigPreview config={config} />}
             {map && <MapPreview map={map} />}
             <Grid.Row className="cretae-buttons-rows">
-              <Button onClick={handleCreateGame} disabled={!canCreateGame}>
+              <Button
+                onClick={() => {
+                  handleCreateGame();
+                }}
+                disabled={!canCreateGame}
+              >
                 {t("page.game.create.confirm.create")}
               </Button>
+              <Button
+                onClick={() => {
+                  saveGameInput.current?.click();
+                }}
+                disabled={!canCreateGame}
+              >
+                {t("page.game.create.confirm.load.savegame")}
+              </Button>
+              <input
+                type="file"
+                hidden
+                accept=".w3z"
+                onChange={(e) => {
+                  if (e.target.files?.length)
+                    handleCreateGame(e.target.files[0] || undefined);
+                }}
+                ref={saveGameInput}
+              ></input>
               <Button
                 onClick={() => {
                   setAutohostModalOpen(true);
@@ -579,7 +609,7 @@ function useLocalCreateGameCallback(
   }, [ghostSocket, gameName]);
 
   return useCallback(
-    (event: SyntheticEvent, data: any) => {
+    (saveGameFile?: File) => {
       if (!config && selectedPatch?.status !== 1) return;
 
       (config?.id
@@ -590,20 +620,51 @@ function useLocalCreateGameCallback(
           )
       )
         .then((mapData) => {
-          ghostSocket.send(
-            new ClientCreateGameConverter().assembly({
-              flags: assemblyMapOptions(
-                options.mask,
-                options.mapSpeed,
-                options.mapVisibility,
-                options.mapObservers
-              ),
-              slotPreset: "",
-              gameName,
-              mapData: mapData,
-              privateGame: options.privateGame,
-              configName: options.configName,
-            })
+          (saveGameFile?.arrayBuffer() || Promise.resolve(undefined)).then(
+            (data) => {
+              let saveGameData: SaveGameData | undefined;
+
+              if (data) {
+                try {
+                  const sgParser = new SaveGameParser();
+                  const sgData = sgParser.parseSaveGame(data);
+  
+                  saveGameData = {
+                    mapPath: sgData.data.mapPath,
+                    magicNumber: sgData.data.magicNumber,
+                    randomSeed: sgData.data.randomSeed,
+                    slots: sgData.data.slots,
+                    saveGameFileName: saveGameFile?.name || ""
+                  };
+
+                  console.log(saveGameData);
+                }
+                catch(e) {
+                  toast({
+                    title: t("page.game.create.useLocal.CreateGameCallback.sg.parseError"),
+                    description: e.toString(),
+                    color: "red",
+                  });
+                }
+              }
+
+              ghostSocket.send(
+                new ClientCreateGameConverter().assembly({
+                  flags: assemblyMapOptions(
+                    options.mask,
+                    options.mapSpeed,
+                    options.mapVisibility,
+                    options.mapObservers
+                  ),
+                  slotPreset: "",
+                  gameName,
+                  mapData: mapData,
+                  privateGame: options.privateGame,
+                  configName: options.configName,
+                  saveGame: saveGameData
+                })
+              );
+            }
           );
         })
         .catch((e) => {
