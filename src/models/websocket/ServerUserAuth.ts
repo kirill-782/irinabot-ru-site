@@ -17,6 +17,7 @@ export interface ServerUserAuth extends AbstractPackage {
   bnetName: string;
   connectorName: string;
   mainType: number;
+  nicknamePrefix: string;
 }
 
 export class ServerUserAuthConverter extends AbstractConverter {
@@ -58,6 +59,7 @@ export class ServerUserAuthConverter extends AbstractConverter {
       bnetName: dataBuffer.getNullTerminatedString(),
       connectorName: dataBuffer.getNullTerminatedString(),
       mainType: dataBuffer.getUint8(),
+      nicknamePrefix: dataBuffer.getNullTerminatedString(),
     };
   }
 }

@@ -10,6 +10,7 @@ import {
 import AccessListModal from "../Modal/AccessListModal";
 import { AccessMaskBit } from "../Modal/AccessMaskModal";
 import UserSettingsModal from "../Modal/UserSettingsModal";
+import WarcraftIIIText from "../WarcraftIIIText";
 
 function UserDrowdown() {
   const authContext = useContext(AuthContext);
@@ -36,10 +37,14 @@ function UserDrowdown() {
   return (
     <>
       <Dropdown
-        text={
-          currentAuth.connectorName.length > 0
-            ? currentAuth.connectorName
-            : currentAuth.nickname
+        trigger={
+          currentAuth.connectorName.length > 0 ? (
+            <WarcraftIIIText>
+              {currentAuth.nicknamePrefix + currentAuth.connectorName}
+            </WarcraftIIIText>
+          ) : (
+            currentAuth.nickname
+          )
         }
         item
       >

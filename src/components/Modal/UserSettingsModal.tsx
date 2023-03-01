@@ -24,10 +24,16 @@ import { GHostPackageEvent } from "../../services/GHostWebsocket";
 import {
   GLOBAL_CONTEXT_HEADER_CONSTANT,
   GLOBAL_BNET_KEY,
+  GLOBAL_ADD_INTEGRATION_RESPONSE,
 } from "./../../models/websocket/HeaderConstants";
 import { ServerBnetKey } from "./../../models/websocket/ServerBnetKey";
 import { ClientRequestBnetKeyConverter } from "./../../models/websocket/ClientRequestBnetKey";
+
 import React from "react";
+import NicknameColorPicker from "../NicknameColorPicker";
+import {
+  ClientNickanameColorChangeConverter,
+} from "./../../models/websocket/ClientNickanameColorChange";
 
 const BNET_INTEGRATION_TYPE = 0;
 
@@ -40,6 +46,20 @@ function UserSettingsModal(props) {
   const { language } = useContext(AppRuntimeSettingsContext);
   const t = language.getString;
 
+  const nicknameColor = (() => {
+    const colors = auth.currentAuth.nicknamePrefix.match(
+      /\|c[0-9a-f]{2}([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})/i
+    );
+
+    if (colors) {
+      return {
+        r: parseInt(colors[1], 16),
+        g: parseInt(colors[2], 16),
+        b: parseInt(colors[3], 16),
+      };
+    }
+  })();
+
   useEffect(() => {
     const onPackage = (data: GHostPackageEvent) => {
       if (
@@ -51,6 +71,17 @@ function UserSettingsModal(props) {
         toast({
           title: t("modal.settings.linkingPVPGn"),
           description: t("modal.settings.linkingPVPGnHint") + bnetKey.key,
+          time: 20000,
+        });
+      }
+
+      if (
+        data.detail.package.context === GLOBAL_CONTEXT_HEADER_CONSTANT &&
+        data.detail.package.type === GLOBAL_ADD_INTEGRATION_RESPONSE
+      ) {
+        toast({
+          title: t("modal.settings.auth.updated.title"),
+          description: t("modal.settings.auth.updated.description"),
           time: 20000,
         });
       }
@@ -115,6 +146,15 @@ function UserSettingsModal(props) {
     oauthWindow.addEventListener("close", () => {
       window.removeEventListener("storage", onStorage);
     });
+  };
+
+  const onColorChanged = (color: number) => {
+    const converter = new ClientNickanameColorChangeConverter();
+    sockets.ghostSocket.send(
+      converter.assembly({
+        color,
+      })
+    );
   };
 
   const onWarcraftIIIButtonClick = () => {
@@ -243,6 +283,11 @@ function UserSettingsModal(props) {
                 </Button>
               </Form.Group>
             </Form.Field>
+            <NicknameColorPicker
+              nickname={connectorName || auth.currentAuth.connectorName}
+              onColorChanged={onColorChanged}
+              defaultColor={nicknameColor}
+            ></NicknameColorPicker>
           </Form>
         </Modal.Description>
       </Modal.Content>
