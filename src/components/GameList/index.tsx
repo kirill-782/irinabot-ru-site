@@ -92,6 +92,8 @@ function GameList({ gameList, selectedGame, setSelectedGame }: GameListProps) {
             }
           );
 
+          let displayedGameName = game.name.replace(/\+([0-9]*)$/, "");
+
           const rowIndex =
             (remaingAdsRow.findIndex((i) => i.index === index) + 1 ||
               remaingAdsRow.findIndex((i) => i.creatorId === game.creatorID) +
@@ -114,7 +116,7 @@ function GameList({ gameList, selectedGame, setSelectedGame }: GameListProps) {
                   {getPlayerSlots(game) + "/" + game.players.length}
                 </Table.Cell>
                 <Table.Cell>
-                  <div className="game-title">{game.name}</div>
+                  <div className="game-title">{displayedGameName}</div>
                   {game.gameFlags.started && (
                     <span className="duration">
                       (

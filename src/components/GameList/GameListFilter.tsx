@@ -59,7 +59,7 @@ function GameListFilter({
           }}
         ></Form.Checkbox>
         <Form.Checkbox
-          label={t("page.game.list.filter.noLoadStarted")}
+          label={t("page.game.list.filter.forceReorder")}
           checked={filterSettings.forceReorder}
           name="forceReorder"
           disabled={disabledFilters.indexOf("forceReorder") > -1}
