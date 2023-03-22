@@ -27,8 +27,8 @@ function ReplayMainInfo() {
   const { replayData, replayActions, name } = useContext(ReplayContext) || {};
 
   const getLeaveRowByPID = (pid?: number) => {
-    return replayData?.records.playerLeave.find((i) => {
-      return i.playerId === pid;
+    return replayData?.records.playerLeave?.find((i) => {
+      return i.record.playerId === pid;
     });
   };
 
@@ -88,7 +88,7 @@ function ReplayMainInfo() {
                   <TableCell>
                     {prettyMilliseconds(leftRow?.time || 0)}
                   </TableCell>
-                  <TableCell>{leftRow?.result}</TableCell>
+                  <TableCell>{leftRow?.record.result}</TableCell>
                 </TableRow>
               );
             })}

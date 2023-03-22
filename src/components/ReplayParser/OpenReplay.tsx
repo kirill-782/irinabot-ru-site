@@ -11,11 +11,31 @@ import {
 } from "semantic-ui-react";
 
 import "./OpenReplay.scss";
-import ReplayParser, { ReplayResult } from "@kokomi/w3g-parser-browser";
+import {
+  DataBuffer,
+  PackedData,
+  ReplayParser,
+  ReplayRecords,
+} from "@kokomi/w3g-parser";
 import { AppRuntimeSettingsContext } from "../../context";
 
+import pako from "pako";
+
+const decompressor = (data: Uint8Array): Uint8Array => {
+  const inflater = new pako.Inflate();
+  inflater.push(data, pako.constants.Z_SYNC_FLUSH | pako.constants.Z_FINISH);
+
+  const inflaterNative = inflater as any;
+
+  if (inflater.result) return inflater.result as Uint8Array;
+
+  return inflaterNative.strm.output.length === inflaterNative.strm.next_out
+    ? inflaterNative.strm.output
+    : inflaterNative.strm.output.subarray(0, inflaterNative.strm.next_out);
+};
+
 interface OpenReplayProps {
-  setReplayData: (name: string, data: ReplayResult) => void;
+  setReplayData: (name: string, data: PackedData<ReplayRecords>) => void;
 }
 
 function OpenReplay({ setReplayData }: OpenReplayProps) {
@@ -34,8 +54,8 @@ function OpenReplay({ setReplayData }: OpenReplayProps) {
 
     file.arrayBuffer().then((data) => {
       try {
-        const parser = new ReplayParser();
-        setReplayData(file.name, parser.parseReplay(data));
+        const parser = new ReplayParser(decompressor);
+        setReplayData(file.name, parser.parse(DataBuffer.wrap(data, true)));
       } catch (e) {
         setError(e.toString());
       }
@@ -49,8 +69,8 @@ function OpenReplay({ setReplayData }: OpenReplayProps) {
     xhr.current.onreadystatechange = () => {
       if (xhr.current?.readyState === 4) {
         try {
-          const parser = new ReplayParser();
-          setReplayData("remote", parser.parseReplay(xhr.current.response));
+          const parser = new ReplayParser(decompressor);
+          setReplayData("remote", parser.parse(DataBuffer.wrap(xhr.current.response, true)));
         } catch (e) {
           setError(e.toString());
         } finally {

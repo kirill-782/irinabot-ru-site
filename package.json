@@ -5,7 +5,7 @@
   "dependencies": {
     "@artsy/fresnel": "^3.5.0",
     "@kokomi/react-semantic-toasts": "^0.7.2",
-    "@kokomi/w3g-parser-browser": "^0.0.14",
+    "@kokomi/w3g-parser": "^1.0.0",
     "@mavrin/remark-typograf": "^2.2.0",
     "@testing-library/jest-dom": "^5.16.3",
     "@testing-library/react": "^12.1.4",
@@ -23,6 +23,7 @@
     "javascript-time-ago": "^2.5.9",
     "jsoneditor": "^9.9.0",
     "jsoneditor-react": "^3.1.2",
+    "pako": "^2.1.0",
     "pretty-ms": "^8.0.0",
     "re-resizable": "^6.9.9",
     "react": "^17.0.2",

@@ -20,7 +20,7 @@ function ExternalBlockCard({ actionsBlock }: ExternalBlockCardProps) {
     if (replayData.records.gameInfo?.hostPlayer.playerId === pid)
       return replayData.records.gameInfo?.hostPlayer.playerName;
 
-    return replayData?.records.players.find((i) => {
+    return replayData.records?.players?.find((i) => {
       return i.playerId === pid;
     })?.playerName;
   };

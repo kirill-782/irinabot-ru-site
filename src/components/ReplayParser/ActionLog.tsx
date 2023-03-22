@@ -3,7 +3,6 @@ import { Form, Grid } from "semantic-ui-react";
 import { ActionData, ReplayContext } from "../Pages/ReplayParserPage";
 
 import ExternalBlockCard from "./ExternalBlockCard";
-import { useVisibility } from "../../hooks/useVisibility";
 import { AppRuntimeSettingsContext } from "../../context";
 
 const PAGE_SIZE = 500;
@@ -26,6 +25,8 @@ function ActionLog({}) {
   const t = language.getString;
 
   useEffect(() => {
+    debugger;
+
     let actions = replayActions;
 
     if (nonEmpty)

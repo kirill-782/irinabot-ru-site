@@ -9,14 +9,14 @@ import { Container } from "semantic-ui-react";
 
 import "./ReplayParserPage.scss";
 import {
-  ReplayResult,
-  AvailableActionData,
+  PackedData,
+  ReplayRecords,
   ActionParser,
   ActionCommandBlock,
-} from "@kokomi/w3g-parser-browser";
+  DataBuffer,
+} from "@kokomi/w3g-parser";
 import OpenReplay from "../ReplayParser/OpenReplay";
 import ReplayInfo from "../ReplayParser/ReplayInfo";
-import MetaDescription from "../Meta/MetaDescription";
 import MetaRobots from "./../Meta/MetaRobots";
 import { AppRuntimeSettingsContext } from "../../context";
 
@@ -31,30 +31,32 @@ export type ActionData = {
 };
 
 export interface ReplayContextData {
-  replayData: ReplayResult;
+  replayData: PackedData<ReplayRecords>;
   replayActions: ActionData[];
   name: string;
   getShortBlockDescription: (block: ActionData) => string;
 }
 
 function ReplayParserPage({}) {
-  const [replayData, setReplayData] = useState<ReplayResult>();
+  const [replayData, setReplayData] = useState<PackedData<ReplayRecords>>();
   const [replayActions, setReplayActions] = useState<ActionData[]>([]);
   const [name, setName] = useState<string>("");
 
   const { language } = useContext(AppRuntimeSettingsContext);
   const t = language.getString;
 
-  const onReplayData = (name: string, data: ReplayResult) => {
+  const onReplayData = (name: string, data: PackedData<ReplayRecords>) => {
     setReplayData(data);
     setName(name);
     const actions: ActionData[] = [];
 
     const actionParser = new ActionParser();
 
-    data.records.actions.forEach((i, k) => {
+    data.records.actions?.forEach((i, k) => {
       try {
-        const result = actionParser.processActionData(i.rawData);
+        const result = actionParser.parse(
+          DataBuffer.wrap(i.record.rawData, true)
+        );
         actions.push({
           commandBlocks: result,
           time: i.time,
@@ -66,7 +68,7 @@ function ReplayParserPage({}) {
           time: i.time,
           errorMessage: e.toString(),
           seqenceNumber: k,
-          rawData: i.rawData,
+          rawData: i.record.rawData,
         });
       }
     });

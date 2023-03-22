@@ -75,16 +75,16 @@ function ChatTab() {
     if (replayData?.records.gameInfo?.hostPlayer.playerId === pid)
       return replayData?.records.gameInfo?.hostPlayer;
 
-    return replayData?.records.players.find((i) => {
+    return replayData?.records.players?.find((i) => {
       return i.playerId === pid;
     });
   };
 
   return (
     <div className="replay-chat-tab">
-      {replayData?.records.chatMessages.map((i, k) => {
-        const player = getPlayerByPid(i.playerId);
-        const slot = getSlotFromPid(i.playerId);
+      {replayData?.records.chatMessages?.map((i, k) => {
+        const player = getPlayerByPid(i.record.playerId);
+        const slot = getSlotFromPid(i.record.playerId);
 
         return (
           <div key={k} className="chat-row">
@@ -95,7 +95,7 @@ function ChatTab() {
             >
               {player?.playerName}
             </Item>
-            <span>{i.message}</span>
+            <span>{i.record.message}</span>
           </div>
         );
       })}

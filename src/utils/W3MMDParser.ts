@@ -1,5 +1,5 @@
-import { ActionCommandBlock } from "@kokomi/w3g-parser-browser";
-import { SyncIntegerData } from "@kokomi/w3g-parser-browser/dist/types/ActionParser";
+import { ActionCommandBlock } from "@kokomi/w3g-parser";
+import { SyncIntegerAction } from "@kokomi/w3g-parser";
 
 export interface W3MMDStatsState {
   nextValueID: number;
@@ -51,14 +51,14 @@ export class W3MMDStatsParser {
     commandBlocks.forEach((i) => {
       i.actions.forEach((j) => {
         if (j.type === 107) {
-          this.processAction(j as SyncIntegerData, i.playerId, time);
+          this.processAction(j as SyncIntegerAction, i.playerId, time);
         }
       });
     });
   }
 
   private processAction(
-    action: SyncIntegerData,
+    action: SyncIntegerAction,
     fromPid: number,
     time?: number
   ) {
