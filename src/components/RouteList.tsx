@@ -62,7 +62,7 @@ const routes: CondirionalRoute[] = [
       {
         index: true,
         element: <GameListPage />,
-        requiredAuthorities: ["BETA_ACCESS"],
+        //requiredAuthorities: ["BETA_ACCESS"],
       },
       {
         path: "debug",
@@ -75,7 +75,7 @@ const routes: CondirionalRoute[] = [
       {
         path: "gamelist",
         element: <GameListPage />,
-        requiredAuthorities: ["BETA_ACCESS"],
+        //requiredAuthorities: ["BETA_ACCESS"],
       },
       {
         path: "autopay",
@@ -89,13 +89,13 @@ const routes: CondirionalRoute[] = [
             index: true,
             element: <CreateGamePage />,
             requireAuth: true,
-            requiredAuthorities: ["BETA_ACCESS"],
+            //requiredAuthorities: ["BETA_ACCESS"],
           },
           {
             path: "confirm",
             element: <CreateGameConfirmPage />,
             requireAuth: true,
-            requiredAuthorities: ["BETA_ACCESS"],
+            //requiredAuthorities: ["BETA_ACCESS"],
           },
         ],
       },
