@@ -59,6 +59,9 @@ function GameList({ gameList, selectedGame, setSelectedGame }: GameListProps) {
     <Table selectable>
       <Table.Header>
         <Table.Row>
+        <Table.HeaderCell width={2}>
+            {t("page.game.list.index.version")}
+          </Table.HeaderCell>
           <Table.HeaderCell width={2}>
             {t("page.game.list.index.slots")}
           </Table.HeaderCell>
@@ -110,6 +113,7 @@ function GameList({ gameList, selectedGame, setSelectedGame }: GameListProps) {
                   else setSelectedGame(game);
                 }}
               >
+                <Table.Cell>{game.gameVersion}</Table.Cell>
                 <Table.Cell>
                   {getPlayerSlots(game) + "/" + game.players.length}
                 </Table.Cell>

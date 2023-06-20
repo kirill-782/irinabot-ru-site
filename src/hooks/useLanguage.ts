@@ -1,6 +1,7 @@
 import TimeAgo from "javascript-time-ago";
 import { useCallback, useState } from "react";
 import { importLocales } from "../utils/LocaleUtils";
+import { Lang } from "../translations/Lang";
 
 type stringMap = {
   [key: string]: string | boolean | number | null | undefined;
@@ -16,7 +17,8 @@ type UseLanguageResult = [
   (language: string) => void,
   (language: string, data: any) => void,
   GetLanguageStaring,
-  string
+  string,
+  Lang
 ];
 
 export const useLanguage = (): UseLanguageResult => {
@@ -71,5 +73,5 @@ export const useLanguage = (): UseLanguageResult => {
     return true;
   }, []);
 
-  return [loadLanguage, pushLanguageData, getString, selectedLanguage];
+  return [loadLanguage, pushLanguageData, getString, selectedLanguage, data];
 };

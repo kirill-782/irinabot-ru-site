@@ -1,36 +1,21 @@
 {
-  "fixics": "Фиксики размещают теги по местам, ожидайте",
+  "siteLoading": "Фиксики размещают теги по местам, ожидайте",
+  "siteErrorCatch": "На сайте произошла ошибка. Проверьте интернет соединение, обновите страницу или обратитесь к администратору",
+  "closeOauthWindow": "Я окошко интроверт. Мне не нравится, что на меня кто то смотрит. Закрой пожалуйста меня.",
+  "error":"Ошибка",
+  "loginError": "Ошибка входа",
+  "loginErrorSessionExpired": "Сессия просрочена. Войдите заново",
+  "onlineStatsCategory": "Категория",
+  "onlineStatsTotalGame": "Игр",
+  "onlineStatsPlayers": "Игроков",
+  "chatListConsoleBotTitle": "Консоль бота",
+  "chatListConsoleBotInfo": "Консоль бота для ввода команд",
+  "chatListNicknamePlaceholder": "Введите никнейм",
+  "chatListOpenChat": "Начать чат",
 
-  "introvert": "Я окошко интроверт. Мне не нравится, что на меня кто то смотрит. Закрой пожалуйста меня.",
 
-  "errorCatch": "На сайте произошла ошибка. Проверьте интернет соединение, обновите страницу или обратитесь к администратору",
-
-  "hook": {
-    "useConnectorGameAdd": {
-      "sended": "Игра в коннектор отправлена",
-      "toLAN": "Зайдите в LAN Warcraft III, чтобы войти"
-    },
-    "useWebsocketAuth": {
-      "error": "Ошибка",
-      "errorLogin": "Ошибка входа",
-      "errorSessionTimeout": "Сессия просрочена. Войдите заново"
-    }
-  },
-
-  "online": {
-    "category": "Категория",
-    "totalGame": "Игр",
-    "players": "Игроков"
-  },
 
   "chat": {
-    "list": {
-      "consoleTitle": "Консоль бота",
-      "consoleInfo": "Консоль бота для ввода команд",
-      "inputNickname": "Введите никнейм",
-      "start": "Начать чат"
-    },
-
     "chat": "Чат",
     "console": "Консоль",
     "consoleSend": "Отправить",
@@ -491,6 +476,7 @@
         "index": {
           "slots": "Слоты",
           "game": "Игра",
+          "version": "Версия",
           "players": "Игроки",
           "owner": "Владелец",
           "copy": "Копировать"

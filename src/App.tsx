@@ -49,7 +49,7 @@ function App() {
     selectUser: () => {},
   });
 
-  const [selectLanguage, pushLanguageData, getString, currentLocale] =
+  const [selectLanguage, pushLanguageData, getString, currentLocale, data] =
     useLanguage();
 
   // Фиксики останутся пока не загрузятся стили и языки
@@ -101,6 +101,7 @@ function App() {
             selectLanguage,
             getString,
             currentLocale,
+            languages: data,
           },
         }}
       >
