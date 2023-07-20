@@ -1,14 +1,14 @@
 import TimeAgo from "javascript-time-ago";
 import { useCallback, useState } from "react";
 import { importLocales } from "../utils/LocaleUtils";
-import { Lang } from "../translations/Lang";
+import { LanguageKey, LanguageRepository } from "../localization/Lang.ru";
 
 type stringMap = {
   [key: string]: string | boolean | number | null | undefined;
 };
 
 export type GetLanguageStaring = (
-  id: string,
+  id: LanguageKey,
   options?: stringMap,
   language?: string
 ) => string;
@@ -18,7 +18,7 @@ type UseLanguageResult = [
   (language: string, data: any) => void,
   GetLanguageStaring,
   string,
-  Lang
+  LanguageRepository
 ];
 
 export const useLanguage = (): UseLanguageResult => {
@@ -73,5 +73,17 @@ export const useLanguage = (): UseLanguageResult => {
     return true;
   }, []);
 
-  return [loadLanguage, pushLanguageData, getString, selectedLanguage, data];
+  return [
+    loadLanguage,
+    pushLanguageData,
+    getString,
+    selectedLanguage,
+    new Proxy(data[selectedLanguage] || {}, {
+      get: (target, key) => {
+        if (key in target) return target[key];
+
+        return key;
+      },
+    }),
+  ];
 };

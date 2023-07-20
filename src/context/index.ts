@@ -10,7 +10,7 @@ import { MapUploaderService } from "../services/MapUploaderService";
 import { AccessMaskHolder } from "../utils/AccessMaskHolder";
 import { ApiTokenHolder } from "../utils/ApiTokenHolder";
 import { ServerUserAuth } from "./../models/websocket/ServerUserAuth";
-import { Lang } from './../translations/Lang';
+import { LanguageRepository } from '../localization/Lang.ru';
 
 // Socket Context
 
@@ -42,7 +42,7 @@ export type AppRuntimeSettingsContextType = {
     getString: GetLanguageStaring;
     selectLanguage: React.Dispatch<string>;
     currentLocale: string;
-    languages: Lang
+    languageRepository: LanguageRepository
   };
 };
 

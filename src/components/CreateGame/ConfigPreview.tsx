@@ -11,7 +11,7 @@ interface ConfigPreviewProps {
 
 function ConfigPreview({ config }: ConfigPreviewProps) {
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
   return <Message info><Markdown light>{t("other.config.preview", {configName: config.name, version: config.version})}</Markdown></Message>;
 }

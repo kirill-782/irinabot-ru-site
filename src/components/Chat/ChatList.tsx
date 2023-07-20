@@ -20,7 +20,7 @@ function ChatList({
   const [newUsername, setNewUsername] = useState<string>("");
 
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
   const handleNewChat = () => {
     const newUser: User = {
@@ -48,20 +48,20 @@ function ChatList({
       <Feed.Event onClick={() => onSelectonChange(SelectionType.CONSOLE)}>
         <Feed.Label icon="pencil" />
         <Feed.Content
-          date={t("chat.list.consoleTitle")}
-          summary={t("chat.list.consoleInfo")}
+          date={lang.chatListConsoleBotTitle}
+          summary={lang.chatListConsoleBotDescription}
         />
       </Feed.Event>
       <Divider />
       <Form>
         <Form.Group widths="equal">
           <Form.Input
-            placeholder={t("chat.list.inputNickname")}
+            placeholder={lang.chatListNicknameLabel}
             value={newUsername}
             onChange={(ev) => setNewUsername(ev.target.value)}
           />
           <Form.Button
-            content={t("chat.list.start")}
+            content={lang.chatListStartChat}
             labelPosition="left"
             icon="edit"
             primary

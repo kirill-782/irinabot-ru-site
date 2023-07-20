@@ -21,21 +21,21 @@ function MapFlags() {
   } = useContext(MapContext).map.additionalFlags || {};
 
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
   return (
     <div className="map-flags">
       {hasCheats && (
-        <Label color="red">{t("page.map.flags.hasCheatPack")}</Label>
+        <Label color="red">{lang.mapflagHasCheatPack}</Label>
       )}
       {sematicCheckError && (
-        <Label color="red">{t("page.map.flags.scriptHasSemanticErrors")}</Label>
+        <Label color="red">{lang.scriptHasSemanticErrors}</Label>
       )}
       {statsType && (
         <Label>
-          {t("page.map.flags.statsType")}: {statsType}
+          {lang.statsType}: {statsType}
         </Label>
       )}
-      {hclSupport && <Label>{t("page.map.flags.hclSupport")}</Label>}
+      {hclSupport && <Label>{lang.hclSupport}</Label>}
     </div>
   );
 }

@@ -23,7 +23,7 @@ function EditConfigPage() {
   const { mapsApi } = useContext(RestContext);
 
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
   useEffect(() => {
     if (!configData) {
@@ -68,13 +68,13 @@ function EditConfigPage() {
         .then((configData) => {
           setConfigData(configData);
           toast({
-            title: t("page.edit.config.saved"),
+            title: lang.configSaved,
             icon: "check",
           });
         })
         .catch((e) => {
           toast({
-            title: t("page.edit.config.savingError"),
+            title: lang.configError,
             description: convertErrorResponseToString(e),
             color: "red",
           });
@@ -90,18 +90,18 @@ function EditConfigPage() {
       )}
       {isLoading && (
         <Loader active size="big">
-          {t("page.edit.config.isLoading")}
+          {lang.page_edit_config_isLoading}
         </Loader>
       )}
       {configPayload && (
         <>
           <Message>
-            {t("page.edit.config.madeFor")}{" "}
+            {lang.confingMade}{" "}
             <strong>{configData?.version}</strong>
           </Message>
           <Form>
             <Form.Field>
-              <label>{t("page.edit.config.name")}</label>
+              <label>{lang.configName}</label>
               <Form.Group widths="equal">
                 <Form.Input
                   fluid
@@ -116,11 +116,11 @@ function EditConfigPage() {
                     saveConfig();
                   }}
                 >
-                  {t("page.edit.config.save")}
+                  {lang.configSave}
                 </Form.Button>
               </Form.Group>
               <Form.Checkbox
-                label={t("page.edit.config.json")}
+                label={lang.json}
                 checked={jsonEditor}
                 onChange={(_, data) => {
                   setJsonEditor(data.checked);

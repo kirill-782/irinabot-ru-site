@@ -44,7 +44,7 @@ function UserSettingsModal(props) {
   const [connectorName, setConnectorName] = useState("");
 
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
   const nicknameColor = (() => {
     const colors = auth.currentAuth.nicknamePrefix.match(
@@ -69,8 +69,8 @@ function UserSettingsModal(props) {
         const bnetKey = data.detail.package as ServerBnetKey;
 
         toast({
-          title: t("modal.settings.linkingPVPGn"),
-          description: t("modal.settings.linkingPVPGnHint") + bnetKey.key,
+          title: lang.linkingPVPGn,
+          description: lang.linkingPVPGnHint + bnetKey.key,
           time: 20000,
         });
       }
@@ -80,8 +80,8 @@ function UserSettingsModal(props) {
         data.detail.package.type === GLOBAL_ADD_INTEGRATION_RESPONSE
       ) {
         toast({
-          title: t("modal.settings.auth.updated.title"),
-          description: t("modal.settings.auth.updated.description"),
+          title: lang.modal_settings_auth_updated_title,
+          description: lang.modal_settings_auth_updated_description,
           time: 20000,
         });
       }
@@ -130,7 +130,7 @@ function UserSettingsModal(props) {
             );
           } else {
             toast({
-              title: t("modal.settings.error"),
+              title: lang.modal_settings_error,
               description: storageNewValue,
               type: "error",
               time: 10000,
@@ -207,10 +207,10 @@ function UserSettingsModal(props) {
 
   return (
     <Modal {...props}>
-      <Modal.Header>{t("modal.settings.caption")}</Modal.Header>
+      <Modal.Header>{lang.modal_settings_caption}</Modal.Header>
       <Modal.Content>
         <Modal.Description>
-          <Header>{t("modal.settings.connection")}</Header>
+          <Header>{lang.connection}</Header>
           <Container>
             <Button onClick={onWarcraftIIIButtonClick} basic color="green">
               Warcraft III
@@ -279,7 +279,7 @@ function UserSettingsModal(props) {
                   style={{ marginLeft: 10 }}
                   color="green"
                 >
-                  {t("modal.settings.save")}
+                  {lang.modal_settings_save}
                 </Button>
               </Form.Group>
             </Form.Field>

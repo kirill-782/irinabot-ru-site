@@ -126,7 +126,7 @@ export const MapFilters: React.FC<FiltersProps> = memo(
     };
 
     const { language } = useContext(AppRuntimeSettingsContext);
-    const t = language.getString;
+    const lang = language.languageRepository;
 
     useEffect(() => {
       if (value) {
@@ -192,7 +192,7 @@ export const MapFilters: React.FC<FiltersProps> = memo(
         {
           key: 0,
           value: 0,
-          text: t("page.map.list.filter.options.any"),
+          text: lang.any,
         },
         ...cacheContext.cachedCategories.map((el) => ({
           key: el.id,
@@ -209,7 +209,7 @@ export const MapFilters: React.FC<FiltersProps> = memo(
     return (
       <>
         <Form.Field>
-          <label>{t("page.map.list.filter.form.label.freeSlots")}</label>
+          <label>{lang.filterFreeSlots}</label>
           <ReactSlider
             value={[minPlayers, maxPlayers]}
             onChange={(newValue) => {
@@ -225,23 +225,23 @@ export const MapFilters: React.FC<FiltersProps> = memo(
           />
         </Form.Field>
         <Form.Checkbox
-          label={t("page.map.list.filter.form.checkbox.verifiedOnly")}
+          label={lang.verifiedOnly}
           checked={verified}
           onChange={() => setVerified(!verified)}
         />
         <Form.Checkbox
-          label={t("page.map.list.filter.form.checkbox.taggedOnly")}
+          label={lang.taggedOnly}
           checked={taggedOnly}
           onChange={() => setTaggedOnly(!taggedOnly)}
         />
         <Form.Checkbox
-          label={t("page.map.list.filter.form.checkbox.favoriteOnly")}
+          label={lang.filterOnlyFavoritedMaps}
           checked={favoriteOnly}
           onChange={() => setFavoriteOnly(!favoriteOnly)}
         />
         <Form.Select
           fluid
-          label={t("page.map.list.filter.form.label.sortBy")}
+          label={lang.sortBy}
           options={sortOptions.map((i) => {
             return { ...i, text: t(i.text) };
           })}
@@ -250,7 +250,7 @@ export const MapFilters: React.FC<FiltersProps> = memo(
         />
         <Form.Select
           fluid
-          label={t("page.map.list.filter.form.label.orderBy")}
+          label={lang.orderBy}
           options={orderOptions.map((i) => {
             return { ...i, text: t(i.text) };
           })}
@@ -260,14 +260,14 @@ export const MapFilters: React.FC<FiltersProps> = memo(
         <Form.Select
           fluid
           loading={categories.length === 0}
-          label={t("page.map.list.filter.form.label.category")}
+          label={lang.mapCategory}
           options={categories}
           onChange={handleCategoryChange}
           value={selectedCategories}
         />
         <Form.Input
           fluid
-          label={t("page.map.list.filter.form.label.owner")}
+          label={lang.owner}
           value={owner}
           onChange={(_, data) => setOwner(data.value)}
           placeholder="8"
@@ -277,7 +277,7 @@ export const MapFilters: React.FC<FiltersProps> = memo(
             <Form.Button
               icon="check"
               color="green"
-              title={t("page.map.list.filter.form.button.accept")}
+              title={lang.filterAccept}
               onClick={(ev) => {
                 ev.preventDefault();
                 commitFilters();
@@ -288,7 +288,7 @@ export const MapFilters: React.FC<FiltersProps> = memo(
             type="button"
             icon="x"
             color="red"
-            title={t("page.map.list.filter.form.button.reset")}
+            title={lang.filterReset}
             onClick={(ev) => {
               ev.preventDefault();
               onFitlerChange([null, null]);

@@ -101,7 +101,7 @@ function App() {
             selectLanguage,
             getString,
             currentLocale,
-            languages: data,
+            languageRepository: data,
           },
         }}
       >

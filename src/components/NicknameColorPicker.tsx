@@ -32,12 +32,12 @@ function NicknameColorPicker({
   const [color, setColor] = useState<any>(defaultColor);
 
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
   return (
     <>
       <Form.Field>
-        <label>{t("colorpicker.color")}</label>
+        <label>{lang.settingsColorPickerColor}</label>
 
         <HuePicker
           color={color}
@@ -48,7 +48,7 @@ function NicknameColorPicker({
         ></HuePicker>
       </Form.Field>
       <Form.Field>
-        <label>{t("colorpicker.otherplayers.label")}</label>
+        <label>{lang.settingsColorPickerPreview}</label>
         <Segment>
           <WarcraftIIIText>
             {(color ? rgbToColorTag(color.r, color.g, color.b) : "") + nickname}
@@ -62,7 +62,7 @@ function NicknameColorPicker({
           onColorChanged((color.r << 16) | (color.g << 8) | color.b);
         }}
       >
-        {t("colorpicker.button.save")}
+        {lang.settingsColorPickerSaveColor}
       </Form.Button>
     </>
   );

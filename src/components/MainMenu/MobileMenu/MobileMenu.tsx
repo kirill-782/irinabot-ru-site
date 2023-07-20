@@ -35,7 +35,7 @@ const MobileMenu = () => {
   const currentAuth = authContext.auth.currentAuth;
 
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
   return (
     <Menu fixed="top" inverted className="main-menu mobile-menu">
@@ -44,15 +44,15 @@ const MobileMenu = () => {
           <Dropdown.Menu>
             <Dropdown.Item as={NavLink} to="/gamelist">
               <Icon name="gamepad" />
-              {t("menu.gamelist")}
+              {lang.gameList}
             </Dropdown.Item>
             <Dropdown.Item as={NavLink} to="/maps">
               <Icon name="file" />
-              {t("menu.maplist")}
+              {lang.mapList}
             </Dropdown.Item>
             <Dropdown.Item as={NavLink} to="/autopay">
               <Icon name="ruble sign" />
-              {t("menu.donate")}
+              {lang.productsPageTitle}
             </Dropdown.Item>
             <Dropdown.Item
               as="a"
@@ -62,7 +62,7 @@ const MobileMenu = () => {
               }}
             >
               <Icon name="help" />
-              {t("menu.help")}
+              {lang.help}
             </Dropdown.Item>
             <Dropdown.Item
               onClick={() => {
@@ -72,7 +72,7 @@ const MobileMenu = () => {
               }}
             >
               <Icon name={currentTheme === E_THEME.DARK ? "sun" : "moon"} />{" "}
-              {t("menu.changeTheme")}
+              {lang.changeTheme}
             </Dropdown.Item>
             <UtilsDropdown />
           </Dropdown.Menu>

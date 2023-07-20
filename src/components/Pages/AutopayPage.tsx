@@ -4,6 +4,7 @@ import { AppRuntimeSettingsContext, AuthContext } from "./../../context/index";
 import { SITE_TITLE } from "../../config/ApplicationConfig";
 import MetaDescription from "../Meta/MetaDescription";
 import React from "react";
+import Markdown from "../Markdown";
 
 interface Place {
   placeId: number;
@@ -56,14 +57,14 @@ function AutopayPage() {
   const paylentLabelRef = useRef<HTMLInputElement>(null);
 
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
   useEffect(() => {
     setConnectorId(authContext.auth.currentAuth?.connectorId.toString());
   }, [authContext.auth.currentAuth]);
 
   useEffect(() => {
-    window.document.title = `${t("page.autopay.donute")} | ${SITE_TITLE}`;
+    window.document.title = `${lang.page_autopay_donute} | ${SITE_TITLE}`;
   }, []);
 
   const togglePlaceCheckbox = (placeId) => {
@@ -110,15 +111,15 @@ function AutopayPage() {
     if (totalPrice === 0)
       return (
         <Message color="red">
-          <Message.Header>{t("page.autopay.donuteNotSelected")}</Message.Header>
-          <p>{t("page.autopay.needMark")}</p>
+          <Message.Header>{lang.productsUnselected}</Message.Header>
+          <p>{lang.productsUnselectedDescription}</p>
         </Message>
       );
 
     return (
       <Message color="red">
-        <Message.Header>{t("page.autopay.incorrectedID")}</Message.Header>
-        <p>{t("page.autopay.incorrectedIDEx")}</p>
+        <Message.Header>{lang.productsIncorrectId}</Message.Header>
+        <p>{lang.productsIncorrectIdDescription}</p>
       </Message>
     );
   };
@@ -136,8 +137,8 @@ function AutopayPage() {
 
   return (
     <Container>
-      <MetaDescription description={t("page.autopay.payhere") + "."} />
-      <Header>{t("page.autopay.donuteCalc")}</Header>
+      <MetaDescription description={lang.productsPageDescription + "."} />
+      <Header>{lang.productsHeader}</Header>
       <Form
         ref={formRef}
         method="POST"
@@ -156,25 +157,25 @@ function AutopayPage() {
                   onChange={() => {
                     togglePlaceCheckbox(place.placeId);
                   }}
-                  label={t(place.title)}
+                  label={lang.place_title}
                 ></Form.Checkbox>
               );
             })}
           </Grid.Column>
           <Grid.Column width="three" floated="right">
             <Form.Input
-              label={t("page.autopay.yourID")}
+              label={lang.productsIdLabel}
               value={connectroId}
               onChange={(e) => checkAndSetConnectorId(e.target.value)}
             ></Form.Input>
             <Form.Input
-              label={t("page.autopay.duration")}
+              label={lang.productsMonthLabel}
               value={duration}
               onChange={(e) => checkAndSetDuration(e.target.value)}
             ></Form.Input>
             <Form.Input
               name="sum"
-              label={t("page.autopay.totalCost")}
+              label={lang.productsTotalLabel}
               value={totalPrice}
             ></Form.Input>
           </Grid.Column>
@@ -187,7 +188,7 @@ function AutopayPage() {
                 basic
                 color="green"
               >
-                {t("page.autopay.paycard")}
+                {lang.productsPayCard}
               </Form.Button>
               <Form.Button
                 onClick={() => pay("PC")}
@@ -195,18 +196,12 @@ function AutopayPage() {
                 basic
                 color="green"
               >
-                {t("page.autopay.pcYoo")}
+                {lang.productsPayYooMoney}
               </Form.Button>
             </Form.Group>
             <Message info>
               <p>
-                {t("page.autopay.infoA")} (
-                <a href="https://vk.com/irina_bot">https://vk.com/irina_bot</a>)
-                {t("page.autopay.infoA")} (
-                <a href="https://discord.gg/cTfyEZT">
-                  https://discord.gg/cTfyEZT
-                </a>
-                ) {t("page.autopay.infoC")}.
+                <Markdown>{lang.productsAutohostInfo}</Markdown>
               </p>
             </Message>
           </Grid.Row>
@@ -215,16 +210,16 @@ function AutopayPage() {
         <input
           type="hidden"
           name="formcomment"
-          value={t("page.autopay.paying") + "."}
+          value={lang.payingIrina + "."}
         />
         <input
           type="hidden"
           name="short-dest"
-          value={t("page.autopay.paying") + "."}
+          value={lang.payingIrina + "."}
         />
         <input type="hidden" name="label" ref={paylentLabelRef} />
         <input type="hidden" name="quickpay-form" value="shop" />
-        <input type="hidden" name="targets" value={t("page.autopay.payirka")} />
+        <input type="hidden" name="targets" value={lang.payingServices} />
         <input
           type="hidden"
           name="paymentType"

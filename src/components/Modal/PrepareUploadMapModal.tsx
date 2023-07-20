@@ -50,7 +50,7 @@ function PrepareUploadMapModal({
   const cacheContext = useContext(CacheContext);
 
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
   useEffect(() => {
     if (cacheContext.cachedCategories.length === 0)
@@ -120,7 +120,7 @@ function PrepareUploadMapModal({
 
   return (
     <Modal open={open} onClose={onClose} closeIcon>
-      <Modal.Header>{t("modal.mapUploader.chooseMap")}</Modal.Header>
+      <Modal.Header>{lang.chooseMap}</Modal.Header>
 
       <Modal.Content
         onDragEnter={handleDragEnter}
@@ -130,15 +130,15 @@ function PrepareUploadMapModal({
       >
         {isDragging && <DragAndDropField />}
         <Modal.Description>
-          <Header>{t("modal.mapUploader.whichUploadLabel")}</Header>
-          <p>{t("modal.mapUploader.whichUploadHint")}</p>
+          <Header>{lang.whichUploadMapLabel}</Header>
+          <p>{lang.whichUploadMapHint}</p>
           <Form>
             <Form.Field>
-              <label>{t("modal.mapUploader.categoryLabel")}</label>
+              <label>{lang.categoryMapLabel}</label>
               <Dropdown
                 fluid
                 multiple
-                placeholder={t("modal.mapUploader.category")}
+                placeholder={lang.modal_mapUploader_category}
                 selection
                 options={dropdownOptions}
                 loading={cacheContext.cachedCategories.length === 0}
@@ -163,11 +163,11 @@ function PrepareUploadMapModal({
                   />
                   <Grid.Row>
                     <Message
-                      header={t("modal.mapUploader.loading")}
+                      header={lang.mapUploading}
                       content={
                         selectedCategories.length === 0
-                          ? t("modal.mapUploader.beforeLoading")
-                          : t("modal.mapUploader.loadingHint")
+                          ? lang.beforeMapLoading
+                          : lang.loadingMapHint
                       }
                       onClick={() => {
                         selectedCategories.length && fileInput.current?.click();

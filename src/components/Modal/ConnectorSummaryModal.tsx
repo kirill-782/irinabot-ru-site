@@ -34,15 +34,15 @@ function ConnectorSummaryModal({
   };
 
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
   return (
     <Modal open={open} onClose={onClose}>
-      <Modal.Header>{t("modal.connectorSummary.caption")}</Modal.Header>
+      <Modal.Header>{lang.connectorInfo}</Modal.Header>
 
       <Modal.Content>
         <Modal.Description>
-          <Message>{t("modal.connectorSummary.description")}</Message>
+          <Message>{lang.connectorDescription}</Message>
           {connectorGames.length > 0 ? (
             <List divided relaxed>
               {connectorGames.map((el, index) => (
@@ -69,7 +69,7 @@ function ConnectorSummaryModal({
                     negative
                     onClick={handleRemoveAll}
                   >
-                    {t("modal.connectorSummary.removeall")}
+                    {lang.removeall}
                   </Button>
                 </List.Content>
               </List.Item>
@@ -77,8 +77,8 @@ function ConnectorSummaryModal({
           ) : (
             <Message>
               {websocketContext.isConnectorSocketConnected
-                ? t("modal.connectorSummary.notAddedAnyGamesYet")
-                : t("modal.connectorSummary.connectorNotRunning")}
+                ? lang.notAddedAnyGamesYet
+                : lang.connectorNotRunning}
             </Message>
           )}
         </Modal.Description>

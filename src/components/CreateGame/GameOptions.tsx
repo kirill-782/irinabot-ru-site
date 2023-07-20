@@ -34,19 +34,19 @@ export const MAP_FLAG_RANDOM_RACES = 16;
 export const GameOptions: React.FC<GameOptionsProps> = memo(
   ({ options, onOptionsChange }) => {
     const { language } = useContext(AppRuntimeSettingsContext);
-    const t = language.getString;
+    const lang = language.languageRepository;
 
     return (
       <>
         <Form.Checkbox
-          label={t("page.game.options.needPassword")}
+          label={lang.needPassword}
           checked={options.privateGame}
           onChange={() => {
             onOptionsChange({ ...options, privateGame: !options.privateGame });
           }}
         />
         <Form.Input
-          label={t("page.game.options.configName")}
+          label={lang.page_game_options_configName}
           value={options.configName}
           onChange={(_, data) => {
             onOptionsChange({ ...options, configName: data.value as string });
@@ -54,7 +54,7 @@ export const GameOptions: React.FC<GameOptionsProps> = memo(
         />
         <Divider />
         <Form.Checkbox
-          label={t("page.game.options.teamsTogether")}
+          label={lang.teamsTogether}
           checked={
             (options.mask & MAP_FLAG_TEAMS_TOGETHER) === MAP_FLAG_TEAMS_TOGETHER
           }
@@ -66,7 +66,7 @@ export const GameOptions: React.FC<GameOptionsProps> = memo(
           }
         />
         <Form.Checkbox
-          label={t("page.game.options.fixedTeams")}
+          label={lang.fixedTeams}
           checked={
             (options.mask & MAP_FLAG_FIXED_TEAMS) === MAP_FLAG_FIXED_TEAMS
           }
@@ -78,7 +78,7 @@ export const GameOptions: React.FC<GameOptionsProps> = memo(
           }
         />
         <Form.Checkbox
-          label={t("page.game.options.unitShare")}
+          label={lang.unitShare}
           checked={(options.mask & MAP_FLAG_UNIT_SHARE) === MAP_FLAG_UNIT_SHARE}
           onChange={() =>
             onOptionsChange({
@@ -88,7 +88,7 @@ export const GameOptions: React.FC<GameOptionsProps> = memo(
           }
         />
         <Form.Checkbox
-          label={t("page.game.options.randomRaces")}
+          label={lang.randomRaces}
           checked={
             (options.mask & MAP_FLAG_RANDOM_RACES) === MAP_FLAG_RANDOM_RACES
           }
@@ -100,7 +100,7 @@ export const GameOptions: React.FC<GameOptionsProps> = memo(
           }
         />
         <Form.Checkbox
-          label={t("page.game.options.randomHero")}
+          label={lang.randomHero}
           name="mapFlagRandomHero"
           checked={
             (options.mask & MAP_FLAG_RANDOM_HERO) === MAP_FLAG_RANDOM_HERO
@@ -115,7 +115,7 @@ export const GameOptions: React.FC<GameOptionsProps> = memo(
         <Form.Select
           fluid
           name="spectators"
-          label={t("page.game.options.mapObservers")}
+          label={lang.page_game_options_mapObservers}
           onChange={(_, data) =>
             onOptionsChange({
               ...options,
@@ -130,7 +130,7 @@ export const GameOptions: React.FC<GameOptionsProps> = memo(
         <Form.Select
           fluid
           name="visibility"
-          label={t("page.game.options.map")}
+          label={lang.page_game_options_map}
           options={visibilityOptions.map((i) => {
             return { ...i, text: t(i.text) };
           })}
@@ -145,7 +145,7 @@ export const GameOptions: React.FC<GameOptionsProps> = memo(
         <Form.Select
           fluid
           name="speed"
-          label={t("page.game.options.speed")}
+          label={lang.speed}
           options={speedOptions.map((i) => {
             return { ...i, text: t(i.text) };
           })}

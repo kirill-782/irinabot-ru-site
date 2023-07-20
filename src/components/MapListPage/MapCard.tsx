@@ -26,7 +26,7 @@ export const MapCard: React.FC<Map & { selectElement?: React.ReactNode }> = ({
   const [fullText, setFullText] = useState(false);
 
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
   let displayDesctiption = description;
   let needFulltextLink = false;
@@ -64,7 +64,7 @@ export const MapCard: React.FC<Map & { selectElement?: React.ReactNode }> = ({
                 setFullText(true);
               }}
             >
-              {t("page.map.list.card.allText")}
+              {lang.allText}
             </a>
           )}
         </Grid.Row>

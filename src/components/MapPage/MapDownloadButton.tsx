@@ -22,7 +22,7 @@ function MapDownloadButton({
 }: MapDownloadButtonProps) {
   const mapSize = byteSize(fileSize);
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
   return (
     <Button
@@ -33,7 +33,7 @@ function MapDownloadButton({
       href={`${downloadUrl}?as=${getBotFileName(fileName || "", id)}`}
     >
       <Icon name="download" />
-      {`${t("page.map.button.download")} ${mapSize.value} ${mapSize.unit}`}
+      {`${lang.download} ${mapSize.value} ${mapSize.unit}`}
     </Button>
   );
 }

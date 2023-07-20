@@ -11,11 +11,11 @@ interface ConfigEditProps {
 
 function ConfigEdit({ configPayload, onConfigChange }: ConfigEditProps) {
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
   return (
     <>
-      <Header size="large">{t("page.map.config.edit")}</Header>
+      <Header size="large">{lang.configEdit}</Header>
       <Form>
         <Form.Group widths="equal">
           <Form.Input
@@ -198,7 +198,7 @@ function ConfigEdit({ configPayload, onConfigChange }: ConfigEditProps) {
             }}
           />
         </Form.Group>
-        <Header size="medium">{t("page.map.config.gameslots")}</Header>
+        <Header size="medium">{lang.gameSlots}</Header>
         <SlotsEdit
           slots={configPayload.playableSlots}
           options={configPayload.options}
@@ -208,7 +208,7 @@ function ConfigEdit({ configPayload, onConfigChange }: ConfigEditProps) {
         />
         {configPayload.observerSlots && (
           <>
-            <Header size="medium">{t("page.map.config.observerslots")}</Header>
+            <Header size="medium">{lang.mapObservers}</Header>
             <SlotsEdit
               slots={configPayload.observerSlots}
               onSlotsChange={(slots) => {

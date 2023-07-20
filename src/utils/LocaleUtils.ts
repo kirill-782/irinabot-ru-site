@@ -1,7 +1,11 @@
 import { DEFAULT_LOCALE } from "../config/Locales";
 
 export const importLocales = async (locale: string) => {
-  const site = import(`../translations/${locale}.json`);
+  let fileName = "Lang";
+
+  if (locale) fileName = `Lang.${locale}`;
+
+  const site = import(`../localization/${fileName}`);
   const timeAgo = (() => {
     switch (locale) {
       case "ru":
@@ -9,6 +13,10 @@ export const importLocales = async (locale: string) => {
     }
     return import(`javascript-time-ago/locale/en.json`);
   })();
+
+  site.catch((e) => {
+    console.error(e);
+  });
 
   return {
     timeAgo: await timeAgo,

@@ -26,7 +26,7 @@ function FlagsEditBlock({
   const { apiToken } = useContext(AuthContext).auth;
 
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
   const [selectedCategories, setSelectedCategories] = useState<number[]>([]);
   const [canDownload, setCanDownload] = useState<boolean | undefined>(true);
@@ -83,14 +83,14 @@ function FlagsEditBlock({
                 onChange={(_, data) => {
                   setCanDownload(!!data.checked);
                 }}
-                label={t("page.map.edit.flagsBlock.canDownload")}
+                label={lang.canDownload}
               />
               <Form.Checkbox
                 checked={mapLocked}
                 onChange={(_, data) => {
                   setMapLocked(!!data.checked);
                 }}
-                label={t("page.map.edit.flagsBlock.lock")}
+                label={lang.mapLock}
               />
             </Form>
           </Grid.Column>
@@ -104,7 +104,7 @@ function FlagsEditBlock({
                 onChange={(_, data) => {
                   setImagesAvailable(!!data.checked);
                 }}
-                label={t("page.map.edit.flagsBlock.imagesAvailable")}
+                label={lang.imagesAvailable}
               />
             )}
             <Form.Checkbox
@@ -113,7 +113,7 @@ function FlagsEditBlock({
                 setMapVerified(!!data.checked);
               }}
               disabled={!apiToken.hasAuthority("MAP_VERIFY")}
-              label={t("page.map.edit.flagsBlock.isVerified")}
+              label={lang.page_map_edit_flagsBlock_isVerified}
             />
           </Form>
         </Grid.Column>
@@ -122,10 +122,10 @@ function FlagsEditBlock({
         <Form>
           <Form.Group widths="equal">
             <Form.Dropdown
-              label={t("page.map.edit.flagsBlock.category")}
+              label={lang.categories}
               fluid
               multiple
-              placeholder={t("page.map.edit.flagsBlock.phcategory")}
+              placeholder={lang.page_map_edit_flagsBlock_phcategory}
               selection
               options={dropdownOptions}
               loading={cacheContext.cachedCategories.length === 0}
@@ -141,7 +141,7 @@ function FlagsEditBlock({
               }}
               disabled={!apiToken.hasAuthority("MAP_VERIFY") || !mapVerified}
               fluid
-              label={t("page.map.edit.flagsBlock.tag")}
+              label={lang.tag}
             />
           </Form.Group>
         </Form>
@@ -149,7 +149,7 @@ function FlagsEditBlock({
       {onFlagsChange && (
         <Button loading={loading} onClick={updateFlags} color="green">
           <Icon name="save" />
-          {t("page.map.edit.flagsBlock.tosave")}
+          {lang.save}
         </Button>
       )}
     </div>

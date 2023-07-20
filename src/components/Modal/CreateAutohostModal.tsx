@@ -42,21 +42,21 @@ function CreateAutohostModal({
   const countGamesHasError = isNaN(parseInt(countGames));
 
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
   return (
     <Modal open={open} onClose={onClose} closeIcon size="tiny">
-      <Header content={t("modal.createAutohost.caption")} />
+      <Header content={lang.autohostCreation} />
       <Modal.Content>
         <Message>
-          <p>{t("modal.createAutohost.description")}</p>
+          <p>{lang.autohostCreationDescription}</p>
         </Message>
         <Form>
           <Form.Input
             fluid
             error={gameNameHasError}
-            label={t("modal.createAutohost.label.gamename")}
-            placeholder={t("modal.createAutohost.placeholder.gamename")}
+            label={lang.modal_createAutohost_label_gamename}
+            placeholder={lang.modal_createAutohost_placeholder_gamename}
             value={gameName}
             onChange={(e, data) => {
               setGameName(data.value);
@@ -66,8 +66,8 @@ function CreateAutohostModal({
             <Form.Input
               fluid
               error={autostartHasError}
-              label={t("modal.createAutohost.label.autostart")}
-              placeholder={t("modal.createAutohost.placeholder.autostart")}
+              label={lang.autostartAtPlayers}
+              placeholder={lang.modal_createAutohost_placeholder_autostart}
               pattern="[0-9]*"
               type="number"
               value={autostart}
@@ -78,8 +78,8 @@ function CreateAutohostModal({
             <Form.Input
               fluid
               error={countGamesHasError}
-              label={t("modal.createAutohost.label.gamelimit")}
-              placeholder={t("modal.createAutohost.placeholder.gamelimit")}
+              label={lang.modal_createAutohost_label_gamelimit}
+              placeholder={lang.modal_createAutohost_placeholder_gamelimit}
               pattern="[0-9]*"
               value={countGames}
               type="number"
@@ -91,8 +91,8 @@ function CreateAutohostModal({
           <Form.Group widths="equal">
             <Form.Input
               fluid
-              label={t("modal.createAutohost.label.hcl")}
-              placeholder={t("modal.createAutohost.placeholder.hcl")}
+              label={lang.hclString}
+              placeholder={lang.modal_createAutohost_placeholder_hcl}
               value={hcl}
               onChange={(e, data) => {
                 setHcl(data.value);
@@ -121,7 +121,7 @@ function CreateAutohostModal({
               });
             }}
           >
-            {t("modal.createAutohost.tocreate")}
+            {lang.modal_createAutohost_tocreate}
           </Button>
         </Form>
       </Modal.Content>

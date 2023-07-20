@@ -16,7 +16,7 @@ function GameListFiltersModal({
   ...filterProps
 }: GameListFiltersModalProps) {
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
   return (
     <Modal
       closeIcon
@@ -26,7 +26,7 @@ function GameListFiltersModal({
       }}
       size="mini"
     >
-      <Modal.Header>{t("modal.gameListFilter.caption")}</Modal.Header>
+      <Modal.Header>{lang.gamelistFilter}</Modal.Header>
       <Modal.Content>
         <GameListFilter {...filterProps} />
       </Modal.Content>

@@ -7,9 +7,9 @@ function ErrorCatch({ children }) {
   const [hasError, setError] = useState(false);
 
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
-  if (hasError) return <Container>{t("errorCatch")}</Container>;
+  if (hasError) return <Container>{lang.errorCatch}</Container>;
 
   try {
     return children;

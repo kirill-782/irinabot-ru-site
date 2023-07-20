@@ -27,7 +27,7 @@ function OpenReplay({ setReplayData }: OpenReplayProps) {
   const [progress, setProgress] = useState<number>(0);
 
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
   const openFromFile = (file: File) => {
     setError("");
@@ -79,7 +79,7 @@ function OpenReplay({ setReplayData }: OpenReplayProps) {
       <div className="centerd">
         <Grid>
           <Grid.Row centered>
-            <Header>{t("page.replay.open.insert")}</Header>
+            <Header>{lang.insertFileLink}</Header>
           </Grid.Row>
           {error && (
             <Grid.Row centered>
@@ -103,7 +103,7 @@ function OpenReplay({ setReplayData }: OpenReplayProps) {
                   }}
                 >
                   <Icon name="linkify" />
-                  {t("page.replay.open.open")}
+                  {lang.open}
                 </Form.Button>
               </Form.Group>
             </Form>
@@ -119,7 +119,7 @@ function OpenReplay({ setReplayData }: OpenReplayProps) {
             </Grid.Row>
           )}
           <Grid.Row centered>
-            <Header>{t("page.replay.open.or")}</Header>
+            <Header>{lang.or}</Header>
           </Grid.Row>
           <Grid.Row centered>
             <Button
@@ -130,7 +130,7 @@ function OpenReplay({ setReplayData }: OpenReplayProps) {
               }}
             >
               <Icon name="file" />
-              {t("page.replay.open.file")}
+              {lang.openFile}
             </Button>
             <input
               multiple

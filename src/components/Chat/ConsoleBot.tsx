@@ -15,7 +15,7 @@ export const ConsoleBot: React.FC<ConsoleProps> = ({
   const [message, setMessage] = useState("");
 
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
   const handleClickSend = (e: SyntheticEvent) => {
     e.preventDefault();
@@ -57,7 +57,7 @@ export const ConsoleBot: React.FC<ConsoleProps> = ({
           value={message}
         />
         <Button
-          content={t("chat.consoleSend")}
+          content={lang.consoleSend}
           labelPosition="left"
           icon="edit"
           primary

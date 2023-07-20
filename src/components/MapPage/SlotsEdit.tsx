@@ -98,7 +98,7 @@ function SlotsEdit({ slots, options, onSlotsChange }: SlotsEditProps) {
   let teamSlots: SlotExtends[][] = [];
 
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
   if (slots) {
     if (!customForces)
@@ -153,7 +153,7 @@ function SlotsEdit({ slots, options, onSlotsChange }: SlotsEditProps) {
           <React.Fragment key={index}>
             {customForces && (
               <label>
-                {t("page.map.slots.force")} {index + 1}
+                {lang.slotTeam} {index + 1}
               </label>
             )}
             <Table>
@@ -161,19 +161,19 @@ function SlotsEdit({ slots, options, onSlotsChange }: SlotsEditProps) {
                 <Table.Header>
                   <Table.HeaderCell width={1}>SID</Table.HeaderCell>
                   <Table.HeaderCell width={4}>
-                    {t("page.map.slots.slot.type")}{" "}
+                    {lang.slotType}{" "}
                   </Table.HeaderCell>
                   <Table.HeaderCell width={3}>
-                    {t("page.map.slots.slot.team")}
+                    {lang.page_map_slots_slot_team}
                   </Table.HeaderCell>
                   <Table.HeaderCell width={4}>
-                    {t("page.map.slots.slot.race")}
+                    {lang.slotRace}
                   </Table.HeaderCell>
                   <Table.HeaderCell width={1}>
-                    {t("page.map.slots.slot.teamcolor")}
+                    {lang.slotTeamcolor}
                   </Table.HeaderCell>
                   <Table.HeaderCell width={2}>
-                    {t("page.map.slots.slot.handicap")}
+                    {lang.slotHandicap}
                   </Table.HeaderCell>
                 </Table.Header>
               )}
@@ -235,7 +235,7 @@ function SlotsEdit({ slots, options, onSlotsChange }: SlotsEditProps) {
                       ></Form.Dropdown>
                       <Form.Checkbox
                         checked={!!(slot.race & SELECTABLE_RACE)}
-                        label={t("page.map.slotsEdit.allowChange")}
+                        label={lang.allowChange}
                         onChange={(_, data) => {
                           if (onSlotsChange) {
                             if (data.checked) {

@@ -19,10 +19,10 @@ function LoginDropdown() {
   );
 
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
   return (
-    <Dropdown text={t("menu.user.login")} item>
+    <Dropdown text={lang.login} item>
       <Dropdown.Menu>
         {AviableAuthMethods.map((method: AuthMethod) => {
           return (

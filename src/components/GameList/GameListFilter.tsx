@@ -41,13 +41,13 @@ function GameListFilter({
   disabledFilters,
 }: GameListFilterProps) {
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
   return (
     <>
       <Form className="sidebar-filter">
         <Form.Checkbox
-          label={t("page.game.list.filter.noLoadStarted")}
+          label={lang.filterNoStarted}
           checked={filterSettings.noLoadStarted}
           name="noLoadStarted"
           disabled={disabledFilters.indexOf("noLoadStarted") > -1}
@@ -59,7 +59,7 @@ function GameListFilter({
           }}
         ></Form.Checkbox>
         <Form.Checkbox
-          label={t("page.game.list.filter.noLoadStarted")}
+          label={lang.filterNoStarted}
           checked={filterSettings.forceReorder}
           name="forceReorder"
           disabled={disabledFilters.indexOf("forceReorder") > -1}
@@ -80,7 +80,7 @@ function GameListFilter({
               onlySelfGames: !!data.checked,
             });
           }}
-          label={t("page.game.list.filter.onlySelfGames")}
+          label={lang.filterOnlySelfGames}
         ></Form.Checkbox>
         <Form.Checkbox
           name="onlyFavoritedMaps"
@@ -92,12 +92,12 @@ function GameListFilter({
               onlyFavoritedMaps: !!data.checked,
             });
           }}
-          label={t("page.game.list.filter.onlyFavoritedMaps")}
+          label={lang.page_game_list_filter_onlyFavoritedMaps}
         ></Form.Checkbox>
         <Form.Group grouped>
-          <label>{t("page.game.list.filter.gameType")}</label>
+          <label>{lang.filterGameType}</label>
           <Form.Field
-            label={t("page.game.list.filter.normalType")}
+            label={lang.page_game_list_filter_normalType}
             control="input"
             type="radio"
             name="gameType"
@@ -111,7 +111,7 @@ function GameListFilter({
             }}
           />
           <Form.Field
-            label={t("page.game.list.filter.allType")}
+            label={lang.filterAllType}
             control="input"
             type="radio"
             name="gameType"
@@ -125,7 +125,7 @@ function GameListFilter({
             }}
           />
           <Form.Field
-            label={t("page.game.list.filter.reposeType")}
+            label={lang.filterReposeType}
             control="input"
             type="radio"
             name="gameType"
@@ -175,7 +175,7 @@ function GameListFilter({
         </Form.Group>
 
         <Form.Field className="players-filter">
-          <label>{t("page.game.list.filter.lobbyPlayers")}</label>
+          <label>{lang.filterLobbyPlayers}</label>
           <ReactSlider
             value={filterSettings.players}
             onChange={(newValue) => {
@@ -193,7 +193,7 @@ function GameListFilter({
           />
         </Form.Field>
         <Form.Field>
-          <label>{t("page.game.list.filter.freeSlots")}</label>
+          <label>{lang.page_game_list_filter_freeSlots}</label>
           <ReactSlider
             value={filterSettings.freeSlots}
             onChange={(newValue) => {
@@ -212,7 +212,7 @@ function GameListFilter({
           />
         </Form.Field>
         <Form.Field>
-          <label>{t("page.game.list.filter.slots")}</label>
+          <label>{lang.filterSlotCount}</label>
           <ReactSlider
             value={filterSettings.slots}
             onChange={(newValue) => {

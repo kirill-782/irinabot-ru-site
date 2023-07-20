@@ -15,7 +15,7 @@ function OnlineStatsCounter({ showAlways }: OnlineStatsCounterProps) {
   const [logined, setLogined] = useState(0);
 
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
   const updateOnlineStats = (stats: ServerWebsocketConnectStats) => {
     setConnected(stats.connected);
@@ -28,7 +28,7 @@ function OnlineStatsCounter({ showAlways }: OnlineStatsCounterProps) {
   });
 
   return showAlways || logined > 0 ? (
-    <Menu.Item title={t("footer.connected") + ": " + connected}>
+    <Menu.Item title={lang.connected + ": " + connected}>
       {logined}
     </Menu.Item>
   ) : null;

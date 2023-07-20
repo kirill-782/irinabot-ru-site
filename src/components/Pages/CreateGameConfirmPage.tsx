@@ -86,7 +86,7 @@ function CreateGameConfirmPage({}) {
   });
 
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
   const [gameName, setGameName] = useState(
     localStorage.getItem(GAME_NAME_LOCALSTORAGE_PATH) || ""
@@ -104,7 +104,7 @@ function CreateGameConfirmPage({}) {
   const saveGameInput = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    window.document.title = `${t("page.game.create.new")} | ${SITE_TITLE}`;
+    window.document.title = `${lang.page_game_create_new} | ${SITE_TITLE}`;
   }, []);
 
   const { accessMask } = useContext(AuthContext).auth;
@@ -137,7 +137,7 @@ function CreateGameConfirmPage({}) {
       {error && <Message error>{error}</Message>}
       {hasLoading && (
         <Loader active size="massive">
-          {t("page.game.create.loadingZZZ")}
+          {lang.page_game_create_loadingZZZ}
         </Loader>
       )}
       {(map || config) && (
@@ -147,8 +147,8 @@ function CreateGameConfirmPage({}) {
               <Form.Group widths="equal">
                 <Form.Input
                   fluid
-                  label={t("page.game.create.confirm.name")}
-                  placeholder={t("page.game.create.confirm.name")}
+                  label={lang.gameTitle}
+                  placeholder={lang.gameTitle}
                   value={gameName}
                   onChange={(_, data) => {
                     setGameName(data.value);
@@ -156,7 +156,7 @@ function CreateGameConfirmPage({}) {
                 />
                 <Form.Select
                   fluid
-                  label={t("page.game.create.confirm.patch")}
+                  label={lang.patch}
                   onChange={updatePatch}
                   options={configPatches}
                   value={selectedPatch?.value}
@@ -178,7 +178,7 @@ function CreateGameConfirmPage({}) {
                 }}
                 disabled={!canCreateGame}
               >
-                {t("page.game.create.confirm.create")}
+                {lang.create}
               </Button>
               <Button
                 onClick={() => {
@@ -186,7 +186,7 @@ function CreateGameConfirmPage({}) {
                 }}
                 disabled={!canCreateGame}
               >
-                {t("page.game.create.confirm.load.savegame")}
+                {lang.page_game_create_confirm_load_savegame}
               </Button>
               <input
                 type="file"
@@ -204,7 +204,7 @@ function CreateGameConfirmPage({}) {
                 }}
                 disabled={!canCreateAutohost}
               >
-                {t("page.game.create.confirm.autohost")}
+                {lang.createAutohost}
               </Button>
             </Grid.Row>
           </Grid.Column>
@@ -232,13 +232,13 @@ function CreateGameConfirmPage({}) {
           setLastPassword("");
         }}
       >
-        <Modal.Header>{t("page.game.create.passgame")}</Modal.Header>
+        <Modal.Header>{lang.page_game_create_passgame}</Modal.Header>
         <Modal.Content>
-          <p>{t("page.game.create.passgameInfo")}.</p>
+          <p>{lang.page_game_create_passgameInfo}.</p>
           <Input
             action={{
               icon: "copy",
-              content: t("page.game.create.copy"),
+              content: lang.page_game_create_copy,
               onClick: () => {
                 copy(lastPassword);
               },
@@ -255,7 +255,7 @@ function CreateGameConfirmPage({}) {
               setLastPassword("");
             }}
           >
-            {t("page.game.create.close")}
+            {lang.page_game_create_close}
           </Button>
         </Modal.Actions>
       </Modal>
@@ -275,7 +275,7 @@ function useLocalMapCategories(): [
   const [error, setError] = useState<string>("");
 
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
   const location = useLocation();
   const { mapsApi } = useContext(RestContext);
@@ -345,7 +345,7 @@ function useLocalMapCategories(): [
         setError("NaN");
       }
     } else {
-      setError(t("page.game.create.useLocal.mapCategories.errorParam"));
+      setError(lang.page_game_create_useLocal_mapCategories_errorParam);
     }
 
     return () => {
@@ -459,7 +459,7 @@ function useLocalAutohostCreateCallback(
   const { auth } = useContext(AuthContext);
 
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
   useEffect(() => {
     const onPacket = (packet: GHostPackageEvent) => {
@@ -560,7 +560,7 @@ function useLocalCreateGameCallback(
   const go = useNavigate();
 
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
   useEffect(() => {
     const onPacket = (packet: GHostPackageEvent) => {
@@ -592,7 +592,7 @@ function useLocalCreateGameCallback(
           }
         } else {
           toast({
-            title: t("page.game.create.useLocal.CreateGameCallback.isError"),
+            title: lang.page_game_create_useLocal_CreateGameCallback_isError,
             description: createGameResponse.description,
             icon: "x",
             color: "red",
@@ -641,7 +641,7 @@ function useLocalCreateGameCallback(
                 }
                 catch(e) {
                   toast({
-                    title: t("page.game.create.useLocal.CreateGameCallback.sg.parseError"),
+                    title: lang.page_game_create_useLocal_CreateGameCallback_sg_parseError,
                     description: e.toString(),
                     color: "red",
                   });
@@ -669,7 +669,7 @@ function useLocalCreateGameCallback(
         })
         .catch((e) => {
           toast({
-            title: t("page.game.create.useLocal.CreateGameCallback.isMapError"),
+            title: lang.page_game_create_useLocal_CreateGameCallback_isMapError,
             description: convertErrorResponseToString(e),
             color: "red",
           });

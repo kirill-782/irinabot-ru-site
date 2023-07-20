@@ -22,7 +22,7 @@ const getPlayerSlots = (game: GameListGame): number => {
 
 function MapStats({ gameList, mapId, className }: MapStatsProps) {
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
   const [allPlayers, lobbyPlayers] = useMemo(() => {
     let allPlayers = 0;
@@ -41,11 +41,11 @@ function MapStats({ gameList, mapId, className }: MapStatsProps) {
 
   return gameList.length === 0 ? null : (
     <>
-      <Label className={className} title={t("page.map.stats.allPlayers")}>
+      <Label className={className} title={lang.allPlayers}>
         <Icon name="user"></Icon>
         {allPlayers}
       </Label>
-      <Label className={className} title={t("page.map.stats.lobbyPlayers")}>
+      <Label className={className} title={lang.lobbyPlayers}>
         <Icon name="wait"></Icon>
         {lobbyPlayers}
       </Label>

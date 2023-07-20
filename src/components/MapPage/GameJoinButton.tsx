@@ -25,7 +25,7 @@ function GameJoinButton({ gameList, mapId, className }: GameJoinButtonProps) {
   const auth = useContext(AuthContext).auth;
 
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
   const requestConnectorGame = () => {
     if (!foundGame) return;
@@ -66,7 +66,7 @@ function GameJoinButton({ gameList, mapId, className }: GameJoinButtonProps) {
       className={className}
       disabled={!foundGame || !isEnabled}
       icon="gamepad"
-      title={t("page.map.button.gameJoin")}
+      title={lang.gameJoin}
       onClick={() => {
         requestConnectorGame();
       }}

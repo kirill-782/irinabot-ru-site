@@ -24,7 +24,7 @@ function ActionLog({}) {
   const [filterResult, setFilterResult] = useState<ActionData[]>();
 
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
   useEffect(() => {
     let actions = replayActions;
@@ -75,14 +75,14 @@ function ActionLog({}) {
     <>
       <Form>
         <Form.Checkbox
-          label={t("page.replay.parser.actionLog.toBegin")}
+          label={lang.blockToStart}
           checked={pageScroll}
           onChange={(_, data) => {
             setPageScroll(!!data.checked);
           }}
         ></Form.Checkbox>
         <Form.Checkbox
-          label={t("page.replay.parser.actionLog.nonEmpty")}
+          label={lang.nonEmptyBlocks}
           checked={nonEmpty}
           onChange={(_, data) => {
             setNonEmpty(!!data.checked);
@@ -90,14 +90,14 @@ function ActionLog({}) {
         ></Form.Checkbox>
         <Form.Group>
           <Form.Checkbox
-            label={t("page.replay.parser.actionLog.syncIntegerOnly")}
+            label={lang.syncIntegerOnly}
             checked={syncIntegerOnly}
             onChange={(_, data) => {
               setSyncIntegerOnly(!!data.checked);
             }}
           ></Form.Checkbox>
           <Form.Checkbox
-            label={t("page.replay.parser.actionLog.chatCommandOnly")}
+            label={lang.chatCommandOnly}
             checked={chatCommandOnly}
             onChange={(_, data) => {
               setChatCommandOnly(!!data.checked);
@@ -125,7 +125,7 @@ function ActionLog({}) {
                   });
               }}
             >
-              {t("page.replay.parser.actionLog.loadTopBlocks")}
+              {lang.loadTopBlocks}
             </button>
           </Grid.Row>
           <Grid.Row>
@@ -145,7 +145,7 @@ function ActionLog({}) {
                   });
               }}
             >
-              {t("page.replay.parser.actionLog.loadBottomBlocks")}
+              {lang.loadBottomBlocks}
             </button>
           </Grid.Row>
         </Grid>

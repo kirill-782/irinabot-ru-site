@@ -14,14 +14,14 @@ function RegisterAccountModal({
   onReject,
 }: RegisterAccountModalProps) {
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
   return (
     <Modal open={open} className="register-modal">
-      <Modal.Header>{t("modal.register.caption")}</Modal.Header>
+      <Modal.Header>{lang.registration}</Modal.Header>
 
       <Modal.Content>
-        <Modal.Description>{t("modal.register.description")}</Modal.Description>
+        <Modal.Description>{lang.fistLogined}</Modal.Description>
       </Modal.Content>
       <Modal.Actions>
         <Button
@@ -30,7 +30,7 @@ function RegisterAccountModal({
             onReject();
           }}
         >
-          <Icon name="remove" /> {t("modal.register.no")}
+          <Icon name="remove" /> {lang.modal_register_no}
         </Button>
         <Button
           color="green"
@@ -38,7 +38,7 @@ function RegisterAccountModal({
             onApprove();
           }}
         >
-          <Icon name="checkmark" /> {t("modal.register.yes")}
+          <Icon name="checkmark" /> {lang.yes}
         </Button>
       </Modal.Actions>
     </Modal>

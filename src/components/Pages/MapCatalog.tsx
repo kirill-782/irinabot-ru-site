@@ -13,7 +13,7 @@ function MapCatalog() {
   const pageNum = parseInt(page || "1");
 
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
   useEffect(() => {
     mapsApi
@@ -44,7 +44,7 @@ function MapCatalog() {
 
   return (
     <Container>
-      <Header>{t("page.map.catalog")}</Header>
+      <Header>{lang.mapCatalog}</Header>
       {searchedMaps?.map((i) => {
         return (
           <div>

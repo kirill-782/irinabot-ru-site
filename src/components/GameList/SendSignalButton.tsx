@@ -30,7 +30,7 @@ function SendSignalButton({ game }: SendSignalButtonProps) {
   };
 
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
   useEffect(() => {
     setSignal("");
@@ -65,11 +65,11 @@ function SendSignalButton({ game }: SendSignalButtonProps) {
             setSignalModalOpen(false);
           }}
         >
-          <Modal.Header>{t("modal.sendSignal.send")}</Modal.Header>
+          <Modal.Header>{lang.sendSignal}</Modal.Header>
           <Modal.Content>
-            <p>{t("modal.sendSignal.what")}</p>
+            <p>{lang.whatSignal}</p>
             <Input
-              placeholder={t("modal.sendSignal.sign")}
+              placeholder={lang.signal}
               value={signal}
               onChange={(_, data) => {
                 setSignal(data.value);
@@ -85,7 +85,7 @@ function SendSignalButton({ game }: SendSignalButtonProps) {
           <Modal.Actions>
             <Button color="red" onClick={() => setSignalModalOpen(false)}>
               <Icon name="x" />
-              {t("modal.sendSignal.cancel")}
+              {lang.cancel}
             </Button>
             <Button
               color="green"
@@ -95,7 +95,7 @@ function SendSignalButton({ game }: SendSignalButtonProps) {
               }}
             >
               <Icon name="checkmark" />
-              {t("modal.sendSignal.submit")}
+              {lang.modal_sendSignal_submit}
             </Button>
           </Modal.Actions>
         </Modal>

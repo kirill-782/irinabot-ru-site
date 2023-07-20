@@ -11,7 +11,7 @@ function MapStatusIcons({
   favorite,
 }: Map) {
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
   if (favorite) {
     return (
@@ -19,7 +19,7 @@ function MapStatusIcons({
         className="status-icon"
         name="star"
         color="orange"
-        title={t("page.map.status.icon.favour")}
+        title={lang.iconFavour}
       />
     );
   }
@@ -30,7 +30,7 @@ function MapStatusIcons({
         className="status-icon"
         name="check"
         color="green"
-        title={t("page.map.status.icon.verified")}
+        title={lang.isVerified}
       />
     );
   }
@@ -41,7 +41,7 @@ function MapStatusIcons({
         className="status-icon"
         name="warning"
         color="red"
-        title={t("page.map.status.icon.cheatPack")}
+        title={lang.iconCheatPack}
       />
     );
   }
@@ -52,7 +52,7 @@ function MapStatusIcons({
         className="status-icon"
         name="warning"
         color="red"
-        title={t("page.map.status.icon.semanticError")}
+        title={lang.page_map_status_icon_semanticError}
       />
     );
   }

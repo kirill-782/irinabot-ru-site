@@ -10,7 +10,7 @@ import { AppRuntimeSettingsContext } from "../../context";
 function ReplayInfo() {
   const { replayData, replayActions, name } = useContext(ReplayContext) || {};
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
   return (
     <Container>
@@ -18,15 +18,15 @@ function ReplayInfo() {
       <Tab
         panes={[
           {
-            menuItem: t("page.replay.info.base"),
+            menuItem: lang.baseInfo,
             render: () => <ReplayMainInfo />,
           },
           {
-            menuItem: t("page.replay.info.chat"),
+            menuItem: lang.page_replay_info_chat,
             render: () => <ChatTab />,
           },
           {
-            menuItem: t("page.replay.info.blocks"),
+            menuItem: lang.blocks,
             render: () => <ActionLog />,
           },
           {

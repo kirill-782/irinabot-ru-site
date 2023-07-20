@@ -35,7 +35,7 @@ const DesktopMenu = () => {
   const currentAuth = authContext.auth.currentAuth;
 
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
   const handleMenuItemClick = () => {};
 
@@ -48,17 +48,17 @@ const DesktopMenu = () => {
         as={NavLink}
         icon="gamepad"
         to="/gamelist"
-        title={t("menu.gamelist")}
+        title={lang.gameList}
       />
       <Menu.Item
         as={NavLink}
         icon="file"
         to="/maps"
-        title={t("menu.maplist")}
+        title={lang.mapList}
       />
       <Menu.Item
         as="a"
-        title={t("menu.help")}
+        title={lang.help}
         icon="help"
         href="https://xgm.guru/p/irina"
         onClick={(e) => {
@@ -82,7 +82,7 @@ const DesktopMenu = () => {
         <UtilsDropdown />
         <Menu.Item as={NavLink} to="/autopay">
           <Icon name="ruble sign" />
-          {t("menu.donate")}
+          {lang.productsPageTitle}
         </Menu.Item>
 
         <LanguageDropdown />

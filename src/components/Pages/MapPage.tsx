@@ -38,7 +38,7 @@ function MapPage() {
   const [noIndex, setNoIndex] = useState(false);
 
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
   useGameListSubscribe({
     ghostSocket: sockets.ghostSocket,
@@ -131,7 +131,7 @@ function MapPage() {
       )}
       {isLoading && (
         <Loader active size="big">
-          {t("page.map.loading")}
+          {lang.page_map_loading}
         </Loader>
       )}
       {mapData && (
@@ -157,12 +157,12 @@ function MapPage() {
             <Grid.Row>
               {config === undefined && (
                 <Loader size="big" active>
-                  {t("page.map.lconfig")}
+                  {lang.configIsLoading}
                 </Loader>
               )}
               {config === null && (
                 <Message style={{ width: "100%" }} info>
-                  {t("page.map.snparsed")}
+                  {lang.slotNoParsed}
                 </Message>
               )}
               {config?.config && (

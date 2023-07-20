@@ -32,7 +32,7 @@ function ForbiddenPage({
   const { isGHostSocketConnected } = useContext(WebsocketContext);
 
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
   const onSuccess = useCallback(
     (token: string, type: number) => {
@@ -46,7 +46,7 @@ function ForbiddenPage({
 
   const loginHint = (
     <>
-      <p>{t("page.forbidden.thisPage")}:</p>
+      <p>{lang.pageDenide}:</p>
       <Grid.Row>
         {AviableAuthMethods.map((method: AuthMethod) => {
           return (
@@ -65,12 +65,12 @@ function ForbiddenPage({
 
   const waitLoader = (
     <>
-      <p>{t("page.forbidden.wait")}</p>
+      <p>{lang.pageWait}</p>
       <Grid.Row>
         <Header>
           {isGHostSocketConnected
-            ? t("page.forbidden.authorization")
-            : t("page.forbidden.connecting")}
+            ? lang.authorization
+            : lang.connecting}
         </Header>
       </Grid.Row>
     </>
@@ -82,7 +82,7 @@ function ForbiddenPage({
       <div className="centerd">
         <Grid centered>
           <Grid.Row>
-            <Header>{t("page.forbidden.denied")}</Header>
+            <Header>{lang.accessDenied}</Header>
           </Grid.Row>
           {!authContext.auth.currentAuth ? (
             authContext.auth.authCredentials ? (
@@ -92,13 +92,13 @@ function ForbiddenPage({
             )
           ) : (
             <Grid.Row>
-              <p>{t("page.forbidden.norights")}</p>
+              <p>{lang.pageNoRights}</p>
             </Grid.Row>
           )}
 
           <Grid.Row>
             <Button to="/" as={Link} color="green">
-              {t("page.forbidden.main")}
+              {lang.page_forbidden_main}
             </Button>
           </Grid.Row>
         </Grid>

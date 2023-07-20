@@ -7,7 +7,7 @@ import { AppRuntimeSettingsContext } from "../../context";
 
 function NotFoundPage() {
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
   return (
     <Container className="not-found">
@@ -15,11 +15,11 @@ function NotFoundPage() {
       <div className="centerd">
         <Grid centered>
           <Grid.Row>
-            <Header>{t("page.nf404")}</Header>
+            <Header>{lang.page404}</Header>
           </Grid.Row>
           <Grid.Row>
             <Button to="/" as={Link} color="green">
-              {t("page.tomain")}
+              {lang.pageMain}
             </Button>
           </Grid.Row>
         </Grid>

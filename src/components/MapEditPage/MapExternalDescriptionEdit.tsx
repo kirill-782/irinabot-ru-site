@@ -22,7 +22,7 @@ function MapExternalDescriptionEdit({
   const [previewModalOpen, setPreviewModalOpen] = useState(false);
 
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
   useEffect(() => {
     setFormValue(value || "");
@@ -47,7 +47,7 @@ function MapExternalDescriptionEdit({
               color="green"
             >
               <Icon name="save" />
-              {t("page.map.edit.xdescription.save")}
+              {lang.extraDescriptionription_save}
             </Button>
           )}
           <Button
@@ -56,7 +56,7 @@ function MapExternalDescriptionEdit({
             }}
             color="green"
           >
-            {t("page.map.edit.xdescription.preview")}
+            {lang.extraDescriptionription_preview}
           </Button>
         </Form>
       </div>
@@ -68,7 +68,7 @@ function MapExternalDescriptionEdit({
           setPreviewModalOpen(false);
         }}
       >
-        <Modal.Header>{t("page.map.edit.xdescription.previews")}</Modal.Header>
+        <Modal.Header>{lang.extraDescriptionription_previews}</Modal.Header>
         <Modal.Content>
           <Markdown>{formValue}</Markdown>
         </Modal.Content>

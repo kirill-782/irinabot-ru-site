@@ -11,7 +11,7 @@ function SitePrepareLoader({ noWait }: SitePrepareLoaderProps) {
   const [timer, setTimer] = useState<number>(0);
 
   //const {language} = useContext(AppRuntimeSettingsContext);
-  //const t = language.getString;
+  //const lang = language.languageRepository;
 
   useEffect(() => {
     const timerId = setTimeout(() => {
@@ -24,7 +24,7 @@ function SitePrepareLoader({ noWait }: SitePrepareLoaderProps) {
   }, []);
 
   return needRender ? (
-    <h1>Фиксики размещают теги по местам, ожидайте{/*t("fixics")*/}</h1>
+    <h1>Фиксики размещают теги по местам, ожидайте{/*lang.fixics*/}</h1>
   ) : null;
 }
 

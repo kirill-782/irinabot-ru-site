@@ -10,14 +10,14 @@ function UtilsDropdown() {
   const authContext = useContext(AuthContext);
 
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
   const [autohostModalOpened, setAutohostModalOpened] = useState(false);
   const [accessMaskModalOpened, setAccessMaskModalOpened] = useState(false);
 
   return (
     <>
-      <Dropdown text={t("menu.utils.utils")} item>
+      <Dropdown text={lang.utils} item>
         <Dropdown.Menu>
           <Dropdown.Item
             onClick={() => {
@@ -30,7 +30,7 @@ function UtilsDropdown() {
             }
           >
             <Icon name="list" />
-            {t("menu.utils.autohostList")}
+            {lang.autohostList}
           </Dropdown.Item>
           <UploadMap />
           <Dropdown.Item
@@ -39,7 +39,7 @@ function UtilsDropdown() {
             }}
           >
             <Icon name="check" />
-            {t("menu.utils.accessMask")}
+            {lang.accessMaskCal}
           </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>

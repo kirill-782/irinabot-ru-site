@@ -60,10 +60,10 @@ function GameListPage() {
   const connectorCache = useContext(CacheContext).cachedConnectorIds;
 
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
   useEffect(() => {
-    window.document.title = `${t("page.game.list.list")} | ${SITE_TITLE}`;
+    window.document.title = `${lang.gamelist} | ${SITE_TITLE}`;
   }, []);
 
   useEffect(() => {
@@ -86,7 +86,7 @@ function GameListPage() {
 
   return (
     <Container className="game-list">
-      <MetaDescription description={t("page.game.list.watch") + "."} />
+      <MetaDescription description={lang.watchGames + "."} />
       <MetaCanonical hostPath="/" />
       <Grid columns="equal" stackable>
         <Grid.Column width={13} className="game-list-column">
@@ -96,7 +96,7 @@ function GameListPage() {
             }
             value={filterSettings.quicFilter}
             style={{ width: "50%" }}
-            placeholder={t("page.game.list.fastfilter")}
+            placeholder={lang.fastfilter}
           />
           {auth.accessMask.hasAccess(AccessMaskBit.GAME_CREATE) && (
             <Button
@@ -134,7 +134,7 @@ function GameListPage() {
               window.open("https://xgm.guru/p/irina/gamecreate");
             }}
           >
-            {t("page.game.list.howToPlay")}
+            {lang.howToPlay}
           </Button>
           {selectedGame ? (
             <MapInfo mapId={selectedGame.mapId}></MapInfo>

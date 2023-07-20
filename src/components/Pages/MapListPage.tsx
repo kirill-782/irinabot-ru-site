@@ -74,7 +74,7 @@ function MapListPage() {
   const [mapIds, setMapsId] = useState("");
 
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
   const sockets = useContext(WebsocketContext);
   const runtimeContext = useContext(AppRuntimeSettingsContext);
@@ -107,7 +107,7 @@ function MapListPage() {
     useSearchMaps(requestFilter, searchOptions[1], searchValue);
 
   useEffect(() => {
-    window.document.title = `${t("page.map.list.maps")} | ${SITE_TITLE}`;
+    window.document.title = `${lang.page_map_list_maps} | ${SITE_TITLE}`;
   }, []);
 
   useEffect(() => {
@@ -128,19 +128,19 @@ function MapListPage() {
 
   return (
     <Container className="map-list-page">
-      <MetaDescription description={t("page.map.list.maps") + "."} />
+      <MetaDescription description={lang.page_map_list_maps + "."} />
       <Form>
         <Grid columns="equal" stackable centered>
           {disableFilters !== "true" && (
             <Grid.Column width={3} style={{ position: "sticky" }}>
-              <Header size="small">{t("page.map.list.filters")}</Header>
+              <Header size="small">{lang.page_map_list_filters}</Header>
               <MapFilters
                 onFitlerChange={setSearchOptions}
                 value={searchOptions}
                 defaultFilters={defaultFilters}
               />
               <Checkbox
-                label={t("page.map.list.limitedSearching")}
+                label={lang.limitedSearching}
                 checked={mapIds.length > 0}
                 onChange={(_, data) => {
                   onLobbyGamesClick(data.checked);
@@ -152,7 +152,7 @@ function MapListPage() {
             {disableFilters === "true" && (
               <FilterDescription filters={searchOptions} />
             )}
-            <Header>{t("page.map.list.list")}</Header>
+            <Header>{lang.page_map_list_list}</Header>
             <Grid.Row className="map-list-page-search-field">
               <Form.Input
                 fluid
@@ -162,8 +162,8 @@ function MapListPage() {
                 loading={isLoading}
                 value={searchValue}
                 error={!!errorMessage}
-                label={t("page.map.list.searching")}
-                placeholder={t("page.map.list.inputName")}
+                label={lang.page_map_list_searching}
+                placeholder={lang.page_map_list_inputName}
               />
             </Grid.Row>
             {searchedMaps &&
@@ -198,8 +198,8 @@ function MapListPage() {
                   }}
                 >
                   {isLoading
-                    ? t("page.map.list.loading")
-                    : t("page.map.list.loadYet")}
+                    ? lang.page_map_list_loading
+                    : lang.page_map_list_loadYet}
                 </button>
               </Grid>
             )}

@@ -42,7 +42,7 @@ function AutohostListModal({ open, onClose }: AutohostListModalProps) {
   const connectorCache = useContext(CacheContext).cachedConnectorIds;
 
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
   useEffect(() => {
     if (!autohosts) return;
@@ -88,10 +88,8 @@ function AutohostListModal({ open, onClose }: AutohostListModalProps) {
           );
         } else {
           toast({
-            title: t("modal.autohostList.toast.deletingError"),
-            description: `${t(
-              "modal.autohostList.toast.deletingErrorReason"
-            )} ${response.status}`,
+            title: lang.deletingError,
+            description: `${lang.deletingErrorReason} ${response.status}`,
             icon: "check",
             color: "red",
           });
@@ -108,35 +106,35 @@ function AutohostListModal({ open, onClose }: AutohostListModalProps) {
 
   return (
     <Modal closeIcon open={open} onClose={onClose}>
-      <Header content={t("modal.autohostList.caption")} />
+      <Header content={lang.modal_autohostList_caption} />
       <Modal.Content>
         {autohosts === null ? (
-          <Header>{t("modal.autohostList.isLoading")}</Header>
+          <Header>{lang.listLoading}</Header>
         ) : autohosts.length === 0 ? (
           <Message info>
-            <p>{t("modal.autohostList.isEmpty")}</p>
+            <p>{lang.autohostListEmpty}</p>
           </Message>
         ) : (
           <Table celled>
             <Table.Header>
               <Table.Row>
                 <Table.HeaderCell width={9}>
-                  {t("modal.autohostList.table.name")}
+                  {lang.name}
                 </Table.HeaderCell>
                 <Table.HeaderCell width={2}>
-                  {t("modal.autohostList.table.autostart")}
+                  {lang.autostart}
                 </Table.HeaderCell>
                 <Table.HeaderCell width={2}>
-                  {t("modal.autohostList.table.gamelimit")}
+                  {lang.gamelimit}
                 </Table.HeaderCell>
                 <Table.HeaderCell width={5}>
-                  {t("modal.autohostList.table.gamecreated")}
+                  {lang.gamecreated}
                 </Table.HeaderCell>
                 <Table.HeaderCell width={3}>
-                  {t("modal.autohostList.table.owner")}
+                  {lang.modal_autohostList_table_owner}
                 </Table.HeaderCell>
                 <Table.HeaderCell width={1}>
-                  {t("modal.autohostList.table.actions")}
+                  {lang.actions}
                 </Table.HeaderCell>
               </Table.Row>
             </Table.Header>

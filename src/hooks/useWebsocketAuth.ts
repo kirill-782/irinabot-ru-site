@@ -109,7 +109,7 @@ export const useWebsocketAuth = ({
   // Register socket event listeners
 
   //const {language} = useContext(AppRuntimeSettingsContext);
-  //const t = language.getString;
+  //const lang = language.languageRepository;
 
   useEffect(() => {
     const onOpen = () => {
@@ -154,7 +154,7 @@ export const useWebsocketAuth = ({
 
         if (errorData.errorCode === 0)
           toast({
-            title: "Ошибка", // title: t("hook.useWebsocketAuth.error"),
+            title: "Ошибка", // title: lang.hook_useWebsocketAuth_error,
             description: errorData.description,
             type: "error",
             time: 10000,
@@ -162,8 +162,8 @@ export const useWebsocketAuth = ({
         else if (errorData.errorCode === 0x10) setNeedRegistryModal(true);
         else if (errorData.errorCode === 1 && errorData.description === "") {
           toast({
-            title: "Ошибка входа", // title: t("hook.useWebsocketAuth.errorLogin"),
-            description: "Сессия просрочена. Войдите заново", // description: t("hook.useWebsocketAuth.errorSessionTimeout"),
+            title: "Ошибка входа", // title: lang.hook_useWebsocketAuth_errorLogin,
+            description: "Сессия просрочена. Войдите заново", // description: lang.hook_useWebsocketAuth_errorSessionTimeout,
             type: "error",
             time: 10000,
           });
@@ -174,8 +174,8 @@ export const useWebsocketAuth = ({
           authDispatcher({ action: "clearCredentials" });
         } else if (errorData.errorCode === 1 && errorData.description === "") {
           toast({
-            title: "Ошибка входа", // title: t("hook.useWebsocketAuth.errorLogin"),
-            description: "Сессия просрочена. Войдите заново", // description: t("hook.useWebsocketAuth.errorSessionTimeout"),
+            title: "Ошибка входа", // title: lang.hook_useWebsocketAuth_errorLogin,
+            description: "Сессия просрочена. Войдите заново", // description: lang.hook_useWebsocketAuth_errorSessionTimeout,
             type: "error",
             time: 10000,
           });

@@ -21,17 +21,17 @@ const panes = [
 
 function CreateGamePage() {
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
   useEffect(() => {
-    window.document.title = `${t("page.game.create.new")} | ${SITE_TITLE}`;
+    window.document.title = `${lang.page_game_create_new} | ${SITE_TITLE}`;
   }, []);
 
   return (
     <Container className="create-game">
-      <MetaDescription description={t("page.game.create.tab.creationEx")} />
+      <MetaDescription description={lang.gameCreationEx} />
       <MetaRobots noIndex />
-      <Header as="h2">{t("page.game.create.tab.creation")}</Header>
+      <Header as="h2">{lang.gameCreation}</Header>
       <Tab
         renderActiveOnly
         panes={panes.map((i) => {

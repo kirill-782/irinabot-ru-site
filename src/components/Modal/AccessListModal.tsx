@@ -20,11 +20,11 @@ function AccessListModal({ open, onClose }: AccessListModalProps) {
   );
 
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
   return (
     <Modal open={open} onClose={onClose} closeIcon>
-      <Modal.Header>{t("modal.accessList.caption")}</Modal.Header>
+      <Modal.Header>{lang.accessList}</Modal.Header>
       <Modal.Content>
         {showAccessMask !== undefined && (
           <AccessMaskModal
@@ -37,20 +37,20 @@ function AccessListModal({ open, onClose }: AccessListModalProps) {
           />
         )}
         {accessRows.length === 0 ? (
-          <Message info>{t("modal.accessList.norights")}</Message>
+          <Message info>{lang.norights}</Message>
         ) : (
           <>
-            <Message info>{t("modal.accessList.info")}</Message>
+            <Message info>{lang.infoDonuteDate}</Message>
             <Table>
               <Table.Header>
                 <Table.HeaderCell>
-                  {t("modal.accessList.table.playerID")}
+                  {lang.playerID}
                 </Table.HeaderCell>
                 <Table.HeaderCell>
-                  {t("modal.accessList.table.accessMask")}
+                  {lang.accessMask}
                 </Table.HeaderCell>
                 <Table.HeaderCell>
-                  {t("modal.accessList.table.playerID")}
+                  {lang.playerID}
                 </Table.HeaderCell>
               </Table.Header>
               {accessRows.map((i) => {
@@ -70,7 +70,7 @@ function AccessListModal({ open, onClose }: AccessListModalProps) {
                     </Table.Cell>
                     <Table.Cell>
                       {i.expireTime === 0
-                        ? t("modal.accessList.table.indefinitely")
+                        ? lang.indefinitely
                         : new Date(i.expireTime * 1000).toLocaleString()}
                     </Table.Cell>
                   </Table.Row>

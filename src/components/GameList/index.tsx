@@ -39,7 +39,7 @@ interface GameListProps {
 
 function GameList({ gameList, selectedGame, setSelectedGame }: GameListProps) {
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
   const { accessMask } = useContext(AuthContext).auth;
 
@@ -60,19 +60,19 @@ function GameList({ gameList, selectedGame, setSelectedGame }: GameListProps) {
       <Table.Header>
         <Table.Row>
         <Table.HeaderCell width={2}>
-            {t("page.game.list.index.version")}
+            {lang.page_game_list_index_version}
           </Table.HeaderCell>
           <Table.HeaderCell width={2}>
-            {t("page.game.list.index.slots")}
+            {lang.slots}
           </Table.HeaderCell>
           <Table.HeaderCell width={4}>
-            {t("page.game.list.index.game")}
+            {lang.game}
           </Table.HeaderCell>
           <Table.HeaderCell>
-            {t("page.game.list.index.players")}
+            {lang.page_game_list_index_players}
           </Table.HeaderCell>
           <Table.HeaderCell width={2}>
-            {t("page.game.list.index.owner")}
+            {lang.page_game_list_index_owner}
           </Table.HeaderCell>
           <Table.HeaderCell width={2}></Table.HeaderCell>
         </Table.Row>
@@ -132,7 +132,7 @@ function GameList({ gameList, selectedGame, setSelectedGame }: GameListProps) {
                   {game.iccupHost && !game.gameFlags.started && (
                     <span
                       className="iccup"
-                      title={t("page.game.list.index.copy")}
+                      title={lang.page_game_list_index_copy}
                       onClick={() => copy(game.iccupHost)}
                     >
                       ({game.iccupHost})

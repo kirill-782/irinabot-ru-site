@@ -21,7 +21,7 @@ function MapInfo({ mapId }: MapInfoProps) {
   const { mapsApi } = useContext(RestContext);
 
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
   useEffect(() => {
     setLoading(true);
@@ -41,7 +41,7 @@ function MapInfo({ mapId }: MapInfoProps) {
   if (isLoading)
     return (
       <Loader active size="big">
-        {t("page.map.info.loading")}
+        {lang.page_map_info_loading}
       </Loader>
     );
 
@@ -49,7 +49,7 @@ function MapInfo({ mapId }: MapInfoProps) {
     return (
       <div className="map-info-error">
         <Icon size="big" color="red" name="close"></Icon>
-        <span className="text">{t("page.map.info.hasError")}</span>
+        <span className="text">{lang.hasError}</span>
       </div>
     );
 
@@ -65,7 +65,7 @@ function MapInfo({ mapId }: MapInfoProps) {
       />
       <div>
         <span className="map-players-title">
-          {t("page.map.info.qplayers")}:
+          {lang.playerCount}:
         </span>
         <WarcraftIIIText>
           {mapInfo?.mapInfo?.playerRecommendation || ""}

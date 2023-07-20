@@ -16,7 +16,7 @@ interface OnlineStatsProps {
 
 function OnlineStats({ gameList }: OnlineStatsProps) {
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
   const gameStats = useMemo<OnlineStatsRow[]>(() => {
     let stats: Map<String, OnlineStatsRow> = new Map();
@@ -72,9 +72,9 @@ function OnlineStats({ gameList }: OnlineStatsProps) {
     <Table>
       <Table.Header>
         <Table.Row>
-          <Table.HeaderCell>{t("online.category")}</Table.HeaderCell>
-          <Table.HeaderCell>{t("online.totalGame")}</Table.HeaderCell>
-          <Table.HeaderCell>{t("online.players")}</Table.HeaderCell>
+          <Table.HeaderCell>{lang.online_category}</Table.HeaderCell>
+          <Table.HeaderCell>{lang.online_totalGame}</Table.HeaderCell>
+          <Table.HeaderCell>{lang.online_players}</Table.HeaderCell>
         </Table.Row>
       </Table.Header>
       <Table.Body>

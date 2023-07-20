@@ -25,7 +25,7 @@ function MapEditPage({ updateMap }: MapEditPageProps) {
   const { mapsApi } = useContext(RestContext);
 
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
   const [flags, updateFlags, flagsLoading, flagsLoadError] = useMapFlags({
     mapId: map.id!!,
@@ -80,7 +80,7 @@ function MapEditPage({ updateMap }: MapEditPageProps) {
           {flags && (
             <>
               <Message info className="fluid">
-                <p>{t("page.map.edit.informer")}</p>
+                <p>{lang.tagInformer}</p>
               </Message>
               <FlagsEditBlock
                 flags={flags}
@@ -93,16 +93,16 @@ function MapEditPage({ updateMap }: MapEditPageProps) {
           )}
           {!flags && flagsLoading && (
             <Loader active size="big">
-              {t("page.map.edit.flagLoads")}
+              {lang.flagLoads}
             </Loader>
           )}
         </Grid.Row>
       </AccessControl>
       <AccessControl requeredAuthority="MAP_VERIFY">
         <Grid.Row stretched>
-          <Header>{t("page.map.edit.xdesc")}</Header>
+          <Header>{lang.extraDescription}</Header>
           <Message info className="fluid">
-            <p>{t("page.map.edit.descripton")}</p>
+            <p>{lang.page_map_edit_descripton}</p>
           </Message>
           <MapExternalDescriptionEdit
             value={map.additionalFlags?.["mapDescription"]}

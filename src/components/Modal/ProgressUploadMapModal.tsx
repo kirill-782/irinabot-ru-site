@@ -17,17 +17,17 @@ function ProgressUploadMapModal({
   onClose,
 }: UploadMapModalProps) {
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
   return (
     <Modal open={open} onClose={onClose} closeIcon>
-      <Modal.Header>{t("modal.uploading.caption")}</Modal.Header>
+      <Modal.Header>{lang.modal_uploading_caption}</Modal.Header>
       <Modal.Content>
         <p>
-          {t("modal.uploading.description")}
+          {lang.fileMapUploading}
         </p>
         <Grid.Row></Grid.Row>
         <Progress
-          label={`${t("modal.uploading.uploaded")} ${percent}%`}
+          label={`${lang.uploaded} ${percent}%`}
           percent={percent}
           indicating
         />

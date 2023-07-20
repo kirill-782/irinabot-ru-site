@@ -22,7 +22,7 @@ function UserDrowdown() {
   const currentAuth = authContext.auth.currentAuth;
 
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
   const logout = () => {
     window.localStorage.removeItem("authTokenType");
@@ -56,24 +56,24 @@ function UserDrowdown() {
             as={NavLink}
             to="/create"
           >
-            {t("menu.user.create")}
+            {lang.new}
           </Dropdown.Item>
           <Dropdown.Item
             onClick={() => {
               setUserSettingsModalOpen(true);
             }}
           >
-            {t("menu.user.settings")}
+            {lang.settings}
           </Dropdown.Item>
           <Dropdown.Item
             onClick={() => {
               setUserAccessModalOpen(true);
             }}
           >
-            {t("menu.user.accessList")}
+            {lang.accessList}
           </Dropdown.Item>
           <Dropdown.Item onClick={logout}>
-            {t("menu.user.logout")}
+            {lang.logout}
           </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>

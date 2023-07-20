@@ -17,7 +17,7 @@ function ConfigSelectTab() {
   const go = useNavigate();
 
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
   const deleteConfig = (configId: number) => {
     mapsApi
@@ -29,7 +29,7 @@ function ConfigSelectTab() {
       })
       .catch((e) => {
         toast({
-          title: t("other.config.selectTAB.removeError"),
+          title: lang.other_config_selectTAB_removeError,
           description: convertErrorResponseToString(e),
           color: "red",
         });
@@ -57,7 +57,7 @@ function ConfigSelectTab() {
       {hasError && <Message color="red">{hasError}</Message>}
       {isLoading && (
         <Loader active size="massive">
-          {t("other.config.selectTAB.loading")}
+          {lang.other_config_selectTAB_loading}
         </Loader>
       )}
       {configList.length > 0 && (
@@ -74,12 +74,12 @@ function ConfigSelectTab() {
                         </Header>
                       </Grid.Row>
                       <Grid.Row>
-                        {t("other.config.selectTAB.update")}:
+                        {lang.other_config_selectTAB_update}:
                         {new Date(config.lastUpdateDate || 0).toLocaleString()}
                       </Grid.Row>
                       <Grid.Row>
                         <Link to={`/maps/${config.mapId}`}>
-                          {t("other.config.selectTAB.tomap")}
+                          {lang.toMap}
                         </Link>
                       </Grid.Row>
                     </Grid.Column>
@@ -89,7 +89,7 @@ function ConfigSelectTab() {
                         as={Link}
                         to={`/create/confirm?configId=${config.id}`}
                       >
-                        {t("other.config.selectTAB.choose")}
+                        {lang.other_config_selectTAB_choose}
                       </Button>
                     </Grid.Column>
                   </Grid.Row>
@@ -100,7 +100,7 @@ function ConfigSelectTab() {
                         go(`/config/${config.id}/edit`);
                       }}
                     >
-                      {t("other.config.selectTAB.edit")}
+                      {lang.edit}
                     </Button>
                     <Button
                       color="red"
@@ -108,7 +108,7 @@ function ConfigSelectTab() {
                         deleteConfig(config.id || 0);
                       }}
                     >
-                      {t("other.config.selectTAB.delete")}
+                      {lang.delete}
                     </Button>
                   </Grid.Row>
                 </Grid>
@@ -120,7 +120,7 @@ function ConfigSelectTab() {
       {configList.length === 0 && !hasError && !isLoading && (
         <Grid.Column>
           <Grid.Row className="config-list">
-            <Message info>{t("other.config.selectTAB.noconfig")}.</Message>
+            <Message info>{lang.noconfig}.</Message>
           </Grid.Row>
         </Grid.Column>
       )}

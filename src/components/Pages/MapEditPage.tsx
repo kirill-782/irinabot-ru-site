@@ -21,7 +21,7 @@ function MapEditPage() {
   const mapLoadRef = useRef<AbortController | null>();
 
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
   const reloadMap = useMemo(() => {
     return () => {
@@ -69,7 +69,7 @@ function MapEditPage() {
         </MapContext.Provider>
       ) : (
         <Loader active size="big">
-          {t("page.map.edit.loading")}
+          {lang.mapLoading}
         </Loader>
       )}
     </Container>

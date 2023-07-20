@@ -29,7 +29,7 @@ function CloneConfigButton({
   const go = useNavigate();
 
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
   const cloneConfigRequests = async (): Promise<ConfigInfo> => {
     const defaultConfig = await mapsApi.getDefaultMapConfig(
@@ -37,7 +37,7 @@ function CloneConfigButton({
       selectedVersion
     );
     if (defaultConfig.status !== 1 || !defaultConfig.config)
-      throw new Error(t("page.map.cloneConfig.error"));
+      throw new Error(lang.page_map_cloneConfig_error);
     else {
       return await mapsApi.createConfig(
         mapId,
@@ -55,7 +55,7 @@ function CloneConfigButton({
       })
       .catch((e) => {
         toast({
-          title: t("page.map.cloneConfing.copyError"),
+          title: lang.copyError,
           description: convertErrorResponseToString(e),
           color: "red",
         });
@@ -69,7 +69,7 @@ function CloneConfigButton({
         color="green"
         basic
         icon="copy"
-        title={t("page.map.cloneConfing.buttonClone")}
+        title={lang.caption}
         disabled={!enabled}
         onClick={() => {
           setModalOpen(true);
@@ -85,12 +85,12 @@ function CloneConfigButton({
           }}
         >
           <Modal.Header>
-            {t("page.map.cloneConfing.modal.caption")}
+            {lang.page_map_cloneConfing_modal_caption}
           </Modal.Header>
           <Modal.Content>
             <Form>
               <Form.Select
-                label={t("page.map.cloneConfing.modal.version")}
+                label={lang.page_map_cloneConfing_modal_version}
                 value={selectedVersion}
                 onChange={(_, data) => {
                   setSelectedVersion((data.value as string) || "");
@@ -101,7 +101,7 @@ function CloneConfigButton({
                     .map((i) => {
                       return {
                         text:
-                          t("page.map.cloneConfing.modal.standardCfg") +
+                          lang.configStandart +
                           " " +
                           i.version,
                         value: i.version,
@@ -114,7 +114,7 @@ function CloneConfigButton({
                 onChange={(_, data) => {
                   setConfigName(data.value);
                 }}
-                label={t("page.map.cloneConfing.modal.nameCfg")}
+                label={lang.configCaption}
               />
               <Form.Button
                 color="green"
@@ -123,7 +123,7 @@ function CloneConfigButton({
                 }}
               >
                 <Icon name="copy" />
-                {t("page.map.cloneConfing.modal.tocopy")}
+                {lang.copy}
               </Form.Button>
             </Form>
           </Modal.Content>

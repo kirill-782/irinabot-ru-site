@@ -43,7 +43,7 @@ function ReplayParserPage({}) {
   const [name, setName] = useState<string>("");
 
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
   const onReplayData = (name: string, data: ReplayResult) => {
     setReplayData(data);
@@ -75,7 +75,7 @@ function ReplayParserPage({}) {
   };
 
   const getShortBlockDescription = (block: ActionData) => {
-    return `${t("page.replay.parser.block")} ${block.seqenceNumber}`;
+    return `${lang.block} ${block.seqenceNumber}`;
   };
 
   return (

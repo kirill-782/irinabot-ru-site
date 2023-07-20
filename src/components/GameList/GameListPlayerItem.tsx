@@ -87,7 +87,7 @@ function GameListPlayerItem({ player }: GameListPlayerItemProps) {
   const { chat } = useContext(AppRuntimeSettingsContext);
 
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
   const openUserChat = () => {
     if (chat.selectUser.selectUser) chat.selectUser.selectUser(player.name);
@@ -111,26 +111,26 @@ function GameListPlayerItem({ player }: GameListPlayerItemProps) {
   const renderStats = () => {
     if (gamePlayerStats === undefined)
       return (
-        <span>{t("page.game.list.playerItem.renderStats.undefined")}</span>
+        <span>{lang.statsLoading}</span>
       );
 
     if (gamePlayerStats === null)
-      return <span>{t("page.game.list.playerItem.renderStats.null")}</span>;
+      return <span>{lang.stats404}</span>;
 
     return (
       <List horizontal>
         <List.Item style={{ color: "green" }}>
-          {t("page.game.list.playerItem.wins")}: {gamePlayerStats.win}
+          {lang.wins}: {gamePlayerStats.win}
         </List.Item>
         <List.Item style={{ color: "red" }}>
-          {t("page.game.list.playerItem.defeats")}: {gamePlayerStats.lose}
+          {lang.defeats}: {gamePlayerStats.lose}
         </List.Item>{" "}
         <List.Item>
-          {t("page.game.list.playerItem.winrate")}: {gamePlayerStats.percent}%
+          {lang.winrate}: {gamePlayerStats.percent}%
         </List.Item>
         <List.Item>
-          {t("page.game.list.playerItem.totalTime")}:{" "}
-          {gamePlayerStats.totalTime} {t("page.game.list.playerItem.h")}.
+          {lang.totalTime}:{" "}
+          {gamePlayerStats.totalTime} {lang.h}.
         </List.Item>
         <List.Item style={{ color: "blue" }}>
           APM: {gamePlayerStats.apm}
@@ -169,7 +169,7 @@ function GameListPlayerItem({ player }: GameListPlayerItemProps) {
             }}
           >
             <Icon name="envelope"></Icon>
-            {t("page.game.list.playerItem.writeMessage")}
+            {lang.writeMessage}
           </Button>
         </Grid.Row>
       </Grid>

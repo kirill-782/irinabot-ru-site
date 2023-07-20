@@ -11,7 +11,7 @@ import WarcraftIIIText from "../WarcraftIIIText";
 function MapHeader() {
   const map = useContext(MapContext).map;
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
   return (
     <>
@@ -35,18 +35,18 @@ function MapHeader() {
           <WarcraftIIIText>{map.mapInfo?.description}</WarcraftIIIText>
         </p>
         <p>
-          <b>{t("page.map.header.author")}: </b>
+          <b>{lang.author}: </b>
           <WarcraftIIIText>{map.mapInfo?.author}</WarcraftIIIText>
         </p>
         <p>
-          <b>{t("page.map.header.playerRecommendation")}: </b>
+          <b>{lang.playerRecommendation}: </b>
           <WarcraftIIIText>{map.mapInfo?.playerRecommendation}</WarcraftIIIText>
         </p>
         <p>
-          <b>{t("page.map.header.uploadedFileName")}: </b> {map.fileName}
+          <b>{lang.uploadedFileName}: </b> {map.fileName}
         </p>
         <p>
-          <b>{t("page.map.header.fileNameOnBot")}: </b>
+          <b>{lang.fileNameOnBot}: </b>
           {getBotFileName(map.fileName || "", map.id || 0)}
         </p>
       </Grid.Column>

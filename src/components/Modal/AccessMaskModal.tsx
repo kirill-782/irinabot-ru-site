@@ -3,6 +3,7 @@ import { Form, Modal } from "semantic-ui-react";
 import { AppRuntimeSettingsContext } from "../../context";
 
 import "./AccessMaskModal.scss";
+import LanguageKey from "../LanguageKey";
 
 export enum AccessMaskBit {
   VIP_COMMANDS = 1,
@@ -129,6 +130,7 @@ function AccessMaskModal({
   const [accessMask, setAccessMask] = useState<number>(defaultAccessMask || 0);
 
   const { language } = useContext(AppRuntimeSettingsContext);
+  const lang = language.languageRepository;
   const t = language.getString;
 
   useEffect(() => {
@@ -143,7 +145,7 @@ function AccessMaskModal({
       onClose={onClose}
       closeIcon
     >
-      <Modal.Header>{t("modal.accessMask.caption")}</Modal.Header>
+      <Modal.Header><LanguageKey stringId={"accessMaskModalHeader"}/></Modal.Header>
       <Modal.Content>
         <Form>
           {AccessMaskCheckBoxs.map((i) => {
@@ -181,7 +183,7 @@ function AccessMaskModal({
                 setAccessMask((accessMask) => accessMask | 3841);
               }}
             >
-              {t("modal.accessMask.add3in1")}
+              {lang.add3in1}
             </Form.Button>
             <Form.Button
               color="green"
@@ -191,7 +193,7 @@ function AccessMaskModal({
                 setAccessMask((accessMask) => accessMask | 3584);
               }}
             >
-              {t("modal.accessMask.addBanList")}
+              {lang.addBanList}
             </Form.Button>
             <Form.Button
               color="green"
@@ -201,7 +203,7 @@ function AccessMaskModal({
                 setAccessMask((accessMask) => accessMask | 536899804);
               }}
             >
-              {t("modal.accessMask.addAdminList")}
+              {lang.addAdminList}
             </Form.Button>
           </Form.Group>
           {onChange && (

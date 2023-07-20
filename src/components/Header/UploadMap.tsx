@@ -41,7 +41,7 @@ function UploadMap() {
   const go = useNavigate();
 
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
   const [currentUpload, setCurrentUpload] =
     useState<CurrentMapUploadDescription>({
@@ -59,17 +59,17 @@ function UploadMap() {
 
       if (event.detail.error)
         toast({
-          title: t("menu.map.error"),
+          title: lang.mapUploadError,
           description: event.detail.error.toString(),
           type: "error",
         });
       else if (event.detail.map)
         toast(
           {
-            title: `${t("menu.map.isUploaded")}.`,
-            description: `${t("menu.map.map")} ${
+            title: `${lang.mapIsUploaded}.`,
+            description: `${lang.map} ${
               event.detail.map.mapInfo?.name
-            } ${t("menu.map.isUploaded2")}.`,
+            } ${lang.mapIsUploaded2}.`,
             type: "success",
             time: 10000,
           },
@@ -169,14 +169,14 @@ function UploadMap() {
         onClick={onItemClick}
         title={
           isMapUploading
-            ? `${t("menu.map.uploading")}: ${currentUpload.fillename} ${
+            ? `${lang.loading}: ${currentUpload.fillename} ${
                 (currentUpload.loadedSize / currentUpload.totalSize) * 100
               }%`
-            : t("menu.map.notUploading")
+            : lang.mapIsntUploaded
         }
       >
         <Icon color={isMapUploading ? "green" : undefined} name="upload" />
-        {t("menu.utils.mapUploading")}
+        {lang.mapUploading}
       </Menu.Item>
     </>
   );

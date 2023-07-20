@@ -19,7 +19,7 @@ function ConnectorAddButton({ game }: ConnectorAddButtonProps) {
   const [password, setPassword] = useState("");
 
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
   const requestConnectorGame = (password?: string) => {
     const converter = new ClientRequestUDPGameConverter();
@@ -56,11 +56,11 @@ function ConnectorAddButton({ game }: ConnectorAddButtonProps) {
             setPasswordModalOpen(false);
           }}
         >
-          <Modal.Header>{t("page.game.list.button.add.private")}</Modal.Header>
+          <Modal.Header>{lang.private}</Modal.Header>
           <Modal.Content>
             <Form>
               <Form.Input
-                label={t("page.game.list.button.add.password")}
+                label={lang.password}
                 value={password}
                 onChange={(_, data) => {
                   setPassword(data.value);
@@ -74,7 +74,7 @@ function ConnectorAddButton({ game }: ConnectorAddButtonProps) {
                 }}
               >
                 <Icon name="check"></Icon>
-                {t("page.game.list.button.add.login")}
+                {lang.page_game_list_button_add_login}
               </Form.Button>
             </Form>
           </Modal.Content>

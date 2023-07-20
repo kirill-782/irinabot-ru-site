@@ -35,12 +35,12 @@ function MapReportModal({ open, onClose, mapId }: MapReportModalProps) {
   const [source, setSource] = useState("");
 
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
   const send = () => {
     let string =
       "**" +
-      t("modal.mapReport.send.type") +
+      lang.modal_mapReport_send_type +
       ":**" +
       t(
         reasonOptions.filter((i) => {
@@ -54,10 +54,10 @@ function MapReportModal({ open, onClose, mapId }: MapReportModalProps) {
     )}:** __#${mapId}__ (https://irinabot.ru/maps/${mapId})\r\n`;
 
     if (source)
-      string += `**${t("modal.mapReport.send.source")}:** ${source}\r\n`;
+      string += `**${lang.modal_mapReport_send_source}:** ${source}\r\n`;
 
     if (comment)
-      string += `**${t("modal.mapReport.send.comment")}:** ${comment}\r\n`;
+      string += `**${lang.modal_mapReport_send_comment}:** ${comment}\r\n`;
 
     window.location.href = `https://xgm.guru/p/irina/add/219?initial-text=${encodeURIComponent(
       string
@@ -72,14 +72,14 @@ function MapReportModal({ open, onClose, mapId }: MapReportModalProps) {
         onClose();
       }}
     >
-      <Modal.Header>{t("modal.mapReport.caption")}</Modal.Header>
+      <Modal.Header>{lang.mapReport}</Modal.Header>
       <Modal.Content>
         <Message info>
-          <p>{t("modal.mapReport.info")}</p>
+          <p>{lang.infoRedirectionXGM}</p>
         </Message>
         <Form>
           <Form.Select
-            label={t("modal.mapReport.type")}
+            label={lang.typeReport}
             options={reasonOptions.map((i) => {
               return { ...i, text: t(i.text) };
             })}
@@ -90,7 +90,7 @@ function MapReportModal({ open, onClose, mapId }: MapReportModalProps) {
           ></Form.Select>
           {type === 1 && (
             <Form.TextArea
-              label={t("modal.mapReport.source")}
+              label={lang.source}
               value={source}
               onChange={(_, data) => {
                 setSource(data.value?.toString() || "");
@@ -99,7 +99,7 @@ function MapReportModal({ open, onClose, mapId }: MapReportModalProps) {
           )}
           {type !== 0 && (
             <Form.TextArea
-              label={t("modal.mapReport.comment")}
+              label={lang.comment}
               value={comment}
               onChange={(_, data) => {
                 setComment(data.value?.toString() || "");
@@ -112,7 +112,7 @@ function MapReportModal({ open, onClose, mapId }: MapReportModalProps) {
               send();
             }}
           >
-            {t("modal.mapReport.tosend")}
+            {lang.modal_mapReport_tosend}
           </Form.Button>
         </Form>
       </Modal.Content>

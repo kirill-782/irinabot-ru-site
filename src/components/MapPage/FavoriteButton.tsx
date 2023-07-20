@@ -12,7 +12,7 @@ function MapFavoriteButton() {
   const favorite = map.favorite;
 
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
   const onButtonClick = () => {
     if (favorite) {
@@ -23,7 +23,7 @@ function MapFavoriteButton() {
         })
         .catch((e) => {
           toast({
-            title: t("page.map.button.favour.error"),
+            title: lang.page_map_button_favour_error,
             description: convertErrorResponseToString(e),
           });
         });
@@ -35,7 +35,7 @@ function MapFavoriteButton() {
         })
         .catch((e) => {
           toast({
-            title: t("page.map.button.favour.error"),
+            title: lang.page_map_button_favour_error,
             description: convertErrorResponseToString(e),
           });
         });

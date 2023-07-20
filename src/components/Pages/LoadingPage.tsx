@@ -4,10 +4,10 @@ import { AppRuntimeSettingsContext } from "../../context";
 
 function LoadingPage() {
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
   return (
     <Loader active size="massive">
-      {t("page.loading")}
+      {lang.pageLoading}
     </Loader>
   );
 }

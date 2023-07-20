@@ -47,7 +47,7 @@ function MapSelectTab() {
   };
 
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
   useEffect(() => {
     const savedState = SessionStorage.get<SesstionSaveOptions>(
@@ -74,7 +74,7 @@ function MapSelectTab() {
   return (
     <Grid columns="equal" stackable className="map-select-tab">
       <Grid.Column width={3}>
-        <Header size="small">{t("page.map.selectTab.filters")}</Header>
+        <Header size="small">{lang.filters}</Header>
         <Form className="filter-form">
           <MapFilters
             value={searchOptions}
@@ -94,8 +94,8 @@ function MapSelectTab() {
               loading={isLoading}
               value={searchValue}
               error={!!errorMessage}
-              label={t("page.map.selectTab.mapSearch")}
-              placeholder={t("page.map.selectTab.mapSearchPlaceholder")}
+              label={lang.mapSearch}
+              placeholder={lang.mapSearchPlaceholder}
             />
           </Form>
         </Grid.Row>
@@ -106,7 +106,7 @@ function MapSelectTab() {
               {...map}
               selectElement={
                 <Button as={Link} to={`/create/confirm?mapId=${map.id}`}>
-                  {t("page.map.selectTab.select")}
+                  {lang.choose}
                 </Button>
               }
             />
@@ -123,8 +123,8 @@ function MapSelectTab() {
               }}
             >
               {isLoading
-                ? t("page.map.selectTab.loadingZZZ")
-                : t("page.map.selectTab.loadMore")}
+                ? lang.page_map_selectTab_loadingZZZ
+                : lang.loadMore}
             </button>
           </Grid>
         )}
