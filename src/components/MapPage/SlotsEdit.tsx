@@ -5,64 +5,72 @@ import { Slot } from "../../models/rest/Slot";
 import { getClassColorByIndex } from "./MapSlots";
 
 import "./MapSlots.scss";
+import { LanguageRepositoryKeys } from "../../localization/Lang.ru";
+import LanguageKey from "../LanguageKey";
 
 const ALL_RACES_FLAGS = 1 | 2 | 4 | 8 | 32;
 const SELECTABLE_RACE = 64;
 
+interface OptionWithLanguageKey {
+  langKey: LanguageRepositoryKeys,
+  value: number,
+  [key: string]: any,
+}
+
 const slotStatusOptions = [
   {
-    text: "page.map.slots.type.open",
-    value: 0,
+    langKey: "slotsOpen",
+    value: 0
   },
   {
-    text: "page.map.slots.type.closed",
-    value: 1,
+    langKey: "slotsClose",
+    value: 1
   },
   {
-    text: "page.map.slots.type.aiEasy",
-    value: 2,
+    langKey: "slotsComputerEasy",
+    value: 2
   },
   {
-    text: "page.map.slots.type.aiMedium",
-    value: 3,
+    langKey: "slotsComputerMedium",
+    value: 3
   },
   {
-    text: "page.map.slots.type.aiInsane",
-    value: 4,
-  },
-];
+    langKey: "slotsComputerHard",
+    value: 4
+  }
+] as OptionWithLanguageKey[];
 
 const slotRacesOptions = [
   {
-    text: "page.map.slots.race.human",
-    value: 1,
+    langKey: "slotsTeamNumber",
+    value: 1
   },
   {
-    text: "page.map.slots.race.orc",
-    value: 2,
+    langKey: "slotsOrc",
+    value: 2
   },
   {
-    text: "page.map.slots.race.nightelf",
-    value: 4,
+    langKey: "slotsNightElf",
+    value: 4
   },
   {
-    text: "page.map.slots.race.undead",
-    value: 8,
+    langKey: "slotsUndead",
+    value: 8
   },
   {
-    text: "page.map.slots.race.random",
-    value: 32,
-  },
-];
+    langKey: "slotsRandom",
+    value: 32
+  }
+] as OptionWithLanguageKey[];
 
 const slotTeamsOptions = (() => {
-  let result: any[] = [];
+  let result: OptionWithLanguageKey[] = [];
 
   for (let i = 0; i < 25; ++i) {
     result[i] = {
       teamNumber: i + 1,
-      text: "page.map.slots.slot.team",
-      value: i,
+      langKey: "slotsTeamNumber",
+      value: i
     };
   }
 
@@ -75,7 +83,7 @@ const slotColorsOptions = (() => {
   for (let i = 0; i < 25; ++i) {
     result[i] = {
       value: i,
-      text: <span className={`slot-color ${getClassColorByIndex(i)}`}></span>,
+      text: <span className={`slot-color ${getClassColorByIndex(i)}`}></span>
     };
   }
 
@@ -99,13 +107,14 @@ function SlotsEdit({ slots, options, onSlotsChange }: SlotsEditProps) {
 
   const { language } = useContext(AppRuntimeSettingsContext);
   const lang = language.languageRepository;
+  const t = language.getString;
 
   if (slots) {
     if (!customForces)
       teamSlots[0] = slots.map((slot, index) => {
         return {
           ...slot,
-          sid: index,
+          sid: index
         };
       });
     else {
@@ -133,7 +142,7 @@ function SlotsEdit({ slots, options, onSlotsChange }: SlotsEditProps) {
           team: updateSlot.team,
           colour: updateSlot.colour,
           race: updateSlot.race,
-          handicap: updateSlot.handicap,
+          handicap: updateSlot.handicap
         };
 
       return {
@@ -141,7 +150,7 @@ function SlotsEdit({ slots, options, onSlotsChange }: SlotsEditProps) {
         team: i.team,
         colour: i.colour,
         race: i.race,
-        handicap: i.handicap,
+        handicap: i.handicap
       };
     });
   };
@@ -153,7 +162,7 @@ function SlotsEdit({ slots, options, onSlotsChange }: SlotsEditProps) {
           <React.Fragment key={index}>
             {customForces && (
               <label>
-                {lang.slotTeam} {index + 1}
+                <LanguageKey stringId={"slotsTeamNumber"} team={index + 1} />
               </label>
             )}
             <Table>
@@ -161,19 +170,19 @@ function SlotsEdit({ slots, options, onSlotsChange }: SlotsEditProps) {
                 <Table.Header>
                   <Table.HeaderCell width={1}>SID</Table.HeaderCell>
                   <Table.HeaderCell width={4}>
-                    {lang.slotType}{" "}
+                    {lang.slotsTypeHeader}
                   </Table.HeaderCell>
                   <Table.HeaderCell width={3}>
-                    {lang.page_map_slots_slot_team}
+                    {lang.slotsTeamHeader}
                   </Table.HeaderCell>
                   <Table.HeaderCell width={4}>
-                    {lang.slotRace}
+                    {lang.slotsRaceHeader}
                   </Table.HeaderCell>
                   <Table.HeaderCell width={1}>
-                    {lang.slotTeamcolor}
+                    {lang.slotsColorHeader}
                   </Table.HeaderCell>
                   <Table.HeaderCell width={2}>
-                    {lang.slotHandicap}
+                    {lang.slotsHandicapHeader}
                   </Table.HeaderCell>
                 </Table.Header>
               )}
@@ -184,7 +193,7 @@ function SlotsEdit({ slots, options, onSlotsChange }: SlotsEditProps) {
                     <Table.Cell width={4}>
                       <Form.Dropdown
                         options={slotStatusOptions.map((i) => {
-                          return { ...i, text: t(i.text) };
+                          return { ...i, text: t(i.langKey) };
                         })}
                         value={slot.status}
                         onChange={(_, data) => {
@@ -192,7 +201,7 @@ function SlotsEdit({ slots, options, onSlotsChange }: SlotsEditProps) {
                             onSlotsChange(
                               assemblySlots({
                                 ...slot,
-                                status: data.value as number,
+                                status: data.value as number
                               })
                             );
                         }}
@@ -201,7 +210,7 @@ function SlotsEdit({ slots, options, onSlotsChange }: SlotsEditProps) {
                     <Table.Cell width={3}>
                       <Form.Dropdown
                         options={slotTeamsOptions.map((i) => {
-                          return { ...i, text: t(i.text) + " " + i.teamNumber };
+                          return { ...i, text: t(i.langKey, { number: i.teamNumber }) };
                         })}
                         value={slot.team}
                         onChange={(_, data) => {
@@ -209,7 +218,7 @@ function SlotsEdit({ slots, options, onSlotsChange }: SlotsEditProps) {
                             onSlotsChange(
                               assemblySlots({
                                 ...slot,
-                                team: data.value as number,
+                                team: data.value as number
                               })
                             );
                         }}
@@ -228,28 +237,28 @@ function SlotsEdit({ slots, options, onSlotsChange }: SlotsEditProps) {
                                 ...slot,
                                 race:
                                   (slot.race & ~ALL_RACES_FLAGS) |
-                                  (data.value as number),
+                                  (data.value as number)
                               })
                             );
                         }}
                       ></Form.Dropdown>
                       <Form.Checkbox
                         checked={!!(slot.race & SELECTABLE_RACE)}
-                        label={lang.allowChange}
+                        label={lang.slotsCanChange}
                         onChange={(_, data) => {
                           if (onSlotsChange) {
                             if (data.checked) {
                               onSlotsChange(
                                 assemblySlots({
                                   ...slot,
-                                  race: slot.race | SELECTABLE_RACE,
+                                  race: slot.race | SELECTABLE_RACE
                                 })
                               );
                             } else {
                               onSlotsChange(
                                 assemblySlots({
                                   ...slot,
-                                  race: slot.race & ~SELECTABLE_RACE,
+                                  race: slot.race & ~SELECTABLE_RACE
                                 })
                               );
                             }
@@ -267,7 +276,7 @@ function SlotsEdit({ slots, options, onSlotsChange }: SlotsEditProps) {
                             onSlotsChange(
                               assemblySlots({
                                 ...slot,
-                                colour: data.value as number,
+                                colour: data.value as number
                               })
                             );
                         }}
@@ -283,7 +292,7 @@ function SlotsEdit({ slots, options, onSlotsChange }: SlotsEditProps) {
                             onSlotsChange(
                               assemblySlots({
                                 ...slot,
-                                handicap: parseInt(data.value),
+                                handicap: parseInt(data.value)
                               })
                             );
                         }}

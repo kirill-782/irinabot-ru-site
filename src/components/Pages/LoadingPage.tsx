@@ -7,7 +7,7 @@ function LoadingPage() {
   const lang = language.languageRepository;
   return (
     <Loader active size="massive">
-      {lang.pageLoading}
+      {lang.loadingPage}
     </Loader>
   );
 }

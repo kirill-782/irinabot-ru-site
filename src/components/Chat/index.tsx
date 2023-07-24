@@ -152,7 +152,7 @@ export const Chat: React.FC<ChatProps> = ({
       }
       break;
     case "console":
-      label = lang.console;
+      label = lang.chatConsole;
       content = (
         <ConsoleBot
           messages={consoleMessages}
@@ -161,7 +161,7 @@ export const Chat: React.FC<ChatProps> = ({
       );
       break;
     default:
-      label = lang.chat;
+      label = lang.chatChat;
       content = (
         <ChatList
           users={users}

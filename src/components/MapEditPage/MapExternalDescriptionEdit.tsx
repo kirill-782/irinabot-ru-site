@@ -47,7 +47,8 @@ function MapExternalDescriptionEdit({
               color="green"
             >
               <Icon name="save" />
-              {lang.extraDescriptionription_save}
+              //скипнув? таких ключей нет
+              {lang.save}
             </Button>
           )}
           <Button
@@ -56,7 +57,7 @@ function MapExternalDescriptionEdit({
             }}
             color="green"
           >
-            {lang.extraDescriptionription_preview}
+            {lang.preview}
           </Button>
         </Form>
       </div>
@@ -68,7 +69,7 @@ function MapExternalDescriptionEdit({
           setPreviewModalOpen(false);
         }}
       >
-        <Modal.Header>{lang.extraDescriptionription_previews}</Modal.Header>
+        <Modal.Header>{lang.preview}</Modal.Header>
         <Modal.Content>
           <Markdown>{formValue}</Markdown>
         </Modal.Content>

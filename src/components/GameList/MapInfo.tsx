@@ -41,7 +41,7 @@ function MapInfo({ mapId }: MapInfoProps) {
   if (isLoading)
     return (
       <Loader active size="big">
-        {lang.page_map_info_loading}
+        {lang.loadingDotted}
       </Loader>
     );
 
@@ -49,7 +49,7 @@ function MapInfo({ mapId }: MapInfoProps) {
     return (
       <div className="map-info-error">
         <Icon size="big" color="red" name="close"></Icon>
-        <span className="text">{lang.hasError}</span>
+        <span className="text">{lang.error}</span>
       </div>
     );
 
@@ -65,7 +65,7 @@ function MapInfo({ mapId }: MapInfoProps) {
       />
       <div>
         <span className="map-players-title">
-          {lang.playerCount}:
+          {lang.mapInfoPlayersCount}
         </span>
         <WarcraftIIIText>
           {mapInfo?.mapInfo?.playerRecommendation || ""}

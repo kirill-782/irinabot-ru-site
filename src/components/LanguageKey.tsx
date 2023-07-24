@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
-import { LanguageKey } from "../localization/Lang.ru";
+import { LanguageRepositoryKeys } from "../localization/Lang.ru";
 import { AppRuntimeSettingsContext } from "../context";
 import Markdown from "./Markdown";
 
 interface LanguageKeyProps {
-  stringId: LanguageKey,
+  stringId: LanguageRepositoryKeys,
 
-  [key: string]: string
+  [key: string]: any
 }
 
 function LanguageKey({ stringId, ...options }: LanguageKeyProps) {

@@ -74,7 +74,7 @@ function MapSelectTab() {
   return (
     <Grid columns="equal" stackable className="map-select-tab">
       <Grid.Column width={3}>
-        <Header size="small">{lang.filters}</Header>
+        <Header size="small">{lang.mapSelectTabFilters}</Header>
         <Form className="filter-form">
           <MapFilters
             value={searchOptions}
@@ -94,8 +94,8 @@ function MapSelectTab() {
               loading={isLoading}
               value={searchValue}
               error={!!errorMessage}
-              label={lang.mapSearch}
-              placeholder={lang.mapSearchPlaceholder}
+              label={lang.mapSelectTabSearchMap}
+              placeholder={lang.mapSelectTabSearchPlaceholder}
             />
           </Form>
         </Grid.Row>
@@ -106,7 +106,7 @@ function MapSelectTab() {
               {...map}
               selectElement={
                 <Button as={Link} to={`/create/confirm?mapId=${map.id}`}>
-                  {lang.choose}
+                  {lang.select}
                 </Button>
               }
             />
@@ -123,7 +123,7 @@ function MapSelectTab() {
               }}
             >
               {isLoading
-                ? lang.page_map_selectTab_loadingZZZ
+                ? lang.loadingDotted
                 : lang.loadMore}
             </button>
           </Grid>

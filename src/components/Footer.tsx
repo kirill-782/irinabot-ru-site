@@ -3,7 +3,6 @@ import { useContext, useState } from "react";
 import { Icon, Label, Menu } from "semantic-ui-react";
 import { AppRuntimeSettingsContext, WebsocketContext } from "../context";
 import { Chat } from "./Chat";
-import ConnectorIndicator from "./Footer/ConnectorIndicator";
 import OnlineStatsCounter from "./Footer/OnlineStatsCounter";
 
 function Footer(props) {
@@ -33,8 +32,7 @@ function Footer(props) {
       />
       <Menu text fixed="bottom" size="massive" className="footer-menu">
         <OnlineStatsCounter />
-        <ConnectorIndicator />
-        <Menu.Item title={t("footer.hostbot") + "."}>
+        <Menu.Item title={t("footerHostbotWebsocketHint")}>
           <Icon
             name="plug"
             color={

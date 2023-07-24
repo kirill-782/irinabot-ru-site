@@ -69,7 +69,7 @@ function MapEditPage() {
         </MapContext.Provider>
       ) : (
         <Loader active size="big">
-          {lang.mapLoading}
+          {lang.loading}
         </Loader>
       )}
     </Container>

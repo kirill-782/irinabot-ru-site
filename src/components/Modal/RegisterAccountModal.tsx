@@ -18,10 +18,10 @@ function RegisterAccountModal({
 
   return (
     <Modal open={open} className="register-modal">
-      <Modal.Header>{lang.registration}</Modal.Header>
+      <Modal.Header>{lang.registerAccountModalHeader}</Modal.Header>
 
       <Modal.Content>
-        <Modal.Description>{lang.fistLogined}</Modal.Description>
+        <Modal.Description>{lang.registerAccountModalDescription}</Modal.Description>
       </Modal.Content>
       <Modal.Actions>
         <Button
@@ -30,7 +30,7 @@ function RegisterAccountModal({
             onReject();
           }}
         >
-          <Icon name="remove" /> {lang.modal_register_no}
+          <Icon name="remove" /> {lang.no}
         </Button>
         <Button
           color="green"

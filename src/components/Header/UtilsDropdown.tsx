@@ -17,7 +17,7 @@ function UtilsDropdown() {
 
   return (
     <>
-      <Dropdown text={lang.utils} item>
+      <Dropdown text={lang.utilsDropdownOption} item>
         <Dropdown.Menu>
           <Dropdown.Item
             onClick={() => {
@@ -30,7 +30,7 @@ function UtilsDropdown() {
             }
           >
             <Icon name="list" />
-            {lang.autohostList}
+            {lang.utilsDropdownAutohostList}
           </Dropdown.Item>
           <UploadMap />
           <Dropdown.Item
@@ -39,7 +39,7 @@ function UtilsDropdown() {
             }}
           >
             <Icon name="check" />
-            {lang.accessMaskCal}
+            {lang.utilsDropdownAccessMaskCalc}
           </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>

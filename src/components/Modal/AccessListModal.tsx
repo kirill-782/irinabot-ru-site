@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Message, Modal, Table } from "semantic-ui-react";
 import ConnectorId from "../ConnectorId";
-import { AppRuntimeSettingsContext, AuthContext } from "./../../context/index";
+import { AppRuntimeSettingsContext, AuthContext } from "../../context";
 import AccessMaskModal from "./AccessMaskModal";
 
 import "./AccessListModal.scss";
@@ -24,7 +24,7 @@ function AccessListModal({ open, onClose }: AccessListModalProps) {
 
   return (
     <Modal open={open} onClose={onClose} closeIcon>
-      <Modal.Header>{lang.accessList}</Modal.Header>
+      <Modal.Header>{lang.accessListModalHeader}</Modal.Header>
       <Modal.Content>
         {showAccessMask !== undefined && (
           <AccessMaskModal
@@ -37,20 +37,20 @@ function AccessListModal({ open, onClose }: AccessListModalProps) {
           />
         )}
         {accessRows.length === 0 ? (
-          <Message info>{lang.norights}</Message>
+          <Message info>{lang.accessListModalNoPermissions}</Message>
         ) : (
           <>
-            <Message info>{lang.infoDonuteDate}</Message>
+            <Message info>{lang.accessListModalExpireNotification}</Message>
             <Table>
               <Table.Header>
                 <Table.HeaderCell>
-                  {lang.playerID}
+                  {lang.accessListModalPlayerId}
                 </Table.HeaderCell>
                 <Table.HeaderCell>
-                  {lang.accessMask}
+                  {lang.accessListModalAccessMask}
                 </Table.HeaderCell>
                 <Table.HeaderCell>
-                  {lang.playerID}
+                  {lang.accessListModalExpire}
                 </Table.HeaderCell>
               </Table.Header>
               {accessRows.map((i) => {
@@ -70,7 +70,7 @@ function AccessListModal({ open, onClose }: AccessListModalProps) {
                     </Table.Cell>
                     <Table.Cell>
                       {i.expireTime === 0
-                        ? lang.indefinitely
+                        ? lang.accessListModalPermanent
                         : new Date(i.expireTime * 1000).toLocaleString()}
                     </Table.Cell>
                   </Table.Row>

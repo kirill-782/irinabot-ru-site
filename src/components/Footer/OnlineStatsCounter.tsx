@@ -2,7 +2,8 @@ import React, { useContext, useState } from "react";
 import { Menu } from "semantic-ui-react";
 import { AppRuntimeSettingsContext, WebsocketContext } from "../../context";
 import { useSiteOnlineStatsSubscribe } from "../../hooks/useSiteOnlineStatsSubscribe";
-import { ServerWebsocketConnectStats } from "./../../models/websocket/ServerWebsocketConnectStats";
+import { ServerWebsocketConnectStats } from "../../models/websocket/ServerWebsocketConnectStats";
+import LanguageKey from "./../LanguageKey";
 
 interface OnlineStatsCounterProps {
   showAlways?: boolean;
@@ -15,7 +16,7 @@ function OnlineStatsCounter({ showAlways }: OnlineStatsCounterProps) {
   const [logined, setLogined] = useState(0);
 
   const { language } = useContext(AppRuntimeSettingsContext);
-  const lang = language.languageRepository;
+  const t = language.getString;
 
   const updateOnlineStats = (stats: ServerWebsocketConnectStats) => {
     setConnected(stats.connected);
@@ -24,11 +25,11 @@ function OnlineStatsCounter({ showAlways }: OnlineStatsCounterProps) {
 
   useSiteOnlineStatsSubscribe({
     ghostSocket: sockets.ghostSocket,
-    onOnlineStats: updateOnlineStats,
+    onOnlineStats: updateOnlineStats
   });
 
   return showAlways || logined > 0 ? (
-    <Menu.Item title={lang.connected + ": " + connected}>
+    <Menu.Item title={t("onlineStatsCounter", { count: connected })}>
       {logined}
     </Menu.Item>
   ) : null;

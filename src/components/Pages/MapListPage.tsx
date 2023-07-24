@@ -1,19 +1,16 @@
 import React, { useContext } from "react";
 import { useEffect, useState, useMemo } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   Checkbox,
   Container,
   Form,
   Grid,
   Header,
-  Message,
+
 } from "semantic-ui-react";
 import { SITE_TITLE } from "../../config/ApplicationConfig";
 import {
   AppRuntimeSettingsContext,
-  CacheContext,
-  MapContext,
   WebsocketContext,
 } from "../../context";
 import { useGameListSubscribe } from "../../hooks/useGameListSubscribe";
@@ -29,9 +26,10 @@ import MapStats from "../MapPage/MapStats";
 import GameJoinButton from "../MapPage/GameJoinButton";
 
 import MetaDescription from "../Meta/MetaDescription";
-import { isNoFilters } from "./../../hooks/useSearchMaps";
+import { isNoFilters } from "../../hooks/useSearchMaps";
 import "./MapListPage.scss";
 import FilterDescription from "./../MapListPage/FilterDescription";
+import { useTitle } from "../../hooks/useTitle";
 
 const defaultFilters: Filter = {
   verify: false,
@@ -106,9 +104,7 @@ function MapListPage() {
   const [searchedMaps, isFull, isLoading, errorMessage, loadNextPage] =
     useSearchMaps(requestFilter, searchOptions[1], searchValue);
 
-  useEffect(() => {
-    window.document.title = `${lang.page_map_list_maps} | ${SITE_TITLE}`;
-  }, []);
+  useTitle(lang.mapListPageTitle)
 
   useEffect(() => {
     if (isVisible) loadNextPage();
@@ -128,19 +124,19 @@ function MapListPage() {
 
   return (
     <Container className="map-list-page">
-      <MetaDescription description={lang.page_map_list_maps + "."} />
+      <MetaDescription description={lang.mapListPageDescription} />
       <Form>
         <Grid columns="equal" stackable centered>
           {disableFilters !== "true" && (
             <Grid.Column width={3} style={{ position: "sticky" }}>
-              <Header size="small">{lang.page_map_list_filters}</Header>
+              <Header size="small">{lang.mapListPageFilters}</Header>
               <MapFilters
                 onFitlerChange={setSearchOptions}
                 value={searchOptions}
                 defaultFilters={defaultFilters}
               />
               <Checkbox
-                label={lang.limitedSearching}
+                label={lang.mapListOnlyLobby}
                 checked={mapIds.length > 0}
                 onChange={(_, data) => {
                   onLobbyGamesClick(data.checked);
@@ -152,7 +148,7 @@ function MapListPage() {
             {disableFilters === "true" && (
               <FilterDescription filters={searchOptions} />
             )}
-            <Header>{lang.page_map_list_list}</Header>
+            <Header>{lang.mapListPageMapList}</Header>
             <Grid.Row className="map-list-page-search-field">
               <Form.Input
                 fluid
@@ -162,8 +158,8 @@ function MapListPage() {
                 loading={isLoading}
                 value={searchValue}
                 error={!!errorMessage}
-                label={lang.page_map_list_searching}
-                placeholder={lang.page_map_list_inputName}
+                label={lang.mapListSearchMapLabel}
+                placeholder={lang.mapListSearchMapPlaceholder}
               />
             </Grid.Row>
             {searchedMaps &&
@@ -198,8 +194,8 @@ function MapListPage() {
                   }}
                 >
                   {isLoading
-                    ? lang.page_map_list_loading
-                    : lang.page_map_list_loadYet}
+                    ? lang.loadingDotted
+                    : lang.mapListLoadMore}
                 </button>
               </Grid>
             )}

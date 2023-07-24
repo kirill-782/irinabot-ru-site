@@ -66,7 +66,7 @@ function GameJoinButton({ gameList, mapId, className }: GameJoinButtonProps) {
       className={className}
       disabled={!foundGame || !isEnabled}
       icon="gamepad"
-      title={lang.gameJoin}
+      title={lang.gameJoinButton}
       onClick={() => {
         requestConnectorGame();
       }}

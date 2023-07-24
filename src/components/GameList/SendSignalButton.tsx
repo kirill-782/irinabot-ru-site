@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button, Icon, Input, Modal } from "semantic-ui-react";
 import {
   AppRuntimeSettingsContext,
@@ -65,11 +65,11 @@ function SendSignalButton({ game }: SendSignalButtonProps) {
             setSignalModalOpen(false);
           }}
         >
-          <Modal.Header>{lang.sendSignal}</Modal.Header>
+          <Modal.Header>{lang.sendSignalButtonSend}</Modal.Header>
           <Modal.Content>
-            <p>{lang.whatSignal}</p>
+            <p>{lang.sendSignalButtonSignalLabel}</p>
             <Input
-              placeholder={lang.signal}
+              placeholder={lang.sendSignalButtonSignalPlaceholder}
               value={signal}
               onChange={(_, data) => {
                 setSignal(data.value);
@@ -95,7 +95,7 @@ function SendSignalButton({ game }: SendSignalButtonProps) {
               }}
             >
               <Icon name="checkmark" />
-              {lang.modal_sendSignal_submit}
+              {lang.send}
             </Button>
           </Modal.Actions>
         </Modal>

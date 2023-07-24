@@ -37,7 +37,7 @@ function NicknameColorPicker({
   return (
     <>
       <Form.Field>
-        <label>{lang.settingsColorPickerColor}</label>
+        <label>{lang.nicknameColorPickerSelectColor}</label>
 
         <HuePicker
           color={color}
@@ -48,7 +48,7 @@ function NicknameColorPicker({
         ></HuePicker>
       </Form.Field>
       <Form.Field>
-        <label>{lang.settingsColorPickerPreview}</label>
+        <label>{lang.nicknameColorPickerPreview}</label>
         <Segment>
           <WarcraftIIIText>
             {(color ? rgbToColorTag(color.r, color.g, color.b) : "") + nickname}
@@ -62,7 +62,7 @@ function NicknameColorPicker({
           onColorChanged((color.r << 16) | (color.g << 8) | color.b);
         }}
       >
-        {lang.settingsColorPickerSaveColor}
+        {lang.nicknameColorPickerSaveColor}
       </Form.Button>
     </>
   );

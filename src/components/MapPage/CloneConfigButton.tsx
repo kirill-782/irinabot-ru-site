@@ -1,7 +1,7 @@
 import React, { memo, useContext, useState } from "react";
-import { Button, Dropdown, Form, Icon, Modal } from "semantic-ui-react";
+import { Button, Form, Icon, Modal } from "semantic-ui-react";
 import { ConfigInfo } from "../../models/rest/ConfigInfo";
-import { AppRuntimeSettingsContext, RestContext } from "./../../context/index";
+import { AppRuntimeSettingsContext, RestContext } from "../../context";
 import { toast } from "@kokomi/react-semantic-toasts";
 import { useNavigate } from "react-router-dom";
 import { convertErrorResponseToString } from "../../utils/ApiUtils";
@@ -13,10 +13,10 @@ interface CloneConfigButtonProps {
 }
 
 function CloneConfigButton({
-  configs,
-  mapId,
-  className,
-}: CloneConfigButtonProps) {
+                             configs,
+                             mapId,
+                             className
+                           }: CloneConfigButtonProps) {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
   const [selectedVersion, setSelectedVersion] = useState("");
@@ -30,6 +30,7 @@ function CloneConfigButton({
 
   const { language } = useContext(AppRuntimeSettingsContext);
   const lang = language.languageRepository;
+  const t = language.getString;
 
   const cloneConfigRequests = async (): Promise<ConfigInfo> => {
     const defaultConfig = await mapsApi.getDefaultMapConfig(
@@ -37,7 +38,7 @@ function CloneConfigButton({
       selectedVersion
     );
     if (defaultConfig.status !== 1 || !defaultConfig.config)
-      throw new Error(lang.page_map_cloneConfig_error);
+      throw new Error(lang.cloneConfigButtonCompatibilityError);
     else {
       return await mapsApi.createConfig(
         mapId,
@@ -55,9 +56,9 @@ function CloneConfigButton({
       })
       .catch((e) => {
         toast({
-          title: lang.copyError,
+          title: lang.cloneConfigButtonCloneError,
           description: convertErrorResponseToString(e),
-          color: "red",
+          color: "red"
         });
       });
   };
@@ -69,7 +70,7 @@ function CloneConfigButton({
         color="green"
         basic
         icon="copy"
-        title={lang.caption}
+        title={lang.cloneConfigButtonHint}
         disabled={!enabled}
         onClick={() => {
           setModalOpen(true);
@@ -85,12 +86,12 @@ function CloneConfigButton({
           }}
         >
           <Modal.Header>
-            {lang.page_map_cloneConfing_modal_caption}
+            {lang.cloneConfigButtonModalHeader}
           </Modal.Header>
           <Modal.Content>
             <Form>
               <Form.Select
-                label={lang.page_map_cloneConfing_modal_version}
+                label={lang.cloneConfigButtonVersionLabel}
                 value={selectedVersion}
                 onChange={(_, data) => {
                   setSelectedVersion((data.value as string) || "");
@@ -99,12 +100,11 @@ function CloneConfigButton({
                   configs
                     .filter((i) => i.status === 1)
                     .map((i) => {
+                      // тут сам
+                      // lang.cloneConfigButtonDefaultConfig
                       return {
-                        text:
-                          lang.configStandart +
-                          " " +
-                          i.version,
-                        value: i.version,
+                        text: t("cloneConfigButtonDefaultConfig", { version: i.version }),
+                        value: i.version
                       };
                     }) || []
                 }
@@ -114,7 +114,7 @@ function CloneConfigButton({
                 onChange={(_, data) => {
                   setConfigName(data.value);
                 }}
-                label={lang.configCaption}
+                label={lang.cloneConfigButtonNameLabel}
               />
               <Form.Button
                 color="green"

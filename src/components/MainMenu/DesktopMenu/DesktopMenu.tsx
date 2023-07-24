@@ -4,8 +4,6 @@ import {
   Icon,
   Menu,
   SemanticICONS,
-  Checkbox,
-  CheckboxProps,
 } from "semantic-ui-react";
 import LoginDropdown from "../../Header/LoginDropdown";
 import UploadMap from "../../Header/UploadMap";
@@ -13,7 +11,7 @@ import UserDrowdown from "../../Header/UserDropdown";
 import {
   AppRuntimeSettingsContext,
   AuthContext,
-} from "./../../../context/index";
+} from "../../../context";
 import { switchTheme, E_THEME, currentTheme } from "../../../utils/Theme";
 import "./DesktopMenu.scss";
 import UtilsDropdown from "../../Header/UtilsDropdown";
@@ -37,8 +35,6 @@ const DesktopMenu = () => {
   const { language } = useContext(AppRuntimeSettingsContext);
   const lang = language.languageRepository;
 
-  const handleMenuItemClick = () => {};
-
   return (
     <Menu fixed="top" inverted className="main-menu">
       <Menu.Item as={NavLink} to="/">
@@ -48,17 +44,17 @@ const DesktopMenu = () => {
         as={NavLink}
         icon="gamepad"
         to="/gamelist"
-        title={lang.gameList}
+        title={lang.menuActiveGames}
       />
       <Menu.Item
         as={NavLink}
         icon="file"
         to="/maps"
-        title={lang.mapList}
+        title={lang.menuMapList}
       />
       <Menu.Item
         as="a"
-        title={lang.help}
+        title={lang.menuHelp}
         icon="help"
         href="https://xgm.guru/p/irina"
         onClick={(e) => {
@@ -82,7 +78,7 @@ const DesktopMenu = () => {
         <UtilsDropdown />
         <Menu.Item as={NavLink} to="/autopay">
           <Icon name="ruble sign" />
-          {lang.productsPageTitle}
+          {lang.menuAutoPay}
         </Menu.Item>
 
         <LanguageDropdown />

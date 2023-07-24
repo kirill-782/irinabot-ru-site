@@ -7,35 +7,42 @@ import MetaRobots from "../Meta/MetaRobots";
 import ConfigSelectTab from "../CreateGame/ConfigSelectTab";
 import { SITE_TITLE } from "../../config/ApplicationConfig";
 import { AppRuntimeSettingsContext } from "../../context";
+import { useLanguage } from "../../hooks/useLanguage";
+import { useTitle } from "../../hooks/useTitle";
+import { LanguageRepositoryKeys } from "../../localization/Lang.ru";
+
+
+interface PanesItems {
+  langKey: LanguageRepositoryKeys,
+  [key: string]: any
+}
 
 const panes = [
   {
-    menuItem: "page.game.create.tab.map",
+    langKey: "createGamePageMap",
     render: () => <MapSelectTab />,
   },
   {
-    menuItem: "page.game.create.tab.config",
+    langKey: "createGamePageConfig",
     render: () => <ConfigSelectTab />,
   },
-];
+] as PanesItems[];
 
 function CreateGamePage() {
   const { language } = useContext(AppRuntimeSettingsContext);
   const lang = language.languageRepository;
 
-  useEffect(() => {
-    window.document.title = `${lang.page_game_create_new} | ${SITE_TITLE}`;
-  }, []);
+  useTitle(lang.createGameConfirmPageTitle)
 
   return (
     <Container className="create-game">
-      <MetaDescription description={lang.gameCreationEx} />
+      <MetaDescription description={lang.createGameConfirmPageTitle} />
       <MetaRobots noIndex />
-      <Header as="h2">{lang.gameCreation}</Header>
+      <Header as="h2">{lang.createGamePageCreateGame}</Header>
       <Tab
         renderActiveOnly
         panes={panes.map((i) => {
-          return { ...i, menuItem: t(i.menuItem) };
+          return { ...i, menuItem: lang[i.langKey] };
         })}
       ></Tab>
     </Container>

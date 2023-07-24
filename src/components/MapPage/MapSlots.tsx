@@ -3,33 +3,35 @@ import { memo } from "react";
 import { Table } from "semantic-ui-react";
 import { AppRuntimeSettingsContext } from "../../context";
 import { Slot } from "../../models/rest/Slot";
+import LanguageKey from "../LanguageKey";
 import "./MapSlots.scss";
+import { LanguageRepositoryKeys } from "../../localization/Lang.ru";
 
-const convertSlotTypeToString = (type: number) => {
+const convertSlotTypeToString = (type: number) : LanguageRepositoryKeys => {
   switch (type) {
     case 0:
-      return "page.map.slots.type.open";
+      return "slotsOpen";
     case 1:
-      return "page.map.slots.type.closed";
+      return "slotsClose";
     case 2:
-      return "page.map.slots.type.aiEasy";
+      return "slotsComputerEasy";
     case 3:
-      return "page.map.slots.type.aiMedium";
+      return "slotsComputerMedium";
     case 4:
-      return "page.map.slots.type.aiInsane";
+      return "slotsComputerHard";
   }
 
-  return type;
+  return "unknown";
 };
 
-const convertSlotRaceToString = (type: number) => {
-  if (type & 1) return "page.map.slots.race.human";
-  if (type & 2) return "page.map.slots.race.orc";
-  if (type & 4) return "page.map.slots.race.nightelf";
-  if (type & 8) return "page.map.slots.race.undead";
-  if (type & 32) return "page.map.slots.race.random";
+const convertSlotRaceToString = (type: number) : LanguageRepositoryKeys  => {
+  if (type & 1) return "slotsHuman";
+  if (type & 2) return "slotsOrc";
+  if (type & 4) return "slotsUndead";
+  if (type & 8) return "slotsNightElf";
+  if (type & 32) return "slotsRaceHeader";
 
-  return type.toString();
+  return "unknown";
 };
 
 export const getClassColorByIndex = (colour) => {
@@ -115,26 +117,26 @@ function MapSlots({ slots, options }: MapSlotsProps) {
           <React.Fragment key={index}>
             {customForces && (
               <label>
-                {lang.slotTeam} {index + 1}
+                <LanguageKey stringId={"slotsTeamNumber"} team={index + 1}/>
               </label>
             )}
             <Table>
               {index === 0 && (
                 <Table.Header>
                   <Table.HeaderCell width={4}>
-                    {lang.slotType}
+                    {lang.slotsTypeHeader}
                   </Table.HeaderCell>
                   <Table.HeaderCell width={3}>
-                    {lang.page_map_slots_slot_team}
+                    {lang.slotsTeamHeader}
                   </Table.HeaderCell>
                   <Table.HeaderCell width={4}>
-                    {lang.slotRace}
+                    {lang.slotsRaceHeader}
                   </Table.HeaderCell>
                   <Table.HeaderCell width={1}>
-                    {lang.slotTeamcolor}
+                    {lang.slotsColorHeader}
                   </Table.HeaderCell>
                   <Table.HeaderCell width={1}>
-                    {lang.slotHandicap}
+                    {lang.slotsHandicapHeader}
                   </Table.HeaderCell>
                 </Table.Header>
               )}
@@ -142,13 +144,13 @@ function MapSlots({ slots, options }: MapSlotsProps) {
                 return (
                   <Table.Row key={index}>
                     <Table.Cell width={4}>
-                      {t(convertSlotTypeToString(slot.status) as string)}
+                      {lang[convertSlotTypeToString(slot.status)]}
                     </Table.Cell>
                     <Table.Cell width={3}>
-                      {lang.page_map_slots_slot_team} {slot.team + 1}
+                      <LanguageKey stringId="slotsTeamNumber" team={ slot.team + 1 }> </LanguageKey>
                     </Table.Cell>
                     <Table.Cell width={4}>
-                      {t(convertSlotRaceToString(slot.race))}
+                      {lang[convertSlotTypeToString(slot.race)]}
                     </Table.Cell>
                     <Table.Cell width={1}>
                       <span

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Button, Grid, Item, Image, Header } from "semantic-ui-react";
+import { Grid, Header } from "semantic-ui-react";
 import { Map } from "../../models/rest/Map";
 import "./MapCard.scss";
 import { Link } from "react-router-dom";
@@ -64,7 +64,7 @@ export const MapCard: React.FC<Map & { selectElement?: React.ReactNode }> = ({
                 setFullText(true);
               }}
             >
-              {lang.allText}
+              {lang.mapCardShowAllText}
             </a>
           )}
         </Grid.Row>

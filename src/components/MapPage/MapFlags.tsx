@@ -8,6 +8,7 @@ import {
   Segment,
 } from "semantic-ui-react";
 import { AppRuntimeSettingsContext, MapContext } from "../../context";
+import LanguageKey from "../LanguageKey";
 import "./MapFlags.scss";
 
 function MapFlags() {
@@ -25,17 +26,17 @@ function MapFlags() {
   return (
     <div className="map-flags">
       {hasCheats && (
-        <Label color="red">{lang.mapflagHasCheatPack}</Label>
+        <Label color="red">{lang.mapFlagsCheat}</Label>
       )}
       {sematicCheckError && (
-        <Label color="red">{lang.scriptHasSemanticErrors}</Label>
+        <Label color="red">{lang.mapFlagsSemantic}</Label>
       )}
       {statsType && (
         <Label>
-          {lang.statsType}: {statsType}
+          <LanguageKey stringId="mapFlagsStatsType" value={statsType}></LanguageKey>
         </Label>
       )}
-      {hclSupport && <Label>{lang.hclSupport}</Label>}
+      {hclSupport && <Label>{lang.mapFlagsHclSupport}</Label>}
     </div>
   );
 }

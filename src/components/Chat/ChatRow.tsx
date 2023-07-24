@@ -1,6 +1,8 @@
-import React, { SyntheticEvent, useEffect, useState } from "react";
+import React, { SyntheticEvent, useContext, useEffect, useState } from "react";
 import { Divider, Feed, Icon, Label } from "semantic-ui-react";
 import { SelectionType, User } from "./interfaces";
+import { AppRuntimeSettingsContext } from "../../context";
+import LanguageKey from './../LanguageKey';
 
 interface ChatRowProps {
   user: User;
@@ -27,6 +29,9 @@ function ChatRow({ user, onSelectonChange, onDeleteUser }: ChatRowProps) {
     onSelectonChange(SelectionType.USER, user);
   };
 
+  const { language } = useContext( AppRuntimeSettingsContext );
+  const lang = language.languageRepository;
+  
   useEffect(() => {
     if (confirmRemove) {
       const abortRemoveTimeOut = setTimeout(() => {
@@ -62,7 +67,8 @@ function ChatRow({ user, onSelectonChange, onDeleteUser }: ChatRowProps) {
                 className="remove-user-button"
                 onClick={(ev) => removeUser(ev)}
               >
-                Подтвердить удаление
+                <LanguageKey stringId="chatRowRemoveConfirm"></LanguageKey>
+
               </span>
             ) : (
               <Icon name="remove" onClick={(ev) => handleRemoveUser(ev)} />
@@ -77,7 +83,7 @@ function ChatRow({ user, onSelectonChange, onDeleteUser }: ChatRowProps) {
               {lastMessage.message}
             </Feed.Extra>
           ) : (
-            "Нет сообщений"
+            <LanguageKey stringId="chatRowNoMessages"></LanguageKey>
           )}
         </Feed.Content>
       </Feed.Event>

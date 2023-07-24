@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./LazyLoadedImage.scss";
 import { ImageProps, Image as ImageComponent, Ref } from "semantic-ui-react";
-import { useVisibility } from "./../../hooks/useVisibility";
+import { useVisibility } from "../../hooks/useVisibility";
 
 import classnames from "classnames";
 

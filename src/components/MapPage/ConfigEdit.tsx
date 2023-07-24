@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Form, Header } from "semantic-ui-react";
 import { Config } from "../../models/rest/Config";
 import SlotsEdit from "./SlotsEdit";
-import { AppRuntimeSettingsContext } from "./../../context/index";
+import { AppRuntimeSettingsContext } from "../../context";
 
 interface ConfigEditProps {
   configPayload: Config;
@@ -15,7 +15,7 @@ function ConfigEdit({ configPayload, onConfigChange }: ConfigEditProps) {
 
   return (
     <>
-      <Header size="large">{lang.configEdit}</Header>
+      <Header size="large">{lang.edit}</Header>
       <Form>
         <Form.Group widths="equal">
           <Form.Input
@@ -198,7 +198,7 @@ function ConfigEdit({ configPayload, onConfigChange }: ConfigEditProps) {
             }}
           />
         </Form.Group>
-        <Header size="medium">{lang.gameSlots}</Header>
+        <Header size="medium">{lang.configEditPlayerSlots}</Header>
         <SlotsEdit
           slots={configPayload.playableSlots}
           options={configPayload.options}
@@ -208,7 +208,7 @@ function ConfigEdit({ configPayload, onConfigChange }: ConfigEditProps) {
         />
         {configPayload.observerSlots && (
           <>
-            <Header size="medium">{lang.mapObservers}</Header>
+            <Header size="medium">{lang.configEditObserverSlots}</Header>
             <SlotsEdit
               slots={configPayload.observerSlots}
               onSlotsChange={(slots) => {

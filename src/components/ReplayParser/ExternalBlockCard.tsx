@@ -4,6 +4,7 @@ import { ActionData, ReplayContext } from "../Pages/ReplayParserPage";
 import prettyMilliseconds from "pretty-ms";
 import ActionBlockDataModal from "../Modal/ActionBlockDataModal";
 import { AppRuntimeSettingsContext } from "../../context";
+import LanguageKey from "../LanguageKey";
 
 interface ExternalBlockCardProps {
   actionsBlock: ActionData;
@@ -36,8 +37,7 @@ function ExternalBlockCard({ actionsBlock }: ExternalBlockCardProps) {
         <Card.Content>
           <Card.Header>{getShortBlockDescription(actionsBlock)}</Card.Header>
           <Card.Meta>
-            {prettyMilliseconds(actionsBlock.time)}{" "}
-            {lang.afterGameStart}
+            <LanguageKey stringId="externalBlockCard" timems={prettyMilliseconds(actionsBlock.time)} />
           </Card.Meta>
           <Card.Description>
             {actionsBlock.errorMessage && (
@@ -45,20 +45,18 @@ function ExternalBlockCard({ actionsBlock }: ExternalBlockCardProps) {
             )}
 
             {actionsBlock.commandBlocks.length === 0 ? (
-              lang.blockEmpty
+              lang.externalBlockCardEmptyBlock
             ) : (
               <>
                 {actionsBlock.commandBlocks.map((i, k) => {
                   return (
                     <React.Fragment key={k}>
                       <Label>
-                        {i.actions.length}{" "}
-                        {lang.cmdFrom}{" "}
-                        {getPlayerName(i.playerId)}
+                        <LanguageKey stringId={"externalBlockCardPlayerSummaryLabel"} count={i.actions.length} name={getPlayerName(i.playerId)}/>
                       </Label>
                       {i.remaingBuffer.length > 0 && (
                         <Label color="orange">
-                          {lang.unknownActions}
+                          {lang.externalBlockCardUnknownActionsLabel}
                         </Label>
                       )}
                     </React.Fragment>

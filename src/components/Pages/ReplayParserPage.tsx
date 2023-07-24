@@ -1,8 +1,6 @@
 import React, {
   createContext,
-  SyntheticEvent,
   useContext,
-  useEffect,
   useState,
 } from "react";
 import { Container } from "semantic-ui-react";
@@ -10,13 +8,11 @@ import { Container } from "semantic-ui-react";
 import "./ReplayParserPage.scss";
 import {
   ReplayResult,
-  AvailableActionData,
   ActionParser,
   ActionCommandBlock,
 } from "@kokomi/w3g-parser-browser";
 import OpenReplay from "../ReplayParser/OpenReplay";
 import ReplayInfo from "../ReplayParser/ReplayInfo";
-import MetaDescription from "../Meta/MetaDescription";
 import MetaRobots from "./../Meta/MetaRobots";
 import { AppRuntimeSettingsContext } from "../../context";
 
@@ -75,7 +71,7 @@ function ReplayParserPage({}) {
   };
 
   const getShortBlockDescription = (block: ActionData) => {
-    return `${lang.block} ${block.seqenceNumber}`;
+    return lang.replayParserPageBlockHeader;
   };
 
   return (

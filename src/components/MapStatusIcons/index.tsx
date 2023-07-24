@@ -19,7 +19,7 @@ function MapStatusIcons({
         className="status-icon"
         name="star"
         color="orange"
-        title={lang.iconFavour}
+        title={lang.mapStatusIconFavoriteHint}
       />
     );
   }
@@ -30,7 +30,7 @@ function MapStatusIcons({
         className="status-icon"
         name="check"
         color="green"
-        title={lang.isVerified}
+        title={lang.mapStatusIconVerifyHint}
       />
     );
   }
@@ -41,7 +41,7 @@ function MapStatusIcons({
         className="status-icon"
         name="warning"
         color="red"
-        title={lang.iconCheatPack}
+        title={lang.mapStatusIconCheatHint}
       />
     );
   }
@@ -52,7 +52,7 @@ function MapStatusIcons({
         className="status-icon"
         name="warning"
         color="red"
-        title={lang.page_map_status_icon_semanticError}
+        title={lang.mapStatusIconSemanticHint}
       />
     );
   }

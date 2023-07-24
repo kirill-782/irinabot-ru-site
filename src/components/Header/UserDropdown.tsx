@@ -56,24 +56,24 @@ function UserDrowdown() {
             as={NavLink}
             to="/create"
           >
-            {lang.new}
+            {lang.userDropdownCreateGame}
           </Dropdown.Item>
           <Dropdown.Item
             onClick={() => {
               setUserSettingsModalOpen(true);
             }}
           >
-            {lang.settings}
+            {lang.userDropdownSettings}
           </Dropdown.Item>
           <Dropdown.Item
             onClick={() => {
               setUserAccessModalOpen(true);
             }}
           >
-            {lang.accessList}
+            {lang.userDropdownAccessList}
           </Dropdown.Item>
           <Dropdown.Item onClick={logout}>
-            {lang.logout}
+            {lang.userDropdownLogout}
           </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>

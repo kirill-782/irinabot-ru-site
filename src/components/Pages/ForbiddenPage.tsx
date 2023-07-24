@@ -46,7 +46,7 @@ function ForbiddenPage({
 
   const loginHint = (
     <>
-      <p>{lang.pageDenide}:</p>
+      <p>{lang.forbiddenPageLoginHint}</p>
       <Grid.Row>
         {AviableAuthMethods.map((method: AuthMethod) => {
           return (
@@ -65,12 +65,12 @@ function ForbiddenPage({
 
   const waitLoader = (
     <>
-      <p>{lang.pageWait}</p>
+      <p>{lang.forbiddenPageLoginHint}</p>
       <Grid.Row>
         <Header>
           {isGHostSocketConnected
-            ? lang.authorization
-            : lang.connecting}
+            ? lang.forbiddenPageAuthorizationHeader
+            : lang.forbiddenPageConnectingHeader}
         </Header>
       </Grid.Row>
     </>
@@ -82,7 +82,7 @@ function ForbiddenPage({
       <div className="centerd">
         <Grid centered>
           <Grid.Row>
-            <Header>{lang.accessDenied}</Header>
+            <Header>{lang.forbiddenPageAccessDeniedHeader}</Header>
           </Grid.Row>
           {!authContext.auth.currentAuth ? (
             authContext.auth.authCredentials ? (
@@ -92,13 +92,13 @@ function ForbiddenPage({
             )
           ) : (
             <Grid.Row>
-              <p>{lang.pageNoRights}</p>
+              <p>{lang.forbiddenPageAccessDeniedDescription}</p>
             </Grid.Row>
           )}
 
           <Grid.Row>
             <Button to="/" as={Link} color="green">
-              {lang.page_forbidden_main}
+              {lang.forbiddenPageGotToHome}
             </Button>
           </Grid.Row>
         </Grid>

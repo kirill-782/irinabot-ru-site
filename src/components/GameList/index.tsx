@@ -60,19 +60,19 @@ function GameList({ gameList, selectedGame, setSelectedGame }: GameListProps) {
       <Table.Header>
         <Table.Row>
         <Table.HeaderCell width={2}>
-            {lang.page_game_list_index_version}
+            {lang.gameListTableHeaderVersion}
           </Table.HeaderCell>
           <Table.HeaderCell width={2}>
-            {lang.slots}
+            {lang.gameListTableHeaderSlots}
           </Table.HeaderCell>
           <Table.HeaderCell width={4}>
-            {lang.game}
+            {lang.gameListTableHeaderGameName}
           </Table.HeaderCell>
           <Table.HeaderCell>
-            {lang.page_game_list_index_players}
+            {lang.gameListTableHeaderPlayers}
           </Table.HeaderCell>
           <Table.HeaderCell width={2}>
-            {lang.page_game_list_index_owner}
+            {lang.gameListTableHeaderOwner}
           </Table.HeaderCell>
           <Table.HeaderCell width={2}></Table.HeaderCell>
         </Table.Row>
@@ -132,7 +132,7 @@ function GameList({ gameList, selectedGame, setSelectedGame }: GameListProps) {
                   {game.iccupHost && !game.gameFlags.started && (
                     <span
                       className="iccup"
-                      title={lang.page_game_list_index_copy}
+                      title={lang.copy}
                       onClick={() => copy(game.iccupHost)}
                     >
                       ({game.iccupHost})

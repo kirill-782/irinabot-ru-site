@@ -1,7 +1,7 @@
 import { Button, Form, Icon, Modal } from "semantic-ui-react";
 import React, { useContext, useState } from "react";
 import { AppRuntimeSettingsContext, WebsocketContext } from "../../context";
-import { AuthContext } from "./../../context/index";
+import { AuthContext } from "../../context";
 import { GameListGame } from "../../models/websocket/ServerGameList";
 import { ClientRequestUDPGameConverter } from "../../models/websocket/ClientRequestUDPGame";
 
@@ -56,11 +56,11 @@ function ConnectorAddButton({ game }: ConnectorAddButtonProps) {
             setPasswordModalOpen(false);
           }}
         >
-          <Modal.Header>{lang.private}</Modal.Header>
+          <Modal.Header>{lang.connectorAddButtonEnterClosedGame}</Modal.Header>
           <Modal.Content>
             <Form>
               <Form.Input
-                label={lang.password}
+                label={lang.connectorAddButtonPassword}
                 value={password}
                 onChange={(_, data) => {
                   setPassword(data.value);
@@ -74,7 +74,7 @@ function ConnectorAddButton({ game }: ConnectorAddButtonProps) {
                 }}
               >
                 <Icon name="check"></Icon>
-                {lang.page_game_list_button_add_login}
+                {lang.connectorAddButtonEnter}
               </Form.Button>
             </Form>
           </Modal.Content>

@@ -9,7 +9,7 @@ import {
   AuthContext,
   MapContext,
   RestContext,
-} from "./../../context/index";
+} from "../../context";
 import usePrevious from "../../hooks/usePrevious";
 import ForbiddenPage from "../Pages/ForbiddenPage";
 import MapExternalDescriptionEdit from "./MapExternalDescriptionEdit";
@@ -80,7 +80,7 @@ function MapEditPage({ updateMap }: MapEditPageProps) {
           {flags && (
             <>
               <Message info className="fluid">
-                <p>{lang.tagInformer}</p>
+                <p>{lang.mapEditPageFlagsNotification}</p>
               </Message>
               <FlagsEditBlock
                 flags={flags}
@@ -93,16 +93,16 @@ function MapEditPage({ updateMap }: MapEditPageProps) {
           )}
           {!flags && flagsLoading && (
             <Loader active size="big">
-              {lang.flagLoads}
+              {lang.mapEditPageFlagsLoading}
             </Loader>
           )}
         </Grid.Row>
       </AccessControl>
       <AccessControl requeredAuthority="MAP_VERIFY">
         <Grid.Row stretched>
-          <Header>{lang.extraDescription}</Header>
+          <Header>{lang.mapEditPageExtraDescriptionLabel}</Header>
           <Message info className="fluid">
-            <p>{lang.page_map_edit_descripton}</p>
+            <p>{lang.mapEditPageExtraDescriptionNotification}</p>
           </Message>
           <MapExternalDescriptionEdit
             value={map.additionalFlags?.["mapDescription"]}

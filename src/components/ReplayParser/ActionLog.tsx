@@ -75,14 +75,14 @@ function ActionLog({}) {
     <>
       <Form>
         <Form.Checkbox
-          label={lang.blockToStart}
+          label={lang.keyMissing}
           checked={pageScroll}
           onChange={(_, data) => {
             setPageScroll(!!data.checked);
           }}
         ></Form.Checkbox>
         <Form.Checkbox
-          label={lang.nonEmptyBlocks}
+          label={lang.keyMissing}
           checked={nonEmpty}
           onChange={(_, data) => {
             setNonEmpty(!!data.checked);
@@ -90,14 +90,14 @@ function ActionLog({}) {
         ></Form.Checkbox>
         <Form.Group>
           <Form.Checkbox
-            label={lang.syncIntegerOnly}
+            label={lang.actionLog_3}
             checked={syncIntegerOnly}
             onChange={(_, data) => {
               setSyncIntegerOnly(!!data.checked);
             }}
           ></Form.Checkbox>
           <Form.Checkbox
-            label={lang.chatCommandOnly}
+            label={lang.actionLog_4}
             checked={chatCommandOnly}
             onChange={(_, data) => {
               setChatCommandOnly(!!data.checked);
@@ -125,7 +125,7 @@ function ActionLog({}) {
                   });
               }}
             >
-              {lang.loadTopBlocks}
+              {lang.actionLog_5}
             </button>
           </Grid.Row>
           <Grid.Row>
@@ -145,7 +145,7 @@ function ActionLog({}) {
                   });
               }}
             >
-              {lang.loadBottomBlocks}
+              {lang.actionLog_6}
             </button>
           </Grid.Row>
         </Grid>

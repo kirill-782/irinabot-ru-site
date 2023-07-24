@@ -458,6 +458,6 @@ const LanguageData: LanguageRepository = {
   settingsColorPickerColor: "Выберите цвет ника",
   settingsColorPickerPreview: "Предпросмотр ника",
   settingsColorPickerSaveColor: "Сохранить цвет",
-} ;
+} as any;
 
 export default LanguageData;

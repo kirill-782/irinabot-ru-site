@@ -26,7 +26,7 @@ function GameListFiltersModal({
       }}
       size="mini"
     >
-      <Modal.Header>{lang.gamelistFilter}</Modal.Header>
+      <Modal.Header>{lang.gameListFiltersModalHeader}</Modal.Header>
       <Modal.Content>
         <GameListFilter {...filterProps} />
       </Modal.Content>

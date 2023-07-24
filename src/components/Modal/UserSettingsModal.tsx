@@ -14,26 +14,26 @@ import {
   AppRuntimeSettingsContext,
   AuthContext,
   WebsocketContext,
-} from "./../../context/index";
+} from "../../context";
 import { AuthMethod, AviableAuthMethods } from "../../config/AuthMethods";
 import { toast } from "@kokomi/react-semantic-toasts";
-import { ClientDeleteIntegrationConverter } from "./../../models/websocket/ClientDeleteIntegration";
-import { ClientAddIntegrationByTokenConverter } from "./../../models/websocket/ClientAddIntegrationByToken";
-import { ClientSetConnectorNameConverter } from "./../../models/websocket/ClientSetConnectorName";
+import { ClientDeleteIntegrationConverter } from "../../models/websocket/ClientDeleteIntegration";
+import { ClientAddIntegrationByTokenConverter } from "../../models/websocket/ClientAddIntegrationByToken";
+import { ClientSetConnectorNameConverter } from "../../models/websocket/ClientSetConnectorName";
 import { GHostPackageEvent } from "../../services/GHostWebsocket";
 import {
   GLOBAL_CONTEXT_HEADER_CONSTANT,
   GLOBAL_BNET_KEY,
   GLOBAL_ADD_INTEGRATION_RESPONSE,
-} from "./../../models/websocket/HeaderConstants";
-import { ServerBnetKey } from "./../../models/websocket/ServerBnetKey";
-import { ClientRequestBnetKeyConverter } from "./../../models/websocket/ClientRequestBnetKey";
+} from "../../models/websocket/HeaderConstants";
+import { ServerBnetKey } from "../../models/websocket/ServerBnetKey";
+import { ClientRequestBnetKeyConverter } from "../../models/websocket/ClientRequestBnetKey";
 
 import React from "react";
 import NicknameColorPicker from "../NicknameColorPicker";
 import {
   ClientNickanameColorChangeConverter,
-} from "./../../models/websocket/ClientNickanameColorChange";
+} from "../../models/websocket/ClientNickanameColorChange";
 
 const BNET_INTEGRATION_TYPE = 0;
 
@@ -45,6 +45,7 @@ function UserSettingsModal(props) {
 
   const { language } = useContext(AppRuntimeSettingsContext);
   const lang = language.languageRepository;
+  const t = language.getString;
 
   const nicknameColor = (() => {
     const colors = auth.currentAuth.nicknamePrefix.match(
@@ -69,8 +70,8 @@ function UserSettingsModal(props) {
         const bnetKey = data.detail.package as ServerBnetKey;
 
         toast({
-          title: lang.linkingPVPGn,
-          description: lang.linkingPVPGnHint + bnetKey.key,
+          title: lang.userSettingsModalPvpGnToastHeader,
+          description: t("userSettingsModalPvpGnToastDescription", {key: bnetKey.key}),
           time: 20000,
         });
       }
@@ -80,8 +81,10 @@ function UserSettingsModal(props) {
         data.detail.package.type === GLOBAL_ADD_INTEGRATION_RESPONSE
       ) {
         toast({
-          title: lang.modal_settings_auth_updated_title,
-          description: lang.modal_settings_auth_updated_description,
+          // тут тоже сам
+          // я нихуя непонял
+          title: lang.userSettingsModalPvpGnToastHeader,
+          description: lang.userSettingsModalPvpGnToastDescription,
           time: 20000,
         });
       }
@@ -130,7 +133,7 @@ function UserSettingsModal(props) {
             );
           } else {
             toast({
-              title: lang.modal_settings_error,
+              title: lang.error,
               description: storageNewValue,
               type: "error",
               time: 10000,
@@ -207,10 +210,10 @@ function UserSettingsModal(props) {
 
   return (
     <Modal {...props}>
-      <Modal.Header>{lang.modal_settings_caption}</Modal.Header>
+      <Modal.Header>{lang.userSettingsModalHeader}</Modal.Header>
       <Modal.Content>
         <Modal.Description>
-          <Header>{lang.connection}</Header>
+          <Header>{lang.userSettingsModalConnectHeader}</Header>
           <Container>
             <Button onClick={onWarcraftIIIButtonClick} basic color="green">
               Warcraft III
@@ -279,7 +282,7 @@ function UserSettingsModal(props) {
                   style={{ marginLeft: 10 }}
                   color="green"
                 >
-                  {lang.modal_settings_save}
+                  {lang.save}
                 </Button>
               </Form.Group>
             </Form.Field>

@@ -27,9 +27,9 @@ function Markdown({ children, light }: MarkdownProps) {
           remarkEmoji,
           {
             padSpaceAfter: false,
-            emoticon: true,
-          },
-        ],
+            emoticon: true
+          }
+        ]
       ]}
       components={{
         code({ node, inline, className, children, ...props }) {
@@ -56,7 +56,7 @@ function Markdown({ children, light }: MarkdownProps) {
         },
         p({ node, children, ...props }) {
           return light ? <>{children}</> : <p>{children}</p>;
-        },
+        }
       }}
     >
       {children}

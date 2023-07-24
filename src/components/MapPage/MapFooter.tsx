@@ -8,10 +8,9 @@ import React from "react";
 import MapDownloadButton from "./MapDownloadButton";
 import MapCategoryList from "./MapCategoryList";
 import { Link } from "react-router-dom";
-import { AuthContext, MapContext } from "./../../context/index";
+import { AuthContext, MapContext } from "../../context";
 import CloneConfigButton from "./CloneConfigButton";
 import "./MapFooter.scss";
-import MapReportModal from "./../Modal/MapReportModal";
 import MapFavoriteButton from "./FavoriteButton";
 
 interface MapFooterProps {
@@ -105,13 +104,6 @@ function MapFooter({ gameList }: MapFooterProps) {
           }}
         />
       </Grid.Row>
-      <MapReportModal
-        mapId={id || 0}
-        open={reportModalOpen}
-        onClose={() => {
-          setReportModalOpen(false);
-        }}
-      ></MapReportModal>
     </>
   );
 }

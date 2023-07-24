@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Dropdown } from "semantic-ui-react";
 import { SUPPORT_LOCALES } from "../../config/Locales";
-import { AppRuntimeSettingsContext } from "./../../context/index";
+import { AppRuntimeSettingsContext } from "../../context";
 
 function LanguageDropdown() {
   const { language } = useContext(AppRuntimeSettingsContext);

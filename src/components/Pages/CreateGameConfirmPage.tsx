@@ -4,7 +4,7 @@ import React, {
   useContext,
   useEffect,
   useRef,
-  useState,
+  useState
 } from "react";
 import {
   Button,
@@ -16,7 +16,7 @@ import {
   Input,
   Loader,
   Message,
-  Modal,
+  Modal
 } from "semantic-ui-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Map } from "../../models/rest/Map";
@@ -26,7 +26,7 @@ import {
   AuthContext,
   CacheContext,
   RestContext,
-  WebsocketContext,
+  WebsocketContext
 } from "../../context";
 import { convertErrorResponseToString } from "../../utils/ApiUtils";
 import { GameOptions } from "../CreateGame/GameOptions";
@@ -35,18 +35,18 @@ import MapPreview from "../CreateGame/MapPreview";
 import ConfigPreview from "../CreateGame/ConfigPreview";
 import CreateGameConfirmPatchNotifications from "../CreateGame/CreateGameConfirmPatchNotifications";
 import CreateAutohostModal, {
-  AuthostModalData,
+  AuthostModalData
 } from "../Modal/CreateAutohostModal";
 import { ClientAddAutohostConverter } from "./../../models/websocket/ClientAddAutohost";
 import {
   ClientCreateGameConverter,
-  SaveGameData,
+  SaveGameData
 } from "./../../models/websocket/ClientCreateGame";
 import { toast } from "@kokomi/react-semantic-toasts";
 import {
   DEFAULT_CONTEXT_HEADER_CONSTANT,
   DEFAULT_AUTOHOST_ADD_RESPONSE,
-  DEFAULT_CREATE_GAME_RESPONSE,
+  DEFAULT_CREATE_GAME_RESPONSE
 } from "../../models/websocket/HeaderConstants";
 import { ServerAutohostAddResponse } from "../../models/websocket/ServerAutohostAddResponse";
 import { GHostPackageEvent } from "../../services/GHostWebsocket";
@@ -56,6 +56,7 @@ import "./CreateGameConfirmPage.scss";
 import MetaRobots from "./../Meta/MetaRobots";
 import { SITE_TITLE } from "../../config/ApplicationConfig";
 import { SaveGameParser } from "@kokomi/w3g-parser-browser";
+import { useTitle } from "../../hooks/useTitle";
 
 const GAME_NAME_LOCALSTORAGE_PATH = "lastSuccessGameName";
 
@@ -82,7 +83,7 @@ function CreateGameConfirmPage({}) {
     mapSpeed: 3,
     mapVisibility: 4,
     mapObservers: 1,
-    configName: "",
+    configName: ""
   });
 
   const { language } = useContext(AppRuntimeSettingsContext);
@@ -103,9 +104,7 @@ function CreateGameConfirmPage({}) {
 
   const saveGameInput = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
-    window.document.title = `${lang.page_game_create_new} | ${SITE_TITLE}`;
-  }, []);
+  useTitle(lang.createGameConfirmPageTitle);
 
   const { accessMask } = useContext(AuthContext).auth;
 
@@ -137,7 +136,7 @@ function CreateGameConfirmPage({}) {
       {error && <Message error>{error}</Message>}
       {hasLoading && (
         <Loader active size="massive">
-          {lang.page_game_create_loadingZZZ}
+          {lang.loadingDotted}
         </Loader>
       )}
       {(map || config) && (
@@ -147,8 +146,8 @@ function CreateGameConfirmPage({}) {
               <Form.Group widths="equal">
                 <Form.Input
                   fluid
-                  label={lang.gameTitle}
-                  placeholder={lang.gameTitle}
+                  label={lang.createGameConfirmPageGameNameLabel}
+                  placeholder={lang.createGameConfirmPageGameNamePlaceholder}
                   value={gameName}
                   onChange={(_, data) => {
                     setGameName(data.value);
@@ -156,7 +155,7 @@ function CreateGameConfirmPage({}) {
                 />
                 <Form.Select
                   fluid
-                  label={lang.patch}
+                  label={lang.createGameConfirmPagePatch}
                   onChange={updatePatch}
                   options={configPatches}
                   value={selectedPatch?.value}
@@ -186,7 +185,7 @@ function CreateGameConfirmPage({}) {
                 }}
                 disabled={!canCreateGame}
               >
-                {lang.page_game_create_confirm_load_savegame}
+                {lang.createGameConfirmPageLoadGame}
               </Button>
               <input
                 type="file"
@@ -204,7 +203,7 @@ function CreateGameConfirmPage({}) {
                 }}
                 disabled={!canCreateAutohost}
               >
-                {lang.createAutohost}
+                {lang.createGameConfirmPageCreateAutohost}
               </Button>
             </Grid.Row>
           </Grid.Column>
@@ -232,16 +231,16 @@ function CreateGameConfirmPage({}) {
           setLastPassword("");
         }}
       >
-        <Modal.Header>{lang.page_game_create_passgame}</Modal.Header>
+        <Modal.Header>{lang.createGameConfirmPageGamePassword}</Modal.Header>
         <Modal.Content>
-          <p>{lang.page_game_create_passgameInfo}.</p>
+          <p>{lang.createGameConfirmPageGamePasswordDescription}.</p>
           <Input
             action={{
               icon: "copy",
-              content: lang.page_game_create_copy,
+              content: lang.copy,
               onClick: () => {
                 copy(lastPassword);
-              },
+              }
             }}
             disabled
             fluid
@@ -255,7 +254,7 @@ function CreateGameConfirmPage({}) {
               setLastPassword("");
             }}
           >
-            {lang.page_game_create_close}
+            {lang.close}
           </Button>
         </Modal.Actions>
       </Modal>
@@ -264,8 +263,8 @@ function CreateGameConfirmPage({}) {
 }
 
 function useLocalMapCategories(): [
-  Map | null,
-  ConfigInfo | null,
+    Map | null,
+    ConfigInfo | null,
   boolean,
   string
 ] {
@@ -345,7 +344,7 @@ function useLocalMapCategories(): [
         setError("NaN");
       }
     } else {
-      setError(lang.page_game_create_useLocal_mapCategories_errorParam);
+      setError(lang.createGameConfirmPageNoParameters);
     }
 
     return () => {
@@ -361,12 +360,10 @@ function useLocalPatchSelector(
   config: ConfigInfo | null
 ): [
   DropdownItemPropsConfirmExtends[],
-  DropdownItemPropsConfirmExtends | undefined,
+    DropdownItemPropsConfirmExtends | undefined,
   (e: SyntheticEvent, data: DropdownProps) => void
 ] {
-  const [configPatches, setConfigPatches] = useState<
-    DropdownItemPropsConfirmExtends[]
-  >([]);
+  const [configPatches, setConfigPatches] = useState<DropdownItemPropsConfirmExtends[]>([]);
   const [selectedPatch, setSelectedPatch] =
     useState<DropdownItemPropsConfirmExtends>();
 
@@ -394,7 +391,7 @@ function useLocalPatchSelector(
           value: version,
           status,
           disabled: status === 2,
-          content: version,
+          content: version
         };
       })
     );
@@ -460,6 +457,7 @@ function useLocalAutohostCreateCallback(
 
   const { language } = useContext(AppRuntimeSettingsContext);
   const lang = language.languageRepository;
+  const t = language.getString;
 
   useEffect(() => {
     const onPacket = (packet: GHostPackageEvent) => {
@@ -472,23 +470,19 @@ function useLocalAutohostCreateCallback(
 
         if (createGameResponse.status === 0) {
           toast({
-            title: t(
-              "page.game.create.useLocal.autohostCreateCallback.isCreated"
-            ),
+            title: lang.createGameConfirmPageAutohostCreated,
             icon: "check",
-            color: "green",
+            color: "green"
           });
 
           setAutohostModalOpen(false);
         } else {
           toast({
             title:
-              t(
-                "page.game.create.useLocal.autohostCreateCallback.isNotCreated"
-              ) + createGameResponse.status,
+            lang.createGameConfirmPageAutohostNotCreated,
             description: createGameResponse.description,
             icon: "check",
-            color: "red",
+            color: "red"
           });
         }
       }
@@ -506,8 +500,8 @@ function useLocalAutohostCreateCallback(
       if (!config && selectedPatch?.status !== 1) return;
 
       (config?.id
-        ? mapsApi.getConfigInfoToken(config.id)
-        : mapsApi.getMapConfig(
+          ? mapsApi.getConfigInfoToken(config.id)
+          : mapsApi.getMapConfig(
             map?.id || 0,
             selectedPatch?.value?.toString() || ""
           )
@@ -528,17 +522,17 @@ function useLocalAutohostCreateCallback(
               slotPreset: "",
               name: autohostData.gameName,
               mapData,
-              configName: options.configName,
+              configName: options.configName
             })
           );
         })
         .catch((e) => {
           toast({
             title: t(
-              "page.game.create.useLocal.autohostCreateCallback.mapErrorParam"
+              "createGameConfirmPageMapConfigLoadingError"
             ),
             description: convertErrorResponseToString(e),
-            color: "red",
+            color: "red"
           });
         });
     },
@@ -577,14 +571,10 @@ function useLocalCreateGameCallback(
 
           if (!createGameResponse.password) {
             toast({
-              title: t(
-                "page.game.create.useLocal.CreateGameCallback.isCreated"
-              ),
-              description: t(
-                "page.game.create.useLocal.CreateGameCallback.useConnector"
-              ),
+              title: lang.createGameConfirmPageGameCreatedToastTitle,
+              description: lang.createGameConfirmPageGameCreatedToastDescription,
               icon: "check",
-              color: "green",
+              color: "green"
             });
             go("/gamelist");
           } else {
@@ -592,10 +582,10 @@ function useLocalCreateGameCallback(
           }
         } else {
           toast({
-            title: lang.page_game_create_useLocal_CreateGameCallback_isError,
+            title: lang.createGameConfirmPageGameCreateErrorToastTitle,
             description: createGameResponse.description,
             icon: "x",
-            color: "red",
+            color: "red"
           });
         }
       }
@@ -613,8 +603,8 @@ function useLocalCreateGameCallback(
       if (!config && selectedPatch?.status !== 1) return;
 
       (config?.id
-        ? mapsApi.getConfigInfoToken(config.id)
-        : mapsApi.getMapConfig(
+          ? mapsApi.getConfigInfoToken(config.id)
+          : mapsApi.getMapConfig(
             map?.id || 0,
             selectedPatch?.value?.toString() || ""
           )
@@ -628,7 +618,7 @@ function useLocalCreateGameCallback(
                 try {
                   const sgParser = new SaveGameParser();
                   const sgData = sgParser.parseSaveGame(data);
-  
+
                   saveGameData = {
                     mapPath: sgData.data.mapPath,
                     magicNumber: sgData.data.magicNumber,
@@ -638,12 +628,11 @@ function useLocalCreateGameCallback(
                   };
 
                   console.log(saveGameData);
-                }
-                catch(e) {
+                } catch (e) {
                   toast({
-                    title: lang.page_game_create_useLocal_CreateGameCallback_sg_parseError,
+                    title: lang.createGameConfirmPageLoadGameErrorToastTitle,
                     description: e.toString(),
-                    color: "red",
+                    color: "red"
                   });
                 }
               }
@@ -669,9 +658,9 @@ function useLocalCreateGameCallback(
         })
         .catch((e) => {
           toast({
-            title: lang.page_game_create_useLocal_CreateGameCallback_isMapError,
+            title: lang.createGameConfirmPageGameCreateErrorToastTitleNetworkError,
             description: convertErrorResponseToString(e),
-            color: "red",
+            color: "red"
           });
         });
     },

@@ -9,7 +9,7 @@ function ErrorCatch({ children }) {
   const { language } = useContext(AppRuntimeSettingsContext);
   const lang = language.languageRepository;
 
-  if (hasError) return <Container>{lang.errorCatch}</Container>;
+  if (hasError) return <Container>{lang.siteErrorCatch}</Container>;
 
   try {
     return children;

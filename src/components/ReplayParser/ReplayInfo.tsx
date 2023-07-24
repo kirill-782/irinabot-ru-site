@@ -8,7 +8,7 @@ import W3MMDStats from "./W3MMDStats";
 import { AppRuntimeSettingsContext } from "../../context";
 
 function ReplayInfo() {
-  const { replayData, replayActions, name } = useContext(ReplayContext) || {};
+  const { name } = useContext(ReplayContext) || {};
   const { language } = useContext(AppRuntimeSettingsContext);
   const lang = language.languageRepository;
 
@@ -18,15 +18,15 @@ function ReplayInfo() {
       <Tab
         panes={[
           {
-            menuItem: lang.baseInfo,
+            menuItem: lang.replayInfo_1,
             render: () => <ReplayMainInfo />,
           },
           {
-            menuItem: lang.page_replay_info_chat,
+            menuItem: lang.replayInfo_2,
             render: () => <ChatTab />,
           },
           {
-            menuItem: lang.blocks,
+            menuItem: lang.replayInfo_3,
             render: () => <ActionLog />,
           },
           {

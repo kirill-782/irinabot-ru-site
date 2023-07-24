@@ -72,9 +72,9 @@ function OnlineStats({ gameList }: OnlineStatsProps) {
     <Table>
       <Table.Header>
         <Table.Row>
-          <Table.HeaderCell>{lang.online_category}</Table.HeaderCell>
-          <Table.HeaderCell>{lang.online_totalGame}</Table.HeaderCell>
-          <Table.HeaderCell>{lang.online_players}</Table.HeaderCell>
+          <Table.HeaderCell>{lang.onlineStatsCategory}</Table.HeaderCell>
+          <Table.HeaderCell>{lang.onlineStatsGames}</Table.HeaderCell>
+          <Table.HeaderCell>{lang.onlineStatsPlayers}</Table.HeaderCell>
         </Table.Row>
       </Table.Header>
       <Table.Body>

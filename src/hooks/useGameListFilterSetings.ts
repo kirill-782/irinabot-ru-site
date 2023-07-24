@@ -6,7 +6,7 @@ import { FilterSettings } from "./useGameListFilter";
 const gameListFilterLocalStorageKey = "gameListFilters";
 
 const defaultFilterSettings: FilterSettings = {
-  quicFilter: "",
+  quickFilter: "",
   noLoadStarted: true,
   onlySelfGames: false,
   onlyFavoritedMaps: false,

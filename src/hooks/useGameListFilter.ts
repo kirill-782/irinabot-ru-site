@@ -10,7 +10,7 @@ import {
 } from "../utils/GameListComparators";
 
 export interface FilterSettings {
-  quicFilter: string;
+  quickFilter: string;
   noLoadStarted: boolean;
   onlySelfGames: boolean;
   onlyFavoritedMaps: boolean;
@@ -116,16 +116,16 @@ export const useGameListFilter = ({
 
       // Quic filter
 
-      if (filters.quicFilter.length === 0) return true;
+      if (filters.quickFilter.length === 0) return true;
 
-      if (game.mapId.toString() === filters.quicFilter) {
+      if (game.mapId.toString() === filters.quickFilter) {
         return true;
       }
 
       if (
         game.name
           .toLocaleLowerCase()
-          .indexOf(filters.quicFilter.toLowerCase()) >= 0
+          .indexOf(filters.quickFilter.toLowerCase()) >= 0
       )
         return true;
 
@@ -134,7 +134,7 @@ export const useGameListFilter = ({
         if (
           player.name
             .toLocaleLowerCase()
-            .indexOf(filters.quicFilter.toLowerCase()) >= 0
+            .indexOf(filters.quickFilter.toLowerCase()) >= 0
         )
           return true;
         return false;

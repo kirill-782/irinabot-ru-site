@@ -19,7 +19,6 @@ const CreateGameConfirmPage = React.lazy(
 );
 const EditConfigPage = React.lazy(() => import("./Pages/EditConfigPage"));
 const DebugPage = React.lazy(() => import("./Pages/DebugPage"));
-const ConnectorSettingsDebugPage = React.lazy(() => import("./Pages/ConnectorSettingsDebugPage"));
 
 const ReplayParserPage = React.lazy(() => import("./Pages/ReplayParserPage"));
 const MapCatalog = React.lazy(() => import("./Pages/MapCatalog"));
@@ -67,10 +66,6 @@ const routes: CondirionalRoute[] = [
       {
         path: "debug",
         element: <DebugPage />,
-      },
-      {
-        path: "debug/connector/settings",
-        element: <ConnectorSettingsDebugPage />,
       },
       {
         path: "gamelist",

@@ -6,6 +6,7 @@ import { AppRuntimeSettingsContext, RestContext } from "../../context";
 import { ConfigInfo } from "../../models/rest/ConfigInfo";
 import { convertErrorResponseToString } from "../../utils/ApiUtils";
 import "./ConfigSelectTab.scss";
+import LanguageKey from './../LanguageKey';
 
 function ConfigSelectTab() {
   const { mapsApi } = useContext(RestContext);
@@ -29,7 +30,7 @@ function ConfigSelectTab() {
       })
       .catch((e) => {
         toast({
-          title: lang.other_config_selectTAB_removeError,
+          title: lang.configSelectTabRemoveError,
           description: convertErrorResponseToString(e),
           color: "red",
         });
@@ -57,7 +58,7 @@ function ConfigSelectTab() {
       {hasError && <Message color="red">{hasError}</Message>}
       {isLoading && (
         <Loader active size="massive">
-          {lang.other_config_selectTAB_loading}
+          {lang.loadingDotted}
         </Loader>
       )}
       {configList.length > 0 && (
@@ -74,12 +75,11 @@ function ConfigSelectTab() {
                         </Header>
                       </Grid.Row>
                       <Grid.Row>
-                        {lang.other_config_selectTAB_update}:
-                        {new Date(config.lastUpdateDate || 0).toLocaleString()}
+                        <LanguageKey stringId="configSelectTabUpdateDate" date={new Date(config.lastUpdateDate || 0).toLocaleString()}/>
                       </Grid.Row>
                       <Grid.Row>
                         <Link to={`/maps/${config.mapId}`}>
-                          {lang.toMap}
+                          {lang.configSelectTabGoToMap}
                         </Link>
                       </Grid.Row>
                     </Grid.Column>
@@ -89,7 +89,7 @@ function ConfigSelectTab() {
                         as={Link}
                         to={`/create/confirm?configId=${config.id}`}
                       >
-                        {lang.other_config_selectTAB_choose}
+                        {lang.select}
                       </Button>
                     </Grid.Column>
                   </Grid.Row>
@@ -108,7 +108,7 @@ function ConfigSelectTab() {
                         deleteConfig(config.id || 0);
                       }}
                     >
-                      {lang.delete}
+                      {lang.remove}
                     </Button>
                   </Grid.Row>
                 </Grid>
@@ -120,7 +120,7 @@ function ConfigSelectTab() {
       {configList.length === 0 && !hasError && !isLoading && (
         <Grid.Column>
           <Grid.Row className="config-list">
-            <Message info>{lang.noconfig}.</Message>
+            <Message info>{lang.configSelectTabNoConfigMessage}.</Message>
           </Grid.Row>
         </Grid.Column>
       )}

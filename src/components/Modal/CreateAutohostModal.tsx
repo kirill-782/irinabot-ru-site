@@ -46,17 +46,17 @@ function CreateAutohostModal({
 
   return (
     <Modal open={open} onClose={onClose} closeIcon size="tiny">
-      <Header content={lang.autohostCreation} />
+      <Header content={lang.createAutohostModalHeader} />
       <Modal.Content>
         <Message>
-          <p>{lang.autohostCreationDescription}</p>
+          <p>{lang.createAutohostModalNotification}</p>
         </Message>
         <Form>
           <Form.Input
             fluid
             error={gameNameHasError}
-            label={lang.modal_createAutohost_label_gamename}
-            placeholder={lang.modal_createAutohost_placeholder_gamename}
+            label={lang.createAutohostModalHeaderGameNameLabel}
+            placeholder={lang.createAutohostModalHeaderGameNamePlaceholder}
             value={gameName}
             onChange={(e, data) => {
               setGameName(data.value);
@@ -66,8 +66,8 @@ function CreateAutohostModal({
             <Form.Input
               fluid
               error={autostartHasError}
-              label={lang.autostartAtPlayers}
-              placeholder={lang.modal_createAutohost_placeholder_autostart}
+              label={lang.createAutohostModalAutostartLabel}
+              placeholder={lang.createAutohostModalAutostartHeader}
               pattern="[0-9]*"
               type="number"
               value={autostart}
@@ -78,8 +78,8 @@ function CreateAutohostModal({
             <Form.Input
               fluid
               error={countGamesHasError}
-              label={lang.modal_createAutohost_label_gamelimit}
-              placeholder={lang.modal_createAutohost_placeholder_gamelimit}
+              label={lang.createAutohostModalGameLimitLabel}
+              placeholder={lang.createAutohostModalGameLimitPlaceholder}
               pattern="[0-9]*"
               value={countGames}
               type="number"
@@ -91,8 +91,8 @@ function CreateAutohostModal({
           <Form.Group widths="equal">
             <Form.Input
               fluid
-              label={lang.hclString}
-              placeholder={lang.modal_createAutohost_placeholder_hcl}
+              label={lang.createAutohostModalHclLabel}
+              placeholder={lang.createAutohostModalHclPlaceholder}
               value={hcl}
               onChange={(e, data) => {
                 setHcl(data.value);
@@ -121,7 +121,7 @@ function CreateAutohostModal({
               });
             }}
           >
-            {lang.modal_createAutohost_tocreate}
+            {lang.createAutohostModalCreate}
           </Button>
         </Form>
       </Modal.Content>

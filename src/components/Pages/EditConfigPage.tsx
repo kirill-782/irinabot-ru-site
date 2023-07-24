@@ -9,6 +9,7 @@ import { JsonEditor as Editor } from "jsoneditor-react";
 import ConfigEdit from "../MapPage/ConfigEdit";
 import "./EditConfigPage.scss";
 import { toast } from "@kokomi/react-semantic-toasts";
+import LanguageKey from "../LanguageKey";
 
 function EditConfigPage() {
   const { id } = useParams();
@@ -68,13 +69,13 @@ function EditConfigPage() {
         .then((configData) => {
           setConfigData(configData);
           toast({
-            title: lang.configSaved,
+            title: lang.editConfigPageConfigSaved,
             icon: "check",
           });
         })
         .catch((e) => {
           toast({
-            title: lang.configError,
+            title: lang.editConfigPageSaveError,
             description: convertErrorResponseToString(e),
             color: "red",
           });
@@ -90,18 +91,17 @@ function EditConfigPage() {
       )}
       {isLoading && (
         <Loader active size="big">
-          {lang.page_edit_config_isLoading}
+          {lang.loading}
         </Loader>
       )}
       {configPayload && (
         <>
           <Message>
-            {lang.confingMade}{" "}
-            <strong>{configData?.version}</strong>
+            <LanguageKey stringId="editConfigPageNotificationDescription" version={configData?.version}/>
           </Message>
           <Form>
             <Form.Field>
-              <label>{lang.configName}</label>
+              <label><LanguageKey stringId="editConfigPageNameLabel"/></label>
               <Form.Group widths="equal">
                 <Form.Input
                   fluid
@@ -116,11 +116,11 @@ function EditConfigPage() {
                     saveConfig();
                   }}
                 >
-                  {lang.configSave}
+                  {lang.save}
                 </Form.Button>
               </Form.Group>
               <Form.Checkbox
-                label={lang.json}
+                label={lang.editConfigPageJsonEditor}
                 checked={jsonEditor}
                 onChange={(_, data) => {
                   setJsonEditor(data.checked);

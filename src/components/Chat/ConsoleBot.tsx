@@ -57,7 +57,7 @@ export const ConsoleBot: React.FC<ConsoleProps> = ({
           value={message}
         />
         <Button
-          content={lang.consoleSend}
+          content={lang.send}
           labelPosition="left"
           icon="edit"
           primary

@@ -79,7 +79,7 @@ function OpenReplay({ setReplayData }: OpenReplayProps) {
       <div className="centerd">
         <Grid>
           <Grid.Row centered>
-            <Header>{lang.insertFileLink}</Header>
+            <Header>{lang.openReplayOpenLinkHeader}</Header>
           </Grid.Row>
           {error && (
             <Grid.Row centered>
@@ -103,7 +103,7 @@ function OpenReplay({ setReplayData }: OpenReplayProps) {
                   }}
                 >
                   <Icon name="linkify" />
-                  {lang.open}
+                  {lang.openReplayOpenLink}
                 </Form.Button>
               </Form.Group>
             </Form>
@@ -130,7 +130,7 @@ function OpenReplay({ setReplayData }: OpenReplayProps) {
               }}
             >
               <Icon name="file" />
-              {lang.openFile}
+              {lang.openReplayOpenFile}
             </Button>
             <input
               multiple

@@ -41,11 +41,11 @@ function MapStats({ gameList, mapId, className }: MapStatsProps) {
 
   return gameList.length === 0 ? null : (
     <>
-      <Label className={className} title={lang.allPlayers}>
+      <Label className={className} title={lang.mapStatsInGamePlayers}>
         <Icon name="user"></Icon>
         {allPlayers}
       </Label>
-      <Label className={className} title={lang.lobbyPlayers}>
+      <Label className={className} title={lang.mapStatsInLobbyPlayers}>
         <Icon name="wait"></Icon>
         {lobbyPlayers}
       </Label>

@@ -5,44 +5,51 @@ import { DropdownItemProps, DropdownProps, Form } from "semantic-ui-react";
 import { AppRuntimeSettingsContext, CacheContext } from "../../context";
 import { SearchFilters } from "../../models/rest/SearchFilters";
 import { SearchOrder } from "./../../models/rest/SearchFilters";
+import { LanguageRepositoryKeys } from "../../localization/Lang.ru";
+
+interface OptionWithLanguageKey {
+  key: string,
+  langKey: LanguageRepositoryKeys,
+  value: string,
+}
 
 const sortOptions = [
   {
     key: "0",
-    text: "page.map.list.filter.options.sort.default",
+    langKey: "mapFiltersDefault",
     value: "default",
   },
   {
     key: "1",
-    text: "page.map.list.filter.options.sort.name",
+    langKey: "mapFiltersMapNameSort",
     value: "mapNameEscaped",
   },
   {
     key: "2",
-    text: "page.map.list.filter.options.sort.creationDate",
+    langKey: "mapFiltersUploadDateSort",
     value: "creationDate",
   },
   {
     key: "3",
-    text: "page.map.list.filter.options.sort.updateDate",
+    langKey: "mapFiltersUpdateDateSort",
     value: "lastUpdateDate",
   },
   {
     key: "4",
-    text: "page.map.list.filter.options.sort.numPlayers",
+    langKey: "mapFiltersMapPlayersSort",
     value: "numPlayers",
   },
-];
+] as OptionWithLanguageKey[];
 
 const orderOptions = [
   {
     key: "0",
-    text: "page.map.list.filter.options.order.default",
+    langKey: "mapFiltersDefault",
     value: "default",
   },
-  { key: "1", text: "page.map.list.filter.options.order.asc", value: "asc" },
-  { key: "2", text: "page.map.list.filter.options.order.desc", value: "desc" },
-];
+  { key: "1", langKey: "mapFiltersAscOrder", value: "asc" },
+  { key: "2", langKey: "mapFiltersDescOrder", value: "desc" },
+] as OptionWithLanguageKey[];
 
 export interface Filter {
   verify: boolean;
@@ -192,7 +199,7 @@ export const MapFilters: React.FC<FiltersProps> = memo(
         {
           key: 0,
           value: 0,
-          text: lang.any,
+          text: lang.mapFiltersAny,
         },
         ...cacheContext.cachedCategories.map((el) => ({
           key: el.id,
@@ -209,7 +216,7 @@ export const MapFilters: React.FC<FiltersProps> = memo(
     return (
       <>
         <Form.Field>
-          <label>{lang.filterFreeSlots}</label>
+          <label>{lang.mapFiltersFreeSlotsLabel}</label>
           <ReactSlider
             value={[minPlayers, maxPlayers]}
             onChange={(newValue) => {
@@ -225,34 +232,35 @@ export const MapFilters: React.FC<FiltersProps> = memo(
           />
         </Form.Field>
         <Form.Checkbox
-          label={lang.verifiedOnly}
+          label={lang.mapFiltersVerifyOnly}
           checked={verified}
           onChange={() => setVerified(!verified)}
         />
         <Form.Checkbox
-          label={lang.taggedOnly}
+          label={lang.mapFiltersTaggedOnly}
           checked={taggedOnly}
           onChange={() => setTaggedOnly(!taggedOnly)}
         />
         <Form.Checkbox
-          label={lang.filterOnlyFavoritedMaps}
+          label={lang.mapFiltersFavoriteOnly}
           checked={favoriteOnly}
           onChange={() => setFavoriteOnly(!favoriteOnly)}
         />
         <Form.Select
           fluid
-          label={lang.sortBy}
+          label={lang.mapFiltersSortByLabel}
           options={sortOptions.map((i) => {
-            return { ...i, text: t(i.text) };
+            // тут костыли какието
+            return { ...i, text: lang[i.langKey] };
           })}
           value={sortBy}
           onChange={(_, data) => setSortBy(String(data.value))}
         />
         <Form.Select
           fluid
-          label={lang.orderBy}
+          label={lang.mapFiltersOrderByLabel}
           options={orderOptions.map((i) => {
-            return { ...i, text: t(i.text) };
+            return { ...i, text: lang[i.langKey] };
           })}
           value={orderBy}
           onChange={(_, data) => setOrderBy(String(data.value))}
@@ -260,14 +268,14 @@ export const MapFilters: React.FC<FiltersProps> = memo(
         <Form.Select
           fluid
           loading={categories.length === 0}
-          label={lang.mapCategory}
+          label={lang.mapFiltersCategoryLabel}
           options={categories}
           onChange={handleCategoryChange}
           value={selectedCategories}
         />
         <Form.Input
           fluid
-          label={lang.owner}
+          label={lang.mapFiltersOwnerLabel}
           value={owner}
           onChange={(_, data) => setOwner(data.value)}
           placeholder="8"
@@ -277,7 +285,7 @@ export const MapFilters: React.FC<FiltersProps> = memo(
             <Form.Button
               icon="check"
               color="green"
-              title={lang.filterAccept}
+              title={lang.mapFiltersApplyFiltersHint}
               onClick={(ev) => {
                 ev.preventDefault();
                 commitFilters();
@@ -288,7 +296,7 @@ export const MapFilters: React.FC<FiltersProps> = memo(
             type="button"
             icon="x"
             color="red"
-            title={lang.filterReset}
+            title={lang.mapFiltersResetFiltersHint}
             onClick={(ev) => {
               ev.preventDefault();
               onFitlerChange([null, null]);

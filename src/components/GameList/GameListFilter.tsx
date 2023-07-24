@@ -9,22 +9,22 @@ import "./GameListFilter.scss";
 const options = [
   {
     key: "default",
-    text: "page.game.list.filter.options.default",
+    langKey: "gameListFilterSortDefault",
     value: "default",
   },
   {
     key: "freeSlots",
-    text: "page.game.list.filter.options.freeSlots",
+    langKey: "gameListFilterSortFreeSlots",
     value: "freeSlots",
   },
   {
     key: "allSlots",
-    text: "page.game.list.filter.options.allSlots",
+    langKey: "gameListFilterSortAllSlots",
     value: "allSlots",
   },
   {
     key: "playerSlots",
-    text: "page.game.list.filter.options.playerSlots",
+    langKey: "gameListFilterSortPlayers",
     value: "playerSlots",
   },
 ];
@@ -47,7 +47,7 @@ function GameListFilter({
     <>
       <Form className="sidebar-filter">
         <Form.Checkbox
-          label={lang.filterNoStarted}
+          label={lang.gameListFilterNoLoadStartGames}
           checked={filterSettings.noLoadStarted}
           name="noLoadStarted"
           disabled={disabledFilters.indexOf("noLoadStarted") > -1}
@@ -59,7 +59,7 @@ function GameListFilter({
           }}
         ></Form.Checkbox>
         <Form.Checkbox
-          label={lang.filterNoStarted}
+          label={lang.gameListFilterForceReorder}
           checked={filterSettings.forceReorder}
           name="forceReorder"
           disabled={disabledFilters.indexOf("forceReorder") > -1}
@@ -71,6 +71,7 @@ function GameListFilter({
           }}
         ></Form.Checkbox>
         <Form.Checkbox
+          label={lang.gameListFilterOnlySelfGames}
           name="onlySelfGames"
           disabled={disabledFilters.indexOf("onlySelfGames") > -1}
           checked={filterSettings.onlySelfGames}
@@ -80,9 +81,9 @@ function GameListFilter({
               onlySelfGames: !!data.checked,
             });
           }}
-          label={lang.filterOnlySelfGames}
         ></Form.Checkbox>
         <Form.Checkbox
+          label={lang.gameListFilterOnlyFavoriteMaps}
           name="onlyFavoritedMaps"
           disabled={disabledFilters.indexOf("onlyFavoritedMaps") > -1}
           checked={filterSettings.onlyFavoritedMaps}
@@ -92,12 +93,11 @@ function GameListFilter({
               onlyFavoritedMaps: !!data.checked,
             });
           }}
-          label={lang.page_game_list_filter_onlyFavoritedMaps}
         ></Form.Checkbox>
         <Form.Group grouped>
-          <label>{lang.filterGameType}</label>
+          <label>{lang.gameListFilterGameTypeLabel}</label>
           <Form.Field
-            label={lang.page_game_list_filter_normalType}
+            label={lang.gameListFilterPlainGamesOnly}
             control="input"
             type="radio"
             name="gameType"
@@ -111,7 +111,7 @@ function GameListFilter({
             }}
           />
           <Form.Field
-            label={lang.filterAllType}
+            label={lang.gameListFilterAllGames}
             control="input"
             type="radio"
             name="gameType"
@@ -125,7 +125,7 @@ function GameListFilter({
             }}
           />
           <Form.Field
-            label={lang.filterReposeType}
+            label={lang.gameListFilterNonPlainOnly}
             control="input"
             type="radio"
             name="gameType"
@@ -154,7 +154,7 @@ function GameListFilter({
             basic
             floating
             options={options.map((i) => {
-              return { ...i, text: t(i.text) };
+              return { ...i, text: lang[i.langKey] };
             })}
             value={filterSettings.orderBy}
           />
@@ -175,7 +175,7 @@ function GameListFilter({
         </Form.Group>
 
         <Form.Field className="players-filter">
-          <label>{lang.filterLobbyPlayers}</label>
+          <label>{lang.gameListFilterPlayerFilterLabel}</label>
           <ReactSlider
             value={filterSettings.players}
             onChange={(newValue) => {
@@ -193,7 +193,7 @@ function GameListFilter({
           />
         </Form.Field>
         <Form.Field>
-          <label>{lang.page_game_list_filter_freeSlots}</label>
+          <label>{lang.gameListFilterFreeSlotsFilterLabel}</label>
           <ReactSlider
             value={filterSettings.freeSlots}
             onChange={(newValue) => {
@@ -212,7 +212,7 @@ function GameListFilter({
           />
         </Form.Field>
         <Form.Field>
-          <label>{lang.filterSlotCount}</label>
+          <label>{lang.gameListFilterAllSlotsFilterLabel}</label>
           <ReactSlider
             value={filterSettings.slots}
             onChange={(newValue) => {

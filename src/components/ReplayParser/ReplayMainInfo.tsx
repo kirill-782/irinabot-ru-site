@@ -10,7 +10,7 @@ import {
   TableCell,
   TableHeader,
   TableHeaderCell,
-  TableRow,
+  TableRow
 } from "semantic-ui-react";
 import React from "react";
 
@@ -18,9 +18,10 @@ import prettyMilliseconds from "pretty-ms";
 
 import "./ReplayMainInfo.scss";
 import { AppRuntimeSettingsContext } from "../../context";
+import LanguageKey from "../LanguageKey";
 
 const PRODUCT_ID_TO_STRING = {
-  1462982736: "Warcraft III TFT",
+  1462982736: "Warcraft III TFT"
 };
 
 function ReplayMainInfo() {
@@ -38,47 +39,48 @@ function ReplayMainInfo() {
   return (
     <Grid className="replay-main-info">
       <Grid.Row stretched>
-        <Header>{t("page.replay.info.map.base")}:</Header>
+        <Header>
+          <LanguageKey stringId="replayMainInfo_1"/>
+        </Header>
         <Segment className="fluid">
           <div>
-            <b>{t("page.replay.info.map.gamename")}:</b>
-            {replayData?.records.gameInfo?.gameName}
+            <LanguageKey stringId="replayMainInfo_2" value={replayData?.records.gameInfo?.gameName}/>
           </div>
           <div>
             <b>Product ID:</b>
             {PRODUCT_ID_TO_STRING[replayData?.subHeader.productId || 0]}
           </div>
           <div>
-            <b>{t("page.replay.info.map.version")}:</b>
+            <b>Version:</b>
             {replayData?.subHeader.version} build{" "}
             {replayData?.subHeader.buildNumber}
           </div>
           <div>
-            <b>{t("page.replay.info.map.duration")}: </b>
-            {prettyMilliseconds(replayData?.subHeader.lengthMilis || 0)}
+            <LanguageKey stringId="replayMainInfo_2" value={prettyMilliseconds(replayData?.subHeader.lengthMilis || 0)}/>
           </div>
           <div>
-            <b>{t("page.replay.info.map.host")}: </b>
-            {replayData?.records.gameInfo?.hostPlayer.playerName}
+            <LanguageKey stringId="replayMainInfo_2" value={replayData?.records.gameInfo?.hostPlayer.playerName}/>
           </div>
         </Segment>
-        <Header>{t("page.replay.info.map.players")}:</Header>
+        <Header>
+          <LanguageKey stringId="replayMainInfo_6" value={replayData?.records.gameInfo?.hostPlayer.playerName}/>
+        </Header>
         <Table>
           <TableHeader>
             <TableHeaderCell>
-              {t("page.replay.info.map.nickname")}
+              {t("replayMainInfo_7")}
             </TableHeaderCell>
             <TableHeaderCell>
-              {t("page.replay.info.map.gametime")}
+              {t("replayMainInfo_8")}
             </TableHeaderCell>
             <TableHeaderCell>
-              {t("page.replay.info.map.exitcode")}
+              {t("replayMainInfo_9")}
             </TableHeaderCell>
           </TableHeader>
           <TableBody>
             {[
               ...(replayData?.records.players || []),
-              replayData?.records.gameInfo?.hostPlayer,
+              replayData?.records.gameInfo?.hostPlayer
             ].map((i) => {
               const leftRow = getLeaveRowByPID(i?.playerId);
 
@@ -97,7 +99,7 @@ function ReplayMainInfo() {
         </Table>
       </Grid.Row>
       <Grid.Row>
-        <Message warning>{t("page.replay.info.map.aqua")}</Message>
+        <Message warning>{t("replayMainInfo_10")}</Message>
       </Grid.Row>
     </Grid>
   );

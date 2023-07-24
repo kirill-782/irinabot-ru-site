@@ -11,12 +11,12 @@ import {
   DEFAULT_AUTOHOST_REMOVE_RESPONSE,
   DEFAULT_CONTEXT_HEADER_CONSTANT,
 } from "../../models/websocket/HeaderConstants";
-import { DEFAULT_AUTOHOST_LIST_RESPONSE } from "./../../models/websocket/HeaderConstants";
-import { ServerAutohostListResponse } from "./../../models/websocket/ServerAutohostListResponse";
-import { ClientAutohostListConverter } from "./../../models/websocket/ClientAutohostList";
-import { ServerAutohostRemoveResponse } from "./../../models/websocket/ServerAutohostRemoveResponse";
+import { DEFAULT_AUTOHOST_LIST_RESPONSE } from "../../models/websocket/HeaderConstants";
+import { ServerAutohostListResponse } from "../../models/websocket/ServerAutohostListResponse";
+import { ClientAutohostListConverter } from "../../models/websocket/ClientAutohostList";
+import { ServerAutohostRemoveResponse } from "../../models/websocket/ServerAutohostRemoveResponse";
 import { toast } from "@kokomi/react-semantic-toasts";
-import { ClientAutohostRemoveConverter } from "./../../models/websocket/ClientAutohostRemove";
+import { ClientAutohostRemoveConverter } from "../../models/websocket/ClientAutohostRemove";
 import ConnectorId from "../ConnectorId";
 import { ClientResolveConnectorIdsConverter } from "../../models/websocket/ClientResolveConnectorIds";
 import React from "react";
@@ -43,6 +43,7 @@ function AutohostListModal({ open, onClose }: AutohostListModalProps) {
 
   const { language } = useContext(AppRuntimeSettingsContext);
   const lang = language.languageRepository;
+  const t = language.getString;
 
   useEffect(() => {
     if (!autohosts) return;
@@ -88,8 +89,8 @@ function AutohostListModal({ open, onClose }: AutohostListModalProps) {
           );
         } else {
           toast({
-            title: lang.deletingError,
-            description: `${lang.deletingErrorReason} ${response.status}`,
+            title: lang.autohostListModalRemoveErrorToastTitle,
+            description: t("autohostListModalRemoveErrorToastDescription", {status: response.status}),
             icon: "check",
             color: "red",
           });
@@ -106,32 +107,32 @@ function AutohostListModal({ open, onClose }: AutohostListModalProps) {
 
   return (
     <Modal closeIcon open={open} onClose={onClose}>
-      <Header content={lang.modal_autohostList_caption} />
+      <Header content={lang.autohostListModalListHeader} />
       <Modal.Content>
         {autohosts === null ? (
-          <Header>{lang.listLoading}</Header>
+          <Header>{lang.autohostListModalLoading}</Header>
         ) : autohosts.length === 0 ? (
           <Message info>
-            <p>{lang.autohostListEmpty}</p>
+            <p>{lang.autohostListModalEmptyNotification}</p>
           </Message>
         ) : (
           <Table celled>
             <Table.Header>
               <Table.Row>
                 <Table.HeaderCell width={9}>
-                  {lang.name}
+                  {lang.autohostListModalNameHeader}
                 </Table.HeaderCell>
                 <Table.HeaderCell width={2}>
-                  {lang.autostart}
+                  {lang.autohostListModalAutostartHeader}
                 </Table.HeaderCell>
                 <Table.HeaderCell width={2}>
-                  {lang.gamelimit}
+                  {lang.autohostListModalGameLimitHeader}
                 </Table.HeaderCell>
                 <Table.HeaderCell width={5}>
-                  {lang.gamecreated}
+                  {lang.autohostListModalCreatedGamesHeader}
                 </Table.HeaderCell>
                 <Table.HeaderCell width={3}>
-                  {lang.modal_autohostList_table_owner}
+                  {lang.autohostListModalOwnerHeader}
                 </Table.HeaderCell>
                 <Table.HeaderCell width={1}>
                   {lang.actions}

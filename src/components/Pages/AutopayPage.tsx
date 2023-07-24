@@ -1,48 +1,49 @@
 import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { Container, Form, Grid, Header, Message } from "semantic-ui-react";
-import { AppRuntimeSettingsContext, AuthContext } from "./../../context/index";
+import { AppRuntimeSettingsContext, AuthContext } from "../../context";
 import { SITE_TITLE } from "../../config/ApplicationConfig";
 import MetaDescription from "../Meta/MetaDescription";
 import React from "react";
 import Markdown from "../Markdown";
+import { LanguageRepositoryKeys } from "../../localization/Lang.ru";
 
-interface Place {
+interface Product {
   placeId: number;
-  title: string;
+  languageKey: LanguageRepositoryKeys;
   description: string;
   imageUrl: string;
   price: number;
 }
 
-const availablePlaces: Place[] = [
+const availablePlaces: Product[] = [
   {
     placeId: 1,
-    title: "VIP доступ",
+    languageKey: "autopayPageProductVip",
     description: "",
     imageUrl: "/images/vip.png",
-    price: 149,
+    price: 149
   },
   {
     placeId: 5,
-    title: "Ban list",
+    languageKey: "autopayPageProductBanList",
     description: "",
     imageUrl: "/images/ban_list.png",
-    price: 99,
+    price: 99
   },
   {
     placeId: 6,
-    title: "Admin list",
+    languageKey: "autopayPageProductAdminList",
     description: "",
     imageUrl: "/images/admin_lina.png",
-    price: 99,
+    price: 99
   },
   {
     placeId: 4,
-    title: "Autohost",
+    languageKey: "autopayPageProductAutohost",
     description: "",
     imageUrl: "/images/autohost.png",
-    price: 299,
-  },
+    price: 299
+  }
 ];
 
 function AutopayPage() {
@@ -64,7 +65,7 @@ function AutopayPage() {
   }, [authContext.auth.currentAuth]);
 
   useEffect(() => {
-    window.document.title = `${lang.page_autopay_donute} | ${SITE_TITLE}`;
+    window.document.title = `${lang.autopayPageTitle} | ${SITE_TITLE}`;
   }, []);
 
   const togglePlaceCheckbox = (placeId) => {
@@ -111,15 +112,15 @@ function AutopayPage() {
     if (totalPrice === 0)
       return (
         <Message color="red">
-          <Message.Header>{lang.productsUnselected}</Message.Header>
-          <p>{lang.productsUnselectedDescription}</p>
+          <Message.Header>{lang.autopayPageProductNotSelectedNotificationTitle}</Message.Header>
+          <p>{lang.autopayPageNotSelectedNotificationDescription}</p>
         </Message>
       );
 
     return (
       <Message color="red">
-        <Message.Header>{lang.productsIncorrectId}</Message.Header>
-        <p>{lang.productsIncorrectIdDescription}</p>
+        <Message.Header>{lang.autopayPageIncorrectConnectorIdNotificationTitle}</Message.Header>
+        <p>{lang.autopayPageIncorrectConnectorIdNotificationDescription}</p>
       </Message>
     );
   };
@@ -129,7 +130,7 @@ function AutopayPage() {
       paymentTypeRef.current.value = payType;
       paylentLabelRef.current.value = JSON.stringify([
         connectroId,
-        selectedPlaces,
+        selectedPlaces
       ]);
       formRef.current.submit();
     }
@@ -137,14 +138,14 @@ function AutopayPage() {
 
   return (
     <Container>
-      <MetaDescription description={lang.productsPageDescription + "."} />
-      <Header>{lang.productsHeader}</Header>
+      <MetaDescription description={lang.autopayPageDescription} />
+      <Header>{lang.autopayPageHeader}</Header>
       <Form
         ref={formRef}
         method="POST"
         action="https://yoomoney.ru/quickpay/confirm.xml"
       >
-        <Grid columns="equal" stackable>
+        <Grid columns="equal" stackable reversed="vertically">
           <Grid.Column width="two">
             {availablePlaces.map((place) => {
               return (
@@ -157,25 +158,25 @@ function AutopayPage() {
                   onChange={() => {
                     togglePlaceCheckbox(place.placeId);
                   }}
-                  label={lang.place_title}
+                  label={lang[place.languageKey]}
                 ></Form.Checkbox>
               );
             })}
           </Grid.Column>
           <Grid.Column width="three" floated="right">
             <Form.Input
-              label={lang.productsIdLabel}
+              label={lang.autopayPageConnectorIdLabel}
               value={connectroId}
               onChange={(e) => checkAndSetConnectorId(e.target.value)}
             ></Form.Input>
             <Form.Input
-              label={lang.productsMonthLabel}
+              label={lang.autopayPageDurationLabel}
               value={duration}
               onChange={(e) => checkAndSetDuration(e.target.value)}
             ></Form.Input>
             <Form.Input
               name="sum"
-              label={lang.productsTotalLabel}
+              label={lang.autopayPageTotalLabel}
               value={totalPrice}
             ></Form.Input>
           </Grid.Column>
@@ -188,7 +189,7 @@ function AutopayPage() {
                 basic
                 color="green"
               >
-                {lang.productsPayCard}
+                {lang.autopayPagePayCard}
               </Form.Button>
               <Form.Button
                 onClick={() => pay("PC")}
@@ -196,30 +197,21 @@ function AutopayPage() {
                 basic
                 color="green"
               >
-                {lang.productsPayYooMoney}
+                {lang.autopayPagePayYooMoney}
               </Form.Button>
             </Form.Group>
+          </Grid.Row>
+          <Grid.Row>
             <Message info>
               <p>
-                <Markdown>{lang.productsAutohostInfo}</Markdown>
+                <Markdown>{lang.autopayPageHelpNotification}</Markdown>
               </p>
             </Message>
           </Grid.Row>
         </Grid>
         <input type="hidden" name="receiver" value="41001757275906" />
-        <input
-          type="hidden"
-          name="formcomment"
-          value={lang.payingIrina + "."}
-        />
-        <input
-          type="hidden"
-          name="short-dest"
-          value={lang.payingIrina + "."}
-        />
         <input type="hidden" name="label" ref={paylentLabelRef} />
         <input type="hidden" name="quickpay-form" value="shop" />
-        <input type="hidden" name="targets" value={lang.payingServices} />
         <input
           type="hidden"
           name="paymentType"

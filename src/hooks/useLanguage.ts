@@ -1,14 +1,14 @@
 import TimeAgo from "javascript-time-ago";
 import { useCallback, useState } from "react";
 import { importLocales } from "../utils/LocaleUtils";
-import { LanguageKey, LanguageRepository } from "../localization/Lang.ru";
+import { LanguageRepositoryKeys, LanguageRepository } from "../localization/Lang.ru";
 
 type stringMap = {
   [key: string]: string | boolean | number | null | undefined;
 };
 
 export type GetLanguageStaring = (
-  id: LanguageKey,
+  id: LanguageRepositoryKeys,
   options?: stringMap,
   language?: string
 ) => string;

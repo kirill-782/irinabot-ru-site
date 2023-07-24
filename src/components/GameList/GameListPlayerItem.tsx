@@ -16,14 +16,6 @@ interface GameListPlayerItemProps {
   player: GameListPlayer;
 }
 
-interface GamePlayerStats {
-  win: string;
-  lose: string;
-  percent: number;
-  totalTime: number;
-  apm: string;
-}
-
 const getClassColorByPlayer = ({ colour }) => {
   switch (colour) {
     case 0:
@@ -80,10 +72,6 @@ const getClassColorByPlayer = ({ colour }) => {
 };
 
 function GameListPlayerItem({ player }: GameListPlayerItemProps) {
-  const [gamePlayerStats, setGamePlayerStats] =
-    useState<GamePlayerStats | null>(null);
-  //https://nwc3l.com/irinabot_profile?id=zsef_He_yIIaJI&json
-
   const { chat } = useContext(AppRuntimeSettingsContext);
 
   const { language } = useContext(AppRuntimeSettingsContext);
@@ -93,56 +81,9 @@ function GameListPlayerItem({ player }: GameListPlayerItemProps) {
     if (chat.selectUser.selectUser) chat.selectUser.selectUser(player.name);
   };
 
-  const loadStats = () => {
-    const urlParser = new URLSearchParams();
-    urlParser.append("id", player.name);
-    urlParser.append("json", "");
-    fetch("https://nwc3l.com/irinabot_profile?" + urlParser.toString()).then(
-      (e) => {
-        if (e.status === 200) {
-          e.json().then((data) => {
-            setGamePlayerStats(data.playerInfo);
-          });
-        } else setGamePlayerStats(null);
-      }
-    );
-  };
-
-  const renderStats = () => {
-    if (gamePlayerStats === undefined)
-      return (
-        <span>{lang.statsLoading}</span>
-      );
-
-    if (gamePlayerStats === null)
-      return <span>{lang.stats404}</span>;
-
-    return (
-      <List horizontal>
-        <List.Item style={{ color: "green" }}>
-          {lang.wins}: {gamePlayerStats.win}
-        </List.Item>
-        <List.Item style={{ color: "red" }}>
-          {lang.defeats}: {gamePlayerStats.lose}
-        </List.Item>{" "}
-        <List.Item>
-          {lang.winrate}: {gamePlayerStats.percent}%
-        </List.Item>
-        <List.Item>
-          {lang.totalTime}:{" "}
-          {gamePlayerStats.totalTime} {lang.h}.
-        </List.Item>
-        <List.Item style={{ color: "blue" }}>
-          APM: {gamePlayerStats.apm}
-        </List.Item>
-      </List>
-    );
-  };
-
   return (
     <Popup
       on="click"
-      onOpen={loadStats}
       trigger={
         <List.Item
           key={player.name}
@@ -159,7 +100,6 @@ function GameListPlayerItem({ player }: GameListPlayerItemProps) {
       }
     >
       <Grid centered>
-        <Grid.Row>{renderStats()}</Grid.Row>
         <Grid.Row>
           <Button
             size="mini"
@@ -169,7 +109,7 @@ function GameListPlayerItem({ player }: GameListPlayerItemProps) {
             }}
           >
             <Icon name="envelope"></Icon>
-            {lang.writeMessage}
+            {lang.gameListPlayerItemSendMessage}
           </Button>
         </Grid.Row>
       </Grid>

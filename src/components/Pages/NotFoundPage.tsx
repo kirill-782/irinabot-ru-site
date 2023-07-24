@@ -15,11 +15,11 @@ function NotFoundPage() {
       <div className="centerd">
         <Grid centered>
           <Grid.Row>
-            <Header>{lang.page404}</Header>
+            <Header>{lang.notFoundPageTitle}</Header>
           </Grid.Row>
           <Grid.Row>
             <Button to="/" as={Link} color="green">
-              {lang.pageMain}
+              {lang.notFoundPageGoToHome}
             </Button>
           </Grid.Row>
         </Grid>

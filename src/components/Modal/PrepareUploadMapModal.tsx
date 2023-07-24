@@ -4,7 +4,7 @@ import {
   useRef,
   useState,
   useMemo,
-  useContext,
+  useContext
 } from "react";
 import {
   Dropdown,
@@ -12,19 +12,18 @@ import {
   Grid,
   Header,
   Modal,
-  Message,
+  Message
 } from "semantic-ui-react";
 
-import { Category } from "../../models/rest/Category";
 import { Flags } from "../../models/rest/Flags";
-import { AdditionalFlags, MapService } from "../../services/MapService";
+import { AdditionalFlags } from "../../services/MapService";
 import { useCategoryFilter } from "../../hooks/useCategoryFilter";
 import { DragAndDropField } from "./DragAndDropField";
 import {
   AppRuntimeSettingsContext,
-  CacheContext,
-  RestContext,
-} from "./../../context/index";
+  CacheContext
+
+} from "../../context";
 import React from "react";
 
 interface PrepareUploadMapModalProps {
@@ -38,10 +37,10 @@ interface PrepareUploadMapModalProps {
 }
 
 function PrepareUploadMapModal({
-  onMapSelected,
-  open,
-  onClose,
-}: PrepareUploadMapModalProps) {
+                                 onMapSelected,
+                                 open,
+                                 onClose
+                               }: PrepareUploadMapModalProps) {
   const [selectedCategories, setSelectedCategories] = useState<any>([]);
 
   const [isDragging, setDragging] = useState(false);
@@ -67,7 +66,7 @@ function PrepareUploadMapModal({
 
   const emitMapSelected = (files: FileList) => {
     const flags: Flags = {
-      categories: selectedCategories,
+      categories: selectedCategories
     };
 
     onMapSelected(files, flags, {});
@@ -120,7 +119,7 @@ function PrepareUploadMapModal({
 
   return (
     <Modal open={open} onClose={onClose} closeIcon>
-      <Modal.Header>{lang.chooseMap}</Modal.Header>
+      <Modal.Header>{lang.prepareUploadMapModalHeader}</Modal.Header>
 
       <Modal.Content
         onDragEnter={handleDragEnter}
@@ -130,15 +129,15 @@ function PrepareUploadMapModal({
       >
         {isDragging && <DragAndDropField />}
         <Modal.Description>
-          <Header>{lang.whichUploadMapLabel}</Header>
-          <p>{lang.whichUploadMapHint}</p>
+          <Header>{lang.prepareUploadMapModalSubHeader}</Header>
+          <p>{lang.prepareUploadMapModalDescription}</p>
           <Form>
             <Form.Field>
-              <label>{lang.categoryMapLabel}</label>
+              <label>{lang.prepareUploadMapModalCategoryLabel}</label>
               <Dropdown
                 fluid
                 multiple
-                placeholder={lang.modal_mapUploader_category}
+                placeholder={lang.prepareUploadMapModalCategoryPlaceholder}
                 selection
                 options={dropdownOptions}
                 loading={cacheContext.cachedCategories.length === 0}
@@ -163,11 +162,11 @@ function PrepareUploadMapModal({
                   />
                   <Grid.Row>
                     <Message
-                      header={lang.mapUploading}
+                      header={lang.prepareUploadMapModalUploadMap}
                       content={
                         selectedCategories.length === 0
-                          ? lang.beforeMapLoading
-                          : lang.loadingMapHint
+                          ? lang.prepareUploadMapModalUploadMapSelectCategory
+                          : lang.prepareUploadMapModalClickOrDropdown
                       }
                       onClick={() => {
                         selectedCategories.length && fileInput.current?.click();

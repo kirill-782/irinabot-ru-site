@@ -138,6 +138,9 @@ const findFirstTag = (WC3String: string, ignoreTags?: string[]) => {
 };
 
 export const escapeWC3Tags = (WC3String: string, ignoreTags?: string[]) => {
+
+  if(!WC3String) return "";
+
   while (true) {
     const tagPotition = findFirstTag(WC3String, ignoreTags);
 

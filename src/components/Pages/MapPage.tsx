@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Container, Grid, Loader, Message } from "semantic-ui-react";
 import { SITE_TITLE } from "../../config/ApplicationConfig";
 import {
@@ -12,7 +12,7 @@ import { Map } from "../../models/rest/Map";
 import { convertErrorResponseToString } from "../../utils/ApiUtils";
 import MapHeader from "../MapPage/MapHeader";
 import MapSlots from "../MapPage/MapSlots";
-import { escapeWC3Tags } from "./../../utils/WC3TestUtils";
+import { escapeWC3Tags } from "../../utils/WC3TestUtils";
 import MapFooter from "./../MapPage/MapFooter";
 import MapDescription from "../MapPage/MapDescription";
 import MapFlags from "./../MapPage/MapFlags";
@@ -21,7 +21,8 @@ import { useGameListSubscribe } from "../../hooks/useGameListSubscribe";
 import MetaDescription from "../Meta/MetaDescription";
 import MetaRobots from "../Meta/MetaRobots";
 import React from "react";
-import { MapContext } from "./../../context/index";
+import { MapContext } from "../../context";
+import { useTitle } from "../../hooks/useTitle";
 
 function MapPage() {
   const { id } = useParams();
@@ -39,6 +40,7 @@ function MapPage() {
 
   const { language } = useContext(AppRuntimeSettingsContext);
   const lang = language.languageRepository;
+  const t = language.getString;
 
   useGameListSubscribe({
     ghostSocket: sockets.ghostSocket,
@@ -47,15 +49,7 @@ function MapPage() {
     ignoreFocusCheck: false,
   });
 
-  useEffect(() => {
-    if (mapData?.mapInfo?.name) {
-      window.document.title = `${escapeWC3Tags(mapData.mapInfo.name)} | ${t(
-        "page.map.maps"
-      )} | ${SITE_TITLE}`;
-    } else {
-      window.document.title = SITE_TITLE;
-    }
-  }, [mapData]);
+  useTitle(escapeWC3Tags(mapData?.mapInfo.name), lang.mapListPageTitle);
 
   useEffect(() => {
     const abort = new AbortController();
@@ -131,7 +125,7 @@ function MapPage() {
       )}
       {isLoading && (
         <Loader active size="big">
-          {lang.page_map_loading}
+          {lang.loadingDotted}
         </Loader>
       )}
       {mapData && (
@@ -157,12 +151,12 @@ function MapPage() {
             <Grid.Row>
               {config === undefined && (
                 <Loader size="big" active>
-                  {lang.configIsLoading}
+                  {lang.mapPageConfigLoading}
                 </Loader>
               )}
               {config === null && (
                 <Message style={{ width: "100%" }} info>
-                  {lang.slotNoParsed}
+                  {lang.mapPageSlotsNotParsed}
                 </Message>
               )}
               {config?.config && (

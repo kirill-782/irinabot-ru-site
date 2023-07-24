@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 import { Link } from "react-router-dom";
-import { Grid, Header, Image } from "semantic-ui-react";
+import { Grid, Header } from "semantic-ui-react";
 import { Map } from "../../models/rest/Map";
 import LazyLoadedImage from "../LazyLoadedImage";
 import MapCategoryList from "../MapPage/MapCategoryList";

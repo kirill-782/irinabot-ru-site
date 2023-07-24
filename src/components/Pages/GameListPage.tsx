@@ -10,20 +10,20 @@ import { useGameListFilterSetings } from "../../hooks/useGameListFilterSetings";
 import { useGameListFilter } from "../../hooks/useGameListFilter";
 import { useDisplayedGameList } from "../../hooks/useDisplayedGameList";
 
-import GameListFilter from "../GameList/GameListFilter";
-import { useDebounce } from "./../../hooks/useDebounce";
+import { useDebounce } from "../../hooks/useDebounce";
 import { CacheContext } from "../../context";
 
 import "../GameList/GameList.scss";
 import MapInfo from "../GameList/MapInfo";
 import { Link } from "react-router-dom";
-import { ClientResolveConnectorIdsConverter } from "./../../models/websocket/ClientResolveConnectorIds";
+import { ClientResolveConnectorIdsConverter } from "../../models/websocket/ClientResolveConnectorIds";
 import { SITE_TITLE } from "../../config/ApplicationConfig";
 import MetaDescription from "../Meta/MetaDescription";
-import { AuthContext } from "./../../context/index";
+import { AuthContext } from "../../context";
 import { AccessMaskBit } from "../Modal/AccessMaskModal";
 import GameListFiltersModal from "../Modal/GameListFiltersModal";
 import MetaCanonical from "../Meta/MetaCanonical";
+import { useTitle } from "../../hooks/useTitle";
 
 function GameListPage() {
   const sockets = useContext(WebsocketContext);
@@ -62,9 +62,7 @@ function GameListPage() {
   const { language } = useContext(AppRuntimeSettingsContext);
   const lang = language.languageRepository;
 
-  useEffect(() => {
-    window.document.title = `${lang.gamelist} | ${SITE_TITLE}`;
-  }, []);
+  useTitle(lang.gameListPageTitle);
 
   useEffect(() => {
     const uncachedConnectorIds = gameList
@@ -86,17 +84,17 @@ function GameListPage() {
 
   return (
     <Container className="game-list">
-      <MetaDescription description={lang.watchGames + "."} />
+      <MetaDescription description={lang.gameListPageDescription}/>
       <MetaCanonical hostPath="/" />
       <Grid columns="equal" stackable>
         <Grid.Column width={13} className="game-list-column">
           <Input
             onChange={(event, data) =>
-              setFilterSettings({ ...filterSettings, quicFilter: data.value })
+              setFilterSettings({ ...filterSettings, quickFilter: data.value })
             }
-            value={filterSettings.quicFilter}
+            value={filterSettings.quickFilter}
             style={{ width: "50%" }}
-            placeholder={lang.fastfilter}
+            placeholder={lang.gameListPageQuickFilterPlaceholder}
           />
           {auth.accessMask.hasAccess(AccessMaskBit.GAME_CREATE) && (
             <Button
@@ -134,7 +132,7 @@ function GameListPage() {
               window.open("https://xgm.guru/p/irina/gamecreate");
             }}
           >
-            {lang.howToPlay}
+            {lang.gameListPageHowToPlay}
           </Button>
           {selectedGame ? (
             <MapInfo mapId={selectedGame.mapId}></MapInfo>

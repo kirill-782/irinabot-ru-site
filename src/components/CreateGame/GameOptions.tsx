@@ -4,26 +4,36 @@ import { GameOptionsProps } from "./interfaces";
 import { invertSelectedBits } from "../../utils/BitMaskUtils";
 import React from "react";
 import { AppRuntimeSettingsContext } from "../../context";
+import { LanguageRepositoryKeys } from "../../localization/Lang.ru";
+
+interface OptionWithLanguageKey {
+  key: string,
+  langKey: LanguageRepositoryKeys,
+  value: number,
+}
 
 const visibilityOptions = [
-  { key: "4", text: "page.game.options.visibility.default", value: 4 },
-  { key: "1", text: "page.game.options.visibility.masked", value: 1 },
-  { key: "2", text: "page.game.options.visibility.explored", value: 2 },
-  { key: "3", text: "page.game.options.visibility.open", value: 3 },
-];
+  {
+    key: "4", langKey: "gameOptionsDefault", value: 4
+  },
+
+  { key: "1", langKey: "gameOptionsHidden", value: 1 },
+  { key: "2", langKey: "gameOptionsExplored", value: 2 },
+  { key: "3", langKey: "gameOptionsOpen", value: 3 }
+] as OptionWithLanguageKey[];
 
 const speedOptions = [
-  { key: "1", text: "page.game.options.gamespeed.slow", value: 1 },
-  { key: "2", text: "page.game.options.gamespeed.norm", value: 2 },
-  { key: "3", text: "page.game.options.gamespeed.fast", value: 3 },
-];
+  { key: "1", langKey: "gameOptionsSlow", value: 1 },
+  { key: "2", langKey: "gameOptionsMedium", value: 2 },
+  { key: "3", langKey: "gameOptionsFast", value: 3 }
+] as OptionWithLanguageKey[];
 
 const observersOptions = [
-  { key: "1", text: "page.game.options.observers.none", value: 1 },
-  { key: "3", text: "page.game.options.observers.all", value: 3 },
-  { key: "2", text: "page.game.options.observers.after", value: 2 },
-  { key: "4", text: "page.game.options.observers.referees", value: 4 },
-];
+  { key: "1", langKey: "gameOptionsNo", value: 1 },
+  { key: "3", langKey: "gameOptionsAllObservers", value: 3 },
+  { key: "2", langKey: "gameOptionsAfterDefeat", value: 2 },
+  { key: "4", langKey: "gameOptionsJudges", value: 4 }
+] as OptionWithLanguageKey[];
 
 export const MAP_FLAG_TEAMS_TOGETHER = 1;
 export const MAP_FLAG_FIXED_TEAMS = 2;
@@ -39,14 +49,14 @@ export const GameOptions: React.FC<GameOptionsProps> = memo(
     return (
       <>
         <Form.Checkbox
-          label={lang.needPassword}
+          label={lang.gameOptionsPassword}
           checked={options.privateGame}
           onChange={() => {
             onOptionsChange({ ...options, privateGame: !options.privateGame });
           }}
         />
         <Form.Input
-          label={lang.page_game_options_configName}
+          label={lang.gameOptionsConfigNameLabel}
           value={options.configName}
           onChange={(_, data) => {
             onOptionsChange({ ...options, configName: data.value as string });
@@ -54,53 +64,53 @@ export const GameOptions: React.FC<GameOptionsProps> = memo(
         />
         <Divider />
         <Form.Checkbox
-          label={lang.teamsTogether}
+          label={lang.gameOptionsTeamsTogether}
           checked={
             (options.mask & MAP_FLAG_TEAMS_TOGETHER) === MAP_FLAG_TEAMS_TOGETHER
           }
           onChange={() =>
             onOptionsChange({
               ...options,
-              mask: invertSelectedBits(options.mask, MAP_FLAG_TEAMS_TOGETHER),
+              mask: invertSelectedBits(options.mask, MAP_FLAG_TEAMS_TOGETHER)
             })
           }
         />
         <Form.Checkbox
-          label={lang.fixedTeams}
+          label={lang.gameOptionsLockTeams}
           checked={
             (options.mask & MAP_FLAG_FIXED_TEAMS) === MAP_FLAG_FIXED_TEAMS
           }
           onChange={() =>
             onOptionsChange({
               ...options,
-              mask: invertSelectedBits(options.mask, MAP_FLAG_FIXED_TEAMS),
+              mask: invertSelectedBits(options.mask, MAP_FLAG_FIXED_TEAMS)
             })
           }
         />
         <Form.Checkbox
-          label={lang.unitShare}
+          label={lang.gameOptionsFullSharedUnitControl}
           checked={(options.mask & MAP_FLAG_UNIT_SHARE) === MAP_FLAG_UNIT_SHARE}
           onChange={() =>
             onOptionsChange({
               ...options,
-              mask: invertSelectedBits(options.mask, MAP_FLAG_UNIT_SHARE),
+              mask: invertSelectedBits(options.mask, MAP_FLAG_UNIT_SHARE)
             })
           }
         />
         <Form.Checkbox
-          label={lang.randomRaces}
+          label={lang.gameOptionsRandomRaces}
           checked={
             (options.mask & MAP_FLAG_RANDOM_RACES) === MAP_FLAG_RANDOM_RACES
           }
           onChange={() =>
             onOptionsChange({
               ...options,
-              mask: invertSelectedBits(options.mask, MAP_FLAG_RANDOM_RACES),
+              mask: invertSelectedBits(options.mask, MAP_FLAG_RANDOM_RACES)
             })
           }
         />
         <Form.Checkbox
-          label={lang.randomHero}
+          label={lang.gameOptionsRandomHeros}
           name="mapFlagRandomHero"
           checked={
             (options.mask & MAP_FLAG_RANDOM_HERO) === MAP_FLAG_RANDOM_HERO
@@ -108,36 +118,36 @@ export const GameOptions: React.FC<GameOptionsProps> = memo(
           onChange={() =>
             onOptionsChange({
               ...options,
-              mask: invertSelectedBits(options.mask, MAP_FLAG_RANDOM_HERO),
+              mask: invertSelectedBits(options.mask, MAP_FLAG_RANDOM_HERO)
             })
           }
         />
         <Form.Select
           fluid
           name="spectators"
-          label={lang.page_game_options_mapObservers}
+          label={lang.gameOptionsObserversLabel}
           onChange={(_, data) =>
             onOptionsChange({
               ...options,
-              mapObservers: data.value as number,
+              mapObservers: data.value as number
             })
           }
           options={observersOptions.map((i) => {
-            return { ...i, text: t(i.text) };
+            return { ...i, text: lang[i.langKey] };
           })}
           value={options.mapObservers}
         />
         <Form.Select
           fluid
           name="visibility"
-          label={lang.page_game_options_map}
+          label={lang.gameOptionsMapVisibilityLabel}
           options={visibilityOptions.map((i) => {
-            return { ...i, text: t(i.text) };
+            return { ...i, text: lang[i.langKey] };
           })}
           onChange={(_, data) =>
             onOptionsChange({
               ...options,
-              mapVisibility: data.value as number,
+              mapVisibility: data.value as number
             })
           }
           value={options.mapVisibility}
@@ -145,14 +155,14 @@ export const GameOptions: React.FC<GameOptionsProps> = memo(
         <Form.Select
           fluid
           name="speed"
-          label={lang.speed}
+          label={lang.gameOptionsSpeedLabel}
           options={speedOptions.map((i) => {
-            return { ...i, text: t(i.text) };
+            return { ...i, text: lang[i.langKey] };
           })}
           onChange={(_, data) =>
             onOptionsChange({
               ...options,
-              mapSpeed: data.value as number,
+              mapSpeed: data.value as number
             })
           }
           value={options.mapSpeed}

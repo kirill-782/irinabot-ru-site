@@ -22,7 +22,7 @@ export const UserChat: React.FC<UserChatProps> = ({ user, sendMessage }) => {
   };
 
   const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+  const lang = language.languageRepository;
 
   return (
     <Comment.Group>
@@ -30,7 +30,7 @@ export const UserChat: React.FC<UserChatProps> = ({ user, sendMessage }) => {
         <Comment key={index}>
           <Comment.Content>
             <Comment.Author as="a">
-              {message.isIncoming ? user.name : t("chat.you")}
+              {message.isIncoming ? user.name : lang.you }
             </Comment.Author>
             <Comment.Metadata>
               <div>{message.date}</div>
@@ -48,7 +48,7 @@ export const UserChat: React.FC<UserChatProps> = ({ user, sendMessage }) => {
           value={message}
         />
         <Button
-          content={t("chat.send")}
+          content={ lang.send }
           labelPosition="left"
           icon="edit"
           primary

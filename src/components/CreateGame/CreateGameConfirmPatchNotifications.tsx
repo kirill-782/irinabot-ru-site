@@ -20,16 +20,15 @@ function CreateGameConfirmPatchNotifications({
       {!Number.isInteger(selectedPatch?.status) &&
         !apiToken.hasAuthority("DEFAULT_CONFIG_PARSE") && (
           <Message error>
-            {lang.errorConfigParseRules}
+            {lang.createGameConfirmPatchNotificationsAccessDenied}
           </Message>
         )}
       {(selectedPatch?.status === 0 || selectedPatch?.status === 2) && (
         <Message info>
           {selectedPatch?.status === 0
-            ? lang.configuring
-            : t(
-                "page.game.create.confirm.pathNotification.incompatibleVersion"
-              )}
+            ? lang.createGameConfirmPatchNotificationsConfigCreating
+            : lang.createGameConfirmPatchNotificationsIncompletableMap
+          }
         </Message>
       )}
     </>

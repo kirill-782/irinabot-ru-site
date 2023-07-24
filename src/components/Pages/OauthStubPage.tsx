@@ -20,7 +20,7 @@ function OauthStubPage() {
 
   window.close();
 
-  return <span>{lang.introvert}</span>;
+  return <span>{lang.oathStubPageText}</span>;
 }
 
 export default OauthStubPage;

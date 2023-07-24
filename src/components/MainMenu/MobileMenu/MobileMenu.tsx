@@ -3,8 +3,6 @@ import {
   Icon,
   Menu,
   SemanticICONS,
-  Checkbox,
-  CheckboxProps,
   Dropdown,
 } from "semantic-ui-react";
 import LoginDropdown from "../../Header/LoginDropdown";
@@ -12,10 +10,9 @@ import UserDrowdown from "../../Header/UserDropdown";
 import {
   AppRuntimeSettingsContext,
   AuthContext,
-} from "./../../../context/index";
+} from "../../../context";
 import { switchTheme, E_THEME, currentTheme } from "../../../utils/Theme";
 import "./MobileMenu.scss";
-import UploadMap from "../../Header/UploadMap";
 import { NavLink } from "react-router-dom";
 import UtilsDropdown from "../../Header/UtilsDropdown";
 
@@ -44,15 +41,15 @@ const MobileMenu = () => {
           <Dropdown.Menu>
             <Dropdown.Item as={NavLink} to="/gamelist">
               <Icon name="gamepad" />
-              {lang.gameList}
+              {lang.menuActiveGames}
             </Dropdown.Item>
             <Dropdown.Item as={NavLink} to="/maps">
               <Icon name="file" />
-              {lang.mapList}
+              {lang.menuMapList}
             </Dropdown.Item>
             <Dropdown.Item as={NavLink} to="/autopay">
               <Icon name="ruble sign" />
-              {lang.productsPageTitle}
+              {lang.menuAutoPay}
             </Dropdown.Item>
             <Dropdown.Item
               as="a"
@@ -62,7 +59,7 @@ const MobileMenu = () => {
               }}
             >
               <Icon name="help" />
-              {lang.help}
+              {lang.menuHelp}
             </Dropdown.Item>
             <Dropdown.Item
               onClick={() => {
@@ -72,7 +69,7 @@ const MobileMenu = () => {
               }}
             >
               <Icon name={currentTheme === E_THEME.DARK ? "sun" : "moon"} />{" "}
-              {lang.changeTheme}
+              {lang.menuThemeChange}
             </Dropdown.Item>
             <UtilsDropdown />
           </Dropdown.Menu>

@@ -83,14 +83,14 @@ function FlagsEditBlock({
                 onChange={(_, data) => {
                   setCanDownload(!!data.checked);
                 }}
-                label={lang.canDownload}
+                label={lang.flagsEditBlockCanDownload}
               />
               <Form.Checkbox
                 checked={mapLocked}
                 onChange={(_, data) => {
                   setMapLocked(!!data.checked);
                 }}
-                label={lang.mapLock}
+                label={lang.flagsEditBlockMapLocked}
               />
             </Form>
           </Grid.Column>
@@ -104,7 +104,7 @@ function FlagsEditBlock({
                 onChange={(_, data) => {
                   setImagesAvailable(!!data.checked);
                 }}
-                label={lang.imagesAvailable}
+                label={lang.flagsEditBlockImagesAvailable}
               />
             )}
             <Form.Checkbox
@@ -113,7 +113,7 @@ function FlagsEditBlock({
                 setMapVerified(!!data.checked);
               }}
               disabled={!apiToken.hasAuthority("MAP_VERIFY")}
-              label={lang.page_map_edit_flagsBlock_isVerified}
+              label={lang.flagsEditBlockMapVerified}
             />
           </Form>
         </Grid.Column>
@@ -122,10 +122,10 @@ function FlagsEditBlock({
         <Form>
           <Form.Group widths="equal">
             <Form.Dropdown
-              label={lang.categories}
+              label={lang.flagsEditBlockCategories}
               fluid
               multiple
-              placeholder={lang.page_map_edit_flagsBlock_phcategory}
+              placeholder={lang.flagsEditBlockCategoriesPlaceholder}
               selection
               options={dropdownOptions}
               loading={cacheContext.cachedCategories.length === 0}
@@ -141,7 +141,7 @@ function FlagsEditBlock({
               }}
               disabled={!apiToken.hasAuthority("MAP_VERIFY") || !mapVerified}
               fluid
-              label={lang.tag}
+              label={lang.flagsEditBlockMapTagLabel}
             />
           </Form.Group>
         </Form>
