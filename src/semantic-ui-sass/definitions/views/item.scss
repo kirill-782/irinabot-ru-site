@@ -27,21 +27,21 @@ $element: "item";
 ---------------*/
 
 .ui.items > .item {
-  display: $display;
-  margin: $itemSpacing 0em;
-  width: $width;
-  min-height: $minHeight;
-  background: $background;
-  padding: $padding;
+    display: $display;
+    margin: $itemSpacing 0em;
+    width: $width;
+    min-height: $minHeight;
+    background: $background;
+    padding: $padding;
 
-  border: $border;
-  border-radius: $borderRadius;
-  box-shadow: $boxShadow;
-  transition: $transition;
-  z-index: $zIndex;
+    border: $border;
+    border-radius: $borderRadius;
+    box-shadow: $boxShadow;
+    transition: $transition;
+    z-index: $zIndex;
 }
 .ui.items > .item a {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 /*--------------
@@ -49,14 +49,14 @@ $element: "item";
 ---------------*/
 
 .ui.items {
-  margin: $groupMargin;
+    margin: $groupMargin;
 }
 
 .ui.items:first-child {
-  margin-top: 0em !important;
+    margin-top: 0em !important;
 }
 .ui.items:last-child {
-  margin-bottom: 0em !important;
+    margin-bottom: 0em !important;
 }
 
 /*--------------
@@ -64,18 +64,18 @@ $element: "item";
 ---------------*/
 
 .ui.items > .item:after {
-  display: block;
-  content: " ";
-  height: 0px;
-  clear: both;
-  overflow: hidden;
-  visibility: hidden;
+    display: block;
+    content: " ";
+    height: 0px;
+    clear: both;
+    overflow: hidden;
+    visibility: hidden;
 }
 .ui.items > .item:first-child {
-  margin-top: 0em;
+    margin-top: 0em;
 }
 .ui.items > .item:last-child {
-  margin-bottom: 0em;
+    margin-bottom: 0em;
 }
 
 /*--------------
@@ -83,25 +83,25 @@ $element: "item";
 ---------------*/
 
 .ui.items > .item > .image {
-  position: relative;
-  flex: 0 0 auto;
-  display: $imageDisplay;
-  float: $imageFloat;
-  margin: $imageMargin;
-  padding: $imagePadding;
-  max-height: $imageMaxHeight;
-  align-self: $imageVerticalAlign;
+    position: relative;
+    flex: 0 0 auto;
+    display: $imageDisplay;
+    float: $imageFloat;
+    margin: $imageMargin;
+    padding: $imagePadding;
+    max-height: $imageMaxHeight;
+    align-self: $imageVerticalAlign;
 }
 .ui.items > .item > .image > img {
-  display: block;
-  width: 100%;
-  height: auto;
-  border-radius: $imageBorderRadius;
-  border: $imageBorder;
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: $imageBorderRadius;
+    border: $imageBorder;
 }
 
 .ui.items > .item > .image:only-child > img {
-  border-radius: $borderRadius;
+    border-radius: $borderRadius;
 }
 
 /*--------------
@@ -109,44 +109,44 @@ $element: "item";
 ---------------*/
 
 .ui.items > .item > .content {
-  display: block;
-  flex: 1 1 auto;
-  background: $contentBackground;
-  margin: $contentMargin;
-  padding: $contentPadding;
-  box-shadow: $contentBoxShadow;
-  font-size: $contentFontSize;
-  border: $contentBorder;
-  border-radius: $contentBorderRadius;
+    display: block;
+    flex: 1 1 auto;
+    background: $contentBackground;
+    margin: $contentMargin;
+    padding: $contentPadding;
+    box-shadow: $contentBoxShadow;
+    font-size: $contentFontSize;
+    border: $contentBorder;
+    border-radius: $contentBorderRadius;
 }
 .ui.items > .item > .content:after {
-  display: block;
-  content: " ";
-  height: 0px;
-  clear: both;
-  overflow: hidden;
-  visibility: hidden;
+    display: block;
+    content: " ";
+    height: 0px;
+    clear: both;
+    overflow: hidden;
+    visibility: hidden;
 }
 
 .ui.items > .item > .image + .content {
-  min-width: 0;
-  width: $contentWidth;
-  display: $contentDisplay;
-  margin-left: $contentOffset;
-  align-self: $contentVerticalAlign;
-  padding-left: $contentImageDistance;
+    min-width: 0;
+    width: $contentWidth;
+    display: $contentDisplay;
+    margin-left: $contentOffset;
+    align-self: $contentVerticalAlign;
+    padding-left: $contentImageDistance;
 }
 
 .ui.items > .item > .content > .header {
-  display: inline-block;
-  margin: $headerMargin;
-  font-family: $headerFont;
-  font-weight: $headerFontWeight;
-  color: $headerColor;
+    display: inline-block;
+    margin: $headerMargin;
+    font-family: $headerFont;
+    font-weight: $headerFontWeight;
+    color: $headerColor;
 }
 /* Default Header Size */
 .ui.items > .item > .content > .header:not(.ui) {
-  font-size: $headerFontSize;
+    font-size: $headerFontSize;
 }
 
 /*--------------
@@ -154,10 +154,10 @@ $element: "item";
 ---------------*/
 
 .ui.items > .item [class*="left floated"] {
-  float: left;
+    float: left;
 }
 .ui.items > .item [class*="right floated"] {
-  float: right;
+    float: right;
 }
 
 /*--------------
@@ -165,14 +165,14 @@ $element: "item";
 ---------------*/
 
 .ui.items > .item .content img {
-  align-self: $contentImageVerticalAlign;
-  width: $contentImageWidth;
+    align-self: $contentImageVerticalAlign;
+    width: $contentImageWidth;
 }
 .ui.items > .item img.avatar,
 .ui.items > .item .avatar img {
-  width: $avatarSize;
-  height: $avatarSize;
-  border-radius: $avatarBorderRadius;
+    width: $avatarSize;
+    height: $avatarSize;
+    border-radius: $avatarBorderRadius;
 }
 
 /*--------------
@@ -180,11 +180,11 @@ $element: "item";
 ---------------*/
 
 .ui.items > .item > .content > .description {
-  margin-top: $descriptionDistance;
-  max-width: $descriptionMaxWidth;
-  font-size: $descriptionFontSize;
-  line-height: $descriptionLineHeight;
-  color: $descriptionColor;
+    margin-top: $descriptionDistance;
+    max-width: $descriptionMaxWidth;
+    font-size: $descriptionFontSize;
+    line-height: $descriptionLineHeight;
+    color: $descriptionColor;
 }
 
 /*--------------
@@ -192,10 +192,10 @@ $element: "item";
 ---------------*/
 
 .ui.items > .item > .content p {
-  margin: 0em 0em $paragraphDistance;
+    margin: 0em 0em $paragraphDistance;
 }
 .ui.items > .item > .content p:last-child {
-  margin-bottom: 0em;
+    margin-bottom: 0em;
 }
 
 /*--------------
@@ -203,21 +203,21 @@ $element: "item";
 ---------------*/
 
 .ui.items > .item .meta {
-  margin: $metaMargin;
-  font-size: $metaFontSize;
-  line-height: $metaLineHeight;
-  color: $metaColor;
+    margin: $metaMargin;
+    font-size: $metaFontSize;
+    line-height: $metaLineHeight;
+    color: $metaColor;
 }
 .ui.items > .item .meta * {
-  margin-right: $metaSpacing;
+    margin-right: $metaSpacing;
 }
 .ui.items > .item .meta :last-child {
-  margin-right: 0em;
+    margin-right: 0em;
 }
 
 .ui.items > .item .meta [class*="right floated"] {
-  margin-right: 0em;
-  margin-left: $metaSpacing;
+    margin-right: 0em;
+    margin-left: $metaSpacing;
 }
 
 /*--------------
@@ -226,27 +226,27 @@ $element: "item";
 
 /* Generic */
 .ui.items > .item > .content a:not(.ui) {
-  color: $contentLinkColor;
-  transition: $contentLinkTransition;
+    color: $contentLinkColor;
+    transition: $contentLinkTransition;
 }
 .ui.items > .item > .content a:not(.ui):hover {
-  color: $contentLinkHoverColor;
+    color: $contentLinkHoverColor;
 }
 
 /* Header */
 .ui.items > .item > .content > a.header {
-  color: $headerLinkColor;
+    color: $headerLinkColor;
 }
 .ui.items > .item > .content > a.header:hover {
-  color: $headerLinkHoverColor;
+    color: $headerLinkHoverColor;
 }
 
 /* Meta */
 .ui.items > .item .meta > a:not(.ui) {
-  color: $metaLinkColor;
+    color: $metaLinkColor;
 }
 .ui.items > .item .meta > a:not(.ui):hover {
-  color: $metaLinkHoverColor;
+    color: $metaLinkHoverColor;
 }
 
 /*--------------
@@ -257,32 +257,32 @@ $element: "item";
 
 /* Icon */
 .ui.items > .item > .content .favorite.icon {
-  cursor: pointer;
-  opacity: $actionOpacity;
-  transition: $actionTransition;
+    cursor: pointer;
+    opacity: $actionOpacity;
+    transition: $actionTransition;
 }
 .ui.items > .item > .content .favorite.icon:hover {
-  opacity: $actionHoverOpacity;
-  color: $favoriteColor;
+    opacity: $actionHoverOpacity;
+    color: $favoriteColor;
 }
 .ui.items > .item > .content .active.favorite.icon {
-  color: $favoriteActiveColor;
+    color: $favoriteActiveColor;
 }
 
 /*-----Like----- */
 
 /* Icon */
 .ui.items > .item > .content .like.icon {
-  cursor: pointer;
-  opacity: $actionOpacity;
-  transition: $actionTransition;
+    cursor: pointer;
+    opacity: $actionOpacity;
+    transition: $actionTransition;
 }
 .ui.items > .item > .content .like.icon:hover {
-  opacity: $actionHoverOpacity;
-  color: $likeColor;
+    opacity: $actionHoverOpacity;
+    color: $likeColor;
 }
 .ui.items > .item > .content .active.like.icon {
-  color: $likeActiveColor;
+    color: $likeActiveColor;
 }
 
 /*----------------
@@ -290,35 +290,33 @@ $element: "item";
 -----------------*/
 
 .ui.items > .item .extra {
-  display: $extraDisplay;
-  position: $extraPosition;
-  background: $extraBackground;
-  margin: $extraMargin;
-  width: $extraWidth;
-  padding: $extraPadding;
-  top: $extraTop;
-  left: $extraLeft;
-  color: $extraColor;
-  box-shadow: $extraBoxShadow;
-  transition: $extraTransition;
-  border-top: $extraDivider;
+    display: $extraDisplay;
+    position: $extraPosition;
+    background: $extraBackground;
+    margin: $extraMargin;
+    width: $extraWidth;
+    padding: $extraPadding;
+    top: $extraTop;
+    left: $extraLeft;
+    color: $extraColor;
+    box-shadow: $extraBoxShadow;
+    transition: $extraTransition;
+    border-top: $extraDivider;
 }
 .ui.items > .item .extra > * {
-  margin: math.div($extraRowSpacing, 2) $extraHorizontalSpacing
-    math.div($extraRowSpacing, 2) 0em;
+    margin: math.div($extraRowSpacing, 2) $extraHorizontalSpacing math.div($extraRowSpacing, 2) 0em;
 }
 .ui.items > .item .extra > [class*="right floated"] {
-  margin: math.div($extraRowSpacing, 2) 0em math.div($extraRowSpacing, 2)
-    $extraHorizontalSpacing;
+    margin: math.div($extraRowSpacing, 2) 0em math.div($extraRowSpacing, 2) $extraHorizontalSpacing;
 }
 
 .ui.items > .item .extra:after {
-  display: block;
-  content: " ";
-  height: 0px;
-  clear: both;
-  overflow: hidden;
-  visibility: hidden;
+    display: block;
+    content: " ";
+    height: 0px;
+    clear: both;
+    overflow: hidden;
+    visibility: hidden;
 }
 
 /*******************************
@@ -327,44 +325,44 @@ $element: "item";
 
 /* Default Image Width */
 .ui.items > .item > .image:not(.ui) {
-  width: $imageWidth;
+    width: $imageWidth;
 }
 
 /* Tablet Only */
 @media only screen and (min-width: $tabletBreakpoint) and (max-width: $largestTabletScreen) {
-  .ui.items > .item {
-    margin: $tabletItemSpacing 0em;
-  }
-  .ui.items > .item > .image:not(.ui) {
-    width: $tabletImageWidth;
-  }
-  .ui.items > .item > .image + .content {
-    display: block;
-    padding: 0em 0em 0em $tabletContentImageDistance;
-  }
+    .ui.items > .item {
+        margin: $tabletItemSpacing 0em;
+    }
+    .ui.items > .item > .image:not(.ui) {
+        width: $tabletImageWidth;
+    }
+    .ui.items > .item > .image + .content {
+        display: block;
+        padding: 0em 0em 0em $tabletContentImageDistance;
+    }
 }
 
 /* Mobile Only */
 @media only screen and (max-width: $largestMobileScreen) {
-  .ui.items:not(.unstackable) > .item {
-    flex-direction: column;
-    margin: $mobileItemSpacing 0em;
-  }
-  .ui.items:not(.unstackable) > .item > .image {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .ui.items:not(.unstackable) > .item > .image,
-  .ui.items:not(.unstackable) > .item > .image > img {
-    max-width: 100% !important;
-    width: $mobileImageWidth !important;
-    max-height: $mobileImageMaxHeight !important;
-  }
-  .ui.items:not(.unstackable) > .item > .image + .content {
-    display: block;
-    padding: $mobileContentImageDistance 0em 0em;
-  }
+    .ui.items:not(.unstackable) > .item {
+        flex-direction: column;
+        margin: $mobileItemSpacing 0em;
+    }
+    .ui.items:not(.unstackable) > .item > .image {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .ui.items:not(.unstackable) > .item > .image,
+    .ui.items:not(.unstackable) > .item > .image > img {
+        max-width: 100% !important;
+        width: $mobileImageWidth !important;
+        max-height: $mobileImageMaxHeight !important;
+    }
+    .ui.items:not(.unstackable) > .item > .image + .content {
+        display: block;
+        padding: $mobileContentImageDistance 0em 0em;
+    }
 }
 
 /*******************************
@@ -376,13 +374,13 @@ $element: "item";
 --------------------*/
 
 .ui.items > .item > .image + [class*="top aligned"].content {
-  align-self: flex-start;
+    align-self: flex-start;
 }
 .ui.items > .item > .image + [class*="middle aligned"].content {
-  align-self: center;
+    align-self: center;
 }
 .ui.items > .item > .image + [class*="bottom aligned"].content {
-  align-self: flex-end;
+    align-self: flex-end;
 }
 
 /*--------------
@@ -390,10 +388,10 @@ $element: "item";
 ---------------*/
 
 .ui.relaxed.items > .item {
-  margin: $relaxedItemSpacing 0em;
+    margin: $relaxedItemSpacing 0em;
 }
 .ui[class*="very relaxed"].items > .item {
-  margin: $veryRelaxedItemSpacing 0em;
+    margin: $veryRelaxedItemSpacing 0em;
 }
 
 /*-------------------
@@ -401,28 +399,28 @@ $element: "item";
 --------------------*/
 
 .ui.divided.items > .item {
-  border-top: $dividedBorder;
-  margin: $dividedMargin;
-  padding: $dividedPadding;
+    border-top: $dividedBorder;
+    margin: $dividedMargin;
+    padding: $dividedPadding;
 }
 .ui.divided.items > .item:first-child {
-  border-top: none;
-  margin-top: $dividedFirstLastMargin !important;
-  padding-top: $dividedFirstLastPadding !important;
+    border-top: none;
+    margin-top: $dividedFirstLastMargin !important;
+    padding-top: $dividedFirstLastPadding !important;
 }
 .ui.divided.items > .item:last-child {
-  margin-bottom: $dividedFirstLastMargin !important;
-  padding-bottom: $dividedFirstLastPadding !important;
+    margin-bottom: $dividedFirstLastMargin !important;
+    padding-bottom: $dividedFirstLastPadding !important;
 }
 
 /* Relaxed Divided */
 .ui.relaxed.divided.items > .item {
-  margin: 0em;
-  padding: $relaxedItemSpacing 0em;
+    margin: 0em;
+    padding: $relaxedItemSpacing 0em;
 }
 .ui[class*="very relaxed"].divided.items > .item {
-  margin: 0em;
-  padding: $veryRelaxedItemSpacing 0em;
+    margin: 0em;
+    padding: $veryRelaxedItemSpacing 0em;
 }
 
 /*-------------------
@@ -431,12 +429,12 @@ $element: "item";
 
 .ui.items a.item:hover,
 .ui.link.items > .item:hover {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .ui.items a.item:hover .content .header,
 .ui.link.items > .item:hover .content .header {
-  color: $headerLinkHoverColor;
+    color: $headerLinkHoverColor;
 }
 
 /*--------------
@@ -444,7 +442,7 @@ $element: "item";
 ---------------*/
 
 .ui.items > .item {
-  font-size: $relativeMedium;
+    font-size: $relativeMedium;
 }
 
 /*---------------
@@ -452,8 +450,8 @@ $element: "item";
 ----------------*/
 
 @media only screen and (max-width: $largestMobileScreen) {
-  .ui.unstackable.items > .item > .image,
-  .ui.unstackable.items > .item > .image > img {
-    width: $unstackableMobileImageWidth !important;
-  }
+    .ui.unstackable.items > .item > .image,
+    .ui.unstackable.items > .item > .image > img {
+        width: $unstackableMobileImageWidth !important;
+    }
 }

@@ -9,17 +9,12 @@ $promptVerticalPadding: $inputVerticalPadding;
 $promptHorizontalPadding: $inputHorizontalPadding;
 $promptLineHeight: $inputLineHeight;
 $promptFontSize: $relativeMedium;
-$promptPadding: (
-    $promptVerticalPadding + math.div((1em - $promptLineHeight), 2)
-  )
-  $promptHorizontalPadding;
+$promptPadding: ($promptVerticalPadding + math.div((1em - $promptLineHeight), 2)) $promptHorizontalPadding;
 $promptBorder: 1px solid $borderColor;
 $promptBorderRadius: $circularRadius;
 $promptColor: $textColor;
-$promptTransition: background-color $defaultDuration $defaultEasing,
-  color $defaultDuration $defaultEasing,
-  box-shadow $defaultDuration $defaultEasing,
-  border-color $defaultDuration $defaultEasing;
+$promptTransition: background-color $defaultDuration $defaultEasing, color $defaultDuration $defaultEasing,
+    box-shadow $defaultDuration $defaultEasing, border-color $defaultDuration $defaultEasing;
 $promptBoxShadow: 0em 0em 0em 0em transparent inset;
 
 /* Mobile */
@@ -121,8 +116,7 @@ $resultsZIndex: 998;
 $selectionPromptBorderRadius: $defaultBorderRadius;
 
 $selectionCloseTop: 0em;
-$selectionCloseTransition: color $defaultDuration $defaultEasing,
-  opacity $defaultDuration $defaultEasing;
+$selectionCloseTransition: color $defaultDuration $defaultEasing, opacity $defaultDuration $defaultEasing;
 $selectionCloseRight: 0em;
 $selectionCloseIconOpacity: 0.8;
 $selectionCloseIconColor: "";
@@ -135,8 +129,7 @@ $selectionCloseIconInputRight: 1.85714em;
 $categoryBackground: $darkWhite;
 $categoryBoxShadow: none;
 $categoryDivider: 1px solid $internalBorderColor;
-$categoryTransition: background $defaultDuration $defaultEasing,
-  border-color $defaultDuration $defaultEasing;
+$categoryTransition: background $defaultDuration $defaultEasing, border-color $defaultDuration $defaultEasing;
 
 $categoryResultsWidth: 28em;
 

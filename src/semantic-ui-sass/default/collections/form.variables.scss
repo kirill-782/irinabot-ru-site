@@ -32,13 +32,11 @@ $labelColor: $textColor;
 $inputFont: $pageFont;
 $inputWidth: 100%;
 $inputFontSize: 1em;
-$inputPadding: ($inputVerticalPadding + math.div((1em - $inputLineHeight), 2))
-  $inputHorizontalPadding;
+$inputPadding: ($inputVerticalPadding + math.div((1em - $inputLineHeight), 2)) $inputHorizontalPadding;
 $inputBorder: 1px solid $borderColor;
 $inputBorderRadius: $absoluteBorderRadius;
 $inputColor: $textColor;
-$inputTransition: color $defaultDuration $defaultEasing,
-  border-color $defaultDuration $defaultEasing;
+$inputTransition: color $defaultDuration $defaultEasing, border-color $defaultDuration $defaultEasing;
 $inputBoxShadow: 0em 0em 0em 0em transparent inset;
 
 /* Select */
@@ -91,8 +89,7 @@ $inputFocusPointerSize: 0px;
 $inputFocusBackground: $inputBackground;
 $inputFocusBorderColor: $focusedFormBorderColor;
 $inputFocusColor: $selectedTextColor;
-$inputFocusBoxShadow: $inputFocusPointerSize 0em 0em 0em $selectedBorderColor
-  inset;
+$inputFocusBoxShadow: $inputFocusPointerSize 0em 0em 0em $selectedBorderColor inset;
 $inputFocusBorderRadius: $inputBorderRadius;
 
 /* Text Area Focus */

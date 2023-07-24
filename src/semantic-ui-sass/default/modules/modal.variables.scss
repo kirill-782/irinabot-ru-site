@@ -8,8 +8,7 @@ $border: none;
 $zIndex: 1001;
 $borderRadius: $defaultBorderRadius;
 $transformOrigin: 50% 25%;
-$boxShadow: 1px 3px 3px 0px rgba(0, 0, 0, 0.2),
-  1px 3px 15px 2px rgba(0, 0, 0, 0.2);
+$boxShadow: 1px 3px 3px 0px rgba(0, 0, 0, 0.2), 1px 3px 15px 2px rgba(0, 0, 0, 0.2);
 
 /* Close Icon */
 $closeOpacity: 0.8;
@@ -61,9 +60,7 @@ $actionAlign: right;
 $buttonDistance: 0.75em;
 
 /* Inner Close Position (Tablet/Mobile) */
-$innerCloseTop: (
-  $headerVerticalPadding - $closeHitBoxOffset + ($lineHeight - 1em)
-);
+$innerCloseTop: ($headerVerticalPadding - $closeHitBoxOffset + ($lineHeight - 1em));
 $innerCloseRight: 1rem;
 $innerCloseColor: $textColor;
 

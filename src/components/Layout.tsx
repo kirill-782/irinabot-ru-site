@@ -6,20 +6,20 @@ import Header from "./Header";
 import LoadingPage from "./Pages/LoadingPage";
 
 function Layout() {
-  return (
-    <>
-      <Header></Header>
+    return (
+        <>
+            <Header></Header>
 
-      <SemanticToastContainer animation="fade" position="top-right" />
-      <Suspense fallback={<LoadingPage />}>
-        <div style={{ marginTop: 70, paddingBottom: 75 }}>
-          <Outlet />
-        </div>
-      </Suspense>
+            <SemanticToastContainer animation="fade" position="top-right" />
+            <Suspense fallback={<LoadingPage />}>
+                <div style={{ marginTop: 70, paddingBottom: 75 }}>
+                    <Outlet />
+                </div>
+            </Suspense>
 
-      <Footer></Footer>
-    </>
-  );
+            <Footer></Footer>
+        </>
+    );
 }
 
 export default Layout;

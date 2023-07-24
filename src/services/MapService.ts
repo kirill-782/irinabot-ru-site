@@ -9,442 +9,406 @@ import { ConfigInfo } from "../models/rest/ConfigInfo";
 import { Config } from "../models/rest/Config";
 
 export interface PageOptions {
-  count?: number;
-  offset?: number;
+    count?: number;
+    offset?: number;
 }
 
 export interface RequestOptions {
-  onUploadProgress?: (progressEvent: any) => void;
-  onDownloadProgress?: (progressEvent: any) => void;
-  signal?: AbortSignal;
+    onUploadProgress?: (progressEvent: any) => void;
+    onDownloadProgress?: (progressEvent: any) => void;
+    signal?: AbortSignal;
 }
 
 export class MapService {
-  public defaultConfig: AxiosRequestConfig;
+    public defaultConfig: AxiosRequestConfig;
 
-  constructor(defaultConfig?: AxiosRequestConfig) {
-    this.defaultConfig = defaultConfig || {};
-  }
+    constructor(defaultConfig?: AxiosRequestConfig) {
+        this.defaultConfig = defaultConfig || {};
+    }
 
-  public uploadMap = async (
-    params: UploadMapParametres,
-    options?: RequestOptions
-  ) => {
-    let request: AxiosRequestConfig<FormData> = {
-      ...this.defaultConfig,
-      url: "/v1/maps",
-      method: "POST",
-      validateStatus: (status) => {
-        return status === 200 || status === 201;
-      },
+    public uploadMap = async (params: UploadMapParametres, options?: RequestOptions) => {
+        let request: AxiosRequestConfig<FormData> = {
+            ...this.defaultConfig,
+            url: "/v1/maps",
+            method: "POST",
+            validateStatus: (status) => {
+                return status === 200 || status === 201;
+            },
+        };
+
+        request = this.appendOptions(request, options);
+
+        // Append parametres
+
+        const body = new FormData();
+
+        body.append("map", params.map);
+        body.append(
+            "additionalFlags",
+            new Blob([JSON.stringify(params.additionalFlags)], {
+                type: "application/json",
+            })
+        );
+        body.append("flags", new Blob([JSON.stringify(params.flags)], { type: "application/json" }));
+
+        request.data = body;
+        const response = await Axios.request<Map>(request);
+
+        return response.data;
     };
 
-    request = this.appendOptions(request, options);
+    public getCategories = async (params?: undefined, options?: RequestOptions) => {
+        let request: AxiosRequestConfig<FormData> = {
+            ...this.defaultConfig,
+            url: "/v1/maps/categories",
+            method: "GET",
+        };
 
-    // Append parametres
+        request = this.appendOptions(request, options);
 
-    const body = new FormData();
+        const response = await Axios.request<Category[]>(request);
 
-    body.append("map", params.map);
-    body.append(
-      "additionalFlags",
-      new Blob([JSON.stringify(params.additionalFlags)], {
-        type: "application/json",
-      })
-    );
-    body.append(
-      "flags",
-      new Blob([JSON.stringify(params.flags)], { type: "application/json" })
-    );
-
-    request.data = body;
-    const response = await Axios.request<Map>(request);
-
-    return response.data;
-  };
-
-  public getCategories = async (
-    params?: undefined,
-    options?: RequestOptions
-  ) => {
-    let request: AxiosRequestConfig<FormData> = {
-      ...this.defaultConfig,
-      url: "/v1/maps/categories",
-      method: "GET",
+        return response.data;
     };
 
-    request = this.appendOptions(request, options);
+    public getMaps = async (options?: RequestOptions) => {
+        const request: AxiosRequestConfig<FormData> = {
+            ...this.defaultConfig,
+            url: "/v1/maps",
+            method: "GET",
+            params: {
+                count: 50,
+                offset: 0,
+            },
+        };
 
-    const response = await Axios.request<Category[]>(request);
+        const response = await Axios.request<Map[]>(request);
 
-    return response.data;
-  };
-
-  public getMaps = async (options?: RequestOptions) => {
-    const request: AxiosRequestConfig<FormData> = {
-      ...this.defaultConfig,
-      url: "/v1/maps",
-      method: "GET",
-      params: {
-        count: 50,
-        offset: 0,
-      },
+        return response.data;
     };
 
-    const response = await Axios.request<Map[]>(request);
+    public getMapInfo = async (mapId: number, options?: RequestOptions) => {
+        let request: AxiosRequestConfig<FormData> = {
+            ...this.defaultConfig,
+            url: `/v1/maps/${mapId}`,
+            method: "GET",
+        };
 
-    return response.data;
-  };
+        request = this.appendOptions(request, options);
 
-  public getMapInfo = async (mapId: number, options?: RequestOptions) => {
-    let request: AxiosRequestConfig<FormData> = {
-      ...this.defaultConfig,
-      url: `/v1/maps/${mapId}`,
-      method: "GET",
+        const response = await Axios.request<Map>(request);
+
+        return response.data;
     };
 
-    request = this.appendOptions(request, options);
+    public getMapConfig = async (mapId: number, patchId: string, options?: RequestOptions) => {
+        let request: AxiosRequestConfig<FormData> = {
+            ...this.defaultConfig,
+            url: `/v1/maps/${mapId}/defaultConfigs/${patchId}`,
+            method: "GET",
+            headers: {
+                ...this.defaultConfig.headers,
+                Accept: `application/jose`,
+            },
+        };
 
-    const response = await Axios.request<Map>(request);
+        request = this.appendOptions(request, options);
 
-    return response.data;
-  };
+        const response = await Axios.request<string>(request);
 
-  public getMapConfig = async (
-    mapId: number,
-    patchId: string,
-    options?: RequestOptions
-  ) => {
-    let request: AxiosRequestConfig<FormData> = {
-      ...this.defaultConfig,
-      url: `/v1/maps/${mapId}/defaultConfigs/${patchId}`,
-      method: "GET",
-      headers: {
-        ...this.defaultConfig.headers,
-        Accept: `application/jose`,
-      },
+        return response.data;
     };
 
-    request = this.appendOptions(request, options);
+    public getDefaultMapConfig = async (mapId: number, patchId: string, options?: RequestOptions) => {
+        let request: AxiosRequestConfig<FormData> = {
+            ...this.defaultConfig,
+            url: `/v1/maps/${mapId}/defaultConfigs/${patchId}`,
+            method: "GET",
+            headers: {
+                Accept: `application/json`,
+            },
+        };
 
-    const response = await Axios.request<string>(request);
+        request = this.appendOptions(request, options);
 
-    return response.data;
-  };
+        const response = await Axios.request<ConfigInfo>(request);
 
-  public getDefaultMapConfig = async (
-    mapId: number,
-    patchId: string,
-    options?: RequestOptions
-  ) => {
-    let request: AxiosRequestConfig<FormData> = {
-      ...this.defaultConfig,
-      url: `/v1/maps/${mapId}/defaultConfigs/${patchId}`,
-      method: "GET",
-      headers: {
-        Accept: `application/json`,
-      },
+        return response.data;
     };
 
-    request = this.appendOptions(request, options);
+    public parseMapConfig = async (mapId: number, patchId: string, options?: RequestOptions) => {
+        let request: AxiosRequestConfig<FormData> = {
+            ...this.defaultConfig,
+            url: "/v1/maps/" + mapId + "/parse",
+            method: "POST",
+        };
 
-    const response = await Axios.request<ConfigInfo>(request);
+        request = this.appendOptions(request, options);
 
-    return response.data;
-  };
+        const body = new FormData();
 
-  public parseMapConfig = async (
-    mapId: number,
-    patchId: string,
-    options?: RequestOptions
-  ) => {
-    let request: AxiosRequestConfig<FormData> = {
-      ...this.defaultConfig,
-      url: "/v1/maps/" + mapId + "/parse",
-      method: "POST",
+        body.set("mapId", String(mapId));
+        body.set("version", patchId);
+
+        request.data = body;
+
+        const response = await Axios.request<ParseMap>(request);
+
+        return response.data;
     };
 
-    request = this.appendOptions(request, options);
+    public addMapToFavorite = async (mapId: number, options?: RequestOptions) => {
+        let request: AxiosRequestConfig<FormData> = {
+            ...this.defaultConfig,
+            url: "/v1/maps/" + mapId + "/favorite",
+            method: "PUT",
+        };
 
-    const body = new FormData();
+        request = this.appendOptions(request, options);
+        const response = await Axios.request<void>(request);
 
-    body.set("mapId", String(mapId));
-    body.set("version", patchId);
-
-    request.data = body;
-
-    const response = await Axios.request<ParseMap>(request);
-
-    return response.data;
-  };
-
-  public addMapToFavorite = async (mapId: number, options?: RequestOptions) => {
-    let request: AxiosRequestConfig<FormData> = {
-      ...this.defaultConfig,
-      url: "/v1/maps/" + mapId + "/favorite",
-      method: "PUT",
+        return response.data;
     };
 
-    request = this.appendOptions(request, options);
-    const response = await Axios.request<void>(request);
+    public deleteMapFromFavorite = async (mapId: number, options?: RequestOptions) => {
+        let request: AxiosRequestConfig<FormData> = {
+            ...this.defaultConfig,
+            url: "/v1/maps/" + mapId + "/favorite",
+            method: "DELETE",
+        };
 
-    return response.data;
-  };
+        request = this.appendOptions(request, options);
+        const response = await Axios.request<void>(request);
 
-  public deleteMapFromFavorite = async (
-    mapId: number,
-    options?: RequestOptions
-  ) => {
-    let request: AxiosRequestConfig<FormData> = {
-      ...this.defaultConfig,
-      url: "/v1/maps/" + mapId + "/favorite",
-      method: "DELETE",
+        return response.data;
     };
 
-    request = this.appendOptions(request, options);
-    const response = await Axios.request<void>(request);
+    public searchMap = async (
+        filters: SearchFilters,
+        order: SearchOrder,
+        mapName?: string,
+        page?: PageOptions,
+        options?: RequestOptions
+    ) => {
+        let request: AxiosRequestConfig<FormData> = {
+            ...this.defaultConfig,
+            url: "/v1/maps/search",
+            method: "GET",
+            params: {
+                q: mapName ? mapName : undefined,
+                ...filters,
+                ...order,
+                ...page,
+            },
+        };
 
-    return response.data;
-  };
+        request = this.appendOptions(request, options);
 
-  public searchMap = async (
-    filters: SearchFilters,
-    order: SearchOrder,
-    mapName?: string,
-    page?: PageOptions,
-    options?: RequestOptions
-  ) => {
-    let request: AxiosRequestConfig<FormData> = {
-      ...this.defaultConfig,
-      url: "/v1/maps/search",
-      method: "GET",
-      params: {
-        q: mapName ? mapName : undefined,
-        ...filters,
-        ...order,
-        ...page,
-      },
+        const response = await Axios.request<Map[]>(request);
+
+        return response.data;
     };
 
-    request = this.appendOptions(request, options);
+    public getConfigInfo = async (configId: number, options?: RequestOptions) => {
+        let request: AxiosRequestConfig = {
+            ...this.defaultConfig,
+            url: `/v1/configs/${configId}`,
+            method: "GET",
+        };
 
-    const response = await Axios.request<Map[]>(request);
+        request = this.appendOptions(request, options);
 
-    return response.data;
-  };
+        const response = await Axios.request<ConfigInfo>(request);
 
-  public getConfigInfo = async (configId: number, options?: RequestOptions) => {
-    let request: AxiosRequestConfig = {
-      ...this.defaultConfig,
-      url: `/v1/configs/${configId}`,
-      method: "GET",
+        return response.data;
     };
 
-    request = this.appendOptions(request, options);
+    public getMapFlags = async (mapId: number, options?: RequestOptions) => {
+        let request: AxiosRequestConfig = {
+            ...this.defaultConfig,
+            url: `/v1/maps/${mapId}/flags`,
+            method: "GET",
+        };
 
-    const response = await Axios.request<ConfigInfo>(request);
+        request = this.appendOptions(request, options);
 
-    return response.data;
-  };
+        const response = await Axios.request<Flags>(request);
 
-  public getMapFlags = async (mapId: number, options?: RequestOptions) => {
-    let request: AxiosRequestConfig = {
-      ...this.defaultConfig,
-      url: `/v1/maps/${mapId}/flags`,
-      method: "GET",
+        return response.data;
     };
 
-    request = this.appendOptions(request, options);
+    public patchMapFlags = async (mapId: number, flags: Flags, options?: RequestOptions) => {
+        let request: AxiosRequestConfig = {
+            ...this.defaultConfig,
+            url: `/v1/maps/${mapId}/flags`,
+            method: "PATCH",
+            headers: {
+                ...this.defaultConfig.headers,
+                "content-type": "application/json",
+            },
+            data: JSON.stringify(flags),
+        };
 
-    const response = await Axios.request<Flags>(request);
+        request = this.appendOptions(request, options);
 
-    return response.data;
-  };
+        const response = await Axios.request<Flags>(request);
 
-  public patchMapFlags = async (
-    mapId: number,
-    flags: Flags,
-    options?: RequestOptions
-  ) => {
-    let request: AxiosRequestConfig = {
-      ...this.defaultConfig,
-      url: `/v1/maps/${mapId}/flags`,
-      method: "PATCH",
-      headers: {
-        ...this.defaultConfig.headers,
-        "content-type": "application/json",
-      },
-      data: JSON.stringify(flags),
+        return response.data;
     };
 
-    request = this.appendOptions(request, options);
+    public patchAdditionalMapFlags = async (
+        mapId: number,
+        flags: { [key: string]: number | string | boolean | null },
+        options?: RequestOptions
+    ) => {
+        let request: AxiosRequestConfig = {
+            ...this.defaultConfig,
+            url: `/v1/maps/${mapId}/additionalFlags`,
+            method: "PATCH",
+            headers: {
+                ...this.defaultConfig.headers,
+                "content-type": "application/json",
+            },
+            data: JSON.stringify(flags),
+        };
 
-    const response = await Axios.request<Flags>(request);
+        request = this.appendOptions(request, options);
 
-    return response.data;
-  };
+        const response = await Axios.request<void>(request);
 
-  public patchAdditionalMapFlags = async (
-    mapId: number,
-    flags: { [key: string]: number | string | boolean | null },
-    options?: RequestOptions
-  ) => {
-    let request: AxiosRequestConfig = {
-      ...this.defaultConfig,
-      url: `/v1/maps/${mapId}/additionalFlags`,
-      method: "PATCH",
-      headers: {
-        ...this.defaultConfig.headers,
-        "content-type": "application/json",
-      },
-      data: JSON.stringify(flags),
+        return response.data;
     };
 
-    request = this.appendOptions(request, options);
+    public getConfigInfoToken = async (configId: number, options?: RequestOptions) => {
+        let request: AxiosRequestConfig = {
+            ...this.defaultConfig,
+            url: `/v1/configs/${configId}`,
+            method: "GET",
+            headers: {
+                ...this.defaultConfig.headers,
+                Accept: `application/jose`,
+            },
+        };
 
-    const response = await Axios.request<void>(request);
+        request = this.appendOptions(request, options);
 
-    return response.data;
-  };
+        const response = await Axios.request<string>(request);
 
-  public getConfigInfoToken = async (
-    configId: number,
-    options?: RequestOptions
-  ) => {
-    let request: AxiosRequestConfig = {
-      ...this.defaultConfig,
-      url: `/v1/configs/${configId}`,
-      method: "GET",
-      headers: {
-        ...this.defaultConfig.headers,
-        Accept: `application/jose`,
-      },
+        return response.data;
     };
 
-    request = this.appendOptions(request, options);
+    public getVersions = async (options?: RequestOptions) => {
+        let request: AxiosRequestConfig<FormData> = {
+            ...this.defaultConfig,
+            url: "/v1/configs/versions",
+            method: "GET",
+        };
 
-    const response = await Axios.request<string>(request);
+        request = this.appendOptions(request, options);
 
-    return response.data;
-  };
+        const response = await Axios.request<string[]>(request);
 
-  public getVersions = async (options?: RequestOptions) => {
-    let request: AxiosRequestConfig<FormData> = {
-      ...this.defaultConfig,
-      url: "/v1/configs/versions",
-      method: "GET",
+        return response.data;
     };
 
-    request = this.appendOptions(request, options);
+    private appendOptions(request: AxiosRequestConfig, options?: RequestOptions) {
+        if (!options) return request;
 
-    const response = await Axios.request<string[]>(request);
+        request.onUploadProgress = options.onUploadProgress;
 
-    return response.data;
-  };
+        request.onDownloadProgress = options.onDownloadProgress;
 
-  private appendOptions(request: AxiosRequestConfig, options?: RequestOptions) {
-    if (!options) return request;
+        request.signal = options.signal;
 
-    request.onUploadProgress = options.onUploadProgress;
+        return request;
+    }
 
-    request.onDownloadProgress = options.onDownloadProgress;
+    public getConfigs = async (options?: RequestOptions) => {
+        let request: AxiosRequestConfig<FormData> = {
+            ...this.defaultConfig,
+            url: "/v1/configs",
+            method: "GET",
+        };
 
-    request.signal = options.signal;
+        request = this.appendOptions(request, options);
 
-    return request;
-  }
+        const response = await Axios.request<ConfigInfo[]>(request);
 
-  public getConfigs = async (options?: RequestOptions) => {
-    let request: AxiosRequestConfig<FormData> = {
-      ...this.defaultConfig,
-      url: "/v1/configs",
-      method: "GET",
+        return response.data;
     };
 
-    request = this.appendOptions(request, options);
+    public createConfig = async (
+        mapId: number,
+        name: string,
+        version: string,
+        config: Config,
+        options?: RequestOptions
+    ) => {
+        let request: AxiosRequestConfig<string> = {
+            ...this.defaultConfig,
+            url: `/v1/maps/${mapId}/configs`,
+            method: "POST",
+            params: {
+                version,
+                name,
+            },
+            headers: {
+                ...this.defaultConfig.headers,
+                "content-type": "application/json",
+            },
+            data: JSON.stringify(config),
+        };
 
-    const response = await Axios.request<ConfigInfo[]>(request);
+        request = this.appendOptions(request, options);
 
-    return response.data;
-  };
+        const response = await Axios.request<ConfigInfo>(request);
 
-  public createConfig = async (
-    mapId: number,
-    name: string,
-    version: string,
-    config: Config,
-    options?: RequestOptions
-  ) => {
-    let request: AxiosRequestConfig<string> = {
-      ...this.defaultConfig,
-      url: `/v1/maps/${mapId}/configs`,
-      method: "POST",
-      params: {
-        version,
-        name,
-      },
-      headers: {
-        ...this.defaultConfig.headers,
-        "content-type": "application/json",
-      },
-      data: JSON.stringify(config),
+        return response.data;
     };
 
-    request = this.appendOptions(request, options);
+    public editConfig = async (configId: number, name: string, config: Config, options?: RequestOptions) => {
+        let request: AxiosRequestConfig<string> = {
+            ...this.defaultConfig,
+            url: `/v1/configs/${configId}`,
+            method: "PUT",
+            params: {
+                name,
+            },
+            headers: {
+                ...this.defaultConfig.headers,
+                "content-type": "application/json",
+            },
+            data: JSON.stringify(config),
+        };
 
-    const response = await Axios.request<ConfigInfo>(request);
+        request = this.appendOptions(request, options);
 
-    return response.data;
-  };
+        const response = await Axios.request<ConfigInfo>(request);
 
-  public editConfig = async (
-    configId: number,
-    name: string,
-    config: Config,
-    options?: RequestOptions
-  ) => {
-    let request: AxiosRequestConfig<string> = {
-      ...this.defaultConfig,
-      url: `/v1/configs/${configId}`,
-      method: "PUT",
-      params: {
-        name,
-      },
-      headers: {
-        ...this.defaultConfig.headers,
-        "content-type": "application/json",
-      },
-      data: JSON.stringify(config),
+        return response.data;
     };
 
-    request = this.appendOptions(request, options);
+    public deleteConfig = async (configId: number, options?: RequestOptions) => {
+        let request: AxiosRequestConfig<string> = {
+            ...this.defaultConfig,
+            url: `/v1/configs/${configId}`,
+            method: "DELETE",
+        };
 
-    const response = await Axios.request<ConfigInfo>(request);
+        request = this.appendOptions(request, options);
 
-    return response.data;
-  };
+        const response = await Axios.request<void>(request);
 
-  public deleteConfig = async (configId: number, options?: RequestOptions) => {
-    let request: AxiosRequestConfig<string> = {
-      ...this.defaultConfig,
-      url: `/v1/configs/${configId}`,
-      method: "DELETE",
+        return response.data;
     };
-
-    request = this.appendOptions(request, options);
-
-    const response = await Axios.request<void>(request);
-
-    return response.data;
-  };
 }
 
 interface UploadMapParametres {
-  map: File;
-  flags: Flags;
-  additionalFlags: AdditionalFlags;
+    map: File;
+    flags: Flags;
+    additionalFlags: AdditionalFlags;
 }
 
 export type AdditionalFlags = {
-  [key: string]: string | boolean | number | null;
+    [key: string]: string | boolean | number | null;
 };

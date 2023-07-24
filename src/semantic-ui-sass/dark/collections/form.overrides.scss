@@ -2,7 +2,7 @@
          Site Overrides
 *******************************/
 .ui.form .field > label {
-  color: #adadad;
+    color: #adadad;
 }
 
 .ui.form input:not([type]):focus,
@@ -17,5 +17,5 @@
 .ui.form input[type="text"]:focus,
 .ui.form input[type="file"]:focus,
 .ui.form input[type="url"]:focus {
-  border-color: #383737;
+    border-color: #383737;
 }

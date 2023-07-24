@@ -12,79 +12,79 @@ import { AppRuntimeSettingsContext } from "../../context";
 
 /** Карточка игры в dropdown */
 export const MapCard: React.FC<Map & { selectElement?: React.ReactNode }> = ({
-  mapInfo,
-  fileName,
-  fileSize,
-  selectElement,
-  id,
-  categories,
-  downloadUrl,
-  ...map
+    mapInfo,
+    fileName,
+    fileSize,
+    selectElement,
+    id,
+    categories,
+    downloadUrl,
+    ...map
 }) => {
-  const { mapImageUrl, coverImageUrl, author, name, description } = mapInfo!;
+    const { mapImageUrl, coverImageUrl, author, name, description } = mapInfo!;
 
-  const [fullText, setFullText] = useState(false);
+    const [fullText, setFullText] = useState(false);
 
-  const { language } = useContext(AppRuntimeSettingsContext);
-  const lang = language.languageRepository;
+    const { language } = useContext(AppRuntimeSettingsContext);
+    const lang = language.languageRepository;
 
-  let displayDesctiption = description;
-  let needFulltextLink = false;
+    let displayDesctiption = description;
+    let needFulltextLink = false;
 
-  if (!fullText && description?.length && description?.length > 500) {
-    displayDesctiption = description?.substring(0, 500) + "...";
+    if (!fullText && description?.length && description?.length > 500) {
+        displayDesctiption = description?.substring(0, 500) + "...";
 
-    needFulltextLink = true;
-  }
+        needFulltextLink = true;
+    }
 
-  return (
-    <Grid className="map-card" stackable>
-      <Grid.Column width={2}>
-        <LazyLoadedImage
-          blured={map?.additionalFlags?.["nsfw_images"]}
-          size="medium"
-          src={coverImageUrl || mapImageUrl}
-        />
-      </Grid.Column>
+    return (
+        <Grid className="map-card" stackable>
+            <Grid.Column width={2}>
+                <LazyLoadedImage
+                    blured={map?.additionalFlags?.["nsfw_images"]}
+                    size="medium"
+                    src={coverImageUrl || mapImageUrl}
+                />
+            </Grid.Column>
 
-      <Grid.Column width={11}>
-        <Header as={Link} to={`/maps/${id}`}>
-          <WarcraftIIIText>{name}</WarcraftIIIText>
-          <MapStatusIcons {...map} />
-        </Header>
-        <div className="author">
-          <WarcraftIIIText>{author}</WarcraftIIIText>
-        </div>
-        <Grid.Row className="description">
-          <WarcraftIIIText>{displayDesctiption}</WarcraftIIIText>
-          {needFulltextLink && (
-            <a
-              className="full-description"
-              onClick={() => {
-                setFullText(true);
-              }}
-            >
-              {lang.mapCardShowAllText}
-            </a>
-          )}
-        </Grid.Row>
-        <Grid.Row className="categories">
-          <MapCategoryList categories={categories} />
-        </Grid.Row>
-      </Grid.Column>
-      <Grid.Column className="action-buttons" width={3}>
-        <Grid.Row>
-          {selectElement}
-          {downloadUrl && (
-            <MapDownloadButton
-              downloadUrl={downloadUrl}
-              fileSize={fileSize}
-              fileName={fileName}
-              id={id || 0}
-            />
-          )}
-        </Grid.Row>
-      </Grid.Column>
-    </Grid>
-  );
+            <Grid.Column width={11}>
+                <Header as={Link} to={`/maps/${id}`}>
+                    <WarcraftIIIText>{name}</WarcraftIIIText>
+                    <MapStatusIcons {...map} />
+                </Header>
+                <div className="author">
+                    <WarcraftIIIText>{author}</WarcraftIIIText>
+                </div>
+                <Grid.Row className="description">
+                    <WarcraftIIIText>{displayDesctiption}</WarcraftIIIText>
+                    {needFulltextLink && (
+                        <a
+                            className="full-description"
+                            onClick={() => {
+                                setFullText(true);
+                            }}
+                        >
+                            {lang.mapCardShowAllText}
+                        </a>
+                    )}
+                </Grid.Row>
+                <Grid.Row className="categories">
+                    <MapCategoryList categories={categories} />
+                </Grid.Row>
+            </Grid.Column>
+            <Grid.Column className="action-buttons" width={3}>
+                <Grid.Row>
+                    {selectElement}
+                    {downloadUrl && (
+                        <MapDownloadButton
+                            downloadUrl={downloadUrl}
+                            fileSize={fileSize}
+                            fileName={fileName}
+                            id={id || 0}
+                        />
+                    )}
+                </Grid.Row>
+            </Grid.Column>
+        </Grid>
+    );
 };

@@ -26,132 +26,121 @@ import MetaCanonical from "../Meta/MetaCanonical";
 import { useTitle } from "../../hooks/useTitle";
 
 function GameListPage() {
-  const sockets = useContext(WebsocketContext);
-  const runtimeContext = useContext(AppRuntimeSettingsContext);
-  const auth = useContext(AuthContext).auth;
+    const sockets = useContext(WebsocketContext);
+    const runtimeContext = useContext(AppRuntimeSettingsContext);
+    const auth = useContext(AuthContext).auth;
 
-  const [gameList, setGameList] = useState<GameListGame[]>([]);
-  const [selectedGame, setSelectedGame] = useState<GameListGame | null>(null);
-  const [filterModalOpen, setFilterModalOpen] = useState(false);
+    const [gameList, setGameList] = useState<GameListGame[]>([]);
+    const [selectedGame, setSelectedGame] = useState<GameListGame | null>(null);
+    const [filterModalOpen, setFilterModalOpen] = useState(false);
 
-  const { filterSettings, setFilterSettings, disabledFilters } =
-    useGameListFilterSetings();
+    const { filterSettings, setFilterSettings, disabledFilters } = useGameListFilterSetings();
 
-  const debouncedFilterSettings = useDebounce(filterSettings, 100);
+    const debouncedFilterSettings = useDebounce(filterSettings, 100);
 
-  const filtredGameList = useGameListFilter({
-    gameList,
-    filters: debouncedFilterSettings,
-  });
+    const filtredGameList = useGameListFilter({
+        gameList,
+        filters: debouncedFilterSettings,
+    });
 
-  useGameListSubscribe({
-    ghostSocket: sockets.ghostSocket,
-    isGameListLocked: runtimeContext.gameList.locked,
-    onGameList: setGameList,
-    filters: debouncedFilterSettings,
-    ignoreFocusCheck: false,
-  });
+    useGameListSubscribe({
+        ghostSocket: sockets.ghostSocket,
+        isGameListLocked: runtimeContext.gameList.locked,
+        onGameList: setGameList,
+        filters: debouncedFilterSettings,
+        ignoreFocusCheck: false,
+    });
 
-  const displayedGameList = useDisplayedGameList({
-    gameList: filtredGameList,
-    filters: debouncedFilterSettings,
-  });
+    const displayedGameList = useDisplayedGameList({
+        gameList: filtredGameList,
+        filters: debouncedFilterSettings,
+    });
 
-  const connectorCache = useContext(CacheContext).cachedConnectorIds;
+    const connectorCache = useContext(CacheContext).cachedConnectorIds;
 
-  const { language } = useContext(AppRuntimeSettingsContext);
-  const lang = language.languageRepository;
+    const { language } = useContext(AppRuntimeSettingsContext);
+    const lang = language.languageRepository;
 
-  useTitle(lang.gameListPageTitle);
+    useTitle(lang.gameListPageTitle);
 
-  useEffect(() => {
-    const uncachedConnectorIds = gameList
-      .map((i) => {
-        return i.creatorID;
-      })
-      .filter((i) => {
-        return !connectorCache[i];
-      });
+    useEffect(() => {
+        const uncachedConnectorIds = gameList
+            .map((i) => {
+                return i.creatorID;
+            })
+            .filter((i) => {
+                return !connectorCache[i];
+            });
 
-    if (uncachedConnectorIds.length > 0) {
-      sockets.ghostSocket.send(
-        new ClientResolveConnectorIdsConverter().assembly({
-          connectorIds: uncachedConnectorIds,
-        })
-      );
-    }
-  }, [gameList, connectorCache, sockets.ghostSocket]);
+        if (uncachedConnectorIds.length > 0) {
+            sockets.ghostSocket.send(
+                new ClientResolveConnectorIdsConverter().assembly({
+                    connectorIds: uncachedConnectorIds,
+                })
+            );
+        }
+    }, [gameList, connectorCache, sockets.ghostSocket]);
 
-  return (
-    <Container className="game-list">
-      <MetaDescription description={lang.gameListPageDescription}/>
-      <MetaCanonical hostPath="/" />
-      <Grid columns="equal" stackable>
-        <Grid.Column width={13} className="game-list-column">
-          <Input
-            onChange={(event, data) =>
-              setFilterSettings({ ...filterSettings, quickFilter: data.value })
-            }
-            value={filterSettings.quickFilter}
-            style={{ width: "50%" }}
-            placeholder={lang.gameListPageQuickFilterPlaceholder}
-          />
-          {auth.accessMask.hasAccess(AccessMaskBit.GAME_CREATE) && (
-            <Button
-              as={Link}
-              to="/create"
-              floated="right"
-              basic
-              icon="plus"
-              color="green"
-              size="large"
+    return (
+        <Container className="game-list">
+            <MetaDescription description={lang.gameListPageDescription} />
+            <MetaCanonical hostPath="/" />
+            <Grid columns="equal" stackable>
+                <Grid.Column width={13} className="game-list-column">
+                    <Input
+                        onChange={(event, data) => setFilterSettings({ ...filterSettings, quickFilter: data.value })}
+                        value={filterSettings.quickFilter}
+                        style={{ width: "50%" }}
+                        placeholder={lang.gameListPageQuickFilterPlaceholder}
+                    />
+                    {auth.accessMask.hasAccess(AccessMaskBit.GAME_CREATE) && (
+                        <Button as={Link} to="/create" floated="right" basic icon="plus" color="green" size="large" />
+                    )}
+                    <Button
+                        basic
+                        icon="filter"
+                        floated="right"
+                        size="large"
+                        onClick={() => {
+                            setFilterModalOpen(true);
+                        }}
+                    />
+                    <GameList
+                        gameList={displayedGameList}
+                        selectedGame={selectedGame}
+                        setSelectedGame={setSelectedGame}
+                    ></GameList>
+                </Grid.Column>
+                <Grid.Column width="three" className="online-stats-column">
+                    <Button
+                        className="how-btn"
+                        basic
+                        color="green"
+                        size="large"
+                        onClick={() => {
+                            window.open("https://xgm.guru/p/irina/gamecreate");
+                        }}
+                    >
+                        {lang.gameListPageHowToPlay}
+                    </Button>
+                    {selectedGame ? (
+                        <MapInfo mapId={selectedGame.mapId}></MapInfo>
+                    ) : (
+                        <OnlineStats gameList={gameList}></OnlineStats>
+                    )}
+                </Grid.Column>
+            </Grid>
+            <GameListFiltersModal
+                open={filterModalOpen}
+                onClose={() => {
+                    setFilterModalOpen(false);
+                }}
+                disabledFilters={disabledFilters}
+                filterSettings={filterSettings}
+                onFilterChange={setFilterSettings}
             />
-          )}
-          <Button
-            basic
-            icon="filter"
-            floated="right"
-            size="large"
-            onClick={() => {
-              setFilterModalOpen(true);
-            }}
-          />
-          <GameList
-            gameList={displayedGameList}
-            selectedGame={selectedGame}
-            setSelectedGame={setSelectedGame}
-          ></GameList>
-        </Grid.Column>
-        <Grid.Column width="three" className="online-stats-column">
-          <Button
-            className="how-btn"
-            basic
-            color="green"
-            size="large"
-            onClick={() => {
-              window.open("https://xgm.guru/p/irina/gamecreate");
-            }}
-          >
-            {lang.gameListPageHowToPlay}
-          </Button>
-          {selectedGame ? (
-            <MapInfo mapId={selectedGame.mapId}></MapInfo>
-          ) : (
-            <OnlineStats gameList={gameList}></OnlineStats>
-          )}
-        </Grid.Column>
-      </Grid>
-      <GameListFiltersModal
-        open={filterModalOpen}
-        onClose={() => {
-          setFilterModalOpen(false);
-        }}
-        disabledFilters={disabledFilters}
-        filterSettings={filterSettings}
-        onFilterChange={setFilterSettings}
-      />
-    </Container>
-  );
+        </Container>
+    );
 }
 
 export default GameListPage;

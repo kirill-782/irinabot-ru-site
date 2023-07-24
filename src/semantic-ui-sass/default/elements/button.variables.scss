@@ -55,11 +55,9 @@ $rightIconMargin: 0em math.div(-$iconDistance, 2) 0em $iconDistance;
 /* Loader */
 $invertedLoaderFillColor: rgba(0, 0, 0, 0.15);
 
-$transition: opacity $defaultDuration $defaultEasing,
-  background-color $defaultDuration $defaultEasing,
-  color $defaultDuration $defaultEasing,
-  box-shadow $defaultDuration $defaultEasing,
-  background $defaultDuration $defaultEasing;
+$transition: opacity $defaultDuration $defaultEasing, background-color $defaultDuration $defaultEasing,
+    color $defaultDuration $defaultEasing, box-shadow $defaultDuration $defaultEasing,
+    background $defaultDuration $defaultEasing;
 /*
 $willChange: box-shadow, transform, opacity, color, background;
 */
@@ -195,8 +193,7 @@ $basicTextTransform: none;
 /* Basic Hover */
 $basicHoverBackground: #ffffff;
 $basicHoverTextColor: $hoveredTextColor;
-$basicHoverBoxShadow: 0px 0px 0px $basicBorderSize $selectedBorderColor inset,
-  0px 0px 0px 0px $borderColor inset;
+$basicHoverBoxShadow: 0px 0px 0px $basicBorderSize $selectedBorderColor inset, 0px 0px 0px 0px $borderColor inset;
 /* Basic Focus */
 $basicFocusBackground: $basicHoverBackground;
 $basicFocusTextColor: $basicHoverTextColor;
@@ -205,8 +202,7 @@ $basicFocusBoxShadow: $basicHoverBoxShadow;
 /* Basic Down */
 $basicDownBackground: #f8f8f8;
 $basicDownTextColor: $pressedTextColor;
-$basicDownBoxShadow: 0px 0px 0px $basicBorderSize rgba(0, 0, 0, 0.15) inset,
-  0px 1px 4px 0px $borderColor inset;
+$basicDownBoxShadow: 0px 0px 0px $basicBorderSize rgba(0, 0, 0, 0.15) inset, 0px 1px 4px 0px $borderColor inset;
 /* Basic Active */
 $basicActiveBackground: $transparentBlack;
 $basicActiveBoxShadow: "";
@@ -218,16 +214,11 @@ $basicInvertedFocusBackground: transparent;
 $basicInvertedDownBackground: $transparentWhite;
 $basicInvertedActiveBackground: $transparentWhite;
 
-$basicInvertedBoxShadow: 0px 0px 0px $invertedBorderSize
-  rgba(255, 255, 255, 0.5) inset;
-$basicInvertedHoverBoxShadow: 0px 0px 0px $invertedBorderSize
-  rgba(255, 255, 255, 1) inset;
-$basicInvertedFocusBoxShadow: 0px 0px 0px $invertedBorderSize
-  rgba(255, 255, 255, 1) inset;
-$basicInvertedDownBoxShadow: 0px 0px 0px $invertedBorderSize
-  rgba(255, 255, 255, 0.9) inset;
-$basicInvertedActiveBoxShadow: 0px 0px 0px $invertedBorderSize
-  rgba(255, 255, 255, 0.7) inset;
+$basicInvertedBoxShadow: 0px 0px 0px $invertedBorderSize rgba(255, 255, 255, 0.5) inset;
+$basicInvertedHoverBoxShadow: 0px 0px 0px $invertedBorderSize rgba(255, 255, 255, 1) inset;
+$basicInvertedFocusBoxShadow: 0px 0px 0px $invertedBorderSize rgba(255, 255, 255, 1) inset;
+$basicInvertedDownBoxShadow: 0px 0px 0px $invertedBorderSize rgba(255, 255, 255, 0.9) inset;
+$basicInvertedActiveBoxShadow: 0px 0px 0px $invertedBorderSize rgba(255, 255, 255, 0.7) inset;
 
 $basicInvertedColor: $darkWhite;
 $basicInvertedHoverColor: $darkWhiteHover;

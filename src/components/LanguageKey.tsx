@@ -4,20 +4,16 @@ import { AppRuntimeSettingsContext } from "../context";
 import Markdown from "./Markdown";
 
 interface LanguageKeyProps {
-  stringId: LanguageRepositoryKeys,
+    stringId: LanguageRepositoryKeys;
 
-  [key: string]: any
+    [key: string]: any;
 }
 
 function LanguageKey({ stringId, ...options }: LanguageKeyProps) {
+    const { language } = useContext(AppRuntimeSettingsContext);
+    const t = language.getString;
 
-  const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
-
-  return <Markdown>
-    {t(stringId, options)}
-  </Markdown>;
-
+    return <Markdown>{t(stringId, options)}</Markdown>;
 }
 
 export default LanguageKey;

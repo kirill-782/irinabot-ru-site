@@ -3,8 +3,8 @@
 /* eslint-disable */
 
 export type Category = {
-  id?: number;
-  name?: string;
-  description?: string;
-  singleton?: boolean;
+    id?: number;
+    name?: string;
+    description?: string;
+    singleton?: boolean;
 };

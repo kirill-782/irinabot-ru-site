@@ -23,21 +23,21 @@ $element: "statistic";
 
 /* Standalone */
 .ui.statistic {
-  display: inline-flex;
-  flex-direction: column;
-  margin: $margin;
-  max-width: $maxWidth;
+    display: inline-flex;
+    flex-direction: column;
+    margin: $margin;
+    max-width: $maxWidth;
 }
 
 .ui.statistic + .ui.statistic {
-  margin: 0em 0em 0em $horizontalSpacing;
+    margin: 0em 0em 0em $horizontalSpacing;
 }
 
 .ui.statistic:first-child {
-  margin-top: 0em;
+    margin-top: 0em;
 }
 .ui.statistic:last-child {
-  margin-bottom: 0em;
+    margin-bottom: 0em;
 }
 
 /*******************************
@@ -46,34 +46,34 @@ $element: "statistic";
 
 /* Grouped */
 .ui.statistics {
-  display: flex;
-  align-items: flex-start;
-  flex-wrap: wrap;
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
 }
 .ui.statistics > .statistic {
-  display: inline-flex;
-  flex: 0 1 auto;
-  flex-direction: column;
-  margin: $elementMargin;
-  max-width: $elementMaxWidth;
+    display: inline-flex;
+    flex: 0 1 auto;
+    flex-direction: column;
+    margin: $elementMargin;
+    max-width: $elementMaxWidth;
 }
 .ui.statistics {
-  display: flex;
-  margin: $groupMargin;
+    display: flex;
+    margin: $groupMargin;
 }
 
 /* Clearing */
 .ui.statistics:after {
-  display: block;
-  content: " ";
-  height: 0px;
-  clear: both;
-  overflow: hidden;
-  visibility: hidden;
+    display: block;
+    content: " ";
+    height: 0px;
+    clear: both;
+    overflow: hidden;
+    visibility: hidden;
 }
 
 .ui.statistics:first-child {
-  margin-top: 0em;
+    margin-top: 0em;
 }
 
 /*******************************
@@ -86,13 +86,13 @@ $element: "statistic";
 
 .ui.statistics .statistic > .value,
 .ui.statistic > .value {
-  font-family: $valueFont;
-  font-size: $valueSize;
-  font-weight: $valueFontWeight;
-  line-height: $valueLineHeight;
-  color: $valueColor;
-  text-transform: $valueTextTransform;
-  text-align: $textAlign;
+    font-family: $valueFont;
+    font-size: $valueSize;
+    font-weight: $valueFontWeight;
+    line-height: $valueLineHeight;
+    color: $valueColor;
+    text-transform: $valueTextTransform;
+    text-align: $textAlign;
 }
 
 /*--------------
@@ -101,24 +101,24 @@ $element: "statistic";
 
 .ui.statistics .statistic > .label,
 .ui.statistic > .label {
-  font-family: $labelFont;
-  font-size: $labelSize;
-  font-weight: $labelFontWeight;
-  color: $labelColor;
-  text-transform: $labelTextTransform;
-  text-align: $textAlign;
+    font-family: $labelFont;
+    font-size: $labelSize;
+    font-weight: $labelFontWeight;
+    color: $labelColor;
+    text-transform: $labelTextTransform;
+    text-align: $textAlign;
 }
 
 /* Top Label */
 .ui.statistics .statistic > .label ~ .value,
 .ui.statistic > .label ~ .value {
-  margin-top: $topLabelDistance;
+    margin-top: $topLabelDistance;
 }
 
 /* Bottom Label */
 .ui.statistics .statistic > .value ~ .label,
 .ui.statistic > .value ~ .label {
-  margin-top: $bottomLabelDistance;
+    margin-top: $bottomLabelDistance;
 }
 
 /*******************************
@@ -131,9 +131,9 @@ $element: "statistic";
 
 .ui.statistics .statistic > .value .icon,
 .ui.statistic > .value .icon {
-  opacity: 1;
-  width: auto;
-  margin: 0em;
+    opacity: 1;
+    width: auto;
+    margin: 0em;
 }
 
 /*--------------
@@ -142,14 +142,14 @@ $element: "statistic";
 
 .ui.statistics .statistic > .text.value,
 .ui.statistic > .text.value {
-  line-height: $textValueLineHeight;
-  min-height: $textValueMinHeight;
-  font-weight: $textValueFontWeight;
-  text-align: center;
+    line-height: $textValueLineHeight;
+    min-height: $textValueMinHeight;
+    font-weight: $textValueFontWeight;
+    text-align: center;
 }
 .ui.statistics .statistic > .text.value + .label,
 .ui.statistic > .text.value + .label {
-  text-align: center;
+    text-align: center;
 }
 
 /*--------------
@@ -158,8 +158,8 @@ $element: "statistic";
 
 .ui.statistics .statistic > .value img,
 .ui.statistic > .value img {
-  max-height: $imageHeight;
-  vertical-align: $imageVerticalAlign;
+    max-height: $imageHeight;
+    vertical-align: $imageVerticalAlign;
 }
 
 /*******************************
@@ -171,83 +171,83 @@ $element: "statistic";
 ---------------*/
 
 .ui.ten.statistics {
-  margin: $itemGroupMargin;
+    margin: $itemGroupMargin;
 }
 .ui.ten.statistics .statistic {
-  min-width: $tenColumn;
-  margin: $itemMargin;
+    min-width: $tenColumn;
+    margin: $itemMargin;
 }
 
 .ui.nine.statistics {
-  margin: $itemGroupMargin;
+    margin: $itemGroupMargin;
 }
 .ui.nine.statistics .statistic {
-  min-width: $nineColumn;
-  margin: $itemMargin;
+    min-width: $nineColumn;
+    margin: $itemMargin;
 }
 
 .ui.eight.statistics {
-  margin: $itemGroupMargin;
+    margin: $itemGroupMargin;
 }
 .ui.eight.statistics .statistic {
-  min-width: $eightColumn;
-  margin: $itemMargin;
+    min-width: $eightColumn;
+    margin: $itemMargin;
 }
 
 .ui.seven.statistics {
-  margin: $itemGroupMargin;
+    margin: $itemGroupMargin;
 }
 .ui.seven.statistics .statistic {
-  min-width: $sevenColumn;
-  margin: $itemMargin;
+    min-width: $sevenColumn;
+    margin: $itemMargin;
 }
 
 .ui.six.statistics {
-  margin: $itemGroupMargin;
+    margin: $itemGroupMargin;
 }
 .ui.six.statistics .statistic {
-  min-width: $sixColumn;
-  margin: $itemMargin;
+    min-width: $sixColumn;
+    margin: $itemMargin;
 }
 
 .ui.five.statistics {
-  margin: $itemGroupMargin;
+    margin: $itemGroupMargin;
 }
 .ui.five.statistics .statistic {
-  min-width: $fiveColumn;
-  margin: $itemMargin;
+    min-width: $fiveColumn;
+    margin: $itemMargin;
 }
 
 .ui.four.statistics {
-  margin: $itemGroupMargin;
+    margin: $itemGroupMargin;
 }
 .ui.four.statistics .statistic {
-  min-width: $fourColumn;
-  margin: $itemMargin;
+    min-width: $fourColumn;
+    margin: $itemMargin;
 }
 
 .ui.three.statistics {
-  margin: $itemGroupMargin;
+    margin: $itemGroupMargin;
 }
 .ui.three.statistics .statistic {
-  min-width: $threeColumn;
-  margin: $itemMargin;
+    min-width: $threeColumn;
+    margin: $itemMargin;
 }
 
 .ui.two.statistics {
-  margin: $itemGroupMargin;
+    margin: $itemGroupMargin;
 }
 .ui.two.statistics .statistic {
-  min-width: $twoColumn;
-  margin: $itemMargin;
+    min-width: $twoColumn;
+    margin: $itemMargin;
 }
 
 .ui.one.statistics {
-  margin: $itemGroupMargin;
+    margin: $itemGroupMargin;
 }
 .ui.one.statistics .statistic {
-  min-width: $oneColumn;
-  margin: $itemMargin;
+    min-width: $oneColumn;
+    margin: $itemMargin;
 }
 
 /*--------------
@@ -255,40 +255,40 @@ $element: "statistic";
 ---------------*/
 
 .ui.horizontal.statistic {
-  flex-direction: row;
-  align-items: center;
+    flex-direction: row;
+    align-items: center;
 }
 .ui.horizontal.statistics {
-  flex-direction: column;
-  margin: 0em;
-  max-width: none;
+    flex-direction: column;
+    margin: 0em;
+    max-width: none;
 }
 .ui.horizontal.statistics .statistic {
-  flex-direction: row;
-  align-items: center;
-  max-width: none;
-  margin: $horizontalGroupElementMargin;
+    flex-direction: row;
+    align-items: center;
+    max-width: none;
+    margin: $horizontalGroupElementMargin;
 }
 
 .ui.horizontal.statistic > .text.value,
 .ui.horizontal.statistics > .statistic > .text.value {
-  min-height: 0em !important;
+    min-height: 0em !important;
 }
 .ui.horizontal.statistics .statistic > .value .icon,
 .ui.horizontal.statistic > .value .icon {
-  width: $iconWidth;
+    width: $iconWidth;
 }
 
 .ui.horizontal.statistics .statistic > .value,
 .ui.horizontal.statistic > .value {
-  display: inline-block;
-  vertical-align: middle;
+    display: inline-block;
+    vertical-align: middle;
 }
 .ui.horizontal.statistics .statistic > .label,
 .ui.horizontal.statistic > .label {
-  display: inline-block;
-  vertical-align: middle;
-  margin: 0em 0em 0em $horizontalLabelDistance;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0em 0em 0em $horizontalLabelDistance;
 }
 
 /*--------------
@@ -298,62 +298,62 @@ $element: "statistic";
 .ui.red.statistics .statistic > .value,
 .ui.statistics .red.statistic > .value,
 .ui.red.statistic > .value {
-  color: $red;
+    color: $red;
 }
 .ui.orange.statistics .statistic > .value,
 .ui.statistics .orange.statistic > .value,
 .ui.orange.statistic > .value {
-  color: $orange;
+    color: $orange;
 }
 .ui.yellow.statistics .statistic > .value,
 .ui.statistics .yellow.statistic > .value,
 .ui.yellow.statistic > .value {
-  color: $yellow;
+    color: $yellow;
 }
 .ui.olive.statistics .statistic > .value,
 .ui.statistics .olive.statistic > .value,
 .ui.olive.statistic > .value {
-  color: $olive;
+    color: $olive;
 }
 .ui.green.statistics .statistic > .value,
 .ui.statistics .green.statistic > .value,
 .ui.green.statistic > .value {
-  color: $green;
+    color: $green;
 }
 .ui.teal.statistics .statistic > .value,
 .ui.statistics .teal.statistic > .value,
 .ui.teal.statistic > .value {
-  color: $teal;
+    color: $teal;
 }
 .ui.blue.statistics .statistic > .value,
 .ui.statistics .blue.statistic > .value,
 .ui.blue.statistic > .value {
-  color: $blue;
+    color: $blue;
 }
 .ui.violet.statistics .statistic > .value,
 .ui.statistics .violet.statistic > .value,
 .ui.violet.statistic > .value {
-  color: $violet;
+    color: $violet;
 }
 .ui.purple.statistics .statistic > .value,
 .ui.statistics .purple.statistic > .value,
 .ui.purple.statistic > .value {
-  color: $purple;
+    color: $purple;
 }
 .ui.pink.statistics .statistic > .value,
 .ui.statistics .pink.statistic > .value,
 .ui.pink.statistic > .value {
-  color: $pink;
+    color: $pink;
 }
 .ui.brown.statistics .statistic > .value,
 .ui.statistics .brown.statistic > .value,
 .ui.brown.statistic > .value {
-  color: $brown;
+    color: $brown;
 }
 .ui.grey.statistics .statistic > .value,
 .ui.statistics .grey.statistic > .value,
 .ui.grey.statistic > .value {
-  color: $grey;
+    color: $grey;
 }
 
 /*--------------
@@ -362,72 +362,72 @@ $element: "statistic";
 
 .ui.inverted.statistics .statistic > .value,
 .ui.inverted.statistic .value {
-  color: $invertedValueColor;
+    color: $invertedValueColor;
 }
 .ui.inverted.statistics .statistic > .label,
 .ui.inverted.statistic .label {
-  color: $invertedLabelColor;
+    color: $invertedLabelColor;
 }
 
 .ui.inverted.red.statistics .statistic > .value,
 .ui.statistics .inverted.red.statistic > .value,
 .ui.inverted.red.statistic > .value {
-  color: $lightRed;
+    color: $lightRed;
 }
 .ui.inverted.orange.statistics .statistic > .value,
 .ui.statistics .inverted.orange.statistic > .value,
 .ui.inverted.orange.statistic > .value {
-  color: $lightOrange;
+    color: $lightOrange;
 }
 .ui.inverted.yellow.statistics .statistic > .value,
 .ui.statistics .inverted.yellow.statistic > .value,
 .ui.inverted.yellow.statistic > .value {
-  color: $lightYellow;
+    color: $lightYellow;
 }
 .ui.inverted.olive.statistics .statistic > .value,
 .ui.statistics .inverted.olive.statistic > .value,
 .ui.inverted.olive.statistic > .value {
-  color: $lightOlive;
+    color: $lightOlive;
 }
 .ui.inverted.green.statistics .statistic > .value,
 .ui.statistics .inverted.green.statistic > .value,
 .ui.inverted.green.statistic > .value {
-  color: $lightGreen;
+    color: $lightGreen;
 }
 .ui.inverted.teal.statistics .statistic > .value,
 .ui.statistics .inverted.teal.statistic > .value,
 .ui.inverted.teal.statistic > .value {
-  color: $lightTeal;
+    color: $lightTeal;
 }
 .ui.inverted.blue.statistics .statistic > .value,
 .ui.statistics .inverted.blue.statistic > .value,
 .ui.inverted.blue.statistic > .value {
-  color: $lightBlue;
+    color: $lightBlue;
 }
 .ui.inverted.violet.statistics .statistic > .value,
 .ui.statistics .inverted.violet.statistic > .value,
 .ui.inverted.violet.statistic > .value {
-  color: $lightViolet;
+    color: $lightViolet;
 }
 .ui.inverted.purple.statistics .statistic > .value,
 .ui.statistics .inverted.purple.statistic > .value,
 .ui.inverted.purple.statistic > .value {
-  color: $lightPurple;
+    color: $lightPurple;
 }
 .ui.inverted.pink.statistics .statistic > .value,
 .ui.statistics .inverted.pink.statistic > .value,
 .ui.inverted.pink.statistic > .value {
-  color: $lightPink;
+    color: $lightPink;
 }
 .ui.inverted.brown.statistics .statistic > .value,
 .ui.statistics .inverted.brown.statistic > .value,
 .ui.inverted.brown.statistic > .value {
-  color: $lightBrown;
+    color: $lightBrown;
 }
 .ui.inverted.grey.statistics .statistic > .value,
 .ui.statistics .inverted.grey.statistic > .value,
 .ui.inverted.grey.statistic > .value {
-  color: $lightGrey;
+    color: $lightGrey;
 }
 
 /*--------------
@@ -435,15 +435,15 @@ $element: "statistic";
 ---------------*/
 
 .ui[class*="left floated"].statistic {
-  float: left;
-  margin: $leftFloatedMargin;
+    float: left;
+    margin: $leftFloatedMargin;
 }
 .ui[class*="right floated"].statistic {
-  float: right;
-  margin: $rightFloatedMargin;
+    float: right;
+    margin: $rightFloatedMargin;
 }
 .ui.floated.statistic:last-child {
-  margin-bottom: 0em;
+    margin-bottom: 0em;
 }
 
 /*--------------
@@ -453,83 +453,83 @@ $element: "statistic";
 /* Mini */
 .ui.mini.statistics .statistic > .value,
 .ui.mini.statistic > .value {
-  font-size: $miniValueSize !important;
+    font-size: $miniValueSize !important;
 }
 .ui.mini.horizontal.statistics .statistic > .value,
 .ui.mini.horizontal.statistic > .value {
-  font-size: $miniHorizontalValueSize !important;
+    font-size: $miniHorizontalValueSize !important;
 }
 .ui.mini.statistics .statistic > .text.value,
 .ui.mini.statistic > .text.value {
-  font-size: $miniTextValueSize !important;
+    font-size: $miniTextValueSize !important;
 }
 
 /* Tiny */
 .ui.tiny.statistics .statistic > .value,
 .ui.tiny.statistic > .value {
-  font-size: $tinyValueSize !important;
+    font-size: $tinyValueSize !important;
 }
 .ui.tiny.horizontal.statistics .statistic > .value,
 .ui.tiny.horizontal.statistic > .value {
-  font-size: $tinyHorizontalValueSize !important;
+    font-size: $tinyHorizontalValueSize !important;
 }
 .ui.tiny.statistics .statistic > .text.value,
 .ui.tiny.statistic > .text.value {
-  font-size: $tinyTextValueSize !important;
+    font-size: $tinyTextValueSize !important;
 }
 
 /* Small */
 .ui.small.statistics .statistic > .value,
 .ui.small.statistic > .value {
-  font-size: $smallValueSize !important;
+    font-size: $smallValueSize !important;
 }
 .ui.small.horizontal.statistics .statistic > .value,
 .ui.small.horizontal.statistic > .value {
-  font-size: $smallHorizontalValueSize !important;
+    font-size: $smallHorizontalValueSize !important;
 }
 .ui.small.statistics .statistic > .text.value,
 .ui.small.statistic > .text.value {
-  font-size: $smallTextValueSize !important;
+    font-size: $smallTextValueSize !important;
 }
 
 /* Medium */
 .ui.statistics .statistic > .value,
 .ui.statistic > .value {
-  font-size: $valueSize !important;
+    font-size: $valueSize !important;
 }
 .ui.horizontal.statistics .statistic > .value,
 .ui.horizontal.statistic > .value {
-  font-size: $horizontalValueSize !important;
+    font-size: $horizontalValueSize !important;
 }
 .ui.statistics .statistic > .text.value,
 .ui.statistic > .text.value {
-  font-size: $textValueSize !important;
+    font-size: $textValueSize !important;
 }
 
 /* Large */
 .ui.large.statistics .statistic > .value,
 .ui.large.statistic > .value {
-  font-size: $largeValueSize !important;
+    font-size: $largeValueSize !important;
 }
 .ui.large.horizontal.statistics .statistic > .value,
 .ui.large.horizontal.statistic > .value {
-  font-size: $largeHorizontalValueSize !important;
+    font-size: $largeHorizontalValueSize !important;
 }
 .ui.large.statistics .statistic > .text.value,
 .ui.large.statistic > .text.value {
-  font-size: $largeTextValueSize !important;
+    font-size: $largeTextValueSize !important;
 }
 
 /* Huge */
 .ui.huge.statistics .statistic > .value,
 .ui.huge.statistic > .value {
-  font-size: $hugeValueSize !important;
+    font-size: $hugeValueSize !important;
 }
 .ui.huge.horizontal.statistics .statistic > .value,
 .ui.huge.horizontal.statistic > .value {
-  font-size: $hugeHorizontalValueSize !important;
+    font-size: $hugeHorizontalValueSize !important;
 }
 .ui.huge.statistics .statistic > .text.value,
 .ui.huge.statistic > .text.value {
-  font-size: $hugeTextValueSize !important;
+    font-size: $hugeTextValueSize !important;
 }

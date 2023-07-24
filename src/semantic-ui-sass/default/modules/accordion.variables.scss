@@ -19,8 +19,7 @@ $iconHeight: 1em;
 $iconDisplay: inline-block;
 $iconMargin: 0em 0.25rem 0em 0rem;
 $iconPadding: 0em;
-$iconTransition: transform $defaultDuration $defaultEasing,
-  opacity $defaultDuration $defaultEasing;
+$iconTransition: transform $defaultDuration $defaultEasing, opacity $defaultDuration $defaultEasing;
 $iconVerticalAlign: baseline;
 $iconTransform: none;
 
@@ -72,8 +71,7 @@ $styledTitleFontWeight: $bold;
 $styledTitleColor: $unselectedTextColor;
 $styledTitleTransition: background-color $defaultDuration $defaultEasing;
 $styledTitleBorder: 1px solid $borderColor;
-$styledTitleTransition: background $defaultDuration $defaultEasing,
-  color $defaultDuration $defaultEasing;
+$styledTitleTransition: background $defaultDuration $defaultEasing, color $defaultDuration $defaultEasing;
 
 /* Styled Title States */
 $styledTitleHoverBackground: transparent;

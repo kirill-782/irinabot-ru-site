@@ -1,20 +1,20 @@
 html.dark {
-  color-scheme: dark;
+    color-scheme: dark;
 
-  body {
-    background-color: #1c1c1c;
-    color: #dadada;
-  }
+    body {
+        background-color: #1c1c1c;
+        color: #dadada;
+    }
 }
 
 html.light {
-  body {
-    background-color: #fff;
-    color: rgba(0, 0, 0, 0.87);
-  }
+    body {
+        background-color: #fff;
+        color: rgba(0, 0, 0, 0.87);
+    }
 }
 
 body {
-  overflow: -moz-scrollbars-vertical;
-  overflow-y: scroll;
+    overflow: -moz-scrollbars-vertical;
+    overflow-y: scroll;
 }

@@ -1,9 +1,9 @@
 {
-  "page": {
-    "map": {
-      "config": {
-        "edit": "Edit config"
-      }
+    "page": {
+        "map": {
+            "config": {
+                "edit": "Edit config"
+            }
+        }
     }
-  }
 }

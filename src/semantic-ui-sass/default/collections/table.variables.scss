@@ -12,8 +12,7 @@ $margin: $verticalMargin $horizontalMargin;
 $borderCollapse: separate;
 $borderSpacing: 0px;
 $borderRadius: $defaultBorderRadius;
-$transition: background $defaultDuration $defaultEasing,
-  color $defaultDuration $defaultEasing;
+$transition: background $defaultDuration $defaultEasing, color $defaultDuration $defaultEasing;
 $background: $white;
 $color: $textColor;
 $borderWidth: 1px;

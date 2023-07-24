@@ -9,37 +9,37 @@ import WarcraftIIIText from "../WarcraftIIIText";
 import "./MapPreview.scss";
 
 interface MapPreviewProps {
-  map: Map;
+    map: Map;
 }
 
 function MapPreview({ map }: MapPreviewProps) {
-  return (
-    <Grid className="map-preview" stackable>
-      <Grid.Column width={4}>
-        <LazyLoadedImage
-          blured={map?.additionalFlags?.["nsfw_images"]}
-          size="medium"
-          src={map.mapInfo?.coverImageUrl || map.mapInfo?.mapImageUrl}
-        />
-      </Grid.Column>
+    return (
+        <Grid className="map-preview" stackable>
+            <Grid.Column width={4}>
+                <LazyLoadedImage
+                    blured={map?.additionalFlags?.["nsfw_images"]}
+                    size="medium"
+                    src={map.mapInfo?.coverImageUrl || map.mapInfo?.mapImageUrl}
+                />
+            </Grid.Column>
 
-      <Grid.Column width={11}>
-        <Header as={Link} to={`/maps/${map.id}`}>
-          <WarcraftIIIText>{map.mapInfo?.name}</WarcraftIIIText>
-          <MapStatusIcons {...map} />
-        </Header>
-        <div className="author">
-          <WarcraftIIIText>{map.mapInfo?.author}</WarcraftIIIText>
-        </div>
-        <Grid.Row className="description">
-          <WarcraftIIIText>{map.mapInfo?.description}</WarcraftIIIText>
-        </Grid.Row>
-        <Grid.Row className="categories">
-          <MapCategoryList categories={map.categories} />
-        </Grid.Row>
-      </Grid.Column>
-    </Grid>
-  );
+            <Grid.Column width={11}>
+                <Header as={Link} to={`/maps/${map.id}`}>
+                    <WarcraftIIIText>{map.mapInfo?.name}</WarcraftIIIText>
+                    <MapStatusIcons {...map} />
+                </Header>
+                <div className="author">
+                    <WarcraftIIIText>{map.mapInfo?.author}</WarcraftIIIText>
+                </div>
+                <Grid.Row className="description">
+                    <WarcraftIIIText>{map.mapInfo?.description}</WarcraftIIIText>
+                </Grid.Row>
+                <Grid.Row className="categories">
+                    <MapCategoryList categories={map.categories} />
+                </Grid.Row>
+            </Grid.Column>
+        </Grid>
+    );
 }
 
 export default memo(MapPreview);

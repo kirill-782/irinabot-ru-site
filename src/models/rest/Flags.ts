@@ -6,10 +6,10 @@
  * Флаги, которые необходимо обновить
  */
 export type Flags = {
-  categories?: Array<number>;
-  canDownload?: boolean;
-  imagesAvailable?: boolean;
-  mapLocked?: boolean;
-  shortTag?: string;
-  mapVerified?: boolean;
+    categories?: Array<number>;
+    canDownload?: boolean;
+    imagesAvailable?: boolean;
+    mapLocked?: boolean;
+    shortTag?: string;
+    mapVerified?: boolean;
 };

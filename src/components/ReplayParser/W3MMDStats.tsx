@@ -14,53 +14,48 @@ import ShortBlockCardList from "./ShortBlockCardList";
 import JSONHighlighter from "./JSONHighlighter";
 
 function W3MMDStats() {
-  const { replayActions } = useContext(ReplayContext)!!;
+    const { replayActions } = useContext(ReplayContext)!!;
 
-  const [meaningfulBlocks, setMeaningfulBlocks] = useState<ActionData[]>([]);
-  const [displayState, setDisplayState] = useState<W3MMDStatsState>();
+    const [meaningfulBlocks, setMeaningfulBlocks] = useState<ActionData[]>([]);
+    const [displayState, setDisplayState] = useState<W3MMDStatsState>();
 
-  useEffect(() => {
-    const mmdParser = new W3MMDStatsParser();
-    const syncActions = replayActions?.filter((i) => {
-      return i.commandBlocks.some((i) => {
-        return i.actions.some((i) => {
-          return i.type === 107;
-        });
-      });
-    });
-
-    let oldState = mmdParser.state;
-
-    syncActions?.forEach((i) => {
-      mmdParser.processActions(i.commandBlocks, i.time);
-
-      if (oldState != mmdParser.state) {
-        setMeaningfulBlocks((meaningfulBlocks) => {
-          return [...meaningfulBlocks, i];
+    useEffect(() => {
+        const mmdParser = new W3MMDStatsParser();
+        const syncActions = replayActions?.filter((i) => {
+            return i.commandBlocks.some((i) => {
+                return i.actions.some((i) => {
+                    return i.type === 107;
+                });
+            });
         });
 
-        oldState = mmdParser.state;
-      }
-    });
+        let oldState = mmdParser.state;
 
-    setDisplayState(mmdParser.state);
-  }, [replayActions]);
+        syncActions?.forEach((i) => {
+            mmdParser.processActions(i.commandBlocks, i.time);
 
-  return (
-    <Grid className="w3mmd-tab" celled>
-      <Resizable
-        className="column block-list"
-        minWidth="150px"
-        maxWidth="40%"
-        enable={{ right: true }}
-      >
-        <ShortBlockCardList actionsBlocks={meaningfulBlocks} />
-      </Resizable>
-      <Grid.Column className="state" width={16}>
-        <JSONHighlighter data={displayState}></JSONHighlighter>
-      </Grid.Column>
-    </Grid>
-  );
+            if (oldState != mmdParser.state) {
+                setMeaningfulBlocks((meaningfulBlocks) => {
+                    return [...meaningfulBlocks, i];
+                });
+
+                oldState = mmdParser.state;
+            }
+        });
+
+        setDisplayState(mmdParser.state);
+    }, [replayActions]);
+
+    return (
+        <Grid className="w3mmd-tab" celled>
+            <Resizable className="column block-list" minWidth="150px" maxWidth="40%" enable={{ right: true }}>
+                <ShortBlockCardList actionsBlocks={meaningfulBlocks} />
+            </Resizable>
+            <Grid.Column className="state" width={16}>
+                <JSONHighlighter data={displayState}></JSONHighlighter>
+            </Grid.Column>
+        </Grid>
+    );
 }
 
 export default W3MMDStats;

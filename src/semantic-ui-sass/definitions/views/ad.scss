@@ -23,24 +23,24 @@ $element: "ad";
 *******************************/
 
 .ui.ad {
-  display: block;
-  overflow: $overflow;
-  margin: $margin;
+    display: block;
+    overflow: $overflow;
+    margin: $margin;
 }
 
 .ui.ad:first-child {
-  margin: 0em;
+    margin: 0em;
 }
 
 .ui.ad:last-child {
-  margin: 0em;
+    margin: 0em;
 }
 
 .ui.ad iframe {
-  margin: 0em;
-  padding: 0em;
-  border: none;
-  overflow: hidden;
+    margin: 0em;
+    padding: 0em;
+    border: none;
+    overflow: hidden;
 }
 
 /*--------------
@@ -49,25 +49,25 @@ $element: "ad";
 
 /* Leaderboard */
 .ui.leaderboard.ad {
-  width: 728px;
-  height: 90px;
+    width: 728px;
+    height: 90px;
 }
 
 /* Medium Rectangle */
 .ui[class*="medium rectangle"].ad {
-  width: 300px;
-  height: 250px;
+    width: 300px;
+    height: 250px;
 }
 
 /* Large Rectangle */
 .ui[class*="large rectangle"].ad {
-  width: 336px;
-  height: 280px;
+    width: 336px;
+    height: 280px;
 }
 /* Half Page */
 .ui[class*="half page"].ad {
-  width: 300px;
-  height: 600px;
+    width: 300px;
+    height: 600px;
 }
 
 /*--------------
@@ -76,14 +76,14 @@ $element: "ad";
 
 /* Square */
 .ui.square.ad {
-  width: 250px;
-  height: 250px;
+    width: 250px;
+    height: 250px;
 }
 
 /* Small Square */
 .ui[class*="small square"].ad {
-  width: 200px;
-  height: 200px;
+    width: 200px;
+    height: 200px;
 }
 
 /*--------------
@@ -92,14 +92,14 @@ $element: "ad";
 
 /* Small Rectangle */
 .ui[class*="small rectangle"].ad {
-  width: 180px;
-  height: 150px;
+    width: 180px;
+    height: 150px;
 }
 
 /* Vertical Rectangle */
 .ui[class*="vertical rectangle"].ad {
-  width: 240px;
-  height: 400px;
+    width: 240px;
+    height: 400px;
 }
 
 /*--------------
@@ -107,16 +107,16 @@ $element: "ad";
 ---------------*/
 
 .ui.button.ad {
-  width: 120px;
-  height: 90px;
+    width: 120px;
+    height: 90px;
 }
 .ui[class*="square button"].ad {
-  width: 125px;
-  height: 125px;
+    width: 125px;
+    height: 125px;
 }
 .ui[class*="small button"].ad {
-  width: 120px;
-  height: 60px;
+    width: 120px;
+    height: 60px;
 }
 
 /*--------------
@@ -125,13 +125,13 @@ $element: "ad";
 
 /* Skyscraper */
 .ui.skyscraper.ad {
-  width: 120px;
-  height: 600px;
+    width: 120px;
+    height: 600px;
 }
 
 /* Wide Skyscraper */
 .ui[class*="wide skyscraper"].ad {
-  width: 160px;
+    width: 160px;
 }
 
 /*--------------
@@ -140,26 +140,26 @@ $element: "ad";
 
 /* Banner */
 .ui.banner.ad {
-  width: 468px;
-  height: 60px;
+    width: 468px;
+    height: 60px;
 }
 
 /* Vertical Banner */
 .ui[class*="vertical banner"].ad {
-  width: 120px;
-  height: 240px;
+    width: 120px;
+    height: 240px;
 }
 
 /* Top Banner */
 .ui[class*="top banner"].ad {
-  width: 930px;
-  height: 180px;
+    width: 930px;
+    height: 180px;
 }
 
 /* Half Banner */
 .ui[class*="half banner"].ad {
-  width: 234px;
-  height: 60px;
+    width: 234px;
+    height: 60px;
 }
 
 /*--------------
@@ -168,14 +168,14 @@ $element: "ad";
 
 /* Leaderboard */
 .ui[class*="large leaderboard"].ad {
-  width: 970px;
-  height: 90px;
+    width: 970px;
+    height: 90px;
 }
 
 /* Billboard */
 .ui.billboard.ad {
-  width: 970px;
-  height: 250px;
+    width: 970px;
+    height: 250px;
 }
 
 /*--------------
@@ -184,8 +184,8 @@ $element: "ad";
 
 /* Panorama */
 .ui.panorama.ad {
-  width: 980px;
-  height: 120px;
+    width: 980px;
+    height: 120px;
 }
 
 /*--------------
@@ -194,8 +194,8 @@ $element: "ad";
 
 /* Netboard */
 .ui.netboard.ad {
-  width: 580px;
-  height: 400px;
+    width: 580px;
+    height: 400px;
 }
 
 /*--------------
@@ -204,14 +204,14 @@ $element: "ad";
 
 /* Large Mobile Banner */
 .ui[class*="large mobile banner"].ad {
-  width: 320px;
-  height: 100px;
+    width: 320px;
+    height: 100px;
 }
 
 /* Mobile Leaderboard */
 .ui[class*="mobile leaderboard"].ad {
-  width: 320px;
-  height: 50px;
+    width: 320px;
+    height: 50px;
 }
 
 /*******************************
@@ -220,13 +220,13 @@ $element: "ad";
 
 /* Mobile Sizes */
 .ui.mobile.ad {
-  display: none;
+    display: none;
 }
 
 @media only screen and (max-width: $largestMobileScreen) {
-  .ui.mobile.ad {
-    display: block;
-  }
+    .ui.mobile.ad {
+        display: block;
+    }
 }
 
 /*******************************
@@ -234,30 +234,30 @@ $element: "ad";
 *******************************/
 
 .ui.centered.ad {
-  margin-left: auto;
-  margin-right: auto;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .ui.test.ad {
-  position: relative;
-  background: $testBackground;
+    position: relative;
+    background: $testBackground;
 }
 .ui.test.ad:after {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 100%;
-  text-align: center;
-  transform: translateX(-50%) translateY(-50%);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    text-align: center;
+    transform: translateX(-50%) translateY(-50%);
 
-  content: $testText;
-  color: $testColor;
-  font-size: $testFontSize;
-  font-weight: $testFontWeight;
+    content: $testText;
+    color: $testColor;
+    font-size: $testFontSize;
+    font-weight: $testFontWeight;
 }
 .ui.mobile.test.ad:after {
-  font-size: $testMobileFontSize;
+    font-size: $testMobileFontSize;
 }
 .ui.test.ad[data-text]:after {
-  content: attr(data-text);
+    content: attr(data-text);
 }

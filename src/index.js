@@ -15,10 +15,10 @@ document.documentElement.classList.add(currentTheme);
 if (DEFAULT_CONFIG.url) fetch(DEFAULT_CONFIG.url + "v1");
 
 ReactDOM.render(
-  <BrowserRouter>
-    <Suspense fallback={<SitePrepareLoader />}>
-      <App />
-    </Suspense>
-  </BrowserRouter>,
-  document.getElementById("root")
+    <BrowserRouter>
+        <Suspense fallback={<SitePrepareLoader />}>
+            <App />
+        </Suspense>
+    </BrowserRouter>,
+    document.getElementById("root")
 );

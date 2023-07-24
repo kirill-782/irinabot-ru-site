@@ -11,9 +11,8 @@
 $itemVerticalPadding: $relativeSmall;
 $itemHorizontalPadding: $relativeLarge;
 $itemTextTransform: none;
-$itemTransition: background $defaultDuration $defaultEasing,
-  box-shadow $defaultDuration $defaultEasing,
-  color $defaultDuration $defaultEasing;
+$itemTransition: background $defaultDuration $defaultEasing, box-shadow $defaultDuration $defaultEasing,
+    color $defaultDuration $defaultEasing;
 $itemFontWeight: $normal;
 $itemTextColor: $textColor;
 
@@ -42,8 +41,7 @@ $subMenuFontSize: $relativeTiny;
 $subMenuTextColor: rgba(0, 0, 0, 0.5);
 
 $subMenuIndent: 0em;
-$subMenuHorizontalPadding: math.div($itemHorizontalPadding, $tinySize) +
-  $subMenuIndent;
+$subMenuHorizontalPadding: math.div($itemHorizontalPadding, $tinySize) + $subMenuIndent;
 $subMenuVerticalPadding: 0.5em;
 
 /* Text Item */
@@ -236,10 +234,8 @@ $secondaryVerticalItemBorderRadius: $defaultBorderRadius;
 
 $secondaryMenuSubMenuMargin: 0em -$secondaryItemHorizontalPadding;
 $secondaryMenuSubMenuItemMargin: 0em;
-$secondarySubMenuHorizontalPadding: math.div($itemHorizontalPadding, $tinySize) +
-  $subMenuIndent;
-$secondaryMenuSubMenuItemPadding: $relative7px
-  $secondarySubMenuHorizontalPadding;
+$secondarySubMenuHorizontalPadding: math.div($itemHorizontalPadding, $tinySize) + $subMenuIndent;
+$secondaryMenuSubMenuItemPadding: $relative7px $secondarySubMenuHorizontalPadding;
 
 /* Pointing */
 $secondaryPointingBorderWidth: 2px;
@@ -259,8 +255,7 @@ $secondaryPointingActiveHoverBorderColor: $secondaryPointingActiveBorderColor;
 $secondaryPointingActiveHoverTextColor: $secondaryPointingActiveTextColor;
 
 $secondaryPointingHeaderColor: $darkTextColor;
-$secondaryVerticalPointingItemMargin: 0em (-$secondaryPointingBorderWidth) 0em
-  0em;
+$secondaryVerticalPointingItemMargin: 0em (-$secondaryPointingBorderWidth) 0em 0em;
 
 /* Inverted Secondary */
 $secondaryInvertedColor: $invertedLightTextColor;

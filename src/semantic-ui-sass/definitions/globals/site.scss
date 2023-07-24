@@ -25,24 +25,24 @@ $element: "site";
 
 html,
 body {
-  height: 80%;
+    height: 80%;
 }
 
 html {
-  font-size: $fontSize;
+    font-size: $fontSize;
 }
 
 body {
-  margin: 0px;
-  padding: 0px;
-  overflow-x: $pageOverflowX;
-  min-width: $pageMinWidth;
-  background: $pageBackground;
-  font-family: $pageFont;
-  font-size: $fontSize;
-  line-height: $lineHeight;
-  color: $textColor;
-  font-smoothing: $fontSmoothing;
+    margin: 0px;
+    padding: 0px;
+    overflow-x: $pageOverflowX;
+    min-width: $pageMinWidth;
+    background: $pageBackground;
+    font-family: $pageFont;
+    font-size: $fontSize;
+    line-height: $lineHeight;
+    color: $textColor;
+    font-smoothing: $fontSmoothing;
 }
 
 /*******************************
@@ -54,28 +54,28 @@ h2,
 h3,
 h4,
 h5 {
-  font-family: $headerFont;
-  line-height: $headerLineHeight;
-  margin: $headerMargin;
-  font-weight: $headerFontWeight;
-  padding: 0em;
+    font-family: $headerFont;
+    line-height: $headerLineHeight;
+    margin: $headerMargin;
+    font-weight: $headerFontWeight;
+    padding: 0em;
 }
 
 h1 {
-  min-height: 1rem;
-  font-size: $h1;
+    min-height: 1rem;
+    font-size: $h1;
 }
 h2 {
-  font-size: $h2;
+    font-size: $h2;
 }
 h3 {
-  font-size: $h3;
+    font-size: $h3;
 }
 h4 {
-  font-size: $h4;
+    font-size: $h4;
 }
 h5 {
-  font-size: $h5;
+    font-size: $h5;
 }
 
 h1:first-child,
@@ -83,7 +83,7 @@ h2:first-child,
 h3:first-child,
 h4:first-child,
 h5:first-child {
-  margin-top: 0em;
+    margin-top: 0em;
 }
 
 h1:last-child,
@@ -91,7 +91,7 @@ h2:last-child,
 h3:last-child,
 h4:last-child,
 h5:last-child {
-  margin-bottom: 0em;
+    margin-bottom: 0em;
 }
 
 /*******************************
@@ -99,14 +99,14 @@ h5:last-child {
 *******************************/
 
 p {
-  margin: $paragraphMargin;
-  line-height: $paragraphLineHeight;
+    margin: $paragraphMargin;
+    line-height: $paragraphLineHeight;
 }
 p:first-child {
-  margin-top: 0em;
+    margin-top: 0em;
 }
 p:last-child {
-  margin-bottom: 0em;
+    margin-bottom: 0em;
 }
 
 /*-------------------
@@ -114,12 +114,12 @@ p:last-child {
 --------------------*/
 
 a {
-  color: $linkColor;
-  text-decoration: $linkUnderline;
+    color: $linkColor;
+    text-decoration: $linkUnderline;
 }
 a:hover {
-  color: $linkHoverColor;
-  text-decoration: $linkHoverUnderline;
+    color: $linkHoverColor;
+    text-decoration: $linkHoverUnderline;
 }
 
 /*******************************
@@ -127,44 +127,44 @@ a:hover {
 *******************************/
 
 @mixin addScrollbars() {
-  @if ($useCustomScrollbars) {
-    /* Force Simple Scrollbars */
-    body ::-webkit-scrollbar {
-      -webkit-appearance: none;
-      width: $customScrollbarWidth;
-      height: $customScrollbarHeight;
-    }
-    body ::-webkit-scrollbar-track {
-      background: $trackBackground;
-      border-radius: $trackBorderRadius;
-    }
-    body ::-webkit-scrollbar-thumb {
-      cursor: pointer;
-      border-radius: $thumbBorderRadius;
-      background: $thumbBackground;
-      transition: $thumbTransition;
-    }
-    body ::-webkit-scrollbar-thumb:window-inactive {
-      background: $thumbInactiveBackground;
-    }
-    body ::-webkit-scrollbar-thumb:hover {
-      background: $thumbHoverBackground;
-    }
+    @if ($useCustomScrollbars) {
+        /* Force Simple Scrollbars */
+        body ::-webkit-scrollbar {
+            -webkit-appearance: none;
+            width: $customScrollbarWidth;
+            height: $customScrollbarHeight;
+        }
+        body ::-webkit-scrollbar-track {
+            background: $trackBackground;
+            border-radius: $trackBorderRadius;
+        }
+        body ::-webkit-scrollbar-thumb {
+            cursor: pointer;
+            border-radius: $thumbBorderRadius;
+            background: $thumbBackground;
+            transition: $thumbTransition;
+        }
+        body ::-webkit-scrollbar-thumb:window-inactive {
+            background: $thumbInactiveBackground;
+        }
+        body ::-webkit-scrollbar-thumb:hover {
+            background: $thumbHoverBackground;
+        }
 
-    /* Inverted UI */
-    body .ui.inverted::-webkit-scrollbar-track {
-      background: $trackInvertedBackground;
+        /* Inverted UI */
+        body .ui.inverted::-webkit-scrollbar-track {
+            background: $trackInvertedBackground;
+        }
+        body .ui.inverted::-webkit-scrollbar-thumb {
+            background: $thumbInvertedBackground;
+        }
+        body .ui.inverted::-webkit-scrollbar-thumb:window-inactive {
+            background: $thumbInvertedInactiveBackground;
+        }
+        body .ui.inverted::-webkit-scrollbar-thumb:hover {
+            background: $thumbInvertedHoverBackground;
+        }
     }
-    body .ui.inverted::-webkit-scrollbar-thumb {
-      background: $thumbInvertedBackground;
-    }
-    body .ui.inverted::-webkit-scrollbar-thumb:window-inactive {
-      background: $thumbInvertedInactiveBackground;
-    }
-    body .ui.inverted::-webkit-scrollbar-thumb:hover {
-      background: $thumbInvertedHoverBackground;
-    }
-  }
 }
 
 /*******************************
@@ -173,33 +173,33 @@ a:hover {
 
 /* Site */
 ::-webkit-selection {
-  background-color: $highlightBackground;
-  color: $highlightColor;
+    background-color: $highlightBackground;
+    color: $highlightColor;
 }
 ::-moz-selection {
-  background-color: $highlightBackground;
-  color: $highlightColor;
+    background-color: $highlightBackground;
+    color: $highlightColor;
 }
 ::selection {
-  background-color: $highlightBackground;
-  color: $highlightColor;
+    background-color: $highlightBackground;
+    color: $highlightColor;
 }
 
 /* Form */
 textarea::-webkit-selection,
 input::-webkit-selection {
-  background-color: $inputHighlightBackground;
-  color: $inputHighlightColor;
+    background-color: $inputHighlightBackground;
+    color: $inputHighlightColor;
 }
 textarea::-moz-selection,
 input::-moz-selection {
-  background-color: $inputHighlightBackground;
-  color: $inputHighlightColor;
+    background-color: $inputHighlightBackground;
+    color: $inputHighlightColor;
 }
 textarea::selection,
 input::selection {
-  background-color: $inputHighlightBackground;
-  color: $inputHighlightColor;
+    background-color: $inputHighlightBackground;
+    color: $inputHighlightColor;
 }
 
 @include addScrollbars();

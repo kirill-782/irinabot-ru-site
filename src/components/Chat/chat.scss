@@ -1,62 +1,62 @@
 .ui.card.chat {
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  background: white;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: white;
 
-  max-height: 500px;
-  overflow-y: auto;
+    max-height: 500px;
+    overflow-y: auto;
 
-  width: 580px;
+    width: 580px;
 
-  @media (max-width: 700px) {
-    width: 85%;
-  }
+    @media (max-width: 700px) {
+        width: 85%;
+    }
 }
 
 .chat-feed {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .ui.comments .reply.form .chat-textarea textarea {
-  height: auto;
+    height: auto;
 }
 
 .ui.label.chat-label-icon:first-child {
-  margin-right: 10px;
+    margin-right: 10px;
 }
 
 .chat .remove-user-button {
-  color: red;
+    color: red;
 }
 
 .dark {
-  .ui.card.chat {
-    background: #343434;
-  }
+    .ui.card.chat {
+        background: #343434;
+    }
 
-  .ui.cards > .card,
-  .ui.card {
-    box-shadow: 0px 1px 3px 0px #101010, 0px 0px 0px 1px #101010;
-  }
+    .ui.cards > .card,
+    .ui.card {
+        box-shadow: 0px 1px 3px 0px #101010, 0px 0px 0px 1px #101010;
+    }
 
-  .ui.feed > .event > .label .icon {
-    color: rgb(255 255 255 / 66%);
-  }
+    .ui.feed > .event > .label .icon {
+        color: rgb(255 255 255 / 66%);
+    }
 
-  .ui.primary.buttons .button,
-  .ui.primary.button {
-    background-color: #1c1c1c;
-    padding-top: 11px;
-    padding-bottom: 11px;
-  }
+    .ui.primary.buttons .button,
+    .ui.primary.button {
+        background-color: #1c1c1c;
+        padding-top: 11px;
+        padding-bottom: 11px;
+    }
 
-  .ui.primary.buttons .button:hover,
-  .ui.primary.button:hover,
-  .ui.primary.buttons .button:active,
-  .ui.primary.button:active {
-    background: #2a2a2a;
-    box-shadow: 0px 0px 0px 1px #2a2a2a inset;
-    color: #d3d3d3;
-  }
+    .ui.primary.buttons .button:hover,
+    .ui.primary.button:hover,
+    .ui.primary.buttons .button:active,
+    .ui.primary.button:active {
+        background: #2a2a2a;
+        box-shadow: 0px 0px 0px 1px #2a2a2a inset;
+        color: #d3d3d3;
+    }
 }

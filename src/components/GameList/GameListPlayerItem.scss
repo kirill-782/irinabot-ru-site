@@ -36,153 +36,153 @@ $d_emerald: #029527;
 
 .ui.list .list > a.item.player-name,
 .ui.list > a.item.player-name {
-  padding: 3px;
-  border-radius: 4px;
+    padding: 3px;
+    border-radius: 4px;
 
-  color: #000000;
+    color: #000000;
 
-  &.red {
-    background: rgba($red, $opacity);
-  }
+    &.red {
+        background: rgba($red, $opacity);
+    }
 
-  &.blue {
-    background: rgba($blue, $opacity);
-  }
+    &.blue {
+        background: rgba($blue, $opacity);
+    }
 
-  &.teal {
-    background: rgba($teal, $opacity);
-  }
+    &.teal {
+        background: rgba($teal, $opacity);
+    }
 
-  &.purple {
-    background: rgba($purple, $opacity);
-  }
+    &.purple {
+        background: rgba($purple, $opacity);
+    }
 
-  &.yellow {
-    background: rgba($yellow, $opacity);
-  }
+    &.yellow {
+        background: rgba($yellow, $opacity);
+    }
 
-  &.orange {
-    background: rgba($orange, $opacity);
-  }
+    &.orange {
+        background: rgba($orange, $opacity);
+    }
 
-  &.green {
-    background: rgba($green, $opacity);
-  }
+    &.green {
+        background: rgba($green, $opacity);
+    }
 
-  &.pink {
-    background: rgba($pink, $opacity);
-  }
+    &.pink {
+        background: rgba($pink, $opacity);
+    }
 
-  &.gray {
-    background: rgba($gray, $opacity);
-  }
+    &.gray {
+        background: rgba($gray, $opacity);
+    }
 
-  &.light-blue {
-    background: rgba($light-blue, $opacity);
-  }
+    &.light-blue {
+        background: rgba($light-blue, $opacity);
+    }
 
-  &.dark-green {
-    background: rgba($dark-green, $opacity);
-  }
+    &.dark-green {
+        background: rgba($dark-green, $opacity);
+    }
 
-  &.brown {
-    background: rgba($brown, $opacity);
-  }
+    &.brown {
+        background: rgba($brown, $opacity);
+    }
 
-  &.maroon {
-    background: rgba($maroon, $opacity);
-  }
+    &.maroon {
+        background: rgba($maroon, $opacity);
+    }
 
-  &.navy {
-    background: rgba($navy, $opacity);
-  }
+    &.navy {
+        background: rgba($navy, $opacity);
+    }
 
-  &.turquoise {
-    background: rgba($turquoise, $opacity);
-  }
+    &.turquoise {
+        background: rgba($turquoise, $opacity);
+    }
 
-  &.violet {
-    background: rgba($violet, $opacity);
-  }
+    &.violet {
+        background: rgba($violet, $opacity);
+    }
 
-  &.violet {
-    background: rgba($violet, $opacity);
-  }
+    &.violet {
+        background: rgba($violet, $opacity);
+    }
 
-  &.wheat {
-    background: rgba($wheat, $opacity);
-  }
+    &.wheat {
+        background: rgba($wheat, $opacity);
+    }
 
-  &.peach {
-    background: rgba($peach, $opacity);
-  }
+    &.peach {
+        background: rgba($peach, $opacity);
+    }
 
-  &.mint {
-    background: rgba($mint, $opacity);
-  }
+    &.mint {
+        background: rgba($mint, $opacity);
+    }
 
-  &.leavender {
-    background: rgba($leavender, $opacity);
-  }
+    &.leavender {
+        background: rgba($leavender, $opacity);
+    }
 
-  &.coal {
-    background: rgba($coal, $opacity);
-  }
+    &.coal {
+        background: rgba($coal, $opacity);
+    }
 
-  &.snow {
-    background: rgba($snow, $opacity);
-  }
+    &.snow {
+        background: rgba($snow, $opacity);
+    }
 
-  &.emerald {
-    background: rgba($emerald, $opacity);
-  }
+    &.emerald {
+        background: rgba($emerald, $opacity);
+    }
 
-  &.peanut {
-    background: rgba($peanut, $opacity);
-  }
+    &.peanut {
+        background: rgba($peanut, $opacity);
+    }
 }
 
 .ui.horizontal.list > .item.player-name:first-child,
 .ui.horizontal.list > .item.player-name:last-child {
-  padding-top: 3px;
-  padding-bottom: 3px;
+    padding-top: 3px;
+    padding-bottom: 3px;
 }
 
 .dark {
-  .ui.list .list > a.item.player-name,
-  .ui.list > a.item.player-name {
-    color: #e0e0e0;
+    .ui.list .list > a.item.player-name,
+    .ui.list > a.item.player-name {
+        color: #e0e0e0;
 
-    &.blue {
-      background: rgba($d_blue, $opacity);
-    }
+        &.blue {
+            background: rgba($d_blue, $opacity);
+        }
 
-    &.purple {
-      background: rgba($d_purple, $opacity);
-    }
+        &.purple {
+            background: rgba($d_purple, $opacity);
+        }
 
-    &.brown {
-      background: rgba($d_brown, $opacity);
-    }
+        &.brown {
+            background: rgba($d_brown, $opacity);
+        }
 
-    &.dark-green {
-      background: rgba($d_dark-green, $opacity);
-    }
+        &.dark-green {
+            background: rgba($d_dark-green, $opacity);
+        }
 
-    &.maroon {
-      background: rgba($d_maroon, $opacity);
-    }
+        &.maroon {
+            background: rgba($d_maroon, $opacity);
+        }
 
-    &.navy {
-      background: rgba($d_navy, $opacity);
-    }
+        &.navy {
+            background: rgba($d_navy, $opacity);
+        }
 
-    &.coal {
-      background: rgba($d_coal, $opacity);
-    }
+        &.coal {
+            background: rgba($d_coal, $opacity);
+        }
 
-    &.emerald {
-      background: rgba($d_emerald, $opacity);
+        &.emerald {
+            background: rgba($d_emerald, $opacity);
+        }
     }
-  }
 }

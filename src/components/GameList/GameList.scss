@@ -1,124 +1,124 @@
 .hidden {
-  display: none;
+    display: none;
 }
 
 .game-vip {
-  background: #c1c6ff;
+    background: #c1c6ff;
 }
 
 .game-started {
-  background: #ffc1c1;
+    background: #ffc1c1;
 }
 
 .game-external {
-  background: #feffc1;
+    background: #feffc1;
 }
 
 .game-list-row:hover {
-  background: #d1ffd1;
+    background: #d1ffd1;
 }
 
 .game-selected {
-  background: #c1ffc1 !important;
+    background: #c1ffc1 !important;
 }
 
 .iccup {
-  color: #ff2121;
+    color: #ff2121;
 }
 
 .duration {
-  color: #ff2121;
+    color: #ff2121;
 }
 
 .dark {
-  .game-vip {
-    background: #c1c6ff2e;
-  }
+    .game-vip {
+        background: #c1c6ff2e;
+    }
 
-  .game-started {
-    background: #ffc1c12e;
-  }
+    .game-started {
+        background: #ffc1c12e;
+    }
 
-  .game-external {
-    background: #feffc12e;
-  }
+    .game-external {
+        background: #feffc12e;
+    }
 
-  .game-list-row:hover {
-    background: #d1ffd12e;
-  }
+    .game-list-row:hover {
+        background: #d1ffd12e;
+    }
 
-  .game-selected {
-    background: #c1ffc160 !important;
-  }
+    .game-selected {
+        background: #c1ffc160 !important;
+    }
 
-  .iccup {
-    color: #df2121;
-    cursor: pointer;
-  }
+    .iccup {
+        color: #df2121;
+        cursor: pointer;
+    }
 
-  .duration {
-    color: #df2121;
-  }
+    .duration {
+        color: #df2121;
+    }
 }
 
 .online-stats-column .how-btn,
 .online-stats-column .ui.how-btn {
-  width: 100%;
-  margin-bottom: 3px;
-  height: 35px;
-  padding: 0;
+    width: 100%;
+    margin-bottom: 3px;
+    height: 35px;
+    padding: 0;
 }
 
 @media only screen and (min-width: 768px) {
-  .game-list {
-    .game-title {
-      overflow: hidden;
-      display: inline-block;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      vertical-align: middle;
-      width: 160px;
+    .game-list {
+        .game-title {
+            overflow: hidden;
+            display: inline-block;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            vertical-align: middle;
+            width: 160px;
+        }
     }
-  }
 }
 
 a.gachi {
-  display: flex;
-  justify-content: center;
+    display: flex;
+    justify-content: center;
 
-  & > img {
-    display: block;
-    max-height: 75px;
-    max-width: 100% !important;
-  }
+    & > img {
+        display: block;
+        max-height: 75px;
+        max-width: 100% !important;
+    }
 }
 
 @media only screen and (min-width: 1200px) {
-  .online-stats-column .how-btn,
-  .online-stats-column .ui.how-btn {
-    width: 220px;
-  }
-
-  .game-list {
-    .game-title {
-      width: 210px;
+    .online-stats-column .how-btn,
+    .online-stats-column .ui.how-btn {
+        width: 220px;
     }
-  }
+
+    .game-list {
+        .game-title {
+            width: 210px;
+        }
+    }
 }
 
 @media only screen and (min-width: 1450px) {
-  .ui.container.game-list {
-    width: 1400px;
-  }
-
-  .online-stats-column .how-btn,
-  .online-stats-column .ui.how-btn {
-    width: 239px;
-  }
-
-  .game-list {
-    .game-title {
-      width: 250px;
+    .ui.container.game-list {
+        width: 1400px;
     }
-  }
+
+    .online-stats-column .how-btn,
+    .online-stats-column .ui.how-btn {
+        width: 239px;
+    }
+
+    .game-list {
+        .game-title {
+            width: 250px;
+        }
+    }
 }

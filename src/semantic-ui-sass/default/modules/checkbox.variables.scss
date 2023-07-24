@@ -14,10 +14,8 @@ $labelDistance: 1.85714em; /* 26px $ 14/em */
 $checkboxBackground: $white;
 $checkboxBorder: 1px solid $solidBorderColor;
 $checkboxBorderRadius: $exact3px;
-$checkboxTransition: border $defaultDuration $defaultEasing,
-  opacity $defaultDuration $defaultEasing,
-  transform $defaultDuration $defaultEasing,
-  box-shadow $defaultDuration $defaultEasing;
+$checkboxTransition: border $defaultDuration $defaultEasing, opacity $defaultDuration $defaultEasing,
+    transform $defaultDuration $defaultEasing, box-shadow $defaultDuration $defaultEasing;
 
 /* Checkmark */
 $checkboxCheckFontSize: 14px;
@@ -149,7 +147,7 @@ $toggleHeight: $toggleHandleSize;
 $toggleHandleRadius: $circularRadius;
 $toggleHandleOffset: 0rem;
 $toggleHandleTransition: background $sliderTransitionDuration $defaultEasing,
-  left $sliderTransitionDuration $defaultEasing;
+    left $sliderTransitionDuration $defaultEasing;
 
 $toggleLaneBackground: $transparentBlack;
 $toggleLaneHeight: $toggleHandleSize;

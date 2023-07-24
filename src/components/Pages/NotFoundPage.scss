@@ -1,12 +1,12 @@
 .container.not-found {
-  height: "90vh";
+    height: "90vh";
 }
 
 .container.not-found > div.centerd {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: auto;
-  height: auto;
-  transform: translateX(-50%) translateY(-50%);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: auto;
+    height: auto;
+    transform: translateX(-50%) translateY(-50%);
 }

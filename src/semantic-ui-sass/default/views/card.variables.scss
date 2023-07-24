@@ -25,8 +25,7 @@ $borderShadow: 0px 0px 0px $borderWidth $solidBorderColor;
 $boxShadow: $shadowBoxShadow, $borderShadow;
 $border: none;
 $zIndex: "";
-$transition: box-shadow $defaultDuration $defaultEasing,
-  transform $defaultDuration $defaultEasing;
+$transition: box-shadow $defaultDuration $defaultEasing, transform $defaultDuration $defaultEasing;
 
 /* Card Group */
 $horizontalSpacing: 1em;
@@ -148,8 +147,7 @@ $linkHoverZIndex: 5;
 $linkHoverRaiseDistance: 3px;
 $linkHoverTransform: translateY(-$linkHoverRaiseDistance);
 
-$shadowHoverBoxShadow: 0px $shadowDistance $linkHoverRaiseDistance 0px
-  $solidSelectedBorderColor;
+$shadowHoverBoxShadow: 0px $shadowDistance $linkHoverRaiseDistance 0px $solidSelectedBorderColor;
 $linkHoverBoxShadow: $shadowHoverBoxShadow, $borderShadow;
 
 /* Raised */
@@ -196,8 +194,7 @@ $tenCardOffset: (-$tenCardSpacing);
 /* Stackable */
 $stackableRowSpacing: 1em;
 $stackableCardSpacing: 1em;
-$stackableMargin: "calc(" + $oneColumn + " - " + ($stackableCardSpacing * 2) +
-  ")";
+$stackableMargin: "calc(" + $oneColumn + " - " + ($stackableCardSpacing * 2) + ")";
 
 /* Sizes */
 $medium: 1em;

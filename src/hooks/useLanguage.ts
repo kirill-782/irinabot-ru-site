@@ -4,86 +4,82 @@ import { importLocales } from "../utils/LocaleUtils";
 import { LanguageRepositoryKeys, LanguageRepository } from "../localization/Lang.ru";
 
 type stringMap = {
-  [key: string]: string | boolean | number | null | undefined;
+    [key: string]: string | boolean | number | null | undefined;
 };
 
-export type GetLanguageStaring = (
-  id: LanguageRepositoryKeys,
-  options?: stringMap,
-  language?: string
-) => string;
+export type GetLanguageStaring = (id: LanguageRepositoryKeys, options?: stringMap, language?: string) => string;
 
 type UseLanguageResult = [
-  (language: string) => void,
-  (language: string, data: any) => void,
-  GetLanguageStaring,
-  string,
-  LanguageRepository
+    (language: string) => void,
+    (language: string, data: any) => void,
+    GetLanguageStaring,
+    string,
+    LanguageRepository
 ];
 
 export const useLanguage = (): UseLanguageResult => {
-  const [selectedLanguage, setSelectedLanguage] = useState<string>("");
-  const [data, setData] = useState<any>({});
+    const [selectedLanguage, setSelectedLanguage] = useState<string>("");
+    const [data, setData] = useState<any>({});
 
-  const getString = useCallback(
-    (id: string, options?: stringMap, language?: string): string => {
-      const currentLanguage = language || selectedLanguage;
-      const languagePath = `${currentLanguage}.${id}`;
+    const getString = useCallback(
+        (id: string, options?: stringMap, language?: string): string => {
+            const currentLanguage = language || selectedLanguage;
+            const languagePath = `${currentLanguage}.${id}`;
 
-      let result = data;
+            let result = data;
 
-      languagePath.split(".").map((i) => {
-        if (typeof result === "object") {
-          result = result[i];
-        } else result = undefined;
-      });
+            languagePath.split(".").map((i) => {
+                if (typeof result === "object") {
+                    result = result[i];
+                } else result = undefined;
+            });
 
-      if (result === undefined) return languagePath;
+            if (result === undefined) return languagePath;
 
-      if (options) {
-        Object.entries(options).forEach((i) => {
-          result = result.replaceAll(`{${i[0]}}`, i[1].toString());
+            if (options) {
+                Object.entries(options).forEach((i) => {
+                    result = result.replaceAll(`{${i[0]}}`, i[1].toString());
+                });
+            }
+
+            return result;
+        },
+        [data, selectedLanguage]
+    );
+
+    const pushLanguageData = (language: string, updateData: any | null) => {
+        setData((data) => {
+            if (!updateData) {
+                delete data[language];
+                return { ...data };
+            }
+            return { ...data, [language]: updateData };
         });
-      }
+    };
 
-      return result;
-    },
-    [data, selectedLanguage]
-  );
+    const loadLanguage = useCallback(async (language: string) => {
+        const result = await importLocales(language);
 
-  const pushLanguageData = (language: string, updateData: any | null) => {
-    setData((data) => {
-      if (!updateData) {
-        delete data[language];
-        return { ...data };
-      }
-      return { ...data, [language]: updateData };
-    });
-  };
+        TimeAgo.addLocale(result.timeAgo.default);
+        TimeAgo.addDefaultLocale(result.timeAgo.default);
+        pushLanguageData(language, result.site.default);
 
-  const loadLanguage = useCallback(async (language: string) => {
-    const result = await importLocales(language);
+        setSelectedLanguage(language);
 
-    TimeAgo.addLocale(result.timeAgo.default);
-    TimeAgo.addDefaultLocale(result.timeAgo.default);
-    pushLanguageData(language, result.site.default);
+        return true;
+    }, []);
 
-    setSelectedLanguage(language);
+    return [
+        loadLanguage,
+        pushLanguageData,
+        getString,
+        selectedLanguage,
+        new Proxy(data[selectedLanguage] || {}, {
+            get: (target, key) => {
+                if (key in target) return target[key];
 
-    return true;
-  }, []);
-
-  return [
-    loadLanguage,
-    pushLanguageData,
-    getString,
-    selectedLanguage,
-    new Proxy(data[selectedLanguage] || {}, {
-      get: (target, key) => {
-        if (key in target) return target[key];
-
-        return key;
-      },
-    }),
-  ];
+                return key;
+            },
+        }),
+    ];
 };

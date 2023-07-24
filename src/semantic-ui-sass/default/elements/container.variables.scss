@@ -20,13 +20,11 @@ $tabletWidth: $tabletBreakpoint - ($tabletMinimumGutter * 2) - $scrollbarWidth;
 $tabletGutter: auto;
 
 $computerMinimumGutter: ($emSize * 1.5);
-$computerWidth: $computerBreakpoint - ($computerMinimumGutter * 2) -
-  $scrollbarWidth;
+$computerWidth: $computerBreakpoint - ($computerMinimumGutter * 2) - $scrollbarWidth;
 $computerGutter: auto;
 
 $largeMonitorMinimumGutter: ($emSize * 2);
-$largeMonitorWidth: $largeMonitorBreakpoint - ($largeMonitorMinimumGutter * 2) -
-  $scrollbarWidth;
+$largeMonitorWidth: $largeMonitorBreakpoint - ($largeMonitorMinimumGutter * 2) - $scrollbarWidth;
 $largeMonitorGutter: auto;
 
 /* Coupling (Add Negative Margin to container size) */
@@ -41,18 +39,13 @@ $largeMonitorGridWidth: "calc(" $largeMonitorWidth " + " $gridGutterWidth ")";
 
 $mobileRelaxedGridWidth: $mobileWidth;
 $tabletRelaxedGridWidth: "calc(" $tabletWidth " + " $relaxedGridGutterWidth ")";
-$computerRelaxedGridWidth: "calc(" $computerWidth " + " $relaxedGridGutterWidth
-  ")";
-$largeMonitorRelaxedGridWidth: "calc(" $largeMonitorWidth " + "
-  $relaxedGridGutterWidth ")";
+$computerRelaxedGridWidth: "calc(" $computerWidth " + " $relaxedGridGutterWidth ")";
+$largeMonitorRelaxedGridWidth: "calc(" $largeMonitorWidth " + " $relaxedGridGutterWidth ")";
 
 $mobileVeryRelaxedGridWidth: $mobileWidth;
-$tabletVeryRelaxedGridWidth: "calc(" $tabletWidth " + "
-  $veryRelaxedGridGutterWidth ")";
-$computerVeryRelaxedGridWidth: "calc(" $computerWidth " + "
-  $veryRelaxedGridGutterWidth ")";
-$largeMonitorVeryRelaxedGridWidth: "calc(" $largeMonitorWidth " + "
-  $veryRelaxedGridGutterWidth ")";
+$tabletVeryRelaxedGridWidth: "calc(" $tabletWidth " + " $veryRelaxedGridGutterWidth ")";
+$computerVeryRelaxedGridWidth: "calc(" $computerWidth " + " $veryRelaxedGridGutterWidth ")";
+$largeMonitorVeryRelaxedGridWidth: "calc(" $largeMonitorWidth " + " $veryRelaxedGridGutterWidth ")";
 
 /*-------------------
        Types
