@@ -14,7 +14,7 @@ const SELECTABLE_RACE = 64;
 interface OptionWithLanguageKey {
     langKey: LanguageRepositoryKeys;
     value: number;
-    [key: string]: any;
+    teamNumber?: number;
 }
 
 const slotStatusOptions = [
@@ -42,7 +42,7 @@ const slotStatusOptions = [
 
 const slotRacesOptions = [
     {
-        langKey: "slotsTeamNumber",
+        langKey: "slotsHuman",
         value: 1,
     },
     {
@@ -125,10 +125,8 @@ function SlotsEdit({ slots, options, onSlotsChange }: SlotsEditProps) {
         }
     }
 
-    const collectSlots = () => {
-        let slots: SlotExtends[] = [];
-
-        return slots
+    const collectSlots = (): SlotExtends[] => {
+        return []
             .concat(...teamSlots)
             .filter((i) => !!i)
             .sort((a, b) => a.sid - b.sid);
@@ -176,121 +174,124 @@ function SlotsEdit({ slots, options, onSlotsChange }: SlotsEditProps) {
                                     <Table.HeaderCell width={2}>{lang.slotsHandicapHeader}</Table.HeaderCell>
                                 </Table.Header>
                             )}
-                            {slots.map((slot, index) => {
-                                return (
-                                    <Table.Row key={index}>
-                                        <Table.Cell width={1}>{slot.sid + 1}</Table.Cell>
-                                        <Table.Cell width={4}>
-                                            <Form.Dropdown
-                                                options={slotStatusOptions.map((i) => {
-                                                    return { ...i, text: t(i.langKey) };
-                                                })}
-                                                value={slot.status}
-                                                onChange={(_, data) => {
-                                                    if (onSlotsChange)
-                                                        onSlotsChange(
-                                                            assemblySlots({
-                                                                ...slot,
-                                                                status: data.value as number,
-                                                            })
-                                                        );
-                                                }}
-                                            ></Form.Dropdown>
-                                        </Table.Cell>
-                                        <Table.Cell width={3}>
-                                            <Form.Dropdown
-                                                options={slotTeamsOptions.map((i) => {
-                                                    return { ...i, text: t(i.langKey, { number: i.teamNumber }) };
-                                                })}
-                                                value={slot.team}
-                                                onChange={(_, data) => {
-                                                    if (onSlotsChange)
-                                                        onSlotsChange(
-                                                            assemblySlots({
-                                                                ...slot,
-                                                                team: data.value as number,
-                                                            })
-                                                        );
-                                                }}
-                                            ></Form.Dropdown>
-                                        </Table.Cell>
-                                        <Table.Cell width={4}>
-                                            <Form.Dropdown
-                                                options={slotRacesOptions.map((i) => {
-                                                    return { ...i, text: t(i.text) };
-                                                })}
-                                                value={slot.race & ALL_RACES_FLAGS}
-                                                onChange={(_, data) => {
-                                                    if (onSlotsChange)
-                                                        onSlotsChange(
-                                                            assemblySlots({
-                                                                ...slot,
-                                                                race:
-                                                                    (slot.race & ~ALL_RACES_FLAGS) |
-                                                                    (data.value as number),
-                                                            })
-                                                        );
-                                                }}
-                                            ></Form.Dropdown>
-                                            <Form.Checkbox
-                                                checked={!!(slot.race & SELECTABLE_RACE)}
-                                                label={lang.slotsCanChange}
-                                                onChange={(_, data) => {
-                                                    if (onSlotsChange) {
-                                                        if (data.checked) {
+                            <Table.Body>
+                                {slots.map((slot, index) => {
+                                    return (
+                                        <Table.Row key={index}>
+                                            <Table.Cell width={1}>{slot.sid + 1}</Table.Cell>
+                                            <Table.Cell width={4}>
+                                                <Form.Dropdown
+                                                    options={slotStatusOptions.map((i) => {
+                                                        return { ...i, text: t(i.langKey) };
+                                                    })}
+                                                    value={slot.status}
+                                                    onChange={(_, data) => {
+                                                        if (onSlotsChange)
                                                             onSlotsChange(
                                                                 assemblySlots({
                                                                     ...slot,
-                                                                    race: slot.race | SELECTABLE_RACE,
-                                                                })
+                                                                    status: data.value as number,
+                                                                }),
                                                             );
-                                                        } else {
+                                                    }}
+                                                ></Form.Dropdown>
+                                            </Table.Cell>
+                                            <Table.Cell width={3}>
+                                                <Form.Dropdown
+                                                    options={slotTeamsOptions.map((i) => {
+                                                        return { ...i, text: t(i.langKey, { team: i.teamNumber }) };
+                                                    })}
+                                                    value={slot.team}
+                                                    onChange={(_, data) => {
+                                                        if (onSlotsChange)
                                                             onSlotsChange(
                                                                 assemblySlots({
                                                                     ...slot,
-                                                                    race: slot.race & ~SELECTABLE_RACE,
-                                                                })
+                                                                    team: data.value as number,
+                                                                }),
                                                             );
+                                                    }}
+                                                ></Form.Dropdown>
+                                            </Table.Cell>
+                                            <Table.Cell width={4}>
+                                                <Form.Dropdown
+                                                    options={slotRacesOptions.map((i) => {
+                                                        console.log(i);
+                                                        return { ...i, text: t(i.langKey) };
+                                                    })}
+                                                    value={slot.race & ALL_RACES_FLAGS}
+                                                    onChange={(_, data) => {
+                                                        if (onSlotsChange)
+                                                            onSlotsChange(
+                                                                assemblySlots({
+                                                                    ...slot,
+                                                                    race:
+                                                                        (slot.race & ~ALL_RACES_FLAGS) |
+                                                                        (data.value as number),
+                                                                }),
+                                                            );
+                                                    }}
+                                                ></Form.Dropdown>
+                                                <Form.Checkbox
+                                                    checked={!!(slot.race & SELECTABLE_RACE)}
+                                                    label={lang.slotsCanChange}
+                                                    onChange={(_, data) => {
+                                                        if (onSlotsChange) {
+                                                            if (data.checked) {
+                                                                onSlotsChange(
+                                                                    assemblySlots({
+                                                                        ...slot,
+                                                                        race: slot.race | SELECTABLE_RACE,
+                                                                    }),
+                                                                );
+                                                            } else {
+                                                                onSlotsChange(
+                                                                    assemblySlots({
+                                                                        ...slot,
+                                                                        race: slot.race & ~SELECTABLE_RACE,
+                                                                    }),
+                                                                );
+                                                            }
                                                         }
-                                                    }
-                                                }}
-                                            ></Form.Checkbox>
-                                        </Table.Cell>
-                                        <Table.Cell width={1}>
-                                            <Form.Dropdown
-                                                options={slotColorsOptions}
-                                                value={slot.colour}
-                                                scrolling
-                                                onChange={(_, data) => {
-                                                    if (onSlotsChange)
-                                                        onSlotsChange(
-                                                            assemblySlots({
-                                                                ...slot,
-                                                                colour: data.value as number,
-                                                            })
-                                                        );
-                                                }}
-                                            ></Form.Dropdown>
-                                        </Table.Cell>
-                                        <Table.Cell width={2}>
-                                            <Form.Input
-                                                fluid
-                                                type="number"
-                                                value={slot.handicap}
-                                                onChange={(_, data) => {
-                                                    if (onSlotsChange)
-                                                        onSlotsChange(
-                                                            assemblySlots({
-                                                                ...slot,
-                                                                handicap: parseInt(data.value),
-                                                            })
-                                                        );
-                                                }}
-                                            />
-                                        </Table.Cell>
-                                    </Table.Row>
-                                );
-                            })}
+                                                    }}
+                                                ></Form.Checkbox>
+                                            </Table.Cell>
+                                            <Table.Cell width={1}>
+                                                <Form.Dropdown
+                                                    options={slotColorsOptions}
+                                                    value={slot.colour}
+                                                    scrolling
+                                                    onChange={(_, data) => {
+                                                        if (onSlotsChange)
+                                                            onSlotsChange(
+                                                                assemblySlots({
+                                                                    ...slot,
+                                                                    colour: data.value as number,
+                                                                }),
+                                                            );
+                                                    }}
+                                                ></Form.Dropdown>
+                                            </Table.Cell>
+                                            <Table.Cell width={2}>
+                                                <Form.Input
+                                                    fluid
+                                                    type="number"
+                                                    value={slot.handicap}
+                                                    onChange={(_, data) => {
+                                                        if (onSlotsChange)
+                                                            onSlotsChange(
+                                                                assemblySlots({
+                                                                    ...slot,
+                                                                    handicap: parseInt(data.value),
+                                                                }),
+                                                            );
+                                                    }}
+                                                />
+                                            </Table.Cell>
+                                        </Table.Row>
+                                    );
+                                })}
+                            </Table.Body>
                         </Table>
                     </React.Fragment>
                 );

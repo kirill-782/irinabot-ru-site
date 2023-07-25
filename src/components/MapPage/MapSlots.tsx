@@ -135,11 +135,9 @@ function MapSlots({ slots, options }: MapSlotsProps) {
                                     <Table.Row key={index}>
                                         <Table.Cell width={4}>{lang[convertSlotTypeToString(slot.status)]}</Table.Cell>
                                         <Table.Cell width={3}>
-                                            <LanguageKey stringId="slotsTeamNumber" team={slot.team + 1}>
-                                                {" "}
-                                            </LanguageKey>
+                                            <LanguageKey stringId="slotsTeamNumber" team={slot.team + 1}/>
                                         </Table.Cell>
-                                        <Table.Cell width={4}>{lang[convertSlotTypeToString(slot.race)]}</Table.Cell>
+                                        <Table.Cell width={4}>{lang[convertSlotRaceToString(slot.race)]}</Table.Cell>
                                         <Table.Cell width={1}>
                                             <span className={`slot-color ${getClassColorByIndex(slot.colour)}`}></span>
                                         </Table.Cell>

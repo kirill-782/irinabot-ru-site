@@ -13,7 +13,7 @@ function LanguageKey({ stringId, ...options }: LanguageKeyProps) {
     const { language } = useContext(AppRuntimeSettingsContext);
     const t = language.getString;
 
-    return <Markdown>{t(stringId, options)}</Markdown>;
+    return <Markdown light>{t(stringId, options)}</Markdown>;
 }
 
 export default LanguageKey;

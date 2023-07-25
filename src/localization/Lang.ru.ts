@@ -48,7 +48,7 @@ const LanguageData = {
     configSelectTabRemoveError: "Ошибка удаления",
     configSelectTabUpdateDate: "Дата обновления: {date}",
     configSelectTabGoToMap: "Перейти к карте",
-    configSelectTabNoConfigMessage: "Вы не создали еще ниодного конфига. Создать конфиг можно на странице карты.",
+    configSelectTabNoConfigMessage: "Вы не создали еще ни одного конфига. Создать конфиг можно на странице карты.",
 
     configPreview: "Вы - конгфиг **{name}** для версии **{version}**",
 
@@ -224,9 +224,9 @@ const LanguageData = {
     mapStatsInGamePlayers: "Игроков в играх",
     mapStatsInLobbyPlayers: "Игроков в лобби",
 
-    mapHeaderAuthor: "Автор: ",
-    mapHeaderPlayerRecommendation: "**Рекомендации к игрокам:** {value}",
-    mapHeaderSourceFileName: "**Имя загруженного файла:**",
+    mapHeaderAuthor: "**Автор:** ",
+    mapHeaderPlayerRecommendation: "**Рекомендации к игрокам:**",
+    mapHeaderSourceFileName: "**Имя загруженного файла:** {value}",
     mapHeaderBotFileName: "**Имя файла на боте:** {value}",
 
     mapFlagsCheat: "Карта содержит читпак",
@@ -402,7 +402,7 @@ const LanguageData = {
     autopayPagePayCard: "Оплата картой",
     autopayPagePayYooMoney: "Оплата Yoo Money",
     autopayPageHelpNotification:
-        "Если вы подключаете автохост впервые - напишите в группу ВК ([https://vk.com/irina_bot](https://vk.com/irina_bot)), либо напишите администрации на сервере Discord ([https://discord.gg/cTfyEZT](https://vk.com/irina_bot)). Там вам выдадут инстрцкцию по подключению.",
+        "Если вы подключаете автохост впервые - напишите в группу ВК ([https://vk.com/irina_bot](https://vk.com/irina_bot)), либо напишите администрации на сервере Discord ([https://discord.gg/cTfyEZT](https://vk.com/irina_bot)). Там вам выдадут инструкцию по подключению.",
 
     oathStubPageText: "Я окошко интроверт. Мне не нравится, что на меня кто то смотрит. Закрой пожалуйста меня.",
 

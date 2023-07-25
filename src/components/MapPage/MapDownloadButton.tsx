@@ -26,9 +26,7 @@ function MapDownloadButton({ downloadUrl, fileName, fileSize, className, id }: M
             href={`${downloadUrl}?as=${getBotFileName(fileName || "", id)}`}
         >
             <Icon name="download" />
-            <LanguageKey stringId="mapDownloadButton" value={mapSize.value} unit={mapSize.unit}>
-                {" "}
-            </LanguageKey>
+            <LanguageKey stringId="mapDownloadButton" value={mapSize.value} unit={mapSize.unit}/>
         </Button>
     );
 }

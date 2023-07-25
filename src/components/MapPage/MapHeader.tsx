@@ -28,18 +28,17 @@ function MapHeader() {
             <Grid.Column width={10}>
                 <Header>
                     <WarcraftIIIText>{map.mapInfo?.name}</WarcraftIIIText>
-                    <u>#{map.id}</u>
                     <MapStatusIcons {...map} />
                 </Header>
                 <p>
                     <WarcraftIIIText>{map.mapInfo?.description}</WarcraftIIIText>
                 </p>
                 <p>
-                    <LanguageKey stringId="mapHeaderSourceFileName" />
+                    <LanguageKey stringId="mapHeaderAuthor"/>{" "}
                     <WarcraftIIIText>{map.mapInfo?.author}</WarcraftIIIText>
                 </p>
                 <p>
-                    <LanguageKey stringId="mapHeaderPlayerRecommendation" />
+                    <LanguageKey stringId="mapHeaderPlayerRecommendation" />{" "}
                     <WarcraftIIIText>{map.mapInfo?.playerRecommendation}</WarcraftIIIText>
                 </p>
                 <p>
