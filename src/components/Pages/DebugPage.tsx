@@ -14,6 +14,7 @@ import {
 } from "semantic-ui-react";
 import GameListPlayerItem from "../GameList/GameListPlayerItem";
 import { toast } from "@kokomi/react-semantic-toasts";
+import WarcraftIIIText from "../WarcraftIIIText";
 
 function DebugPage() {
     const avialableColors: SemanticCOLORS[] = [
@@ -41,6 +42,14 @@ function DebugPage() {
             <Header as="h2" dividing>
                 Site
             </Header>
+
+            <Segment>
+                Зона текстов вара
+
+                <WarcraftIIIText>
+                    <b>|cFFFF0000Asuna</b>
+                </WarcraftIIIText>
+            </Segment>
 
             <Grid columns={3} stackable>
                 <Grid.Column>

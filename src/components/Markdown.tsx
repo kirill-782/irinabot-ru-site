@@ -3,6 +3,8 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import remarkTypograf from "@mavrin/remark-typograf";
 import remarkEmoji from "remark-emoji";
+import remarkDirective from "remark-directive";
+import remarkDirectiveRehype from "remark-directive-rehype";
 
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { docco, dark } from "react-syntax-highlighter/dist/esm/styles/hljs";
@@ -10,7 +12,21 @@ import { docco, dark } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import { currentTheme, E_THEME } from "../utils/Theme";
 import React from "react";
 
-import { Image, Table } from "semantic-ui-react";
+import { Image, Table, Message } from "semantic-ui-react";
+import { NavLink } from "react-router-dom";
+import WarcraftIIIText from "./WarcraftIIIText";
+
+declare global {
+    namespace JSX {
+        // this merges with the existing intrinsic elements, adding 'my-custom-tag' and its props
+        interface IntrinsicElements {
+            "w3c": {
+                children: React.ReactNode;
+                color: string;
+            };
+        }
+    }
+}
 
 interface MarkdownProps {
     children: string;
@@ -23,6 +39,8 @@ function Markdown({ children, light }: MarkdownProps) {
             remarkPlugins={[
                 remarkGfm,
                 remarkTypograf,
+                remarkDirective,
+                remarkDirectiveRehype,
                 [
                     remarkEmoji,
                     {
@@ -49,13 +67,35 @@ function Markdown({ children, light }: MarkdownProps) {
                     );
                 },
                 img({ node, ...props }) {
-                    return <Image {...props} size="medium" centered wrapped></Image>;
+                    return <Image {...props} />;
                 },
                 table({ node, children, ...props }) {
-                    return <Table>{children}</Table>;
+                    return <div style={{ overflowX: "scroll" }}>
+                        <Table striped>{children}</Table>
+                    </div>;
+                },
+                thead({ node, children, ...props }) {
+                    return <Table.Header>{children}</Table.Header>;
+                },
+                tbody({ node, children, ...props }) {
+                    return <Table.Body>{children}</Table.Body>;
+                },
+                tr({ node, children, ...props }) {
+                    return <Table.Row>{children}</Table.Row>;
+                },
+                td({ node, children, ...props }) {
+                    return <Table.Cell>{children}</Table.Cell>;
                 },
                 p({ node, children, ...props }) {
                     return light ? <>{children}</> : <p>{children}</p>;
+                },
+                a({ node, href, children, ...props }) {
+                    return href?.match(new RegExp("^(?:[a-z+]+:)?//", "i"))
+                        ? <a href={href} {...props} rel="nofollow noreferrer" target="_blank">{children}</a>
+                        : <NavLink to={href} {...props}>{children}</NavLink>;
+                },
+                w3c({ node, children, color }) {
+                    return <WarcraftIIIText style={{color}} ignoreTags={["|n"]} enableAlpha>{children}</WarcraftIIIText>;
                 },
             }}
         >

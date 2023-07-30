@@ -1,14 +1,14 @@
 import React, { ReactNode } from "react";
 
-export const parseWC3TagsReact = (WC3String: string, ignoreTags?: string[]) => {
+export const parseWC3TagsReact = (WC3String: string, ignoreTags?: string[], enableAlpha?: boolean) => {
     WC3String = WC3String.replace(/\r\n/g, "|n");
 
     let components: ReactNode[] = [];
     let colorData:
         | {
-              color: string;
-              components: ReactNode[];
-          }
+        color: string;
+        components: ReactNode[];
+    }
         | undefined;
 
     let key = 0;
@@ -22,8 +22,8 @@ export const parseWC3TagsReact = (WC3String: string, ignoreTags?: string[]) => {
                         style: { color: `#${colorData.color}`, margin: 0, padding: 0 },
                         key: ++key,
                     },
-                    ...colorData.components
-                )
+                    ...colorData.components,
+                ),
             );
             colorData = undefined;
         }
@@ -67,7 +67,8 @@ export const parseWC3TagsReact = (WC3String: string, ignoreTags?: string[]) => {
                 case "c":
                     pushColorTextIfExist();
 
-                    const color = WC3String.substring(nextTagPosition + 4, nextTagPosition + 10);
+                    const color = WC3String.substring(nextTagPosition + 4, nextTagPosition + 10)
+                        + (enableAlpha ? WC3String.substring(nextTagPosition + 2, nextTagPosition + 4) : "");
 
                     colorData = {
                         color,

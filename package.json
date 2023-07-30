@@ -36,6 +36,8 @@
     "react-syntax-highlighter": "^15.5.0",
     "react-time-ago": "^7.2.1",
     "remark": "^14.0.2",
+    "remark-directive": "^2.0.1",
+    "remark-directive-rehype": "^0.4.2",
     "remark-emoji": "^3.0.2",
     "remark-gfm": "^3.0.1",
     "semantic-ui-css": "2.4.1",

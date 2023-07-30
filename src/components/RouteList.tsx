@@ -5,6 +5,7 @@ import React from "react";
 import ForbiddenPage from "./Pages/ForbiddenPage";
 import Layout from "./Layout";
 import MapEditPage from "./Pages/MapEditPage";
+import HelpPage from "./Pages/HelpPage";
 
 const AutopayPage = React.lazy(() => import("./Pages/AutopayPage"));
 const CreateGamePage = React.lazy(() => import("./Pages/CreateGamePage"));
@@ -32,7 +33,7 @@ interface CondirionalRoutePath {
 }
 
 type CondirionalRoute = {
-    element: React.ReactNode | null;
+    element?: React.ReactNode | null;
     routes?: CondirionalRoute[];
     requiredAccessMask?: number;
     requiredAuthorities?: string[];
@@ -58,7 +59,23 @@ const routes: CondirionalRoute[] = [
             {
                 index: true,
                 element: <GameListPage />,
-                //requiredAuthorities: ["BETA_ACCESS"],
+            },
+            {
+                path: "help",
+                routes: [
+                    {
+                        path: ":section",
+                        element: <HelpPage />,
+                    },
+                    {
+                        path: ":section/:article",
+                        element: <HelpPage />,
+                    },
+                    {
+                        index: true,
+                        element: <HelpPage />,
+                    },
+                ],
             },
             {
                 path: "debug",
@@ -67,7 +84,6 @@ const routes: CondirionalRoute[] = [
             {
                 path: "gamelist",
                 element: <GameListPage />,
-                //requiredAuthorities: ["BETA_ACCESS"],
             },
             {
                 path: "autopay",
@@ -75,19 +91,16 @@ const routes: CondirionalRoute[] = [
             },
             {
                 path: "create",
-                element: undefined,
                 routes: [
                     {
                         index: true,
                         element: <CreateGamePage />,
                         requireAuth: true,
-                        //requiredAuthorities: ["BETA_ACCESS"],
                     },
                     {
                         path: "confirm",
                         element: <CreateGameConfirmPage />,
                         requireAuth: true,
-                        //requiredAuthorities: ["BETA_ACCESS"],
                     },
                 ],
             },
@@ -144,11 +157,11 @@ function RouteList() {
 
     const resultRoutes = useMemo(() => {
         const hasAccessToRoute = ({
-            requiredAuthorities,
-            requireAuth,
-            requireToken,
-            waitAuth,
-        }: CondirionalRoute): CheckRouteResult => {
+                                      requiredAuthorities,
+                                      requireAuth,
+                                      requireToken,
+                                      waitAuth,
+                                  }: CondirionalRoute): CheckRouteResult => {
             let result: CheckRouteResult = {
                 hasAccess: true,
                 waitAuth: waitAuth,
