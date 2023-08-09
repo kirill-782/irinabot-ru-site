@@ -12,9 +12,10 @@ import { docco, dark } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import { currentTheme, E_THEME } from "../utils/Theme";
 import React from "react";
 
-import { Image, Table, Message } from "semantic-ui-react";
+import { Image, Table, Message, Accordion, Icon, Divider } from "semantic-ui-react";
 import { NavLink } from "react-router-dom";
 import WarcraftIIIText from "./WarcraftIIIText";
+import Spoiler from "./Spoiler";
 
 declare global {
     namespace JSX {
@@ -24,12 +25,16 @@ declare global {
                 children: React.ReactNode;
                 color: string;
             };
+            "cat": {
+                "title"?: string
+                children: React.ReactNode
+            };
         }
     }
 }
 
 interface MarkdownProps {
-    children: string;
+    children?: string;
     light?: boolean;
 }
 
@@ -95,8 +100,24 @@ function Markdown({ children, light }: MarkdownProps) {
                         : <NavLink to={href} {...props}>{children}</NavLink>;
                 },
                 w3c({ node, children, color }) {
-                    return <WarcraftIIIText style={{color}} ignoreTags={["|n"]} enableAlpha>{children}</WarcraftIIIText>;
+                    return <WarcraftIIIText style={{ color }} ignoreTags={["|n"]}
+                                            enableAlpha>{children}</WarcraftIIIText>;
                 },
+                cat({ node, title, children }) {
+                    if(Array.isArray(children) && children.length === 2)
+                        return (
+                            <Spoiler title={children[0]}>{children[1]}</Spoiler>
+                        );
+
+
+                    return (
+                        <Spoiler title={title}>{children}</Spoiler>
+                    );
+                },
+                hr({node, ...props}) {
+                    console.log(props);
+                    return <Divider/>
+                }
             }}
         >
             {children}

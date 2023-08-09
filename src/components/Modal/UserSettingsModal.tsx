@@ -57,19 +57,6 @@ function UserSettingsModal(props) {
                     time: 20000,
                 });
             }
-
-            if (
-                data.detail.package.context === GLOBAL_CONTEXT_HEADER_CONSTANT &&
-                data.detail.package.type === GLOBAL_ADD_INTEGRATION_RESPONSE
-            ) {
-                toast({
-                    // тут тоже сам
-                    // я нихуя непонял
-                    title: lang.userSettingsModalPvpGnToastHeader,
-                    description: lang.userSettingsModalPvpGnToastDescription,
-                    time: 20000,
-                });
-            }
         };
 
         sockets.ghostSocket.addEventListener("package", onPackage);

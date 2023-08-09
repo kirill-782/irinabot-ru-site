@@ -19,24 +19,23 @@ import {
     GLOBAL_USER_AUTH_RESPONSE,
 } from "../models/websocket/HeaderConstants";
 import { ServerMapInfoConverter } from "../models/websocket/ServerMapInfo";
-import { ServerGameListConverter } from "./../models/websocket/ServerGameList";
-import { DataBuffer } from "./../utils/DataBuffer";
-import { AbstractPackage } from "./../models/websocket/AbstractPackage";
+import { ServerGameListConverter } from "../models/websocket/ServerGameList";
+import { DataBuffer } from "../utils/DataBuffer";
+import { AbstractPackage } from "../models/websocket/AbstractPackage";
 import { ServerWebsocketConnectStatsConverter } from "../models/websocket/ServerWebsocketConnectStats";
-import { GLOBAL_CONTEXT_HEADER_CONSTANT } from "./../models/websocket/HeaderConstants";
-import { ServerUserAuthConverter } from "./../models/websocket/ServerUserAuth";
+import { GLOBAL_CONTEXT_HEADER_CONSTANT } from "../models/websocket/HeaderConstants";
+import { ServerUserAuthConverter } from "../models/websocket/ServerUserAuth";
 import { ServerErrorConverter } from "../models/websocket/ServerError";
-import { ServerUDPAnswerConverter } from "./../models/websocket/ServerUDPAnswer";
-import { ServerAddIntegrationResponseConverter } from "./../models/websocket/ServerAddIntegrationResponse";
-import { ServerBnetKeyConverter } from "./../models/websocket/ServerBnetKey";
-import { ServerTextMessageConverter } from "./../models/websocket/ServerTextMessage";
-import { ServerCreateGameConverter } from "./../models/websocket/ServerCreateGame";
+import { ServerUDPAnswerConverter } from "../models/websocket/ServerUDPAnswer";
+import { ServerAddIntegrationResponseConverter } from "../models/websocket/ServerAddIntegrationResponse";
+import { ServerBnetKeyConverter } from "../models/websocket/ServerBnetKey";
+import { ServerTextMessageConverter } from "../models/websocket/ServerTextMessage";
+import { ServerCreateGameConverter } from "../models/websocket/ServerCreateGame";
 import { ServerApiTokenConverter } from "../models/websocket/ServerApiToken";
 import { ServerAutohostAddResponseConverter } from "../models/websocket/ServerAutohostAddResponse";
 import {
-    ServerAutohostListResponse,
     ServerAutohostListResponseConverter,
-} from "./../models/websocket/ServerAutohostListResponse";
+} from "../models/websocket/ServerAutohostListResponse";
 import { ServerAutohostRemoveResponseConverter } from "../models/websocket/ServerAutohostRemoveResponse";
 import { ServerResolveConnectorIdsConverter } from "../models/websocket/ServerResolveConnectorIds";
 import { ServerAccessListConverter } from "../models/websocket/ServerAccessList";

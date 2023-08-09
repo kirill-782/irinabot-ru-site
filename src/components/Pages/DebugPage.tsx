@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
     Button,
     Container,
@@ -10,11 +10,12 @@ import {
     Segment,
     SemanticCOLORS,
     Image,
-    List,
+    List, TextArea,
 } from "semantic-ui-react";
 import GameListPlayerItem from "../GameList/GameListPlayerItem";
 import { toast } from "@kokomi/react-semantic-toasts";
 import WarcraftIIIText from "../WarcraftIIIText";
+import Markdown from "../Markdown";
 
 function DebugPage() {
     const avialableColors: SemanticCOLORS[] = [
@@ -35,8 +36,19 @@ function DebugPage() {
 
     const playersNumber: number[] = Array(25).fill(1);
 
+    const [markdown, setMarkdown] = useState<string>();
+
     return (
         <Container style={{ marginTop: "3em" }}>
+            <Segment>
+                <TextArea style={{width: "100%"}} onInput={(event, data) => {
+                    setMarkdown(data.value.toString());
+                }}></TextArea>
+
+                <Header as="h3">Result</Header>
+                <Markdown>{markdown}</Markdown>
+            </Segment>
+
             <Header as="h1">Theming Examples</Header>
 
             <Header as="h2" dividing>

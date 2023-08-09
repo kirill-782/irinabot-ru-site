@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { ClientWebsocketConnectStatsConverter } from "../models/websocket/ClientWebsocketConnectStats";
-import { DEFAULT_WEBSOCKET_CONNECT_STATS } from "../models/websocket/HeaderConstants";
+import { DEFAULT_CONTEXT_HEADER_CONSTANT, DEFAULT_WEBSOCKET_CONNECT_STATS } from "../models/websocket/HeaderConstants";
 import { ServerWebsocketConnectStats } from "../models/websocket/ServerWebsocketConnectStats";
 import { GHostPackageEvent, GHostWebSocket } from "../services/GHostWebsocket";
 
@@ -23,7 +23,7 @@ export const useSiteOnlineStatsSubscribe = ({ ghostSocket, onOnlineStats }: Site
         if (ghostSocket.isConnected()) sendStatsRequest();
 
         const onConnectedCount = (event: GHostPackageEvent) => {
-            if (event.detail.package.type === DEFAULT_WEBSOCKET_CONNECT_STATS) {
+            if (event.detail.package.type === DEFAULT_WEBSOCKET_CONNECT_STATS && event.detail.package.context === DEFAULT_CONTEXT_HEADER_CONSTANT) {
                 const stats: ServerWebsocketConnectStats = event.detail.package as ServerWebsocketConnectStats;
                 onOnlineStats(stats);
 

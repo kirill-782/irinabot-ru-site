@@ -5,7 +5,6 @@ import React from "react";
 import ForbiddenPage from "./Pages/ForbiddenPage";
 import Layout from "./Layout";
 import MapEditPage from "./Pages/MapEditPage";
-import HelpPage from "./Pages/HelpPage";
 
 const AutopayPage = React.lazy(() => import("./Pages/AutopayPage"));
 const CreateGamePage = React.lazy(() => import("./Pages/CreateGamePage"));
@@ -21,6 +20,8 @@ const DebugPage = React.lazy(() => import("./Pages/DebugPage"));
 
 const ReplayParserPage = React.lazy(() => import("./Pages/ReplayParserPage"));
 const MapCatalog = React.lazy(() => import("./Pages/MapCatalog"));
+
+const WikiPage = React.lazy(() => import("./Pages/WikiPage"));
 
 interface CondirionalRouteIndex {
     path?: undefined;
@@ -61,19 +62,19 @@ const routes: CondirionalRoute[] = [
                 element: <GameListPage />,
             },
             {
-                path: "help",
+                path: "wiki",
                 routes: [
                     {
-                        path: ":section",
-                        element: <HelpPage />,
+                        path: ":wiki",
+                        element: <WikiPage />,
                     },
                     {
-                        path: ":section/:article",
-                        element: <HelpPage />,
+                        path: ":wiki/:article",
+                        element: <WikiPage />,
                     },
                     {
                         index: true,
-                        element: <HelpPage />,
+                        element: <ForbiddenPage />,
                     },
                 ],
             },

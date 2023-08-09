@@ -24,27 +24,18 @@ export const useLanguage = (): UseLanguageResult => {
     const getString = useCallback(
         (id: string, options?: stringMap, language?: string): string => {
             const currentLanguage = language || selectedLanguage;
-            const languagePath = `${currentLanguage}.${id}`;
 
-            let result = data;
+            let result = data[currentLanguage][id];
 
-            languagePath.split(".").map((i) => {
-                if (typeof result === "object") {
-                    result = result[i];
-                } else result = undefined;
-            });
-
-            if (result === undefined) return languagePath;
-
-            if (options) {
+            if (options && result) {
                 Object.entries(options).forEach((i) => {
-                    result = result.replaceAll(`{${i[0]}}`, i[1].toString());
+                    result = result.replaceAll(`{${i[0]}}`, i[1]);
                 });
             }
 
             return result;
         },
-        [data, selectedLanguage]
+        [data, selectedLanguage],
     );
 
     const pushLanguageData = (language: string, updateData: any | null) => {
@@ -74,12 +65,6 @@ export const useLanguage = (): UseLanguageResult => {
         pushLanguageData,
         getString,
         selectedLanguage,
-        new Proxy(data[selectedLanguage] || {}, {
-            get: (target, key) => {
-                if (key in target) return target[key];
-
-                return key;
-            },
-        }),
+        data[selectedLanguage],
     ];
 };
