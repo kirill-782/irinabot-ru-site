@@ -1,10 +1,11 @@
 import { GHostWebSocket } from "./../services/GHostWebsocket";
 import { ConnectorWebsocket } from "./../services/ConnectorWebsocket";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { DEFAULT_CONTEXT_HEADER_CONSTANT, DEFAULT_UDP_ANSWER } from "../models/websocket/HeaderConstants";
 import { ServerUDPAnswer } from "../models/websocket/ServerUDPAnswer";
 
 import { fromByteArray } from "base64-js";
+import { toast } from "@kokomi/react-semantic-toasts";
 
 interface useConnectorGameAddOptions {
     ghostSocket: GHostWebSocket;
@@ -12,9 +13,6 @@ interface useConnectorGameAddOptions {
 }
 
 export const useConnectorGameAdd = ({ ghostSocket, connectorSocket }: useConnectorGameAddOptions) => {
-    //const {language} = useContext(AppRuntimeSettingsContext);
-    //const lang = language.languageRepository;
-
     useEffect(() => {
         const onUDPGameAddPackage = (data) => {
             if (
@@ -23,8 +21,6 @@ export const useConnectorGameAdd = ({ ghostSocket, connectorSocket }: useConnect
             ) {
                 const gameParams = new URLSearchParams();
                 const gameData = data.detail.package as ServerUDPAnswer;
-
-                console.log(gameData);
 
                 gameParams.append("token", gameData.token);
                 gameParams.append("hostCounter", gameData.hostCounter.toString());
@@ -51,6 +47,16 @@ export const useConnectorGameAdd = ({ ghostSocket, connectorSocket }: useConnect
                 gameParams.append("mapGameType", gameData.mapGameType.toString());
 
                 console.log("irinat://addgame?" + gameParams.toString());
+
+                if (connectorSocket.isConnected()) {
+                    toast({
+                        title: "Мы обновили коннектор",
+                        icon: "warning",
+                        time: 15000,
+                        color: "orange",
+                        description: "Мы заметили, что у вас запущен старый коннектор. Если у вас не получается добавить игру - обновите коннектор",
+                    });
+                }
 
                 document.location.href = "irinat://addgame?" + gameParams.toString();
             }

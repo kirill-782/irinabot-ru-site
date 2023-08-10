@@ -38,7 +38,7 @@ function GameJoinButton({ gameList, mapId, className }: GameJoinButtonProps) {
         );
     };
 
-    const isEnabled = auth.currentAuth !== null && sockets.isConnectorSocketConnected;
+    const isEnabled = auth.currentAuth !== null;
 
     useEffect(() => {
         let game: GameListGame | undefined;
