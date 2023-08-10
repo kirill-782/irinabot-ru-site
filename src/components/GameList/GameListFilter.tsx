@@ -1,10 +1,11 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { memo } from "react";
 import ReactSlider from "react-slider";
-import { Button, Form } from "semantic-ui-react";
-import { AppRuntimeSettingsContext } from "../../context";
+import { Button, Dropdown, DropdownItemProps, Form } from "semantic-ui-react";
+import { AppRuntimeSettingsContext, CacheContext } from "../../context";
 import { FilterSettings } from "../../hooks/useGameListFilter";
 import "./GameListFilter.scss";
+import { DropdownItemPropsConfirmExtends } from "../Pages/CreateGameConfirmPage";
 
 const options = [
     {
@@ -38,6 +39,24 @@ export interface GameListFilterProps {
 function GameListFilter({ filterSettings, onFilterChange, disabledFilters }: GameListFilterProps) {
     const { language } = useContext(AppRuntimeSettingsContext);
     const lang = language.languageRepository;
+
+    const [configPatches, setConfigPatches] = useState<DropdownItemProps[]>([]);
+
+    const cache = useContext(CacheContext);
+
+    useEffect(() => {
+        if (cache.cachedVersions.length === 0) cache.cacheVersions();
+    }, [cache]);
+
+    useEffect(() => {
+        setConfigPatches(cache.cachedVersions.map((i) => {
+            return {
+                text: i,
+                value: i,
+                content: i,
+            };
+        }));
+    }, [cache.cachedVersions]);
 
     return (
         <>
@@ -90,6 +109,19 @@ function GameListFilter({ filterSettings, onFilterChange, disabledFilters }: Gam
                         });
                     }}
                 ></Form.Checkbox>
+                <Form.Field>
+                    <label>{lang.gameListFilterHiddenPatchLabel}</label>
+                    <Dropdown placeholder={lang.gameListFilterHiddenPatchPlaceholder} fluid multiple selection
+                              options={configPatches}
+                              value={filterSettings.hiddenPatch}
+                              selectedLabel=""
+                              onChange={(event, data) => {
+                                  onFilterChange({
+                                      ...filterSettings,
+                                      hiddenPatch: data.value as string[],
+                                  });
+                              }} />
+                </Form.Field>
                 <Form.Group grouped>
                     <label>{lang.gameListFilterGameTypeLabel}</label>
                     <Form.Field

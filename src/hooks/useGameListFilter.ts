@@ -21,6 +21,7 @@ export interface FilterSettings {
     players: [number, number];
     freeSlots: [number, number];
     slots: [number, number];
+    hiddenPatch: string[];
 }
 
 interface useGameListFilterOptions {
@@ -92,7 +93,12 @@ export const useGameListFilter = ({ gameList, filters }: useGameListFilterOption
                 }
             }
 
-            // Quic filter
+            if(filters.hiddenPatch.length > 0) {
+                if(filters.hiddenPatch.indexOf(game.gameVersion) != -1)
+                    return false;
+            }
+
+            // Quick filter
 
             if (filters.quickFilter.length === 0) return true;
 

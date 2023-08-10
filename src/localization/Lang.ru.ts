@@ -97,6 +97,9 @@ const LanguageData = {
     gameListFilterOnlyFavoriteMaps: "Только избранные карты",
     gameListFilterGameTypeLabel: "Игры по типу",
 
+    gameListFilterHiddenPatchLabel: "Скрыть игры патчей",
+    gameListFilterHiddenPatchPlaceholder: "Патчи",
+
     gameListFilterPlainGamesOnly: "Только обычные игры",
     gameListFilterAllGames: "Все игры",
     gameListFilterNonPlainOnly: "Игры с переопределением позиции",
@@ -115,6 +118,13 @@ const LanguageData = {
     onlineStatsCategory: "Категория",
     onlineStatsGames: "Игр",
     onlineStatsPlayers: "Игроков",
+
+    onlineStatsCategoryTypeAll: "Всего",
+    onlineStatsCategoryTypeLobby: "Лобби",
+    onlineStatsCategoryTypeStarted: "Начатые игры",
+    onlineStatsCategoryTypeOther: "Игроки с остальных платфром",
+    onlineStatsCategoryTypeRealm: "Игроков с {realm}",
+    onlineStatsCategoryTypePatch: "Патч {patch}",
 
     mapInfoPlayersCount: "Кол-во игроков: ",
 

@@ -22,8 +22,8 @@ import MapPreview from "../CreateGame/MapPreview";
 import ConfigPreview from "../CreateGame/ConfigPreview";
 import CreateGameConfirmPatchNotifications from "../CreateGame/CreateGameConfirmPatchNotifications";
 import CreateAutohostModal, { AuthostModalData } from "../Modal/CreateAutohostModal";
-import { ClientAddAutohostConverter } from "./../../models/websocket/ClientAddAutohost";
-import { ClientCreateGameConverter, SaveGameData } from "./../../models/websocket/ClientCreateGame";
+import { ClientAddAutohostConverter } from "../../models/websocket/ClientAddAutohost";
+import { ClientCreateGameConverter, SaveGameData } from "../../models/websocket/ClientCreateGame";
 import { toast } from "@kokomi/react-semantic-toasts";
 import {
     DEFAULT_CONTEXT_HEADER_CONSTANT,
@@ -36,7 +36,6 @@ import { ServerCreateGame } from "../../models/websocket/ServerCreateGame";
 import copy from "clipboard-copy";
 import "./CreateGameConfirmPage.scss";
 import MetaRobots from "./../Meta/MetaRobots";
-import { SITE_TITLE } from "../../config/ApplicationConfig";
 import { SaveGameParser } from "@kokomi/w3g-parser-browser";
 import { useTitle } from "../../hooks/useTitle";
 

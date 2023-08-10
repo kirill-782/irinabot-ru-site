@@ -75,11 +75,11 @@ const compareByOtherGame = (a: GameListGame, b: GameListGame): number => {
 };
 
 const compareByGamePatch = (a: GameListGame, b: GameListGame): number => {
-    if (a.maxPlayers === 1 && b.maxPlayers === 1) return 0;
-
-    if (a.maxPlayers === 1) return 1;
-
-    if (b.maxPlayers === 1) return -1;
+    // if (a.maxPlayers === 1 && b.maxPlayers === 1) return 0;
+    //
+    // if (a.maxPlayers === 1) return 1;
+    //
+    // if (b.maxPlayers === 1) return -1;
 
     return 0;
 };

@@ -17,6 +17,7 @@ const defaultFilterSettings: FilterSettings = {
     players: [0, 24],
     slots: [0, 24],
     freeSlots: [0, 24],
+    hiddenPatch: [],
 };
 
 export const useGameListFilterSetings = () => {
