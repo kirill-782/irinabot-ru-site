@@ -1,5 +1,5 @@
 import React, { memo, useContext, useState } from "react";
-import { Form, Label, Segment } from "semantic-ui-react";
+import { Form, Segment } from "semantic-ui-react";
 import { AppRuntimeSettingsContext } from "../context";
 
 import { HuePicker } from "react-color";
@@ -7,7 +7,7 @@ import WarcraftIIIText from "./WarcraftIIIText";
 
 const componentToHex = (c) => {
     var hex = c.toString(16);
-    return hex.length == 1 ? "0" + hex : hex;
+    return hex.length === 1 ? "0" + hex : hex;
 };
 
 const rgbToColorTag = (r, g, b) => {
@@ -17,6 +17,7 @@ const rgbToColorTag = (r, g, b) => {
 interface NicknameColorPickerProps {
     nickname: string;
     onColorChanged: (color: number) => void;
+    disabled?: boolean
     defaultColor?: {
         r: number;
         g: number;
@@ -24,7 +25,7 @@ interface NicknameColorPickerProps {
     };
 }
 
-function NicknameColorPicker({ nickname, onColorChanged, defaultColor }: NicknameColorPickerProps) {
+function NicknameColorPicker({ nickname, onColorChanged, defaultColor, disabled }: NicknameColorPickerProps) {
     const [color, setColor] = useState<any>(defaultColor);
 
     const { language } = useContext(AppRuntimeSettingsContext);
@@ -32,18 +33,18 @@ function NicknameColorPicker({ nickname, onColorChanged, defaultColor }: Nicknam
 
     return (
         <>
-            <Form.Field>
+            <Form.Field disabled={disabled}>
                 <label>{lang.nicknameColorPickerSelectColor}</label>
 
                 <HuePicker
                     color={color}
+                    disableAlpha
                     onChange={(color) => {
-                        console.log(color);
                         setColor(color.rgb);
                     }}
                 ></HuePicker>
             </Form.Field>
-            <Form.Field>
+            <Form.Field disabled={disabled}>
                 <label>{lang.nicknameColorPickerPreview}</label>
                 <Segment>
                     <WarcraftIIIText>
@@ -53,6 +54,7 @@ function NicknameColorPicker({ nickname, onColorChanged, defaultColor }: Nicknam
             </Form.Field>
 
             <Form.Button
+                disabled={disabled}
                 color="green"
                 onClick={() => {
                     onColorChanged((color.r << 16) | (color.g << 8) | color.b);

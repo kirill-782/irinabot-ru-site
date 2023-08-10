@@ -244,6 +244,7 @@ function UserSettingsModal(props) {
                             </Form.Group>
                         </Form.Field>
                         <NicknameColorPicker
+                            disabled={!auth.accessMask.hasAccess(1)}
                             nickname={connectorName || auth.currentAuth.connectorName}
                             onColorChanged={onColorChanged}
                             defaultColor={nicknameColor}

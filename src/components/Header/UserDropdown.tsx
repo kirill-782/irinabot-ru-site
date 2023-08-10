@@ -15,7 +15,7 @@ function UserDrowdown() {
     const [userSettingsModalOpen, setUserSettingsModalOpen] = useState(false);
     const [userAccessModalOpen, setUserAccessModalOpen] = useState(false);
 
-    const currentAuth = authContext.auth.currentAuth;
+    const { currentAuth, accessMask } = authContext.auth;
 
     const { language } = useContext(AppRuntimeSettingsContext);
     const lang = language.languageRepository;
@@ -35,7 +35,9 @@ function UserDrowdown() {
             <Dropdown
                 trigger={
                     currentAuth.connectorName.length > 0 ? (
-                        <WarcraftIIIText>{currentAuth.nicknamePrefix + currentAuth.connectorName}</WarcraftIIIText>
+                        <WarcraftIIIText>{
+                            (accessMask.hasAccess(1) ? currentAuth.nicknamePrefix : "")
+                            + currentAuth.connectorName}</WarcraftIIIText>
                     ) : (
                         currentAuth.nickname
                     )
