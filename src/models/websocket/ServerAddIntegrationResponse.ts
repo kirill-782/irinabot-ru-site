@@ -10,6 +10,7 @@ export interface ServerAddIntegrationResponse extends AbstractPackage {
     bnetName: string;
     connectorName: string;
     mainType: number;
+    nicknamePrefix: string;
 }
 
 export class ServerAddIntegrationResponseConverter extends AbstractConverter {
@@ -28,6 +29,7 @@ export class ServerAddIntegrationResponseConverter extends AbstractConverter {
 
         dataBuffer.putNullTerminatedString(data.connectorName);
         dataBuffer.putUint8(data.mainType);
+        dataBuffer.putNullTerminatedString(data.nicknamePrefix);
 
         return dataBuffer.toArrayBuffer();
     }
@@ -43,6 +45,7 @@ export class ServerAddIntegrationResponseConverter extends AbstractConverter {
             bnetName: dataBuffer.getNullTerminatedString(),
             connectorName: dataBuffer.getNullTerminatedString(),
             mainType: dataBuffer.getUint8(),
+            nicknamePrefix: dataBuffer.getNullTerminatedString(),
         };
     }
 }

@@ -142,7 +142,7 @@ const LanguageData = {
     userDropdownCreateGame: "Создать игру",
     userDropdownSettings: "Настройки",
     userDropdownAccessList: "Список прав",
-    userDropdownLogout: "Выйти (в окно)",
+    userDropdownLogout: "Выйти",
 
     uploadMapUploadingError: "Ошибка загрузки карты",
     uploadMapMapUploadedNotificationTitle: "Карта загружена",

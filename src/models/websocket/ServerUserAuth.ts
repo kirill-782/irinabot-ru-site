@@ -37,6 +37,7 @@ export class ServerUserAuthConverter extends AbstractConverter {
 
         dataBuffer.putNullTerminatedString(data.connectorName);
         dataBuffer.putUint8(data.mainType);
+        dataBuffer.putNullTerminatedString(data.nicknamePrefix);
 
         return dataBuffer.toArrayBuffer();
     }
