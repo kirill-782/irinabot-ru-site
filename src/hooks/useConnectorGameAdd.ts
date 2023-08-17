@@ -1,11 +1,12 @@
 import { GHostWebSocket } from "./../services/GHostWebsocket";
 import { ConnectorWebsocket } from "./../services/ConnectorWebsocket";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { DEFAULT_CONTEXT_HEADER_CONSTANT, DEFAULT_UDP_ANSWER } from "../models/websocket/HeaderConstants";
 import { ServerUDPAnswer } from "../models/websocket/ServerUDPAnswer";
 
 import { fromByteArray } from "base64-js";
 import { toast } from "@kokomi/react-semantic-toasts";
+import  copy  from 'clipboard-copy';
 
 interface useConnectorGameAddOptions {
     ghostSocket: GHostWebSocket;
@@ -13,7 +14,15 @@ interface useConnectorGameAddOptions {
 }
 
 export const useConnectorGameAdd = ({ ghostSocket, connectorSocket }: useConnectorGameAddOptions) => {
+
+    const isCopy = useRef(false);
+
     useEffect(() => {
+
+        const onKeyEvent = (e: KeyboardEvent) => {
+            isCopy.current = e.altKey
+        }
+
         const onUDPGameAddPackage = (data) => {
             if (
                 data.detail.package.type === DEFAULT_UDP_ANSWER &&
@@ -46,7 +55,14 @@ export const useConnectorGameAdd = ({ ghostSocket, connectorSocket }: useConnect
 
                 gameParams.append("mapGameType", gameData.mapGameType.toString());
 
-                console.log("irina://addgame?" + gameParams.toString());
+                const url = "irina://addgame?" + gameParams.toString()
+
+                console.log(url);
+
+                if(isCopy.current) {
+                    copy(url)
+                }
+
 
                 if (connectorSocket.isConnected()) {
                     toast({
@@ -58,14 +74,20 @@ export const useConnectorGameAdd = ({ ghostSocket, connectorSocket }: useConnect
                     });
                 }
 
-                document.location.href = "irina://addgame?" + gameParams.toString();
+                document.location.href = url;
             }
         };
 
         ghostSocket.addEventListener("package", onUDPGameAddPackage);
 
+        window.addEventListener('keyup', onKeyEvent);
+        window.addEventListener('keydown', onKeyEvent);
+
         return () => {
             ghostSocket.removeEventListener("package", onUDPGameAddPackage);
+
+            window.removeEventListener('keyup', onKeyEvent);
+            window.removeEventListener('keydown', onKeyEvent);
         };
     }, [ghostSocket, connectorSocket]);
 };
