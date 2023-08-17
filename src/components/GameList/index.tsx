@@ -29,6 +29,12 @@ const ADS = [
         index: undefined,
         creatorId: 170246,
     },
+    {
+        img: "/kaisa/BannerForMelee.png",
+        link: "https://xgm.guru/p/wc3/xgm-irina-autohost",
+        index: 15,
+        expire: 1692478800000,
+    },
 ];
 
 interface GameListProps {
