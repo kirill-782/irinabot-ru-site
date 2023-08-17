@@ -122,17 +122,12 @@ function GameListPage() {
                     ></GameList>
                 </Grid.Column>
                 <Grid.Column width="three" className="online-stats-column">
-                    <Button
-                        className="how-btn"
-                        basic
-                        color="green"
-                        size="large"
-                        onClick={() => {
-                            window.open("https://xgm.guru/p/irina/gamecreate");
-                        }}
-                    >
-                        {lang.gameListPageHowToPlay}
-                    </Button>
+                    <NavLink to="/wiki/irina-help/how-to-play">
+                        <Button className="how-btn" basic color="green" size="large">
+                            {lang.gameListPageHowToPlay}
+                        </Button>
+                    </NavLink>
+
                     {selectedGame ? (
                         <MapInfo mapId={selectedGame.mapId}></MapInfo>
                     ) : (
