@@ -46,7 +46,7 @@ export const useConnectorGameAdd = ({ ghostSocket, connectorSocket }: useConnect
 
                 gameParams.append("mapGameType", gameData.mapGameType.toString());
 
-                console.log("irinat://addgame?" + gameParams.toString());
+                console.log("irina://addgame?" + gameParams.toString());
 
                 if (connectorSocket.isConnected()) {
                     toast({
@@ -58,7 +58,7 @@ export const useConnectorGameAdd = ({ ghostSocket, connectorSocket }: useConnect
                     });
                 }
 
-                document.location.href = "irinat://addgame?" + gameParams.toString();
+                document.location.href = "irina://addgame?" + gameParams.toString();
             }
         };
 

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Button, Container, Grid, Input } from "semantic-ui-react";
+import { Button, Container, Grid, Input, Message } from "semantic-ui-react";
 import { AppRuntimeSettingsContext, WebsocketContext } from "../../context";
 import { GameListGame } from "../../models/websocket/ServerGameList";
 import GameList from "../GameList";
@@ -15,7 +15,7 @@ import { CacheContext } from "../../context";
 
 import "../GameList/GameList.scss";
 import MapInfo from "../GameList/MapInfo";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { ClientResolveConnectorIdsConverter } from "../../models/websocket/ClientResolveConnectorIds";
 import { SITE_TITLE } from "../../config/ApplicationConfig";
 import MetaDescription from "../Meta/MetaDescription";
@@ -105,6 +105,16 @@ function GameListPage() {
                             setFilterModalOpen(true);
                         }}
                     />
+                    {sockets.connectorSocket.isConnected() && (
+                        <Message error>
+                            <Message.Header>Мы обновили коннектор</Message.Header>
+                            <Message.Content>
+                                Мы заметили, что у вас открыт старый коннектор. Обновите его по этой{" "}
+                                <NavLink to="/wiki/irina-help/how-to-play">инструкции</NavLink>
+                            </Message.Content>
+                        </Message>
+                    )}
+
                     <GameList
                         gameList={displayedGameList}
                         selectedGame={selectedGame}

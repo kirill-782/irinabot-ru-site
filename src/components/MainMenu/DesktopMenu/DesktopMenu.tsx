@@ -36,13 +36,10 @@ const DesktopMenu = () => {
             <Menu.Item as={NavLink} icon="gamepad" to="/gamelist" title={lang.menuActiveGames} />
             <Menu.Item as={NavLink} icon="file" to="/maps" title={lang.menuMapList} />
             <Menu.Item
-                as="a"
+                as={NavLink}
                 title={lang.menuHelp}
                 icon="help"
-                href="https://xgm.guru/p/irina"
-                onClick={(e) => {
-                    if (window.open("https://xgm.guru/p/irina")) e.preventDefault();
-                }}
+                to="/wiki/irina-help/how-to-play"
             />
             <Menu.Item
                 onClick={() => {

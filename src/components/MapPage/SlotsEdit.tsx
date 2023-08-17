@@ -216,7 +216,6 @@ function SlotsEdit({ slots, options, onSlotsChange }: SlotsEditProps) {
                                             <Table.Cell width={4}>
                                                 <Form.Dropdown
                                                     options={slotRacesOptions.map((i) => {
-                                                        console.log(i);
                                                         return { ...i, text: t(i.langKey) };
                                                     })}
                                                     value={slot.race & ALL_RACES_FLAGS}

@@ -115,7 +115,6 @@ function Markdown({ children, light }: MarkdownProps) {
                     );
                 },
                 hr({node, ...props}) {
-                    console.log(props);
                     return <Divider/>
                 }
             }}

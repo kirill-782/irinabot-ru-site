@@ -116,9 +116,6 @@ export const useWebsocketAuth = ({
         };
 
         const onPackage = (e: GHostPackageEvent) => {
-
-            console.log(e);
-
             if (
                 e.detail.package.context === GLOBAL_CONTEXT_HEADER_CONSTANT &&
                 e.detail.package.type === GLOBAL_USER_AUTH_RESPONSE

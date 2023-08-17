@@ -35,9 +35,12 @@ function UserDrowdown() {
             <Dropdown
                 trigger={
                     currentAuth.connectorName.length > 0 ? (
-                        <WarcraftIIIText>{
-                            (accessMask.hasAccess(1) ? currentAuth.nicknamePrefix : "")
-                            + currentAuth.connectorName}</WarcraftIIIText>
+                        <WarcraftIIIText>
+                            {(accessMask.hasAccess(1) ? currentAuth.nicknamePrefix : "") +
+                                (accessMask.hasAccess(1) && currentAuth.nicknamePrefix.length !== 10
+                                    ? ""
+                                    : currentAuth.connectorName)}
+                        </WarcraftIIIText>
                     ) : (
                         currentAuth.nickname
                     )

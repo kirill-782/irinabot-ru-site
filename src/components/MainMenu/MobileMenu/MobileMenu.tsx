@@ -44,11 +44,8 @@ const MobileMenu = () => {
                             {lang.menuAutoPay}
                         </Dropdown.Item>
                         <Dropdown.Item
-                            as="a"
-                            href="https://xgm.guru/p/irina"
-                            onClick={(e) => {
-                                if (window.open("https://xgm.guru/p/irina")) e.preventDefault();
-                            }}
+                            as={NavLink}
+                            to="/wiki/irina-help/how-to-play"
                         >
                             <Icon name="help" />
                             {lang.menuHelp}
