@@ -12,6 +12,10 @@ export class DataBuffer {
         this.allowResize = true;
     }
 
+    public remaining() {
+        return this.data.byteLength - this.offset;
+    }
+
     public length() {
         return this.data.byteLength;
     }

@@ -102,7 +102,7 @@ export class ServerUDPAnswerConverter extends AbstractConverter {
                 broadcast: true,
                 productId: dataBuffer.getArray(4),
                 versionPrefix: dataBuffer.getArray(4),
-                mapGameType: dataBuffer.getUint32(),
+                mapGameType: dataBuffer.remaining() ? dataBuffer.getUint32() : 1,
             };
         }
 
