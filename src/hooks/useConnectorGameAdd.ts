@@ -6,7 +6,7 @@ import { ServerUDPAnswer } from "../models/websocket/ServerUDPAnswer";
 
 import { fromByteArray } from "base64-js";
 import { toast } from "@kokomi/react-semantic-toasts";
-import  copy  from 'clipboard-copy';
+import copy from "clipboard-copy";
 
 interface useConnectorGameAddOptions {
     ghostSocket: GHostWebSocket;
@@ -14,14 +14,12 @@ interface useConnectorGameAddOptions {
 }
 
 export const useConnectorGameAdd = ({ ghostSocket, connectorSocket }: useConnectorGameAddOptions) => {
-
     const isCopy = useRef(false);
 
     useEffect(() => {
-
         const onKeyEvent = (e: KeyboardEvent) => {
-            isCopy.current = e.altKey
-        }
+            isCopy.current = e.altKey;
+        };
 
         const onUDPGameAddPackage = (data) => {
             if (
@@ -55,14 +53,31 @@ export const useConnectorGameAdd = ({ ghostSocket, connectorSocket }: useConnect
 
                 gameParams.append("mapGameType", gameData.mapGameType.toString());
 
-                const url = "irina://addgame?" + gameParams.toString()
+                const url = "irina://addgame?" + gameParams.toString();
 
                 console.log(url);
 
-                if(isCopy.current) {
-                    copy(url)
+                if (isCopy.current) {
+                    copy(url).then(() => {
+                        toast({
+                            title: "Ссылка скопирована",
+                            icon: "check",
+                            time: 15000,
+                            color: "green",
+                            description: "Ссылка на игру скопирована. Вставьте её в коннектор",
+                        });
+                    }).catch((e) => {
+                        toast({
+                            title: "Ошибка при копировании ссылки",
+                            icon: "x",
+                            time: 15000,
+                            color: "red",
+                            description: "Ошибка при копировании ссылки",
+                        });
+                    });
+                } else {
+                    document.location.href = url;
                 }
-
 
                 if (connectorSocket.isConnected()) {
                     toast({
@@ -70,24 +85,23 @@ export const useConnectorGameAdd = ({ ghostSocket, connectorSocket }: useConnect
                         icon: "warning",
                         time: 15000,
                         color: "orange",
-                        description: "Мы заметили, что у вас запущен старый коннектор. Если у вас не получается добавить игру - обновите коннектор",
+                        description:
+                            "Мы заметили, что у вас запущен старый коннектор. Если у вас не получается добавить игру - обновите коннектор",
                     });
                 }
-
-                document.location.href = url;
             }
         };
 
         ghostSocket.addEventListener("package", onUDPGameAddPackage);
 
-        window.addEventListener('keyup', onKeyEvent);
-        window.addEventListener('keydown', onKeyEvent);
+        window.addEventListener("keyup", onKeyEvent);
+        window.addEventListener("keydown", onKeyEvent);
 
         return () => {
             ghostSocket.removeEventListener("package", onUDPGameAddPackage);
 
-            window.removeEventListener('keyup', onKeyEvent);
-            window.removeEventListener('keydown', onKeyEvent);
+            window.removeEventListener("keyup", onKeyEvent);
+            window.removeEventListener("keydown", onKeyEvent);
         };
     }, [ghostSocket, connectorSocket]);
 };
