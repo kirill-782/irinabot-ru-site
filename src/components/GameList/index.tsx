@@ -31,7 +31,7 @@ const ADS = [
     },
     {
         img: "/kaisa/BannerForMelee.png",
-        link: "https://xgm.guru/p/wc3/xgm-irina-autohost",
+        link: "https://goodgame.ru/cups/irinabot-cup-3x3-atr-so-sluchajnym-soyuznikom-4626",
         index: 15,
         expire: 1692478800000,
     },
