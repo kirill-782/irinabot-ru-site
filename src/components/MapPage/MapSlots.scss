@@ -35,176 +35,176 @@ $d_coal: #000000;
 $d_emerald: #029527;
 
 span.slot-color {
-  padding: 3px;
-  padding-left: 30px;
-  border-radius: 4px;
+    padding: 3px;
+    padding-left: 30px;
+    border-radius: 4px;
 
-  &.red {
-    color: $red;
-    background: rgba($red, $opacity);
-  }
+    &.red {
+        color: $red;
+        background: rgba($red, $opacity);
+    }
 
-  &.blue {
-    color: $blue;
-    background: rgba($blue, $opacity);
-  }
-
-  &.teal {
-    color: $teal;
-    background: rgba($teal, $opacity);
-  }
-
-  &.purple {
-    color: $purple;
-    background: rgba($purple, $opacity);
-  }
-
-  &.yellow {
-    color: $yellow;
-    background: rgba($yellow, $opacity);
-  }
-
-  &.orange {
-    color: $orange;
-    background: rgba($orange, $opacity);
-  }
-
-  &.green {
-    color: $green;
-    background: rgba($green, $opacity);
-  }
-
-  &.pink {
-    color: $pink;
-    background: rgba($pink, $opacity);
-  }
-
-  &.gray {
-    color: $gray;
-    background: rgba($gray, $opacity);
-  }
-
-  &.light-blue {
-    color: $light-blue;
-    background: rgba($light-blue, $opacity);
-  }
-
-  &.dark-green {
-    color: $dark-green;
-    background: rgba($dark-green, $opacity);
-  }
-
-  &.brown {
-    color: $brown;
-    background: rgba($brown, $opacity);
-  }
-
-  &.maroon {
-    color: $maroon;
-    background: rgba($maroon, $opacity);
-  }
-
-  &.navy {
-    color: $navy;
-    background: rgba($navy, $opacity);
-  }
-
-  &.turquoise {
-    color: $turquoise;
-    background: rgba($turquoise, $opacity);
-  }
-
-  &.violet {
-    color: $violet;
-    background: rgba($violet, $opacity);
-  }
-
-  &.violet {
-    color: $violet;
-    background: rgba($violet, $opacity);
-  }
-
-  &.wheat {
-    color: $wheat;
-    background: rgba($wheat, $opacity);
-  }
-
-  &.peach {
-    color: $peach;
-    background: rgba($peach, $opacity);
-  }
-
-  &.mint {
-    color: $mint;
-    background: rgba($mint, $opacity);
-  }
-
-  &.leavender {
-    color: $leavender;
-    background: rgba($leavender, $opacity);
-  }
-
-  &.coal {
-    color: $coal;
-    background: rgba($coal, $opacity);
-  }
-
-  &.snow {
-    color: $snow;
-    background: rgba($snow, $opacity);
-  }
-
-  &.emerald {
-    color: $emerald;
-    background: rgba($emerald, $opacity);
-  }
-
-  &.peanut {
-    color: $peanut;
-    background: rgba($peanut, $opacity);
-  }
-}
-
-.dark {
-  span.slot-color {
     &.blue {
-      color: $d_blue;
-      background: rgba($d_blue, $opacity);
+        color: $blue;
+        background: rgba($blue, $opacity);
+    }
+
+    &.teal {
+        color: $teal;
+        background: rgba($teal, $opacity);
     }
 
     &.purple {
-      color: $d_purple;
-      background: rgba($d_purple, $opacity);
+        color: $purple;
+        background: rgba($purple, $opacity);
     }
 
-    &.brown {
-      color: $d_brown;
-      background: rgba($d_brown, $opacity);
+    &.yellow {
+        color: $yellow;
+        background: rgba($yellow, $opacity);
+    }
+
+    &.orange {
+        color: $orange;
+        background: rgba($orange, $opacity);
+    }
+
+    &.green {
+        color: $green;
+        background: rgba($green, $opacity);
+    }
+
+    &.pink {
+        color: $pink;
+        background: rgba($pink, $opacity);
+    }
+
+    &.gray {
+        color: $gray;
+        background: rgba($gray, $opacity);
+    }
+
+    &.light-blue {
+        color: $light-blue;
+        background: rgba($light-blue, $opacity);
     }
 
     &.dark-green {
-      color: $d_dark-green;
-      background: rgba($d_dark-green, $opacity);
+        color: $dark-green;
+        background: rgba($dark-green, $opacity);
+    }
+
+    &.brown {
+        color: $brown;
+        background: rgba($brown, $opacity);
     }
 
     &.maroon {
-      color: $d_maroon;
-      background: rgba($d_maroon, $opacity);
+        color: $maroon;
+        background: rgba($maroon, $opacity);
     }
 
     &.navy {
-      color: $d_navy;
-      background: rgba($d_navy, $opacity);
+        color: $navy;
+        background: rgba($navy, $opacity);
+    }
+
+    &.turquoise {
+        color: $turquoise;
+        background: rgba($turquoise, $opacity);
+    }
+
+    &.violet {
+        color: $violet;
+        background: rgba($violet, $opacity);
+    }
+
+    &.violet {
+        color: $violet;
+        background: rgba($violet, $opacity);
+    }
+
+    &.wheat {
+        color: $wheat;
+        background: rgba($wheat, $opacity);
+    }
+
+    &.peach {
+        color: $peach;
+        background: rgba($peach, $opacity);
+    }
+
+    &.mint {
+        color: $mint;
+        background: rgba($mint, $opacity);
+    }
+
+    &.leavender {
+        color: $leavender;
+        background: rgba($leavender, $opacity);
     }
 
     &.coal {
-      color: $d_coal;
-      background: rgba($d_coal, $opacity);
+        color: $coal;
+        background: rgba($coal, $opacity);
+    }
+
+    &.snow {
+        color: $snow;
+        background: rgba($snow, $opacity);
     }
 
     &.emerald {
-      color: $d_emerald;
-      background: rgba($d_emerald, $opacity);
+        color: $emerald;
+        background: rgba($emerald, $opacity);
     }
-  }
+
+    &.peanut {
+        color: $peanut;
+        background: rgba($peanut, $opacity);
+    }
+}
+
+.dark {
+    span.slot-color {
+        &.blue {
+            color: $d_blue;
+            background: rgba($d_blue, $opacity);
+        }
+
+        &.purple {
+            color: $d_purple;
+            background: rgba($d_purple, $opacity);
+        }
+
+        &.brown {
+            color: $d_brown;
+            background: rgba($d_brown, $opacity);
+        }
+
+        &.dark-green {
+            color: $d_dark-green;
+            background: rgba($d_dark-green, $opacity);
+        }
+
+        &.maroon {
+            color: $d_maroon;
+            background: rgba($d_maroon, $opacity);
+        }
+
+        &.navy {
+            color: $d_navy;
+            background: rgba($d_navy, $opacity);
+        }
+
+        &.coal {
+            color: $d_coal;
+            background: rgba($d_coal, $opacity);
+        }
+
+        &.emerald {
+            color: $d_emerald;
+            background: rgba($d_emerald, $opacity);
+        }
+    }
 }

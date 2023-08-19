@@ -3,13 +3,13 @@ import { Loader } from "semantic-ui-react";
 import { AppRuntimeSettingsContext } from "../../context";
 
 function LoadingPage() {
-  const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
-  return (
-    <Loader active size="massive">
-      {t("page.loading")}
-    </Loader>
-  );
+    const { language } = useContext(AppRuntimeSettingsContext);
+    const lang = language.languageRepository;
+    return (
+        <Loader active size="massive">
+            {lang.loadingPage}
+        </Loader>
+    );
 }
 
 export default LoadingPage;

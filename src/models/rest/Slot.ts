@@ -3,9 +3,9 @@
 /* eslint-disable */
 
 export type Slot = {
-  status: number;
-  team: number;
-  colour: number;
-  race: number;
-  handicap: number;
+    status: number;
+    team: number;
+    colour: number;
+    race: number;
+    handicap: number;
 };

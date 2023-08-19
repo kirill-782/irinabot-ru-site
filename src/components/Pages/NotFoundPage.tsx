@@ -6,26 +6,26 @@ import React, { useContext } from "react";
 import { AppRuntimeSettingsContext } from "../../context";
 
 function NotFoundPage() {
-  const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+    const { language } = useContext(AppRuntimeSettingsContext);
+    const lang = language.languageRepository;
 
-  return (
-    <Container className="not-found">
-      <MetaRobots noIndex />
-      <div className="centerd">
-        <Grid centered>
-          <Grid.Row>
-            <Header>{t("page.nf404")}</Header>
-          </Grid.Row>
-          <Grid.Row>
-            <Button to="/" as={Link} color="green">
-              {t("page.tomain")}
-            </Button>
-          </Grid.Row>
-        </Grid>
-      </div>
-    </Container>
-  );
+    return (
+        <Container className="not-found">
+            <MetaRobots noIndex />
+            <div className="centerd">
+                <Grid centered>
+                    <Grid.Row>
+                        <Header>{lang.notFoundPageTitle}</Header>
+                    </Grid.Row>
+                    <Grid.Row>
+                        <Button to="/" as={Link} color="green">
+                            {lang.notFoundPageGoToHome}
+                        </Button>
+                    </Grid.Row>
+                </Grid>
+            </div>
+        </Container>
+    );
 }
 
 export default NotFoundPage;

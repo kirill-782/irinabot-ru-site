@@ -27,8 +27,8 @@ $element: "form";
 ---------------------*/
 
 .ui.form {
-  position: relative;
-  max-width: 100%;
+    position: relative;
+    max-width: 100%;
 }
 
 /*--------------------
@@ -36,7 +36,7 @@ $element: "form";
 ---------------------*/
 
 .ui.form > p {
-  margin: $paragraphMargin;
+    margin: $paragraphMargin;
 }
 
 /*--------------------
@@ -44,18 +44,18 @@ $element: "form";
 ---------------------*/
 
 .ui.form .field {
-  clear: both;
-  margin: $fieldMargin;
+    clear: both;
+    margin: $fieldMargin;
 }
 
 .ui.form .field:last-child,
 .ui.form .fields:last-child .field {
-  margin-bottom: 0em;
+    margin-bottom: 0em;
 }
 
 .ui.form .fields .field {
-  clear: both;
-  margin: 0em;
+    clear: both;
+    margin: 0em;
 }
 
 /*--------------------
@@ -63,12 +63,12 @@ $element: "form";
 ---------------------*/
 
 .ui.form .field > label {
-  display: block;
-  margin: $labelMargin;
-  color: $labelColor;
-  font-size: $labelFontSize;
-  font-weight: $labelFontWeight;
-  text-transform: $labelTextTransform;
+    display: block;
+    margin: $labelMargin;
+    color: $labelColor;
+    font-size: $labelFontSize;
+    font-weight: $labelFontWeight;
+    text-transform: $labelTextTransform;
 }
 
 /*--------------------
@@ -88,14 +88,14 @@ $element: "form";
 .ui.form input[type="text"],
 .ui.form input[type="file"],
 .ui.form input[type="url"] {
-  width: $inputWidth;
-  vertical-align: top;
+    width: $inputWidth;
+    vertical-align: top;
 }
 
 /* Set max height on unusual input */
 .ui.form ::-webkit-datetime-edit,
 .ui.form ::-webkit-inner-spin-button {
-  height: $inputLineHeight;
+    height: $inputLineHeight;
 }
 
 .ui.form input:not([type]),
@@ -110,52 +110,52 @@ $element: "form";
 .ui.form input[type="text"],
 .ui.form input[type="file"],
 .ui.form input[type="url"] {
-  font-family: $inputFont;
-  margin: 0em;
-  outline: none;
-  -webkit-appearance: none;
-  tap-highlight-color: rgba(255, 255, 255, 0);
+    font-family: $inputFont;
+    margin: 0em;
+    outline: none;
+    -webkit-appearance: none;
+    tap-highlight-color: rgba(255, 255, 255, 0);
 
-  line-height: $inputLineHeight;
-  padding: $inputPadding;
-  font-size: $inputFontSize;
+    line-height: $inputLineHeight;
+    padding: $inputPadding;
+    font-size: $inputFontSize;
 
-  background: $inputBackground;
-  border: $inputBorder;
-  color: $inputColor;
-  border-radius: $inputBorderRadius;
-  box-shadow: $inputBoxShadow;
-  transition: $inputTransition;
+    background: $inputBackground;
+    border: $inputBorder;
+    color: $inputColor;
+    border-radius: $inputBorderRadius;
+    box-shadow: $inputBoxShadow;
+    transition: $inputTransition;
 }
 
 /* Text Area */
 .ui.form textarea {
-  margin: 0em;
-  -webkit-appearance: none;
-  tap-highlight-color: rgba(255, 255, 255, 0);
+    margin: 0em;
+    -webkit-appearance: none;
+    tap-highlight-color: rgba(255, 255, 255, 0);
 
-  padding: $textAreaPadding;
-  font-size: $textAreaFontSize;
-  background: $textAreaBackground;
-  border: $textAreaBorder;
-  outline: none;
-  color: $inputColor;
-  border-radius: $inputBorderRadius;
-  box-shadow: $inputBoxShadow;
-  transition: $textAreaTransition;
-  font-size: $textAreaFontSize;
-  line-height: $textAreaLineHeight;
-  resize: $textAreaResize;
+    padding: $textAreaPadding;
+    font-size: $textAreaFontSize;
+    background: $textAreaBackground;
+    border: $textAreaBorder;
+    outline: none;
+    color: $inputColor;
+    border-radius: $inputBorderRadius;
+    box-shadow: $inputBoxShadow;
+    transition: $textAreaTransition;
+    font-size: $textAreaFontSize;
+    line-height: $textAreaLineHeight;
+    resize: $textAreaResize;
 }
 .ui.form textarea:not([rows]) {
-  height: $textAreaHeight;
-  min-height: $textAreaMinHeight;
-  max-height: $textAreaMaxHeight;
+    height: $textAreaHeight;
+    min-height: $textAreaMinHeight;
+    max-height: $textAreaMaxHeight;
 }
 
 .ui.form textarea,
 .ui.form input[type="checkbox"] {
-  vertical-align: $checkboxVerticalAlign;
+    vertical-align: $checkboxVerticalAlign;
 }
 
 /*--------------------------
@@ -163,7 +163,7 @@ $element: "form";
 ---------------------------*/
 
 .ui.form input.attached {
-  width: auto;
+    width: auto;
 }
 
 /*--------------------
@@ -171,16 +171,16 @@ $element: "form";
 ---------------------*/
 
 .ui.form select {
-  display: block;
-  height: auto;
-  width: 100%;
-  background: $selectBackground;
-  border: $selectBorder;
-  border-radius: $selectBorderRadius;
-  box-shadow: $selectBoxShadow;
-  padding: $selectPadding;
-  color: $selectColor;
-  transition: $selectTransition;
+    display: block;
+    height: auto;
+    width: 100%;
+    background: $selectBackground;
+    border: $selectBorder;
+    border-radius: $selectBorderRadius;
+    box-shadow: $selectBoxShadow;
+    padding: $selectPadding;
+    color: $selectColor;
+    transition: $selectTransition;
 }
 
 /*--------------------
@@ -189,21 +189,21 @@ $element: "form";
 
 /* Block */
 .ui.form .field > .selection.dropdown {
-  width: 100%;
+    width: 100%;
 }
 .ui.form .field > .selection.dropdown > .dropdown.icon {
-  float: right;
-  margin-top: 2px;
+    float: right;
+    margin-top: 2px;
 }
 
 /* Inline */
 .ui.form .inline.fields .field > .selection.dropdown,
 .ui.form .inline.field > .selection.dropdown {
-  width: auto;
+    width: auto;
 }
 .ui.form .inline.fields .field > .selection.dropdown > .dropdown.icon,
 .ui.form .inline.field > .selection.dropdown > .dropdown.icon {
-  float: none;
+    float: none;
 }
 
 /*--------------------
@@ -214,20 +214,20 @@ $element: "form";
 .ui.form .field .ui.input,
 .ui.form .fields .field .ui.input,
 .ui.form .wide.field .ui.input {
-  width: 100%;
+    width: 100%;
 }
 
 /* Inline  */
 .ui.form .inline.fields .field:not(.wide) .ui.input,
 .ui.form .inline.field:not(.wide) .ui.input {
-  width: auto;
-  vertical-align: middle;
+    width: auto;
+    vertical-align: middle;
 }
 
 /* Auto Input */
 .ui.form .fields .field .ui.input input,
 .ui.form .field .ui.input input {
-  width: auto;
+    width: auto;
 }
 
 /* Full Width Input */
@@ -241,8 +241,8 @@ $element: "form";
 .ui.form .three.fields .ui.input input,
 .ui.form .two.fields .ui.input input,
 .ui.form .wide.field .ui.input input {
-  flex: 1 0 auto;
-  width: 0px;
+    flex: 1 0 auto;
+    width: 0px;
 }
 
 /*--------------------
@@ -252,12 +252,12 @@ $element: "form";
 .ui.form .success.message,
 .ui.form .warning.message,
 .ui.form .error.message {
-  // display: none;
+    // display: none;
 }
 
 /* Assumptions */
 .ui.form .message:first-child {
-  margin-top: 0px;
+    margin-top: 0px;
 }
 
 /*--------------------
@@ -265,23 +265,23 @@ $element: "form";
 ---------------------*/
 
 .ui.form .field .prompt.label {
-  white-space: normal;
-  background: $promptBackground !important;
-  border: $promptBorder !important;
-  color: $promptTextColor !important;
+    white-space: normal;
+    background: $promptBackground !important;
+    border: $promptBorder !important;
+    color: $promptTextColor !important;
 }
 .ui.form .inline.fields .field .prompt,
 .ui.form .inline.field .prompt {
-  vertical-align: top;
-  margin: $inlinePromptMargin;
+    vertical-align: top;
+    margin: $inlinePromptMargin;
 }
 .ui.form .inline.fields .field .prompt:before,
 .ui.form .inline.field .prompt:before {
-  border-width: 0px 0px $inlinePromptBorderWidth $inlinePromptBorderWidth;
-  bottom: auto;
-  right: auto;
-  top: 50%;
-  left: 0em;
+    border-width: 0px 0px $inlinePromptBorderWidth $inlinePromptBorderWidth;
+    bottom: auto;
+    right: auto;
+    top: 50%;
+    left: 0em;
 }
 
 /*******************************
@@ -293,20 +293,20 @@ $element: "form";
 ---------------------*/
 
 .ui.form .field.field input:-webkit-autofill {
-  box-shadow: 0px 0px 0px 100px $inputAutoFillBackground inset !important;
-  border-color: $inputAutoFillBorder !important;
+    box-shadow: 0px 0px 0px 100px $inputAutoFillBackground inset !important;
+    border-color: $inputAutoFillBorder !important;
 }
 
 /* Focus */
 .ui.form .field.field input:-webkit-autofill:focus {
-  box-shadow: 0px 0px 0px 100px $inputAutoFillFocusBackground inset !important;
-  border-color: $inputAutoFillFocusBorder !important;
+    box-shadow: 0px 0px 0px 100px $inputAutoFillFocusBackground inset !important;
+    border-color: $inputAutoFillFocusBorder !important;
 }
 
 /* Error */
 .ui.form .error.error input:-webkit-autofill {
-  box-shadow: 0px 0px 0px 100px $inputAutoFillErrorBackground inset !important;
-  border-color: $inputAutoFillErrorBorder !important;
+    box-shadow: 0px 0px 0px 100px $inputAutoFillErrorBackground inset !important;
+    border-color: $inputAutoFillErrorBorder !important;
 }
 
 /*--------------------
@@ -315,44 +315,44 @@ $element: "form";
 
 /* browsers require these rules separate */
 .ui.form ::-webkit-input-placeholder {
-  color: $inputPlaceholderColor;
+    color: $inputPlaceholderColor;
 }
 .ui.form :-ms-input-placeholder {
-  color: $inputPlaceholderColor !important;
+    color: $inputPlaceholderColor !important;
 }
 .ui.form ::-moz-placeholder {
-  color: $inputPlaceholderColor;
+    color: $inputPlaceholderColor;
 }
 
 .ui.form :focus::-webkit-input-placeholder {
-  color: $inputPlaceholderFocusColor;
+    color: $inputPlaceholderFocusColor;
 }
 .ui.form :focus:-ms-input-placeholder {
-  color: $inputPlaceholderFocusColor !important;
+    color: $inputPlaceholderFocusColor !important;
 }
 .ui.form :focus::-moz-placeholder {
-  color: $inputPlaceholderFocusColor;
+    color: $inputPlaceholderFocusColor;
 }
 
 /* Error Placeholder */
 .ui.form .error ::-webkit-input-placeholder {
-  color: $inputErrorPlaceholderColor;
+    color: $inputErrorPlaceholderColor;
 }
 .ui.form .error :-ms-input-placeholder {
-  color: $inputErrorPlaceholderColor !important;
+    color: $inputErrorPlaceholderColor !important;
 }
 .ui.form .error ::-moz-placeholder {
-  color: $inputErrorPlaceholderColor;
+    color: $inputErrorPlaceholderColor;
 }
 
 .ui.form .error :focus::-webkit-input-placeholder {
-  color: $inputErrorPlaceholderFocusColor;
+    color: $inputErrorPlaceholderFocusColor;
 }
 .ui.form .error :focus:-ms-input-placeholder {
-  color: $inputErrorPlaceholderFocusColor !important;
+    color: $inputErrorPlaceholderFocusColor !important;
 }
 .ui.form .error :focus::-moz-placeholder {
-  color: $inputErrorPlaceholderFocusColor;
+    color: $inputErrorPlaceholderFocusColor;
 }
 
 /*--------------------
@@ -371,19 +371,19 @@ $element: "form";
 .ui.form input[type="text"]:focus,
 .ui.form input[type="file"]:focus,
 .ui.form input[type="url"]:focus {
-  color: $inputFocusColor;
-  border-color: $inputFocusBorderColor;
-  border-radius: $inputFocusBorderRadius;
-  background: $inputFocusBackground;
-  box-shadow: $inputFocusBoxShadow;
+    color: $inputFocusColor;
+    border-color: $inputFocusBorderColor;
+    border-radius: $inputFocusBorderRadius;
+    background: $inputFocusBackground;
+    box-shadow: $inputFocusBoxShadow;
 }
 .ui.form textarea:focus {
-  color: $textAreaFocusColor;
-  border-color: $textAreaFocusBorderColor;
-  border-radius: $textAreaFocusBorderRadius;
-  background: $textAreaFocusBackground;
-  box-shadow: $textAreaFocusBoxShadow;
-  -webkit-appearance: none;
+    color: $textAreaFocusColor;
+    border-color: $textAreaFocusBorderColor;
+    border-radius: $textAreaFocusBorderRadius;
+    background: $textAreaFocusBackground;
+    box-shadow: $textAreaFocusBoxShadow;
+    -webkit-appearance: none;
 }
 
 /*--------------------
@@ -392,13 +392,13 @@ $element: "form";
 
 /* On Form */
 .ui.form.success .success.message:not(:empty) {
-  display: block;
+    display: block;
 }
 .ui.form.success .compact.success.message:not(:empty) {
-  display: inline-block;
+    display: inline-block;
 }
 .ui.form.success .icon.success.message:not(:empty) {
-  display: flex;
+    display: flex;
 }
 
 /*--------------------
@@ -407,13 +407,13 @@ $element: "form";
 
 /* On Form */
 .ui.form.warning .warning.message:not(:empty) {
-  display: block;
+    display: block;
 }
 .ui.form.warning .compact.warning.message:not(:empty) {
-  display: inline-block;
+    display: inline-block;
 }
 .ui.form.warning .icon.warning.message:not(:empty) {
-  display: flex;
+    display: flex;
 }
 
 /*--------------------
@@ -422,13 +422,13 @@ $element: "form";
 
 /* On Form */
 .ui.form.error .error.message:not(:empty) {
-  display: block;
+    display: block;
 }
 .ui.form.error .compact.error.message:not(:empty) {
-  display: inline-block;
+    display: inline-block;
 }
 .ui.form.error .icon.error.message:not(:empty) {
-  display: flex;
+    display: flex;
 }
 
 /* On Field(s) */
@@ -436,13 +436,13 @@ $element: "form";
 .ui.form .field.error label,
 .ui.form .fields.error .field .input,
 .ui.form .field.error .input {
-  color: $formErrorColor;
+    color: $formErrorColor;
 }
 
 .ui.form .fields.error .field .corner.label,
 .ui.form .field.error .corner.label {
-  border-color: $formErrorColor;
-  color: $white;
+    border-color: $formErrorColor;
+    color: $white;
 }
 
 .ui.form .fields.error .field textarea,
@@ -473,11 +473,11 @@ $element: "form";
 .ui.form .field.error input[type="text"],
 .ui.form .field.error input[type="file"],
 .ui.form .field.error input[type="url"] {
-  background: $formErrorBackground;
-  border-color: $formErrorBorder;
-  color: $formErrorColor;
-  border-radius: $inputErrorBorderRadius;
-  box-shadow: $inputErrorBoxShadow;
+    background: $formErrorBackground;
+    border-color: $formErrorBorder;
+    color: $formErrorColor;
+    border-radius: $inputErrorBorderRadius;
+    box-shadow: $inputErrorBoxShadow;
 }
 .ui.form .field.error textarea:focus,
 .ui.form .field.error select:focus,
@@ -493,17 +493,17 @@ $element: "form";
 .ui.form .field.error input[type="text"]:focus,
 .ui.form .field.error input[type="file"]:focus,
 .ui.form .field.error input[type="url"]:focus {
-  background: $inputErrorFocusBackground;
-  border-color: $inputErrorFocusBorder;
-  color: $inputErrorFocusColor;
+    background: $inputErrorFocusBackground;
+    border-color: $inputErrorFocusBorder;
+    color: $inputErrorFocusColor;
 
-  -webkit-appearance: none;
-  box-shadow: $inputErrorFocusBoxShadow;
+    -webkit-appearance: none;
+    box-shadow: $inputErrorFocusBoxShadow;
 }
 
 /* Preserve Native Select Stylings */
 .ui.form .field.error select {
-  -webkit-appearance: menulist-button;
+    -webkit-appearance: menulist-button;
 }
 
 /*------------------
@@ -515,43 +515,43 @@ $element: "form";
 .ui.form .field.error .ui.dropdown,
 .ui.form .field.error .ui.dropdown .text,
 .ui.form .field.error .ui.dropdown .item {
-  background: $formErrorBackground;
-  color: $formErrorColor;
+    background: $formErrorBackground;
+    color: $formErrorColor;
 }
 .ui.form .fields.error .field .ui.dropdown,
 .ui.form .field.error .ui.dropdown {
-  border-color: $formErrorBorder !important;
+    border-color: $formErrorBorder !important;
 }
 .ui.form .fields.error .field .ui.dropdown:hover,
 .ui.form .field.error .ui.dropdown:hover {
-  border-color: $formErrorBorder !important;
+    border-color: $formErrorBorder !important;
 }
 .ui.form .fields.error .field .ui.dropdown:hover .menu,
 .ui.form .field.error .ui.dropdown:hover .menu {
-  border-color: $formErrorBorder;
+    border-color: $formErrorBorder;
 }
 .ui.form .fields.error .field .ui.multiple.selection.dropdown > .label,
 .ui.form .field.error .ui.multiple.selection.dropdown > .label {
-  background-color: $dropdownErrorLabelBackground;
-  color: $dropdownErrorLabelColor;
+    background-color: $dropdownErrorLabelBackground;
+    color: $dropdownErrorLabelColor;
 }
 
 /* Hover */
 .ui.form .fields.error .field .ui.dropdown .menu .item:hover,
 .ui.form .field.error .ui.dropdown .menu .item:hover {
-  background-color: $dropdownErrorHoverBackground;
+    background-color: $dropdownErrorHoverBackground;
 }
 
 /* Selected */
 .ui.form .fields.error .field .ui.dropdown .menu .selected.item,
 .ui.form .field.error .ui.dropdown .menu .selected.item {
-  background-color: $dropdownErrorSelectedBackground;
+    background-color: $dropdownErrorSelectedBackground;
 }
 
 /* Active */
 .ui.form .fields.error .field .ui.dropdown .menu .active.item,
 .ui.form .field.error .ui.dropdown .menu .active.item {
-  background-color: $dropdownErrorActiveBackground !important;
+    background-color: $dropdownErrorActiveBackground !important;
 }
 
 /*--------------------
@@ -562,20 +562,20 @@ $element: "form";
 .ui.form .field.error .checkbox:not(.toggle):not(.slider) label,
 .ui.form .fields.error .field .checkbox:not(.toggle):not(.slider) .box,
 .ui.form .field.error .checkbox:not(.toggle):not(.slider) .box {
-  color: $formErrorColor;
+    color: $formErrorColor;
 }
 .ui.form .fields.error .field .checkbox:not(.toggle):not(.slider) label:before,
 .ui.form .field.error .checkbox:not(.toggle):not(.slider) label:before,
 .ui.form .fields.error .field .checkbox:not(.toggle):not(.slider) .box:before,
 .ui.form .field.error .checkbox:not(.toggle):not(.slider) .box:before {
-  background: $formErrorBackground;
-  border-color: $formErrorBorder;
+    background: $formErrorBackground;
+    border-color: $formErrorBorder;
 }
 .ui.form .fields.error .field .checkbox label:after,
 .ui.form .field.error .checkbox label:after,
 .ui.form .fields.error .field .checkbox .box:after,
 .ui.form .field.error .checkbox .box:after {
-  color: $formErrorColor;
+    color: $formErrorColor;
 }
 
 /*--------------------
@@ -585,15 +585,15 @@ $element: "form";
 .ui.form .disabled.fields .field,
 .ui.form .disabled.field,
 .ui.form .field :disabled {
-  pointer-events: none;
-  opacity: $disabledOpacity;
+    pointer-events: none;
+    opacity: $disabledOpacity;
 }
 .ui.form .field.disabled > label,
 .ui.form .fields.disabled > label {
-  opacity: $disabledLabelOpacity;
+    opacity: $disabledLabelOpacity;
 }
 .ui.form .field.disabled :disabled {
-  opacity: 1;
+    opacity: 1;
 }
 
 /*--------------
@@ -601,52 +601,51 @@ $element: "form";
 ---------------*/
 
 .ui.loading.form {
-  position: relative;
-  cursor: default;
-  pointer-events: none;
+    position: relative;
+    cursor: default;
+    pointer-events: none;
 }
 .ui.loading.form:before {
-  position: absolute;
-  content: "";
-  top: 0%;
-  left: 0%;
-  background: $loaderDimmerColor;
-  width: 100%;
-  height: 100%;
-  z-index: $loaderDimmerZIndex;
+    position: absolute;
+    content: "";
+    top: 0%;
+    left: 0%;
+    background: $loaderDimmerColor;
+    width: 100%;
+    height: 100%;
+    z-index: $loaderDimmerZIndex;
 }
 .ui.loading.form:after {
-  position: absolute;
-  content: "";
-  top: 50%;
-  left: 50%;
+    position: absolute;
+    content: "";
+    top: 50%;
+    left: 50%;
 
-  margin: $loaderMargin;
-  width: $loaderSize;
-  height: $loaderSize;
+    margin: $loaderMargin;
+    width: $loaderSize;
+    height: $loaderSize;
 
-  animation: form-spin $loaderSpeed linear;
-  animation-iteration-count: infinite;
+    animation: form-spin $loaderSpeed linear;
+    animation-iteration-count: infinite;
 
-  border-radius: $circularRadius;
+    border-radius: $circularRadius;
 
-  border-color: $loaderLineColor $loaderFillColor $loaderFillColor
-    $loaderFillColor;
-  border-style: solid;
-  border-width: $loaderLineWidth;
+    border-color: $loaderLineColor $loaderFillColor $loaderFillColor $loaderFillColor;
+    border-style: solid;
+    border-width: $loaderLineWidth;
 
-  box-shadow: 0px 0px 0px 1px transparent;
-  visibility: visible;
-  z-index: $loaderLineZIndex;
+    box-shadow: 0px 0px 0px 1px transparent;
+    visibility: visible;
+    z-index: $loaderLineZIndex;
 }
 
 @keyframes form-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 /*******************************
@@ -662,23 +661,23 @@ $element: "form";
 .ui.form .required.field > label:after,
 .ui.form .required.fields:not(.grouped) > .field > .checkbox:after,
 .ui.form .required.field > .checkbox:after {
-  margin: $requiredMargin;
-  content: $requiredContent;
-  color: $requiredColor;
+    margin: $requiredMargin;
+    content: $requiredContent;
+    color: $requiredColor;
 }
 
 .ui.form .required.fields:not(.grouped) > .field > label:after,
 .ui.form .required.fields.grouped > label:after,
 .ui.form .required.field > label:after {
-  display: inline-block;
-  vertical-align: top;
+    display: inline-block;
+    vertical-align: top;
 }
 
 .ui.form .required.fields:not(.grouped) > .field > .checkbox:after,
 .ui.form .required.field > .checkbox:after {
-  position: absolute;
-  top: 0%;
-  left: 100%;
+    position: absolute;
+    top: 0%;
+    left: 100%;
 }
 
 /*******************************
@@ -700,7 +699,7 @@ $element: "form";
 .ui.inverted.form .inline.fields .field > p,
 .ui.inverted.form .inline.field > label,
 .ui.inverted.form .inline.field > p {
-  color: $invertedLabelColor;
+    color: $invertedLabelColor;
 }
 
 /* Inverted Field */
@@ -716,10 +715,10 @@ $element: "form";
 .ui.inverted.form input[type="text"],
 .ui.inverted.form input[type="file"],
 .ui.inverted.form input[type="url"] {
-  background: $invertedInputBackground;
-  border-color: $invertedInputBorderColor;
-  color: $invertedInputColor;
-  box-shadow: $invertedInputBoxShadow;
+    background: $invertedInputBackground;
+    border-color: $invertedInputBorderColor;
+    color: $invertedInputColor;
+    box-shadow: $invertedInputBoxShadow;
 }
 
 /*--------------------
@@ -728,26 +727,26 @@ $element: "form";
 
 /* Grouped Vertically */
 .ui.form .grouped.fields {
-  display: block;
-  margin: $groupedMargin;
+    display: block;
+    margin: $groupedMargin;
 }
 .ui.form .grouped.fields:last-child {
-  margin-bottom: 0em;
+    margin-bottom: 0em;
 }
 
 .ui.form .grouped.fields > label {
-  margin: $groupedLabelMargin;
-  color: $groupedLabelColor;
-  font-size: $groupedLabelFontSize;
-  font-weight: $groupedLabelFontWeight;
-  text-transform: $groupedLabelTextTransform;
+    margin: $groupedLabelMargin;
+    color: $groupedLabelColor;
+    font-size: $groupedLabelFontSize;
+    font-weight: $groupedLabelFontWeight;
+    text-transform: $groupedLabelTextTransform;
 }
 
 .ui.form .grouped.fields .field,
 .ui.form .grouped.inline.fields .field {
-  display: block;
-  margin: $groupedFieldMargin;
-  padding: 0em;
+    display: block;
+    margin: $groupedFieldMargin;
+    padding: 0em;
 }
 
 /*--------------------
@@ -756,177 +755,175 @@ $element: "form";
 
 /* Split fields */
 .ui.form .fields {
-  display: flex;
-  flex-direction: row;
-  margin: $fieldsMargin;
+    display: flex;
+    flex-direction: row;
+    margin: $fieldsMargin;
 }
 .ui.form .fields > .field {
-  flex: 0 1 auto;
-  padding-left: math.div($gutterWidth, 2);
-  padding-right: math.div($gutterWidth, 2);
+    flex: 0 1 auto;
+    padding-left: math.div($gutterWidth, 2);
+    padding-right: math.div($gutterWidth, 2);
 }
 .ui.form .fields > .field:first-child {
-  border-left: none;
-  box-shadow: none;
+    border-left: none;
+    box-shadow: none;
 }
 
 /* Other Combinations */
 .ui.form .two.fields > .fields,
 .ui.form .two.fields > .field {
-  width: $twoColumn;
+    width: $twoColumn;
 }
 .ui.form .three.fields > .fields,
 .ui.form .three.fields > .field {
-  width: $threeColumn;
+    width: $threeColumn;
 }
 .ui.form .four.fields > .fields,
 .ui.form .four.fields > .field {
-  width: $fourColumn;
+    width: $fourColumn;
 }
 .ui.form .five.fields > .fields,
 .ui.form .five.fields > .field {
-  width: $fiveColumn;
+    width: $fiveColumn;
 }
 .ui.form .six.fields > .fields,
 .ui.form .six.fields > .field {
-  width: $sixColumn;
+    width: $sixColumn;
 }
 .ui.form .seven.fields > .fields,
 .ui.form .seven.fields > .field {
-  width: $sevenColumn;
+    width: $sevenColumn;
 }
 .ui.form .eight.fields > .fields,
 .ui.form .eight.fields > .field {
-  width: $eightColumn;
+    width: $eightColumn;
 }
 .ui.form .nine.fields > .fields,
 .ui.form .nine.fields > .field {
-  width: $nineColumn;
+    width: $nineColumn;
 }
 .ui.form .ten.fields > .fields,
 .ui.form .ten.fields > .field {
-  width: $tenColumn;
+    width: $tenColumn;
 }
 
 /* Swap to full width on mobile */
 @media only screen and (max-width: $largestMobileScreen) {
-  .ui.form .fields {
-    flex-wrap: wrap;
-  }
+    .ui.form .fields {
+        flex-wrap: wrap;
+    }
 
-  .ui[class*="equal width"].form:not(.unstackable) .fields > .field,
-  .ui.form:not(.unstackable)
-    [class*="equal width"].fields:not(.unstackable)
-    > .field,
-  .ui.form:not(.unstackable) .two.fields:not(.unstackable) > .fields,
-  .ui.form:not(.unstackable) .two.fields:not(.unstackable) > .field,
-  .ui.form:not(.unstackable) .three.fields:not(.unstackable) > .fields,
-  .ui.form:not(.unstackable) .three.fields:not(.unstackable) > .field,
-  .ui.form:not(.unstackable) .four.fields:not(.unstackable) > .fields,
-  .ui.form:not(.unstackable) .four.fields:not(.unstackable) > .field,
-  .ui.form:not(.unstackable) .five.fields:not(.unstackable) > .fields,
-  .ui.form:not(.unstackable) .five.fields:not(.unstackable) > .field,
-  .ui.form:not(.unstackable) .six.fields:not(.unstackable) > .fields,
-  .ui.form:not(.unstackable) .six.fields:not(.unstackable) > .field,
-  .ui.form:not(.unstackable) .seven.fields:not(.unstackable) > .fields,
-  .ui.form:not(.unstackable) .seven.fields:not(.unstackable) > .field,
-  .ui.form:not(.unstackable) .eight.fields:not(.unstackable) > .fields,
-  .ui.form:not(.unstackable) .eight.fields:not(.unstackable) > .field,
-  .ui.form:not(.unstackable) .nine.fields:not(.unstackable) > .fields,
-  .ui.form:not(.unstackable) .nine.fields:not(.unstackable) > .field,
-  .ui.form:not(.unstackable) .ten.fields:not(.unstackable) > .fields,
-  .ui.form:not(.unstackable) .ten.fields:not(.unstackable) > .field {
-    width: $oneColumn !important;
-    margin: 0em 0em $rowDistance;
-  }
+    .ui[class*="equal width"].form:not(.unstackable) .fields > .field,
+    .ui.form:not(.unstackable) [class*="equal width"].fields:not(.unstackable) > .field,
+    .ui.form:not(.unstackable) .two.fields:not(.unstackable) > .fields,
+    .ui.form:not(.unstackable) .two.fields:not(.unstackable) > .field,
+    .ui.form:not(.unstackable) .three.fields:not(.unstackable) > .fields,
+    .ui.form:not(.unstackable) .three.fields:not(.unstackable) > .field,
+    .ui.form:not(.unstackable) .four.fields:not(.unstackable) > .fields,
+    .ui.form:not(.unstackable) .four.fields:not(.unstackable) > .field,
+    .ui.form:not(.unstackable) .five.fields:not(.unstackable) > .fields,
+    .ui.form:not(.unstackable) .five.fields:not(.unstackable) > .field,
+    .ui.form:not(.unstackable) .six.fields:not(.unstackable) > .fields,
+    .ui.form:not(.unstackable) .six.fields:not(.unstackable) > .field,
+    .ui.form:not(.unstackable) .seven.fields:not(.unstackable) > .fields,
+    .ui.form:not(.unstackable) .seven.fields:not(.unstackable) > .field,
+    .ui.form:not(.unstackable) .eight.fields:not(.unstackable) > .fields,
+    .ui.form:not(.unstackable) .eight.fields:not(.unstackable) > .field,
+    .ui.form:not(.unstackable) .nine.fields:not(.unstackable) > .fields,
+    .ui.form:not(.unstackable) .nine.fields:not(.unstackable) > .field,
+    .ui.form:not(.unstackable) .ten.fields:not(.unstackable) > .fields,
+    .ui.form:not(.unstackable) .ten.fields:not(.unstackable) > .field {
+        width: $oneColumn !important;
+        margin: 0em 0em $rowDistance;
+    }
 }
 
 /* Sizing Combinations */
 .ui.form .fields .wide.field {
-  width: $oneWide;
-  padding-left: math.div($gutterWidth, 2);
-  padding-right: math.div($gutterWidth, 2);
+    width: $oneWide;
+    padding-left: math.div($gutterWidth, 2);
+    padding-right: math.div($gutterWidth, 2);
 }
 
 .ui.form .one.wide.field {
-  width: $oneWide !important;
+    width: $oneWide !important;
 }
 .ui.form .two.wide.field {
-  width: $twoWide !important;
+    width: $twoWide !important;
 }
 .ui.form .three.wide.field {
-  width: $threeWide !important;
+    width: $threeWide !important;
 }
 .ui.form .four.wide.field {
-  width: $fourWide !important;
+    width: $fourWide !important;
 }
 .ui.form .five.wide.field {
-  width: $fiveWide !important;
+    width: $fiveWide !important;
 }
 .ui.form .six.wide.field {
-  width: $sixWide !important;
+    width: $sixWide !important;
 }
 .ui.form .seven.wide.field {
-  width: $sevenWide !important;
+    width: $sevenWide !important;
 }
 .ui.form .eight.wide.field {
-  width: $eightWide !important;
+    width: $eightWide !important;
 }
 .ui.form .nine.wide.field {
-  width: $nineWide !important;
+    width: $nineWide !important;
 }
 .ui.form .ten.wide.field {
-  width: $tenWide !important;
+    width: $tenWide !important;
 }
 .ui.form .eleven.wide.field {
-  width: $elevenWide !important;
+    width: $elevenWide !important;
 }
 .ui.form .twelve.wide.field {
-  width: $twelveWide !important;
+    width: $twelveWide !important;
 }
 .ui.form .thirteen.wide.field {
-  width: $thirteenWide !important;
+    width: $thirteenWide !important;
 }
 .ui.form .fourteen.wide.field {
-  width: $fourteenWide !important;
+    width: $fourteenWide !important;
 }
 .ui.form .fifteen.wide.field {
-  width: $fifteenWide !important;
+    width: $fifteenWide !important;
 }
 .ui.form .sixteen.wide.field {
-  width: $sixteenWide !important;
+    width: $sixteenWide !important;
 }
 
 /* Swap to full width on mobile */
 @media only screen and (max-width: $largestMobileScreen) {
-  .ui.form:not(.unstackable) .two.fields:not(.unstackable) > .fields,
-  .ui.form:not(.unstackable) .two.fields:not(.unstackable) > .field,
-  .ui.form:not(.unstackable) .three.fields:not(.unstackable) > .fields,
-  .ui.form:not(.unstackable) .three.fields:not(.unstackable) > .field,
-  .ui.form:not(.unstackable) .four.fields:not(.unstackable) > .fields,
-  .ui.form:not(.unstackable) .four.fields:not(.unstackable) > .field,
-  .ui.form:not(.unstackable) .five.fields:not(.unstackable) > .fields,
-  .ui.form:not(.unstackable) .five.fields:not(.unstackable) > .field,
-  .ui.form:not(.unstackable) .fields:not(.unstackable) > .two.wide.field,
-  .ui.form:not(.unstackable) .fields:not(.unstackable) > .three.wide.field,
-  .ui.form:not(.unstackable) .fields:not(.unstackable) > .four.wide.field,
-  .ui.form:not(.unstackable) .fields:not(.unstackable) > .five.wide.field,
-  .ui.form:not(.unstackable) .fields:not(.unstackable) > .six.wide.field,
-  .ui.form:not(.unstackable) .fields:not(.unstackable) > .seven.wide.field,
-  .ui.form:not(.unstackable) .fields:not(.unstackable) > .eight.wide.field,
-  .ui.form:not(.unstackable) .fields:not(.unstackable) > .nine.wide.field,
-  .ui.form:not(.unstackable) .fields:not(.unstackable) > .ten.wide.field,
-  .ui.form:not(.unstackable) .fields:not(.unstackable) > .eleven.wide.field,
-  .ui.form:not(.unstackable) .fields:not(.unstackable) > .twelve.wide.field,
-  .ui.form:not(.unstackable) .fields:not(.unstackable) > .thirteen.wide.field,
-  .ui.form:not(.unstackable) .fields:not(.unstackable) > .fourteen.wide.field,
-  .ui.form:not(.unstackable) .fields:not(.unstackable) > .fifteen.wide.field,
-  .ui.form:not(.unstackable) .fields:not(.unstackable) > .sixteen.wide.field {
-    width: $oneColumn !important;
-  }
-  .ui.form .fields {
-    margin-bottom: 0em;
-  }
+    .ui.form:not(.unstackable) .two.fields:not(.unstackable) > .fields,
+    .ui.form:not(.unstackable) .two.fields:not(.unstackable) > .field,
+    .ui.form:not(.unstackable) .three.fields:not(.unstackable) > .fields,
+    .ui.form:not(.unstackable) .three.fields:not(.unstackable) > .field,
+    .ui.form:not(.unstackable) .four.fields:not(.unstackable) > .fields,
+    .ui.form:not(.unstackable) .four.fields:not(.unstackable) > .field,
+    .ui.form:not(.unstackable) .five.fields:not(.unstackable) > .fields,
+    .ui.form:not(.unstackable) .five.fields:not(.unstackable) > .field,
+    .ui.form:not(.unstackable) .fields:not(.unstackable) > .two.wide.field,
+    .ui.form:not(.unstackable) .fields:not(.unstackable) > .three.wide.field,
+    .ui.form:not(.unstackable) .fields:not(.unstackable) > .four.wide.field,
+    .ui.form:not(.unstackable) .fields:not(.unstackable) > .five.wide.field,
+    .ui.form:not(.unstackable) .fields:not(.unstackable) > .six.wide.field,
+    .ui.form:not(.unstackable) .fields:not(.unstackable) > .seven.wide.field,
+    .ui.form:not(.unstackable) .fields:not(.unstackable) > .eight.wide.field,
+    .ui.form:not(.unstackable) .fields:not(.unstackable) > .nine.wide.field,
+    .ui.form:not(.unstackable) .fields:not(.unstackable) > .ten.wide.field,
+    .ui.form:not(.unstackable) .fields:not(.unstackable) > .eleven.wide.field,
+    .ui.form:not(.unstackable) .fields:not(.unstackable) > .twelve.wide.field,
+    .ui.form:not(.unstackable) .fields:not(.unstackable) > .thirteen.wide.field,
+    .ui.form:not(.unstackable) .fields:not(.unstackable) > .fourteen.wide.field,
+    .ui.form:not(.unstackable) .fields:not(.unstackable) > .fifteen.wide.field,
+    .ui.form:not(.unstackable) .fields:not(.unstackable) > .sixteen.wide.field {
+        width: $oneColumn !important;
+    }
+    .ui.form .fields {
+        margin-bottom: 0em;
+    }
 }
 
 /*--------------------
@@ -935,8 +932,8 @@ $element: "form";
 
 .ui[class*="equal width"].form .fields > .field,
 .ui.form [class*="equal width"].fields > .field {
-  width: 100%;
-  flex: 1 1 auto;
+    width: 100%;
+    flex: 1 1 auto;
 }
 
 /*--------------------
@@ -944,12 +941,12 @@ $element: "form";
 ---------------------*/
 
 .ui.form .inline.fields {
-  margin: $fieldMargin;
-  align-items: center;
+    margin: $fieldMargin;
+    align-items: center;
 }
 .ui.form .inline.fields .field {
-  margin: 0em;
-  padding: $inlineFieldsMargin;
+    margin: 0em;
+    padding: $inlineFieldsMargin;
 }
 
 /* Inline Label */
@@ -958,20 +955,20 @@ $element: "form";
 .ui.form .inline.fields .field > p,
 .ui.form .inline.field > label,
 .ui.form .inline.field > p {
-  display: inline-block;
-  width: auto;
-  margin-top: 0em;
-  margin-bottom: 0em;
-  vertical-align: baseline;
-  font-size: $inlineLabelFontSize;
-  font-weight: $inlineLabelFontWeight;
-  color: $inlineLabelColor;
-  text-transform: $inlineLabelTextTransform;
+    display: inline-block;
+    width: auto;
+    margin-top: 0em;
+    margin-bottom: 0em;
+    vertical-align: baseline;
+    font-size: $inlineLabelFontSize;
+    font-weight: $inlineLabelFontWeight;
+    color: $inlineLabelColor;
+    text-transform: $inlineLabelTextTransform;
 }
 
 /* Grouped Inline Label */
 .ui.form .inline.fields > label {
-  margin: $groupedInlineLabelMargin;
+    margin: $groupedInlineLabelMargin;
 }
 
 /* Inline Input */
@@ -979,34 +976,34 @@ $element: "form";
 .ui.form .inline.fields .field > select,
 .ui.form .inline.field > input,
 .ui.form .inline.field > select {
-  display: inline-block;
-  width: auto;
+    display: inline-block;
+    width: auto;
 
-  margin-top: 0em;
-  margin-bottom: 0em;
+    margin-top: 0em;
+    margin-bottom: 0em;
 
-  vertical-align: middle;
-  font-size: $inlineInputSize;
+    vertical-align: middle;
+    font-size: $inlineInputSize;
 }
 
 /* Label */
 .ui.form .inline.fields .field > :first-child,
 .ui.form .inline.field > :first-child {
-  margin: 0em $inlineLabelDistance 0em 0em;
+    margin: 0em $inlineLabelDistance 0em 0em;
 }
 .ui.form .inline.fields .field > :only-child,
 .ui.form .inline.field > :only-child {
-  margin: 0em;
+    margin: 0em;
 }
 
 /* Wide */
 .ui.form .inline.fields .wide.field {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 }
 .ui.form .inline.fields .wide.field > input,
 .ui.form .inline.fields .wide.field > select {
-  width: 100%;
+    width: 100%;
 }
 
 /*--------------------
@@ -1014,26 +1011,26 @@ $element: "form";
 ---------------------*/
 
 .ui.mini.form {
-  font-size: $mini;
+    font-size: $mini;
 }
 .ui.tiny.form {
-  font-size: $tiny;
+    font-size: $tiny;
 }
 .ui.small.form {
-  font-size: $small;
+    font-size: $small;
 }
 .ui.form {
-  font-size: $medium;
+    font-size: $medium;
 }
 .ui.large.form {
-  font-size: $large;
+    font-size: $large;
 }
 .ui.big.form {
-  font-size: $big;
+    font-size: $big;
 }
 .ui.huge.form {
-  font-size: $huge;
+    font-size: $huge;
 }
 .ui.massive.form {
-  font-size: $massive;
+    font-size: $massive;
 }

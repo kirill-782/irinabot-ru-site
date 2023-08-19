@@ -2,12 +2,12 @@
          Theme Overrides
 *******************************/
 @media screen and (max-width: 768px) {
-  .ui.message,
-  .ui.message:last-child {
-    margin-bottom: 15px;
-  }
+    .ui.message,
+    .ui.message:last-child {
+        margin-bottom: 15px;
+    }
 }
 
 .ui.message.fluid {
-  width: 100%;
+    width: 100%;
 }

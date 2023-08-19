@@ -1,75 +1,70 @@
 import TimeAgo from "javascript-time-ago";
 import { useCallback, useState } from "react";
 import { importLocales } from "../utils/LocaleUtils";
+import { LanguageRepositoryKeys, LanguageRepository } from "../localization/Lang.ru";
 
 type stringMap = {
-  [key: string]: string | boolean | number | null | undefined;
+    [key: string]: string | boolean | number | null | undefined;
 };
 
-export type GetLanguageStaring = (
-  id: string,
-  options?: stringMap,
-  language?: string
-) => string;
+export type GetLanguageStaring = (id: LanguageRepositoryKeys, options?: stringMap, language?: string) => string;
 
 type UseLanguageResult = [
-  (language: string) => void,
-  (language: string, data: any) => void,
-  GetLanguageStaring,
-  string
+    (language: string) => void,
+    (language: string, data: any) => void,
+    GetLanguageStaring,
+    string,
+    LanguageRepository
 ];
 
 export const useLanguage = (): UseLanguageResult => {
-  const [selectedLanguage, setSelectedLanguage] = useState<string>("");
-  const [data, setData] = useState<any>({});
+    const [selectedLanguage, setSelectedLanguage] = useState<string>("");
+    const [data, setData] = useState<any>({});
 
-  const getString = useCallback(
-    (id: string, options?: stringMap, language?: string): string => {
-      const currentLanguage = language || selectedLanguage;
-      const languagePath = `${currentLanguage}.${id}`;
+    const getString = useCallback(
+        (id: string, options?: stringMap, language?: string): string => {
+            const currentLanguage = language || selectedLanguage;
 
-      let result = data;
+            let result = data[currentLanguage][id];
 
-      languagePath.split(".").map((i) => {
-        if (typeof result === "object") {
-          result = result[i];
-        } else result = undefined;
-      });
+            if (options && result) {
+                Object.entries(options).forEach((i) => {
+                    result = result.replaceAll(`{${i[0]}}`, i[1]);
+                });
+            }
 
-      if (result === undefined) return languagePath;
+            return result;
+        },
+        [data, selectedLanguage],
+    );
 
-      if (options) {
-        Object.entries(options).forEach((i) => {
-          result = result.replaceAll(`{${i[0]}}`, i[1].toString());
+    const pushLanguageData = (language: string, updateData: any | null) => {
+        setData((data) => {
+            if (!updateData) {
+                delete data[language];
+                return { ...data };
+            }
+            return { ...data, [language]: updateData };
         });
-      }
+    };
 
-      return result;
-    },
-    [data, selectedLanguage]
-  );
+    const loadLanguage = useCallback(async (language: string) => {
+        const result = await importLocales(language);
 
-  const pushLanguageData = (language: string, updateData: any | null) => {
-    setData((data) => {
-      if (!updateData) {
-        delete data[language];
-        return { ...data };
-      }
-      return { ...data, [language]: updateData };
-    });
-  };
+        TimeAgo.addLocale(result.timeAgo.default);
+        TimeAgo.addDefaultLocale(result.timeAgo.default);
+        pushLanguageData(language, result.site.default);
 
-  const loadLanguage = useCallback(async (language: string) => {
-    const result = await importLocales(language);
+        setSelectedLanguage(language);
 
-    TimeAgo.addLocale(result.timeAgo.default);
-    TimeAgo.addDefaultLocale(result.timeAgo.default);
-    pushLanguageData(language, result.site.default);
+        return true;
+    }, []);
 
-    setSelectedLanguage(language);
-
-    return true;
-  }, []);
-
-  return [loadLanguage, pushLanguageData, getString, selectedLanguage];
+    return [
+        loadLanguage,
+        pushLanguageData,
+        getString,
+        selectedLanguage,
+        data[selectedLanguage],
+    ];
 };

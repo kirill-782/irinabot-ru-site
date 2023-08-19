@@ -1,38 +1,38 @@
 .burger-button {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .mobile-menu {
-  .mobile-menu-pushable {
-    background-color: rgba(0, 0, 0, 0.4);
-    z-index: 1;
-    overflow: hidden;
-    opacity: 0;
-    -webkit-transition: opacity 0.5s;
-    transition: opacity 0.5s;
-    will-change: opacity;
+    .mobile-menu-pushable {
+        background-color: rgba(0, 0, 0, 0.4);
+        z-index: 1;
+        overflow: hidden;
+        opacity: 0;
+        -webkit-transition: opacity 0.5s;
+        transition: opacity 0.5s;
+        will-change: opacity;
 
-    &.active {
-      position: fixed;
-      top: 43px;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      opacity: 1;
+        &.active {
+            position: fixed;
+            top: 43px;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            opacity: 1;
+        }
     }
-  }
 }
 
 .burger-mobile-menu {
-  position: absolute;
-  top: 43px;
-  left: -9999px;
-  z-index: 2;
-  background-color: inherit;
-  width: 100%;
-  transition: all 0.2s ease-out;
+    position: absolute;
+    top: 43px;
+    left: -9999px;
+    z-index: 2;
+    background-color: inherit;
+    width: 100%;
+    transition: all 0.2s ease-out;
 
-  &.active {
-    left: 0;
-  }
+    &.active {
+        left: 0;
+    }
 }

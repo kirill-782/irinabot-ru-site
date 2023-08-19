@@ -3,6 +3,6 @@
 /* eslint-disable */
 
 export type Error = {
-  message?: string;
-  code?: number;
+    message?: string;
+    code?: number;
 };

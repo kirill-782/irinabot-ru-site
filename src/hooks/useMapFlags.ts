@@ -4,52 +4,47 @@ import { Flags } from "../models/rest/Flags";
 import { convertErrorResponseToString } from "../utils/ApiUtils";
 
 interface useMapFlagsParams {
-  mapId: number;
+    mapId: number;
 }
 
 export const useMapFlags = ({
-  mapId,
-}: useMapFlagsParams): [
-  Flags | undefined,
-  (flags: Flags) => void,
-  boolean,
-  string
-] => {
-  const [flags, setFlags] = useState<Flags>();
-  const [flagsLoading, setFlagsLoading] = useState<boolean>(false);
-  const [flagsLoadError, setFlagsLoadError] = useState<string>("");
+    mapId,
+}: useMapFlagsParams): [Flags | undefined, (flags: Flags) => void, boolean, string] => {
+    const [flags, setFlags] = useState<Flags>();
+    const [flagsLoading, setFlagsLoading] = useState<boolean>(false);
+    const [flagsLoadError, setFlagsLoadError] = useState<string>("");
 
-  const { mapsApi } = useContext(RestContext);
+    const { mapsApi } = useContext(RestContext);
 
-  const updateFlags = (flags: Flags) => {
-    setFlagsLoading(true);
-    mapsApi
-      .patchMapFlags(mapId, flags)
-      .then((flags) => {
-        setFlags(flags);
-      })
-      .finally(() => {
-        setFlagsLoading(false);
-      });
-  };
+    const updateFlags = (flags: Flags) => {
+        setFlagsLoading(true);
+        mapsApi
+            .patchMapFlags(mapId, flags)
+            .then((flags) => {
+                setFlags(flags);
+            })
+            .finally(() => {
+                setFlagsLoading(false);
+            });
+    };
 
-  useEffect(() => {
-    setFlagsLoading(true);
-    setFlagsLoadError("");
-    setFlags(undefined);
+    useEffect(() => {
+        setFlagsLoading(true);
+        setFlagsLoadError("");
+        setFlags(undefined);
 
-    mapsApi
-      .getMapFlags(mapId)
-      .then((e) => {
-        setFlags(e);
-      })
-      .catch((e) => {
-        setFlagsLoadError(convertErrorResponseToString(e));
-      })
-      .finally(() => {
-        setFlagsLoading(false);
-      });
-  }, [mapId, mapsApi]);
+        mapsApi
+            .getMapFlags(mapId)
+            .then((e) => {
+                setFlags(e);
+            })
+            .catch((e) => {
+                setFlagsLoadError(convertErrorResponseToString(e));
+            })
+            .finally(() => {
+                setFlagsLoading(false);
+            });
+    }, [mapId, mapsApi]);
 
-  return [flags, updateFlags, flagsLoading, flagsLoadError];
+    return [flags, updateFlags, flagsLoading, flagsLoadError];
 };

@@ -9,48 +9,44 @@ import { MapService } from "./services/MapService";
 import { MapUploaderService } from "./services/MapUploaderService";
 
 function AfterContextApp(props) {
-  const [mapsApi, setMapsApi] = useState(new MapService(DEFAULT_CONFIG));
-  const [mapUploader, setMapUploader] = useState(
-    new MapUploaderService(new MapService(DEFAULT_CONFIG))
-  );
+    const [mapsApi, setMapsApi] = useState(new MapService(DEFAULT_CONFIG));
+    const [mapUploader, setMapUploader] = useState(new MapUploaderService(new MapService(DEFAULT_CONFIG)));
 
-  useEffect(() => {
-    mapUploader.setMapService(mapsApi);
-  }, [mapsApi, mapUploader]);
+    useEffect(() => {
+        mapUploader.setMapService(mapsApi);
+    }, [mapsApi, mapUploader]);
 
-  useApiAuth({ setMapService: setMapsApi });
+    useApiAuth({ setMapService: setMapsApi });
 
-  const { ghostSocket } = useContext(WebsocketContext);
+    const { ghostSocket } = useContext(WebsocketContext);
 
-  const [cachedConnectorIds, cacheConnectorIdsDispatcher] = useConnectorIdCache(
-    { ghostSocket }
-  );
+    const [cachedConnectorIds, cacheConnectorIdsDispatcher] = useConnectorIdCache({ ghostSocket });
 
-  const [cachedCategories, cacheCategories] = useCategoriesCache(mapsApi);
+    const [cachedCategories, cacheCategories] = useCategoriesCache(mapsApi);
 
-  const [cachedVersions, cacheVersions] = useVersionsCache(mapsApi);
+    const [cachedVersions, cacheVersions] = useVersionsCache(mapsApi);
 
-  return (
-    <RestContext.Provider
-      value={{
-        mapsApi,
-        mapUploader,
-      }}
-    >
-      <CacheContext.Provider
-        value={{
-          cachedConnectorIds,
-          cacheConnectorIdsDispatcher,
-          cachedCategories,
-          cacheCategories,
-          cachedVersions,
-          cacheVersions,
-        }}
-      >
-        {props.children}
-      </CacheContext.Provider>
-    </RestContext.Provider>
-  );
+    return (
+        <RestContext.Provider
+            value={{
+                mapsApi,
+                mapUploader,
+            }}
+        >
+            <CacheContext.Provider
+                value={{
+                    cachedConnectorIds,
+                    cacheConnectorIdsDispatcher,
+                    cachedCategories,
+                    cacheCategories,
+                    cachedVersions,
+                    cacheVersions,
+                }}
+            >
+                {props.children}
+            </CacheContext.Provider>
+        </RestContext.Provider>
+    );
 }
 
 export default AfterContextApp;

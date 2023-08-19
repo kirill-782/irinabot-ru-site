@@ -1,13 +1,13 @@
 .w3mmd-tab {
-  flex-wrap: nowrap !important;
+    flex-wrap: nowrap !important;
 
-  .block-list {
-    width: 20%;
-    flex-shrink: 0;
-  }
+    .block-list {
+        width: 20%;
+        flex-shrink: 0;
+    }
 
-  .state {
-    width: 100%;
-    min-width: 1px;
-  }
+    .state {
+        width: 100%;
+        min-width: 1px;
+    }
 }

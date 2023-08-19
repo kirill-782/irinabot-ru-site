@@ -7,84 +7,78 @@ import { convertErrorResponseToString } from "../utils/ApiUtils";
 const PAGE_SIZE = 20;
 
 export const isNoFilters = (filters: SearchFilters | null) => {
-  if (!filters || !Object.keys(filters).length) return true;
+    if (!filters || !Object.keys(filters).length) return true;
 
-  let found = false;
+    let found = false;
 
-  Object.keys(filters).forEach((i) => {
-    if (filters[i] !== undefined) found = true;
-  });
+    Object.keys(filters).forEach((i) => {
+        if (filters[i] !== undefined) found = true;
+    });
 
-  return !found;
+    return !found;
 };
 
 export const useSearchMaps = (
-  filters: SearchFilters | null,
-  order: SearchOrder | null,
-  q?: string
+    filters: SearchFilters | null,
+    order: SearchOrder | null,
+    q?: string
 ): [Map[], boolean, boolean, string, () => void] => {
-  const [searchedMaps, setSearchedMaps] = useState<Map[] | null>(null);
-  const [currentPage, setCurrentPage] = useState<number>(0);
-  const [isFull, setFull] = useState<boolean>(false);
+    const [searchedMaps, setSearchedMaps] = useState<Map[] | null>(null);
+    const [currentPage, setCurrentPage] = useState<number>(0);
+    const [isFull, setFull] = useState<boolean>(false);
 
-  const [isLoading, setLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string>("");
+    const [isLoading, setLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState<string>("");
 
-  const { mapsApi } = useContext(RestContext);
+    const { mapsApi } = useContext(RestContext);
 
-  const searchMaps = (
-    value: string,
-    filters: SearchFilters,
-    order: SearchOrder,
-    page: number
-  ) => {
-    if (value.length < 2 && isNoFilters(filters)) return;
+    const searchMaps = (value: string, filters: SearchFilters, order: SearchOrder, page: number) => {
+        if (value.length < 2 && isNoFilters(filters)) return;
 
-    setLoading(true);
+        setLoading(true);
 
-    if (!page) setSearchedMaps([]);
+        if (!page) setSearchedMaps([]);
 
-    setErrorMessage("");
-    mapsApi
-      .searchMap(filters, order, value.length >= 2 ? value : undefined, {
-        count: PAGE_SIZE,
-        offset: page * PAGE_SIZE,
-      })
-      .then((maps) => {
-        if (maps.length < PAGE_SIZE) setFull(true);
-        else setFull(false);
+        setErrorMessage("");
+        mapsApi
+            .searchMap(filters, order, value.length >= 2 ? value : undefined, {
+                count: PAGE_SIZE,
+                offset: page * PAGE_SIZE,
+            })
+            .then((maps) => {
+                if (maps.length < PAGE_SIZE) setFull(true);
+                else setFull(false);
 
-        setCurrentPage(page);
-        setSearchedMaps((searchedMaps) => {
-          if (!searchedMaps || page === 0) return maps;
-          return [...searchedMaps, ...maps];
-        });
-        setLoading(false);
-      })
-      .catch((e) => {
-        setCurrentPage(0);
-        setFull(false);
-        setSearchedMaps(null);
-        setLoading(false);
-        setErrorMessage(convertErrorResponseToString(e));
-      });
-  };
+                setCurrentPage(page);
+                setSearchedMaps((searchedMaps) => {
+                    if (!searchedMaps || page === 0) return maps;
+                    return [...searchedMaps, ...maps];
+                });
+                setLoading(false);
+            })
+            .catch((e) => {
+                setCurrentPage(0);
+                setFull(false);
+                setSearchedMaps(null);
+                setLoading(false);
+                setErrorMessage(convertErrorResponseToString(e));
+            });
+    };
 
-  const loadNextPage = () => {
-    if (!isFull && !isLoading && (q || filters))
-      searchMaps(q, filters || {}, order || {}, currentPage + 1);
-  };
+    const loadNextPage = () => {
+        if (!isFull && !isLoading && (q || filters)) searchMaps(q, filters || {}, order || {}, currentPage + 1);
+    };
 
-  useEffect(() => {
-    if (q || !isNoFilters(filters)) {
-      const timer = setTimeout(() => {
-        searchMaps(q, filters || {}, order || {}, 0);
-      }, 300);
+    useEffect(() => {
+        if (q || !isNoFilters(filters)) {
+            const timer = setTimeout(() => {
+                searchMaps(q, filters || {}, order || {}, 0);
+            }, 300);
 
-      return () => clearTimeout(timer);
-    } else setSearchedMaps(null);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [q, filters, order]);
+            return () => clearTimeout(timer);
+        } else setSearchedMaps(null);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [q, filters, order]);
 
-  return [searchedMaps, isFull, isLoading, errorMessage, loadNextPage];
+    return [searchedMaps, isFull, isLoading, errorMessage, loadNextPage];
 };

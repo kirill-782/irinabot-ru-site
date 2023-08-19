@@ -4,15 +4,15 @@ import React from "react";
 import Markdown from "../Markdown";
 
 export interface MapDescriptionProps {
-  desctiption: string;
+    desctiption: string;
 }
 
 function MapDescription({ desctiption }: MapDescriptionProps) {
-  return (
-    <Segment style={{ width: "100%" }}>
-      <Markdown>{desctiption}</Markdown>
-    </Segment>
-  );
+    return (
+        <Segment style={{ width: "100%" }}>
+            <Markdown>{desctiption}</Markdown>
+        </Segment>
+    );
 }
 
 export default memo(MapDescription);

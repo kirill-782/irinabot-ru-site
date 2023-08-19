@@ -1,14 +1,14 @@
 export interface GameOptionsData {
-  mask: number;
-  slotPreset: string;
-  privateGame: boolean;
-  mapSpeed: number;
-  mapVisibility: number;
-  mapObservers: number;
-  configName: string;
+    mask: number;
+    slotPreset: string;
+    privateGame: boolean;
+    mapSpeed: number;
+    mapVisibility: number;
+    mapObservers: number;
+    configName: string;
 }
 
 export interface GameOptionsProps {
-  options: GameOptionsData;
-  onOptionsChange: (options: GameOptionsData) => void;
+    options: GameOptionsData;
+    onOptionsChange: (options: GameOptionsData) => void;
 }

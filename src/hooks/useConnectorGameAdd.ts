@@ -1,49 +1,107 @@
 import { GHostWebSocket } from "./../services/GHostWebsocket";
 import { ConnectorWebsocket } from "./../services/ConnectorWebsocket";
-import { useEffect } from "react";
-import {
-  DEFAULT_CONTEXT_HEADER_CONSTANT,
-  DEFAULT_UDP_ANSWER,
-} from "../models/websocket/HeaderConstants";
-import { toast } from "@kokomi/react-semantic-toasts";
+import { useEffect, useRef, useState } from "react";
+import { DEFAULT_CONTEXT_HEADER_CONSTANT, DEFAULT_UDP_ANSWER } from "../models/websocket/HeaderConstants";
 import { ServerUDPAnswer } from "../models/websocket/ServerUDPAnswer";
-import { ConnectorBrowserAddGameConverter } from "../models/websocket/ConnectorBrowserGameAdd";
+
+import { fromByteArray } from "base64-js";
+import { toast } from "@kokomi/react-semantic-toasts";
+import copy from "clipboard-copy";
+
 interface useConnectorGameAddOptions {
-  ghostSocket: GHostWebSocket;
-  connectorSocket: ConnectorWebsocket;
+    ghostSocket: GHostWebSocket;
+    connectorSocket: ConnectorWebsocket;
 }
 
-export const useConnectorGameAdd = ({
-  ghostSocket,
-  connectorSocket,
-}: useConnectorGameAddOptions) => {
-  //const {language} = useContext(AppRuntimeSettingsContext);
-  //const t = language.getString;
+export const useConnectorGameAdd = ({ ghostSocket, connectorSocket }: useConnectorGameAddOptions) => {
+    const isCopy = useRef(false);
 
-  useEffect(() => {
-    const onUDPGameAddPackage = (data) => {
-      if (
-        data.detail.package.type === DEFAULT_UDP_ANSWER &&
-        data.detail.package.context === DEFAULT_CONTEXT_HEADER_CONSTANT
-      ) {
-        if (connectorSocket.isConnected()) {
-          toast({
-            title: "Игра в коннектор отправлена", //  title: t("hook.useConnectorGameAdd.sended"),
-            description: "Зайдите в LAN Warcraft III, чтобы войти", //  description: t("hook.useConnectorGameAdd.toLAN"),
-            type: "success",
-            time: 10000,
-          });
-          const udpAnswer = data.detail.package as ServerUDPAnswer;
-          const converter = new ConnectorBrowserAddGameConverter();
-          connectorSocket.send(converter.assembly({ data: udpAnswer.data }));
-        }
-      }
-    };
+    useEffect(() => {
+        const onKeyEvent = (e: KeyboardEvent) => {
+            isCopy.current = e.altKey;
+        };
 
-    ghostSocket.addEventListener("package", onUDPGameAddPackage);
+        const onUDPGameAddPackage = (data) => {
+            if (
+                data.detail.package.type === DEFAULT_UDP_ANSWER &&
+                data.detail.package.context === DEFAULT_CONTEXT_HEADER_CONSTANT
+            ) {
+                const gameParams = new URLSearchParams();
+                const gameData = data.detail.package as ServerUDPAnswer;
 
-    return () => {
-      ghostSocket.removeEventListener("package", onUDPGameAddPackage);
-    };
-  }, [ghostSocket, connectorSocket]);
+                gameParams.append("token", gameData.token);
+                gameParams.append("hostCounter", gameData.hostCounter.toString());
+                gameParams.append("entryKey", gameData.entryKey.toString());
+                gameParams.append("connectPort", gameData.connectPort.toString());
+                gameParams.append("connectHost", gameData.connectHost);
+                gameParams.append("gameName", gameData.gameName);
+                gameParams.append("mapGameFlags", fromByteArray(Uint8Array.from(gameData.mapGameFlags)));
+                gameParams.append("mapWidth", fromByteArray(Uint8Array.from(gameData.mapWidth)));
+                gameParams.append("mapHeight", fromByteArray(Uint8Array.from(gameData.mapHeight)));
+                gameParams.append("mapCrc", fromByteArray(Uint8Array.from(gameData.mapCrc)));
+                gameParams.append("mapPath", gameData.mapPath);
+                gameParams.append("hostName", gameData.hostName);
+                gameParams.append("mapFileSha1", fromByteArray(Uint8Array.from(gameData.mapFileSha1)));
+                gameParams.append("version", gameData.version);
+                gameParams.append("maxPlayers", gameData.maxPlayers.toString());
+                gameParams.append("broadcast", gameData.broadcast.toString());
+
+                if (gameData.broadcast) {
+                    gameParams.append("productId", fromByteArray(Uint8Array.from(gameData.productId)));
+                    gameParams.append("versionPrefix", fromByteArray(Uint8Array.from(gameData.versionPrefix)));
+                } else if (gameData.broadcast === false) gameParams.append("domain", gameData.domain);
+
+                gameParams.append("mapGameType", gameData.mapGameType.toString());
+
+                const url = "irina://addgame?" + gameParams.toString();
+
+                console.log(url);
+
+                if (isCopy.current) {
+                    copy(url).then(() => {
+                        toast({
+                            title: "Ссылка скопирована",
+                            icon: "check",
+                            time: 15000,
+                            color: "green",
+                            description: "Ссылка на игру скопирована. Вставьте её в коннектор",
+                        });
+                    }).catch((e) => {
+                        toast({
+                            title: "Ошибка при копировании ссылки",
+                            icon: "x",
+                            time: 15000,
+                            color: "red",
+                            description: "Ошибка при копировании ссылки",
+                        });
+                    });
+                } else {
+                    document.location.href = url;
+                }
+
+                if (connectorSocket.isConnected()) {
+                    toast({
+                        title: "Мы обновили коннектор",
+                        icon: "warning",
+                        time: 15000,
+                        color: "orange",
+                        description:
+                            "Мы заметили, что у вас запущен старый коннектор. Если у вас не получается добавить игру - обновите коннектор",
+                    });
+                }
+            }
+        };
+
+        ghostSocket.addEventListener("package", onUDPGameAddPackage);
+
+        window.addEventListener("keyup", onKeyEvent);
+        window.addEventListener("keydown", onKeyEvent);
+
+        return () => {
+            ghostSocket.removeEventListener("package", onUDPGameAddPackage);
+
+            window.removeEventListener("keyup", onKeyEvent);
+            window.removeEventListener("keydown", onKeyEvent);
+        };
+    }, [ghostSocket, connectorSocket]);
 };

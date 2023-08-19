@@ -5,10 +5,10 @@
 .ui.checkbox input:not([type="radio"]):indeterminate:focus ~ label:after,
 .ui.checkbox input:checked:focus ~ .box:after,
 .ui.checkbox input:checked:focus ~ label:after {
-  color: #000;
+    color: #000;
 }
 
 .ui.checkbox input:checked ~ .box:after,
 .ui.checkbox input:checked ~ label:after {
-  color: #000;
+    color: #000;
 }

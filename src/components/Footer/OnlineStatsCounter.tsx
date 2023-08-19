@@ -2,36 +2,35 @@ import React, { useContext, useState } from "react";
 import { Menu } from "semantic-ui-react";
 import { AppRuntimeSettingsContext, WebsocketContext } from "../../context";
 import { useSiteOnlineStatsSubscribe } from "../../hooks/useSiteOnlineStatsSubscribe";
-import { ServerWebsocketConnectStats } from "./../../models/websocket/ServerWebsocketConnectStats";
+import { ServerWebsocketConnectStats } from "../../models/websocket/ServerWebsocketConnectStats";
+import LanguageKey from "./../LanguageKey";
 
 interface OnlineStatsCounterProps {
-  showAlways?: boolean;
+    showAlways?: boolean;
 }
 
 function OnlineStatsCounter({ showAlways }: OnlineStatsCounterProps) {
-  let sockets = useContext(WebsocketContext);
+    let sockets = useContext(WebsocketContext);
 
-  const [connected, setConnected] = useState(0);
-  const [logined, setLogined] = useState(0);
+    const [connected, setConnected] = useState(0);
+    const [logined, setLogined] = useState(0);
 
-  const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+    const { language } = useContext(AppRuntimeSettingsContext);
+    const t = language.getString;
 
-  const updateOnlineStats = (stats: ServerWebsocketConnectStats) => {
-    setConnected(stats.connected);
-    setLogined(stats.logined);
-  };
+    const updateOnlineStats = (stats: ServerWebsocketConnectStats) => {
+        setConnected(stats.connected);
+        setLogined(stats.logined);
+    };
 
-  useSiteOnlineStatsSubscribe({
-    ghostSocket: sockets.ghostSocket,
-    onOnlineStats: updateOnlineStats,
-  });
+    useSiteOnlineStatsSubscribe({
+        ghostSocket: sockets.ghostSocket,
+        onOnlineStats: updateOnlineStats,
+    });
 
-  return showAlways || logined > 0 ? (
-    <Menu.Item title={t("footer.connected") + ": " + connected}>
-      {logined}
-    </Menu.Item>
-  ) : null;
+    return showAlways || logined > 0 ? (
+        <Menu.Item title={t("onlineStatsCounter", { count: connected })}>{logined}</Menu.Item>
+    ) : null;
 }
 
 export default OnlineStatsCounter;

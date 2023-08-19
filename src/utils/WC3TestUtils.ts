@@ -1,157 +1,134 @@
 import React, { ReactNode } from "react";
 
-export const parseWC3TagsReact = (WC3String: string, ignoreTags?: string[]) => {
-  WC3String = WC3String.replace(/\r\n/g, "|n");
+export const parseWC3TagsReact = (WC3String: string, ignoreTags?: string[], enableAlpha?: boolean) => {
+    WC3String = WC3String.replace(/\r\n/g, "|n");
 
-  let components: ReactNode[] = [];
-  let colorData:
-    | {
+    let components: ReactNode[] = [];
+    let colorData:
+        | {
         color: string;
         components: ReactNode[];
-      }
-    | undefined;
-
-  let key = 0;
-
-  const pushColorTextIfExist = () => {
-    if (colorData) {
-      components.push(
-        React.createElement(
-          "span",
-          {
-            style: { color: `#${colorData.color}`, margin: 0, padding: 0 },
-            key: ++key,
-          },
-          ...colorData.components
-        )
-      );
-      colorData = undefined;
     }
-  };
+        | undefined;
 
-  const pushNode = (node: ReactNode) => {
-    if (colorData) colorData.components.push(node);
-    else components.push(node);
-  };
+    let key = 0;
 
-  while (WC3String.length) {
-    const nextTagPosition = findFirstTag(WC3String, ignoreTags);
-    const plainText =
-      nextTagPosition === -1
-        ? WC3String
-        : WC3String.substring(0, nextTagPosition);
+    const pushColorTextIfExist = () => {
+        if (colorData) {
+            components.push(
+                React.createElement(
+                    "span",
+                    {
+                        style: { color: `#${colorData.color}`, margin: 0, padding: 0 },
+                        key: ++key,
+                    },
+                    ...colorData.components,
+                ),
+            );
+            colorData = undefined;
+        }
+    };
 
-    let tagLength = 0;
+    const pushNode = (node: ReactNode) => {
+        if (colorData) colorData.components.push(node);
+        else components.push(node);
+    };
 
-    if (plainText.length) {
-      pushNode(plainText);
+    while (WC3String.length) {
+        const nextTagPosition = findFirstTag(WC3String, ignoreTags);
+        const plainText = nextTagPosition === -1 ? WC3String : WC3String.substring(0, nextTagPosition);
 
-      WC3String = WC3String.substring(plainText.length);
-      continue;
-    }
+        let tagLength = 0;
 
-    if (nextTagPosition === -1) {
-      pushNode(plainText);
-    } else {
-      const tagType = WC3String.charAt(nextTagPosition + 1) || "";
+        if (plainText.length) {
+            pushNode(plainText);
 
-      switch (tagType.toLocaleLowerCase()) {
-        case "r":
-          pushColorTextIfExist();
-          tagLength = 2;
+            WC3String = WC3String.substring(plainText.length);
+            continue;
+        }
 
-          break;
+        if (nextTagPosition === -1) {
+            pushNode(plainText);
+        } else {
+            const tagType = WC3String.charAt(nextTagPosition + 1) || "";
 
-        case "n":
-          pushNode(React.createElement("br", { key: ++key }));
-          tagLength = 2;
+            switch (tagType.toLocaleLowerCase()) {
+                case "r":
+                    pushColorTextIfExist();
+                    tagLength = 2;
 
-          break;
-        case "c":
-          pushColorTextIfExist();
+                    break;
 
-          const color = WC3String.substring(
-            nextTagPosition + 4,
-            nextTagPosition + 10
-          );
+                case "n":
+                    pushNode(React.createElement("br", { key: ++key }));
+                    tagLength = 2;
 
-          colorData = {
-            color,
-            components: [],
-          };
+                    break;
+                case "c":
+                    pushColorTextIfExist();
 
-          tagLength = 10;
+                    const color = WC3String.substring(nextTagPosition + 4, nextTagPosition + 10)
+                        + (enableAlpha ? WC3String.substring(nextTagPosition + 2, nextTagPosition + 4) : "");
 
-          break;
-      }
+                    colorData = {
+                        color,
+                        components: [],
+                    };
+
+                    tagLength = 10;
+
+                    break;
+            }
+        }
+
+        WC3String = WC3String.substring(nextTagPosition + tagLength);
     }
 
-    WC3String = WC3String.substring(nextTagPosition + tagLength);
-  }
+    pushColorTextIfExist();
 
-  pushColorTextIfExist();
-
-  return components;
+    return components;
 };
 
 const findFirstTag = (WC3String: string, ignoreTags?: string[]) => {
-  const colorStart =
-    ignoreTags && ignoreTags.indexOf("|c") !== -1
-      ? -1
-      : WC3String.toLowerCase().indexOf("|c");
-  const colorEnd =
-    ignoreTags && ignoreTags.indexOf("|r") !== -1
-      ? -1
-      : WC3String.toLowerCase().indexOf("|r");
-  const newLine =
-    ignoreTags && ignoreTags.indexOf("|n") !== -1
-      ? -1
-      : WC3String.toLowerCase().indexOf("|n");
+    const colorStart = ignoreTags && ignoreTags.indexOf("|c") !== -1 ? -1 : WC3String.toLowerCase().indexOf("|c");
+    const colorEnd = ignoreTags && ignoreTags.indexOf("|r") !== -1 ? -1 : WC3String.toLowerCase().indexOf("|r");
+    const newLine = ignoreTags && ignoreTags.indexOf("|n") !== -1 ? -1 : WC3String.toLowerCase().indexOf("|n");
 
-  if (colorStart === -1 && colorEnd === -1 && newLine === -1) return -1;
+    if (colorStart === -1 && colorEnd === -1 && newLine === -1) return -1;
 
-  let simpleTagPosition = colorEnd;
+    let simpleTagPosition = colorEnd;
 
-  if (
-    simpleTagPosition === -1 ||
-    (newLine < simpleTagPosition && newLine !== -1)
-  )
-    simpleTagPosition = newLine;
+    if (simpleTagPosition === -1 || (newLine < simpleTagPosition && newLine !== -1)) simpleTagPosition = newLine;
 
-  if (
-    colorStart === -1 ||
-    (simpleTagPosition < colorStart && simpleTagPosition !== -1)
-  )
+    if (colorStart === -1 || (simpleTagPosition < colorStart && simpleTagPosition !== -1)) return simpleTagPosition;
+
+    // Color start validation
+
+    if (colorStart + 10 > WC3String.length) return simpleTagPosition;
+
+    const colorTag = WC3String.substring(colorStart, colorStart + 10);
+
+    const colorTagValidation = /\|[cC][0-9a-fA-F]{8}/;
+
+    if (colorTag.match(colorTagValidation)) return colorStart;
+
     return simpleTagPosition;
-
-  // Color start validation
-
-  if (colorStart + 10 > WC3String.length) return simpleTagPosition;
-
-  const colorTag = WC3String.substring(colorStart, colorStart + 10);
-
-  const colorTagValidation = /\|[cC][0-9a-fA-F]{8}/;
-
-  if (colorTag.match(colorTagValidation)) return colorStart;
-
-  return simpleTagPosition;
 };
 
 export const escapeWC3Tags = (WC3String: string, ignoreTags?: string[]) => {
-  while (true) {
-    const tagPotition = findFirstTag(WC3String, ignoreTags);
+    if (!WC3String) return "";
 
-    if (tagPotition === -1) break;
+    while (true) {
+        const tagPotition = findFirstTag(WC3String, ignoreTags);
 
-    const tag = WC3String.charAt(tagPotition + 1)?.toLocaleLowerCase();
+        if (tagPotition === -1) break;
 
-    if (tag === "r" || tag === "n") {
-      WC3String =
-        WC3String.slice(0, tagPotition) + WC3String.slice(tagPotition + 2);
-    } else if (tag === "c")
-      WC3String =
-        WC3String.slice(0, tagPotition) + WC3String.slice(tagPotition + 10);
-  }
+        const tag = WC3String.charAt(tagPotition + 1)?.toLocaleLowerCase();
 
-  return WC3String;
+        if (tag === "r" || tag === "n") {
+            WC3String = WC3String.slice(0, tagPotition) + WC3String.slice(tagPotition + 2);
+        } else if (tag === "c") WC3String = WC3String.slice(0, tagPotition) + WC3String.slice(tagPotition + 10);
+    }
+
+    return WC3String;
 };

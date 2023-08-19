@@ -1,19 +1,18 @@
-import { config } from "process";
-import React, { useContext } from "react";
-import { AppRuntimeSettingsContext } from "../../context";
+import React from "react";
 import { Message } from "semantic-ui-react";
 import { ConfigInfo } from "../../models/rest/ConfigInfo";
-import Markdown from "../Markdown";
+import LanguageKey from "./../LanguageKey";
 
 interface ConfigPreviewProps {
-  config: ConfigInfo;
+    config: ConfigInfo;
 }
 
 function ConfigPreview({ config }: ConfigPreviewProps) {
-  const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
-
-  return <Message info><Markdown light>{t("other.config.preview", {configName: config.name, version: config.version})}</Markdown></Message>;
+    return (
+        <Message info>
+            <LanguageKey stringId="configPreview" name={config.name} version={config.version} />
+        </Message>
+    );
 }
 
 export default ConfigPreview;

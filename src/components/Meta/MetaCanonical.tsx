@@ -1,30 +1,27 @@
 import { useEffect } from "react";
 
 interface MetaCanonicalProps {
-  link?: string;
-  hostPath?: string;
+    link?: string;
+    hostPath?: string;
 }
 
 function MetaCanonical({ link, hostPath }: MetaCanonicalProps) {
-  useEffect(() => {
-    if (!link && !hostPath) return;
+    useEffect(() => {
+        if (!link && !hostPath) return;
 
-    const linkElement = document.createElement("link");
+        const linkElement = document.createElement("link");
 
-    linkElement.setAttribute("rel", "canonical");
-    linkElement.setAttribute(
-      "href",
-      link ? link : window.location.origin + hostPath
-    );
+        linkElement.setAttribute("rel", "canonical");
+        linkElement.setAttribute("href", link ? link : window.location.origin + hostPath);
 
-    document.head.appendChild(linkElement);
+        document.head.appendChild(linkElement);
 
-    return () => {
-      document.head.removeChild(linkElement);
-    };
-  }, [link, hostPath]);
+        return () => {
+            document.head.removeChild(linkElement);
+        };
+    }, [link, hostPath]);
 
-  return null;
+    return null;
 }
 
 export default MetaCanonical;

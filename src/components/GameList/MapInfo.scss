@@ -1,49 +1,49 @@
 .map-info {
-  position: sticky;
-  top: 50px;
-  margin-top: 12px;
+    position: sticky;
+    top: 50px;
+    margin-top: 12px;
 
-  span {
-    display: inline-block;
-    padding: 0 5px;
-  }
+    span {
+        display: inline-block;
+        padding: 0 5px;
+    }
 
-  p {
-    text-align: center;
-    font-weight: 600;
-  }
+    p {
+        text-align: center;
+        font-weight: 600;
+    }
 
-  .map-title {
-    text-align: center;
-    width: 100%;
-    display: inline-block;
-    margin-top: 10px;
-  }
+    .map-title {
+        text-align: center;
+        width: 100%;
+        display: inline-block;
+        margin-top: 10px;
+    }
 
-  .map-players-title {
-    font-weight: bold;
-  }
+    .map-players-title {
+        font-weight: bold;
+    }
 
-  img {
-    border: 2px solid blue;
-    width: 100%;
-    margin-bottom: 20px;
-  }
+    img {
+        border: 2px solid blue;
+        width: 100%;
+        margin-bottom: 20px;
+    }
 }
 
 .map-info-error {
-  margin-top: 10px;
-  i.big.icon,
-  i.big.icons {
-    width: 100%;
-    font-size: 5rem;
-  }
+    margin-top: 10px;
+    i.big.icon,
+    i.big.icons {
+        width: 100%;
+        font-size: 5rem;
+    }
 
-  span {
-    color: #db2828;
-    font-size: 1.2857142857em;
-    width: 100%;
-    display: inline-block;
-    text-align: center;
-  }
+    span {
+        color: #db2828;
+        font-size: 1.2857142857em;
+        width: 100%;
+        display: inline-block;
+        text-align: center;
+    }
 }

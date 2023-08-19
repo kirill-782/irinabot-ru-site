@@ -1,24 +1,24 @@
 import { useEffect } from "react";
 
 interface MetaDescriptionProps {
-  description: string;
+    description: string;
 }
 
 function MetaDescription({ description }: MetaDescriptionProps) {
-  useEffect(() => {
-    const descriptionTag = document.createElement("meta");
+    useEffect(() => {
+        const descriptionTag = document.createElement("meta");
 
-    descriptionTag.setAttribute("name", "description");
-    descriptionTag.setAttribute("content", description);
+        descriptionTag.setAttribute("name", "description");
+        descriptionTag.setAttribute("content", description);
 
-    document.head.appendChild(descriptionTag);
+        document.head.appendChild(descriptionTag);
 
-    return () => {
-      document.head.removeChild(descriptionTag);
-    };
-  }, [description]);
+        return () => {
+            document.head.removeChild(descriptionTag);
+        };
+    }, [description]);
 
-  return null;
+    return null;
 }
 
 export default MetaDescription;

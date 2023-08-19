@@ -22,10 +22,8 @@ $borderShadow: 0px 0px 0px $borderWidth $strongBorderColor inset;
 $shadowShadow: 0px 0px 0px 0px rgba(0, 0, 0, 0);
 $boxShadow: $borderShadow, $shadowShadow;
 
-$transition: opacity $defaultDuration $defaultEasing,
-  color $defaultDuration $defaultEasing,
-  background $defaultDuration $defaultEasing,
-  box-shadow $defaultDuration $defaultEasing;
+$transition: opacity $defaultDuration $defaultEasing, color $defaultDuration $defaultEasing,
+    background $defaultDuration $defaultEasing, box-shadow $defaultDuration $defaultEasing;
 
 /* Header */
 $headerFontSize: $relativeLarge;
@@ -76,29 +74,21 @@ $floatingBoxShadow: $borderShadow, $floatingShadow;
 
 /* Colors */
 $redBoxShadow: 0px 0px 0px $borderWidth $redBorderColor inset, $shadowShadow;
-$orangeBoxShadow: 0px 0px 0px $borderWidth $orangeBorderColor inset,
-  $shadowShadow;
-$yellowBoxShadow: 0px 0px 0px $borderWidth $yellowBorderColor inset,
-  $shadowShadow;
+$orangeBoxShadow: 0px 0px 0px $borderWidth $orangeBorderColor inset, $shadowShadow;
+$yellowBoxShadow: 0px 0px 0px $borderWidth $yellowBorderColor inset, $shadowShadow;
 $oliveBoxShadow: 0px 0px 0px $borderWidth $oliveBorderColor inset, $shadowShadow;
 $greenBoxShadow: 0px 0px 0px $borderWidth $greenBorderColor inset, $shadowShadow;
 $tealBoxShadow: 0px 0px 0px $borderWidth $tealBorderColor inset, $shadowShadow;
 $blueBoxShadow: 0px 0px 0px $borderWidth $blueBorderColor inset, $shadowShadow;
-$violetBoxShadow: 0px 0px 0px $borderWidth $violetBorderColor inset,
-  $shadowShadow;
-$purpleBoxShadow: 0px 0px 0px $borderWidth $purpleBorderColor inset,
-  $shadowShadow;
+$violetBoxShadow: 0px 0px 0px $borderWidth $violetBorderColor inset, $shadowShadow;
+$purpleBoxShadow: 0px 0px 0px $borderWidth $purpleBorderColor inset, $shadowShadow;
 $pinkBoxShadow: 0px 0px 0px $borderWidth $pinkBorderColor inset, $shadowShadow;
 $brownBoxShadow: 0px 0px 0px $borderWidth $brownBorderColor inset, $shadowShadow;
 
 /* Warning / Positive / Negative / Info */
-$positiveBoxShadow: 0px 0px 0px $borderWidth $positiveBorderColor inset,
-  $shadowShadow;
-$negativeBoxShadow: 0px 0px 0px $borderWidth $negativeBorderColor inset,
-  $shadowShadow;
+$positiveBoxShadow: 0px 0px 0px $borderWidth $positiveBorderColor inset, $shadowShadow;
+$negativeBoxShadow: 0px 0px 0px $borderWidth $negativeBorderColor inset, $shadowShadow;
 $infoBoxShadow: 0px 0px 0px $borderWidth $infoBorderColor inset, $shadowShadow;
-$warningBoxShadow: 0px 0px 0px $borderWidth $warningBorderColor inset,
-  $shadowShadow;
+$warningBoxShadow: 0px 0px 0px $borderWidth $warningBorderColor inset, $shadowShadow;
 $errorBoxShadow: 0px 0px 0px $borderWidth $errorBorderColor inset, $shadowShadow;
-$successBoxShadow: 0px 0px 0px $borderWidth $successBorderColor inset,
-  $shadowShadow;
+$successBoxShadow: 0px 0px 0px $borderWidth $successBorderColor inset, $shadowShadow;

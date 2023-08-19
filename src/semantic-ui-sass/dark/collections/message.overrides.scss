@@ -2,14 +2,14 @@
         Site Overrides
 *******************************/
 .ui.message {
-  color: #c5c5c5;
-  background: #0e0e0e;
-  margin-bottom: 15px;
+    color: #c5c5c5;
+    background: #0e0e0e;
+    margin-bottom: 15px;
 }
 
 .ui.red.message .header,
 .ui.red.info.message .header {
-  color: #d62420;
+    color: #d62420;
 }
 
 .ui.error.message,
@@ -19,49 +19,49 @@
 .ui.red.info.message,
 .ui.attached.red.message,
 .ui.attached.red.message .ui.attached.red.info.message {
-  box-shadow: 0px 0px 0px 1px #d62420 inset, 0px 0px 0px 0px rgb(0 0 0 / 0%);
-  color: #ff201b;
-  background: #0c0c0c;
+    box-shadow: 0px 0px 0px 1px #d62420 inset, 0px 0px 0px 0px rgb(0 0 0 / 0%);
+    color: #ff201b;
+    background: #0c0c0c;
 }
 
 .ui.info.message,
 .ui.attached.info.message {
-  box-shadow: 0px 0px 0px 1px #21adfb inset, 0px 0px 0px 0px rgb(0 0 0 / 0%);
+    box-shadow: 0px 0px 0px 1px #21adfb inset, 0px 0px 0px 0px rgb(0 0 0 / 0%);
 }
 
 .ui.info.message .header {
-  color: #1c8ca2;
+    color: #1c8ca2;
 }
 
 .ui.info.message {
-  background-color: #0c0c0c;
-  color: #21adfb;
+    background-color: #0c0c0c;
+    color: #21adfb;
 }
 
 .ui.success.message,
 .ui.attached.success.message,
 .ui.green.message,
 .ui.attached.green.message {
-  background-color: #0c0c0c;
-  box-shadow: 0px 0px 0px 1px #339c34 inset, 0px 0px 0px 0px rgb(0 0 0 / 0%);
+    background-color: #0c0c0c;
+    box-shadow: 0px 0px 0px 1px #339c34 inset, 0px 0px 0px 0px rgb(0 0 0 / 0%);
 }
 
 .ui.success.message,
 .ui.success.message .header,
 .ui.green.message,
 .ui.green.message .header {
-  color: #3dc03f;
+    color: #3dc03f;
 }
 
 .ui.orange.message,
 .ui.attached.orange.message {
-  background-color: #0c0c0c;
-  color: #c9ba9b;
+    background-color: #0c0c0c;
+    color: #c9ba9b;
 }
 
 @media screen and (max-width: 768px) {
-  .ui.message,
-  .ui.message:last-child {
-    margin-bottom: 15px;
-  }
+    .ui.message,
+    .ui.message:last-child {
+        margin-bottom: 15px;
+    }
 }

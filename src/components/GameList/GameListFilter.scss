@@ -1,32 +1,32 @@
 @media screen and (max-width: 1200px) {
-  .online-stats-column {
-    font-size: 10px;
-  }
+    .online-stats-column {
+        font-size: 10px;
+    }
 }
 
 @media screen and (max-width: 991px) {
-  .ui.grid > [class*="three wide"].column.online-stats-column {
-    width: 100% !important;
-  }
-
-  .online-stats-column {
-    font-size: 14px;
-  }
-
-  .ui.form .fields.order-filter {
-    flex-direction: column;
-    button {
-      margin: 0 7px;
+    .ui.grid > [class*="three wide"].column.online-stats-column {
+        width: 100% !important;
     }
-  }
 
-  .ui.form .fields .field.order-filter-select {
-    margin-bottom: 10px;
-  }
+    .online-stats-column {
+        font-size: 14px;
+    }
+
+    .ui.form .fields.order-filter {
+        flex-direction: column;
+        button {
+            margin: 0 7px;
+        }
+    }
+
+    .ui.form .fields .field.order-filter-select {
+        margin-bottom: 10px;
+    }
 }
 
 @media screen and (max-width: 767px) {
-  .players-filter {
-    margin-top: 15px;
-  }
+    .players-filter {
+        margin-top: 15px;
+    }
 }

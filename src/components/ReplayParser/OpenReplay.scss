@@ -1,14 +1,14 @@
 .replay-parser {
-  .container.open-replay {
-    height: "90vh";
-  }
+    .container.open-replay {
+        height: "90vh";
+    }
 
-  .container.open-replay > div.centerd {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: auto;
-    height: auto;
-    transform: translateX(-50%) translateY(-50%);
-  }
+    .container.open-replay > div.centerd {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: auto;
+        height: auto;
+        transform: translateX(-50%) translateY(-50%);
+    }
 }

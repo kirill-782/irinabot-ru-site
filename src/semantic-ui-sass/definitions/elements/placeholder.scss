@@ -21,43 +21,39 @@ $element: "placeholder";
 --------------------*/
 
 .ui.placeholder {
-  position: static;
-  overflow: hidden;
-  animation: placeholderShimmer $placeholderLoadingAnimationDuration linear;
-  animation-iteration-count: infinite;
-  background-color: $white;
-  background-image: $placeholderLoadingGradient;
-  background-size: $placeholderLoadingGradientWidth 100%;
-  max-width: $placeholderMaxWidth;
+    position: static;
+    overflow: hidden;
+    animation: placeholderShimmer $placeholderLoadingAnimationDuration linear;
+    animation-iteration-count: infinite;
+    background-color: $white;
+    background-image: $placeholderLoadingGradient;
+    background-size: $placeholderLoadingGradientWidth 100%;
+    max-width: $placeholderMaxWidth;
 }
 
 @keyframes placeholderShimmer {
-  0% {
-    background-position: (-$placeholderLoadingGradientWidth) 0;
-  }
-  100% {
-    background-position: $placeholderLoadingGradientWidth 0;
-  }
+    0% {
+        background-position: (-$placeholderLoadingGradientWidth) 0;
+    }
+    100% {
+        background-position: $placeholderLoadingGradientWidth 0;
+    }
 }
 
 .ui.placeholder + .ui.placeholder {
-  margin-top: $consecutivePlaceholderSpacing;
+    margin-top: $consecutivePlaceholderSpacing;
 }
 .ui.placeholder + .ui.placeholder {
-  animation-delay: $placeholderAnimationInterval;
+    animation-delay: $placeholderAnimationInterval;
 }
 .ui.placeholder + .ui.placeholder + .ui.placeholder {
-  animation-delay: ($placeholderAnimationInterval * 2);
+    animation-delay: ($placeholderAnimationInterval * 2);
 }
 .ui.placeholder + .ui.placeholder + .ui.placeholder + .ui.placeholder {
-  animation-delay: ($placeholderAnimationInterval * 3);
+    animation-delay: ($placeholderAnimationInterval * 3);
 }
-.ui.placeholder
-  + .ui.placeholder
-  + .ui.placeholder
-  + .ui.placeholder
-  + .ui.placeholder {
-  animation-delay: ($placeholderAnimationInterval * 4);
+.ui.placeholder + .ui.placeholder + .ui.placeholder + .ui.placeholder + .ui.placeholder {
+    animation-delay: ($placeholderAnimationInterval * 4);
 }
 
 .ui.placeholder,
@@ -65,136 +61,136 @@ $element: "placeholder";
 .ui.placeholder .image.header:after,
 .ui.placeholder .line,
 .ui.placeholder .line:after {
-  background-color: $white;
+    background-color: $white;
 }
 
 /* Image */
 .ui.placeholder .image:not(.header):not(.ui) {
-  height: $placeholderImageHeight;
+    height: $placeholderImageHeight;
 }
 .ui.placeholder .square.image:not(.header) {
-  height: 0px;
-  overflow: hidden;
-  /* 1/1 aspect ratio */
-  padding-top: 100%;
+    height: 0px;
+    overflow: hidden;
+    /* 1/1 aspect ratio */
+    padding-top: 100%;
 }
 .ui.placeholder .rectangular.image:not(.header) {
-  height: 0px;
-  overflow: hidden;
-  /* 4/3 aspect ratio */
-  padding-top: 75%;
+    height: 0px;
+    overflow: hidden;
+    /* 4/3 aspect ratio */
+    padding-top: 75%;
 }
 
 /* Lines */
 .ui.placeholder .line {
-  position: relative;
-  height: $placeholderLineMargin;
+    position: relative;
+    height: $placeholderLineMargin;
 }
 .ui.placeholder .line:before,
 .ui.placeholder .line:after {
-  top: 100%;
-  position: absolute;
-  content: "";
-  background-color: inherit;
+    top: 100%;
+    position: absolute;
+    content: "";
+    background-color: inherit;
 }
 .ui.placeholder .line:before {
-  left: 0px;
+    left: 0px;
 }
 .ui.placeholder .line:after {
-  right: 0px;
+    right: 0px;
 }
 
 /* Any Lines */
 .ui.placeholder .line {
-  margin-bottom: $placeholderLineHeight;
+    margin-bottom: $placeholderLineHeight;
 }
 .ui.placeholder .line:before,
 .ui.placeholder .line:after {
-  height: $placeholderLineHeight;
+    height: $placeholderLineHeight;
 }
 .ui.placeholder .line:not(:first-child) {
-  margin-top: $placeholderLineHeight;
+    margin-top: $placeholderLineHeight;
 }
 
 /* Header Image + 2 Lines */
 .ui.placeholder .header {
-  position: relative;
-  overflow: hidden;
+    position: relative;
+    overflow: hidden;
 }
 
 /* Line Outdent */
 .ui.placeholder .line:nth-child(1):after {
-  width: $placeholderLineOneOutdent;
+    width: $placeholderLineOneOutdent;
 }
 .ui.placeholder .line:nth-child(2):after {
-  width: $placeholderLineTwoOutdent;
+    width: $placeholderLineTwoOutdent;
 }
 .ui.placeholder .line:nth-child(3):after {
-  width: $placeholderLineThreeOutdent;
+    width: $placeholderLineThreeOutdent;
 }
 .ui.placeholder .line:nth-child(4):after {
-  width: $placeholderLineFourOutdent;
+    width: $placeholderLineFourOutdent;
 }
 .ui.placeholder .line:nth-child(5):after {
-  width: $placeholderLineFiveOutdent;
+    width: $placeholderLineFiveOutdent;
 }
 
 /* Header Line 1 & 2*/
 .ui.placeholder .header .line {
-  margin-bottom: $placeholderHeaderLineHeight;
+    margin-bottom: $placeholderHeaderLineHeight;
 }
 .ui.placeholder .header .line:before,
 .ui.placeholder .header .line:after {
-  height: $placeholderHeaderLineHeight;
+    height: $placeholderHeaderLineHeight;
 }
 .ui.placeholder .header .line:not(:first-child) {
-  margin-top: $placeholderHeaderLineHeight;
+    margin-top: $placeholderHeaderLineHeight;
 }
 .ui.placeholder .header .line:after {
-  width: $placeholderHeaderLineOneOutdent;
+    width: $placeholderHeaderLineOneOutdent;
 }
 .ui.placeholder .header .line:nth-child(2):after {
-  width: $placeholderHeaderLineTwoOutdent;
+    width: $placeholderHeaderLineTwoOutdent;
 }
 
 /* Image Header */
 .ui.placeholder .image.header .line {
-  margin-left: $placeholderImageWidth;
+    margin-left: $placeholderImageWidth;
 }
 .ui.placeholder .image.header .line:before {
-  width: $placeholderImageTextIndent;
+    width: $placeholderImageTextIndent;
 }
 .ui.placeholder .image.header:after {
-  display: block;
-  height: $placeholderLineMargin;
-  content: "";
-  margin-left: $placeholderImageWidth;
+    display: block;
+    height: $placeholderLineMargin;
+    content: "";
+    margin-left: $placeholderImageWidth;
 }
 
 /* Spacing */
 .ui.placeholder .image .line:first-child,
 .ui.placeholder .paragraph .line:first-child,
 .ui.placeholder .header .line:first-child {
-  height: 0.01px;
+    height: 0.01px;
 }
 .ui.placeholder .image:not(:first-child):before,
 .ui.placeholder .paragraph:not(:first-child):before,
 .ui.placeholder .header:not(:first-child):before {
-  height: $placeholderSpacing;
-  content: "";
-  display: block;
+    height: $placeholderSpacing;
+    content: "";
+    display: block;
 }
 
 /* Inverted Content Loader */
 .ui.inverted.placeholder {
-  background-image: $placeholderInvertedLoadingGradient;
+    background-image: $placeholderInvertedLoadingGradient;
 }
 .ui.inverted.placeholder,
 .ui.inverted.placeholder > :before,
 .ui.inverted.placeholder .image.header:after,
 .ui.inverted.placeholder .line,
 .ui.inverted.placeholder .line:after {
-  background-color: $black;
+    background-color: $black;
 }
 
 /*******************************
@@ -206,22 +202,22 @@ $element: "placeholder";
 --------------------*/
 
 .ui.placeholder .full.line.line.line:after {
-  width: $placeholderFullLineOutdent;
+    width: $placeholderFullLineOutdent;
 }
 .ui.placeholder .very.long.line.line.line:after {
-  width: $placeholderVeryLongLineOutdent;
+    width: $placeholderVeryLongLineOutdent;
 }
 .ui.placeholder .long.line.line.line:after {
-  width: $placeholderLongLineOutdent;
+    width: $placeholderLongLineOutdent;
 }
 .ui.placeholder .medium.line.line.line:after {
-  width: $placeholderMediumLineOutdent;
+    width: $placeholderMediumLineOutdent;
 }
 .ui.placeholder .short.line.line.line:after {
-  width: $placeholderShortLineOutdent;
+    width: $placeholderShortLineOutdent;
 }
 .ui.placeholder .very.short.line.line.line:after {
-  width: $placeholderVeryShortLineOutdent;
+    width: $placeholderVeryShortLineOutdent;
 }
 
 /*-------------------
@@ -229,5 +225,5 @@ $element: "placeholder";
 --------------------*/
 
 .ui.fluid.placeholder {
-  max-width: none;
+    max-width: none;
 }

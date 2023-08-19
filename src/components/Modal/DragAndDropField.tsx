@@ -3,10 +3,8 @@ import { AppRuntimeSettingsContext } from "../../context";
 import "./DragAndDropField.scss";
 
 export const DragAndDropField = () => {
-  const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+    const { language } = useContext(AppRuntimeSettingsContext);
+    const lang = language.languageRepository;
 
-  return (
-    <div className="drag-and-drop-field">{t("modal.dragAndDropField")}</div>
-  );
+    return <div className="drag-and-drop-field">{lang.dragAndDropField}</div>;
 };

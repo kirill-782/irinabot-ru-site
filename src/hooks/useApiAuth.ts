@@ -6,28 +6,28 @@ import { MapService } from "../services/MapService";
 import { DEFAULT_CONFIG } from "../config/ApiConfig";
 
 export interface ApiAuthOptions {
-  setMapService: Dispatch<SetStateAction<MapService>>;
+    setMapService: Dispatch<SetStateAction<MapService>>;
 }
 
 export const useApiAuth = ({ setMapService }: ApiAuthOptions) => {
-  const authContext = useContext(AuthContext);
+    const authContext = useContext(AuthContext);
 
-  useEffect(() => {
-    let newConfig = {};
+    useEffect(() => {
+        let newConfig = {};
 
-    if (authContext.auth.apiToken) {
-      newConfig = {
-        ...DEFAULT_CONFIG,
-        headers: {
-          Authorization: `Bearer ${authContext.auth.apiToken.getToken()}`,
-        },
-      };
-    } else {
-      newConfig = {
-        ...DEFAULT_CONFIG,
-      };
-    }
+        if (authContext.auth.apiToken) {
+            newConfig = {
+                ...DEFAULT_CONFIG,
+                headers: {
+                    Authorization: `Bearer ${authContext.auth.apiToken.getToken()}`,
+                },
+            };
+        } else {
+            newConfig = {
+                ...DEFAULT_CONFIG,
+            };
+        }
 
-    setMapService(new MapService(newConfig));
-  }, [authContext.auth.apiToken]);
+        setMapService(new MapService(newConfig));
+    }, [authContext.auth.apiToken]);
 };

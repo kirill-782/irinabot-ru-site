@@ -4,36 +4,29 @@ import { AppRuntimeSettingsContext, AuthContext } from "../../context";
 import { DropdownItemPropsConfirmExtends } from "../Pages/CreateGameConfirmPage";
 
 interface CreateGameConfirmPatchNotificationsProps {
-  selectedPatch?: DropdownItemPropsConfirmExtends;
+    selectedPatch?: DropdownItemPropsConfirmExtends;
 }
 
-function CreateGameConfirmPatchNotifications({
-  selectedPatch,
-}: CreateGameConfirmPatchNotificationsProps) {
-  const { apiToken } = useContext(AuthContext).auth;
+function CreateGameConfirmPatchNotifications({ selectedPatch }: CreateGameConfirmPatchNotificationsProps) {
+    const { apiToken } = useContext(AuthContext).auth;
 
-  const { language } = useContext(AppRuntimeSettingsContext);
-  const t = language.getString;
+    const { language } = useContext(AppRuntimeSettingsContext);
+    const lang = language.languageRepository;
 
-  return (
-    <>
-      {!Number.isInteger(selectedPatch?.status) &&
-        !apiToken.hasAuthority("DEFAULT_CONFIG_PARSE") && (
-          <Message error>
-            {t("page.game.create.confirm.pathNotification.error")}
-          </Message>
-        )}
-      {(selectedPatch?.status === 0 || selectedPatch?.status === 2) && (
-        <Message info>
-          {selectedPatch?.status === 0
-            ? t("page.game.create.confirm.pathNotification.configuring")
-            : t(
-                "page.game.create.confirm.pathNotification.incompatibleVersion"
-              )}
-        </Message>
-      )}
-    </>
-  );
+    return (
+        <>
+            {!Number.isInteger(selectedPatch?.status) && !apiToken.hasAuthority("DEFAULT_CONFIG_PARSE") && (
+                <Message error>{lang.createGameConfirmPatchNotificationsAccessDenied}</Message>
+            )}
+            {(selectedPatch?.status === 0 || selectedPatch?.status === 2) && (
+                <Message info>
+                    {selectedPatch?.status === 0
+                        ? lang.createGameConfirmPatchNotificationsConfigCreating
+                        : lang.createGameConfirmPatchNotificationsIncompletableMap}
+                </Message>
+            )}
+        </>
+    );
 }
 
 export default CreateGameConfirmPatchNotifications;

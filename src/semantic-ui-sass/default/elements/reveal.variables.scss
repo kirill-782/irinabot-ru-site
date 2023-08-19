@@ -14,6 +14,5 @@ $overlayZIndex: 5;
 
 /* Types */
 $rotateDegrees: 110deg;
-$moveTransition: transform $transitionDuration $transitionEasing
-  $transitionDelay;
+$moveTransition: transform $transitionDuration $transitionEasing $transitionDelay;
 $slideTransition: transform $transitionDuration $defaultEasing $transitionDelay;

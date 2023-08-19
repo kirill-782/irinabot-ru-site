@@ -2,29 +2,29 @@
         User Overrides
 *******************************/
 .ui.dropdown .menu {
-  background: #3e3e3e;
+    background: #3e3e3e;
 }
 
 .ui.dropdown .menu > .item:hover {
-  background: rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.2);
 }
 
 .ui.selection.active.dropdown {
-  border-color: #000000;
+    border-color: #000000;
 }
 
 .ui.selection.active.dropdown:hover {
-  border-color: #000000;
+    border-color: #000000;
 }
 
 .ui.selection.active.dropdown:hover .menu {
-  border-color: #000000;
+    border-color: #000000;
 }
 
 .ui.selection.dropdown .menu > .item {
-  border-top: 1px solid #323232;
+    border-top: 1px solid #323232;
 }
 
 .ui.selection.active.dropdown .menu {
-  border-color: #000000;
+    border-color: #000000;
 }

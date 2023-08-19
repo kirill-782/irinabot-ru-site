@@ -1,20 +1,20 @@
 @media only screen and (min-width: 1450px) {
-  .ui.container.map-list-page {
-    width: 1400px;
-  }
+    .ui.container.map-list-page {
+        width: 1400px;
+    }
 }
 
 .map-list-page-search-field {
-  margin-bottom: 20px;
+    margin-bottom: 20px;
 }
 
 .player-stats {
-  display: flex !important;
-  flex-direction: row-reverse !important;
+    display: flex !important;
+    flex-direction: row-reverse !important;
 
-  .label.centred {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+    .label.centred {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 }

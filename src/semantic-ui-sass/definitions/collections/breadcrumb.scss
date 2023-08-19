@@ -22,16 +22,16 @@ $element: "breadcrumb";
 *******************************/
 
 .ui.breadcrumb {
-  line-height: 1;
-  display: $display;
-  margin: $verticalMargin 0em;
-  vertical-align: $verticalAlign;
+    line-height: 1;
+    display: $display;
+    margin: $verticalMargin 0em;
+    vertical-align: $verticalAlign;
 }
 .ui.breadcrumb:first-child {
-  margin-top: 0em;
+    margin-top: 0em;
 }
 .ui.breadcrumb:last-child {
-  margin-bottom: 0em;
+    margin-bottom: 0em;
 }
 
 /*******************************
@@ -40,43 +40,43 @@ $element: "breadcrumb";
 
 /* Divider */
 .ui.breadcrumb .divider {
-  display: inline-block;
-  opacity: $dividerOpacity;
-  margin: 0em $dividerSpacing 0em;
+    display: inline-block;
+    opacity: $dividerOpacity;
+    margin: 0em $dividerSpacing 0em;
 
-  font-size: $dividerSize;
-  color: $dividerColor;
-  vertical-align: $dividerVerticalAlign;
+    font-size: $dividerSize;
+    color: $dividerColor;
+    vertical-align: $dividerVerticalAlign;
 }
 
 /* Link */
 .ui.breadcrumb a {
-  color: $linkColor;
+    color: $linkColor;
 }
 .ui.breadcrumb a:hover {
-  color: $linkHoverColor;
+    color: $linkHoverColor;
 }
 
 /* Icon Divider */
 .ui.breadcrumb .icon.divider {
-  font-size: $iconDividerSize;
-  vertical-align: $iconDividerVerticalAlign;
+    font-size: $iconDividerSize;
+    vertical-align: $iconDividerVerticalAlign;
 }
 
 /* Section */
 .ui.breadcrumb a.section {
-  cursor: pointer;
+    cursor: pointer;
 }
 .ui.breadcrumb .section {
-  display: inline-block;
-  margin: $sectionMargin;
-  padding: $sectionPadding;
+    display: inline-block;
+    margin: $sectionMargin;
+    padding: $sectionPadding;
 }
 
 /* Loose Coupling */
 .ui.breadcrumb.segment {
-  display: inline-block;
-  padding: $segmentPadding;
+    display: inline-block;
+    padding: $segmentPadding;
 }
 
 /*******************************
@@ -84,7 +84,7 @@ $element: "breadcrumb";
 *******************************/
 
 .ui.breadcrumb .active.section {
-  font-weight: $activeFontWeight;
+    font-weight: $activeFontWeight;
 }
 
 /*******************************
@@ -92,26 +92,26 @@ $element: "breadcrumb";
 *******************************/
 
 .ui.mini.breadcrumb {
-  font-size: $mini;
+    font-size: $mini;
 }
 .ui.tiny.breadcrumb {
-  font-size: $tiny;
+    font-size: $tiny;
 }
 .ui.small.breadcrumb {
-  font-size: $small;
+    font-size: $small;
 }
 .ui.breadcrumb {
-  font-size: $medium;
+    font-size: $medium;
 }
 .ui.large.breadcrumb {
-  font-size: $large;
+    font-size: $large;
 }
 .ui.big.breadcrumb {
-  font-size: $big;
+    font-size: $big;
 }
 .ui.huge.breadcrumb {
-  font-size: $huge;
+    font-size: $huge;
 }
 .ui.massive.breadcrumb {
-  font-size: $massive;
+    font-size: $massive;
 }

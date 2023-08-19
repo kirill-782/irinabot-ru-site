@@ -1,37 +1,30 @@
 import { useEffect, useState } from "react";
-import {
-  ConnectorWebsocket,
-  ConnectorWebsocketOptions,
-} from "../services/ConnectorWebsocket";
+import { ConnectorWebsocket, ConnectorWebsocketOptions } from "../services/ConnectorWebsocket";
 
-export const useConnectorSocket = (
-  options: ConnectorWebsocketOptions
-): [ConnectorWebsocket, boolean] => {
-  const [connectorSocket] = useState<ConnectorWebsocket>(
-    new ConnectorWebsocket(options)
-  );
-  const [isSocketConnected, setSocketConnected] = useState<boolean>(false);
+export const useConnectorSocket = (options: ConnectorWebsocketOptions): [ConnectorWebsocket, boolean] => {
+    const [connectorSocket] = useState<ConnectorWebsocket>(new ConnectorWebsocket(options));
+    const [isSocketConnected, setSocketConnected] = useState<boolean>(false);
 
-  useEffect(() => {
-    const onOpen = () => {
-      setSocketConnected(true);
-    };
-    const onClose = () => {
-      setSocketConnected(false);
-    };
+    useEffect(() => {
+        const onOpen = () => {
+            setSocketConnected(true);
+        };
+        const onClose = () => {
+            setSocketConnected(false);
+        };
 
-    connectorSocket.addEventListener("open", onOpen);
-    connectorSocket.addEventListener("close", onClose);
+        connectorSocket.addEventListener("open", onOpen);
+        connectorSocket.addEventListener("close", onClose);
 
-    connectorSocket.connect();
+        connectorSocket.connect();
 
-    return () => {
-      connectorSocket.removeEventListener("open", onOpen);
-      connectorSocket.removeEventListener("close", onClose);
+        return () => {
+            connectorSocket.removeEventListener("open", onOpen);
+            connectorSocket.removeEventListener("close", onClose);
 
-      connectorSocket.destroy();
-    };
-  }, [connectorSocket]);
+            connectorSocket.destroy();
+        };
+    }, [connectorSocket]);
 
-  return [connectorSocket, isSocketConnected];
+    return [connectorSocket, isSocketConnected];
 };

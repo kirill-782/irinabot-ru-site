@@ -588,8 +588,7 @@ $invertedDisabledTextColor: rgba(225, 225, 225, 0.3);
 --------------------*/
 
 /*---  Shadows  ---*/
-$floatingShadowHover: 0px 2px 4px 0px rgba(34, 36, 38, 0.15),
-  0px 2px 10px 0px rgba(34, 36, 38, 0.25);
+$floatingShadowHover: 0px 2px 4px 0px rgba(34, 36, 38, 0.15), 0px 2px 10px 0px rgba(34, 36, 38, 0.25);
 
 /*-------------------
     Brand Colors
@@ -879,8 +878,7 @@ $subtleGradient: linear-gradient(transparent, $transparentBlack);
 
 /* Differentiating Layers */
 $subtleShadow: 0px 1px 2px 0 $borderColor;
-$floatingShadow: 0px 2px 4px 0px rgba(34, 36, 38, 0.12),
-  0px 2px 10px 0px rgba(34, 36, 38, 0.15);
+$floatingShadow: 0px 2px 4px 0px rgba(34, 36, 38, 0.12), 0px 2px 10px 0px rgba(34, 36, 38, 0.15);
 
 /*-------------------
     Derived Values

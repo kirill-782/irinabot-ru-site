@@ -3,55 +3,55 @@
 *******************************/
 .ui.basic.buttons .button,
 .ui.basic.button {
-  background: $darkest !important;
-  color: $inputColor !important;
+    background: $darkest !important;
+    color: $inputColor !important;
 }
 
 .ui.basic.buttons .button:hover,
 .ui.basic.button:hover {
-  background: lighten($darkest, 10%) !important;
-  color: darken($inputColor, 10%) !important;
+    background: lighten($darkest, 10%) !important;
+    color: darken($inputColor, 10%) !important;
 }
 
 .ui.basic.buttons .active.button,
 .ui.basic.active.button {
-  background: rgb(34 34 34) !important;
+    background: rgb(34 34 34) !important;
 }
 
 .ui.basic.buttons .active.button,
 .ui.basic.active.button {
-  background: rgb(34 34 34) !important;
-  color: darken($inputColor, 20%) !important;
+    background: rgb(34 34 34) !important;
+    color: darken($inputColor, 20%) !important;
 }
 
 .ui.basic.buttons .button:focus,
 .ui.basic.button:focus {
-  background: #323232 !important;
+    background: #323232 !important;
 }
 
 .ui.green.buttons .button,
 .ui.green.button {
-  background-color: #0e6623;
-  color: #cdcdcd;
+    background-color: #0e6623;
+    color: #cdcdcd;
 }
 
 .ui.green.buttons .button:hover,
 .ui.green.button:hover {
-  background-color: #0a6420;
-  color: #cdcdcd;
+    background-color: #0a6420;
+    color: #cdcdcd;
 }
 
 .ui.button {
-  border: 1px solid #444;
-  background: #101010 none;
-  color: #d6d6d6;
+    border: 1px solid #444;
+    background: #101010 none;
+    color: #d6d6d6;
 }
 
 .ui.button:hover,
 .ui.button:active,
 .ui.active.button:active,
 .ui.button:focus {
-  background: #2a2a2a;
-  color: #e6e6e6;
-  border: 1px solid #171717;
+    background: #2a2a2a;
+    color: #e6e6e6;
+    border: 1px solid #171717;
 }

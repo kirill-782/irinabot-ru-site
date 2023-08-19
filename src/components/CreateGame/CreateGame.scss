@@ -1,32 +1,32 @@
 @media only screen and (min-width: 1450px) {
-  .ui.container.create-game {
-    width: 1400px;
-  }
+    .ui.container.create-game {
+        width: 1400px;
+    }
 }
 
 .ok-patch {
-  color: black;
+    color: black;
 }
 
 .error-patch {
-  color: rgb(228, 95, 95);
+    color: rgb(228, 95, 95);
 }
 
 .create-game .ui.items {
-  .item {
-    .meta {
-      font-style: italic;
-      font-weight: bold;
+    .item {
+        .meta {
+            font-style: italic;
+            font-weight: bold;
+        }
     }
-  }
 }
 
 .dark {
-  .create-game .ui.items {
-    .item {
-      .meta {
-        color: #797979;
-      }
+    .create-game .ui.items {
+        .item {
+            .meta {
+                color: #797979;
+            }
+        }
     }
-  }
 }

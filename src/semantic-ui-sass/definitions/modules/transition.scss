@@ -22,10 +22,10 @@ $element: "transition";
 *******************************/
 
 .transition {
-  animation-iteration-count: 1;
-  animation-duration: $transitionDefaultDuration;
-  animation-timing-function: $transitionDefaultEasing;
-  animation-fill-mode: $transitionDefaultFill;
+    animation-iteration-count: 1;
+    animation-duration: $transitionDefaultDuration;
+    animation-timing-function: $transitionDefaultEasing;
+    animation-fill-mode: $transitionDefaultFill;
 }
 
 /*******************************
@@ -34,34 +34,34 @@ $element: "transition";
 
 /* Animating */
 .animating.transition {
-  backface-visibility: $backfaceVisibility;
-  visibility: visible !important;
+    backface-visibility: $backfaceVisibility;
+    visibility: visible !important;
 }
 
 /* Loading */
 .loading.transition {
-  position: absolute;
-  top: -99999px;
-  left: -99999px;
+    position: absolute;
+    top: -99999px;
+    left: -99999px;
 }
 
 /* Hidden */
 .hidden.transition {
-  display: none;
-  visibility: hidden;
+    display: none;
+    visibility: hidden;
 }
 
 /* Visible */
 .visible.transition {
-  display: block !important;
-  visibility: visible !important;
-  /*  backface-visibility: $backfaceVisibility;
+    display: block !important;
+    visibility: visible !important;
+    /*  backface-visibility: $backfaceVisibility;
   transform: $use3DAcceleration;*/
 }
 
 /* Disabled */
 .disabled.transition {
-  animation-play-state: paused;
+    animation-play-state: paused;
 }
 
 /*******************************
@@ -69,5 +69,5 @@ $element: "transition";
 *******************************/
 
 .looping.transition {
-  animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
 }

@@ -22,26 +22,26 @@ $element: "rating";
 *******************************/
 
 .ui.rating {
-  display: inline-flex;
-  white-space: $whiteSpace;
-  vertical-align: $verticalAlign;
+    display: inline-flex;
+    white-space: $whiteSpace;
+    vertical-align: $verticalAlign;
 }
 .ui.rating:last-child {
-  margin-right: 0em;
+    margin-right: 0em;
 }
 
 /* Icon */
 .ui.rating .icon {
-  padding: 0em;
-  margin: 0em;
-  text-align: center;
-  font-weight: $normal;
-  font-style: normal;
-  flex: 1 0 auto;
-  cursor: $iconCursor;
-  width: $iconWidth;
-  height: $iconHeight;
-  transition: $iconTransition;
+    padding: 0em;
+    margin: 0em;
+    text-align: center;
+    font-weight: $normal;
+    font-style: normal;
+    flex: 1 0 auto;
+    cursor: $iconCursor;
+    width: $iconWidth;
+    height: $iconHeight;
+    transition: $iconTransition;
 }
 
 /*******************************
@@ -54,21 +54,21 @@ $element: "rating";
 
 /* Inactive Icon */
 .ui.rating .icon {
-  background: $inactiveBackground;
-  color: $inactiveColor;
+    background: $inactiveBackground;
+    color: $inactiveColor;
 }
 
 /* Active Icon */
 .ui.rating .active.icon {
-  background: $activeBackground;
-  color: $activeColor;
+    background: $activeBackground;
+    color: $activeColor;
 }
 
 /* Selected Icon */
 .ui.rating .icon.selected,
 .ui.rating .icon.selected.active {
-  background: $selectedBackground;
-  color: $selectedColor;
+    background: $selectedBackground;
+    color: $selectedColor;
 }
 
 /*-------------------
@@ -77,26 +77,26 @@ $element: "rating";
 
 /* Inactive */
 .ui.star.rating .icon {
-  width: $starIconWidth;
-  height: $starIconHeight;
-  background: $starInactiveBackground;
-  color: $starInactiveColor;
-  text-shadow: $starInactiveTextShadow;
+    width: $starIconWidth;
+    height: $starIconHeight;
+    background: $starInactiveBackground;
+    color: $starInactiveColor;
+    text-shadow: $starInactiveTextShadow;
 }
 
 /* Active Star */
 .ui.star.rating .active.icon {
-  background: $starActiveBackground !important;
-  color: $starActiveColor !important;
-  text-shadow: $starActiveTextShadow !important;
+    background: $starActiveBackground !important;
+    color: $starActiveColor !important;
+    text-shadow: $starActiveTextShadow !important;
 }
 
 /* Selected Star */
 .ui.star.rating .icon.selected,
 .ui.star.rating .icon.selected.active {
-  background: $starSelectedBackground !important;
-  color: $starSelectedColor !important;
-  text-shadow: $starSelectedTextShadow !important;
+    background: $starSelectedBackground !important;
+    color: $starSelectedColor !important;
+    text-shadow: $starSelectedTextShadow !important;
 }
 
 /*-------------------
@@ -104,26 +104,26 @@ $element: "rating";
 --------------------*/
 
 .ui.heart.rating .icon {
-  width: $heartIconWidth;
-  height: $heartIconHeight;
-  background: $heartInactiveBackground;
-  color: $heartInactiveColor;
-  text-shadow: $heartInactiveTextShadow !important;
+    width: $heartIconWidth;
+    height: $heartIconHeight;
+    background: $heartInactiveBackground;
+    color: $heartInactiveColor;
+    text-shadow: $heartInactiveTextShadow !important;
 }
 
 /* Active Heart */
 .ui.heart.rating .active.icon {
-  background: $heartActiveBackground !important;
-  color: $heartActiveColor !important;
-  text-shadow: $heartActiveTextShadow !important;
+    background: $heartActiveBackground !important;
+    color: $heartActiveColor !important;
+    text-shadow: $heartActiveTextShadow !important;
 }
 
 /* Selected Heart */
 .ui.heart.rating .icon.selected,
 .ui.heart.rating .icon.selected.active {
-  background: $heartSelectedBackground !important;
-  color: $heartSelectedColor !important;
-  text-shadow: $heartSelectedTextShadow !important;
+    background: $heartSelectedBackground !important;
+    color: $heartSelectedColor !important;
+    text-shadow: $heartSelectedTextShadow !important;
 }
 
 /*******************************
@@ -136,7 +136,7 @@ $element: "rating";
 
 /* disabled rating */
 .ui.disabled.rating .icon {
-  cursor: default;
+    cursor: default;
 }
 
 /*-------------------
@@ -145,11 +145,11 @@ $element: "rating";
 
 /* Selected Rating */
 .ui.rating.selected .active.icon {
-  opacity: $interactiveActiveIconOpacity;
+    opacity: $interactiveActiveIconOpacity;
 }
 .ui.rating.selected .icon.selected,
 .ui.rating .icon.selected {
-  opacity: $interactiveSelectedIconOpacity;
+    opacity: $interactiveSelectedIconOpacity;
 }
 
 /*******************************
@@ -157,23 +157,23 @@ $element: "rating";
 *******************************/
 
 .ui.mini.rating {
-  font-size: $mini;
+    font-size: $mini;
 }
 .ui.tiny.rating {
-  font-size: $tiny;
+    font-size: $tiny;
 }
 .ui.small.rating {
-  font-size: $small;
+    font-size: $small;
 }
 .ui.rating {
-  font-size: $medium;
+    font-size: $medium;
 }
 .ui.large.rating {
-  font-size: $large;
+    font-size: $large;
 }
 .ui.huge.rating {
-  font-size: $huge;
+    font-size: $huge;
 }
 .ui.massive.rating {
-  font-size: $massive;
+    font-size: $massive;
 }

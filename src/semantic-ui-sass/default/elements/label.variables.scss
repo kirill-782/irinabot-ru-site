@@ -69,21 +69,17 @@ $imageLabelTextDistance: 0.5em;
 $imageLabelDetailDistance: $imageLabelTextDistance;
 $imageLabelBorderRadius: $borderRadius;
 $imageLabelBoxShadow: none;
-$imageLabelPadding: $imageLabelVerticalPadding $imageLabelHorizontalPadding
-  $imageLabelVerticalPadding $imageLabelTextDistance;
+$imageLabelPadding: $imageLabelVerticalPadding $imageLabelHorizontalPadding $imageLabelVerticalPadding
+    $imageLabelTextDistance;
 
-$imageLabelImageMargin: (-$verticalPadding) $imageLabelTextDistance
-  (-$verticalPadding) -$imageLabelTextDistance;
-$imageLabelImageBorderRadius: $imageLabelBorderRadius 0em 0em
-  $imageLabelBorderRadius;
+$imageLabelImageMargin: (-$verticalPadding) $imageLabelTextDistance (-$verticalPadding) -$imageLabelTextDistance;
+$imageLabelImageBorderRadius: $imageLabelBorderRadius 0em 0em $imageLabelBorderRadius;
 $imageLabelImageHeight: $imageHeight;
 
 $imageLabelDetailBackground: $strongTransparentBlack;
-$imageLabelDetailPadding: $imageLabelVerticalPadding
-  $imageLabelHorizontalPadding;
-$imageLabelDetailMargin: (-$imageLabelVerticalPadding)
-  (-$imageLabelHorizontalPadding) (-$imageLabelVerticalPadding)
-  $imageLabelDetailDistance;
+$imageLabelDetailPadding: $imageLabelVerticalPadding $imageLabelHorizontalPadding;
+$imageLabelDetailMargin: (-$imageLabelVerticalPadding) (-$imageLabelHorizontalPadding) (-$imageLabelVerticalPadding)
+    $imageLabelDetailDistance;
 
 /*-------------------
         States
@@ -204,8 +200,7 @@ $attachedBorderRadius: $borderRadius;
 $cornerSizeRatio: 1;
 $cornerTransition: color $labelTransitionDuration $labelTransitionEasing;
 $cornerTriangleSize: 4em;
-$cornerTriangleTransition: border-color $labelTransitionDuration
-  $labelTransitionEasing;
+$cornerTriangleTransition: border-color $labelTransitionDuration $labelTransitionEasing;
 $cornerTriangleZIndex: 1;
 
 $cornerIconSize: $relativeLarge;
@@ -234,8 +229,7 @@ $pointingVerticalDistance: 1em;
 $pointingTriangleSize: 0.6666em;
 $pointingHorizontalDistance: $pointingTriangleSize;
 
-$pointingTriangleTransition: background $labelTransitionDuration
-  $labelTransitionEasing;
+$pointingTriangleTransition: background $labelTransitionDuration $labelTransitionEasing;
 $pointingTriangleZIndex: 2;
 
 /* Basic Pointing */

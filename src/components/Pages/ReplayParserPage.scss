@@ -1,16 +1,16 @@
 @media only screen and (min-width: 1450px) {
-  .ui.container.replay-parser.unused {
-    width: 95%;
-  }
+    .ui.container.replay-parser.unused {
+        width: 95%;
+    }
 }
 .replay-parser {
-  .replay-tab-menu {
-    .tab-name {
-      overflow: hidden;
-      display: inline-block;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      width: 85%;
+    .replay-tab-menu {
+        .tab-name {
+            overflow: hidden;
+            display: inline-block;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: 85%;
+        }
     }
-  }
 }
