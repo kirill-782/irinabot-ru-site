@@ -21,13 +21,13 @@ declare global {
     namespace JSX {
         // this merges with the existing intrinsic elements, adding 'my-custom-tag' and its props
         interface IntrinsicElements {
-            "w3c": {
+            w3c: {
                 children: React.ReactNode;
                 color: string;
             };
-            "cat": {
-                "title"?: string
-                children: React.ReactNode
+            cat: {
+                title?: string;
+                children: React.ReactNode;
             };
         }
     }
@@ -75,9 +75,11 @@ function Markdown({ children, light }: MarkdownProps) {
                     return <Image {...props} />;
                 },
                 table({ node, children, ...props }) {
-                    return <div style={{ overflowX: "scroll" }}>
-                        <Table striped>{children}</Table>
-                    </div>;
+                    return (
+                        <div style={{ overflowX: "scroll" }}>
+                            <Table striped>{children}</Table>
+                        </div>
+                    );
                 },
                 thead({ node, children, ...props }) {
                     return <Table.Header>{children}</Table.Header>;
@@ -95,28 +97,34 @@ function Markdown({ children, light }: MarkdownProps) {
                     return light ? <>{children}</> : <p>{children}</p>;
                 },
                 a({ node, href, children, ...props }) {
-                    return href?.match(new RegExp("^(?:[a-z+]+:)?//", "i"))
-                        ? <a href={href} {...props} rel="nofollow noreferrer" target="_blank">{children}</a>
-                        : <NavLink to={href} {...props}>{children}</NavLink>;
-                },
-                w3c({ node, children, color }) {
-                    return <WarcraftIIIText style={{ color }} ignoreTags={["|n"]}
-                                            enableAlpha>{children}</WarcraftIIIText>;
-                },
-                cat({ node, title, children }) {
-                    if(Array.isArray(children) && children.length === 2)
-                        return (
-                            <Spoiler title={children[0]}>{children[1]}</Spoiler>
-                        );
-
-
-                    return (
-                        <Spoiler title={title}>{children}</Spoiler>
+                    return href?.match(new RegExp("^(?:[a-z+]+:)?//", "i")) ? (
+                        <a href={href} {...props} rel="nofollow noreferrer" target="_blank">
+                            {children}
+                        </a>
+                    ) : (
+                        <NavLink to={href} {...props}>
+                            {children}
+                        </NavLink>
                     );
                 },
-                hr({node, ...props}) {
-                    return <Divider/>
-                }
+                w3c({ node, children, color }) {
+                    return (
+                        <WarcraftIIIText style={{ color }} ignoreTags={["|n"]} enableAlpha>
+                            {children}
+                        </WarcraftIIIText>
+                    );
+                },
+                cat({ node, title, children }) {
+                    if (title) return <Spoiler title={title}>{children}</Spoiler>;
+
+                    if (Array.isArray(children) && children.length >= 2)
+                        return <Spoiler title={children[0]}>{children.slice(1)}</Spoiler>;
+
+                        return <Spoiler title="">{children}</Spoiler>;
+                },
+                hr({ node, ...props }) {
+                    return <Divider />;
+                },
             }}
         >
             {children}
