@@ -87,28 +87,47 @@ function GameListPage() {
             <MetaCanonical hostPath="/" />
             <Grid columns="equal" stackable>
                 <Grid.Column width={13} className="game-list-column">
-                    <Input
-                        onChange={(event, data) => setFilterSettings({ ...filterSettings, quickFilter: data.value })}
-                        value={filterSettings.quickFilter}
-                        style={{ width: "50%" }}
-                        placeholder={lang.gameListPageQuickFilterPlaceholder}
-                    />
-                    {auth.accessMask.hasAccess(AccessMaskBit.GAME_CREATE) && (
-                        <Button as={Link} to="/create" floated="right" basic icon="plus" color="green" size="large" />
-                    )}
-                    <Button floated="right" basic icon="copy" color={runtimeContext.linkCopyMode.copy ? "green" : undefined} size="large" onClick={() => {
-                        runtimeContext.linkCopyMode.setCopy((copy) => !copy);
-                    }} />
+                    <div style={{top: 50, position: "sticky" }}>
+                        <Input
+                            onChange={(event, data) =>
+                                setFilterSettings({ ...filterSettings, quickFilter: data.value })
+                            }
+                            value={filterSettings.quickFilter}
+                            style={{ width: "50%" }}
+                            placeholder={lang.gameListPageQuickFilterPlaceholder}
+                        />
+                        {auth.accessMask.hasAccess(AccessMaskBit.GAME_CREATE) && (
+                            <Button
+                                as={Link}
+                                to="/create"
+                                floated="right"
+                                basic
+                                icon="plus"
+                                color="green"
+                                size="large"
+                            />
+                        )}
+                        <Button
+                            floated="right"
+                            basic
+                            icon="copy"
+                            color={runtimeContext.linkCopyMode.copy ? "green" : undefined}
+                            size="large"
+                            onClick={() => {
+                                runtimeContext.linkCopyMode.setCopy((copy) => !copy);
+                            }}
+                        />
 
-                    <Button
-                        basic
-                        icon="filter"
-                        floated="right"
-                        size="large"
-                        onClick={() => {
-                            setFilterModalOpen(true);
-                        }}
-                    />
+                        <Button
+                            basic
+                            icon="filter"
+                            floated="right"
+                            size="large"
+                            onClick={() => {
+                                setFilterModalOpen(true);
+                            }}
+                        />
+                    </div>
                     {sockets.connectorSocket.isConnected() && (
                         <Message error>
                             <Message.Header>Мы обновили коннектор</Message.Header>
