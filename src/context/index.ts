@@ -34,6 +34,10 @@ export type AppRuntimeSettingsContextType = {
         locked: boolean;
         setLocked: (locked: ((locked: boolean) => boolean) | boolean) => void;
     };
+    linkCopyMode: {
+        copy: boolean;
+        setCopy: (locked: ((locked: boolean) => boolean) | boolean) => void;
+    };
     chat: {
         selectUser: SelectUserFunctionHolder;
         setSelectUser: React.Dispatch<SelectUserFunctionHolder>;

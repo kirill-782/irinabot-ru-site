@@ -35,12 +35,17 @@ function App() {
         url: CONNECTOR_WEBSOCKET_ENDPOINT,
     });
     const [gameListLocked, setGameListLocked] = useState(false);
+    const [linkCopyMode, setLinkCopyMode] = useState(localStorage.getItem("linkCopyMode") === "1");
+
+    useEffect(() => {
+        localStorage.setItem("linkCopyMode", linkCopyMode ? "1" : "0");
+    }, [linkCopyMode]);
 
     const [authState, authDispatcher, needRegisterModal] = useWebsocketAuth({
         ghostSocket,
     });
 
-    useConnectorGameAdd({ ghostSocket, connectorSocket });
+    useConnectorGameAdd({ ghostSocket, connectorSocket, linkCopyMode });
 
     const [selectUser, setSelectUser] = useState<SelectUserFunctionHolder>({
         selectUser: () => {},
@@ -88,6 +93,7 @@ function App() {
         >
             <AppRuntimeSettingsContext.Provider
                 value={{
+                    linkCopyMode: { copy: linkCopyMode, setCopy: setLinkCopyMode },
                     gameList: { locked: gameListLocked, setLocked: setGameListLocked },
                     chat: {
                         selectUser,

@@ -96,6 +96,10 @@ function GameListPage() {
                     {auth.accessMask.hasAccess(AccessMaskBit.GAME_CREATE) && (
                         <Button as={Link} to="/create" floated="right" basic icon="plus" color="green" size="large" />
                     )}
+                    <Button floated="right" basic icon="copy" color={runtimeContext.linkCopyMode.copy ? "green" : undefined} size="large" onClick={() => {
+                        runtimeContext.linkCopyMode.setCopy((copy) => !copy);
+                    }} />
+
                     <Button
                         basic
                         icon="filter"

@@ -1,26 +1,31 @@
 import { GHostWebSocket } from "./../services/GHostWebsocket";
 import { ConnectorWebsocket } from "./../services/ConnectorWebsocket";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useContext } from "react";
 import { DEFAULT_CONTEXT_HEADER_CONSTANT, DEFAULT_UDP_ANSWER } from "../models/websocket/HeaderConstants";
 import { ServerUDPAnswer } from "../models/websocket/ServerUDPAnswer";
 
 import { fromByteArray } from "base64-js";
 import { toast } from "@kokomi/react-semantic-toasts";
 import copy from "clipboard-copy";
+import { AppRuntimeSettingsContext } from "../context";
 
 interface useConnectorGameAddOptions {
     ghostSocket: GHostWebSocket;
     connectorSocket: ConnectorWebsocket;
+    linkCopyMode: boolean
 }
 
-export const useConnectorGameAdd = ({ ghostSocket, connectorSocket }: useConnectorGameAddOptions) => {
-    const isCopy = useRef(false);
+function timeout(time: number) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            reject(timeout);
+        }, time)
+    });
+}
+
+export const useConnectorGameAdd = ({ ghostSocket, connectorSocket, linkCopyMode }: useConnectorGameAddOptions) => {
 
     useEffect(() => {
-        const onKeyEvent = (e: KeyboardEvent) => {
-            isCopy.current = e.altKey;
-        };
-
         const onUDPGameAddPackage = (data) => {
             if (
                 data.detail.package.type === DEFAULT_UDP_ANSWER &&
@@ -57,7 +62,7 @@ export const useConnectorGameAdd = ({ ghostSocket, connectorSocket }: useConnect
 
                 console.log(url);
 
-                if (isCopy.current) {
+                if (linkCopyMode) {
                     copy(url).then(() => {
                         toast({
                             title: "Ссылка скопирована",
@@ -76,7 +81,33 @@ export const useConnectorGameAdd = ({ ghostSocket, connectorSocket }: useConnect
                         });
                     });
                 } else {
-                    document.location.href = url;
+
+                    const addGameResponse = fetch("http://127.0.0.1:44771/addgame?" + gameParams.toString());
+                    const result = Promise.race([addGameResponse, timeout(1000)]);
+
+                    result.then((result:  Awaited<typeof addGameResponse>) => {
+                        if(result.status === 200)
+                        {
+                            toast({
+                                title: "Игра добавлена",
+                                icon: "check",
+                                time: 15000,
+                                color: "green",
+                                description: "Разверните коннектор, чтобы продолжить",
+                            });
+                        }
+                    }).catch((e)=>{
+                        console.log("xD", e);
+                        document.location.href = url;
+
+                        toast({
+                            title: "Запрос на добвление отправлен",
+                            icon: "check",
+                            time: 15000,
+                            color: "green",
+                            description: "Проверьте появилась ли игра в коннекторе",
+                        });
+                    });
                 }
 
                 if (connectorSocket.isConnected()) {
@@ -94,14 +125,8 @@ export const useConnectorGameAdd = ({ ghostSocket, connectorSocket }: useConnect
 
         ghostSocket.addEventListener("package", onUDPGameAddPackage);
 
-        window.addEventListener("keyup", onKeyEvent);
-        window.addEventListener("keydown", onKeyEvent);
-
         return () => {
             ghostSocket.removeEventListener("package", onUDPGameAddPackage);
-
-            window.removeEventListener("keyup", onKeyEvent);
-            window.removeEventListener("keydown", onKeyEvent);
         };
-    }, [ghostSocket, connectorSocket]);
+    }, [ghostSocket, connectorSocket, linkCopyMode]);
 };
