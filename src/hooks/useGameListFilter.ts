@@ -63,6 +63,9 @@ export const useGameListFilter = ({ gameList, filters }: useGameListFilterOption
                 return playersCount;
             })();
 
+            if(currentAuth && game.creatorID == currentAuth.connectorId)
+                return true;
+
             // Game Type Filter
 
             if (filters.gameType) {
@@ -96,6 +99,14 @@ export const useGameListFilter = ({ gameList, filters }: useGameListFilterOption
             if(filters.hiddenPatch.length > 0) {
                 if(filters.hiddenPatch.indexOf(game.gameVersion) != -1)
                     return false;
+            }
+
+            // Hide another hosts if exsists local
+
+            if(game.gameFlags.hasOtherGame) {
+                const hasExists = gameList.some((i) => i.mapId == game.mapId && !i.gameFlags.hasOtherGame);
+
+                if(hasExists) return false;
             }
 
             // Quick filter

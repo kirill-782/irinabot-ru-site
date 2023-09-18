@@ -128,7 +128,7 @@ function GameListPage() {
                             }}
                         />
                     </div>
-                    {sockets.connectorSocket.isConnected() && (
+                    {(sockets.connectorSocket.isConnected() && sockets.connectorSocket.version != 7) && (
                         <Message error>
                             <Message.Header>Мы обновили коннектор</Message.Header>
                             <Message.Content>

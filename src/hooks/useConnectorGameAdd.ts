@@ -82,35 +82,48 @@ export const useConnectorGameAdd = ({ ghostSocket, connectorSocket, linkCopyMode
                     });
                 } else {
 
-                    const addGameResponse = fetch("http://127.0.0.1:44771/addgame?" + gameParams.toString());
-                    const result = Promise.race([addGameResponse, timeout(1000)]);
-
-                    result.then((result:  Awaited<typeof addGameResponse>) => {
-                        if(result.status === 200)
-                        {
-                            toast({
-                                title: "Игра добавлена",
-                                icon: "check",
-                                time: 15000,
-                                color: "green",
-                                description: "Разверните коннектор, чтобы продолжить",
-                            });
-                        }
-                    }).catch((e)=>{
-                        console.log("xD", e);
-                        document.location.href = url;
-
+                    if(connectorSocket.isConnected() && connectorSocket.version == 7) {
+                        connectorSocket.send(Uint8Array.from([2, ...new TextEncoder().encode(url) , 0]));
+                        
                         toast({
                             title: "Запрос на добвление отправлен",
                             icon: "check",
                             time: 15000,
                             color: "green",
-                            description: "Проверьте появилась ли игра в коннекторе",
+                            description: "Проверьте появилась ли игра в консольном коннекторе",
                         });
-                    });
+                    }
+                    else {
+                        const addGameResponse = fetch("http://127.0.0.1:44771/addgame?" + gameParams.toString());
+                        const result = Promise.race([addGameResponse, timeout(1000)]);
+    
+                        result.then((result:  Awaited<typeof addGameResponse>) => {
+                            if(result.status === 200)
+                            {
+                                toast({
+                                    title: "Игра добавлена",
+                                    icon: "check",
+                                    time: 15000,
+                                    color: "green",
+                                    description: "Разверните коннектор, чтобы продолжить",
+                                });
+                            }
+                        }).catch((e)=>{
+                            console.log("xD", e);
+                            document.location.href = url;
+    
+                            toast({
+                                title: "Запрос на добвление отправлен",
+                                icon: "check",
+                                time: 15000,
+                                color: "green",
+                                description: "Проверьте появилась ли игра в коннекторе",
+                            });
+                        });
+                    }
                 }
 
-                if (connectorSocket.isConnected()) {
+                if (connectorSocket.isConnected() && connectorSocket.version != 7) {
                     toast({
                         title: "Мы обновили коннектор",
                         icon: "warning",

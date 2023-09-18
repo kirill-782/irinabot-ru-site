@@ -17,6 +17,12 @@ import { AccessMaskBit } from "../Modal/AccessMaskModal";
 
 const ADS = [
     {
+        img: "/kaisa/BoostyBaner.png",
+        link: "https://boosty.to/irina_bot?postsTagsIds=18226",
+        index: 1,
+        expire: 3692478800000,
+    },
+    {
         img: "/kaisa/ZBRestored-plain.png?1",
         link: "https://discord.com/invite/bfkq5JcDPT",
         index: undefined,

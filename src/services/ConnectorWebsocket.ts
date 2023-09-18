@@ -55,6 +55,8 @@ export class ConnectorWebsocket extends EventTarget {
     private socketConnect: WebSocket;
     private options: ConnectorWebsocketOptions;
 
+    public version: number;
+
     constructor(options: ConnectorWebsocketOptions) {
         super();
 
@@ -142,7 +144,11 @@ export class ConnectorWebsocket extends EventTarget {
 
             const type = dataBuffer.getUint8();
 
-            if (!packageHandlers[type]) {
+            if(type === 0) {
+                this.version = dataBuffer.getUint32();
+                return;
+            }
+            else if (!packageHandlers[type]) {
                 console.log("Unknown connector type passed (" + type + ")");
                 return;
             }
