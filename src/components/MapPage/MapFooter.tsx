@@ -1,5 +1,5 @@
 import { memo, useContext, useState } from "react";
-import { Button, Grid } from "semantic-ui-react";
+import { Button, Grid, Label } from "semantic-ui-react";
 import { Map } from "../../models/rest/Map";
 import MapStats from "./MapStats";
 import { GameListGame } from "../../models/websocket/ServerGameList";
@@ -8,10 +8,11 @@ import React from "react";
 import MapDownloadButton from "./MapDownloadButton";
 import MapCategoryList from "./MapCategoryList";
 import { Link } from "react-router-dom";
-import { AuthContext, MapContext } from "../../context";
+import { AppRuntimeSettingsContext, AuthContext, MapContext } from "../../context";
 import CloneConfigButton from "./CloneConfigButton";
 import "./MapFooter.scss";
 import MapFavoriteButton from "./FavoriteButton";
+import LanguageKey from "../LanguageKey";
 
 interface MapFooterProps {
     gameList: GameListGame[];
@@ -20,7 +21,11 @@ interface MapFooterProps {
 function MapFooter({ gameList }: MapFooterProps) {
     const { accessMask, apiToken } = useContext(AuthContext).auth;
 
-    const { categories, downloadUrl, fileName, fileSize, id, configs, favorite, owner } = useContext(MapContext).map;
+    const { language } = useContext(AppRuntimeSettingsContext);
+    const g = language.getString;
+
+    const { categories, downloadUrl, fileName, fileSize, id, configs, favorite, owner, mapStats } =
+        useContext(MapContext).map;
 
     const showCreateButton = apiToken.hasAuthority("MAP_READ") && accessMask.hasAccess(64);
 
@@ -35,6 +40,16 @@ function MapFooter({ gameList }: MapFooterProps) {
             <Grid.Row>
                 <MapCategoryList categories={categories} />
                 <MapStats gameList={gameList} mapId={id || 0} />
+                {mapStats && (
+                    <>
+                        <Label title={g("mapStatsHint", { month: mapStats.monthGames, week: mapStats.weekGames })}>
+                            <LanguageKey stringId="mapStatsTotalGames" value={mapStats.totalGames}></LanguageKey>
+                        </Label>
+                        <Label title={g("mapStatsHint", { month: mapStats.monthPlayers, week: mapStats.weekPlayers })}>
+                            <LanguageKey stringId="mapStatsTotalPlayers" value={mapStats.totalPlayers}></LanguageKey>
+                        </Label>
+                    </>
+                )}
             </Grid.Row>
             <Grid.Row className="map-footer-buttons" verticalAlign="middle">
                 {downloadUrl && (

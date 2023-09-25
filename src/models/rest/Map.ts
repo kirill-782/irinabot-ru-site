@@ -4,6 +4,7 @@
 
 import type { ConfigInfo } from "./ConfigInfo";
 import type { MapInfo } from "./MapInfo";
+import { MapStats } from "./MapStats";
 
 /**
  * Поля, которые нужно заменить
@@ -18,6 +19,7 @@ export type Map = {
     creationDate?: string;
     categories?: Array<number>;
     mapInfo?: MapInfo;
+    mapStats?: MapStats;
     additionalFlags?: Record<string, any>;
     configs?: Array<ConfigInfo>;
     verified?: boolean;

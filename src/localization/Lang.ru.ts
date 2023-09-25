@@ -191,11 +191,15 @@ const LanguageData = {
 
     mapCardShowAllText: "Показать весь текст",
 
+    
+
     mapFiltersDefault: "(по умолчанию)",
     mapFiltersMapNameSort: "Имя карты",
     mapFiltersUploadDateSort: "Дата загрузки",
     mapFiltersUpdateDateSort: "Дата обновления",
     mapFiltersMapPlayersSort: "Игроков в карте",
+    mapFiltersGamesSort: "Сыграно игр за месяц",
+    mapFiltersPlayersSort: "Сыграно игроков за месяц",
     mapFiltersAscOrder: "По возрастанию",
     mapFiltersDescOrder: "По убыванию",
 
@@ -233,6 +237,11 @@ const LanguageData = {
 
     mapStatsInGamePlayers: "Игроков в играх",
     mapStatsInLobbyPlayers: "Игроков в лобби",
+
+    mapStatsTotalGames: "Всего сыграно игр: {value}",
+    mapStatsTotalPlayers: "Всего игроков: {value}",
+
+    mapStatsHint: "За неделю: {week}, за месяц: {month}",
 
     mapHeaderAuthor: "**Автор:** ",
     mapHeaderPlayerRecommendation: "**Рекомендации к игрокам:**",

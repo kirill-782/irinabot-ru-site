@@ -39,6 +39,16 @@ const sortOptions = [
         langKey: "mapFiltersMapPlayersSort",
         value: "numPlayers",
     },
+    {
+        key: "5",
+        langKey: "mapFiltersGamesSort",
+        value: "MapStats.monthGames",
+    },
+    {
+        key: "6",
+        langKey: "mapFiltersPlayersSort",
+        value: "MapStats.monthPlayers",
+    },
 ] as OptionWithLanguageKey[];
 
 const orderOptions = [
