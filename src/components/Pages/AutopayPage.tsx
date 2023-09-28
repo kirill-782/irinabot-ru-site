@@ -5,7 +5,7 @@ import { SITE_TITLE } from "../../config/ApplicationConfig";
 import MetaDescription from "../Meta/MetaDescription";
 import React from "react";
 import Markdown from "../Markdown";
-import { LanguageRepositoryKeys } from "../../localization/Lang.ru";
+import { LanguageRepositoryKeys } from "../../localization/Lang";
 
 interface Product {
     placeId: number;

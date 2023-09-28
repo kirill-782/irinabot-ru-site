@@ -5,7 +5,7 @@ import { AppRuntimeSettingsContext } from "../../context";
 import { Slot } from "../../models/rest/Slot";
 import LanguageKey from "../LanguageKey";
 import "./MapSlots.scss";
-import { LanguageRepositoryKeys } from "../../localization/Lang.ru";
+import { LanguageRepositoryKeys } from "../../localization/Lang";
 
 const convertSlotTypeToString = (type: number): LanguageRepositoryKeys => {
     switch (type) {

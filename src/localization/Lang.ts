@@ -1,7 +1,7 @@
 export type LanguageRepository = typeof LanguageData;
 export type LanguageRepositoryKeys = keyof LanguageRepository;
 
-const LanguageData = {
+export const LanguageData = {
     error: "Ошибка",
     send: "Отправить",
     save: "Сохранить",
@@ -50,13 +50,13 @@ const LanguageData = {
     configSelectTabGoToMap: "Перейти к карте",
     configSelectTabNoConfigMessage: "Вы не создали еще ни одного конфига. Создать конфиг можно на странице карты.",
 
-    configPreview: "Вы - конгфиг **{name}** для версии **{version}**",
+    configPreview: "Вы выбрали конфиг **{name}** для версии **{version}**",
 
     mapSelectTabFilters: "Фильтры",
     mapSelectTabSearchMap: "Поиск карты",
     mapSelectTabSearchPlaceholder: "Введите часть названия карты...",
 
-    gameOptionsDefault: "По умочланию",
+    gameOptionsDefault: "По умолчанию",
     gameOptionsHidden: "Скрыта",
     gameOptionsExplored: "Разведана",
 
@@ -82,7 +82,7 @@ const LanguageData = {
     gameOptionsSpeedLabel: "Скорость",
 
     createGameConfirmPatchNotificationsAccessDenied:
-        "У вас отсуствуют права парсить конфиги. Выберите другую версию с готовым конфигом.",
+        "У вас отсутствуют права парсить конфиги. Выберите другую версию с готовым конфигом.",
     createGameConfirmPatchNotificationsConfigCreating: "Конфиг создается. Вернитесь на страницу создания игры позже.",
     createGameConfirmPatchNotificationsIncompletableMap: "Карта не совместима с выбранной версией",
 
@@ -175,7 +175,7 @@ const LanguageData = {
     mapListOnlyLobby: "Ограничить поиск картами из списка с играми",
 
     mapEditPageFlagsNotification:
-        "Данные флаги влияют на поведение объекта карты. Обратите внимание, что тег уникален и не может задан для не верефицированных карт.",
+        "Данные флаги влияют на поведение объекта карты. Обратите внимание, что тег уникален и может быть задан только для верифицированных карт.",
     mapEditPageFlagsLoading: "Флаги загружаются",
     mapEditPageExtraDescriptionLabel: "Дополнительное описание",
     mapEditPageExtraDescriptionNotification:
@@ -304,7 +304,7 @@ const LanguageData = {
     connectorSummaryModal: "DEPRECATED",
 
     autohostListModalRemoveErrorToastTitle: "Ошибка удаления",
-    autohostListModalRemoveErrorToastDescription: "Автохост не удален почуму-то {status}",
+    autohostListModalRemoveErrorToastDescription: "Автохост не удален почему-то {status}",
     autohostListModalListHeader: "Список автохостов",
     autohostListModalLoading: "Список загружается",
     autohostListModalEmptyNotification: "Список автохостов пуст",
@@ -317,7 +317,7 @@ const LanguageData = {
     accessMaskModalVip: "Доступ к VIP командам",
     accessMaskModalManageConfig: "Управлять конфигом",
     accessMaskModalManageGame: "Управлять игрой",
-    accessMaskModalManagePlayers: "Упровлять игроками",
+    accessMaskModalManagePlayers: "Управлять игроками",
     accessMaskModalManageAutohost: "Управлять автохостом",
     accessMaskModalCreateGame: "Создавать игры",
     accessMaskModalPriorityEnter: "Приоритетный вход",
@@ -356,10 +356,10 @@ const LanguageData = {
 
     registerAccountModalHeader: "Регистрация аккаунта",
     registerAccountModalDescription:
-        "Вы с данного акканта входите впервые. Выполнить регистрацию аккаунта с помощью данного способа входа? В будущем вы не сможете отвязать аккаунт социальной сети от аккаунта бота.",
+        "Вы с данного аккаунта входите впервые. Выполнить регистрацию аккаунта с помощью данного способа входа? В будущем вы не сможете отвязать аккаунт социальной сети от аккаунта бота.",
 
     progressUploadMapModalHeader: "Загрузка карты",
-    progressUploadMapModalDescription: "Файл **{filename}** загружается. Пожалуйста дождитесь окончания загрузки.",
+    progressUploadMapModalDescription: "Файл **{filename}** загружается. Пожалуйста, дождитесь окончания загрузки.",
     progressUploadMapModalProgressLabel: "Загружено {percent}%",
 
     forbiddenPageLoginHint: "У вас нет доступа к этой странице. Попробуйте войти на сайт через:",
@@ -367,7 +367,7 @@ const LanguageData = {
     forbiddenPageAuthorizationHeader: "Авторизация. . .",
     forbiddenPageConnectingHeader: "Подключение . . .",
     forbiddenPageAccessDeniedHeader: "Отказано в доступе",
-    forbiddenPageAccessDeniedDescription: "У вас отсуствую необходимые права для доступа к данной странице",
+    forbiddenPageAccessDeniedDescription: "У вас отсуствуют необходимые права для доступа к данной странице",
     forbiddenPageGotToHome: "На главную",
 
     editConfigPageConfigSaved: "Конфиг сохранен",
@@ -423,7 +423,7 @@ const LanguageData = {
     autopayPageHelpNotification:
         "Если вы подключаете автохост впервые - напишите в группу ВК ([https://vk.com/irina_bot](https://vk.com/irina_bot)), либо напишите администрации на сервере Discord ([https://discord.gg/cTfyEZT](https://vk.com/irina_bot)). Там вам выдадут инструкцию по подключению.",
 
-    oathStubPageText: "Я окошко интроверт. Мне не нравится, что на меня кто то смотрит. Закрой пожалуйста меня.",
+    oathStubPageText: "Я окошко интроверт. Мне не нравится, что на меня кто-то смотрит. Закрой пожалуйста меня.",
 
     notFoundPageTitle: "Страницы нет",
     notFoundPageGoToHome: "На главную",
@@ -439,7 +439,7 @@ const LanguageData = {
     loadingPage: "Загрузка страницы",
 
     gameListPageTitle: "Список игр",
-    gameListPageDescription: "Просмотреть список созданных игр, к которым можно присоедениться.",
+    gameListPageDescription: "Просмотреть список созданных игр, к которым можно присоединиться.",
     gameListPageQuickFilterPlaceholder: "Быстрый фильтр",
     gameListPageHowToPlay: "Как играть",
 
@@ -451,10 +451,10 @@ const LanguageData = {
 
     externalBlockCard: "{timems} после старта игры",
     externalBlockCardEmptyBlock: "(пустой блок)",
-    externalBlockCardPlayerSummaryLabel: "{count} комманд от {name}",
+    externalBlockCardPlayerSummaryLabel: "{count} команд от {name}",
     externalBlockCardUnknownActionsLabel: "Неизвестные действия",
 
-    actionLog_1: "Прогручивать страницу к началу блоков",
+    actionLog_1: "Прокручивать страницу к началу блоков",
     actionLog_2: "Не пустые блоки",
     actionLog_3: "Только SyncStoredInteger",
     actionLog_4: "Срабатывания TriggerRegisterPlayerChatEvent",

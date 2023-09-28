@@ -7,7 +7,7 @@ import MetaRobots from "../Meta/MetaRobots";
 import ConfigSelectTab from "../CreateGame/ConfigSelectTab";
 import { AppRuntimeSettingsContext } from "../../context";
 import { useTitle } from "../../hooks/useTitle";
-import { LanguageRepositoryKeys } from "../../localization/Lang.ru";
+import { LanguageRepositoryKeys } from "../../localization/Lang";
 
 interface PanesItems {
     langKey: LanguageRepositoryKeys;

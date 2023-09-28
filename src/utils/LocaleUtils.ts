@@ -1,3 +1,4 @@
+import { DEFAULT_CONFIG } from "../config/ApiConfig";
 import { DEFAULT_LOCALE } from "../config/Locales";
 
 export const importLocales = async (locale: string) => {
@@ -5,13 +6,16 @@ export const importLocales = async (locale: string) => {
 
     if (locale) fileName = `Lang.${locale}`;
 
-    const site = import(`../localization/${fileName}`);
-    const timeAgo = (() => {
+    const site = (await fetch(`${DEFAULT_CONFIG.baseURL}v1/lang?locale=${locale}`)).json();
+    const timeAgo = await (() => {
         switch (locale) {
-            case "ru":
-                return import(`javascript-time-ago/locale/ru.json`);
+            case "en-US":
+                return import(`javascript-time-ago/locale/en.json`);
+                case "ru-RU":
+                    return import(`javascript-time-ago/locale/ru.json`);
         }
-        return import(`javascript-time-ago/locale/en.json`);
+
+        return import(`javascript-time-ago/locale/ru.json`);
     })();
 
     site.catch((e) => {
@@ -19,8 +23,8 @@ export const importLocales = async (locale: string) => {
     });
 
     return {
-        timeAgo: await timeAgo,
-        site: await site,
+        timeAgo: await timeAgo.default,
+        site: await site
     };
 };
 

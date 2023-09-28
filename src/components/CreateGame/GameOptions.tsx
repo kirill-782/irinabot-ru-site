@@ -4,7 +4,7 @@ import { GameOptionsProps } from "./interfaces";
 import { invertSelectedBits } from "../../utils/BitMaskUtils";
 import React from "react";
 import { AppRuntimeSettingsContext } from "../../context";
-import { LanguageRepositoryKeys } from "../../localization/Lang.ru";
+import { LanguageRepositoryKeys } from "../../localization/Lang";
 
 interface OptionWithLanguageKey {
     key: string;

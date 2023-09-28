@@ -3,6 +3,7 @@ import { Container, Dropdown, Grid, Menu } from "semantic-ui-react";
 import Markdown from "../Markdown";
 import { NavLink, useParams } from "react-router-dom";
 import { useTitle } from "../../hooks/useTitle";
+import { DEFAULT_LOCALE } from "../../config/Locales";
 
 interface ArticleNode {
     id: number;
@@ -28,14 +29,14 @@ function WikiPage() {
 
     useEffect( () => {
         (async () => {
-            const response = await fetch(`https://api.irinabot.ru/v1/wiki/${wiki}/articles`);
+            const response = await fetch(`https://api.irinabot.ru/v1/wiki/${wiki}/articles?locale=${DEFAULT_LOCALE}`);
             setArticleList(await response.json());
         })()
     }, [wiki]);
 
     useEffect( () => {
         (async () => {
-            const response = await fetch(`https://api.irinabot.ru/v1/wiki/${wiki}/article/${article || "index"}`);
+            const response = await fetch(`https://api.irinabot.ru/v1/wiki/${wiki}/article/${article || "index"}?locale=${DEFAULT_LOCALE}`);
             setCurrentArticle(await response.json());
         })()
     }, [wiki, article]);

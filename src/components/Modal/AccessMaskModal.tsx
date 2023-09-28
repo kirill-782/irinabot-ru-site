@@ -4,7 +4,7 @@ import { AppRuntimeSettingsContext } from "../../context";
 
 import "./AccessMaskModal.scss";
 import LanguageKey from "../LanguageKey";
-import { LanguageRepository, LanguageRepositoryKeys } from "../../localization/Lang.ru";
+import { LanguageRepository, LanguageRepositoryKeys } from "../../localization/Lang";
 
 export enum AccessMaskBit {
     VIP_COMMANDS = 1,

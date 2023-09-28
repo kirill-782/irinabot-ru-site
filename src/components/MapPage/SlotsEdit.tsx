@@ -5,7 +5,7 @@ import { Slot } from "../../models/rest/Slot";
 import { getClassColorByIndex } from "./MapSlots";
 
 import "./MapSlots.scss";
-import { LanguageRepositoryKeys } from "../../localization/Lang.ru";
+import { LanguageRepositoryKeys } from "../../localization/Lang";
 import LanguageKey from "../LanguageKey";
 
 const ALL_RACES_FLAGS = 1 | 2 | 4 | 8 | 32;

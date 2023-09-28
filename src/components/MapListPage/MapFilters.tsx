@@ -5,7 +5,7 @@ import { DropdownItemProps, DropdownProps, Form } from "semantic-ui-react";
 import { AppRuntimeSettingsContext, CacheContext } from "../../context";
 import { SearchFilters } from "../../models/rest/SearchFilters";
 import { SearchOrder } from "./../../models/rest/SearchFilters";
-import { LanguageRepositoryKeys } from "../../localization/Lang.ru";
+import { LanguageRepositoryKeys } from "../../localization/Lang";
 
 interface OptionWithLanguageKey {
     key: string;

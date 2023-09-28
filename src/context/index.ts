@@ -10,7 +10,7 @@ import { MapUploaderService } from "../services/MapUploaderService";
 import { AccessMaskHolder } from "../utils/AccessMaskHolder";
 import { ApiTokenHolder } from "../utils/ApiTokenHolder";
 import { ServerUserAuth } from "./../models/websocket/ServerUserAuth";
-import { LanguageRepository } from "../localization/Lang.ru";
+import { LanguageRepository } from "../localization/Lang";
 
 // Socket Context
 

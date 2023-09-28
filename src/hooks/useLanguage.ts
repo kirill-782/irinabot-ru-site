@@ -1,7 +1,7 @@
 import TimeAgo from "javascript-time-ago";
 import { useCallback, useState } from "react";
 import { importLocales } from "../utils/LocaleUtils";
-import { LanguageRepositoryKeys, LanguageRepository } from "../localization/Lang.ru";
+import { LanguageRepositoryKeys, LanguageRepository, LanguageData } from "../localization/Lang";
 
 type stringMap = {
     [key: string]: string | boolean | number | null | undefined;
@@ -44,18 +44,19 @@ export const useLanguage = (): UseLanguageResult => {
                 delete data[language];
                 return { ...data };
             }
-            return { ...data, [language]: updateData };
+            return { ...data, [language]: {...LanguageData, ...updateData} };
         });
     };
 
-    const loadLanguage = useCallback(async (language: string) => {
-        const result = await importLocales(language);
+    const loadLanguage = useCallback(async (locale: string) => {
 
-        TimeAgo.addLocale(result.timeAgo.default);
-        TimeAgo.addDefaultLocale(result.timeAgo.default);
-        pushLanguageData(language, result.site.default);
+        const result = await importLocales(locale);
 
-        setSelectedLanguage(language);
+        TimeAgo.addLocale(result.timeAgo);
+        TimeAgo.addDefaultLocale(result.timeAgo);
+        pushLanguageData(locale, result.site);
+
+        setSelectedLanguage(locale);
 
         return true;
     }, []);

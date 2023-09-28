@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { LanguageRepositoryKeys } from "../localization/Lang.ru";
+import { LanguageRepositoryKeys } from "../localization/Lang";
 import { AppRuntimeSettingsContext } from "../context";
 import Markdown from "./Markdown";
 

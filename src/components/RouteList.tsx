@@ -23,6 +23,8 @@ const MapCatalog = React.lazy(() => import("./Pages/MapCatalog"));
 
 const WikiPage = React.lazy(() => import("./Pages/WikiPage"));
 
+const LanguageManagerPage = React.lazy(() => import("./Pages/LanguageManagerPage"));
+
 interface CondirionalRouteIndex {
     path?: undefined;
     index?: true;
@@ -33,9 +35,9 @@ interface CondirionalRoutePath {
     index?: false;
 }
 
-type CondirionalRoute = {
+type ConditionalRoute = {
     element?: React.ReactNode | null;
-    routes?: CondirionalRoute[];
+    routes?: ConditionalRoute[];
     requiredAccessMask?: number;
     requiredAuthorities?: string[];
     requireWebsocketConnect?: boolean;
@@ -52,7 +54,7 @@ interface CheckRouteResult {
     waitAuth?: boolean;
 }
 
-const routes: CondirionalRoute[] = [
+const routes: ConditionalRoute[] = [
     {
         path: "/*",
         element: <Layout />,
@@ -142,6 +144,10 @@ const routes: CondirionalRoute[] = [
                 element: <ReplayParserPage />,
             },
             {
+                path: "lang",
+                element: <LanguageManagerPage />,
+            },
+            {
                 path: "*",
                 element: <NotFoundPage />,
             },
@@ -162,7 +168,7 @@ function RouteList() {
                                       requireAuth,
                                       requireToken,
                                       waitAuth,
-                                  }: CondirionalRoute): CheckRouteResult => {
+                                  }: ConditionalRoute): CheckRouteResult => {
             let result: CheckRouteResult = {
                 hasAccess: true,
                 waitAuth: waitAuth,
@@ -189,7 +195,7 @@ function RouteList() {
 
         const authReady = auth.currentAuth && auth.apiToken.hasToken();
 
-        const getRoutesNode = (i: CondirionalRoute, key: number) => {
+        const getRoutesNode = (i: ConditionalRoute, key: number) => {
             const checkResult = hasAccessToRoute(i);
 
             const canAccess = checkResult.hasAccess && (!checkResult.waitAuth || authReady || !auth.authCredentials);
