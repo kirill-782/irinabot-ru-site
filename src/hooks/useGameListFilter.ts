@@ -104,7 +104,7 @@ export const useGameListFilter = ({ gameList, filters }: useGameListFilterOption
             // Hide another hosts if exsists local
 
             if(game.gameFlags.hasOtherGame) {
-                const hasExists = gameList.some((i) => i.mapId == game.mapId && !i.gameFlags.hasOtherGame);
+                const hasExists = gameList.some((i) => i.mapId == game.mapId && !i.gameFlags.started && !i.gameFlags.hasOtherGame);
 
                 if(hasExists) return false;
             }
