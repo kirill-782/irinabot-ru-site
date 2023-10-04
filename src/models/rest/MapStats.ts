@@ -9,4 +9,7 @@ export type MapStats = {
     totalPlayers: number;
     weekPlayers: number;
     monthPlayers: number;
+    totalUniquePlayers: number;
+    weekUniquePlayers: number;
+    monthUniquePlayers: number;
 };

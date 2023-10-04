@@ -240,6 +240,7 @@ export const LanguageData = {
 
     mapStatsTotalGames: "Всего сыграно игр: {value}",
     mapStatsTotalPlayers: "Всего игроков: {value}",
+    mapStatsTotalUniquePlayers: "Всего уникальных игроков: {value}",
 
     mapStatsHint: "За неделю: {week}, за месяц: {month}",
 

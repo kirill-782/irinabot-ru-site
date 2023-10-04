@@ -48,6 +48,9 @@ function MapFooter({ gameList }: MapFooterProps) {
                         <Label title={g("mapStatsHint", { month: mapStats.monthPlayers, week: mapStats.weekPlayers })}>
                             <LanguageKey stringId="mapStatsTotalPlayers" value={mapStats.totalPlayers}></LanguageKey>
                         </Label>
+                        <Label title={g("mapStatsHint", { month: mapStats.monthUniquePlayers, week: mapStats.weekUniquePlayers })}>
+                            <LanguageKey stringId="mapStatsTotalUniquePlayers" value={mapStats.totalUniquePlayers}></LanguageKey>
+                        </Label>
                     </>
                 )}
             </Grid.Row>
