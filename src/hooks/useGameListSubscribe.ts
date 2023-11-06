@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { DEFAULT_GAME_LIST } from "../models/websocket/HeaderConstants";
-import { GameListGame, ServerGameList } from "../models/websocket/ServerGameList";
+import { GameListGame, GameListGameFlags, ServerGameList } from "../models/websocket/ServerGameList";
 import { GHostPackageEvent, GHostWebSocket } from "./../services/GHostWebsocket";
 import { ClientGameListConverter, GAMELIST_FILTER_STARTED } from "../models/websocket/ClientGameList";
 import { FilterSettings } from "./useGameListFilter";
@@ -12,6 +12,21 @@ interface GameListSubscribeOptions {
     filters?: FilterSettings;
     ignoreFocusCheck: boolean;
 }
+
+const replaceRules: Record<string, Partial<GameListGame>> = {
+    WC3Game_7: {
+        gameFlags: new GameListGameFlags(4),
+        gamePosition: 1,
+    },
+    WC3Game_8: {
+        gameFlags: new GameListGameFlags(4),
+        gamePosition: 1,
+    },
+    "WC3.Game_2": {
+        gameFlags: new GameListGameFlags(4),
+        gamePosition: 1,
+    },
+};
 
 export const useGameListSubscribe = ({
     ghostSocket,
@@ -42,7 +57,14 @@ export const useGameListSubscribe = ({
         const onPackage = (event: GHostPackageEvent) => {
             if (event.detail.package.type === DEFAULT_GAME_LIST) {
                 const gameList: ServerGameList = event.detail.package as ServerGameList;
-                onGameList(gameList.games);
+
+                const replacedGames = gameList.games.map((i) => {
+                    if (i.gameFlags.hasOtherGame) return { ...i, ...replaceRules[i.iccupHost] };
+
+                    return i;
+                });
+
+                onGameList(replacedGames);
 
                 clearTimeout(intervalId);
                 intervalId = setTimeout(trySendGameList, 3000);

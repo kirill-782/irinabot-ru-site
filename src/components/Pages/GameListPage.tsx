@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Button, Container, Grid, Input, Message } from "semantic-ui-react";
 import { AppRuntimeSettingsContext, WebsocketContext } from "../../context";
-import { GameListGame } from "../../models/websocket/ServerGameList";
+import { GameListGame, GameListGameFlags } from "../../models/websocket/ServerGameList";
 import GameList from "../GameList";
 import OnlineStats from "../GameList/OnlineStats";
 
@@ -87,7 +87,7 @@ function GameListPage() {
             <MetaCanonical hostPath="/" />
             <Grid columns="equal" stackable>
                 <Grid.Column width={13} className="game-list-column">
-                    <div style={{top: 50, position: "sticky" }}>
+                    <div style={{ top: 50, position: "sticky" }}>
                         <Input
                             onChange={(event, data) =>
                                 setFilterSettings({ ...filterSettings, quickFilter: data.value })
@@ -128,7 +128,7 @@ function GameListPage() {
                             }}
                         />
                     </div>
-                    {(sockets.connectorSocket.isConnected() && sockets.connectorSocket.version != 7) && (
+                    {sockets.connectorSocket.isConnected() && sockets.connectorSocket.version != 7 && (
                         <Message error>
                             <Message.Header>Мы обновили коннектор</Message.Header>
                             <Message.Content>
