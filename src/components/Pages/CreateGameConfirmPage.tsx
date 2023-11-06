@@ -92,7 +92,7 @@ function CreateGameConfirmPage({}) {
 
     const handleCreateGame = useLocalCreateGameCallback(selectedPatch, map, config, options, setLastPassword, gameName);
 
-    const canCreateGame = gameName.length > 0 && (config || selectedPatch?.status === 1) && map.additionalFlags.softLock !== "1";
+    const canCreateGame = gameName.length > 0 && (config || selectedPatch?.status === 1);
     const canCreateAutohost = (config || selectedPatch?.status === 1) && accessMask.hasAccess(32);
 
     return (
