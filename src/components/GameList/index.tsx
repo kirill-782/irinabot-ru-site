@@ -21,6 +21,7 @@ const ADS = [
         link: "https://boosty.to/irina_bot?postsTagsIds=18226",
         index: 1,
         expire: 3692478800000,
+        alwaysVisible: true
     },
     {
         img: "/kaisa/ZBRestored-plain.png?1",
@@ -36,10 +37,10 @@ const ADS = [
         creatorId: 170246,
     },
     {
-        img: "/kaisa/BannerForMelee.png",
-        link: "https://goodgame.ru/cups/irinabot-cup-3x3-atr-so-sluchajnym-soyuznikom-4626",
+        img: "/kaisa/Banner1x1ATR_.png",
+        link: "https://goodgame.ru/cups/irinabot-cup-1h1-atr-4905",
         index: 15,
-        expire: 1692478800000,
+        expire: 1699822799000,
     },
 ];
 
@@ -143,7 +144,7 @@ function GameList({ gameList, selectedGame, setSelectedGame }: GameListProps) {
                                     <SendSignalButton game={game} />
                                 </Table.Cell>
                             </Table.Row>
-                            {adsRow && !accessMask.hasAccess(AccessMaskBit.VIP_COMMANDS) && (
+                            {adsRow && ( !accessMask.hasAccess(AccessMaskBit.VIP_COMMANDS) || adsRow.alwaysVisible ) && (
                                 <Table.Row>
                                     <Table.Cell colSpan="5">
                                         <a href={adsRow.link} className="gachi">
