@@ -34,7 +34,7 @@ function W3MMDStats() {
         syncActions?.forEach((i) => {
             mmdParser.processActions(i.commandBlocks, i.time);
 
-            if (oldState != mmdParser.state) {
+            if (oldState !== mmdParser.state) {
                 setMeaningfulBlocks((meaningfulBlocks) => {
                     return [...meaningfulBlocks, i];
                 });

@@ -1,6 +1,5 @@
-import React, { useContext } from "react";
+import React from "react";
 import { useEffect, useState } from "react";
-import { AppRuntimeSettingsContext } from "../context";
 
 interface SitePrepareLoaderProps {
     noWait?: boolean;
@@ -8,7 +7,6 @@ interface SitePrepareLoaderProps {
 
 function SitePrepareLoader({ noWait }: SitePrepareLoaderProps) {
     const [needRender, setNeedRender] = useState<boolean>(noWait || false);
-    const [timer, setTimer] = useState<number>(0);
 
     //const {language} = useContext(AppRuntimeSettingsContext);
     //const lang = language.languageRepository;

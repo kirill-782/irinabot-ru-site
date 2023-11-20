@@ -36,7 +36,6 @@ function MapPage() {
 
     const { language } = useContext(AppRuntimeSettingsContext);
     const lang = language.languageRepository;
-    const t = language.getString;
 
     useGameListSubscribe({
         ghostSocket: sockets.ghostSocket,

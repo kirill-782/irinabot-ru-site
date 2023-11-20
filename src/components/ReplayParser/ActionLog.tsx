@@ -1,9 +1,8 @@
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Form, Grid } from "semantic-ui-react";
 import { ActionData, ReplayContext } from "../Pages/ReplayParserPage";
 
 import ExternalBlockCard from "./ExternalBlockCard";
-import { useVisibility } from "../../hooks/useVisibility";
 import { AppRuntimeSettingsContext } from "../../context";
 
 const PAGE_SIZE = 500;

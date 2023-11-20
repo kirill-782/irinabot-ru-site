@@ -1,12 +1,12 @@
-import { useContext, useEffect, useReducer, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 import { toast } from "@kokomi/react-semantic-toasts";
-import { AuthAction, AuthData, WebsocketContext } from "../context";
+import { AuthAction, AuthData } from "../context";
 import { ClientUserAuthConverter } from "../models/websocket/ClientUserAuth";
 import { ServerAccessList } from "../models/websocket/ServerAccessList";
 import { ServerApiToken } from "../models/websocket/ServerApiToken";
 import { ServerError } from "../models/websocket/ServerError";
 import { ServerUserAuth } from "../models/websocket/ServerUserAuth";
-import { AccessMaskHolder, AccessMaskHolderImpl, AnonymousAccessMaskHolder } from "../utils/AccessMaskHolder";
+import { AccessMaskHolderImpl, AnonymousAccessMaskHolder } from "../utils/AccessMaskHolder";
 import { AnonymousTokenHolder, ApiTokenJwtHolder } from "../utils/ApiTokenHolder";
 import {
     GLOBAL_ACCESS_LIST,

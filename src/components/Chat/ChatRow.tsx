@@ -1,7 +1,6 @@
-import React, { SyntheticEvent, useContext, useEffect, useState } from "react";
+import React, { SyntheticEvent, useEffect, useState } from "react";
 import { Divider, Feed, Icon, Label } from "semantic-ui-react";
 import { SelectionType, User } from "./interfaces";
-import { AppRuntimeSettingsContext } from "../../context";
 import LanguageKey from "./../LanguageKey";
 
 interface ChatRowProps {
@@ -28,9 +27,6 @@ function ChatRow({ user, onSelectonChange, onDeleteUser }: ChatRowProps) {
     const handleSelectUser = (ev: SyntheticEvent) => {
         onSelectonChange(SelectionType.USER, user);
     };
-
-    const { language } = useContext(AppRuntimeSettingsContext);
-    const lang = language.languageRepository;
 
     useEffect(() => {
         if (confirmRemove) {
