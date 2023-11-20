@@ -28,19 +28,18 @@ const DesktopMenu = () => {
     const { language } = useContext(AppRuntimeSettingsContext);
     const lang = language.languageRepository;
 
+    const tryTopScroll = () => {
+        window.scrollTo(0, 0);
+    };
+
     return (
         <Menu fixed="top" inverted className="main-menu">
             <Menu.Item as={NavLink} to="/">
                 IrInA Host B<Icon name="circle" style={{ margin: 0 }} />T
             </Menu.Item>
-            <Menu.Item as={NavLink} icon="gamepad" to="/gamelist" title={lang.menuActiveGames} />
-            <Menu.Item as={NavLink} icon="file" to="/maps" title={lang.menuMapList} />
-            <Menu.Item
-                as={NavLink}
-                title={lang.menuHelp}
-                icon="help"
-                to="/wiki/irina-help/how-to-play"
-            />
+            <Menu.Item as={NavLink} icon="gamepad" to="/gamelist" title={lang.menuActiveGames} onClick={tryTopScroll} />
+            <Menu.Item as={NavLink} icon="file" to="/maps" title={lang.menuMapList} onClick={tryTopScroll} />
+            <Menu.Item as={NavLink} title={lang.menuHelp} icon="help" to="/wiki/irina-help/how-to-play" />
             <Menu.Item
                 onClick={() => {
                     switchTheme(currentTheme === E_THEME.LIGHT ? E_THEME.DARK : E_THEME.LIGHT);
