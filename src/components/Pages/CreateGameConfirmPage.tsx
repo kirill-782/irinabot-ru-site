@@ -38,6 +38,7 @@ import "./CreateGameConfirmPage.scss";
 import MetaRobots from "./../Meta/MetaRobots";
 import { SaveGameParser } from "@kokomi/w3g-parser-browser";
 import { useTitle } from "../../hooks/useTitle";
+import { useAdsRender } from "../../hooks/useAdsRender";
 
 const GAME_NAME_LOCALSTORAGE_PATH = "lastSuccessGameName";
 
@@ -95,6 +96,8 @@ function CreateGameConfirmPage({}) {
     const canCreateGame = gameName.length > 0 && (config || selectedPatch?.status === 1);
     const canCreateAutohost = (config || selectedPatch?.status === 1) && accessMask.hasAccess(32);
 
+    useAdsRender("R-A-3959850-3", "yandex_rtb_confirmPage", {removeContainer: true});
+
     return (
         <Container className="create-game-confirm">
             <MetaRobots noIndex></MetaRobots>
@@ -131,6 +134,10 @@ function CreateGameConfirmPage({}) {
                         {!config && <CreateGameConfirmPatchNotifications selectedPatch={selectedPatch} />}
                         {config && <ConfigPreview config={config} />}
                         {map && <MapPreview map={map} />}
+                        <div
+                            id="yandex_rtb_confirmPage"
+                            style={{ height: "20vh", maxHeight: "20vh", marginTop: 10 }}
+                        ></div>
                         <Grid.Row className="cretae-buttons-rows">
                             <Button
                                 onClick={() => {

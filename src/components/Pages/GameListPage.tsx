@@ -24,6 +24,7 @@ import GameListFiltersModal from "../Modal/GameListFiltersModal";
 import MetaCanonical from "../Meta/MetaCanonical";
 import { useTitle } from "../../hooks/useTitle";
 import { currentTheme, E_THEME } from "../../utils/Theme";
+import { useAdsRender } from "../../hooks/useAdsRender";
 
 function GameListPage() {
     const sockets = useContext(WebsocketContext);
@@ -42,32 +43,8 @@ function GameListPage() {
         gameList,
         filters: debouncedFilterSettings,
     });
-
-    useEffect(() => {
-        let adRenderTimer;
-
-        const adTryRender = () => {
-            // Ya.Context.AdvManager.render
-
-            const Ya = (window as any).Ya as any;
-
-            if (window.document.getElementById("yandex_rtb_gameList")) {
-                (window as any).yaContextCb.push(() => {
-                    Ya.Context.AdvManager.render({
-                        blockId: "R-A-3959850-1",
-                        renderTo: "yandex_rtb_gameList",
-                        darkTheme: currentTheme === E_THEME.DARK,
-                    });
-                });
-            } else adRenderTimer = setTimeout(adTryRender, 100);
-        };
-
-        adRenderTimer = setTimeout(adTryRender, 100);
-
-        return () => {
-            clearTimeout(adRenderTimer);
-        };
-    }, []);
+    
+    useAdsRender("R-A-3959850-1", "yandex_rtb_gameList");
 
     useGameListSubscribe({
         ghostSocket: sockets.ghostSocket,

@@ -19,6 +19,7 @@ import React from "react";
 import { MapContext } from "../../context";
 import { useTitle } from "../../hooks/useTitle";
 import { currentTheme, E_THEME } from "../../utils/Theme";
+import { useAdsRender } from "../../hooks/useAdsRender";
 
 function MapPage() {
     const { id } = useParams();
@@ -100,31 +101,7 @@ function MapPage() {
         };
     }, [id, mapData]);
 
-    useEffect(() => {
-        let adRenderTimer;
-
-        const adTryRender = () => {
-            // Ya.Context.AdvManager.render
-
-            const Ya = (window as any).Ya as any;
-
-            if (window.document.getElementById("yandex_rtb_mapfooter")) {
-                (window as any).yaContextCb.push(() => {
-                    Ya.Context.AdvManager.render({
-                        blockId: "R-A-3959850-2",
-                        renderTo: "yandex_rtb_mapfooter",
-                        darkTheme: currentTheme === E_THEME.DARK,
-                    });
-                });
-            } else adRenderTimer = setTimeout(adTryRender, 100);
-        };
-
-        adRenderTimer = setTimeout(adTryRender, 100);
-
-        return () => {
-            clearTimeout(adRenderTimer);
-        };
-    }, []);
+    useAdsRender("R-A-3959850-2", "yandex_rtb_mapfooter");
 
     return (
         <Container>
