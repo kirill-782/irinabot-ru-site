@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Button, Container, Grid, Input, Message } from "semantic-ui-react";
 import { AppRuntimeSettingsContext, WebsocketContext } from "../../context";
-import { GameListGame, GameListGameFlags } from "../../models/websocket/ServerGameList";
+import { GameListGame } from "../../models/websocket/ServerGameList";
 import GameList from "../GameList";
 import OnlineStats from "../GameList/OnlineStats";
 
@@ -17,13 +17,13 @@ import "../GameList/GameList.scss";
 import MapInfo from "../GameList/MapInfo";
 import { Link, NavLink } from "react-router-dom";
 import { ClientResolveConnectorIdsConverter } from "../../models/websocket/ClientResolveConnectorIds";
-import { SITE_TITLE } from "../../config/ApplicationConfig";
 import MetaDescription from "../Meta/MetaDescription";
 import { AuthContext } from "../../context";
 import { AccessMaskBit } from "../Modal/AccessMaskModal";
 import GameListFiltersModal from "../Modal/GameListFiltersModal";
 import MetaCanonical from "../Meta/MetaCanonical";
 import { useTitle } from "../../hooks/useTitle";
+import { currentTheme, E_THEME } from "../../utils/Theme";
 
 function GameListPage() {
     const sockets = useContext(WebsocketContext);
@@ -42,6 +42,32 @@ function GameListPage() {
         gameList,
         filters: debouncedFilterSettings,
     });
+
+    useEffect(() => {
+        let adRenderTimer;
+
+        const adTryRender = () => {
+            // Ya.Context.AdvManager.render
+
+            const Ya = (window as any).Ya as any;
+
+            if (window.document.getElementById("yandex_rtb_gameList")) {
+                (window as any).yaContextCb.push(() => {
+                    Ya.Context.AdvManager.render({
+                        blockId: "R-A-3959850-1",
+                        renderTo: "yandex_rtb_gameList",
+                        darkTheme: currentTheme === E_THEME.DARK,
+                    });
+                });
+            } else adRenderTimer = setTimeout(adTryRender, 100);
+        };
+
+        adRenderTimer = setTimeout(adTryRender, 100);
+
+        return () => {
+            clearTimeout(adRenderTimer);
+        };
+    }, []);
 
     useGameListSubscribe({
         ghostSocket: sockets.ghostSocket,
@@ -137,7 +163,7 @@ function GameListPage() {
                             </Message.Content>
                         </Message>
                     )}
-
+                    <div id="yandex_rtb_gameList" style={{marginTop: 10}}></div>
                     <GameList
                         gameList={displayedGameList}
                         selectedGame={selectedGame}

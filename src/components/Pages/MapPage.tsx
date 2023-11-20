@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Container, Grid, Loader, Message } from "semantic-ui-react";
-import { SITE_TITLE } from "../../config/ApplicationConfig";
 import { AppRuntimeSettingsContext, RestContext, WebsocketContext } from "../../context";
 import { ConfigInfo } from "../../models/rest/ConfigInfo";
 import { Map } from "../../models/rest/Map";
@@ -19,6 +18,7 @@ import MetaRobots from "../Meta/MetaRobots";
 import React from "react";
 import { MapContext } from "../../context";
 import { useTitle } from "../../hooks/useTitle";
+import { currentTheme, E_THEME } from "../../utils/Theme";
 
 function MapPage() {
     const { id } = useParams();
@@ -101,6 +101,32 @@ function MapPage() {
         };
     }, [id, mapData]);
 
+    useEffect(() => {
+        let adRenderTimer;
+
+        const adTryRender = () => {
+            // Ya.Context.AdvManager.render
+
+            const Ya = (window as any).Ya as any;
+
+            if (window.document.getElementById("yandex_rtb_mapfooter")) {
+                (window as any).yaContextCb.push(() => {
+                    Ya.Context.AdvManager.render({
+                        blockId: "R-A-3959850-2",
+                        renderTo: "yandex_rtb_mapfooter",
+                        darkTheme: currentTheme === E_THEME.DARK,
+                    });
+                });
+            } else adRenderTimer = setTimeout(adTryRender, 100);
+        };
+
+        adRenderTimer = setTimeout(adTryRender, 100);
+
+        return () => {
+            clearTimeout(adRenderTimer);
+        };
+    }, []);
+
     return (
         <Container>
             <MetaRobots noIndex={!!noIndex || !mapData?.mapInfo?.name} />
@@ -132,6 +158,7 @@ function MapPage() {
                         <Grid.Row>
                             <MapFlags />
                         </Grid.Row>
+                        <Grid.Row id="yandex_rtb_mapfooter"></Grid.Row>
                         <MapFooter gameList={gameList} />
                         <Grid.Row>
                             {config === undefined && (
