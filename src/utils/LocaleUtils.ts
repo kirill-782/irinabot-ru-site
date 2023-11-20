@@ -1,5 +1,5 @@
 import { DEFAULT_CONFIG } from "../config/ApiConfig";
-import { DEFAULT_LOCALE } from "../config/Locales";
+import { SITE_LOCALE } from "../config/Locales";
 
 export const importLocales = async (locale: string) => {
     let fileName = "Lang";
@@ -29,5 +29,5 @@ export const importLocales = async (locale: string) => {
 };
 
 export const getLocale = () => {
-    return DEFAULT_LOCALE;
+    return SITE_LOCALE;
 };

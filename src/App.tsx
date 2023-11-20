@@ -25,6 +25,7 @@ import { loadTheme } from "./utils/Theme";
 import SitePrepareLoader from "./components/SitePrepareLoader";
 import { useLanguage } from "./hooks/useLanguage";
 import { Header } from "semantic-ui-react";
+import { useLinkAlternate } from "./hooks/useLinkAlternate";
 
 function App() {
     const [ghostSocket, isGHostSocketConnected] = useGHostSocket({
@@ -65,14 +66,20 @@ function App() {
             });
         });
         const locale = getLocale();
-        Promise.all([theme, selectLanguage(locale)])
-            .then(() => {
-                setDynamicImportReady(true);
-            })
-            .catch((e) => {
-                setDynamicImportError(JSON.stringify(e));
-            });
+        document.documentElement.lang = locale;
+
+        Promise.allSettled([theme, selectLanguage(locale)]).then((e) => {
+            if (e[0].status === "rejected") {
+                setDynamicImportError("Load theme error: " + JSON.stringify(e[0]));
+                return;
+            }
+
+            // Ignore language promise result: If it is rejected, the built-in language pack will be used
+            setDynamicImportReady(true);
+        });
     }, []);
+
+    useLinkAlternate();
 
     if (dynamicImportError) {
         return <Header>{dynamicImportError}</Header>;

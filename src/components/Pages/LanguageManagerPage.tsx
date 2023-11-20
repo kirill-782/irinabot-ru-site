@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Container, Form, Header, Select } from "semantic-ui-react";
+import { Container, Form, Header } from "semantic-ui-react";
 import { DEFAULT_CONFIG } from "../../config/ApiConfig";
-import { DEFAULT_LOCALE, SUPPORT_LOCALES } from "../../config/Locales";
+import { SUPPORT_LOCALES } from "../../config/Locales";
 import { AppRuntimeSettingsContext } from "../../context";
 
 const languageOptions = SUPPORT_LOCALES.map((i) => {

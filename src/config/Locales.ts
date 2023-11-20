@@ -1,12 +1,8 @@
 export const SUPPORT_LOCALES = ["ru-RU", "en-US"];
 
+export const SITE_LOCALE = document.location.host === "irinabot.com" ? "en-US" : "ru-RU";
 
-var searchParams = new URLSearchParams(window.location.search);
-var paramValue = searchParams.get('locale');
-
-export const DEFAULT_LOCALE = paramValue === "en-US" ? "en-US" : "ru-RU";
-
-export const BROWSER_LOCALE_MAPPING = {
-    "ru-RU": ["ru", "ru-RU"],
-    "en-US": ["en-US"],
+export const DOMAIN_TO_LOCALE_MAP = {
+    "irinabot.com": "en-US",
+    "irinabot.ru": "ru-RU",
 };
