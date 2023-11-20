@@ -38,26 +38,23 @@ export const useAdsRender = (adBlockId: string, contatinerId: string, options?: 
     const { currentAuth, authCredentials, accessMask } = useContext(AuthContext).auth;
 
     useEffect(() => {
-        debugger;
-
         if (adsRenderComplete) return;
 
         // Wait auth ready
         if (authCredentials && accessMask instanceof AnonymousAccessMaskHolder) return;
 
-        if (
-            (currentAuth && accessMask.hasAccess(1, currentAuth.connectorId)) ||
-            accessMask.hasAccess(32, currentAuth.connectorId)
-        ) {
-            setAdsRenderComplete(true);
+        if (currentAuth) {
+            if (accessMask.hasAccess(1, currentAuth.connectorId) || accessMask.hasAccess(32, currentAuth.connectorId)) {
+                setAdsRenderComplete(true);
 
-            if (options?.removeContainer) {
-                setTimeout(() => {
-                    window.document.getElementById(contatinerId)?.remove();
-                }, 100);
+                if (options?.removeContainer) {
+                    setTimeout(() => {
+                        window.document.getElementById(contatinerId)?.remove();
+                    }, 100);
+                }
+
+                return;
             }
-
-            return;
         }
 
         let adRenderTimer;
