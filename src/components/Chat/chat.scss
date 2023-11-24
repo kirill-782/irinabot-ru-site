@@ -3,15 +3,20 @@
     bottom: 30px;
     right: 30px;
     background: white;
-
-    max-height: 500px;
-    overflow-y: auto;
-
     width: 580px;
 
     @media (max-width: 700px) {
         width: 85%;
     }
+}
+
+.ui.card > .content > .header + .description {
+    max-height: 500px;
+    overflow-y: auto;
+
+    display: flex;
+    flex-direction: column-reverse;
+    overflow-anchor: auto !important;
 }
 
 .chat-feed {
