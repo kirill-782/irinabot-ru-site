@@ -21,6 +21,17 @@ export const UserChat: React.FC<UserChatProps> = ({ user, sendMessage }) => {
         sendMessage(user, message);
     };
 
+    const onEnterPress = (e) => {
+        if(e.keyCode == 13 && e.shiftKey == false) {
+            e.preventDefault();
+            if (!message) {
+                return;
+            }
+            setMessage("");
+            sendMessage(user, message);
+        }
+    }
+
     const { language } = useContext(AppRuntimeSettingsContext);
     const lang = language.languageRepository;
 
@@ -44,6 +55,7 @@ export const UserChat: React.FC<UserChatProps> = ({ user, sendMessage }) => {
                     className="chat-textarea"
                     onChange={(ev) => setMessage(ev.target.value)}
                     value={message}
+                    onKeyDown={onEnterPress}
                 />
                 <Button content={lang.send} labelPosition="left" icon="edit" primary onClick={handleClickSend} />
             </Form>
