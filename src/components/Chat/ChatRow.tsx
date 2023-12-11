@@ -49,7 +49,7 @@ function ChatRow({ user, onSelectonChange, onDeleteUser }: ChatRowProps) {
                 <Feed.Content>
                     <Feed.Summary>
                         {user.name}
-                        <Feed.Date content={user.messages.length ? user.messages[user.messages.length - 1].date : ""} />
+                        <Feed.Date content={user.messages.length ? user.messages[user.messages.length - 1].date.toString() : ""} />
                         {confirmRemove === user ? (
                             <span className="remove-user-button" onClick={(ev) => removeUser(ev)}>
                                 <LanguageKey stringId="chatRowRemoveConfirm"></LanguageKey>

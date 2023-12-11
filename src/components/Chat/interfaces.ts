@@ -1,7 +1,7 @@
 /** Вид сообщения */
 export interface Message {
     /** Дата прихода сообщения */
-    date: string;
+    date: Date;
     /** Сообщение */
     message: string;
     /** Является ли входящим */

@@ -78,7 +78,7 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages, open, setOpen }) 
         if (matchUser) {
             matchUser.messages.push({
                 message,
-                date: new Date().toLocaleDateString(),
+                date: new Date(),
                 isIncoming: false,
             });
         }
@@ -132,7 +132,16 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages, open, setOpen }) 
         case "chat":
             if (selectedUser) {
                 label = selectedUser.name;
-                content = <UserChat user={selectedUser} sendMessage={sendMessage} />;
+                content =
+                <div className="chat-common">
+                    <ChatList
+                        users={users}
+                        onDeleteUser={onDeleteUser}
+                        onSelectonChange={onSelectonChange}
+                        onNewUser={onNewUser}
+                    />
+                    <UserChat user={selectedUser} sendMessage={sendMessage} />
+                </div> 
             }
             break;
         case "console":
@@ -176,7 +185,7 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages, open, setOpen }) 
                         const newUsers = [...users];
                         const { from, text } = message;
                         const newMessage: Message = {
-                            date: new Date().toLocaleDateString(),
+                            date: new Date(),
                             isIncoming: true,
                             message: text,
                         };

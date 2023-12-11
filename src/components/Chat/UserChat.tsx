@@ -36,29 +36,32 @@ export const UserChat: React.FC<UserChatProps> = ({ user, sendMessage }) => {
     const lang = language.languageRepository;
 
     return (
-        <Comment.Group>
-            {user.messages.map((message, index) => (
-                <Comment key={index}>
-                    <Comment.Content>
-                        <Comment.Author as="a">{message.isIncoming ? user.name : lang.you}</Comment.Author>
-                        <Comment.Metadata>
-                            <div>{message.date}</div>
-                        </Comment.Metadata>
-                        <Comment.Text>{message.message}</Comment.Text>
-                    </Comment.Content>
-                </Comment>
-            ))}
-
-            <Form reply>
-                <Form.TextArea
-                    rows={2}
-                    className="chat-textarea"
-                    onChange={(ev) => setMessage(ev.target.value)}
-                    value={message}
-                    onKeyDown={onEnterPress}
-                />
-                <Button content={lang.send} labelPosition="left" icon="edit" primary onClick={handleClickSend} />
-            </Form>
+        <Comment.Group className="user-chat">
+            <div>
+                {user.messages.map((message, index) => (
+                    <Comment key={index}>
+                        <Comment.Content>
+                            <Comment.Author as="a">{message.isIncoming ? user.name : lang.you}</Comment.Author>
+                            <Comment.Metadata>
+                                <div>{message.date.toString()}</div>
+                            </Comment.Metadata>
+                            <Comment.Text>{message.message}</Comment.Text>
+                        </Comment.Content>
+                    </Comment>
+                ))}
+            </div>
+            <div className="chat-reply">
+                <Form reply>
+                    <Form.TextArea
+                        rows={2}
+                        className="chat-textarea"
+                        onChange={(ev) => setMessage(ev.target.value)}
+                        value={message}
+                        onKeyDown={onEnterPress}
+                    />
+                    <Button content={lang.send} labelPosition="left" icon="edit" primary onClick={handleClickSend} />
+                </Form>
+            </div>
         </Comment.Group>
     );
 };
