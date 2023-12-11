@@ -1,7 +1,9 @@
-import React, { SyntheticEvent, useEffect, useState } from "react";
+import React, { SyntheticEvent, useContext, useEffect, useState } from "react";
 import { Divider, Feed, Icon, Label } from "semantic-ui-react";
 import { SelectionType, User } from "./interfaces";
 import LanguageKey from "./../LanguageKey";
+import ReactTimeAgo from "react-time-ago";
+import { AppRuntimeSettingsContext } from "./../../context";
 
 interface ChatRowProps {
     user: User;
@@ -41,22 +43,39 @@ function ChatRow({ user, onSelectonChange, onDeleteUser }: ChatRowProps) {
     }, [confirmRemove]);
 
     const lastMessage = user.messages.length ? user.messages[user.messages.length - 1] : null;
+    const { language } = useContext(AppRuntimeSettingsContext);
+    const lang = language.languageRepository;
 
     return (
         <React.Fragment key={user.name}>
             <Feed.Event onClick={(ev) => handleSelectUser(ev)}>
                 <Feed.Label icon="user" />
                 <Feed.Content>
-                    <Feed.Summary>
-                        {user.name}
-                        <Feed.Date content={user.messages.length ? user.messages[user.messages.length - 1].date.toString() : ""} />
-                        {confirmRemove === user ? (
-                            <span className="remove-user-button" onClick={(ev) => removeUser(ev)}>
-                                <LanguageKey stringId="chatRowRemoveConfirm"></LanguageKey>
-                            </span>
-                        ) : (
-                            <Icon name="remove" onClick={(ev) => handleRemoveUser(ev)} />
-                        )}
+                    <Feed.Summary className="summary-header">
+                        <div className="summary-name">
+                            {user.name} &nbsp;
+                            <div className="summary-date">
+                            {user.messages.length > 0 && (
+                                    (
+                                    <span className="chat-time-ago">
+                                        <ReactTimeAgo
+                                            date={user.messages[user.messages.length - 1].date}
+                                            locale={language.currentLocale}
+                                        />
+                                    </span>
+                                    )
+                            )}
+
+                            {confirmRemove === user ? (
+                                <span className="remove-user-button" onClick={(ev) => removeUser(ev)}>
+                                    <LanguageKey stringId="chatRowRemoveConfirm"></LanguageKey>
+                                </span>
+                            ) : (
+                                <Icon name="remove" onClick={(ev) => handleRemoveUser(ev)} />
+                            )}
+                        </div>
+                    </div>
+
                     </Feed.Summary>
                     {lastMessage ? (
                         <Feed.Extra>

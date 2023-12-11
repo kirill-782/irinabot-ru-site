@@ -1,8 +1,9 @@
 import { Comment, Form, Button } from "semantic-ui-react";
-import { User } from "./interfaces";
+import { User, Message } from "./interfaces";
 import { SyntheticEvent, useContext, useState } from "react";
 import { AppRuntimeSettingsContext } from "./../../context";
 import React from "react";
+import ReactTimeAgo from "react-time-ago";
 
 interface UserChatProps {
     user: User;
@@ -17,6 +18,7 @@ export const UserChat: React.FC<UserChatProps> = ({ user, sendMessage }) => {
         if (!message) {
             return;
         }
+
         setMessage("");
         sendMessage(user, message);
     };
@@ -43,7 +45,11 @@ export const UserChat: React.FC<UserChatProps> = ({ user, sendMessage }) => {
                         <Comment.Content>
                             <Comment.Author as="a">{message.isIncoming ? user.name : lang.you}</Comment.Author>
                             <Comment.Metadata>
-                                <div>{message.date.toString()}</div>
+                            {Date.parse(message.date.toString()) && (
+                            <ReactTimeAgo
+                                date={message.date}
+                                locale={language.currentLocale}
+                            /> )}
                             </Comment.Metadata>
                             <Comment.Text>{message.message}</Comment.Text>
                         </Comment.Content>

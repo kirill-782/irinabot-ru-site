@@ -35,26 +35,29 @@ export const ConsoleBot: React.FC<ConsoleProps> = ({ sendConsoleMessage, message
     };
 
     return (
-        <Comment.Group>
-            {messages.map((message, index) => (
-                <Comment key={index}>
-                    <Comment.Author as="a">Irina</Comment.Author>
-                    <Comment.Content>
-                        <Comment.Text>{message}</Comment.Text>
-                    </Comment.Content>
-                </Comment>
-            ))}
-
-            <Form reply>
-                <Form.TextArea
-                    rows={2}
-                    className="chat-textarea"
-                    onChange={(ev) => setMessage(ev.target.value)}
-                    onKeyPress={handleKeyTextarea}
-                    value={message}
-                />
-                <Button content={lang.send} labelPosition="left" icon="edit" primary onClick={handleClickSend} />
-            </Form>
+        <Comment.Group className="user-chat">
+            <div>
+                {messages.map((message, index) => (
+                    <Comment key={index}>
+                        <Comment.Author as="a">Irina</Comment.Author>
+                        <Comment.Content>
+                            <Comment.Text>{message}</Comment.Text>
+                        </Comment.Content>
+                    </Comment>
+                ))}
+            </div>
+            <div className="chat-reply">
+                <Form reply>
+                    <Form.TextArea
+                        rows={2}
+                        className="chat-textarea"
+                        onChange={(ev) => setMessage(ev.target.value)}
+                        onKeyPress={handleKeyTextarea}
+                        value={message}
+                    />
+                    <Button content={lang.send} labelPosition="left" icon="edit" primary onClick={handleClickSend} />
+                </Form>
+            </div>
         </Comment.Group>
     );
 };

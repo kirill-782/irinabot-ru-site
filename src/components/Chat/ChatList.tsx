@@ -21,7 +21,7 @@ function ChatList({ users, onDeleteUser, onNewUser, onSelectonChange }: ChatList
         const newUser: User = {
             name: newUsername,
             messages: [],
-            newMessages: false,
+            newMessages: false
         };
 
         onNewUser(newUser);
@@ -52,14 +52,14 @@ function ChatList({ users, onDeleteUser, onNewUser, onSelectonChange }: ChatList
                         value={newUsername}
                         onChange={(ev) => setNewUsername(ev.target.value)}
                     />
-                    <Form.Button
+                </Form.Group>
+                <Form.Button
                         content={lang.chatListStartChat}
                         labelPosition="left"
                         icon="edit"
                         primary
                         onClick={handleNewChat}
                     />
-                </Form.Group>
             </Form>
         </Feed>
     );

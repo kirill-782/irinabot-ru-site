@@ -52,6 +52,7 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages, open, setOpen }) 
                     newMessages: false,
                     name: nickname,
                     messages: [],
+                    lastMessageDate: new Date()
                 };
 
                 onNewUser(newUser);
@@ -146,7 +147,16 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages, open, setOpen }) 
             break;
         case "console":
             label = lang.chatConsole;
-            content = <ConsoleBot messages={consoleMessages} sendConsoleMessage={sendConsoleMessage} />;
+            content = 
+            <div className="chat-common">
+                <ChatList
+                    users={users}
+                    onDeleteUser={onDeleteUser}
+                    onSelectonChange={onSelectonChange}
+                    onNewUser={onNewUser}
+                />
+                <ConsoleBot messages={consoleMessages} sendConsoleMessage={sendConsoleMessage} />
+            </div> 
             break;
         default:
             label = lang.chatChat;
