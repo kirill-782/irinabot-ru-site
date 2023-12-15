@@ -241,8 +241,10 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages, open, setOpen }) 
                         }}
                     />
                 </Card.Header>
+                <Card.Description>
+                    {content}
+                </Card.Description>
             </Card.Content>
-            <Card.Content>{content}</Card.Content>
         </Card>
     );
 };
