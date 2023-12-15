@@ -21,28 +21,28 @@ const availablePlaces: Product[] = [
         languageKey: "autopayPageProductVip",
         description: "",
         imageUrl: "/images/vip.png",
-        price: 149,
+        price: 99,
     },
     {
         placeId: 5,
         languageKey: "autopayPageProductBanList",
         description: "",
         imageUrl: "/images/ban_list.png",
-        price: 99,
+        price: 74,
     },
     {
         placeId: 6,
         languageKey: "autopayPageProductAdminList",
         description: "",
         imageUrl: "/images/admin_lina.png",
-        price: 99,
+        price: 74,
     },
     {
         placeId: 4,
         languageKey: "autopayPageProductAutohost",
         description: "",
         imageUrl: "/images/autohost.png",
-        price: 299,
+        price: 249,
     },
 ];
 
