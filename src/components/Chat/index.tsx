@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import { Card, Icon } from "semantic-ui-react";
+import { Divider, Card, Icon } from "semantic-ui-react";
 import { User, ChatProps, Message, SelectionType } from "./interfaces";
 import "./chat.scss";
 import { UserChat } from "./UserChat";
@@ -10,6 +10,8 @@ import { GHostPackageEvent } from "../../services/GHostWebsocket";
 import { DEFAULT_CONTEXT_HEADER_CONSTANT, DEFAULT_NEW_MESSAGE } from "../../models/websocket/HeaderConstants";
 import { ServerTextMessage } from "../../models/websocket/ServerTextMessage";
 import ChatList from "./ChatList";
+import { Console } from "console";
+import _ from "lodash";
 
 const getUsers = (): User[] => {
     const usersStr = localStorage.getItem("chat-users");
@@ -21,7 +23,7 @@ const getUsers = (): User[] => {
 
 const saveUsers = (users: User[]) => {
     // Сохраняем последние 10 сообщений
-    let stringifyUsers = JSON.stringify(users.map((el) => ({ ...el, messages: el.messages.slice(-10) })));
+    let stringifyUsers = JSON.stringify(users.map((el) => ({ ...el, messages: el.messages.slice(-10), lastMessage: el.messages.length ? el.messages[el.messages.length - 1] : null })));
     // TODO найти точный параметр для подкрутки
     // Если слишком много сообщений, подчистить все сообщения
     if (stringifyUsers.length > 20000) {
@@ -52,6 +54,7 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages, open, setOpen }) 
                     newMessages: false,
                     name: nickname,
                     messages: [],
+                    lastMessage: null
                 };
 
                 onNewUser(newUser);
@@ -78,7 +81,7 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages, open, setOpen }) 
         if (matchUser) {
             matchUser.messages.push({
                 message,
-                date: new Date().toLocaleDateString(),
+                date: new Date(),
                 isIncoming: false,
             });
         }
@@ -176,9 +179,9 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages, open, setOpen }) 
                         const newUsers = [...users];
                         const { from, text } = message;
                         const newMessage: Message = {
-                            date: new Date().toLocaleDateString(),
+                            date: new Date(),
                             isIncoming: true,
-                            message: text,
+                            message: text
                         };
                         let matchUser: User | undefined = users.find((el) => el.name === from);
                         if (!matchUser) {
@@ -186,6 +189,7 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages, open, setOpen }) 
                                 name: from,
                                 messages: [newMessage],
                                 newMessages: true,
+                                lastMessage: null
                             };
                             newUsers.push(matchUser);
                         } else {
@@ -194,8 +198,7 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages, open, setOpen }) 
                                 matchUser.newMessages = true;
                             }
                         }
-
-                        return newUsers;
+                        return _.orderBy(newUsers, 'lastMessage.date', 'desc');
                     });
 
                     // Play Sound
@@ -227,7 +230,7 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages, open, setOpen }) 
                 <Card.Header>
                     {openedChat !== "" ? (
                         <>
-                            <Icon name="angle left" onClick={closeChat}></Icon>
+                            <Icon style={{cursor: "pointer" }} name="angle left" onClick={closeChat}></Icon>
                             {label}
                         </>
                     ) : (
@@ -241,6 +244,7 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages, open, setOpen }) 
                         }}
                     />
                 </Card.Header>
+                <Divider />
                 <Card.Description>
                     {content}
                 </Card.Description>

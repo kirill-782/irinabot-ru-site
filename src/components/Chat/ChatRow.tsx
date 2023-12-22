@@ -1,7 +1,9 @@
-import React, { SyntheticEvent, useEffect, useState } from "react";
+import React, { SyntheticEvent, useEffect, useContext, useState } from "react";
 import { Divider, Feed, Icon, Label } from "semantic-ui-react";
 import { SelectionType, User } from "./interfaces";
 import LanguageKey from "./../LanguageKey";
+import ReactTimeAgo from "react-time-ago";
+import { AppRuntimeSettingsContext } from "./../../context";
 
 interface ChatRowProps {
     user: User;
@@ -41,6 +43,8 @@ function ChatRow({ user, onSelectonChange, onDeleteUser }: ChatRowProps) {
     }, [confirmRemove]);
 
     const lastMessage = user.messages.length ? user.messages[user.messages.length - 1] : null;
+    const { language } = useContext(AppRuntimeSettingsContext);
+    const lang = language.languageRepository;
 
     return (
         <React.Fragment key={user.name}>
@@ -49,7 +53,9 @@ function ChatRow({ user, onSelectonChange, onDeleteUser }: ChatRowProps) {
                 <Feed.Content>
                     <Feed.Summary>
                         {user.name}
-                        <Feed.Date content={user.messages.length ? user.messages[user.messages.length - 1].date : ""} />
+                        {lastMessage != null && Date.parse(lastMessage.date.toString()) && (
+                            <ReactTimeAgo className="date" date={lastMessage.date} locale={language.currentLocale}/> 
+                        )}
                         {confirmRemove === user ? (
                             <span className="remove-user-button" onClick={(ev) => removeUser(ev)}>
                                 <LanguageKey stringId="chatRowRemoveConfirm"></LanguageKey>
