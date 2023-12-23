@@ -37,10 +37,10 @@ const ADS = [
         creatorId: 170246,
     },
     {
-        img: "/kaisa/Banner1x1ATR_.png",
-        link: "https://goodgame.ru/cups/irinabot-cup-1h1-atr-4905",
+        img: "/kaisa/www1.png",
+        link: "https://forum.onligamez.ru/threads/new-years-tournament-ozgame-legiontd-x20-2x2.126006/",
         index: 15,
-        expire: 1699822799000,
+        expire: 1705438800000,
     },
 ];
 
