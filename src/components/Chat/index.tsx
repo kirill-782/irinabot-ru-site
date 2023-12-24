@@ -23,7 +23,13 @@ const getUsers = (): User[] => {
 
 const saveUsers = (users: User[]) => {
     // Сохраняем последние 10 сообщений
-    let stringifyUsers = JSON.stringify(users.map((el) => ({ ...el, messages: el.messages.slice(-10), lastMessage: el.messages.length ? el.messages[el.messages.length - 1] : null })));
+    let stringifyUsers = JSON.stringify(
+        users.map((el) => ({
+            ...el,
+            messages: el.messages.slice(-10),
+            lastMessage: el.messages.length ? el.messages[el.messages.length - 1] : null,
+        }))
+    );
     // TODO найти точный параметр для подкрутки
     // Если слишком много сообщений, подчистить все сообщения
     if (stringifyUsers.length > 20000) {
@@ -45,7 +51,7 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages, open, setOpen }) 
             setOpenedChat("chat");
 
             const user = users.find((user) => {
-                if (user.name.toLocaleLowerCase() === nickname.toLocaleLowerCase()) return true;
+                return user.name.toLocaleLowerCase() === nickname.toLocaleLowerCase();
             });
 
             if (user) setSelectedUser(user);
@@ -54,7 +60,7 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages, open, setOpen }) 
                     newMessages: false,
                     name: nickname,
                     messages: [],
-                    lastMessage: null
+                    lastMessage: null,
                 };
 
                 onNewUser(newUser);
@@ -181,7 +187,7 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages, open, setOpen }) 
                         const newMessage: Message = {
                             date: new Date(),
                             isIncoming: true,
-                            message: text
+                            message: text,
                         };
                         let matchUser: User | undefined = users.find((el) => el.name === from);
                         if (!matchUser) {
@@ -189,7 +195,7 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages, open, setOpen }) 
                                 name: from,
                                 messages: [newMessage],
                                 newMessages: true,
-                                lastMessage: null
+                                lastMessage: null,
                             };
                             newUsers.push(matchUser);
                         } else {
@@ -198,7 +204,7 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages, open, setOpen }) 
                                 matchUser.newMessages = true;
                             }
                         }
-                        return _.orderBy(newUsers, 'lastMessage.date', 'desc');
+                        return _.orderBy(newUsers, "lastMessage.date", "desc");
                     });
 
                     // Play Sound
@@ -230,7 +236,7 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages, open, setOpen }) 
                 <Card.Header>
                     {openedChat !== "" ? (
                         <>
-                            <Icon style={{cursor: "pointer" }} name="angle left" onClick={closeChat}></Icon>
+                            <Icon style={{ cursor: "pointer" }} name="angle left" onClick={closeChat}></Icon>
                             {label}
                         </>
                     ) : (
@@ -245,9 +251,7 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages, open, setOpen }) 
                     />
                 </Card.Header>
                 <Divider />
-                <Card.Description>
-                    {content}
-                </Card.Description>
+                <Card.Description>{content}</Card.Description>
             </Card.Content>
         </Card>
     );
