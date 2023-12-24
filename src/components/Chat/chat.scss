@@ -4,20 +4,29 @@
     right: 30px;
     background: white;
     width: 580px;
-
+    max-height: 500px;
     @media (max-width: 700px) {
         width: 85%;
     }
 }
 
-.ui.card > .content > .header + .description {
-    max-height: 500px;
+.ui.feed.chat-feed{
+    height: 380px;
     overflow-y: auto;
     overflow-x: hidden;
+}
+
+.comment-groups {
+    max-height: 380px;
+}
+
+.comment-reverse {
+    max-height: 270px;
+    overflow-y: auto;
     display: flex;
     flex-direction: column-reverse;
     overflow-anchor: auto !important;
-    padding: 0 1em 0 0;
+    margin: 0 0 1em 0;
 }
 
 .ui.feed > .event > .label + .content {

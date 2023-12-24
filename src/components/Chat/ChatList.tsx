@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { Divider, Feed, Form } from "semantic-ui-react";
 import { AppRuntimeSettingsContext } from "../../context";
 import ChatRow from "./ChatRow";
-import { SelectionType, User } from "./interfaces";
+import { SelectionType, User, Message } from "./interfaces";
 
 interface ChatListProps {
     users: User[];
@@ -22,6 +22,7 @@ function ChatList({ users, onDeleteUser, onNewUser, onSelectonChange }: ChatList
             name: newUsername,
             messages: [],
             newMessages: false,
+            lastMessage: null 
         };
 
         onNewUser(newUser);

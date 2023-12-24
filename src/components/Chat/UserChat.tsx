@@ -3,6 +3,7 @@ import { User } from "./interfaces";
 import { SyntheticEvent, useContext, useState } from "react";
 import { AppRuntimeSettingsContext } from "./../../context";
 import React from "react";
+import ReactTimeAgo from "react-time-ago";
 
 interface UserChatProps {
     user: User;
@@ -22,7 +23,7 @@ export const UserChat: React.FC<UserChatProps> = ({ user, sendMessage }) => {
     };
 
     const onEnterPress = (e) => {
-        if(e.keyCode == 13 && e.shiftKey == false) {
+        if (e.keyCode == 13 && e.shiftKey == false) {
             e.preventDefault();
             if (!message) {
                 return;
@@ -30,24 +31,35 @@ export const UserChat: React.FC<UserChatProps> = ({ user, sendMessage }) => {
             setMessage("");
             sendMessage(user, message);
         }
-    }
+    };
 
     const { language } = useContext(AppRuntimeSettingsContext);
     const lang = language.languageRepository;
 
     return (
-        <Comment.Group>
-            {user.messages.map((message, index) => (
-                <Comment key={index}>
-                    <Comment.Content>
-                        <Comment.Author as="a">{message.isIncoming ? user.name : lang.you}</Comment.Author>
-                        <Comment.Metadata>
-                            <div>{message.date}</div>
-                        </Comment.Metadata>
-                        <Comment.Text>{message.message}</Comment.Text>
-                    </Comment.Content>
-                </Comment>
-            ))}
+        <div className="comment-groups">
+            <div className="comment-reverse">
+                <div />
+                <div>
+                    <Comment.Group>
+                        {user.messages.map((message, index) => (
+                            <Comment key={index}>
+                                <Comment.Content>
+                                    <Comment.Author as="a">{message.isIncoming ? user.name : lang.you}</Comment.Author>
+                                    <Comment.Metadata>
+                                        <div>
+                                            {Date.parse(message.date.toString()) && (
+                                                <ReactTimeAgo date={message.date} locale={language.currentLocale} />
+                                            )}
+                                        </div>
+                                    </Comment.Metadata>
+                                    <Comment.Text>{message.message}</Comment.Text>
+                                </Comment.Content>
+                            </Comment>
+                        ))}
+                    </Comment.Group>
+                </div>
+            </div>
 
             <Form reply>
                 <Form.TextArea
@@ -59,6 +71,6 @@ export const UserChat: React.FC<UserChatProps> = ({ user, sendMessage }) => {
                 />
                 <Button content={lang.send} labelPosition="left" icon="edit" primary onClick={handleClickSend} />
             </Form>
-        </Comment.Group>
+        </div>
     );
 };
