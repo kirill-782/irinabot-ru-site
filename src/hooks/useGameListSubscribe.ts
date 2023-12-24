@@ -18,6 +18,10 @@ const replaceRules: Record<string, Partial<GameListGame>> = {
         gameFlags: new GameListGameFlags(4),
         gamePosition: 1,
     },
+    WC3Game_10: {
+        gameFlags: new GameListGameFlags(4),
+        gamePosition: 1,
+    },
     WC3Game_8: {
         gameFlags: new GameListGameFlags(4),
         gamePosition: 1,
