@@ -9,15 +9,22 @@ interface ChatRowProps {
     user: User;
     onSelectonChange: (type: SelectionType, user?: User) => void;
     onDeleteUser: (user: User) => void;
+    onPinUser: (user: User) => void;
 }
 
-function ChatRow({ user, onSelectonChange, onDeleteUser }: ChatRowProps) {
+function ChatRow({ user, onSelectonChange, onDeleteUser, onPinUser }: ChatRowProps) {
     const [confirmRemove, setConfirmRemove] = useState<User | undefined>();
 
     const handleRemoveUser = (ev: SyntheticEvent) => {
         ev.preventDefault();
         ev.stopPropagation();
         setConfirmRemove(user);
+    };
+
+    const handlePinnedUser = (ev: SyntheticEvent) => {
+        ev.preventDefault();
+        ev.stopPropagation();
+        onPinUser(user);
     };
 
     const removeUser = (ev: SyntheticEvent) => {
@@ -52,17 +59,22 @@ function ChatRow({ user, onSelectonChange, onDeleteUser }: ChatRowProps) {
                 <Feed.Label icon="user" />
                 <Feed.Content>
                     <Feed.Summary>
-                        {user.name}
-                        {lastMessage != null && Date.parse(lastMessage.date.toString()) && (
-                            <ReactTimeAgo className="date" date={lastMessage.date} locale={language.currentLocale}/> 
-                        )}
-                        {confirmRemove === user ? (
-                            <span className="remove-user-button" onClick={(ev) => removeUser(ev)}>
-                                <LanguageKey stringId="chatRowRemoveConfirm"></LanguageKey>
-                            </span>
-                        ) : (
-                            <Icon name="remove" onClick={(ev) => handleRemoveUser(ev)} />
-                        )}
+                        <div>
+                            {user.name}&nbsp;
+                            {lastMessage != null && Date.parse(lastMessage.date.toString()) && (
+                                <ReactTimeAgo className="date" date={lastMessage.date} locale={language.currentLocale} />
+                            )}
+                       </div>
+                        <div className="summary-icons">
+                            <Icon color={user.isPinned ? 'black' : 'grey'} link name="thumbtack" onClick={(ev) => handlePinnedUser(ev)} />
+                            {confirmRemove === user ? (
+                                <span className="remove-user-button" onClick={(ev) => removeUser(ev)}>
+                                    <LanguageKey stringId="chatRowRemoveConfirm"></LanguageKey>
+                                </span>
+                            ) : (
+                                <Icon color='red' link name="remove" onClick={(ev) => handleRemoveUser(ev)} />
+                            )}
+                        </div>
                     </Feed.Summary>
                     {lastMessage ? (
                         <Feed.Extra>

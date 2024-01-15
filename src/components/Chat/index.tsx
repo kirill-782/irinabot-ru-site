@@ -16,7 +16,8 @@ import _ from "lodash";
 const getUsers = (): User[] => {
     const usersStr = localStorage.getItem("chat-users");
     if (usersStr) {
-        return JSON.parse(usersStr);
+        let jsonUsers = JSON.parse(usersStr);
+        return _.orderBy(jsonUsers, ["isPinned","lastMessage", "lastMessage.date"], ["desc","asc","desc"]);
     }
     return [];
 };
@@ -61,6 +62,7 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages, open, setOpen }) 
                     name: nickname,
                     messages: [],
                     lastMessage: null,
+                    isPinned: false,
                 };
 
                 onNewUser(newUser);
@@ -121,6 +123,13 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages, open, setOpen }) 
         setUsers(users.filter((el) => el !== user));
     };
 
+    const onPinUser = (user: User) => {
+        user.isPinned = !user.isPinned;
+        setSelectedUser(user);
+        saveUsers(users);
+        setUsers(getUsers);
+    };
+
     const onSelectonChange = (type: SelectionType, user?: User) => {
         if (type === SelectionType.CONSOLE) setOpenedChat("console");
         else if (type === SelectionType.USER && user) {
@@ -156,6 +165,7 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages, open, setOpen }) 
                     onDeleteUser={onDeleteUser}
                     onSelectonChange={onSelectonChange}
                     onNewUser={onNewUser}
+                    onPinUser={onPinUser}
                 />
             );
             break;
@@ -173,7 +183,6 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages, open, setOpen }) 
                 packet.detail.package.type === DEFAULT_NEW_MESSAGE
             ) {
                 const message = packet.detail.package as ServerTextMessage;
-
                 if (message.to === "chat") {
                     setConsoleMessages((consoleMessages) => {
                         const newConsoleMessages = [...consoleMessages];
@@ -196,6 +205,7 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages, open, setOpen }) 
                                 messages: [newMessage],
                                 newMessages: true,
                                 lastMessage: null,
+                                isPinned: false
                             };
                             newUsers.push(matchUser);
                         } else {
@@ -204,7 +214,7 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages, open, setOpen }) 
                                 matchUser.newMessages = true;
                             }
                         }
-                        return _.orderBy(newUsers, "lastMessage.date", "desc");
+                        return _.orderBy(newUsers, ["isPinned","lastMessage.date"], ["desc","desc"]);
                     });
 
                     // Play Sound

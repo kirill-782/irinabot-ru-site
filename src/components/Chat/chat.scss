@@ -10,7 +10,7 @@
     }
 }
 
-.ui.feed.chat-feed{
+.ui.feed.chat-feed {
     height: 380px;
     overflow-y: auto;
     overflow-x: hidden;
@@ -18,6 +18,17 @@
 
 .comment-groups {
     max-height: 380px;
+}
+
+.summary {
+    display: flex;
+    white-space: nowrap;
+    justify-content: space-between;
+}
+
+.summary-icons {
+    display: flex;
+    white-space: nowrap;
 }
 
 .comment-reverse {

@@ -15,6 +15,7 @@ export interface User {
     /** Признак новых сообщений */
     newMessages: boolean;
     lastMessage: Message;
+    isPinned: boolean;
 }
 
 /** Пропсы чата */
