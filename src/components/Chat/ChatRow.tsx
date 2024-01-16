@@ -59,13 +59,13 @@ function ChatRow({ user, onSelectonChange, onDeleteUser, onPinUser }: ChatRowPro
                 <Feed.Label icon="user" />
                 <Feed.Content>
                     <Feed.Summary>
-                        <div>
+                        <span>
                             {user.name}&nbsp;
                             {lastMessage != null && Date.parse(lastMessage.date.toString()) && (
                                 <ReactTimeAgo className="date" date={lastMessage.date} locale={language.currentLocale} />
                             )}
-                       </div>
-                        <div className="summary-icons">
+                       </span>
+                        <span className="summary-icons">
                             <Icon circular color={user.isPinned ? 'black' : 'grey'} link name="thumbtack" onClick={(ev) => handlePinnedUser(ev)} />
                             {confirmRemove === user ? (
                                 <span className="remove-user-button" onClick={(ev) => removeUser(ev)}>
@@ -74,7 +74,7 @@ function ChatRow({ user, onSelectonChange, onDeleteUser, onPinUser }: ChatRowPro
                             ) : (
                                 <Icon circular color='grey' link name="remove" onClick={(ev) => handleRemoveUser(ev)} />
                             )}
-                        </div>
+                        </span>
                     </Feed.Summary>
                     {lastMessage ? (
                         <Feed.Extra>

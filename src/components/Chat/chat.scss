@@ -20,10 +20,22 @@
     max-height: 380px;
 }
 
+.ui.feed > .event > .content .extra {
+    margin: 0;
+}
+
+.ui.feed > .event > .content .date  {
+    font-size: .8571428571em;
+    font-style: normal;
+    font-weight: 400;
+}
+
 .summary {
     display: flex;
     white-space: nowrap;
     justify-content: space-between;
+    margin: 0;
+    padding: 0;
 }
 
 .summary-icons {
