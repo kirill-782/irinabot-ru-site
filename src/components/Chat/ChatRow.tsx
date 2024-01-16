@@ -66,13 +66,13 @@ function ChatRow({ user, onSelectonChange, onDeleteUser, onPinUser }: ChatRowPro
                             )}
                        </div>
                         <div className="summary-icons">
-                            <Icon color={user.isPinned ? 'black' : 'grey'} link name="thumbtack" onClick={(ev) => handlePinnedUser(ev)} />
+                            <Icon circular color={user.isPinned ? 'black' : 'grey'} link name="thumbtack" onClick={(ev) => handlePinnedUser(ev)} />
                             {confirmRemove === user ? (
                                 <span className="remove-user-button" onClick={(ev) => removeUser(ev)}>
                                     <LanguageKey stringId="chatRowRemoveConfirm"></LanguageKey>
                                 </span>
                             ) : (
-                                <Icon color='red' link name="remove" onClick={(ev) => handleRemoveUser(ev)} />
+                                <Icon circular color='grey' link name="remove" onClick={(ev) => handleRemoveUser(ev)} />
                             )}
                         </div>
                     </Feed.Summary>
