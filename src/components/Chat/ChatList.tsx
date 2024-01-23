@@ -9,9 +9,10 @@ interface ChatListProps {
     onNewUser: (user: User) => void;
     onDeleteUser: (user: User) => void;
     onSelectonChange: (type: SelectionType, user?: User) => void;
+    onPinUser: (user: User) => void;
 }
 
-function ChatList({ users, onDeleteUser, onNewUser, onSelectonChange }: ChatListProps) {
+function ChatList({ users, onDeleteUser, onNewUser, onSelectonChange, onPinUser }: ChatListProps) {
     const [newUsername, setNewUsername] = useState<string>("");
 
     const { language } = useContext(AppRuntimeSettingsContext);
@@ -22,7 +23,8 @@ function ChatList({ users, onDeleteUser, onNewUser, onSelectonChange }: ChatList
             name: newUsername,
             messages: [],
             newMessages: false,
-            lastMessage: null 
+            lastMessage: null,
+            isPinned: false
         };
 
         onNewUser(newUser);
@@ -38,6 +40,7 @@ function ChatList({ users, onDeleteUser, onNewUser, onSelectonChange }: ChatList
                         user={user}
                         onSelectonChange={onSelectonChange}
                         onDeleteUser={onDeleteUser}
+                        onPinUser={onPinUser}
                     />
                 );
             })}
