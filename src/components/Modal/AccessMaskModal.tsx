@@ -4,7 +4,7 @@ import { AppRuntimeSettingsContext } from "../../context";
 
 import "./AccessMaskModal.scss";
 import LanguageKey from "../LanguageKey";
-import { LanguageRepository, LanguageRepositoryKeys } from "../../localization/Lang";
+import { LanguageRepositoryKeys } from "../../localization/Lang";
 
 export enum AccessMaskBit {
     VIP_COMMANDS = 1,
@@ -23,6 +23,8 @@ export enum AccessMaskBit {
     ADMIN_ACCESS_ADMIN_ADD = 4096,
     ADMIN_ACCESS_ADMIN_REMOVE = 8192,
     ADMIN_ACCESS_ADMIN_LIST = 16384,
+    ADMIN_ACCESS_SLOTS_CLIENT = 1 << 16,
+    ADMIN_ACCESS_SLOTS_SERVER = 1 << 17,
     ACCESS_SHARE = 1 << 29,
     ACCESS_GLOBAL = 1 << 30,
     ACCESS_ROOT = 1 << 31,
@@ -97,6 +99,14 @@ const AccessMaskCheckBoxs: AccessMaskCheckbox[] = [
     {
         accessMask: AccessMaskBit.ADMIN_ACCESS_ADMIN_LIST,
         languageKey: "accessMaskModalViewAdmin",
+    },
+    {
+        accessMask: AccessMaskBit.ADMIN_ACCESS_SLOTS_CLIENT,
+        languageKey: "accessMaskModalSlotsClient",
+    },
+    {
+        accessMask: AccessMaskBit.ADMIN_ACCESS_SLOTS_SERVER,
+        languageKey: "accessMaskModalSlotsServer",
     },
     {
         accessMask: AccessMaskBit.ACCESS_SHARE,

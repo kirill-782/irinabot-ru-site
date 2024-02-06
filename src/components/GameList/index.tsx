@@ -37,10 +37,16 @@ const ADS = [
         creatorId: 170246,
     },
     {
-        img: "/kaisa/www1.png",
-        link: "https://forum.onligamez.ru/threads/new-years-tournament-ozgame-legiontd-x20-2x2.126006/",
+        img: "/kaisa/RoflanBaner.png",
+        link: "https://youtube.com/watch?v=OIhwbyHMLnY",
+        index: 10,
+        expire: 1708722000000,
+    },
+    {
+        img: "/kaisa/NLBaner.png",
+        link: "https://discord.gg/wwt7pQM",
         index: 15,
-        expire: 1705438800000,
+        expire: 1709672400000,
     },
 ];
 

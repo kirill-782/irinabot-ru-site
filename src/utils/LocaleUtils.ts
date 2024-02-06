@@ -2,10 +2,6 @@ import { DEFAULT_CONFIG } from "../config/ApiConfig";
 import { SITE_LOCALE } from "../config/Locales";
 
 export const importLocales = async (locale: string) => {
-    let fileName = "Lang";
-
-    if (locale) fileName = `Lang.${locale}`;
-
     const site = (await fetch(`${DEFAULT_CONFIG.baseURL}v1/lang?locale=${locale}`)).json();
     const timeAgo = await (() => {
         switch (locale) {

@@ -38,6 +38,18 @@ const replaceRules: Record<string, Partial<GameListGame>> = {
         gameFlags: new GameListGameFlags(4),
         gamePosition: 1,
     },
+    WC3Game_14: {
+        gameFlags: new GameListGameFlags(4),
+        gamePosition: 1,
+    },
+    WC3Game_17: {
+        gameFlags: new GameListGameFlags(4),
+        gamePosition: 1,
+    },
+    WC3Game_5: {
+        gameFlags: new GameListGameFlags(4),
+        gamePosition: 1,
+    },
 };
 
 export const useGameListSubscribe = ({

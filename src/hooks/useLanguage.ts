@@ -1,7 +1,11 @@
 import TimeAgo from "javascript-time-ago";
+import TimeAgoRuLocale from "javascript-time-ago/locale/ru.json";
+
 import { useCallback, useState } from "react";
 import { importLocales } from "../utils/LocaleUtils";
 import { LanguageRepositoryKeys, LanguageRepository, LanguageData } from "../localization/Lang";
+
+TimeAgo.addDefaultLocale(TimeAgoRuLocale);
 
 type stringMap = {
     [key: string]: string | boolean | number | null | undefined;
@@ -25,7 +29,7 @@ export const useLanguage = (): UseLanguageResult => {
         (id: string, options?: stringMap, language?: string): string => {
             const currentLanguage = language || selectedLanguage;
 
-            let result = data[currentLanguage][id];
+            let result = data[currentLanguage]?.[id] || LanguageData[id];
 
             if (options && result) {
                 Object.entries(options).forEach((i) => {
@@ -35,7 +39,7 @@ export const useLanguage = (): UseLanguageResult => {
 
             return result;
         },
-        [data, selectedLanguage],
+        [data, selectedLanguage]
     );
 
     const pushLanguageData = (language: string, updateData: any | null) => {
@@ -44,16 +48,17 @@ export const useLanguage = (): UseLanguageResult => {
                 delete data[language];
                 return { ...data };
             }
-            return { ...data, [language]: {...LanguageData, ...updateData} };
+
+            return { ...data, [language]: { ...LanguageData, ...updateData } };
         });
     };
 
     const loadLanguage = useCallback(async (locale: string) => {
-
         const result = await importLocales(locale);
 
         TimeAgo.addLocale(result.timeAgo);
-        TimeAgo.addDefaultLocale(result.timeAgo);
+        TimeAgo.setDefaultLocale(locale);
+
         pushLanguageData(locale, result.site);
 
         setSelectedLanguage(locale);
@@ -61,11 +66,5 @@ export const useLanguage = (): UseLanguageResult => {
         return true;
     }, []);
 
-    return [
-        loadLanguage,
-        pushLanguageData,
-        getString,
-        selectedLanguage,
-        data[selectedLanguage],
-    ];
+    return [loadLanguage, pushLanguageData, getString, selectedLanguage, data[selectedLanguage] || LanguageData];
 };

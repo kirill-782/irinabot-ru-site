@@ -191,8 +191,6 @@ export const LanguageData = {
 
     mapCardShowAllText: "Показать весь текст",
 
-    
-
     mapFiltersDefault: "(по умолчанию)",
     mapFiltersMapNameSort: "Имя карты",
     mapFiltersUploadDateSort: "Дата загрузки",
@@ -332,6 +330,8 @@ export const LanguageData = {
     accessMaskModalRemoveAdmin: "Разжаловать администраторов",
     accessMaskModalViewAdmin: "Просматривать список администраторов",
     accessMaskModalShare: "Разделение прав на связанные аккаунты",
+    accessMaskModalSlotsClient: "Доступ к редактору слотов",
+    accessMaskModalSlotsServer: "Доступ к редактору слотов (сервер)",
     accessMaskModalGlobal: "Глобальный доступ",
     accessMaskModalRootAdmin: "Первородный (рут)",
     accessMaskModalHeader: "Редактор админ прав",
@@ -403,10 +403,11 @@ export const LanguageData = {
     createGameConfirmPageLoadGameErrorToastTitle: "Ошибка при разборе сохранения",
     createGameConfirmPageGameCreateErrorToastTitleNetworkError: "Ошибка получения параметров карты",
 
-    autopayPageProductVip: "VIP доступ",
+    autopayPageProductVip: "VIP доступ + Slots (client)",
     autopayPageProductBanList: "Ban list",
     autopayPageProductAdminList: "Admin list",
     autopayPageProductAutohost: "Autohost",
+    autopayPageProductSlotsServer: "Slots (server)",
     autopayPageTitle: "Донат",
 
     autopayPageProductNotSelectedNotificationTitle: "Не выбран донат",
