@@ -24,30 +24,17 @@ const ADS = [
         alwaysVisible: true
     },
     {
-        img: "/kaisa/ZBRestored-plain.png?1",
-        link: "https://discord.com/invite/bfkq5JcDPT",
-        index: undefined,
-        creatorId: 171118,
-        expire: 1676322000000,
-    },
-    {
         img: "/kaisa/XGMLogo.png",
         link: "https://xgm.guru/p/wc3/xgm-irina-autohost",
         index: undefined,
         creatorId: 170246,
     },
     {
-        img: "/kaisa/RoflanBaner.png",
-        link: "https://youtube.com/watch?v=OIhwbyHMLnY",
+        img: "/kaisa/var6.png",
+        link: "https://vk.com/empiresofwarcraft/",
         index: 10,
-        expire: 1708722000000,
-    },
-    {
-        img: "/kaisa/NLBaner.png",
-        link: "https://discord.gg/wwt7pQM",
-        index: 15,
-        expire: 1709672400000,
-    },
+        expire: 1718830800000,
+    }
 ];
 
 interface GameListProps {

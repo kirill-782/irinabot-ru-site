@@ -220,7 +220,7 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages, open, setOpen }) 
                     // Play Sound
 
                     const audio = new Audio("/sound/162464__kastenfrosch__message.mp3");
-                    audio.volume = 0.8;
+                    audio.volume = 0.5;
                     audio.play();
                 }
             }
