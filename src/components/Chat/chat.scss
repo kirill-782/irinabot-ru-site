@@ -5,6 +5,7 @@
     background: white;
     width: 580px;
     max-height: 500px;
+
     @media (max-width: 700px) {
         width: 85%;
     }
@@ -70,6 +71,21 @@
 
 .chat .remove-user-button {
     color: red;
+}
+
+.ui.cards > .card > .content > .header, .ui.card > .content > .header {
+    display: flex;
+    justify-content: space-between;
+    height: 26px;
+    align-items: center;
+
+    p {
+        padding: 0;
+        margin: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 }
 
 .dark {

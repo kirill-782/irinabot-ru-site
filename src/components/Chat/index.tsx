@@ -10,14 +10,14 @@ import { GHostPackageEvent } from "../../services/GHostWebsocket";
 import { DEFAULT_CONTEXT_HEADER_CONSTANT, DEFAULT_NEW_MESSAGE } from "../../models/websocket/HeaderConstants";
 import { ServerTextMessage } from "../../models/websocket/ServerTextMessage";
 import ChatList from "./ChatList";
-import { Console } from "console";
 import _ from "lodash";
+import { iconChatStyles } from "./styles";
 
 const getUsers = (): User[] => {
     const usersStr = localStorage.getItem("chat-users");
     if (usersStr) {
         let jsonUsers = JSON.parse(usersStr);
-        return _.orderBy(jsonUsers, ["isPinned","lastMessage", "lastMessage.date"], ["desc","asc","desc"]);
+        return _.orderBy(jsonUsers, ["isPinned", "lastMessage", "lastMessage.date"], ["desc", "asc", "desc"]);
     }
     return [];
 };
@@ -205,7 +205,7 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages, open, setOpen }) 
                                 messages: [newMessage],
                                 newMessages: true,
                                 lastMessage: null,
-                                isPinned: false
+                                isPinned: false,
                             };
                             newUsers.push(matchUser);
                         } else {
@@ -214,7 +214,7 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages, open, setOpen }) 
                                 matchUser.newMessages = true;
                             }
                         }
-                        return _.orderBy(newUsers, ["isPinned","lastMessage.date"], ["desc","desc"]);
+                        return _.orderBy(newUsers, ["isPinned", "lastMessage.date"], ["desc", "desc"]);
                     });
 
                     // Play Sound
@@ -243,17 +243,11 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages, open, setOpen }) 
     return (
         <Card className="chat">
             <Card.Content>
-                <Card.Header>
-                    {openedChat !== "" ? (
-                        <>
-                            <Icon style={{ cursor: "pointer" }} name="angle left" onClick={closeChat}></Icon>
-                            {label}
-                        </>
-                    ) : (
-                        label
-                    )}
+                <Card.Header className="chat-header">
+                    {openedChat !== "" && <Icon style={iconChatStyles} name="angle left" onClick={closeChat} />}
+                    <p>{label}</p>
                     <Icon
-                        style={{ float: "right", cursor: "pointer" }}
+                        style={{ float: "right", ...iconChatStyles }}
                         name="x"
                         onClick={() => {
                             setOpen(false);
