@@ -34,6 +34,12 @@ const ADS = [
         link: "https://vk.com/empiresofwarcraft/",
         index: 10,
         expire: 1718830800000,
+    },
+    {
+        img: "/kaisa/Banner2x2ATR.png",
+        link: "https://goodgame.ru/cups/irinabot-cup-2x2-atr-so-sluchajnym-soyuznikom-6293",
+        index: 15,
+        expire: 1720990800000,
     }
 ];
 
