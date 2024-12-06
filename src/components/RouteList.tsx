@@ -13,6 +13,7 @@ const MapListPage = React.lazy(() => import("./Pages/MapListPage"));
 const MapPage = React.lazy(() => import("./Pages/MapPage"));
 const NotFoundPage = React.lazy(() => import("./Pages/NotFoundPage"));
 const OauthStubPage = React.lazy(() => import("./Pages/OauthStubPage"));
+const TelegramAuthStubPage = React.lazy(() => import("./Pages/TelegramAuthStubPage"));
 
 const CreateGameConfirmPage = React.lazy(() => import("./Pages/CreateGameConfirmPage"));
 const EditConfigPage = React.lazy(() => import("./Pages/EditConfigPage"));
@@ -24,6 +25,8 @@ const MapCatalog = React.lazy(() => import("./Pages/MapCatalog"));
 const WikiPage = React.lazy(() => import("./Pages/WikiPage"));
 
 const LanguageManagerPage = React.lazy(() => import("./Pages/LanguageManagerPage"));
+
+
 
 interface CondirionalRouteIndex {
     path?: undefined;
@@ -157,6 +160,12 @@ const routes: ConditionalRoute[] = [
         path: "/oauth",
         element: <OauthStubPage />,
     },
+    {
+        path: "/telegramAuth",
+        element: <TelegramAuthStubPage />,
+    },
+
+    
 ];
 
 function RouteList() {

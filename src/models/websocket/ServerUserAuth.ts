@@ -10,6 +10,10 @@ export interface ServerUserAuth extends AbstractPackage {
     connectorId: number;
     discordId: string;
     vkId: number;
+    googleId: string;
+    telegramId: string;
+    yandexId: string;
+
     realm: string;
     bnetName: string;
     connectorName: string;
@@ -31,6 +35,9 @@ export class ServerUserAuthConverter extends AbstractConverter {
         dataBuffer.putUint32(data.connectorId);
         dataBuffer.putNullTerminatedString(data.discordId);
         dataBuffer.putUint32(data.vkId);
+        dataBuffer.putNullTerminatedString(data.googleId);
+        dataBuffer.putNullTerminatedString(data.telegramId);
+        dataBuffer.putNullTerminatedString(data.yandexId);
 
         dataBuffer.putNullTerminatedString(data.realm);
         dataBuffer.putNullTerminatedString(data.bnetName);
@@ -53,6 +60,9 @@ export class ServerUserAuthConverter extends AbstractConverter {
             connectorId: dataBuffer.getUint32(),
             discordId: dataBuffer.getNullTerminatedString(),
             vkId: dataBuffer.getUint32(),
+            googleId: dataBuffer.getNullTerminatedString(),
+            telegramId: dataBuffer.getNullTerminatedString(),
+            yandexId: dataBuffer.getNullTerminatedString(),
             realm: dataBuffer.getNullTerminatedString(),
             bnetName: dataBuffer.getNullTerminatedString(),
             connectorName: dataBuffer.getNullTerminatedString(),

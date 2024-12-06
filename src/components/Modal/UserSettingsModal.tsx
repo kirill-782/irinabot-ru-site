@@ -226,6 +226,30 @@ function UserSettingsModal(props) {
                                 {auth.currentAuth.discordId}
                             </Item>
                         )}
+                        {auth.currentAuth.telegramId.length > 0 && (
+                            <Item>
+                                <Image avatar>
+                                    <Icon name="telegram"></Icon>
+                                </Image>
+                                {auth.currentAuth.telegramId}
+                            </Item>
+                        )}
+                        {auth.currentAuth.googleId.length > 0 && (
+                            <Item>
+                                <Image avatar>
+                                    <Icon name="google"></Icon>
+                                </Image>
+                                {auth.currentAuth.googleId}
+                            </Item>
+                        )}
+                        {auth.currentAuth.yandexId.length > 0 && (
+                            <Item>
+                                <Image avatar>
+                                    <Icon name="yandex"></Icon>
+                                </Image>
+                                {auth.currentAuth.yandexId}
+                            </Item>
+                        )}
                     </List>
                     <Form>
                         <Form.Field>

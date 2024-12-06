@@ -3,6 +3,7 @@ import { Dropdown } from "semantic-ui-react";
 import { AuthMethod, AviableAuthMethods } from "../../config/AuthMethods";
 import { AppRuntimeSettingsContext, AuthContext } from "../../context";
 import { authByOauth } from "../../utils/Oauth";
+import { authByTelegram } from "../../utils/TelegramAuth";
 import React from "react";
 
 function LoginDropdown() {
@@ -25,11 +26,22 @@ function LoginDropdown() {
         <Dropdown text={lang.loginDropdownOption} item>
             <Dropdown.Menu>
                 {AviableAuthMethods.map((method: AuthMethod) => {
-                    return (
-                        <Dropdown.Item key={method.name} onClick={() => authByOauth(method, onSuccess)}>
-                            {method.name}
-                        </Dropdown.Item>
-                    );
+                    switch (method.customImpl) {
+                        case "telegram": {
+                            return (
+                                <Dropdown.Item key={method.name} onClick={() => authByTelegram(method, onSuccess)}>
+                                    {method.name}
+                                </Dropdown.Item>
+                            );
+                        }
+                        default: {
+                            return (
+                                <Dropdown.Item key={method.name} onClick={() => authByOauth(method, onSuccess)}>
+                                    {method.name}
+                                </Dropdown.Item>
+                            );
+                        }
+                    }
                 })}
             </Dropdown.Menu>
         </Dropdown>

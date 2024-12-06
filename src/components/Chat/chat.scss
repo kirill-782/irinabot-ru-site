@@ -11,6 +11,13 @@
     }
 }
 
+.chat {
+    .description {
+        max-height: 400px;
+        overflow: auto;
+    }
+}
+
 .ui.feed.chat-feed {
     height: 380px;
     overflow-y: auto;
