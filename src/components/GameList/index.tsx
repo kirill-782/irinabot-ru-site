@@ -37,9 +37,9 @@ const ADS = [
     },
     {
         img: "/kaisa/Banner2x2ATR.png",
-        link: "https://goodgame.ru/cups/irinabot-cup-2x2-atr-so-sluchajnym-soyuznikom-6293",
+        link: "https://goodgame.ru/cups/irinabot-cup-2x2-atr-so-sluchajnym-soyuznikom-7200",
         index: 15,
-        expire: 1720990800000,
+        expire: 1734296400000,
     }
 ];
 
