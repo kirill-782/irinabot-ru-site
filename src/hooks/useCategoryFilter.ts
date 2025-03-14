@@ -16,7 +16,7 @@ export const useCategoryFilter = (selectedCategories: number[], categories: Cate
         };
 
         let filtredCategories = categories.filter(i => {
-            return !i.accessFroSet //|| auth.apiToken.hasAuthority(i.accessFroSet);
+            return !i.accessFroSet || auth.apiToken.hasAuthority(i.accessFroSet);
         })
 
         let selectableCategories = [];

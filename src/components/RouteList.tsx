@@ -4,13 +4,13 @@ import { AuthContext } from "../context";
 import React from "react";
 import ForbiddenPage from "./Pages/ForbiddenPage";
 import Layout from "./Layout";
-import MapEditPage from "./Pages/MapEditPage";
 
 const AutopayPage = React.lazy(() => import("./Pages/AutopayPage"));
 const CreateGamePage = React.lazy(() => import("./Pages/CreateGamePage"));
 const GameListPage = React.lazy(() => import("./Pages/GameListPage"));
 const MapListPage = React.lazy(() => import("./Pages/MapListPage"));
 const MapPage = React.lazy(() => import("./Pages/MapPage"));
+const MapEditPage = React.lazy(() => import("./Pages/MapEditPage"));
 const NotFoundPage = React.lazy(() => import("./Pages/NotFoundPage"));
 const OauthStubPage = React.lazy(() => import("./Pages/OauthStubPage"));
 const TelegramAuthStubPage = React.lazy(() => import("./Pages/TelegramAuthStubPage"));
@@ -26,6 +26,7 @@ const WikiPage = React.lazy(() => import("./Pages/WikiPage"));
 
 const LanguageManagerPage = React.lazy(() => import("./Pages/LanguageManagerPage"));
 
+const ConsentStubPage = React.lazy(() => import("./Pages/ConsentStubPage"));
 
 
 interface CondirionalRouteIndex {
@@ -149,6 +150,11 @@ const routes: ConditionalRoute[] = [
             {
                 path: "lang",
                 element: <LanguageManagerPage />,
+            },
+            {
+                path: "consent",
+                element: <ConsentStubPage/>,
+                requireAuth: true,
             },
             {
                 path: "*",
