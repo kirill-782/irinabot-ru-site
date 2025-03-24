@@ -1,6 +1,5 @@
 import { Table } from "semantic-ui-react";
 import { memo, useContext, useMemo } from "react";
-import { GameListGame } from "../../models/websocket/ServerGameList";
 import {
     OnlineStatsRow,
     realmCategoryToRealmName,
@@ -9,9 +8,10 @@ import {
 } from "../../config/PvpGNConfig";
 import React from "react";
 import { AppRuntimeSettingsContext } from "../../context";
+import { GameDataShort } from "../../models/rest/Game";
 
 interface OnlineStatsProps {
-    gameList: GameListGame[];
+    gameList: GameDataShort[];
 }
 
 class NeverError extends Error {
@@ -45,12 +45,12 @@ function OnlineStats({ gameList }: OnlineStatsProps) {
 
             let playersCount = 0;
 
-            game.players.forEach((player) => {
-                if (player.name.length === 0) return;
+            game.slots.forEach((slot) => {
+                if (!slot.player) return;
 
                 playersCount++;
 
-                if (!realmToCategory[player.realm])
+                if (!realmToCategory[slot.player?.realm])
                     appendToStats({
                         categoryType: "other",
                         categoryArgument: "",
@@ -60,7 +60,7 @@ function OnlineStats({ gameList }: OnlineStatsProps) {
                 else
                     appendToStats({
                         categoryType: "realm",
-                        categoryArgument: realmToCategory[player.realm],
+                        categoryArgument: realmToCategory[slot.player.realm],
                         lobbyCount: 0,
                         playersCount: 1,
                     });
@@ -68,7 +68,7 @@ function OnlineStats({ gameList }: OnlineStatsProps) {
 
             appendToStats({ categoryType: "patch", categoryArgument: game.gameVersion, lobbyCount: 1, playersCount });
 
-            if (game.gameFlags.started) appendToStats({
+            if (game.started) appendToStats({
                 categoryType: "started",
                 categoryArgument: "",
                 lobbyCount: 1,

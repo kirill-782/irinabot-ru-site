@@ -7,16 +7,18 @@ import React, { useContext, useEffect, useState } from "react";
 import { DEFAULT_CONFIG } from "./config/ApiConfig";
 import { MapService } from "./services/MapService";
 import { MapUploaderService } from "./services/MapUploaderService";
+import { GamesService } from "./services/GamesService";
 
 function AfterContextApp(props) {
     const [mapsApi, setMapsApi] = useState(new MapService(DEFAULT_CONFIG));
+    const [gamesApi, setGamesApi] = useState(new GamesService(DEFAULT_CONFIG));
     const [mapUploader, setMapUploader] = useState(new MapUploaderService(new MapService(DEFAULT_CONFIG)));
 
     useEffect(() => {
         mapUploader.setMapService(mapsApi);
     }, [mapsApi, mapUploader]);
 
-    useApiAuth({ setMapService: setMapsApi });
+    useApiAuth({ setMapService: setMapsApi, setGamesService: setGamesApi });
 
     const { ghostSocket } = useContext(WebsocketContext);
 
@@ -30,6 +32,7 @@ function AfterContextApp(props) {
         <RestContext.Provider
             value={{
                 mapsApi,
+                gamesApi,
                 mapUploader,
             }}
         >

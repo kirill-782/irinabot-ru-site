@@ -1,15 +1,15 @@
 import { useContext, useEffect, useState } from "react";
-import { GameListGame } from "./../models/websocket/ServerGameList";
 import { FilterSettings } from "./useGameListFilter";
 import { useRef } from "react";
+import { GameDataShort } from "../models/rest/Game";
 
 export interface DisplayedGameListParams {
-    gameList: GameListGame[];
+    gameList: GameDataShort[];
     filters?: FilterSettings;
 }
 
 export function useDisplayedGameList({ gameList, filters }: DisplayedGameListParams) {
-    const [displayedGameList, setDisplayedGameList] = useState<GameListGame[]>([]);
+    const [displayedGameList, setDisplayedGameList] = useState<GameDataShort[]>([]);
 
     const gameListRef = useRef(gameList);
     gameListRef.current = gameList;
@@ -28,21 +28,21 @@ export function useDisplayedGameList({ gameList, filters }: DisplayedGameListPar
             return;
         }
 
-        const getGameById = (games: GameListGame[], id: number) => {
-            return games.find((i) => i.gameCounter === id);
+        const getGameById = (games: GameDataShort[], id: number) => {
+            return games.find((i) => i.id === id);
         };
 
         const newGames = gameList.filter((i) => {
-            return !getGameById(displayedGameListRef.current, i.gameCounter);
+            return !getGameById(displayedGameListRef.current, i.id);
         });
 
-        const startedNewGames = newGames.filter((i) => i.gameFlags.started);
-        const notStartedNewGames = newGames.filter((i) => !i.gameFlags.started);
+        const startedNewGames = newGames.filter((i) => i.started);
+        const notStartedNewGames = newGames.filter((i) => !i.started);
 
         // Remove deleted games
 
         const updatedGameList = displayedGameListRef.current.filter((i) => {
-            return getGameById(gameList, i.gameCounter);
+            return getGameById(gameList, i.id);
         });
 
         // Append new games to the top of the list
@@ -52,7 +52,7 @@ export function useDisplayedGameList({ gameList, filters }: DisplayedGameListPar
 
         const gl = updatedGameList
             .map((i) => {
-                return getGameById(gameList, i.gameCounter);
+                return getGameById(gameList, i.id);
             })
             .filter((i) => i);
 

@@ -1,5 +1,6 @@
 import { useContext, useEffect, useMemo, useState } from "react";
 import { AuthContext, RestContext } from "../context";
+import { GameDataShort } from "../models/rest/Game";
 import { GameListGame } from "../models/websocket/ServerGameList";
 import {
     allSlotsComparator,
@@ -25,11 +26,11 @@ export interface FilterSettings {
 }
 
 interface useGameListFilterOptions {
-    gameList: GameListGame[];
+    gameList: GameDataShort[];
     filters: FilterSettings;
 }
 
-export const useGameListFilter = ({ gameList, filters }: useGameListFilterOptions): GameListGame[] => {
+export const useGameListFilter = ({ gameList, filters }: useGameListFilterOptions): GameDataShort[] => {
     const currentAuth = useContext(AuthContext).auth.currentAuth;
 
     const [allowMapIds, setAllowMapIds] = useState<number[] | null>(null);
@@ -56,35 +57,35 @@ export const useGameListFilter = ({ gameList, filters }: useGameListFilterOption
         let filtredGames = gameList.filter((game) => {
             const playersCount = (() => {
                 let playersCount = 0;
-                game.players.forEach((player) => {
-                    if (player.name.length > 0) playersCount++;
+                game.slots.forEach((slot) => {
+                    if (slot.player) playersCount++;
                 });
 
                 return playersCount;
             })();
 
-            if(currentAuth && game.creatorID == currentAuth.connectorId)
+            if(currentAuth && game.creatorUserId === currentAuth.connectorId.toString())
                 return true;
 
             // Game Type Filter
 
             if (filters.gameType) {
-                if (filters.gameType === 1 && game.orderID === 0) return false;
+                if (filters.gameType === 1 && game.isAutohost) return false;
 
-                if (filters.gameType === 2 && game.orderID !== 0) return false;
+                if (filters.gameType === 2 && !game.isAutohost) return false;
             }
 
-            if (currentAuth && filters.onlySelfGames && currentAuth.connectorId !== game.creatorID) return false;
+            if (currentAuth && filters.onlySelfGames && game.creatorUserId === currentAuth.connectorId.toString()) return false;
 
             // Slots filter
 
-            if (game.players.length < filters.slots[0] || game.players.length > filters.slots[1]) return false;
+            if (game.slots.length < filters.slots[0] || game.slots.length > filters.slots[1]) return false;
 
             if (playersCount < filters.players[0] || playersCount > filters.players[1]) return false;
 
             if (
-                game.players.length - playersCount < filters.freeSlots[0] ||
-                game.players.length - playersCount > filters.freeSlots[1]
+                game.slots.length - playersCount < filters.freeSlots[0] ||
+                game.slots.length - playersCount > filters.freeSlots[1]
             )
                 return false;
 
@@ -103,25 +104,27 @@ export const useGameListFilter = ({ gameList, filters }: useGameListFilterOption
 
             // Hide another hosts if exsists local
 
-            if(game.gameFlags.hasOtherGame) {
-                const hasExists = gameList.some((i) => i.mapId == game.mapId && !i.gameFlags.started && !i.gameFlags.hasOtherGame);
+            if(game.ownerBot.external) {
+                const hasExists = gameList.some((i) => i.mapId == game.mapId && !i.started && !i.ownerBot.external);
 
                 if(hasExists) return false;
             }
 
             // Quick filter
 
-            if (filters.quickFilter.length === 0) return true;
+            const queryQuickFilter = filters.quickFilter.trim().toLowerCase();
+
+            if (queryQuickFilter.length === 0) return true;
 
             if (game.mapId.toString() === filters.quickFilter) {
                 return true;
             }
 
-            if (game.name.toLocaleLowerCase().indexOf(filters.quickFilter.toLowerCase()) >= 0) return true;
+            if (game.name.toLocaleLowerCase().indexOf(queryQuickFilter) >= 0) return true;
 
-            const players = game.players.filter((player) => {
-                if (player.name.length === 0) return false;
-                if (player.name.toLocaleLowerCase().indexOf(filters.quickFilter.toLowerCase()) >= 0) return true;
+            const players = game.slots.filter((slot) => {
+                if (!slot.player) return false;
+                if (slot.player.name.toLocaleLowerCase().indexOf(queryQuickFilter) >= 0) return true;
                 return false;
             });
 
@@ -132,12 +135,12 @@ export const useGameListFilter = ({ gameList, filters }: useGameListFilterOption
 
         // Order
 
-        const creatorComparator = (a: GameListGame, b: GameListGame) => {
-            if (a.creatorID === b.creatorID && a.creatorID === currentAuth?.connectorId) return 0;
+        const creatorComparator = (a: GameDataShort, b: GameDataShort) => {
+            if (a.creatorUserId === b.creatorUserId && a.creatorUserId === currentAuth?.connectorId.toString()) return 0;
 
-            if (a.creatorID === currentAuth?.connectorId) return -1;
+            if (a.creatorUserId === currentAuth?.connectorId.toString()) return -1;
 
-            if (b.creatorID === currentAuth?.connectorId) return 1;
+            if (b.creatorUserId === currentAuth?.connectorId.toString()) return 1;
 
             return 0;
         };

@@ -46,7 +46,7 @@ function App() {
         ghostSocket,
     });
 
-    useConnectorGameAdd({ ghostSocket, connectorSocket, linkCopyMode });
+    const sendameToConnector = useConnectorGameAdd({ connectorSocket, linkCopyMode });
 
     const [selectUser, setSelectUser] = useState<SelectUserFunctionHolder>({
         selectUser: () => {},
@@ -102,6 +102,9 @@ function App() {
                 value={{
                     linkCopyMode: { copy: linkCopyMode, setCopy: setLinkCopyMode },
                     gameList: { locked: gameListLocked, setLocked: setGameListLocked },
+                    connector: {
+                        sendGame: sendameToConnector,
+                    },
                     chat: {
                         selectUser,
                         setSelectUser,

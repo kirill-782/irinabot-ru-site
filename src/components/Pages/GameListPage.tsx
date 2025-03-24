@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Button, Container, Grid, Input, Message } from "semantic-ui-react";
 import { AppRuntimeSettingsContext, WebsocketContext } from "../../context";
-import { GameListGame } from "../../models/websocket/ServerGameList";
 import GameList from "../GameList";
 import OnlineStats from "../GameList/OnlineStats";
 
@@ -23,16 +22,16 @@ import { AccessMaskBit } from "../Modal/AccessMaskModal";
 import GameListFiltersModal from "../Modal/GameListFiltersModal";
 import MetaCanonical from "../Meta/MetaCanonical";
 import { useTitle } from "../../hooks/useTitle";
-import { currentTheme, E_THEME } from "../../utils/Theme";
 import { useAdsRender } from "../../hooks/useAdsRender";
+import { GameDataShort } from "../../models/rest/Game";
 
 function GameListPage() {
     const sockets = useContext(WebsocketContext);
     const runtimeContext = useContext(AppRuntimeSettingsContext);
     const auth = useContext(AuthContext).auth;
 
-    const [gameList, setGameList] = useState<GameListGame[]>([]);
-    const [selectedGame, setSelectedGame] = useState<GameListGame | null>(null);
+    const [gameList, setGameList] = useState<GameDataShort[]>([]);
+    const [selectedGame, setSelectedGame] = useState<GameDataShort | null>(null);
     const [filterModalOpen, setFilterModalOpen] = useState(false);
 
     const { filterSettings, setFilterSettings, disabledFilters } = useGameListFilterSetings();
@@ -43,11 +42,10 @@ function GameListPage() {
         gameList,
         filters: debouncedFilterSettings,
     });
-    
+
     useAdsRender("R-A-3959850-1", "yandex_rtb_gameList");
 
     useGameListSubscribe({
-        ghostSocket: sockets.ghostSocket,
         isGameListLocked: runtimeContext.gameList.locked,
         onGameList: setGameList,
         filters: debouncedFilterSettings,
@@ -69,13 +67,13 @@ function GameListPage() {
     useEffect(() => {
         const uncachedConnectorIds = gameList
             .map((i) => {
-                return i.creatorID;
+                return Number(i.creatorUserId);
             })
             .filter((i) => {
                 return !connectorCache[i];
             });
 
-        if (uncachedConnectorIds.length > 0) {
+        if (sockets.ghostSocket.isConnected() && uncachedConnectorIds.length > 0) {
             sockets.ghostSocket.send(
                 new ClientResolveConnectorIdsConverter().assembly({
                     connectorIds: uncachedConnectorIds,
@@ -140,7 +138,7 @@ function GameListPage() {
                             </Message.Content>
                         </Message>
                     )}
-                    <div id="yandex_rtb_gameList" style={{marginTop: 10}}></div>
+                    <div id="yandex_rtb_gameList" style={{ marginTop: 10 }}></div>
                     <GameList
                         gameList={displayedGameList}
                         selectedGame={selectedGame}

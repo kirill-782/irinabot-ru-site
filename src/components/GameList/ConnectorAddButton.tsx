@@ -1,19 +1,21 @@
 import { Button, Form, Icon, Modal } from "semantic-ui-react";
 import React, { useContext, useState } from "react";
-import { AppRuntimeSettingsContext, WebsocketContext } from "../../context";
+import { AppRuntimeSettingsContext, RestContext, WebsocketContext } from "../../context";
 import { AuthContext } from "../../context";
-import { GameListGame } from "../../models/websocket/ServerGameList";
 import { ClientRequestUDPGameConverter } from "../../models/websocket/ClientRequestUDPGame";
+import { GameDataShort } from "../../models/rest/Game";
+import { toast } from "@kokomi/react-semantic-toasts";
 
 declare function ym(id: number, type: string, event: string): void;
 
 interface ConnectorAddButtonProps {
-    game: GameListGame;
+    game: GameDataShort;
 }
 
 function ConnectorAddButton({ game }: ConnectorAddButtonProps) {
-    const sockets = useContext(WebsocketContext);
     const auth = useContext(AuthContext).auth;
+    const { sendGame } = useContext(AppRuntimeSettingsContext).connector;
+    const { gamesApi } = useContext(RestContext);
 
     const [passwordModalOpen, setPasswordModalOpen] = useState(false);
     const [password, setPassword] = useState("");
@@ -21,26 +23,27 @@ function ConnectorAddButton({ game }: ConnectorAddButtonProps) {
     const { language } = useContext(AppRuntimeSettingsContext);
     const lang = language.languageRepository;
 
-    const requestConnectorGame = (password?: string) => {
-        const converter = new ClientRequestUDPGameConverter();
-        sockets.ghostSocket.send(
-            converter.assembly({
-                gameId: game.gameCounter,
-                isPrivateKey: false,
-                password: password || "",
-            })
-        );
+    const requestConnectorGame = async (password?: string) => {
+        try {
+            const gameData = await gamesApi.getGame({ gameId: game.id, password });
+            sendGame(gameData);
+        } catch (e) {
+            toast({
+                title: "Ошибка удаления игры",
+                description: e.toString(),
+            });
+        }
     };
 
     const onButtonClick = () => {
         ym(54068152, "reachGoal", "GAMELIST_CONNECTOR_BROADCAST");
-        if (game.gameFlags.hasPassword) setPasswordModalOpen(true);
+        if (game.passwordRequired) setPasswordModalOpen(true);
         else requestConnectorGame();
     };
 
     const isEnabled = auth.currentAuth !== null;
 
-    if (game.gameFlags.started) return null;
+    if (game.started) return null;
 
     return (
         <>
@@ -81,7 +84,7 @@ function ConnectorAddButton({ game }: ConnectorAddButtonProps) {
                 </Modal>
             </div>
             <Button
-                icon={game.gameFlags.hasPassword ? "lock" : "gamepad"}
+                icon={game.passwordRequired ? "lock" : "gamepad"}
                 disabled={!isEnabled}
                 color={isEnabled ? "green" : "red"}
                 basic

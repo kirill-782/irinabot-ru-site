@@ -4,18 +4,20 @@ import { AuthContext, RestContext } from "./../context/index";
 
 import { MapService } from "../services/MapService";
 import { DEFAULT_CONFIG } from "../config/ApiConfig";
+import { GamesService } from "../services/GamesService";
 
 export interface ApiAuthOptions {
     setMapService: Dispatch<SetStateAction<MapService>>;
+    setGamesService: Dispatch<SetStateAction<GamesService>>;
 }
 
-export const useApiAuth = ({ setMapService }: ApiAuthOptions) => {
+export const useApiAuth = ({ setMapService, setGamesService }: ApiAuthOptions) => {
     const authContext = useContext(AuthContext);
 
     useEffect(() => {
         let newConfig = {};
 
-        if (authContext.auth.apiToken) {
+        if (authContext.auth.apiToken.hasToken()) {
             newConfig = {
                 ...DEFAULT_CONFIG,
                 headers: {
@@ -29,5 +31,6 @@ export const useApiAuth = ({ setMapService }: ApiAuthOptions) => {
         }
 
         setMapService(new MapService(newConfig));
+        setGamesService(new GamesService(newConfig));
     }, [authContext.auth.apiToken]);
 };

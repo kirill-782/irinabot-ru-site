@@ -10,7 +10,8 @@ import {
     Segment,
     SemanticCOLORS,
     Image,
-    List, TextArea,
+    List,
+    TextArea,
 } from "semantic-ui-react";
 import GameListPlayerItem from "../GameList/GameListPlayerItem";
 import { toast } from "@kokomi/react-semantic-toasts";
@@ -41,9 +42,12 @@ function DebugPage() {
     return (
         <Container style={{ marginTop: "3em" }}>
             <Segment>
-                <TextArea style={{width: "100%"}} onInput={(event, data) => {
-                    setMarkdown(data.value.toString());
-                }}></TextArea>
+                <TextArea
+                    style={{ width: "100%" }}
+                    onInput={(event, data) => {
+                        setMarkdown(data.value.toString());
+                    }}
+                ></TextArea>
 
                 <Header as="h3">Result</Header>
                 <Markdown>{markdown}</Markdown>
@@ -57,7 +61,6 @@ function DebugPage() {
 
             <Segment>
                 Зона текстов вара
-
                 <WarcraftIIIText>
                     <b>|cFFFF0000Asuna</b>
                 </WarcraftIIIText>
@@ -374,11 +377,11 @@ function DebugPage() {
                             return (
                                 <GameListPlayerItem
                                     key={k}
+                                    slotIndex={k}
                                     player={{
-                                        colour: k,
                                         name: "Dimiurgi",
-                                        comment: "" + i,
-                                        realm: "",
+                                        id: 123,
+                                        realm: "asuna",
                                     }}
                                 />
                             );

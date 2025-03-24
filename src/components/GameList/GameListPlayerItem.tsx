@@ -5,6 +5,7 @@ import "./GameListPlayerItem.scss";
 import { AppRuntimeSettingsContext } from "../../context";
 import React from "react";
 import WarcraftIIIText from "../WarcraftIIIText";
+import { GamePlayer } from "../../models/rest/Game";
 
 const realmToText = {
     "178.218.214.114": "iCCup",
@@ -13,7 +14,8 @@ const realmToText = {
 };
 
 interface GameListPlayerItemProps {
-    player: GameListPlayer;
+    slotIndex: number
+    player: GamePlayer;
 }
 
 const getClassColorByPlayer = ({ colour }) => {
@@ -71,7 +73,7 @@ const getClassColorByPlayer = ({ colour }) => {
     }
 };
 
-function GameListPlayerItem({ player }: GameListPlayerItemProps) {
+function GameListPlayerItem({ player, slotIndex }: GameListPlayerItemProps) {
     const { chat } = useContext(AppRuntimeSettingsContext);
 
     const { language } = useContext(AppRuntimeSettingsContext);
@@ -89,7 +91,7 @@ function GameListPlayerItem({ player }: GameListPlayerItemProps) {
                     key={player.name}
                     as="a"
                     title={!realmToText[player.realm] ? player.realm : realmToText[player.realm]}
-                    className={`player-name ${getClassColorByPlayer(player)}`}
+                    className={`player-name ${getClassColorByPlayer({colour: slotIndex})}`}
                 >
                     <WarcraftIIIText ignoreTags={["|n"]}>{player.name}</WarcraftIIIText>
                 </List.Item>

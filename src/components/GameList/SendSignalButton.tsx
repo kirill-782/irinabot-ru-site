@@ -1,99 +1,43 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Button, Icon, Input, Modal } from "semantic-ui-react";
-import { AppRuntimeSettingsContext, AuthContext, WebsocketContext } from "../../context";
-import { GameListGame } from "../../models/websocket/ServerGameList";
+import React, { useContext } from "react";
+import { Button } from "semantic-ui-react";
+import { AppRuntimeSettingsContext, AuthContext, RestContext } from "../../context";
 import { AccessMaskBit } from "../Modal/AccessMaskModal";
-import { ClientExternalSignalConverter } from "../../models/websocket/ClientExternalSignal";
+import { GameDataShort } from "../../models/rest/Game";
+import { toast } from "@kokomi/react-semantic-toasts";
 
 interface SendSignalButtonProps {
-    game: GameListGame;
+    game: GameDataShort;
 }
 
 function SendSignalButton({ game }: SendSignalButtonProps) {
-    const sockets = useContext(WebsocketContext);
     const auth = useContext(AuthContext).auth;
+    const { gamesApi } = useContext(RestContext);
 
-    const [signalModalOpen, setSignalModalOpen] = useState(false);
-    const [signal, setSignal] = useState("");
-
-    const sendSignal = () => {
-        sockets.ghostSocket.send(
-            new ClientExternalSignalConverter().assembly({
-                signal,
-                gameId: game.gameCounter,
-            })
-        );
+    const sendDeleteRequest = () => {
+        gamesApi.deleteGame({ gameId: game.id }).catch((e) => {
+            toast({
+                title: "Ошибка получения данных игры",
+                description: e.toString(),
+            });
+        });
     };
 
-    const { language } = useContext(AppRuntimeSettingsContext);
-    const lang = language.languageRepository;
-
-    useEffect(() => {
-        setSignal("");
-    }, []);
-
-    if (auth.currentAuth?.connectorId !== game.creatorID && !auth.accessMask.hasAccess(AccessMaskBit.ACCESS_ROOT))
+    if (
+        auth.currentAuth?.connectorId.toString() !== game.creatorUserId &&
+        !auth.accessMask.hasAccess(AccessMaskBit.ACCESS_ROOT)
+    )
         return null;
 
     return (
-        <>
-            <Button
-                icon="setting"
-                basic
-                size="mini"
-                color="green"
-                onClick={() => {
-                    setSignalModalOpen(true);
-                }}
-            />
-            <div
-                onClick={(e) => {
-                    e.stopPropagation();
-                }}
-            >
-                <Modal
-                    closeIcon
-                    open={signalModalOpen}
-                    onClose={() => {
-                        setSignalModalOpen(false);
-                    }}
-                >
-                    <Modal.Header>{lang.sendSignalButtonSend}</Modal.Header>
-                    <Modal.Content>
-                        <p>{lang.sendSignalButtonSignalLabel}</p>
-                        <Input
-                            placeholder={lang.sendSignalButtonSignalPlaceholder}
-                            value={signal}
-                            onChange={(_, data) => {
-                                setSignal(data.value);
-                            }}
-                            onKeyUp={(e: React.KeyboardEvent) => {
-                                if (e.code === "Enter") {
-                                    setSignalModalOpen(false);
-                                    sendSignal();
-                                }
-                            }}
-                        ></Input>
-                    </Modal.Content>
-                    <Modal.Actions>
-                        <Button color="red" onClick={() => setSignalModalOpen(false)}>
-                            <Icon name="x" />
-                            {lang.cancel}
-                        </Button>
-                        <Button
-                            color="green"
-                            onClick={() => {
-                                setSignalModalOpen(false);
-                                sendSignal();
-                            }}
-                        >
-                            <Icon name="checkmark" />
-                            {lang.send}
-                        </Button>
-                    </Modal.Actions>
-                </Modal>
-            </div>
-        </>
+        <Button
+            icon="x"
+            basic
+            size="mini"
+            color="red"
+            onClick={() => {
+                sendDeleteRequest();
+            }}
+        />
     );
 }
 

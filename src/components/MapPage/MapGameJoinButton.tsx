@@ -6,15 +6,14 @@ import { AppRuntimeSettingsContext, AuthContext, WebsocketContext } from "../../
 import { ClientRequestUDPGameConverter } from "../../models/websocket/ClientRequestUDPGame";
 import React from "react";
 
-interface GameJoinButtonProps {
-    gameList: GameListGame[];
+interface MapGameJoinButtonProps {
     mapId: number;
     className?: string;
 }
 
 declare function ym(id: number, type: string, event: string): void;
 
-function GameJoinButton({ gameList, mapId, className }: GameJoinButtonProps) {
+function MapGameJoinButton({ mapId, className }: MapGameJoinButtonProps) {
     const [foundGame, setFoundGame] = useState<GameListGame>();
 
     const sockets = useContext(WebsocketContext);
@@ -39,18 +38,7 @@ function GameJoinButton({ gameList, mapId, className }: GameJoinButtonProps) {
     };
 
     const isEnabled = auth.currentAuth !== null;
-
-    useEffect(() => {
-        let game: GameListGame | undefined;
-
-        gameList.forEach((i) => {
-            if (!i.gameFlags.started && i.mapId === mapId && !i.gameFlags.hasPassword) {
-                game = i;
-            }
-        });
-
-        setFoundGame(game);
-    }, [gameList, mapId]);
+    
 
     return (
         <Button
@@ -65,4 +53,4 @@ function GameJoinButton({ gameList, mapId, className }: GameJoinButtonProps) {
     );
 }
 
-export default GameJoinButton;
+export default MapGameJoinButton;

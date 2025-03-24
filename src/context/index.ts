@@ -11,6 +11,8 @@ import { AccessMaskHolder } from "../utils/AccessMaskHolder";
 import { ApiTokenHolder } from "../utils/ApiTokenHolder";
 import { ServerUserAuth } from "./../models/websocket/ServerUserAuth";
 import { LanguageRepository } from "../localization/Lang";
+import { GamesService } from "../services/GamesService";
+import { GameDataFull } from "../models/rest/Game";
 
 // Socket Context
 
@@ -38,6 +40,9 @@ export type AppRuntimeSettingsContextType = {
         copy: boolean;
         setCopy: (locked: ((locked: boolean) => boolean) | boolean) => void;
     };
+    connector: {
+        sendGame(gameData: GameDataFull)
+    }
     chat: {
         selectUser: SelectUserFunctionHolder;
         setSelectUser: React.Dispatch<SelectUserFunctionHolder>;
@@ -123,6 +128,7 @@ export const AuthContext = createContext<AuthContextType>(null);
 export type RestContextType = {
     mapUploader: MapUploaderService;
     mapsApi: MapService;
+    gamesApi: GamesService;
 };
 
 export const RestContext = createContext<RestContextType>(null);

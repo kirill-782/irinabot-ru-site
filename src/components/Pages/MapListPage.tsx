@@ -13,7 +13,7 @@ import { GameListGame } from "../../models/websocket/ServerGameList";
 import { MapCard } from "../MapListPage/MapCard";
 import { Filter, MapFilters } from "../MapListPage/MapFilters";
 import MapStats from "../MapPage/MapStats";
-import GameJoinButton from "../MapPage/GameJoinButton";
+import MapGameJoinButton from "../MapPage/MapGameJoinButton";
 
 import MetaDescription from "../Meta/MetaDescription";
 import { isNoFilters } from "../../hooks/useSearchMaps";
@@ -62,17 +62,6 @@ function MapListPage() {
     const { language } = useContext(AppRuntimeSettingsContext);
     const lang = language.languageRepository;
 
-    const sockets = useContext(WebsocketContext);
-    const runtimeContext = useContext(AppRuntimeSettingsContext);
-    const [gameList, setGameList] = useState<GameListGame[]>([]);
-
-    useGameListSubscribe({
-        ghostSocket: sockets.ghostSocket,
-        isGameListLocked: runtimeContext.gameList.locked,
-        onGameList: setGameList,
-        ignoreFocusCheck: false,
-    });
-
     const [loadButton, setLoadButton] = useState<HTMLButtonElement | null>(null);
 
     const isVisible = useVisibility(loadButton, { rootMargin: "100px" });
@@ -102,17 +91,6 @@ function MapListPage() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isVisible]);
 
-    const onLobbyGamesClick = (checked?: boolean) => {
-        if (checked) {
-            setMapsId(
-                gameList
-                    .map((i) => i.mapId)
-                    .filter(unique)
-                    .join(",")
-            );
-        } else setMapsId("");
-    };
-
     return (
         <Container className="map-list-page">
             <MetaDescription description={lang.mapListPageDescription} />
@@ -125,13 +103,6 @@ function MapListPage() {
                                 onFitlerChange={setSearchOptions}
                                 value={searchOptions}
                                 defaultFilters={defaultFilters}
-                            />
-                            <Checkbox
-                                label={lang.mapListOnlyLobby}
-                                checked={mapIds.length > 0}
-                                onChange={(_, data) => {
-                                    onLobbyGamesClick(data.checked);
-                                }}
                             />
                         </Grid.Column>
                     )}
@@ -158,8 +129,7 @@ function MapListPage() {
                                         <MapCard {...map} />
                                         <Grid padded="vertically">
                                             <Grid.Row className="player-stats">
-                                                <MapStats className="centred" gameList={gameList} mapId={map.id || 0} />
-                                                <GameJoinButton gameList={gameList} mapId={map.id || 0} />
+                                                <MapGameJoinButton mapId={map.id || 0} />
                                             </Grid.Row>
                                         </Grid>
                                     </React.Fragment>

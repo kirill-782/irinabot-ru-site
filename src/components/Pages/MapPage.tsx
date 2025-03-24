@@ -18,32 +18,20 @@ import MetaRobots from "../Meta/MetaRobots";
 import React from "react";
 import { MapContext } from "../../context";
 import { useTitle } from "../../hooks/useTitle";
-import { currentTheme, E_THEME } from "../../utils/Theme";
 import { useAdsRender } from "../../hooks/useAdsRender";
 
 function MapPage() {
     const { id } = useParams();
     const mapsApi = useContext(RestContext).mapsApi;
-    const runtimeContext = useContext(AppRuntimeSettingsContext);
     const [mapData, setMapData] = useState<Map | null>(null);
     const [isLoading, setLoading] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string>("");
     const [config, setConfig] = useState<ConfigInfo | undefined | null>();
 
-    const sockets = useContext(WebsocketContext);
-    const [gameList, setGameList] = useState<GameListGame[]>([]);
-
     const [noIndex, setNoIndex] = useState(false);
 
     const { language } = useContext(AppRuntimeSettingsContext);
     const lang = language.languageRepository;
-
-    useGameListSubscribe({
-        ghostSocket: sockets.ghostSocket,
-        isGameListLocked: runtimeContext.gameList.locked,
-        onGameList: setGameList,
-        ignoreFocusCheck: false,
-    });
 
     useTitle(escapeWC3Tags(mapData?.mapInfo.name), lang.mapListPageTitle);
 
@@ -135,7 +123,7 @@ function MapPage() {
                             <MapFlags />
                         </Grid.Row>
                         <Grid.Row id="yandex_rtb_mapfooter"></Grid.Row>
-                        <MapFooter gameList={gameList} />
+                        <MapFooter />
                         <Grid.Row>
                             {config === undefined && (
                                 <Loader size="big" active>

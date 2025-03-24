@@ -4,7 +4,6 @@ import React, { memo, useContext } from "react";
 import ConnectorAddButton from "./ConnectorAddButton";
 
 import "./GameList.scss";
-import { GameListGame } from "./../../models/websocket/ServerGameList";
 import ConnectorId from "../ConnectorId";
 import SendSignalButton from "./SendSignalButton";
 import ReactTimeAgo from "react-time-ago";
@@ -12,6 +11,7 @@ import classnames from "classnames";
 import copy from "clipboard-copy";
 import { AppRuntimeSettingsContext, AuthContext } from "../../context";
 import { AccessMaskBit } from "../Modal/AccessMaskModal";
+import { GameDataShort } from "../../models/rest/Game";
 
 // TODO AdsFile
 
@@ -44,9 +44,9 @@ const ADS = [
 ];
 
 interface GameListProps {
-    gameList: GameListGame[];
-    selectedGame: GameListGame | null;
-    setSelectedGame: (game: GameListGame | null) => void;
+    gameList: GameDataShort[];
+    selectedGame: GameDataShort | null;
+    setSelectedGame: (game: GameDataShort | null) => void;
 }
 
 function GameList({ gameList, selectedGame, setSelectedGame }: GameListProps) {
@@ -55,11 +55,11 @@ function GameList({ gameList, selectedGame, setSelectedGame }: GameListProps) {
 
     const { accessMask } = useContext(AuthContext).auth;
 
-    const getPlayerSlots = (game: GameListGame): number => {
+    const getPlayerSlots = (game: GameDataShort): number => {
         let usedSlots = 0;
 
-        game.players.forEach((player) => {
-            if (player.name.length > 0) usedSlots++;
+        game.slots.forEach((slot) => {
+            if (slot.player) usedSlots++;
         });
 
         return usedSlots;
@@ -80,43 +80,43 @@ function GameList({ gameList, selectedGame, setSelectedGame }: GameListProps) {
                 </Table.Row>
             </Table.Header>
             <Table.Body>
-                {gameList.map((game: GameListGame, index) => {
+                {gameList.map((game: GameDataShort, index) => {
                     const classList = classnames(
                         "game-list-row",
                         {
-                            "game-started": game.gameFlags.started,
+                            "game-started": game.started,
                         },
                         {
-                            "game-vip": game.gameFlags.hasGamePowerUp,
+                            "game-vip": false //game.highlighted,
                         },
                         {
-                            "game-external": game.gameFlags.hasOtherGame,
+                            "game-external": game.ownerBot.external,
                         },
                         {
-                            "game-selected": game.gameCounter === selectedGame?.gameCounter,
+                            "game-selected": game.id === selectedGame?.id,
                         }
                     );
 
                     const rowIndex =
                         (remaingAdsRow.findIndex((i) => i.index === index) + 1 ||
-                            remaingAdsRow.findIndex((i) => i.creatorId === game.creatorID) + 1) - 1;
+                            remaingAdsRow.findIndex((i) => i.creatorId === Number(game.creatorUserId)) + 1) - 1;
 
                     const adsRow = rowIndex === -1 ? null : remaingAdsRow.splice(rowIndex, 1)[0];
 
                     return (
-                        <React.Fragment key={game.gameCounter}>
+                        <React.Fragment key={game.id}>
                             <Table.Row
                                 className={classList}
                                 onClick={() => {
-                                    if (selectedGame?.gameCounter === game.gameCounter) setSelectedGame(null);
+                                    if (selectedGame?.id === game.id) setSelectedGame(null);
                                     else setSelectedGame(game);
                                 }}
                             >
                                 <Table.Cell>{game.gameVersion}</Table.Cell>
-                                <Table.Cell>{getPlayerSlots(game) + "/" + game.players.length}</Table.Cell>
+                                <Table.Cell>{getPlayerSlots(game) + "/" + game.slots.length}</Table.Cell>
                                 <Table.Cell>
                                     <div className="game-title">{game.name}</div>
-                                    {game.gameFlags.started && (
+                                    {game.started && (
                                         <span className="duration">
                                             (
                                             <ReactTimeAgo
@@ -126,17 +126,17 @@ function GameList({ gameList, selectedGame, setSelectedGame }: GameListProps) {
                                             )
                                         </span>
                                     )}
-                                    {game.iccupHost && !game.gameFlags.started && (
-                                        <span className="iccup" title={lang.copy} onClick={() => copy(game.iccupHost)}>
-                                            ({game.iccupHost})
+                                    {game.externalAccount && !game.started && (
+                                        <span className="iccup" title={lang.copy} onClick={() => copy(game.externalAccount)}>
+                                            ({game.externalAccount})
                                         </span>
                                     )}
                                 </Table.Cell>
                                 <Table.Cell>
-                                    <GameListPlayers players={game.players} />
+                                    <GameListPlayers slots={game.slots} />
                                 </Table.Cell>
                                 <Table.Cell>
-                                    <ConnectorId id={game.creatorID} />
+                                    <ConnectorId id={Number(game.creatorUserId)} />
                                 </Table.Cell>
                                 <Table.Cell>
                                     <ConnectorAddButton game={game} />

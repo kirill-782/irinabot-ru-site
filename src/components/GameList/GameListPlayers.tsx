@@ -1,18 +1,18 @@
 import React, { memo } from "react";
 import { List } from "semantic-ui-react";
-import { GameListPlayer } from "../../models/websocket/ServerGameList";
+import { GameSlot } from "../../models/rest/Game";
 import GameListPlayerItem from "./GameListPlayerItem";
 import "./GameListPlayers.scss";
 
 interface GameListPlayerProps {
-    players: GameListPlayer[];
+    slots: GameSlot[];
 }
 
-function GameListPlayers({ players }: GameListPlayerProps) {
+function GameListPlayers({ slots }: GameListPlayerProps) {
     return (
         <List horizontal>
-            {players.map((player) => {
-                return player.name.length > 0 ? <GameListPlayerItem key={player.name} player={player} /> : null;
+            {slots.map((slot, index) => {
+                return slot.player ? <GameListPlayerItem key={slot.player.name} player={slot.player} slotIndex={index} /> : null;
             })}
         </List>
     );

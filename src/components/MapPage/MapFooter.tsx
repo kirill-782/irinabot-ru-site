@@ -3,7 +3,7 @@ import { Button, Grid, Label } from "semantic-ui-react";
 import { Map } from "../../models/rest/Map";
 import MapStats from "./MapStats";
 import { GameListGame } from "../../models/websocket/ServerGameList";
-import GameJoinButton from "./GameJoinButton";
+import MapGameJoinButton from "./MapGameJoinButton";
 import React from "react";
 import MapDownloadButton from "./MapDownloadButton";
 import MapCategoryList from "./MapCategoryList";
@@ -15,10 +15,9 @@ import MapFavoriteButton from "./FavoriteButton";
 import LanguageKey from "../LanguageKey";
 
 interface MapFooterProps {
-    gameList: GameListGame[];
 }
 
-function MapFooter({ gameList }: MapFooterProps) {
+function MapFooter({ }: MapFooterProps) {
     const { accessMask, apiToken } = useContext(AuthContext).auth;
 
     const { language } = useContext(AppRuntimeSettingsContext);
@@ -39,7 +38,6 @@ function MapFooter({ gameList }: MapFooterProps) {
         <>
             <Grid.Row>
                 <MapCategoryList categories={categories} />
-                <MapStats gameList={gameList} mapId={id || 0} />
                 {mapStats && (
                     <>
                         <Label title={g("mapStatsHint", { month: mapStats.monthGames, week: mapStats.weekGames })}>
@@ -64,7 +62,7 @@ function MapFooter({ gameList }: MapFooterProps) {
                         id={id || 0}
                     />
                 )}
-                <GameJoinButton className="centred" gameList={gameList} mapId={id || 0} />
+                <MapGameJoinButton className="centred" mapId={id || 0} />
                 {showCreateButton && (
                     <Button
                         className="centred"
