@@ -2,6 +2,7 @@ import React, { SyntheticEvent, useCallback, useContext, useEffect, useRef, useS
 import {
     Button,
     Container,
+    Dropdown,
     DropdownItemProps,
     DropdownProps,
     Form,
@@ -23,22 +24,18 @@ import ConfigPreview from "../CreateGame/ConfigPreview";
 import CreateGameConfirmPatchNotifications from "../CreateGame/CreateGameConfirmPatchNotifications";
 import CreateAutohostModal, { AuthostModalData } from "../Modal/CreateAutohostModal";
 import { ClientAddAutohostConverter } from "../../models/websocket/ClientAddAutohost";
-import { ClientCreateGameConverter, SaveGameData } from "../../models/websocket/ClientCreateGame";
+import { SaveGameData } from "../../models/websocket/ClientCreateGame";
 import { toast } from "@kokomi/react-semantic-toasts";
-import {
-    DEFAULT_CONTEXT_HEADER_CONSTANT,
-    DEFAULT_AUTOHOST_ADD_RESPONSE,
-    DEFAULT_CREATE_GAME_RESPONSE,
-} from "../../models/websocket/HeaderConstants";
+import { DEFAULT_CONTEXT_HEADER_CONSTANT, DEFAULT_AUTOHOST_ADD_RESPONSE } from "../../models/websocket/HeaderConstants";
 import { ServerAutohostAddResponse } from "../../models/websocket/ServerAutohostAddResponse";
 import { GHostPackageEvent } from "../../services/GHostWebsocket";
-import { ServerCreateGame } from "../../models/websocket/ServerCreateGame";
-import copy from "clipboard-copy";
 import "./CreateGameConfirmPage.scss";
 import MetaRobots from "./../Meta/MetaRobots";
 import { SaveGameParser } from "@kokomi/w3g-parser-browser";
 import { useTitle } from "../../hooks/useTitle";
 import { useAdsRender } from "../../hooks/useAdsRender";
+import { useAsyncLoader } from "../../hooks/useAsyncLoader";
+import { BotInfo } from "../../models/rest/BotInfo";
 
 const GAME_NAME_LOCALSTORAGE_PATH = "lastSuccessGameName";
 
@@ -59,7 +56,7 @@ function CreateGameConfirmPage({}) {
     const [options, setOptions] = useState<GameOptionsData>({
         mask: 3,
         slotPreset: "",
-        privateGame: false,
+        password: "",
         mapSpeed: 3,
         mapVisibility: 4,
         mapObservers: 1,
@@ -71,13 +68,22 @@ function CreateGameConfirmPage({}) {
 
     const [gameName, setGameName] = useState(localStorage.getItem(GAME_NAME_LOCALSTORAGE_PATH) || "");
     const [autohostModalOpen, setAutohostModalOpen] = useState(false);
-    const [lastPassword, setLastPassword] = useState("");
+
+    const [selectedBot, setSelectedBot] = useState<BotInfo>();
 
     const [map, config, hasLoading, error] = useLocalMapCategories();
 
     const [configPatches, selectedPatch, updatePatch] = useLocalPatchSelector(map, config);
 
     const saveGameInput = useRef<HTMLInputElement>(null);
+
+    const { gamesApi } = useContext(RestContext);
+
+    const [activeBots, activeBotsLoading] = useAsyncLoader(
+        useCallback(async () => await gamesApi.getActiveBots(), [gamesApi]),
+        [],
+        true
+    );
 
     useTitle(lang.createGameConfirmPageTitle);
 
@@ -91,12 +97,12 @@ function CreateGameConfirmPage({}) {
         setAutohostModalOpen
     );
 
-    const handleCreateGame = useLocalCreateGameCallback(selectedPatch, map, config, options, setLastPassword, gameName);
+    const handleCreateGame = useLocalCreateGameCallback(selectedPatch, map, config, options, gameName);
 
     const canCreateGame = gameName.length > 0 && (config || selectedPatch?.status === 1);
     const canCreateAutohost = (config || selectedPatch?.status === 1) && accessMask.hasAccess(32);
 
-    useAdsRender("R-A-3959850-3", "yandex_rtb_confirmPage", {removeContainer: true});
+    useAdsRender("R-A-3959850-3", "yandex_rtb_confirmPage", { removeContainer: true });
 
     return (
         <Container className="create-game-confirm">
@@ -129,6 +135,20 @@ function CreateGameConfirmPage({}) {
                                     value={selectedPatch?.value}
                                     disabled={!!config}
                                 />
+                                {activeBots.length >= 0 && (
+                                    <Form.Select
+                                        fluid
+                                        loading={true}
+                                        label="Бот"
+                                        onChange={(e, data) => {
+                                            setSelectedBot(activeBots.find((i) => i.id == data?.value));
+                                        }}
+                                        options={activeBots.map((i) => {
+                                            return { text: i.botProjectName, value: i.id };
+                                        })}
+                                        value={selectedBot?.id}
+                                    />
+                                )}
                             </Form.Group>
                         </Form>
                         {!config && <CreateGameConfirmPatchNotifications selectedPatch={selectedPatch} />}
@@ -192,39 +212,6 @@ function CreateGameConfirmPage({}) {
                     defaultAutostart={map?.mapInfo?.numPlayers || 4}
                 ></CreateAutohostModal>
             )}
-            <Modal
-                open={!!lastPassword}
-                onClose={() => {
-                    setLastPassword("");
-                }}
-            >
-                <Modal.Header>{lang.createGameConfirmPageGamePassword}</Modal.Header>
-                <Modal.Content>
-                    <p>{lang.createGameConfirmPageGamePasswordDescription}.</p>
-                    <Input
-                        action={{
-                            icon: "copy",
-                            content: lang.copy,
-                            onClick: () => {
-                                copy(lastPassword);
-                            },
-                        }}
-                        disabled
-                        fluid
-                        value={lastPassword}
-                    />
-                </Modal.Content>
-                <Modal.Actions>
-                    <Button
-                        positive
-                        onClick={() => {
-                            setLastPassword("");
-                        }}
-                    >
-                        {lang.close}
-                    </Button>
-                </Modal.Actions>
-            </Modal>
         </Container>
     );
 }
@@ -489,122 +476,77 @@ function useLocalCreateGameCallback(
     map: Map | undefined | null,
     config: ConfigInfo | undefined | null,
     options: GameOptionsData,
-    setLastPassword: (value: string) => void,
     gameName: string
 ) {
-    const { mapsApi } = useContext(RestContext);
-    const { ghostSocket } = useContext(WebsocketContext);
+    const { mapsApi, gamesApi } = useContext(RestContext);
     const { auth } = useContext(AuthContext);
     const go = useNavigate();
 
     const { language } = useContext(AppRuntimeSettingsContext);
     const lang = language.languageRepository;
 
-    useEffect(() => {
-        const onPacket = (packet: GHostPackageEvent) => {
-            const packetData = packet.detail.package;
-
-            if (
-                packetData.context === DEFAULT_CONTEXT_HEADER_CONSTANT &&
-                packetData.type === DEFAULT_CREATE_GAME_RESPONSE
-            ) {
-                const createGameResponse = packetData as ServerCreateGame;
-
-                if (createGameResponse.status === 0) {
-                    localStorage.setItem(GAME_NAME_LOCALSTORAGE_PATH, gameName);
-
-                    if (!createGameResponse.password) {
-                        toast({
-                            title: lang.createGameConfirmPageGameCreatedToastTitle,
-                            description: lang.createGameConfirmPageGameCreatedToastDescription,
-                            icon: "check",
-                            color: "green",
-                        });
-                        go("/gamelist");
-                    } else {
-                        setLastPassword(createGameResponse.password);
-                    }
-                } else {
-                    toast({
-                        title: lang.createGameConfirmPageGameCreateErrorToastTitle,
-                        description: createGameResponse.description,
-                        icon: "x",
-                        color: "red",
-                    });
-                }
-            }
-        };
-
-        ghostSocket.addEventListener("package", onPacket);
-
-        return () => {
-            ghostSocket.removeEventListener("package", onPacket);
-        };
-    }, [ghostSocket, gameName]);
-
     return useCallback(
-        (saveGameFile?: File) => {
+        async (saveGameFile?: File) => {
             if (!config && selectedPatch?.status !== 1) return;
 
-            (config?.id
-                ? mapsApi.getConfigInfoToken(config.id)
-                : mapsApi.getMapConfig(map?.id || 0, selectedPatch?.value?.toString() || "")
-            )
-                .then((mapData) => {
-                    (saveGameFile?.arrayBuffer() || Promise.resolve(undefined)).then((data) => {
-                        let saveGameData: SaveGameData | undefined;
+            // Try parse saveGame data
 
-                        if (data) {
-                            try {
-                                const sgParser = new SaveGameParser();
-                                const sgData = sgParser.parseSaveGame(data);
+            const saveGameData: SaveGameData | null = await (async () => {
+                if (!saveGameFile) return null;
 
-                                saveGameData = {
-                                    mapPath: sgData.data.mapPath,
-                                    magicNumber: sgData.data.magicNumber,
-                                    randomSeed: sgData.data.randomSeed,
-                                    slots: sgData.data.slots,
-                                    saveGameFileName: saveGameFile?.name || "",
-                                };
+                let saveGameData: SaveGameData | undefined;
 
-                                console.log(saveGameData);
-                            } catch (e) {
-                                toast({
-                                    title: lang.createGameConfirmPageLoadGameErrorToastTitle,
-                                    description: e.toString(),
-                                    color: "red",
-                                });
-                            }
-                        }
+                try {
+                    const sgParser = new SaveGameParser();
+                    const sgData = sgParser.parseSaveGame(await saveGameFile.arrayBuffer());
 
-                        ghostSocket.send(
-                            new ClientCreateGameConverter().assembly({
-                                flags: assemblyMapOptions(
-                                    options.mask,
-                                    options.mapSpeed,
-                                    options.mapVisibility,
-                                    options.mapObservers
-                                ),
-                                slotPreset: "",
-                                gameName,
-                                mapData: mapData,
-                                privateGame: options.privateGame,
-                                configName: options.configName,
-                                saveGame: saveGameData,
-                            })
-                        );
-                    });
-                })
-                .catch((e) => {
-                    toast({
-                        title: lang.createGameConfirmPageGameCreateErrorToastTitleNetworkError,
-                        description: convertErrorResponseToString(e),
-                        color: "red",
-                    });
-                });
+                    saveGameData = {
+                        mapPath: sgData.data.mapPath,
+                        magicNumber: sgData.data.magicNumber,
+                        randomSeed: sgData.data.randomSeed,
+                        slots: sgData.data.slots,
+                        saveGameFileName: saveGameFile?.name || "",
+                    };
+
+                    return saveGameData;
+                } catch (e) {
+                    throw new ErrorForToast(lang.createGameConfirmPageLoadGameErrorToastTitle, e.toString());
+                }
+            })();
+
+            await gamesApi.createGame({
+                name: gameName,
+                configId: config?.id,
+                configName: options.configName,
+                mapId: map?.id,
+                saveGameData: saveGameData,
+                targetBotId: 1,
+                version: selectedPatch?.value.toString() || config?.version,
+                password: options.password,
+                mapGameSettings: {
+                    flags: assemblyMapOptions(
+                        options.mask,
+                        options.mapSpeed,
+                        options.mapVisibility,
+                        options.mapObservers
+                    ),
+                    hcl: "",
+                    teamPreset: "",
+                },
+            });
         },
-        [ghostSocket, selectedPatch, auth, options, gameName]
+        [selectedPatch, auth, options, gameName]
     );
+}
+
+class ErrorForToast {
+    public description: string;
+    public title: string;
+
+    constructor(title: string, description: string) {
+        this.title = title;
+        this.description = description;
+    }
 }
 
 export default CreateGameConfirmPage;

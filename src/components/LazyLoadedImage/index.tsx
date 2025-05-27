@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./LazyLoadedImage.scss";
-import { ImageProps, Image as ImageComponent, Ref } from "semantic-ui-react";
+import { ImageProps, Image as ImageComponent } from "semantic-ui-react";
 import { useVisibility } from "../../hooks/useVisibility";
 
 import classnames from "classnames";
@@ -45,17 +45,14 @@ function LazyLoadedImage({ src, forceLoaded, blured, ...props }: LazyLoadedImage
     }, [isLoaded, isLoading]);
 
     return (
-        <Ref
-            innerRef={(el) => {
+        <ImageComponent
+            ref={(el) => {
                 setImg(el as HTMLImageElement);
             }}
-        >
-            <ImageComponent
-                className={classnames({ "lazy-load-img": true, blured })}
-                src={isLoaded ? src : IMAGE_STUB_SRC}
-                {...props}
-            />
-        </Ref>
+            className={classnames({ "lazy-load-img": true, blured })}
+            src={isLoaded ? src : IMAGE_STUB_SRC}
+            {...props}
+        />
     );
 }
 

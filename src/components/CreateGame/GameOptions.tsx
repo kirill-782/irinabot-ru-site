@@ -49,11 +49,12 @@ export const GameOptions: React.FC<GameOptionsProps> = memo(({ options, onOption
 
     return (
         <>
-            <Form.Checkbox
-                label={lang.gameOptionsPassword}
-                checked={options.privateGame}
-                onChange={() => {
-                    onOptionsChange({ ...options, privateGame: !options.privateGame });
+            <Form.Input
+                label="Пароль"
+                type="password"
+                value={options.password}
+                onChange={(_, data) => {
+                    onOptionsChange({ ...options, password: data.value as string });
                 }}
             />
             <Form.Input

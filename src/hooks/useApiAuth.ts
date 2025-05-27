@@ -31,6 +31,8 @@ export const useApiAuth = ({ setMapService, setGamesService }: ApiAuthOptions) =
         }
 
         setMapService(new MapService(newConfig));
-        setGamesService(new GamesService(newConfig));
+        //setGamesService(new GamesService(newConfig));
+
+        setGamesService(new GamesService({ ...newConfig, baseURL: "http://127.0.0.1:1000/" }));
     }, [authContext.auth.apiToken]);
 };

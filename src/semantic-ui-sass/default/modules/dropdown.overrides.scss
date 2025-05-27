@@ -49,6 +49,10 @@
     content: "\f00d";
 }
 
+.ui.dropdown.loading.selection > .dropdown.icon {
+    margin: $selectionIconMargin !important;
+}
+
 /* Icons for Reference (Subsetted in 2.4.0)
   .dropdown.down:before { content: "\f0d7"; }
   .dropdown.up:before { content: "\f0d8"; }

@@ -1,7 +1,7 @@
 export interface GameOptionsData {
     mask: number;
     slotPreset: string;
-    privateGame: boolean;
+    password: string;
     mapSpeed: number;
     mapVisibility: number;
     mapObservers: number;
