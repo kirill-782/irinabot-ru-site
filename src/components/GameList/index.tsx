@@ -30,10 +30,10 @@ const ADS = [
         creatorId: 170246,
     },
     {
-        img: "/kaisa/var6.png",
-        link: "https://vk.com/empiresofwarcraft/",
+        img: "/kaisa/turikx20.png",
+        link: "https://t.me/onligamez/302",
         index: 10,
-        expire: 1718830800000,
+        expire: 1751058000000,
     },
     {
         img: "/kaisa/Banner2x2ATR.png",
