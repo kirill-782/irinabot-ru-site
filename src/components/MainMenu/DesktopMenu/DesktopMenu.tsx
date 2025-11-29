@@ -1,14 +1,14 @@
 import React, { ReactNode, useContext } from "react";
 import { NavLink } from "react-router-dom";
-import { Icon, Menu, SemanticICONS } from "semantic-ui-react";
+import { Icon, Menu, SemanticICONS, Message } from "semantic-ui-react";
 import LoginDropdown from "../../Header/LoginDropdown";
-import UploadMap from "../../Header/UploadMap";
 import UserDrowdown from "../../Header/UserDropdown";
 import { AppRuntimeSettingsContext, AuthContext } from "../../../context";
 import { switchTheme, E_THEME, currentTheme } from "../../../utils/Theme";
 import "./DesktopMenu.scss";
 import UtilsDropdown from "../../Header/UtilsDropdown";
 import LanguageDropdown from "../../Header/LanguageDropdown";
+import { WEBSOCKET_ENV } from "../../../config/ApplicationConfig";
 
 export interface MenuItem {
     type: string;
@@ -47,6 +47,10 @@ const DesktopMenu = () => {
             >
                 <Icon name={currentTheme === E_THEME.DARK ? "sun" : "moon"} style={{ margin: 0 }} />
             </Menu.Item>
+
+            <Menu.Menu position="right">
+                <Message  error={WEBSOCKET_ENV === "prod"}>{WEBSOCKET_ENV}</Message>
+            </Menu.Menu>
 
             <Menu.Menu position="right">
                 <UtilsDropdown />

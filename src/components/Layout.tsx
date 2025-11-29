@@ -11,6 +11,7 @@ function Layout() {
             <Header></Header>
 
             <SemanticToastContainer animation="fade" position="top-right" />
+            
             <Suspense fallback={<LoadingPage />}>
                 <div style={{ marginTop: 70, paddingBottom: 75 }}>
                     <Outlet />
