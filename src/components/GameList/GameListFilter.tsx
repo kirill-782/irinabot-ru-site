@@ -38,6 +38,7 @@ export interface GameListFilterProps {
 
 function GameListFilter({ filterSettings, onFilterChange, disabledFilters }: GameListFilterProps) {
     const { language } = useContext(AppRuntimeSettingsContext);
+    const runtimeContext = useContext(AppRuntimeSettingsContext);
     const lang = language.languageRepository;
 
     const [configPatches, setConfigPatches] = useState<DropdownItemProps[]>([]);
@@ -49,13 +50,15 @@ function GameListFilter({ filterSettings, onFilterChange, disabledFilters }: Gam
     }, [cache]);
 
     useEffect(() => {
-        setConfigPatches(cache.cachedVersions.map((i) => {
-            return {
-                text: i,
-                value: i,
-                content: i,
-            };
-        }));
+        setConfigPatches(
+            cache.cachedVersions.map((i) => {
+                return {
+                    text: i,
+                    value: i,
+                    content: i,
+                };
+            })
+        );
     }, [cache.cachedVersions]);
 
     return (
@@ -110,17 +113,33 @@ function GameListFilter({ filterSettings, onFilterChange, disabledFilters }: Gam
                     }}
                 ></Form.Checkbox>
                 <Form.Field>
+                    <Button
+                        basic
+                        icon="copy"
+                        size="large"
+                        color={runtimeContext.linkCopyMode.copy ? "green" : undefined}
+                        onClick={() => {
+                            runtimeContext.linkCopyMode.setCopy((copy) => !copy);
+                        }}
+                    />
+                </Form.Field>
+                <Form.Field>
                     <label>{lang.gameListFilterHiddenPatchLabel}</label>
-                    <Dropdown placeholder={lang.gameListFilterHiddenPatchPlaceholder} fluid multiple selection
-                              options={configPatches}
-                              value={filterSettings.hiddenPatch}
-                              selectedLabel=""
-                              onChange={(event, data) => {
-                                  onFilterChange({
-                                      ...filterSettings,
-                                      hiddenPatch: data.value as string[],
-                                  });
-                              }} />
+                    <Dropdown
+                        placeholder={lang.gameListFilterHiddenPatchPlaceholder}
+                        fluid
+                        multiple
+                        selection
+                        options={configPatches}
+                        value={filterSettings.hiddenPatch}
+                        selectedLabel=""
+                        onChange={(event, data) => {
+                            onFilterChange({
+                                ...filterSettings,
+                                hiddenPatch: data.value as string[],
+                            });
+                        }}
+                    />
                 </Form.Field>
                 <Form.Group grouped>
                     <label>{lang.gameListFilterGameTypeLabel}</label>
