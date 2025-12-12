@@ -110,16 +110,6 @@ function GameListPage() {
                                 size="large"
                             />
                         )}
-                        <Button
-                            floated="right"
-                            basic
-                            icon="copy"
-                            color={runtimeContext.linkCopyMode.copy ? "green" : undefined}
-                            size="large"
-                            onClick={() => {
-                                runtimeContext.linkCopyMode.setCopy((copy) => !copy);
-                            }}
-                        />
 
                         <Button
                             basic
