@@ -47,6 +47,15 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages, open, setOpen }) 
     const [selectedUser, setSelectedUser] = useState<User | null>(null);
     const [openedChat, setOpenedChat] = useState<"chat" | "console" | "">("");
 
+    const [chatVolume, setChatVolume] = useState(() => {
+        const saved = localStorage.getItem("chat-volume");
+        return saved ? parseFloat(saved) : 0.5;
+    });
+
+    useEffect(() => {
+        localStorage.setItem("chat-volume", chatVolume.toString());
+    }, [chatVolume]);
+
     const openChat = useCallback(
         (nickname: string) => {
             setOpenedChat("chat");
@@ -81,7 +90,7 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages, open, setOpen }) 
 
     useEffect(() => {
         chat.setSelectUser({ selectUser: openChat });
-    }, [openChat, chat.setSelectUser]);
+    }, [openChat]);
 
     const sendMessage = (user: User, message: string) => {
         const newUsers = [...users];
@@ -220,7 +229,7 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages, open, setOpen }) 
                     // Play Sound
 
                     const audio = new Audio("/sound/162464__kastenfrosch__message.mp3");
-                    audio.volume = 0.5;
+                    audio.volume = chatVolume;
                     audio.play();
                 }
             }
@@ -231,7 +240,7 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages, open, setOpen }) 
         return () => {
             sockets.ghostSocket.removeEventListener("package", onPacket);
         };
-    }, [selectedUser, setUnreadMessages, sockets.ghostSocket, users]);
+    }, [chatVolume, selectedUser, setUnreadMessages, sockets.ghostSocket, users]);
 
     const closeChat = () => {
         setSelectedUser(null);
@@ -246,13 +255,29 @@ export const Chat: React.FC<ChatProps> = ({ setUnreadMessages, open, setOpen }) 
                 <Card.Header className="chat-header">
                     {openedChat !== "" && <Icon style={iconChatStyles} name="angle left" onClick={closeChat} />}
                     <p>{label}</p>
-                    <Icon
-                        style={{ float: "right", ...iconChatStyles }}
-                        name="x"
-                        onClick={() => {
-                            setOpen(false);
-                        }}
-                    />
+                    <div style={{ float: "right", display: "flex", alignItems: "center", gap: "5px" }}>
+                        <Icon
+                            name={chatVolume === 0 ? "volume off" : "volume up"}
+                            style={iconChatStyles}
+                            onClick={() => setChatVolume(0)}
+                        />
+                        <input
+                            type="range"
+                            min="0"
+                            max="1"
+                            step="0.01"
+                            value={chatVolume}
+                            onChange={(e) => setChatVolume(parseFloat(e.target.value))}
+                            style={{ width: "60px" }}
+                        />
+                        <Icon
+                            style={iconChatStyles}
+                            name="x"
+                            onClick={() => {
+                                setOpen(false);
+                            }}
+                        />
+                    </div>
                 </Card.Header>
                 <Divider />
                 <Card.Description>{content}</Card.Description>
