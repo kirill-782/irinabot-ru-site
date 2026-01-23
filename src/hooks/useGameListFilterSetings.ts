@@ -1,6 +1,5 @@
-import { abort } from "process";
 import { useContext, useEffect, useState } from "react";
-import { AuthContext, RestContext } from "../context";
+import { AuthContext } from "../context";
 import { FilterSettings } from "./useGameListFilter";
 
 const gameListFilterLocalStorageKey = "gameListFilters";

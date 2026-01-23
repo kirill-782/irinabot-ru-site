@@ -57,7 +57,7 @@ function AutopayPage() {
     const authContext = useContext(AuthContext);
 
     const [selectedPlaces, setSelectedPlaces] = useState<number[]>([]);
-    const [connectroId, setConnectorId] = useState<string>("");
+    const [connectorId, setConnectorId] = useState<string>("");
     const [duration, setDuration] = useState<string>("1");
 
     const formRef = useRef<HTMLFormElement>(null);
@@ -107,8 +107,8 @@ function AutopayPage() {
 
         const totalPrice = basePriceInMoonth * parseInt(duration);
 
-        return [totalPrice, totalPrice > 0 && parseInt(connectroId) > 1];
-    }, [selectedPlaces, duration, connectroId]);
+        return [totalPrice, totalPrice > 0 && parseInt(connectorId) > 1];
+    }, [selectedPlaces, duration, connectorId]);
 
     const renerErrorMessage = () => {
         if (isValid) return null;
@@ -132,7 +132,7 @@ function AutopayPage() {
     const pay = (payType: string) => {
         if (paymentTypeRef.current && paylentLabelRef.current && formRef.current) {
             paymentTypeRef.current.value = payType;
-            paylentLabelRef.current.value = JSON.stringify([connectroId, selectedPlaces]);
+            paylentLabelRef.current.value = JSON.stringify([connectorId, selectedPlaces]);
             formRef.current.submit();
         }
     };
@@ -160,7 +160,7 @@ function AutopayPage() {
                     <Grid.Column width="three" floated="right">
                         <Form.Input
                             label={lang.autopayPageConnectorIdLabel}
-                            value={connectroId}
+                            value={connectorId}
                             onChange={(e) => checkAndSetConnectorId(e.target.value)}
                         ></Form.Input>
                         <Form.Input

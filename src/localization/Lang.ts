@@ -31,6 +31,9 @@ export const LanguageData = {
     hookConnectorGameAddNotificationTitle: "Игра в коннектор отправлена",
     hookConnectorGameAddNotificationDescription: "Зайдите в LAN Warcraft III, чтобы войти",
 
+    hookGameNotificationTitle: "Новое уведомление об игре",
+    hookGameNotificationDescription: 'Игра "{gameName}" соответствует вашим правилам!',
+
     siteSpareLoader: "Фиксики размещают теги по местам, ожидайте",
     siteErrorCatch:
         "На сайте произошла ошибка. Проверьте интернет соединение, обвините страницу или обратитесь к администратору",
@@ -158,6 +161,7 @@ export const LanguageData = {
     utilsDropdownOption: "Утилиты",
     utilsDropdownAutohostList: "Список автохостов",
     utilsDropdownAccessMaskCalc: "Калькулятор accessMask",
+    utilsDropdownGameNotifications: "Уведомления об играх",
 
     menuActiveGames: "Активные игры",
     menuMapList: "Список карт",
@@ -286,6 +290,18 @@ export const LanguageData = {
     mapReportModal: "DEPRECATED",
 
     gameListFiltersModalHeader: "Фильтр списка игр",
+
+    gameNotificationSettingsModalHeader: "Настройки уведомлений об играх",
+    gameNotificationSettingsModalRuleTypeFavoriteMap: "Карта из избранного",
+    gameNotificationSettingsModalRuleTypePlayerNickname: "В игре есть игрок с ником",
+    gameNotificationSettingsModalRuleTypeGameNameSubstring: "Название игры соответствует подстроке",
+    gameNotificationSettingsModalRuleTypeLabel: "Тип правила",
+    gameNotificationSettingsModalRuleTypePlaceholder: "Выберите тип",
+    gameNotificationSettingsModalPlayerNicknameLabel: "Никнейм игрока",
+    gameNotificationSettingsModalPlayerNicknamePlaceholder: "Введите никнейм",
+    gameNotificationSettingsModalGameNameSubstringLabel: "Подстрока названия",
+    gameNotificationSettingsModalGameNameSubstringPlaceholder: "Введите подстроку",
+    gameNotificationSettingsModalAddRule: "Добавить правило",
 
     createAutohostModalHeader: "Создание автохоста",
     createAutohostModalNotification:

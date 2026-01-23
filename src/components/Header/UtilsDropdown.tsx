@@ -1,10 +1,10 @@
-import { access } from "fs";
 import React, { useContext, useState } from "react";
 import { Dropdown, Icon } from "semantic-ui-react";
 import { AppRuntimeSettingsContext, AuthContext } from "../../context";
 import AccessMaskModal, { AccessMaskBit } from "../Modal/AccessMaskModal";
 import AutohostListModal from "../Modal/AutohostListModal";
 import UploadMap from "./UploadMap";
+import GameNotificationSettingsModal from "../Modal/GameNotificationSettingsModal";
 
 function UtilsDropdown() {
     const authContext = useContext(AuthContext);
@@ -14,6 +14,7 @@ function UtilsDropdown() {
 
     const [autohostModalOpened, setAutohostModalOpened] = useState(false);
     const [accessMaskModalOpened, setAccessMaskModalOpened] = useState(false);
+    const [gameNotificationModalOpened, setGameNotificationModalOpened] = useState(false);
 
     return (
         <>
@@ -29,6 +30,14 @@ function UtilsDropdown() {
                         {lang.utilsDropdownAutohostList}
                     </Dropdown.Item>
                     <UploadMap />
+                    <Dropdown.Item
+                        onClick={() => {
+                            setGameNotificationModalOpened(true);
+                        }}
+                    >
+                        <Icon name="bell" />
+                        {lang.utilsDropdownGameNotifications}
+                    </Dropdown.Item>
                     <Dropdown.Item
                         onClick={() => {
                             setAccessMaskModalOpened(true);
@@ -54,6 +63,14 @@ function UtilsDropdown() {
                         setAccessMaskModalOpened(false);
                     }}
                 ></AccessMaskModal>
+            )}
+            {gameNotificationModalOpened && (
+                <GameNotificationSettingsModal
+                    open={gameNotificationModalOpened}
+                    onClose={() => {
+                        setGameNotificationModalOpened(false);
+                    }}
+                />
             )}
         </>
     );
