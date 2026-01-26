@@ -1,9 +1,26 @@
-import { useEffect } from "react";
+import { useContext, useEffect, useRef } from "react";
+import { FilterSettings } from "./useGameListFilter";
+import { RestContext } from "../context/index";
+import { toast } from "@kokomi/react-semantic-toasts";
+import { getGameNotificationRules, GameNotificationRule } from "../utils/GameNotificationRules";
+import { FavoriteMaps } from "../utils/FavoriteMaps";
+import { AppRuntimeSettingsContext } from "../context";
 import { DEFAULT_GAME_LIST } from "../models/websocket/HeaderConstants";
 import { GameListGame, GameListGameFlags, ServerGameList } from "../models/websocket/ServerGameList";
 import { GHostPackageEvent, GHostWebSocket } from "./../services/GHostWebsocket";
-import { ClientGameListConverter, GAMELIST_FILTER_STARTED } from "../models/websocket/ClientGameList";
-import { FilterSettings } from "./useGameListFilter";
+
+const checkGameMatchesRule = (game: GameListGame, rule: GameNotificationRule): boolean => {
+    switch (rule.type) {
+        case "favorite_map":
+            return FavoriteMaps.listMaps().has(game.mapId);
+        case "player_nickname":
+            return game.players.some((player) => player.name === rule.nickname);
+        case "game_name_substring":
+            return game.name.toLowerCase().includes(rule.substring!.toLowerCase());
+        default:
+            return false;
+    }
+};
 
 interface GameListSubscribeOptions {
     ghostSocket: GHostWebSocket;
@@ -51,23 +68,21 @@ export const useGameListSubscribe = ({
     filters,
     ignoreFocusCheck,
 }: GameListSubscribeOptions) => {
+    const { mapsApi } = useContext(RestContext);
+    const { language } = useContext(AppRuntimeSettingsContext);
+    const lang = language.languageRepository;
+    const previousGamesRef = useRef<GameListGame[]>([]);
+
     useEffect(() => {
         let intervalId;
-
-        const sendGameListRequest = () => {
-            if (ghostSocket.isConnected()) {
-                let filterFlags = 0xffffffff;
-
-                if (filters?.noLoadStarted) filterFlags &= ~GAMELIST_FILTER_STARTED;
-
-                let clientGameListConverter = new ClientGameListConverter();
-                ghostSocket.send(clientGameListConverter.assembly({ filters: filterFlags }));
-            }
-        };
+        const abortController = new AbortController();
 
         const trySendGameList = () => {
-            if ((document.hasFocus() || ignoreFocusCheck) && !isGameListLocked) sendGameListRequest();
-            else intervalId = setTimeout(trySendGameList, 500);
+            if ((document.hasFocus() || ignoreFocusCheck) && !isGameListLocked) {
+                // Do nothing, wait for websocket
+            } else {
+                intervalId = setTimeout(trySendGameList, 500);
+            }
         };
 
         const onPackage = (event: GHostPackageEvent) => {
@@ -82,6 +97,25 @@ export const useGameListSubscribe = ({
 
                 onGameList(replacedGames);
 
+                // Check for new games and notify
+                const rules = getGameNotificationRules();
+                if (rules.length > 0) {
+                    const previousGameIds = new Set(previousGamesRef.current.map((g) => g.gameCounter));
+                    const newGames = replacedGames.filter((g) => !previousGameIds.has(g.gameCounter));
+                    newGames.forEach((game) => {
+                        const matchingRules = rules.filter((rule) => checkGameMatchesRule(game, rule));
+                        if (matchingRules.length > 0) {
+                            toast({
+                                title: lang.hookGameNotificationTitle,
+                                description: lang.hookGameNotificationDescription.replace("{gameName}", game.name),
+                                type: "info",
+                                time: 5000,
+                            });
+                        }
+                    });
+                }
+                previousGamesRef.current = replacedGames;
+
                 clearTimeout(intervalId);
                 intervalId = setTimeout(trySendGameList, 3000);
             }
@@ -91,7 +125,7 @@ export const useGameListSubscribe = ({
             trySendGameList();
         }
 
-        const onConnectOpen = () => sendGameListRequest();
+        const onConnectOpen = () => {};
 
         const onConnectClose = () => {
             clearTimeout(intervalId);
@@ -106,10 +140,20 @@ export const useGameListSubscribe = ({
 
         return () => {
             clearInterval(intervalId);
+            abortController.abort();
 
             ghostSocket.removeEventListener("package", onPackage);
             ghostSocket.removeEventListener("open", onConnectOpen);
             ghostSocket.removeEventListener("close", onConnectClose);
         };
-    }, [ghostSocket, isGameListLocked, filters?.noLoadStarted, onGameList, ignoreFocusCheck]);
+    }, [
+        ghostSocket,
+        isGameListLocked,
+        filters?.noLoadStarted,
+        onGameList,
+        ignoreFocusCheck,
+        mapsApi,
+        lang.hookGameNotificationTitle,
+        lang.hookGameNotificationDescription,
+    ]);
 };
