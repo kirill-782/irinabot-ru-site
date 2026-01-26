@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Dropdown, Icon } from "semantic-ui-react";
+import { NavLink } from "react-router-dom";
 import { AppRuntimeSettingsContext, AuthContext } from "../../context";
 import AccessMaskModal, { AccessMaskBit } from "../Modal/AccessMaskModal";
 import AutohostListModal from "../Modal/AutohostListModal";
@@ -28,6 +29,14 @@ function UtilsDropdown() {
                     >
                         <Icon name="list" />
                         {lang.utilsDropdownAutohostList}
+                    </Dropdown.Item>
+                    <Dropdown.Item
+                        as={NavLink}
+                        to="/admin-list"
+                        disabled={!authContext.auth.apiToken.hasAuthority("ADMIN_ACCESS_ROOT")}
+                    >
+                        <Icon name="shield" />
+                        {lang.utilsDropdownAdminList}
                     </Dropdown.Item>
                     <UploadMap />
                     <Dropdown.Item

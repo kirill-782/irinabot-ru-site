@@ -28,6 +28,7 @@ const LanguageManagerPage = React.lazy(() => import("./Pages/LanguageManagerPage
 
 const ConsentStubPage = React.lazy(() => import("./Pages/ConsentStubPage"));
 
+const AdminListPage = React.lazy(() => import("./Pages/AdminListPage"));
 
 interface CondirionalRouteIndex {
     path?: undefined;
@@ -153,8 +154,15 @@ const routes: ConditionalRoute[] = [
             },
             {
                 path: "consent",
-                element: <ConsentStubPage/>,
+                element: <ConsentStubPage />,
                 requireAuth: true,
+            },
+            {
+                path: "admin-list",
+                element: <AdminListPage />,
+                requireAuth: true,
+                requireToken: true,
+                requiredAuthorities: ["ADMIN_ACCESS_ROOT"],
             },
             {
                 path: "*",
@@ -170,8 +178,6 @@ const routes: ConditionalRoute[] = [
         path: "/telegramAuth",
         element: <TelegramAuthStubPage />,
     },
-
-    
 ];
 
 function RouteList() {
@@ -179,11 +185,11 @@ function RouteList() {
 
     const resultRoutes = useMemo(() => {
         const hasAccessToRoute = ({
-                                      requiredAuthorities,
-                                      requireAuth,
-                                      requireToken,
-                                      waitAuth,
-                                  }: ConditionalRoute): CheckRouteResult => {
+            requiredAuthorities,
+            requireAuth,
+            requireToken,
+            waitAuth,
+        }: ConditionalRoute): CheckRouteResult => {
             let result: CheckRouteResult = {
                 hasAccess: true,
                 waitAuth: waitAuth,
