@@ -3,4 +3,19 @@
         margin-top: 10px;
         float: right;
     }
+
+    .form-loader-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0.78571429rem 1rem;
+        border: 1px solid rgba(34, 36, 38, 0.15);
+    }
+
+    .form-warning-message {
+        margin: 0;
+        padding: 0.5em 0.75em;
+        font-size: 0.9em;
+        border: none;
+    }
 }

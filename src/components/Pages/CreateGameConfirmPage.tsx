@@ -6,12 +6,13 @@ import {
     DropdownProps,
     Form,
     Grid,
-    Input,
     Loader,
     Message,
     Modal,
+    Input,
 } from "semantic-ui-react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { ClientCreateGameConverter } from "../../models/websocket/ClientCreateGame";
 import { Map } from "../../models/rest/Map";
 import { ConfigInfo } from "../../models/rest/ConfigInfo";
 import { AppRuntimeSettingsContext, AuthContext, CacheContext, RestContext, WebsocketContext } from "../../context";
@@ -22,8 +23,7 @@ import MapPreview from "../CreateGame/MapPreview";
 import ConfigPreview from "../CreateGame/ConfigPreview";
 import CreateGameConfirmPatchNotifications from "../CreateGame/CreateGameConfirmPatchNotifications";
 import CreateAutohostModal, { AuthostModalData } from "../Modal/CreateAutohostModal";
-import { ClientAddAutohostConverter } from "../../models/websocket/ClientAddAutohost";
-import { ClientCreateGameConverter, SaveGameData } from "../../models/websocket/ClientCreateGame";
+import { SaveGameData } from "../../models/websocket/ClientCreateGame";
 import { toast } from "@kokomi/react-semantic-toasts";
 import {
     DEFAULT_CONTEXT_HEADER_CONSTANT,
@@ -55,7 +55,7 @@ export interface DropdownItemPropsConfirmExtends extends DropdownItemProps {
     status?: null | number;
 }
 
-function CreateGameConfirmPage({}) {
+function CreateGameConfirmPage() {
     const [options, setOptions] = useState<GameOptionsData>({
         mask: 3,
         slotPreset: "",
@@ -71,7 +71,10 @@ function CreateGameConfirmPage({}) {
 
     const [gameName, setGameName] = useState(localStorage.getItem(GAME_NAME_LOCALSTORAGE_PATH) || "");
     const [autohostModalOpen, setAutohostModalOpen] = useState(false);
-    const [lastPassword, setLastPassword] = useState("");
+    const [lastPassword, setLastPassword] = useState<string>("");
+
+    const [selectedBot, setSelectedBot] = useState<any>();
+    const [selectedSpaceId, setSelectedSpaceId] = useState<number>(0);
 
     const [map, config, hasLoading, error] = useLocalMapCategories();
 
@@ -79,16 +82,43 @@ function CreateGameConfirmPage({}) {
 
     const saveGameInput = useRef<HTMLInputElement>(null);
 
+    const activeBots = React.useMemo(() => [] as any[], []);
+    const activeBotsLoading = false;
+
+    useEffect(() => {
+        if (!Array.isArray(activeBots) || activeBots.length === 0) return;
+
+        if (!selectedBot || !activeBots.some((b) => b.id === selectedBot.id)) {
+            setSelectedBot(activeBots[0]);
+        }
+    }, [activeBots, selectedBot]);
+
     useTitle(lang.createGameConfirmPageTitle);
 
     const { accessMask } = useContext(AuthContext).auth;
+    const connectorCache = useContext(CacheContext).cachedConnectorIds;
+
+    const serverOptions = accessMask
+        .getRecords()
+        .filter((i) => (i.accessMask & 32) === 32)
+        .map((i) => ({
+            value: i.spaceId,
+            text: connectorCache[i.spaceId] || `Server ${i.spaceId}`,
+        }));
+
+    useEffect(() => {
+        if (serverOptions.length > 0 && selectedSpaceId === 0) {
+            setSelectedSpaceId(serverOptions[0].value as number);
+        }
+    }, [serverOptions, selectedSpaceId]);
 
     const handleAutohostCreate = useLocalAutohostCreateCallback(
         selectedPatch,
         map,
         config,
         options,
-        setAutohostModalOpen
+        setAutohostModalOpen,
+        selectedSpaceId
     );
 
     const handleCreateGame = useLocalCreateGameCallback(selectedPatch, map, config, options, setLastPassword, gameName);
@@ -96,7 +126,7 @@ function CreateGameConfirmPage({}) {
     const canCreateGame = gameName.length > 0 && (config || selectedPatch?.status === 1);
     const canCreateAutohost = (config || selectedPatch?.status === 1) && accessMask.hasAccess(32);
 
-    useAdsRender("R-A-3959850-3", "yandex_rtb_confirmPage", {removeContainer: true});
+    useAdsRender("R-A-3959850-3", "yandex_rtb_confirmPage", { removeContainer: true });
 
     return (
         <Container className="create-game-confirm">
@@ -128,6 +158,39 @@ function CreateGameConfirmPage({}) {
                                     options={configPatches}
                                     value={selectedPatch?.value}
                                     disabled={!!config}
+                                />
+                                {activeBotsLoading ? (
+                                    <div className="form-loader-container">
+                                        <Loader active inline />
+                                    </div>
+                                ) : activeBots.length === 0 ? (
+                                    <Message warning className="form-warning-message">
+                                        Нет доступных ботов
+                                    </Message>
+                                ) : (
+                                    <Form.Select
+                                        fluid
+                                        label="Бот"
+                                        loading={activeBotsLoading}
+                                        options={activeBots.map((i) => ({
+                                            text: i.botProjectName,
+                                            value: i.id,
+                                        }))}
+                                        value={selectedBot?.id}
+                                        onChange={(e, data) => {
+                                            const bot = activeBots.find((i) => i.id === data.value);
+                                            if (bot) setSelectedBot(bot);
+                                        }}
+                                    />
+                                )}
+                                <Form.Select
+                                    fluid
+                                    label="Сервер"
+                                    onChange={(e, data) => {
+                                        setSelectedSpaceId(parseInt(data.value?.toString() || "0"));
+                                    }}
+                                    options={serverOptions}
+                                    value={selectedSpaceId}
                                 />
                             </Form.Group>
                         </Form>
@@ -312,7 +375,7 @@ function useLocalMapCategories(): [Map | null, ConfigInfo | null, boolean, strin
         return () => {
             abortController.abort();
         };
-    }, [location.search, mapsApi]);
+    }, [config?.id, lang.createGameConfirmPageNoParameters, location.search, map?.id, mapsApi]);
 
     return [map, config, hasLoading, error];
 }
@@ -367,7 +430,7 @@ function useLocalPatchSelector(
         else {
             setSelectedPatch(configPatches.find((i) => i.status === 1) || configPatches[0]);
         }
-    }, [configPatches, map, config]);
+    }, [configPatches, map, config, selectedPatch]);
 
     // Autoparser
 
@@ -385,7 +448,7 @@ function useLocalPatchSelector(
                 });
             }
         }
-    }, [selectedPatch]);
+    }, [selectedPatch, mapsApi, apiToken, map?.id]);
 
     const onUpdatePatch = (e: SyntheticEvent, { value }: DropdownProps) => {
         setSelectedPatch(configPatches.find((e) => e.value === value));
@@ -399,15 +462,14 @@ function useLocalAutohostCreateCallback(
     map: Map | undefined | null,
     config: ConfigInfo | undefined | null,
     options: GameOptionsData,
-    setAutohostModalOpen: (value: boolean) => void
+    setAutohostModalOpen: (value: boolean) => void,
+    selectedSpaceId: number
 ) {
     const { mapsApi } = useContext(RestContext);
     const { ghostSocket } = useContext(WebsocketContext);
-    const { auth } = useContext(AuthContext);
 
     const { language } = useContext(AppRuntimeSettingsContext);
     const lang = language.languageRepository;
-    const t = language.getString;
 
     useEffect(() => {
         const onPacket = (packet: GHostPackageEvent) => {
@@ -442,45 +504,87 @@ function useLocalAutohostCreateCallback(
         return () => {
             ghostSocket.removeEventListener("package", onPacket);
         };
-    }, [ghostSocket]);
+    }, [
+        ghostSocket,
+        lang.createGameConfirmPageAutohostCreated,
+        lang.createGameConfirmPageAutohostNotCreated,
+        setAutohostModalOpen,
+    ]);
 
     return useCallback(
-        (autohostData: AuthostModalData) => {
+        async (autohostData: AuthostModalData) => {
             if (!config && selectedPatch?.status !== 1) return;
 
-            (config?.id
-                ? mapsApi.getConfigInfoToken(config.id)
-                : mapsApi.getMapConfig(map?.id || 0, selectedPatch?.value?.toString() || "")
-            )
-                .then((mapData) => {
-                    ghostSocket.send(
-                        new ClientAddAutohostConverter().assembly({
-                            gameLimit: autohostData.countGames,
-                            autostart: autohostData.autostart,
-                            flags: assemblyMapOptions(
-                                options.mask,
-                                options.mapSpeed,
-                                options.mapVisibility,
-                                options.mapObservers
-                            ),
-                            spaceId: autohostData.spaceId,
-                            hcl: autohostData.hcl,
-                            slotPreset: "",
-                            name: autohostData.gameName,
-                            mapData,
-                            configName: options.configName,
-                        })
-                    );
-                })
-                .catch((e) => {
+            try {
+                const mapData = await (config?.id
+                    ? mapsApi.getConfigInfoToken(config.id)
+                    : mapsApi.getMapConfig(map?.id || 0, selectedPatch?.value?.toString() || ""));
+
+                const response = await fetch("/api/autohost", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        gameLimit: autohostData.countGames,
+                        autostart: autohostData.autostart,
+                        flags: assemblyMapOptions(
+                            options.mask,
+                            options.mapSpeed,
+                            options.mapVisibility,
+                            options.mapObservers
+                        ),
+                        spaceId: selectedSpaceId,
+                        hcl: autohostData.hcl,
+                        slotPreset: "",
+                        name: autohostData.gameName,
+                        mapData,
+                        configName: options.configName,
+                    }),
+                });
+
+                const result = await response.json();
+
+                if (result.status === 0) {
                     toast({
-                        title: t("createGameConfirmPageMapConfigLoadingError"),
-                        description: convertErrorResponseToString(e),
+                        title: lang.createGameConfirmPageAutohostCreated,
+                        icon: "check",
+                        color: "green",
+                    });
+                    setAutohostModalOpen(false);
+                } else {
+                    toast({
+                        title: lang.createGameConfirmPageAutohostNotCreated,
+                        description: result.description,
+                        icon: "x",
                         color: "red",
                     });
+                }
+            } catch (e) {
+                toast({
+                    title: lang.createGameConfirmPageMapConfigLoadingError,
+                    description: convertErrorResponseToString(e),
+                    color: "red",
                 });
+            }
         },
-        [ghostSocket, selectedPatch, auth, options, config]
+        [
+            config,
+            selectedPatch?.status,
+            selectedPatch?.value,
+            mapsApi,
+            map?.id,
+            options.mask,
+            options.mapSpeed,
+            options.mapVisibility,
+            options.mapObservers,
+            options.configName,
+            selectedSpaceId,
+            lang.createGameConfirmPageAutohostCreated,
+            lang.createGameConfirmPageAutohostNotCreated,
+            lang.createGameConfirmPageMapConfigLoadingError,
+            setAutohostModalOpen,
+        ]
     );
 }
 
@@ -494,11 +598,11 @@ function useLocalCreateGameCallback(
 ) {
     const { mapsApi } = useContext(RestContext);
     const { ghostSocket } = useContext(WebsocketContext);
-    const { auth } = useContext(AuthContext);
-    const go = useNavigate();
 
     const { language } = useContext(AppRuntimeSettingsContext);
     const lang = language.languageRepository;
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         const onPacket = (packet: GHostPackageEvent) => {
@@ -520,7 +624,7 @@ function useLocalCreateGameCallback(
                             icon: "check",
                             color: "green",
                         });
-                        go("/gamelist");
+                        navigate("/gamelist");
                     } else {
                         setLastPassword(createGameResponse.password);
                     }
@@ -540,7 +644,15 @@ function useLocalCreateGameCallback(
         return () => {
             ghostSocket.removeEventListener("package", onPacket);
         };
-    }, [ghostSocket, gameName]);
+    }, [
+        ghostSocket,
+        gameName,
+        lang.createGameConfirmPageGameCreatedToastTitle,
+        lang.createGameConfirmPageGameCreatedToastDescription,
+        lang.createGameConfirmPageGameCreateErrorToastTitle,
+        setLastPassword,
+        navigate,
+    ]);
 
     return useCallback(
         (saveGameFile?: File) => {
@@ -603,7 +715,23 @@ function useLocalCreateGameCallback(
                     });
                 });
         },
-        [ghostSocket, selectedPatch, auth, options, gameName]
+        [
+            config,
+            selectedPatch?.status,
+            selectedPatch?.value,
+            mapsApi,
+            gameName,
+            options.configName,
+            options.privateGame,
+            options.mask,
+            options.mapSpeed,
+            options.mapVisibility,
+            options.mapObservers,
+            map?.id,
+            lang.createGameConfirmPageLoadGameErrorToastTitle,
+            lang.createGameConfirmPageGameCreateErrorToastTitleNetworkError,
+            ghostSocket,
+        ]
     );
 }
 
