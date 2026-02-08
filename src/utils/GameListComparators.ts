@@ -11,7 +11,7 @@ const getFreeSlots = (game: GameListGame): number => {
 };
 
 export const gameTypeComparator = (a: GameListGame, b: GameListGame): number => {
-    return compareByStarted(a, b) || compareByOtherGame(a, b);
+    return compareByStarted(a, b) || compareByJoinAsObserver(a, b) * -1 || compareByOtherGame(a, b);
 };
 
 export const defaultComparator = (a: GameListGame, b: GameListGame): number => {
@@ -60,6 +60,16 @@ const compareByStarted = (a: GameListGame, b: GameListGame): number => {
     if (a.gameFlags.started) return 1;
 
     if (b.gameFlags.started) return -1;
+
+    return 0;
+};
+
+const compareByJoinAsObserver = (a: GameListGame, b: GameListGame): number => {
+    if (a.gameFlags.canJoinAsObserver && b.gameFlags.canJoinAsObserver) return 0;
+
+    if (a.gameFlags.canJoinAsObserver) return 1;
+
+    if (b.gameFlags.canJoinAsObserver) return -1;
 
     return 0;
 };

@@ -11,12 +11,14 @@ export class GameListGameFlags {
     public hasPassword: boolean;
     public hasOtherGame: boolean;
     public hasGamePowerUp: boolean;
+    public canJoinAsObserver: boolean;
 
     constructor(flags: number) {
         this.started = (flags & 1) > 0;
         this.hasPassword = (flags & 2) > 0;
         this.hasGamePowerUp = (flags & 4) > 0;
         this.hasOtherGame = (flags & 8) > 0;
+        this.canJoinAsObserver = (flags & 16) > 0;
     }
 
     public toInteger = () => {
@@ -26,6 +28,7 @@ export class GameListGameFlags {
         if (this.hasPassword) number |= 2;
         if (this.hasGamePowerUp) number |= 4;
         if (this.hasOtherGame) number |= 8;
+        if (this.canJoinAsObserver) number |= 16;
 
         return number;
     };

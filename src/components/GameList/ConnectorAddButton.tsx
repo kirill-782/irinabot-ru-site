@@ -1,4 +1,4 @@
-import { Button, Form, Icon, Modal } from "semantic-ui-react";
+import { Button, Form, Icon, IconProps, Modal, SemanticShorthandItem } from "semantic-ui-react";
 import React, { useContext, useState } from "react";
 import { AppRuntimeSettingsContext, WebsocketContext } from "../../context";
 import { AuthContext } from "../../context";
@@ -40,7 +40,15 @@ function ConnectorAddButton({ game }: ConnectorAddButtonProps) {
 
     const isEnabled = auth.currentAuth !== null;
 
-    if (game.gameFlags.started) return null;
+    if (game.gameFlags.started && !game.gameFlags.canJoinAsObserver) return null;
+
+    const icon = ((): SemanticShorthandItem<IconProps> => {
+        if (game.gameFlags.hasPassword) return "lock";
+
+        if (game.gameFlags.started) return "eye";
+
+        return "gamepad";
+    })();
 
     return (
         <>
@@ -81,7 +89,7 @@ function ConnectorAddButton({ game }: ConnectorAddButtonProps) {
                 </Modal>
             </div>
             <Button
-                icon={game.gameFlags.hasPassword ? "lock" : "gamepad"}
+                icon={icon}
                 disabled={!isEnabled}
                 color={isEnabled ? "green" : "red"}
                 basic
