@@ -30,16 +30,10 @@ const ADS = [
         creatorId: 170246,
     },
     {
-        img: "/kaisa/turikx20.png",
-        link: "https://t.me/onligamez/302",
+        img: "/kaisa/Banner.png",
+        link: "https://discord.gg/d3WvXDk9zQ",
         index: 10,
-        expire: 1751058000000,
-    },
-    {
-        img: "/kaisa/Banner2x2ATR.png",
-        link: "https://goodgame.ru/cups/irinabot-cup-2x2-atr-so-sluchajnym-soyuznikom-7200",
-        index: 15,
-        expire: 1734296400000,
+        expire: 1773090000000,
     }
 ];
 
