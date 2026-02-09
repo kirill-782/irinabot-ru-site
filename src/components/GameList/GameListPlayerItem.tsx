@@ -5,6 +5,7 @@ import "./GameListPlayerItem.scss";
 import { AppRuntimeSettingsContext } from "../../context";
 import React from "react";
 import WarcraftIIIText from "../WarcraftIIIText";
+import { escapeWC3Tags } from "../../utils/WC3TestUtils";
 
 const realmToText = {
     "178.218.214.114": "iCCup",
@@ -78,7 +79,7 @@ function GameListPlayerItem({ player }: GameListPlayerItemProps) {
     const lang = language.languageRepository;
 
     const openUserChat = () => {
-        if (chat.selectUser.selectUser) chat.selectUser.selectUser(player.name);
+        if (chat.selectUser.selectUser) chat.selectUser.selectUser(escapeWC3Tags(player.name));
     };
 
     return (
