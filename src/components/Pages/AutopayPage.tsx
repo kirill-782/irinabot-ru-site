@@ -67,6 +67,7 @@ function AutopayPage() {
 
     const { language } = useContext(AppRuntimeSettingsContext);
     const lang = language.languageRepository;
+    const t = language.getString;
 
     useEffect(() => {
         setConnectorId(authContext.auth.currentAuth?.connectorId.toString());
@@ -140,21 +141,17 @@ function AutopayPage() {
     };
 
     const payReddem = async () => {
-        const code = prompt("Укажите код предоплаты");
+        const code = prompt(lang.autopayPageRedeemCodePrompt);
 
-        if(!code) return;
+        if (!code) return;
 
-        const result = await redeemApi.redeemCode({code, userId: Number(connectorId), places: selectedPlaces});
+        const result = await redeemApi.redeemCode({ code, userId: Number(connectorId), places: selectedPlaces });
 
-        if(result.ok)
-            alert("Код погашен. Номинал: " + result.amount);
-        else if(result.statusCode === 429)
-            alert("Слишком быстро. Подождите 5 секунд");
-        else if(result.statusCode === 409)
-            alert("Код не найден или уже активирован");
-        else if((result as any).message != undefined)
-            alert((result as any).message)
-    }
+        if (result.ok) alert(t("autopayPageRedeemSuccess", { amount: result.amount }));
+        else if (result.statusCode === 429) alert(lang.autopayPageRedeemRateLimit);
+        else if (result.statusCode === 409) alert(lang.autopayPageRedeemNotFound);
+        else if ((result as any).message != undefined) alert((result as any).message);
+    };
 
     return (
         <Container>
@@ -198,8 +195,16 @@ function AutopayPage() {
                             <Form.Button onClick={() => pay("PC")} disabled={!isValid} basic color="green">
                                 {lang.autopayPagePayYooMoney}
                             </Form.Button>
-                            <Form.Button onClick={(e) => {payReddem(); e.preventDefault();}} disabled={!isValid} basic color="green">
-                                Оплата предоплаченным кодом
+                            <Form.Button
+                                onClick={(e) => {
+                                    payReddem();
+                                    e.preventDefault();
+                                }}
+                                disabled={!isValid}
+                                basic
+                                color="green"
+                            >
+                                {lang.autopayPagePayRedeemCode}
                             </Form.Button>
                         </Form.Group>
                     </Grid.Row>

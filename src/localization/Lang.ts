@@ -422,6 +422,11 @@ export const LanguageData = {
     autopayPageTotalLabel: "Итого",
     autopayPagePayCard: "Оплата картой",
     autopayPagePayYooMoney: "Оплата Yoo Money",
+    autopayPagePayRedeemCode: "Оплата предоплаченным кодом",
+    autopayPageRedeemCodePrompt: "Укажите код предоплаты",
+    autopayPageRedeemSuccess: "Код погашен. Номинал: {amount}",
+    autopayPageRedeemRateLimit: "Слишком быстро. Подождите 5 секунд",
+    autopayPageRedeemNotFound: "Код не найден или уже активирован",
     autopayPageHelpNotification:
         "Если вы подключаете автохост впервые - напишите в группу ВК ([https://vk.com/irina_bot](https://vk.com/irina_bot)), либо напишите администрации на сервере Discord ([https://discord.gg/cTfyEZT](https://vk.com/irina_bot)). Там вам выдадут инструкцию по подключению.",
 
