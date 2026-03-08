@@ -1,15 +1,17 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect } from "react";
 import { useContext } from "react";
-import { AuthContext, RestContext } from "./../context/index";
+import { AuthContext } from "./../context/index";
 
 import { MapService } from "../services/MapService";
+import { RedeemCodeService } from "../services/RedeemCodeService";
 import { DEFAULT_CONFIG } from "../config/ApiConfig";
 
 export interface ApiAuthOptions {
     setMapService: Dispatch<SetStateAction<MapService>>;
+    setRedeemService: Dispatch<SetStateAction<RedeemCodeService>>;
 }
 
-export const useApiAuth = ({ setMapService }: ApiAuthOptions) => {
+export const useApiAuth = ({ setMapService, setRedeemService }: ApiAuthOptions) => {
     const authContext = useContext(AuthContext);
 
     useEffect(() => {
@@ -29,5 +31,6 @@ export const useApiAuth = ({ setMapService }: ApiAuthOptions) => {
         }
 
         setMapService(new MapService(newConfig));
-    }, [authContext.auth.apiToken]);
+        setRedeemService(new RedeemCodeService(newConfig));
+    }, [authContext.auth.apiToken, setMapService, setRedeemService]);
 };

@@ -7,6 +7,7 @@ import { ConnectorWebsocket } from "../services/ConnectorWebsocket";
 import { GHostWebSocket } from "../services/GHostWebsocket";
 import { MapService } from "../services/MapService";
 import { MapUploaderService } from "../services/MapUploaderService";
+import { RedeemCodeService } from "../services/RedeemCodeService";
 import { AccessMaskHolder } from "../utils/AccessMaskHolder";
 import { ApiTokenHolder } from "../utils/ApiTokenHolder";
 import { ServerUserAuth } from "./../models/websocket/ServerUserAuth";
@@ -123,6 +124,7 @@ export const AuthContext = createContext<AuthContextType>(null);
 export type RestContextType = {
     mapUploader: MapUploaderService;
     mapsApi: MapService;
+    redeemApi: RedeemCodeService;
 };
 
 export const RestContext = createContext<RestContextType>(null);

@@ -7,16 +7,18 @@ import React, { useContext, useEffect, useState } from "react";
 import { DEFAULT_CONFIG } from "./config/ApiConfig";
 import { MapService } from "./services/MapService";
 import { MapUploaderService } from "./services/MapUploaderService";
+import { RedeemCodeService } from "./services/RedeemCodeService";
 
 function AfterContextApp(props) {
     const [mapsApi, setMapsApi] = useState(new MapService(DEFAULT_CONFIG));
-    const [mapUploader, setMapUploader] = useState(new MapUploaderService(new MapService(DEFAULT_CONFIG)));
+    const [mapUploader] = useState(new MapUploaderService(new MapService(DEFAULT_CONFIG)));
+    const [redeemApi, setRedeemApi] = useState(new RedeemCodeService(DEFAULT_CONFIG));
 
     useEffect(() => {
         mapUploader.setMapService(mapsApi);
     }, [mapsApi, mapUploader]);
 
-    useApiAuth({ setMapService: setMapsApi });
+    useApiAuth({ setMapService: setMapsApi, setRedeemService: setRedeemApi });
 
     const { ghostSocket } = useContext(WebsocketContext);
 
@@ -31,6 +33,7 @@ function AfterContextApp(props) {
             value={{
                 mapsApi,
                 mapUploader,
+                redeemApi,
             }}
         >
             <CacheContext.Provider
