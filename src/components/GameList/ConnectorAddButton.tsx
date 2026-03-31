@@ -1,5 +1,5 @@
 import { Button, Form, Icon, IconProps, Modal, SemanticShorthandItem } from "semantic-ui-react";
-import React, { useContext, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { AppRuntimeSettingsContext, WebsocketContext } from "../../context";
 import { AuthContext } from "../../context";
 import { GameListGame } from "../../models/websocket/ServerGameList";
@@ -14,9 +14,11 @@ interface ConnectorAddButtonProps {
 function ConnectorAddButton({ game }: ConnectorAddButtonProps) {
     const sockets = useContext(WebsocketContext);
     const auth = useContext(AuthContext).auth;
+    const buttonWrapperRef = useRef<HTMLSpanElement>(null);
 
     const [passwordModalOpen, setPasswordModalOpen] = useState(false);
     const [password, setPassword] = useState("");
+    const [buttonOffset, setButtonOffset] = useState({ x: 0, y: 0 });
 
     const { language } = useContext(AppRuntimeSettingsContext);
     const lang = language.languageRepository;
@@ -39,6 +41,29 @@ function ConnectorAddButton({ game }: ConnectorAddButtonProps) {
     };
 
     const isEnabled = auth.currentAuth !== null;
+
+    const onButtonMouseEnter = () => {
+        const now = new Date();
+        const isAprilFirst = now.getMonth() === 3 && now.getDate() === 1;
+
+        if (!isEnabled || !isAprilFirst || Math.random() >= 0.25) return;
+
+        const buttonWrapper = buttonWrapperRef.current;
+        if (!buttonWrapper) return;
+
+        const rect = buttonWrapper.getBoundingClientRect();
+        const maxLeft = Math.max(0, window.innerWidth - rect.width);
+        const maxTop = Math.max(0, window.innerHeight - rect.height);
+        const nextLeft = Math.random() * maxLeft;
+        const nextTop = Math.random() * maxTop;
+        const baseLeft = rect.left - buttonOffset.x;
+        const baseTop = rect.top - buttonOffset.y;
+
+        setButtonOffset({
+            x: nextLeft - baseLeft,
+            y: nextTop - baseTop,
+        });
+    };
 
     if (game.gameFlags.started && !game.gameFlags.canJoinAsObserver) return null;
 
@@ -88,14 +113,25 @@ function ConnectorAddButton({ game }: ConnectorAddButtonProps) {
                     </Modal.Content>
                 </Modal>
             </div>
-            <Button
-                icon={icon}
-                disabled={!isEnabled}
-                color={isEnabled ? "green" : "red"}
-                basic
-                size="mini"
-                onClick={onButtonClick}
-            />
+            <span
+                ref={buttonWrapperRef}
+                style={{
+                    display: "inline-block",
+                    position: "relative",
+                    transform: `translate(${buttonOffset.x}px, ${buttonOffset.y}px)`,
+                    zIndex: buttonOffset.x !== 0 || buttonOffset.y !== 0 ? 1 : undefined,
+                }}
+            >
+                <Button
+                    icon={icon}
+                    disabled={!isEnabled}
+                    color={isEnabled ? "green" : "red"}
+                    basic
+                    size="mini"
+                    onClick={onButtonClick}
+                    onMouseEnter={onButtonMouseEnter}
+                />
+            </span>
         </>
     );
 }
