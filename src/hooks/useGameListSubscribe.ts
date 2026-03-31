@@ -14,18 +14,6 @@ interface GameListSubscribeOptions {
 }
 
 const replaceRules: Record<string, Partial<GameListGame>> = {
-    WC3Game_10: {
-        gameFlags: new GameListGameFlags(4),
-        gamePosition: 1,
-    },
-    WC3Game_18: {
-        gameFlags: new GameListGameFlags(4),
-        gamePosition: 1,
-    },
-    "oz.ltdx3": {
-        gameFlags: new GameListGameFlags(4),
-        gamePosition: 1,
-    },
     WC3Game_9: {
         gameFlags: new GameListGameFlags(4),
         gamePosition: 1,
@@ -33,11 +21,7 @@ const replaceRules: Record<string, Partial<GameListGame>> = {
     "oz.ltdx20": {
         gameFlags: new GameListGameFlags(4),
         gamePosition: 1,
-    },
-    WC3Game_7: {
-        gameFlags: new GameListGameFlags(4),
-        gamePosition: 1,
-    },
+    }
 };
 
 export const useGameListSubscribe = ({
