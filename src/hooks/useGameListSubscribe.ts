@@ -18,10 +18,20 @@ const replaceRules: Record<string, Partial<GameListGame>> = {
         gameFlags: new GameListGameFlags(4),
         gamePosition: 1,
     },
+    WC3Game_10: {
+        gameFlags: new GameListGameFlags(4),
+        gamePosition: 1,
+    },
     "oz.ltdx20": {
         gameFlags: new GameListGameFlags(4),
         gamePosition: 1,
-    }
+    },
+
+    // Управляется balc99
+    "WC3Game_17": {
+        gameFlags: new GameListGameFlags(4),
+        gamePosition: 1,
+    },
 };
 
 export const useGameListSubscribe = ({
