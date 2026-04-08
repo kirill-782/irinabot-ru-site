@@ -491,6 +491,18 @@ export const LanguageData = {
     mapDownloadQueued: "В очереди",
     mapDownloadPause: "Приостановить {percent}%",
     mapDownloadResume: "Продолжить {percent}%",
+    mapDownloadManage: "Загрузки карт",
+    mapDownloadNoActiveHint: "Недокачанных карт нет",
+    mapDownloadActiveHint: "Загрузка: {filename} {percent}%",
+    mapDownloadIncompleteHint: "Недокачанных карт: {count}",
+    mapDownloadModalHeader: "Недокачанные карты",
+    mapDownloadModalDescription: "Здесь отображаются текущая загрузка и все сохранённые в IndexedDB недокачанные карты.",
+    mapDownloadModalEmpty: "Недокачанных карт нет.",
+    mapDownloadOpenMap: "Открыть карту",
+    mapDownloadPauseAction: "Пауза",
+    mapDownloadResumeAction: "Продолжить",
+    mapDownloadStatusDownloading: "Загружается",
+    mapDownloadStatusPaused: "На паузе",
 } as const;
 
 export default LanguageData;

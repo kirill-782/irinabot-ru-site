@@ -1,0 +1,60 @@
+.progress-download-map-modal {
+    &__item {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 1rem;
+    }
+
+    &__main {
+        flex: 1 1 auto;
+        min-width: 0;
+    }
+
+    &__actions {
+        display: flex;
+        flex: 0 0 auto;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+    }
+
+    .ui.progress {
+        .bar {
+            transition: width 0.3s ease, background-color 0.2s ease;
+        }
+    }
+}
+
+@media (max-width: 520px) {
+    .progress-download-map-modal {
+        &__item {
+            flex-direction: column;
+        }
+
+        &__actions {
+            width: 100%;
+            justify-content: flex-start;
+        }
+    }
+}
+
+.dark {
+    .progress-download-map-modal {
+        .content,
+        p,
+        .ui.list > .item .header,
+        .ui.list > .item .description {
+            color: rgba(255, 255, 255, 0.88);
+        }
+
+        .ui.progress {
+            background: rgba(255, 255, 255, 0.18);
+
+            .bar > .progress,
+            > .label {
+                color: rgba(255, 255, 255, 0.92);
+            }
+        }
+    }
+}

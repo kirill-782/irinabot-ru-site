@@ -9,6 +9,7 @@ const MAP_DOWNLOAD_PARALLEL_THREADS = 4;
 interface PersistedDownloadRecord {
     id: string;
     url: string;
+    mapId?: number;
     fileName: string;
     totalSize: number | null;
     downloadedSize: number;
@@ -79,6 +80,19 @@ export interface DownloadMapPauseEventDetail {
 export interface DownloadProgressSnapshot {
     loaded: number;
     total: number;
+}
+
+export type IncompleteDownloadState = "downloading" | "paused" | "queued";
+
+export interface IncompleteMapDownload {
+    id?: number;
+    downloadUrl: string;
+    fileName: string;
+    totalSize: number;
+    downloadedSize: number;
+    progress: number;
+    updatedAt: number;
+    status: IncompleteDownloadState;
 }
 
 export class DownloadMapQueueEvent extends CustomEvent<DownloadMapQueueEventDetail> {
@@ -169,6 +183,24 @@ class MapDownloadStorage {
 
             transaction.onabort = () => {
                 reject(transaction.error);
+            };
+        });
+    }
+
+    public async getDownloads() {
+        const db = await this.dbPromise;
+
+        return new Promise<PersistedDownloadRecord[]>((resolve, reject) => {
+            const transaction = db.transaction(MAP_DOWNLOAD_STORE_NAME, "readonly");
+            const store = transaction.objectStore(MAP_DOWNLOAD_STORE_NAME);
+            const request = store.getAll();
+
+            request.onsuccess = () => {
+                resolve((request.result as PersistedDownloadRecord[]) || []);
+            };
+
+            request.onerror = () => {
+                reject(request.error);
             };
         });
     }
@@ -410,6 +442,38 @@ export class MapDownloaderService extends EventTarget {
         return this.currentProgress;
     }
 
+    public async getIncompleteDownloads() {
+        const downloads = await this.storage.getDownloads();
+
+        return downloads
+            .filter((download) => {
+                return !download.totalSize || download.downloadedSize < download.totalSize;
+            })
+            .map((download) => {
+                const totalSize = download.totalSize || download.downloadedSize || 0;
+
+                return {
+                    id: download.mapId,
+                    downloadUrl: download.url,
+                    fileName: download.fileName,
+                    totalSize,
+                    downloadedSize: download.downloadedSize,
+                    progress: this.getProgressPercent(download.downloadedSize, totalSize),
+                    updatedAt: download.updatedAt,
+                    status: this.getIncompleteDownloadState(download.url, download.mapId),
+                };
+            })
+            .sort((first, second) => {
+                const statusOrder = this.getIncompleteDownloadStateOrder(first.status) - this.getIncompleteDownloadStateOrder(second.status);
+
+                if (statusOrder !== 0) {
+                    return statusOrder;
+                }
+
+                return second.updatedAt - first.updatedAt;
+            });
+    }
+
     public isDownloading() {
         return this.currentDownload !== null && !this.currentPaused;
     }
@@ -509,7 +573,13 @@ export class MapDownloaderService extends EventTarget {
 
     private async downloadEntry(entry: DownloadMapEntry, signal: AbortSignal) {
         const downloadId = this.getStorageKey(entry.downloadUrl);
-        const storedDownload = await this.storage.getDownload(downloadId);
+        let storedDownload = await this.storage.getDownload(downloadId);
+
+        if (this.isStoredDownloadInvalid(entry, storedDownload)) {
+            await this.storage.deleteDownload(downloadId);
+            storedDownload = null;
+        }
+
         const total = storedDownload?.totalSize ?? entry.fileSize ?? 0;
         const loaded = storedDownload?.downloadedSize ?? 0;
 
@@ -557,6 +627,7 @@ export class MapDownloaderService extends EventTarget {
         let record: PersistedDownloadRecord = {
             id: downloadId,
             url: resolvedUrl,
+            mapId: storedDownload?.mapId ?? entry.id,
             fileName: entry.fileName,
             totalSize: storedDownload?.totalSize || entry.fileSize || null,
             downloadedSize: storedDownload?.downloadedSize || 0,
@@ -790,18 +861,22 @@ export class MapDownloaderService extends EventTarget {
         return headers;
     }
 
-    private getDownloadTotal(response: Response, offset: number, fallback?: number) {
+    private getDownloadTotal(response: Response, _offset: number, fallback?: number) {
         const rangeTotal = this.getRangeTotal(response.headers.get("content-range"));
 
         if (rangeTotal) return rangeTotal;
 
+        if (fallback && fallback > 0) {
+            return fallback;
+        }
+
         const contentLength = this.getHeaderNumber(response.headers.get("content-length"));
 
         if (response.status === 206 && contentLength) {
-            return offset + contentLength;
+            return 0;
         }
 
-        return contentLength || fallback || 0;
+        return contentLength || 0;
     }
 
     private getHeaderNumber(value: string) {
@@ -832,6 +907,45 @@ export class MapDownloaderService extends EventTarget {
         if (!totalSize || totalSize <= 0) return 0;
 
         return Math.ceil(totalSize / MAP_DOWNLOAD_CHUNK_SIZE);
+    }
+
+    private getProgressPercent(loaded: number, total: number) {
+        if (!total || total <= 0) return 0;
+
+        return Math.max(0, Math.min(100, Math.round((loaded / total) * 100)));
+    }
+
+    private isStoredDownloadInvalid(entry: DownloadMapEntry, storedDownload: PersistedDownloadRecord) {
+        if (!storedDownload) return false;
+
+        if (storedDownload.totalSize && storedDownload.downloadedSize > storedDownload.totalSize) {
+            return true;
+        }
+
+        if (entry.fileSize && storedDownload.totalSize && storedDownload.totalSize < entry.fileSize) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private getIncompleteDownloadState(downloadUrl: string, id?: number): IncompleteDownloadState {
+        if (this.matchesCurrent(downloadUrl, id)) {
+            return this.currentPaused ? "paused" : "downloading";
+        }
+
+        if (this.isQueued(downloadUrl, id)) {
+            return "queued";
+        }
+
+        return "paused";
+    }
+
+    private getIncompleteDownloadStateOrder(status: IncompleteDownloadState) {
+        if (status === "downloading") return 0;
+        if (status === "queued") return 1;
+
+        return 2;
     }
 
     private getFirstMissingChunkIndex(completedChunkIndexes: Set<number>, totalChunkCount?: number) {

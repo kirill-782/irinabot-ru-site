@@ -1,9 +1,9 @@
-import { access } from "fs";
 import React, { useContext, useState } from "react";
 import { Dropdown, Icon } from "semantic-ui-react";
 import { AppRuntimeSettingsContext, AuthContext } from "../../context";
 import AccessMaskModal, { AccessMaskBit } from "../Modal/AccessMaskModal";
 import AutohostListModal from "../Modal/AutohostListModal";
+import DownloadMap from "./DownloadMap";
 import UploadMap from "./UploadMap";
 
 function UtilsDropdown() {
@@ -29,6 +29,7 @@ function UtilsDropdown() {
                         {lang.utilsDropdownAutohostList}
                     </Dropdown.Item>
                     <UploadMap />
+                    <DownloadMap />
                     <Dropdown.Item
                         onClick={() => {
                             setAccessMaskModalOpened(true);
