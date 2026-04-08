@@ -1,0 +1,37 @@
+.map-download-button.ui.button {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    background-image: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.22) 0,
+        rgba(255, 255, 255, 0.22) var(--map-download-progress, 0%),
+        transparent var(--map-download-progress, 0%),
+        transparent 100%
+    );
+    background-repeat: no-repeat;
+    transition: background-image 0.2s ease;
+}
+
+.map-download-button.ui.button.busy {
+    color: #ffffff;
+}
+
+.map-download-button.ui.button.queued {
+    background-image: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.14) 0,
+        rgba(255, 255, 255, 0.14) 100%
+    );
+}
+
+.map-download-button.ui.yellow.button.paused {
+    color: #1b1c1d;
+    background-image: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.32) 0,
+        rgba(255, 255, 255, 0.32) var(--map-download-progress, 0%),
+        transparent var(--map-download-progress, 0%),
+        transparent 100%
+    );
+}

@@ -487,6 +487,10 @@ export const LanguageData = {
     nicknameColorPickerSelectColor: "Выберите цвет",
     nicknameColorPickerPreview: "Предпросмотр",
     nicknameColorPickerSaveColor: "Сохранить цвет",
+    mapDownloadError: "Ошибка скачивания карты",
+    mapDownloadQueued: "В очереди",
+    mapDownloadPause: "Приостановить {percent}%",
+    mapDownloadResume: "Продолжить {percent}%",
 } as const;
 
 export default LanguageData;

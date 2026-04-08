@@ -5,6 +5,7 @@ import { Map } from "../models/rest/Map";
 import { AccessListRecord } from "../models/websocket/ServerAccessList";
 import { ConnectorWebsocket } from "../services/ConnectorWebsocket";
 import { GHostWebSocket } from "../services/GHostWebsocket";
+import { MapDownloaderService } from "../services/MapDownloaderService";
 import { MapService } from "../services/MapService";
 import { MapUploaderService } from "../services/MapUploaderService";
 import { RedeemCodeService } from "../services/RedeemCodeService";
@@ -122,6 +123,7 @@ export const AuthContext = createContext<AuthContextType>(null);
 // RestApi context
 
 export type RestContextType = {
+    mapDownloader: MapDownloaderService;
     mapUploader: MapUploaderService;
     mapsApi: MapService;
     redeemApi: RedeemCodeService;

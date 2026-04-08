@@ -5,12 +5,14 @@ import { useConnectorIdCache } from "./hooks/useConnectorIdCache";
 import { useVersionsCache } from "./hooks/useVersionsCache";
 import React, { useContext, useEffect, useState } from "react";
 import { DEFAULT_CONFIG } from "./config/ApiConfig";
+import { MapDownloaderService } from "./services/MapDownloaderService";
 import { MapService } from "./services/MapService";
 import { MapUploaderService } from "./services/MapUploaderService";
 import { RedeemCodeService } from "./services/RedeemCodeService";
 
 function AfterContextApp(props) {
     const [mapsApi, setMapsApi] = useState(new MapService(DEFAULT_CONFIG));
+    const [mapDownloader] = useState(new MapDownloaderService());
     const [mapUploader] = useState(new MapUploaderService(new MapService(DEFAULT_CONFIG)));
     const [redeemApi, setRedeemApi] = useState(new RedeemCodeService(DEFAULT_CONFIG));
 
@@ -31,6 +33,7 @@ function AfterContextApp(props) {
     return (
         <RestContext.Provider
             value={{
+                mapDownloader,
                 mapsApi,
                 mapUploader,
                 redeemApi,
