@@ -5,6 +5,7 @@ import { DEFAULT_CONTEXT_HEADER_CONSTANT, DEFAULT_GET_WEBSOCKETCONNECTS_STATS } 
 export interface ServerWebsocketConnectStats extends AbstractPackage {
     logined: number;
     connected: number;
+    isEnanled: boolean;
 }
 
 export class ServerWebsocketConnectStatsConverter extends AbstractConverter {
@@ -16,6 +17,7 @@ export class ServerWebsocketConnectStatsConverter extends AbstractConverter {
 
         dataBuffer.putUint32(data.logined);
         dataBuffer.putUint32(data.connected);
+        dataBuffer.putUint8(data.isEnanled ? 1 : 0);
 
         return dataBuffer.toArrayBuffer();
     }
@@ -26,6 +28,7 @@ export class ServerWebsocketConnectStatsConverter extends AbstractConverter {
             type: DEFAULT_GET_WEBSOCKETCONNECTS_STATS,
             logined: dataBuffer.getUint32(),
             connected: dataBuffer.getUint32(),
+            isEnanled: dataBuffer.getUint8() > 0
         };
     }
 }

@@ -12,6 +12,7 @@ import { RedeemCodeService } from "../services/RedeemCodeService";
 import { UpdaterService } from "../services/UpdaterService";
 import { AccessMaskHolder } from "../utils/AccessMaskHolder";
 import { ApiTokenHolder } from "../utils/ApiTokenHolder";
+import { ServerWebsocketConnectStats } from "../models/websocket/ServerWebsocketConnectStats";
 import { ServerUserAuth } from "./../models/websocket/ServerUserAuth";
 import { LanguageRepository } from "../localization/Lang";
 
@@ -51,6 +52,7 @@ export type AppRuntimeSettingsContextType = {
         currentLocale: string;
         languageRepository: LanguageRepository;
     };
+    siteOnlineStats: ServerWebsocketConnectStats | null;
 };
 
 export const AppRuntimeSettingsContext = createContext<AppRuntimeSettingsContextType>(null);

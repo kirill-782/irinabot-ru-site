@@ -39,6 +39,7 @@ import MetaRobots from "./../Meta/MetaRobots";
 import { SaveGameParser } from "@kokomi/w3g-parser-browser";
 import { useTitle } from "../../hooks/useTitle";
 import { useAdsRender } from "../../hooks/useAdsRender";
+import SiteMaintenanceMessage from "../SiteMaintenanceMessage";
 
 const GAME_NAME_LOCALSTORAGE_PATH = "lastSuccessGameName";
 
@@ -56,6 +57,7 @@ export interface DropdownItemPropsConfirmExtends extends DropdownItemProps {
 }
 
 function CreateGameConfirmPage({}) {
+    const runtimeContext = useContext(AppRuntimeSettingsContext);
     const [options, setOptions] = useState<GameOptionsData>({
         mask: 3,
         slotPreset: "",
@@ -66,8 +68,9 @@ function CreateGameConfirmPage({}) {
         configName: "",
     });
 
-    const { language } = useContext(AppRuntimeSettingsContext);
+    const { language } = runtimeContext;
     const lang = language.languageRepository;
+    const isSiteEnabled = runtimeContext.siteOnlineStats?.isEnanled !== false;
 
     const [gameName, setGameName] = useState(localStorage.getItem(GAME_NAME_LOCALSTORAGE_PATH) || "");
     const [autohostModalOpen, setAutohostModalOpen] = useState(false);
@@ -88,15 +91,30 @@ function CreateGameConfirmPage({}) {
         map,
         config,
         options,
-        setAutohostModalOpen
+        setAutohostModalOpen,
+        isSiteEnabled
     );
 
-    const handleCreateGame = useLocalCreateGameCallback(selectedPatch, map, config, options, setLastPassword, gameName);
+    const handleCreateGame = useLocalCreateGameCallback(
+        selectedPatch,
+        map,
+        config,
+        options,
+        setLastPassword,
+        gameName,
+        isSiteEnabled
+    );
 
-    const canCreateGame = gameName.length > 0 && (config || selectedPatch?.status === 1);
-    const canCreateAutohost = (config || selectedPatch?.status === 1) && accessMask.hasAccess(32);
+    const canCreateGame =
+        (isSiteEnabled || accessMask.hasAccess(2147483648)) &&
+        gameName.length > 0 &&
+        (config || selectedPatch?.status === 1);
+    const canCreateAutohost =
+        (isSiteEnabled || accessMask.hasAccess(2147483648)) &&
+        (config || selectedPatch?.status === 1) &&
+        accessMask.hasAccess(32);
 
-    useAdsRender("R-A-3959850-3", "yandex_rtb_confirmPage", {removeContainer: true});
+    useAdsRender("R-A-3959850-3", "yandex_rtb_confirmPage", { removeContainer: true });
 
     return (
         <Container className="create-game-confirm">
@@ -107,6 +125,7 @@ function CreateGameConfirmPage({}) {
                     {lang.loadingDotted}
                 </Loader>
             )}
+            {!isSiteEnabled && <SiteMaintenanceMessage />}
             {(map || config) && (
                 <Grid>
                     <Grid.Column width={11}>
@@ -141,6 +160,7 @@ function CreateGameConfirmPage({}) {
                         <Grid.Row className="cretae-buttons-rows">
                             <Button
                                 onClick={() => {
+                                    if (!isSiteEnabled && !accessMask.hasAccess(2147483648)) return;
                                     handleCreateGame();
                                 }}
                                 disabled={!canCreateGame}
@@ -149,6 +169,7 @@ function CreateGameConfirmPage({}) {
                             </Button>
                             <Button
                                 onClick={() => {
+                                    if (!isSiteEnabled) return;
                                     saveGameInput.current?.click();
                                 }}
                                 disabled={!canCreateGame}
@@ -159,13 +180,16 @@ function CreateGameConfirmPage({}) {
                                 type="file"
                                 hidden
                                 accept=".w3z"
+                                disabled={!isSiteEnabled}
                                 onChange={(e) => {
+                                    if (!isSiteEnabled) return;
                                     if (e.target.files?.length) handleCreateGame(e.target.files[0] || undefined);
                                 }}
                                 ref={saveGameInput}
                             ></input>
                             <Button
                                 onClick={() => {
+                                    if (!isSiteEnabled) return;
                                     setAutohostModalOpen(true);
                                 }}
                                 disabled={!canCreateAutohost}
@@ -399,7 +423,8 @@ function useLocalAutohostCreateCallback(
     map: Map | undefined | null,
     config: ConfigInfo | undefined | null,
     options: GameOptionsData,
-    setAutohostModalOpen: (value: boolean) => void
+    setAutohostModalOpen: (value: boolean) => void,
+    isSiteEnabled: boolean
 ) {
     const { mapsApi } = useContext(RestContext);
     const { ghostSocket } = useContext(WebsocketContext);
@@ -446,7 +471,7 @@ function useLocalAutohostCreateCallback(
 
     return useCallback(
         (autohostData: AuthostModalData) => {
-            if (!config && selectedPatch?.status !== 1) return;
+            if (!isSiteEnabled || (!config && selectedPatch?.status !== 1)) return;
 
             (config?.id
                 ? mapsApi.getConfigInfoToken(config.id)
@@ -480,7 +505,7 @@ function useLocalAutohostCreateCallback(
                     });
                 });
         },
-        [ghostSocket, selectedPatch, auth, options, config]
+        [ghostSocket, selectedPatch, auth, options, config, isSiteEnabled]
     );
 }
 
@@ -490,7 +515,8 @@ function useLocalCreateGameCallback(
     config: ConfigInfo | undefined | null,
     options: GameOptionsData,
     setLastPassword: (value: string) => void,
-    gameName: string
+    gameName: string,
+    isSiteEnabled: boolean
 ) {
     const { mapsApi } = useContext(RestContext);
     const { ghostSocket } = useContext(WebsocketContext);
@@ -544,7 +570,7 @@ function useLocalCreateGameCallback(
 
     return useCallback(
         (saveGameFile?: File) => {
-            if (!config && selectedPatch?.status !== 1) return;
+            if (!isSiteEnabled || (!config && selectedPatch?.status !== 1)) return;
 
             (config?.id
                 ? mapsApi.getConfigInfoToken(config.id)
@@ -603,7 +629,7 @@ function useLocalCreateGameCallback(
                     });
                 });
         },
-        [ghostSocket, selectedPatch, auth, options, gameName]
+        [ghostSocket, selectedPatch, auth, options, gameName, isSiteEnabled]
     );
 }
 

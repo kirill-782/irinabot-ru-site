@@ -1,32 +1,16 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { Menu } from "semantic-ui-react";
-import { AppRuntimeSettingsContext, WebsocketContext } from "../../context";
-import { useSiteOnlineStatsSubscribe } from "../../hooks/useSiteOnlineStatsSubscribe";
-import { ServerWebsocketConnectStats } from "../../models/websocket/ServerWebsocketConnectStats";
-import LanguageKey from "./../LanguageKey";
+import { AppRuntimeSettingsContext } from "../../context";
 
 interface OnlineStatsCounterProps {
     showAlways?: boolean;
 }
 
 function OnlineStatsCounter({ showAlways }: OnlineStatsCounterProps) {
-    let sockets = useContext(WebsocketContext);
-
-    const [connected, setConnected] = useState(0);
-    const [logined, setLogined] = useState(0);
-
-    const { language } = useContext(AppRuntimeSettingsContext);
+    const { language, siteOnlineStats } = useContext(AppRuntimeSettingsContext);
     const t = language.getString;
-
-    const updateOnlineStats = (stats: ServerWebsocketConnectStats) => {
-        setConnected(stats.connected);
-        setLogined(stats.logined);
-    };
-
-    useSiteOnlineStatsSubscribe({
-        ghostSocket: sockets.ghostSocket,
-        onOnlineStats: updateOnlineStats,
-    });
+    const connected = siteOnlineStats?.connected || 0;
+    const logined = siteOnlineStats?.logined || 0;
 
     return showAlways || logined > 0 ? (
         <Menu.Item title={t("onlineStatsCounter", { count: connected })}>{logined}</Menu.Item>

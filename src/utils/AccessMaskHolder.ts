@@ -33,7 +33,7 @@ export class AccessMaskHolderImpl extends AccessMaskHolder {
             }
         });
 
-        return (resultAccessMask & accessMask) === accessMask;
+        return Math.abs(resultAccessMask & accessMask) === accessMask;
     }
 }
 

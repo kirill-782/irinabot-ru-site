@@ -53,6 +53,17 @@
     color: #3dc03f;
 }
 
+.ui.warning.message,
+.ui.attached.warning.message {
+    background-color: #0c0c0c;
+    box-shadow: 0px 0px 0px 1px #cb9d4f inset, 0px 0px 0px 0px rgb(0 0 0 / 0%);
+    color: #cb9d4f;
+}
+
+.ui.warning.message .header {
+    color: #cb9d4f;
+}
+
 .ui.orange.message,
 .ui.attached.orange.message {
     background-color: #0c0c0c;

@@ -1,0 +1,939 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Updater API",
+    "version": "v1",
+    "description": "Static OpenAPI document generated from the current Spring controllers and integration tests. POST endpoints require a JWT bearer token with the UPDATES_PUBLISH authority."
+  },
+  "tags": [
+    {
+      "name": "Updates",
+      "description": "Upload new product versions and download update archives."
+    }
+  ],
+  "paths": {
+    "/v1/updates": {
+      "post": {
+        "tags": [
+          "Updates"
+        ],
+        "summary": "Upload a single version",
+        "description": "Imports one product version from a ZIP or 7z archive. The archive may contain an optional _manifest.json with ignorePaths rules.",
+        "operationId": "uploadVersion",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/SingleVersionUploadRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Version imported successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UploadVersionResultOut"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request, duplicate version, invalid archive, invalid manifest, or version lower than the current latest.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Bearer token does not contain the UPDATES_PUBLISH authority."
+          }
+        }
+      }
+    },
+    "/v1/updates/dry-run": {
+      "post": {
+        "tags": [
+          "Updates"
+        ],
+        "summary": "Preview a single version upload",
+        "description": "Analyzes a ZIP or 7z archive and returns the files that would be stored without persisting anything.",
+        "operationId": "uploadVersionDryRun",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/SingleVersionUploadRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Dry-run completed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UploadVersionDryRunOut"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request, invalid archive, invalid manifest, or invalid version ordering.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Bearer token does not contain the UPDATES_PUBLISH authority."
+          }
+        }
+      }
+    },
+    "/v1/updates/batch": {
+      "post": {
+        "tags": [
+          "Updates"
+        ],
+        "summary": "Upload a batch archive",
+        "description": "Imports one archive that contains one or more scoped _manifest.json files. Individual scopes may fail while the overall request still succeeds.",
+        "operationId": "uploadBatch",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/BatchUploadRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Batch archive processed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BatchUploadResultOut"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request, invalid archive, or invalid batch manifest.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Bearer token does not contain the UPDATES_PUBLISH authority."
+          }
+        }
+      }
+    },
+    "/v1/updates/batch/dry-run": {
+      "post": {
+        "tags": [
+          "Updates"
+        ],
+        "summary": "Preview a batch archive upload",
+        "description": "Analyzes one archive with scoped manifests and reports per-scope results without persisting any files.",
+        "operationId": "uploadBatchDryRun",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/BatchUploadRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Batch dry-run completed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BatchUploadDryRunOut"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request, invalid archive, or invalid batch manifest.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Bearer token does not contain the UPDATES_PUBLISH authority."
+          }
+        }
+      }
+    },
+    "/v1/updates/archive": {
+      "get": {
+        "tags": [
+          "Updates"
+        ],
+        "summary": "Download a delta archive",
+        "description": "Builds a ZIP archive with all changes between the client version and the latest available product version. Supports HTTP range requests.",
+        "operationId": "downloadArchive",
+        "parameters": [
+          {
+            "name": "currentVersion",
+            "in": "query",
+            "required": true,
+            "description": "Current client version in packed dotted format, for example 1.0.0.1.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "channel",
+            "in": "query",
+            "required": true,
+            "description": "Release channel.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "product",
+            "in": "query",
+            "required": true,
+            "description": "Product name.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Range",
+            "in": "header",
+            "required": false,
+            "description": "Optional byte range request, for example bytes=0-15.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Archive generated successfully.",
+            "headers": {
+              "Content-Disposition": {
+                "description": "Attachment filename for the generated archive.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Actual-Version": {
+                "description": "Latest available version used to build the archive.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Accept-Ranges": {
+                "description": "Always set to bytes.",
+                "schema": {
+                  "type": "string",
+                  "example": "bytes"
+                }
+              }
+            },
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "The client is already on the latest version or there are no changed files to return."
+          },
+          "206": {
+            "description": "Partial content for a byte range request.",
+            "headers": {
+              "Content-Disposition": {
+                "description": "Attachment filename for the generated archive.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Actual-Version": {
+                "description": "Latest available version used to build the archive.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Accept-Ranges": {
+                "description": "Always set to bytes.",
+                "schema": {
+                  "type": "string",
+                  "example": "bytes"
+                }
+              },
+              "Content-Range": {
+                "description": "Returned byte range.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No uploads exist for the requested channel and product.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Archive could not be built.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/updates/file": {
+      "get": {
+        "tags": [
+          "Updates"
+        ],
+        "summary": "Download one changed file",
+        "description": "Returns the latest bytes of a specific file path when that file changed since the current client version. Supports HTTP range requests.",
+        "operationId": "downloadFile",
+        "parameters": [
+          {
+            "name": "currentVersion",
+            "in": "query",
+            "required": true,
+            "description": "Current client version in packed dotted format, for example 1.0.0.1.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "channel",
+            "in": "query",
+            "required": true,
+            "description": "Release channel.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "product",
+            "in": "query",
+            "required": true,
+            "description": "Product name.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "path",
+            "in": "query",
+            "required": true,
+            "description": "Normalized archive path of the file to download.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Range",
+            "in": "header",
+            "required": false,
+            "description": "Optional byte range request, for example bytes=2-5.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Changed file returned successfully.",
+            "headers": {
+              "Content-Disposition": {
+                "description": "Attachment filename for the returned file.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Actual-Version": {
+                "description": "Latest available version used to resolve the file.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-File-Path": {
+                "description": "Normalized file path inside the product snapshot.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Accept-Ranges": {
+                "description": "Always set to bytes.",
+                "schema": {
+                  "type": "string",
+                  "example": "bytes"
+                }
+              }
+            },
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "The requested file did not change, was deleted, or the client is already on the latest version."
+          },
+          "206": {
+            "description": "Partial content for a byte range request.",
+            "headers": {
+              "Content-Disposition": {
+                "description": "Attachment filename for the returned file.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Actual-Version": {
+                "description": "Latest available version used to resolve the file.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-File-Path": {
+                "description": "Normalized file path inside the product snapshot.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Accept-Ranges": {
+                "description": "Always set to bytes.",
+                "schema": {
+                  "type": "string",
+                  "example": "bytes"
+                }
+              },
+              "Content-Range": {
+                "description": "Returned byte range.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters or invalid file path.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No uploads exist for the requested channel and product.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/updates/bundle/{bundle}": {
+      "get": {
+        "tags": [
+          "Updates"
+        ],
+        "summary": "Download a bundle archive",
+        "description": "Builds a ZIP archive from the latest versions of all products defined in the bundle manifest. Supports HTTP range requests.",
+        "operationId": "downloadBundle",
+        "parameters": [
+          {
+            "name": "bundle",
+            "in": "path",
+            "required": true,
+            "description": "Bundle manifest name.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "channel",
+            "in": "query",
+            "required": true,
+            "description": "Release channel.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Range",
+            "in": "header",
+            "required": false,
+            "description": "Optional byte range request.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Bundle archive generated successfully.",
+            "headers": {
+              "Content-Disposition": {
+                "description": "Attachment filename for the generated archive.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Bundle-Versions": {
+                "description": "JSON object serialized as a string. Keys are mount paths, values contain product and resolved version.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Accept-Ranges": {
+                "description": "Always set to bytes.",
+                "schema": {
+                  "type": "string",
+                  "example": "bytes"
+                }
+              }
+            },
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "206": {
+            "description": "Partial content for a byte range request.",
+            "headers": {
+              "Content-Disposition": {
+                "description": "Attachment filename for the generated archive.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Bundle-Versions": {
+                "description": "JSON object serialized as a string. Keys are mount paths, values contain product and resolved version.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Accept-Ranges": {
+                "description": "Always set to bytes.",
+                "schema": {
+                  "type": "string",
+                  "example": "bytes"
+                }
+              },
+              "Content-Range": {
+                "description": "Returned byte range.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Bundle manifest does not exist or a required product has no uploads.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Bundle archive could not be built because of manifest or archive generation errors.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "JWT bearer token with the UPDATES_PUBLISH authority."
+      }
+    },
+    "schemas": {
+      "SingleVersionUploadRequest": {
+        "type": "object",
+        "required": [
+          "version",
+          "channel",
+          "product",
+          "archive"
+        ],
+        "properties": {
+          "version": {
+            "type": "string",
+            "description": "Version in packed dotted format."
+          },
+          "channel": {
+            "type": "string",
+            "description": "Release channel."
+          },
+          "product": {
+            "type": "string",
+            "description": "Product name."
+          },
+          "archive": {
+            "type": "string",
+            "format": "binary",
+            "description": "ZIP or 7z archive."
+          }
+        }
+      },
+      "BatchUploadRequest": {
+        "type": "object",
+        "required": [
+          "channel",
+          "archive"
+        ],
+        "properties": {
+          "channel": {
+            "type": "string",
+            "description": "Release channel."
+          },
+          "archive": {
+            "type": "string",
+            "format": "binary",
+            "description": "ZIP or 7z archive with one or more scoped _manifest.json files."
+          }
+        }
+      },
+      "UploadVersionResultOut": {
+        "type": "object",
+        "required": [
+          "channel",
+          "product",
+          "version",
+          "filesStored",
+          "newFilesStored"
+        ],
+        "properties": {
+          "channel": {
+            "type": "string"
+          },
+          "product": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          },
+          "filesStored": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "newFilesStored": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "UploadVersionDryRunOut": {
+        "type": "object",
+        "required": [
+          "channel",
+          "product",
+          "version",
+          "filesToStore",
+          "files"
+        ],
+        "properties": {
+          "channel": {
+            "type": "string"
+          },
+          "product": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          },
+          "filesToStore": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "files": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "BatchUploadResultOut": {
+        "type": "object",
+        "required": [
+          "channel",
+          "importedVersions",
+          "skippedVersions",
+          "versions"
+        ],
+        "properties": {
+          "channel": {
+            "type": "string"
+          },
+          "importedVersions": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "skippedVersions": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "versions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BatchUploadVersionResultOut"
+            }
+          }
+        }
+      },
+      "BatchUploadVersionResultOut": {
+        "type": "object",
+        "required": [
+          "product",
+          "version",
+          "imported",
+          "filesStored",
+          "newFilesStored"
+        ],
+        "properties": {
+          "product": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          },
+          "imported": {
+            "type": "boolean"
+          },
+          "filesStored": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "newFilesStored": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "error": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "BatchUploadDryRunOut": {
+        "type": "object",
+        "required": [
+          "channel",
+          "processableVersions",
+          "failedVersions",
+          "versions"
+        ],
+        "properties": {
+          "channel": {
+            "type": "string"
+          },
+          "processableVersions": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "failedVersions": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "versions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BatchUploadDryRunVersionOut"
+            }
+          }
+        }
+      },
+      "BatchUploadDryRunVersionOut": {
+        "type": "object",
+        "required": [
+          "product",
+          "version",
+          "processable",
+          "filesToStore",
+          "files"
+        ],
+        "properties": {
+          "product": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          },
+          "processable": {
+            "type": "boolean"
+          },
+          "filesToStore": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "files": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "error": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "ErrorOut": {
+        "type": "object",
+        "required": [
+          "error"
+        ],
+        "properties": {
+          "error": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

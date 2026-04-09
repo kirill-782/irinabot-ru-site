@@ -25,6 +25,7 @@ import MetaCanonical from "../Meta/MetaCanonical";
 import { useTitle } from "../../hooks/useTitle";
 import { currentTheme, E_THEME } from "../../utils/Theme";
 import { useAdsRender } from "../../hooks/useAdsRender";
+import SiteMaintenanceMessage from "../SiteMaintenanceMessage";
 
 function GameListPage() {
     const sockets = useContext(WebsocketContext);
@@ -63,6 +64,7 @@ function GameListPage() {
 
     const { language } = useContext(AppRuntimeSettingsContext);
     const lang = language.languageRepository;
+    const hasSiteMaintenance = runtimeContext.siteOnlineStats?.isEnanled === false;
 
     useTitle(lang.gameListPageTitle);
 
@@ -130,6 +132,7 @@ function GameListPage() {
                             </Message.Content>
                         </Message>
                     )}
+                    {hasSiteMaintenance && <SiteMaintenanceMessage />}
                     <div id="yandex_rtb_gameList" style={{marginTop: 10}}></div>
                     <GameList
                         gameList={displayedGameList}

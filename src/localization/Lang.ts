@@ -35,6 +35,8 @@ export const LanguageData = {
     siteErrorCatch:
         "На сайте произошла ошибка. Проверьте интернет соединение, обвините страницу или обратитесь к администратору",
     footerHostbotWebsocketHint: "Отображает состояние соединения с хостботом.",
+    siteMaintenanceNotificationTitle: "Технические работы",
+    siteMaintenanceNotificationDescription: "На сервере идут технические работы. Создание новых игр временно недоступно. Начатые игры и лобби могут быть прерваны принудительно",
 
     chatListConsoleBotTitle: "Консоль бота",
     chatListConsoleBotDescription: "Консоль бота для ввода команд",
