@@ -1,11 +1,14 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { useContext, useMemo } from "react";
 import { AuthContext } from "../context";
 import React from "react";
 import ForbiddenPage from "./Pages/ForbiddenPage";
 import Layout from "./Layout";
+import { getAccessibleAdminSections } from "./Pages/AdminSections";
 
 const AutopayPage = React.lazy(() => import("./Pages/AutopayPage"));
+const AdminAutoupdaterPage = React.lazy(() => import("./Pages/AdminAutoupdaterPage"));
+const AdminPage = React.lazy(() => import("./Pages/AdminPage"));
 const CreateGamePage = React.lazy(() => import("./Pages/CreateGamePage"));
 const GameListPage = React.lazy(() => import("./Pages/GameListPage"));
 const MapListPage = React.lazy(() => import("./Pages/MapListPage"));
@@ -87,6 +90,13 @@ const routes: ConditionalRoute[] = [
             {
                 path: "debug",
                 element: <DebugPage />,
+            },
+            {
+                path: "admin",
+                element: <AdminPage />,
+                requireAuth: true,
+                requireToken: true,
+                routes: [],
             },
             {
                 path: "gamelist",
@@ -179,6 +189,7 @@ function RouteList() {
 
     const resultRoutes = useMemo(() => {
         const hasAccessToRoute = ({
+                                      requiredAccessMask,
                                       requiredAuthorities,
                                       requireAuth,
                                       requireToken,
@@ -191,6 +202,10 @@ function RouteList() {
 
             if (requireToken && !auth.apiToken.hasToken()) {
                 result = { ...result, hasAccess: false, noToken: true };
+            }
+
+            if (requiredAccessMask && !auth.accessMask.hasAccess(requiredAccessMask)) {
+                result = { ...result, hasAccess: false };
             }
 
             if (requiredAuthorities && requiredAuthorities.length > 0) {
@@ -209,6 +224,47 @@ function RouteList() {
         };
 
         const authReady = auth.currentAuth && auth.apiToken.hasToken();
+        const accessibleAdminSections = getAccessibleAdminSections(auth);
+
+        const adminRouteChildren: ConditionalRoute[] = accessibleAdminSections.reduce<ConditionalRoute[]>((acc, section) => {
+            switch (section.key) {
+                case "autoupdater":
+                    acc.push({
+                        path: section.path,
+                        element: <AdminAutoupdaterPage />,
+                        requiredAccessMask: section.requiredAccessMask,
+                        requiredAuthorities: section.requiredAuthorities,
+                        requireAuth: section.requireAuth,
+                        requireToken: section.requireToken,
+                    });
+                    break;
+            }
+
+            return acc;
+        }, []);
+
+        if (accessibleAdminSections.length > 0) {
+            adminRouteChildren.unshift({
+                index: true,
+                element: <Navigate replace to={accessibleAdminSections[0].path} />,
+            });
+        }
+
+        const preparedRoutes = routes.map((route) => {
+            if (route.path !== "/*" || !route.routes) return route;
+
+            return {
+                ...route,
+                routes: route.routes.map((childRoute) => {
+                    if (childRoute.path !== "admin") return childRoute;
+
+                    return {
+                        ...childRoute,
+                        routes: adminRouteChildren,
+                    };
+                }),
+            };
+        });
 
         const getRoutesNode = (i: ConditionalRoute, key: number) => {
             const checkResult = hasAccessToRoute(i);
@@ -228,8 +284,8 @@ function RouteList() {
             }
         };
 
-        return routes.map(getRoutesNode);
-    }, [auth.apiToken, auth.currentAuth, routes]);
+        return preparedRoutes.map(getRoutesNode);
+    }, [auth]);
 
     return <Routes>{resultRoutes}</Routes>;
 }

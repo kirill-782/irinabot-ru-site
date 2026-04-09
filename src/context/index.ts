@@ -9,6 +9,7 @@ import { MapDownloaderService } from "../services/MapDownloaderService";
 import { MapService } from "../services/MapService";
 import { MapUploaderService } from "../services/MapUploaderService";
 import { RedeemCodeService } from "../services/RedeemCodeService";
+import { UpdaterService } from "../services/UpdaterService";
 import { AccessMaskHolder } from "../utils/AccessMaskHolder";
 import { ApiTokenHolder } from "../utils/ApiTokenHolder";
 import { ServerUserAuth } from "./../models/websocket/ServerUserAuth";
@@ -127,6 +128,7 @@ export type RestContextType = {
     mapUploader: MapUploaderService;
     mapsApi: MapService;
     redeemApi: RedeemCodeService;
+    updaterApi: UpdaterService;
 };
 
 export const RestContext = createContext<RestContextType>(null);

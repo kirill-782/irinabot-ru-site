@@ -1,0 +1,38 @@
+.admin-autoupdater__mode-switch {
+    margin-bottom: 1rem;
+}
+
+.admin-autoupdater__archive-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.admin-autoupdater__archive-name {
+    color: rgba(0, 0, 0, 0.6);
+    word-break: break-word;
+}
+
+.dark {
+    .admin-autoupdater__archive-name {
+        color: rgba(255, 255, 255, 0.7);
+    }
+}
+
+.admin-autoupdater__actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
+
+.admin-autoupdater__result-list {
+    margin-top: 1rem !important;
+}
+
+.admin-autoupdater__result-files {
+    margin-top: 0.75rem !important;
+    max-height: 14rem;
+    overflow: auto;
+}
