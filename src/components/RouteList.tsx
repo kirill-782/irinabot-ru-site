@@ -7,7 +7,10 @@ import Layout from "./Layout";
 import { getAccessibleAdminSections } from "./Pages/AdminSections";
 
 const AutopayPage = React.lazy(() => import("./Pages/AutopayPage"));
+const AdminListDetailsPage = React.lazy(() => import("./Pages/AdminListDetailsPage"));
+const AdminListOverviewPage = React.lazy(() => import("./Pages/AdminListOverviewPage"));
 const AdminAutoupdaterPage = React.lazy(() => import("./Pages/AdminAutoupdaterPage"));
+const AdminListAppAdminPage = React.lazy(() => import("./Pages/AdminListAppAdminPage"));
 const AdminPage = React.lazy(() => import("./Pages/AdminPage"));
 const CreateGamePage = React.lazy(() => import("./Pages/CreateGamePage"));
 const GameListPage = React.lazy(() => import("./Pages/GameListPage"));
@@ -97,6 +100,21 @@ const routes: ConditionalRoute[] = [
                 requireAuth: true,
                 requireToken: true,
                 routes: [],
+            },
+            {
+                path: "admin-list",
+                requireAuth: true,
+                requireToken: true,
+                routes: [
+                    {
+                        index: true,
+                        element: <AdminListOverviewPage />,
+                    },
+                    {
+                        path: ":id",
+                        element: <AdminListDetailsPage />,
+                    },
+                ],
             },
             {
                 path: "gamelist",
@@ -232,6 +250,16 @@ function RouteList() {
                     acc.push({
                         path: section.path,
                         element: <AdminAutoupdaterPage />,
+                        requiredAccessMask: section.requiredAccessMask,
+                        requiredAuthorities: section.requiredAuthorities,
+                        requireAuth: section.requireAuth,
+                        requireToken: section.requireToken,
+                    });
+                    break;
+                case "admin-list-app-admin":
+                    acc.push({
+                        path: section.path,
+                        element: <AdminListAppAdminPage />,
                         requiredAccessMask: section.requiredAccessMask,
                         requiredAuthorities: section.requiredAuthorities,
                         requireAuth: section.requireAuth,

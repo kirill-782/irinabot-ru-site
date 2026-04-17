@@ -1,0 +1,46 @@
+.admin-list-overview__toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.admin-list-overview__actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.admin-list-overview__group + .admin-list-overview__group {
+    margin-top: 2rem;
+}
+
+.admin-list-overview__cards {
+    margin-top: 1rem !important;
+}
+
+.admin-list-overview__cards .card {
+    height: 100%;
+}
+
+.admin-list-overview__labels {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.75rem;
+}
+
+.admin-list-overview__meta {
+    display: grid;
+    gap: 0.35rem;
+    margin-top: 1rem;
+}
+
+.admin-list-overview__loader {
+    min-height: 12rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

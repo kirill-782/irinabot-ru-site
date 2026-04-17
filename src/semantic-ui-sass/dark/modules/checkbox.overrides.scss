@@ -12,3 +12,63 @@
 .ui.checkbox input:checked ~ label:after {
     color: #000;
 }
+
+/* Radio checkbox */
+.ui.radio.checkbox label {
+    color: $mutedTextColor;
+}
+
+.ui.radio.checkbox label:before {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.ui.radio.checkbox label:after {
+    background-color: $selectedTextColor !important;
+}
+
+.ui.radio.checkbox:hover label:before {
+    border-color: rgba(255, 255, 255, 0.7);
+}
+
+/* Active (checked) */
+.ui.radio.checkbox input:checked ~ .box:before,
+.ui.radio.checkbox input:checked ~ label:before {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.9);
+}
+
+.ui.radio.checkbox input:checked ~ .box:after,
+.ui.radio.checkbox input:checked ~ label:after {
+    background-color: $selectedTextColor !important;
+}
+
+.ui.radio.checkbox input:focus ~ label,
+.ui.radio.checkbox input:focus-visible ~ label {
+    color: $selectedTextColor;
+}
+
+.ui.radio.checkbox input:focus ~ label:before,
+.ui.radio.checkbox input:focus-visible ~ label:before {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.85);
+    box-shadow: 0 0 0 2px rgba(120, 180, 255, 0.6);
+}
+
+.ui.radio.checkbox input:focus ~ label:after,
+.ui.radio.checkbox input:focus-visible ~ label:after {
+    background-color: $selectedTextColor !important;
+}
+
+/* Active Focus (checked + focused) */
+.ui.radio.checkbox input:focus:checked ~ .box:before,
+.ui.radio.checkbox input:focus:checked ~ label:before {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 1);
+    box-shadow: 0 0 0 2px rgba(120, 180, 255, 0.6);
+}
+
+.ui.radio.checkbox input:focus:checked ~ .box:after,
+.ui.radio.checkbox input:focus:checked ~ label:after {
+    background-color: $selectedTextColor !important;
+}

@@ -99,6 +99,26 @@ $element: "container";
     }
 }
 
+/*
+    Дополнительные тиры для широких мониторов.
+    Активируются установкой модификатора `extra` на `.ui.container`.
+    Пример: <Container className="extra"> ... </Container>
+*/
+
+/* Widescreen (FullHD и выше) — extra */
+@media only screen and (min-width: $extraWidescreenBreakpoint) {
+    .ui.extra.container {
+        width: $extraWidescreenWidth;
+    }
+}
+
+/* 2K / QHD (2560px и выше) — extra */
+@media only screen and (min-width: $extra2KBreakpoint) {
+    .ui.extra.container {
+        width: $extra2KWidth;
+    }
+}
+
 /*******************************
              Types
 *******************************/

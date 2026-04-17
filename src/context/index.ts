@@ -3,6 +3,8 @@ import { GetLanguageStaring } from "../hooks/useLanguage";
 import { Category } from "../models/rest/Category";
 import { Map } from "../models/rest/Map";
 import { AccessListRecord } from "../models/websocket/ServerAccessList";
+import { AdminListApplicationAdministratorService } from "../services/AdminListApplicationAdministratorService";
+import { AdminListService } from "../services/AdminListService";
 import { ConnectorWebsocket } from "../services/ConnectorWebsocket";
 import { GHostWebSocket } from "../services/GHostWebsocket";
 import { MapDownloaderService } from "../services/MapDownloaderService";
@@ -126,6 +128,8 @@ export const AuthContext = createContext<AuthContextType>(null);
 // RestApi context
 
 export type RestContextType = {
+    adminListApi: AdminListService;
+    adminListAppAdminApi: AdminListApplicationAdministratorService;
     mapDownloader: MapDownloaderService;
     mapUploader: MapUploaderService;
     mapsApi: MapService;

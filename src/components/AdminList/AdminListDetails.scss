@@ -1,0 +1,213 @@
+.admin-list-details {
+    margin-top: 3em;
+
+    .toolbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 1rem;
+        flex-wrap: wrap;
+        margin-bottom: 1rem;
+    }
+
+    .toolbar-actions {
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+    }
+
+    .user-open-form {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        margin-bottom: 1rem;
+
+        .field {
+            flex: 1 1 12rem;
+            min-width: 0;
+            margin: 0 !important;
+        }
+
+        .ui.button {
+            flex: 0 0 auto;
+        }
+    }
+
+    .user-menu {
+        max-height: none;
+        overflow: visible;
+    }
+
+    .user-item {
+        display: grid;
+        gap: 0.2rem;
+    }
+
+    .empty {
+        min-height: 12rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .user-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 1rem;
+        flex-wrap: wrap;
+        margin-bottom: 1rem;
+    }
+
+    .user-header-labels {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+    }
+
+    .privilege-row {
+        display: flex;
+        gap: 1rem;
+        align-items: flex-end;
+        flex-wrap: wrap;
+    }
+
+    .role-tags {
+        display: flex;
+        gap: 0.35rem;
+        flex-wrap: wrap;
+        margin-top: 0.4rem;
+    }
+
+    .hint {
+        margin-top: 0.5rem;
+        color: var(--muted-text-color, rgba(0, 0, 0, 0.6));
+        font-size: 0.85rem;
+    }
+
+    .date-input {
+        min-width: 12rem;
+    }
+
+    .date-cell {
+        display: flex;
+        gap: 0.4rem;
+        align-items: stretch;
+        flex-wrap: wrap;
+
+        > .ui.label,
+        > .ui.button {
+            min-width: 2.7142rem;
+            width: 2.7142rem;
+            align-self: stretch;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+            flex: 0 0 2.7142rem;
+            padding: 0;
+            font-size: 0;
+            white-space: nowrap;
+            text-align: center;
+        }
+
+        > .ui.label::before,
+        > .ui.button::before {
+            content: "\221E";
+            font-size: 1.05rem;
+            font-weight: 700;
+            line-height: 1;
+        }
+    }
+
+    .table-scroll {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .roles-table.ui.table {
+        min-width: 880px;
+    }
+
+    .ui.table th.access-cell,
+    .ui.table td.access-cell {
+        width: 150px;
+        max-width: 150px;
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    .ui.table td.access-cell > * {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .ui.table th.actions-cell,
+    .ui.table td.actions-cell {
+        width: 150px;
+        max-width: 150px;
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    .ui.table td.actions-cell > * {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .row-actions {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .pending-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+        margin-bottom: 0.75rem;
+
+        .ui.header {
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+    }
+
+    .pending-actions {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+    }
+
+    .bulk-date {
+        margin-bottom: 0.75rem;
+    }
+
+    .bulk-date-row {
+        display: flex;
+        gap: 0.75rem;
+        align-items: flex-end;
+        flex-wrap: wrap;
+    }
+
+    .bulk-date-input {
+        min-width: 16rem;
+
+        &.field {
+            margin: 0 !important;
+        }
+    }
+
+    .pending-list {
+        margin: 0 !important;
+    }
+
+    .list-meta.ui.list {
+        margin-bottom: 0.75rem;
+    }
+}

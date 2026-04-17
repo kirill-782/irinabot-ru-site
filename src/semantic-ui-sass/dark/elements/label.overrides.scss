@@ -3,9 +3,177 @@
 *******************************/
 .ui.label {
     background-color: #2e2e2e;
+    color: $mutedTextColor;
+}
+
+.ui.label > .detail {
+    color: $lightTextColor;
 }
 
 a.ui.labels .label:hover,
 a.ui.label:hover {
-    background-color: #303030;
+    background-color: #353535;
+    color: $darkTextColor;
+}
+
+.ui.active.label {
+    background-color: #3d3d3d;
+    border-color: rgba(255, 255, 255, 0.12);
+    color: $darkTextColor;
+}
+
+.ui.active.label:before {
+    background-color: #3d3d3d;
+    color: $darkTextColor;
+}
+
+a.ui.labels .active.label:hover,
+a.ui.active.label:hover {
+    background-color: #474747;
+    border-color: rgba(255, 255, 255, 0.16);
+    color: $hoveredTextColor;
+}
+
+.ui.labels a.active.label:activehover:before,
+a.ui.active.label:activehover:before {
+    background-color: #474747;
+    color: $hoveredTextColor;
+}
+
+.ui.basic.label {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.14);
+    color: $mutedTextColor;
+    box-shadow: none;
+}
+
+a.ui.basic.label:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: $darkTextColor;
+    box-shadow: none;
+}
+
+.ui.image.label {
+    background-color: #2e2e2e;
+    color: $mutedTextColor;
+}
+
+.ui.image.label .detail {
+    background: rgba(255, 255, 255, 0.08);
+    color: $lightTextColor;
+}
+
+.ui.corner.label,
+.ui.corner.label:hover {
+    border-color: #2e2e2e;
+}
+
+.ui.active.corner.label,
+.ui.active.corner.label:hover {
+    border-color: #3d3d3d;
+}
+
+.ui.tag.label:after,
+.ui.tag.labels .label:after {
+    background-color: $pageBackground !important;
+    box-shadow: 0 -1px 1px 0 rgba(0, 0, 0, 0.45);
+}
+
+@mixin dark-accent-label($name, $tone, $textColor: rgba(255, 255, 255, 0.95)) {
+    $surface: mix($tone, $pageBackground, 72%);
+    $surfaceHover: mix($tone, $pageBackground, 80%);
+    $basicSurface: rgba($tone, 0.1);
+    $basicSurfaceHover: rgba($tone, 0.18);
+    $basicBorder: rgba($tone, 0.5);
+    $basicBorderHover: rgba($tone, 0.65);
+    $basicText: mix($tone, #ffffff, 72%);
+    $basicTextHover: mix($tone, #ffffff, 58%);
+
+    .ui.#{$name}.labels .label,
+    .ui.#{$name}.label {
+        background-color: $surface !important;
+        border-color: $surface !important;
+        color: $textColor !important;
+    }
+
+    .ui.#{$name}.labels .label:hover,
+    a.ui.#{$name}.label:hover {
+        background-color: $surfaceHover !important;
+        border-color: $surfaceHover !important;
+        color: #ffffff !important;
+    }
+
+    .ui.#{$name}.corner.label,
+    .ui.#{$name}.corner.label:hover {
+        border-color: $surface !important;
+    }
+
+    .ui.#{$name}.ribbon.label {
+        border-color: darken($surface, 10%) !important;
+    }
+
+    .ui.basic.#{$name}.label {
+        background: $basicSurface !important;
+        color: $basicText !important;
+        border-color: $basicBorder !important;
+    }
+
+    .ui.basic.#{$name}.labels a.label:hover,
+    a.ui.basic.#{$name}.label:hover {
+        background-color: $basicSurfaceHover !important;
+        color: $basicTextHover !important;
+        border-color: $basicBorderHover !important;
+        box-shadow: none !important;
+    }
+}
+
+@include dark-accent-label("red", $red);
+@include dark-accent-label("orange", $orange);
+@include dark-accent-label("yellow", $yellow);
+@include dark-accent-label("olive", $olive);
+@include dark-accent-label("green", $green);
+@include dark-accent-label("teal", $teal);
+@include dark-accent-label("blue", $blue);
+@include dark-accent-label("violet", $violet);
+@include dark-accent-label("purple", $purple);
+@include dark-accent-label("pink", $pink);
+@include dark-accent-label("brown", $brown);
+@include dark-accent-label("grey", $grey);
+
+.ui.black.labels .label,
+.ui.black.label {
+    background-color: #464646 !important;
+    border-color: #464646 !important;
+    color: rgba(255, 255, 255, 0.95) !important;
+}
+
+.ui.black.labels .label:hover,
+a.ui.black.label:hover {
+    background-color: #555555 !important;
+    border-color: #555555 !important;
+    color: #ffffff !important;
+}
+
+.ui.black.corner.label,
+.ui.black.corner.label:hover {
+    border-color: #464646 !important;
+}
+
+.ui.black.ribbon.label {
+    border-color: #323232 !important;
+}
+
+.ui.basic.black.label {
+    background: rgba(255, 255, 255, 0.05) !important;
+    color: $darkTextColor !important;
+    border-color: rgba(255, 255, 255, 0.22) !important;
+}
+
+.ui.basic.black.labels a.label:hover,
+a.ui.basic.black.label:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    color: #ffffff !important;
+    border-color: rgba(255, 255, 255, 0.32) !important;
+    box-shadow: none !important;
 }

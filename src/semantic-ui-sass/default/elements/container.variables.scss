@@ -27,6 +27,12 @@ $largeMonitorMinimumGutter: ($emSize * 2);
 $largeMonitorWidth: $largeMonitorBreakpoint - ($largeMonitorMinimumGutter * 2) - $scrollbarWidth;
 $largeMonitorGutter: auto;
 
+/* Extra (широкоформатные мониторы, модификатор .ui.extra.container) */
+$extraWidescreenBreakpoint: $widescreenMonitorBreakpoint;
+$extraWidescreenWidth: 1700px;
+$extra2KBreakpoint: 2560px;
+$extra2KWidth: 2200px;
+
 /* Coupling (Add Negative Margin to container size) */
 $gridGutterWidth: 2rem;
 $relaxedGridGutterWidth: 3rem;

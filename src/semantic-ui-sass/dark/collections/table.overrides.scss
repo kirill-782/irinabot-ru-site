@@ -30,3 +30,9 @@
     background: #202020 !important;
     color: #898989 !important;
 }
+
+.ui.table tr.active,
+.ui.table tr.active td {
+    background: rgba(255, 255, 255, 0.08) !important;
+    color: rgba(255, 255, 255, 0.95) !important;
+}

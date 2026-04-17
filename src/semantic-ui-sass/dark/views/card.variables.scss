@@ -1,3 +1,14 @@
 /*******************************
     User Variable Overrides
 *******************************/
+$background: #3d3d3d;
+$shadowBoxShadow: 0px $shadowDistance 3px 0px rgba(0, 0, 0, 0.35);
+$borderShadow: 0px 0px 0px $borderWidth rgba(255, 255, 255, 0.08);
+
+$descriptionColor: $mutedTextColor;
+
+$extraDivider: 1px solid $internalBorderColor;
+$extraColor: $lightTextColor;
+
+$linkHoverBackground: lighten($background, 4%);
+$shadowHoverBoxShadow: 0px $shadowDistance $linkHoverRaiseDistance 0px rgba(0, 0, 0, 0.45);

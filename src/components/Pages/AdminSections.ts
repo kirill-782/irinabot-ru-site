@@ -22,6 +22,14 @@ export const adminSections: AdminSection[] = [
         requireToken: true,
         requiredAuthorities: ["UPDATES_PUBLISH"],
     },
+    {
+        key: "admin-list-app-admin",
+        title: "Admin list (администратор)",
+        path: "admin-list-app-admin",
+        requireAuth: true,
+        requireToken: true,
+        requiredAuthorities: ["ADMINLIST_ADMIN"],
+    },
 ];
 
 export function canAccessControlledRoute(auth: AuthData, route: AccessControlledRoute) {

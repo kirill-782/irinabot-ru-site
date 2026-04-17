@@ -1,6 +1,8 @@
 html.dark {
     color-scheme: dark;
 
+    --muted-text-color: rgba(255, 255, 255, 0.7);
+
     body {
         background-color: #1c1c1c;
         color: #dadada;
@@ -8,6 +10,8 @@ html.dark {
 }
 
 html.light {
+    --muted-text-color: rgba(0, 0, 0, 0.6);
+
     body {
         background-color: #fff;
         color: rgba(0, 0, 0, 0.87);

@@ -1,0 +1,30 @@
+.admin-list-value-control {
+    display: inline-flex;
+    align-items: center;
+
+    &.max {
+        min-width: 2rem;
+        justify-content: center;
+    }
+
+    .ui.button {
+        min-width: 2.5rem;
+        width: 2.5rem;
+        height: 2.25rem;
+        padding: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
+        flex: 0 0 2.5rem;
+
+        > .icon {
+            margin: 0;
+        }
+
+        &.neutral:not(.basic) {
+            background: #3a2d39;
+            color: #fff;
+        }
+    }
+}

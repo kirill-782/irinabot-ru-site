@@ -5,6 +5,8 @@ import { useConnectorIdCache } from "./hooks/useConnectorIdCache";
 import { useVersionsCache } from "./hooks/useVersionsCache";
 import React, { useContext, useEffect, useState } from "react";
 import { DEFAULT_CONFIG } from "./config/ApiConfig";
+import { AdminListApplicationAdministratorService } from "./services/AdminListApplicationAdministratorService";
+import { AdminListService } from "./services/AdminListService";
 import { MapDownloaderService } from "./services/MapDownloaderService";
 import { MapService } from "./services/MapService";
 import { MapUploaderService } from "./services/MapUploaderService";
@@ -12,6 +14,10 @@ import { RedeemCodeService } from "./services/RedeemCodeService";
 import { UpdaterService } from "./services/UpdaterService";
 
 function AfterContextApp(props) {
+    const [adminListApi, setAdminListApi] = useState(new AdminListService(DEFAULT_CONFIG));
+    const [adminListAppAdminApi, setAdminListAppAdminApi] = useState(
+        new AdminListApplicationAdministratorService(DEFAULT_CONFIG)
+    );
     const [mapsApi, setMapsApi] = useState(new MapService(DEFAULT_CONFIG));
     const [mapDownloader] = useState(new MapDownloaderService());
     const [mapUploader] = useState(new MapUploaderService(new MapService(DEFAULT_CONFIG)));
@@ -22,7 +28,13 @@ function AfterContextApp(props) {
         mapUploader.setMapService(mapsApi);
     }, [mapsApi, mapUploader]);
 
-    useApiAuth({ setMapService: setMapsApi, setRedeemService: setRedeemApi, setUpdaterService: setUpdaterApi });
+    useApiAuth({
+        setAdminListService: setAdminListApi,
+        setAdminListApplicationAdministratorService: setAdminListAppAdminApi,
+        setMapService: setMapsApi,
+        setRedeemService: setRedeemApi,
+        setUpdaterService: setUpdaterApi,
+    });
 
     const { ghostSocket } = useContext(WebsocketContext);
 
@@ -35,6 +47,8 @@ function AfterContextApp(props) {
     return (
         <RestContext.Provider
             value={{
+                adminListApi,
+                adminListAppAdminApi,
                 mapDownloader,
                 mapsApi,
                 mapUploader,
