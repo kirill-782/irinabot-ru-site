@@ -1,3 +1,29 @@
 /*******************************
         User Overrides
 *******************************/
+.ui.popup {
+    background: #343434;
+    color: #bcbcbc;
+    border-color: #4b4b4b;
+}
+
+.ui.popup > .header {
+    color: #dadada;
+}
+
+.ui.popup::before {
+    background: #343434 !important;
+    box-shadow: 1px 1px 0 0 #4b4b4b !important;
+}
+
+.ui.bottom.popup::before {
+    box-shadow: -1px -1px 0 0 #4b4b4b !important;
+}
+
+.ui.left.center.popup::before {
+    box-shadow: 1px -1px 0 0 #4b4b4b !important;
+}
+
+.ui.right.center.popup::before {
+    box-shadow: -1px 1px 0 0 #4b4b4b !important;
+}

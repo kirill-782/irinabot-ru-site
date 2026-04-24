@@ -40,6 +40,7 @@ const DesktopMenu = () => {
             <Menu.Item as={NavLink} icon="gamepad" to="/gamelist" title={lang.menuActiveGames} onClick={tryTopScroll} />
             <Menu.Item as={NavLink} icon="file" to="/maps" title={lang.menuMapList} onClick={tryTopScroll} />
             <Menu.Item as={NavLink} title={lang.menuHelp} icon="help" to="/wiki/irina-help/how-to-play" />
+            <Menu.Item as={NavLink} icon="cogs" to="/host-presets" title="Настройки" />
             <Menu.Item
                 onClick={() => {
                     switchTheme(currentTheme === E_THEME.LIGHT ? E_THEME.DARK : E_THEME.LIGHT);

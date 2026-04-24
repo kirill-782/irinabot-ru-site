@@ -5,6 +5,7 @@ import { Map } from "../models/rest/Map";
 import { AccessListRecord } from "../models/websocket/ServerAccessList";
 import { AdminListApplicationAdministratorService } from "../services/AdminListApplicationAdministratorService";
 import { AdminListService } from "../services/AdminListService";
+import { HostPresetService } from "../services/HostPresetService";
 import { ConnectorWebsocket } from "../services/ConnectorWebsocket";
 import { GHostWebSocket } from "../services/GHostWebsocket";
 import { MapDownloaderService } from "../services/MapDownloaderService";
@@ -135,6 +136,7 @@ export type RestContextType = {
     mapsApi: MapService;
     redeemApi: RedeemCodeService;
     updaterApi: UpdaterService;
+    hostPresetApi: HostPresetService;
 };
 
 export const RestContext = createContext<RestContextType>(null);

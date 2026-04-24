@@ -12,6 +12,7 @@ import { MapService } from "./services/MapService";
 import { MapUploaderService } from "./services/MapUploaderService";
 import { RedeemCodeService } from "./services/RedeemCodeService";
 import { UpdaterService } from "./services/UpdaterService";
+import { HostPresetService } from "./services/HostPresetService";
 
 function AfterContextApp(props) {
     const [adminListApi, setAdminListApi] = useState(new AdminListService(DEFAULT_CONFIG));
@@ -23,6 +24,7 @@ function AfterContextApp(props) {
     const [mapUploader] = useState(new MapUploaderService(new MapService(DEFAULT_CONFIG)));
     const [redeemApi, setRedeemApi] = useState(new RedeemCodeService(DEFAULT_CONFIG));
     const [updaterApi, setUpdaterApi] = useState(new UpdaterService(DEFAULT_CONFIG));
+    const [hostPresetApi, setHostPresetApi] = useState(new HostPresetService(DEFAULT_CONFIG));
 
     useEffect(() => {
         mapUploader.setMapService(mapsApi);
@@ -34,6 +36,7 @@ function AfterContextApp(props) {
         setMapService: setMapsApi,
         setRedeemService: setRedeemApi,
         setUpdaterService: setUpdaterApi,
+        setHostPresetService: setHostPresetApi,
     });
 
     const { ghostSocket } = useContext(WebsocketContext);
@@ -54,6 +57,7 @@ function AfterContextApp(props) {
                 mapUploader,
                 redeemApi,
                 updaterApi,
+                hostPresetApi,
             }}
         >
             <CacheContext.Provider

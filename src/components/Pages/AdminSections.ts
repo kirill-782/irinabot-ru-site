@@ -30,6 +30,14 @@ export const adminSections: AdminSection[] = [
         requireToken: true,
         requiredAuthorities: ["ADMINLIST_ADMIN"],
     },
+    {
+        key: "host-preset-properties",
+        title: "Стандартные свойства",
+        path: "host-preset-properties",
+        requireAuth: true,
+        requireToken: true,
+        requiredAuthorities: ["CONFIG_CREATE"],
+    },
 ];
 
 export function canAccessControlledRoute(auth: AuthData, route: AccessControlledRoute) {

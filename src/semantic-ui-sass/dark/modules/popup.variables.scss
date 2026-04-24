@@ -1,3 +1,18 @@
 /*******************************
     User Variable Overrides
 *******************************/
+$background: #343434;
+$color: #bcbcbc;
+$borderColor: #4b4b4b;
+$headerColor: #dadada;
+
+$arrowBackground: #343434;
+$arrowTopBackground: $arrowBackground;
+$arrowCenterBackground: $arrowBackground;
+$arrowBottomBackground: $arrowBackground;
+$arrowColor: #4b4b4b;
+
+$arrowBoxShadow: 1px 1px 0 0 $arrowColor;
+$leftArrowBoxShadow: 1px -1px 0 0 $arrowColor;
+$rightArrowBoxShadow: -1px 1px 0 0 $arrowColor;
+$bottomArrowBoxShadow: -1px -1px 0 0 $arrowColor;

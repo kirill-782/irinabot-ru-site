@@ -33,6 +33,8 @@ const WikiPage = React.lazy(() => import("./Pages/WikiPage"));
 const LanguageManagerPage = React.lazy(() => import("./Pages/LanguageManagerPage"));
 
 const ConsentStubPage = React.lazy(() => import("./Pages/ConsentStubPage"));
+const ConfigSettingsPage = React.lazy(() => import("./Pages/ConfigSettingsPage"));
+const HostPresetPropertiesPage = React.lazy(() => import("./Pages/HostPresetPropertiesPage"));
 
 
 interface CondirionalRouteIndex {
@@ -180,6 +182,16 @@ const routes: ConditionalRoute[] = [
                 element: <LanguageManagerPage />,
             },
             {
+                path: "host-presets",
+                element: <ConfigSettingsPage />,
+                requireAuth: true,
+            },
+            {
+                path: "host-presets/:id",
+                element: <ConfigSettingsPage />,
+                requireAuth: true,
+            },
+            {
                 path: "consent",
                 element: <ConsentStubPage/>,
                 requireAuth: true,
@@ -260,6 +272,16 @@ function RouteList() {
                     acc.push({
                         path: section.path,
                         element: <AdminListAppAdminPage />,
+                        requiredAccessMask: section.requiredAccessMask,
+                        requiredAuthorities: section.requiredAuthorities,
+                        requireAuth: section.requireAuth,
+                        requireToken: section.requireToken,
+                    });
+                    break;
+                case "host-preset-properties":
+                    acc.push({
+                        path: section.path,
+                        element: <HostPresetPropertiesPage />,
                         requiredAccessMask: section.requiredAccessMask,
                         requiredAuthorities: section.requiredAuthorities,
                         requireAuth: section.requireAuth,

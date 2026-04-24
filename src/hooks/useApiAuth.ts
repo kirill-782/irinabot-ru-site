@@ -7,6 +7,7 @@ import { AdminListService } from "../services/AdminListService";
 import { MapService } from "../services/MapService";
 import { RedeemCodeService } from "../services/RedeemCodeService";
 import { UpdaterService } from "../services/UpdaterService";
+import { HostPresetService } from "../services/HostPresetService";
 import { DEFAULT_CONFIG } from "../config/ApiConfig";
 
 export interface ApiAuthOptions {
@@ -15,6 +16,7 @@ export interface ApiAuthOptions {
     setMapService: Dispatch<SetStateAction<MapService>>;
     setRedeemService: Dispatch<SetStateAction<RedeemCodeService>>;
     setUpdaterService: Dispatch<SetStateAction<UpdaterService>>;
+    setHostPresetService: Dispatch<SetStateAction<HostPresetService>>;
 }
 
 export const useApiAuth = ({
@@ -23,6 +25,7 @@ export const useApiAuth = ({
     setMapService,
     setRedeemService,
     setUpdaterService,
+    setHostPresetService,
 }: ApiAuthOptions) => {
     const authContext = useContext(AuthContext);
 
@@ -49,6 +52,7 @@ export const useApiAuth = ({
         setMapService(new MapService(newConfig));
         setRedeemService(new RedeemCodeService(newConfig));
         setUpdaterService(new UpdaterService(newConfig));
+        setHostPresetService(new HostPresetService(newConfig));
     }, [
         authContext.auth.apiToken,
         setAdminListApplicationAdministratorService,
@@ -56,5 +60,6 @@ export const useApiAuth = ({
         setMapService,
         setRedeemService,
         setUpdaterService,
+        setHostPresetService,
     ]);
 };

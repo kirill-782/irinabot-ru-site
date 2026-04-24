@@ -1,0 +1,215 @@
+.config-settings-page {
+    margin-top: 3em;
+}
+
+.config-menu {
+    .item {
+        border-radius: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .item.active {
+        background: rgba(34, 36, 38, 0.08);
+        font-weight: 700;
+    }
+
+    .circular.label {
+        margin-left: auto;
+    }
+}
+
+.config-menu-group {
+    margin-top: 0.8em;
+    font-size: 0.85em;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted-text-color, rgba(0, 0, 0, 0.6));
+}
+
+.config-toolbar {
+    margin-bottom: 1rem;
+}
+
+.config-toolbar-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.config-preset-select {
+    min-width: 16rem;
+}
+
+.config-search {
+    margin-bottom: 0.75rem;
+}
+
+.config-menu-dimmed {
+    opacity: 0.35;
+}
+
+.config-content {
+    min-height: 18rem;
+}
+
+.config-changes-inline {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-left: auto;
+}
+
+.config-changes-label {
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+.config-section > div {
+    margin-bottom: 1.2rem;
+}
+
+.config-section .field-description {
+    margin-top: 0.3rem;
+    font-size: 0.85rem;
+    color: var(--muted-text-color, rgba(0, 0, 0, 0.6));
+    font-style: italic;
+}
+
+.config-section .field-hint {
+    margin-top: 0.3rem;
+    font-size: 0.8rem;
+    color: var(--muted-text-color, rgba(0, 0, 0, 0.6));
+}
+
+.config-section .bitmask-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    padding: 0.7rem;
+    background: rgba(0, 0, 0, 0.02);
+    border-radius: 0.3rem;
+}
+
+.config-field-highlight {
+    background: rgba(33, 133, 208, 0.08);
+    border-left: 3px solid #2185d0;
+    padding: 0.4rem 0.6rem;
+    border-radius: 0.2rem;
+}
+
+.config-field-dimmed {
+    opacity: 0.3;
+}
+
+.property-field-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.5rem;
+}
+
+.property-field-input {
+    flex: 1;
+    min-width: 0;
+}
+
+.property-field-delete.ui.button {
+    flex-shrink: 0;
+    margin-bottom: 1px;
+}
+
+.variable-source-item .variable-source-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.8rem;
+
+    .left {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+    }
+}
+
+.condition-variable-editor {
+    .layout {
+        display: flex;
+        gap: 1rem;
+        min-height: 18rem;
+    }
+
+    .sidebar {
+        width: 200px;
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .list-segment {
+        flex: 1;
+        overflow-y: auto;
+        padding: 0 !important;
+        min-height: 0;
+    }
+
+    .var-list {
+        margin: 0 !important;
+
+        .item.active {
+            background: #2185d0 !important;
+            color: #fff !important;
+        }
+    }
+
+    .sidebar-controls {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .delete-btn {
+        margin-top: auto !important;
+        flex-shrink: 0;
+    }
+
+    .detail {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .conditions-header {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        margin-bottom: 0.5rem;
+    }
+}
+
+.dark {
+    .config-menu {
+        .item.active {
+            background: rgba(255, 255, 255, 0.1);
+        }
+    }
+
+    .config-section .bitmask-group {
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    .config-field-highlight {
+        background: rgba(33, 133, 208, 0.15);
+    }
+
+    .condition-variable-editor {
+        .var-list .item:hover {
+            background: rgba(255, 255, 255, 0.08) !important;
+            color: #dadada !important;
+        }
+
+        .var-list .item.active {
+            background: #1a6fb5 !important;
+        }
+    }
+}
