@@ -34,6 +34,18 @@ const ADS = [
         link: "https://discord.gg/d3WvXDk9zQ",
         index: 10,
         expire: 1773090000000,
+    },
+    {
+        img: "/kaisa/4x4ATR6k.png",
+        link: "https://goodgame.ru/cups/irinabot-4x4-buff-cup-10074",
+        index: 15,
+        expire: 1782680400000,
+    },
+    {
+        img: "/kaisa/YouTubeBanner.svg",
+        link: "https://www.youtube.com/@irinabottv",
+        index: 10,
+        expire: 1786000000000, // ~2026-08-06, ротация на ~1.5 месяца
     }
 ];
 

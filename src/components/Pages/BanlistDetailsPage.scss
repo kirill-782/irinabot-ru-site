@@ -1,0 +1,32 @@
+.banlist-details {
+    .crumbs {
+        margin-bottom: 0.75rem;
+    }
+
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 1rem;
+        flex-wrap: wrap;
+        margin-bottom: 1rem;
+    }
+
+    .actions {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        align-items: stretch;
+
+        > .ui.label,
+        > .ui.button {
+            height: 2.25rem;
+            display: inline-flex;
+            align-items: center;
+            font-size: 0.92857143rem;
+            line-height: 1;
+            margin: 0;
+            box-sizing: border-box;
+        }
+    }
+}

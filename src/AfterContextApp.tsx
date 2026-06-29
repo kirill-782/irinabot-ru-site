@@ -7,24 +7,28 @@ import React, { useContext, useEffect, useState } from "react";
 import { DEFAULT_CONFIG } from "./config/ApiConfig";
 import { AdminListApplicationAdministratorService } from "./services/AdminListApplicationAdministratorService";
 import { AdminListService } from "./services/AdminListService";
+import { BanlistService } from "./services/BanlistService";
 import { MapDownloaderService } from "./services/MapDownloaderService";
 import { MapService } from "./services/MapService";
 import { MapUploaderService } from "./services/MapUploaderService";
 import { RedeemCodeService } from "./services/RedeemCodeService";
 import { UpdaterService } from "./services/UpdaterService";
 import { HostPresetService } from "./services/HostPresetService";
+import { UserNicknameService } from "./services/UserNicknameService";
 
 function AfterContextApp(props) {
     const [adminListApi, setAdminListApi] = useState(new AdminListService(DEFAULT_CONFIG));
     const [adminListAppAdminApi, setAdminListAppAdminApi] = useState(
         new AdminListApplicationAdministratorService(DEFAULT_CONFIG)
     );
+    const [banlistApi, setBanlistApi] = useState(new BanlistService(DEFAULT_CONFIG));
     const [mapsApi, setMapsApi] = useState(new MapService(DEFAULT_CONFIG));
     const [mapDownloader] = useState(new MapDownloaderService());
     const [mapUploader] = useState(new MapUploaderService(new MapService(DEFAULT_CONFIG)));
     const [redeemApi, setRedeemApi] = useState(new RedeemCodeService(DEFAULT_CONFIG));
     const [updaterApi, setUpdaterApi] = useState(new UpdaterService(DEFAULT_CONFIG));
     const [hostPresetApi, setHostPresetApi] = useState(new HostPresetService(DEFAULT_CONFIG));
+    const [userNicknameApi, setUserNicknameApi] = useState(new UserNicknameService(DEFAULT_CONFIG));
 
     useEffect(() => {
         mapUploader.setMapService(mapsApi);
@@ -33,10 +37,12 @@ function AfterContextApp(props) {
     useApiAuth({
         setAdminListService: setAdminListApi,
         setAdminListApplicationAdministratorService: setAdminListAppAdminApi,
+        setBanlistService: setBanlistApi,
         setMapService: setMapsApi,
         setRedeemService: setRedeemApi,
         setUpdaterService: setUpdaterApi,
         setHostPresetService: setHostPresetApi,
+        setUserNicknameService: setUserNicknameApi,
     });
 
     const { ghostSocket } = useContext(WebsocketContext);
@@ -52,12 +58,14 @@ function AfterContextApp(props) {
             value={{
                 adminListApi,
                 adminListAppAdminApi,
+                banlistApi,
                 mapDownloader,
                 mapsApi,
                 mapUploader,
                 redeemApi,
                 updaterApi,
                 hostPresetApi,
+                userNicknameApi,
             }}
         >
             <CacheContext.Provider

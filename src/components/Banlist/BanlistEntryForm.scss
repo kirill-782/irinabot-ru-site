@@ -1,0 +1,49 @@
+.banlist-entry-form {
+    .form-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 1rem;
+        flex-wrap: wrap;
+        margin-bottom: 1rem;
+    }
+
+    .template-row {
+        display: flex;
+        gap: 0.4rem;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+    .indent {
+        margin-left: 2rem;
+        margin-top: 0.5rem;
+    }
+
+    // Отключённые поля Semantic гасит прозрачностью сразу на двух уровнях
+    // (.field и вложенный .ui.input — 0.45 × 0.45 ≈ 0.2), из-за чего на светлой
+    // теме значение (неизменяемый userId / pvpgn) почти не читается. Не гасим
+    // прозрачностью — показываем приглушённым, но видимым цветом.
+    .ui.form .disabled.field,
+    .ui.form .disabled.field > label,
+    .ui.disabled.input,
+    .ui.disabled.checkbox label,
+    .ui.checkbox input[disabled] ~ label {
+        opacity: 1;
+    }
+
+    .ui.form .disabled.field > label,
+    .ui.disabled.checkbox label,
+    .ui.checkbox input[disabled] ~ label {
+        color: var(--muted-text-color);
+    }
+
+    // значение отключённого инпута: приглушённое, но читаемое
+    // (-webkit-text-fill-color нужен, иначе WebKit подменяет цвет disabled-инпута)
+    .ui.disabled.input > input,
+    .ui.disabled.input input,
+    .ui.form .field input:disabled {
+        color: var(--muted-text-color);
+        -webkit-text-fill-color: var(--muted-text-color);
+    }
+}

@@ -20,7 +20,8 @@
         display: flex;
         gap: 0.5rem;
         flex-wrap: wrap;
-        margin-bottom: 1rem;
+        margin-bottom: 0.5rem;
+        align-items: flex-start;
 
         .field {
             flex: 1 1 12rem;
@@ -28,8 +29,37 @@
             margin: 0 !important;
         }
 
+        .ui.search.user-open-search {
+            flex: 1 1 12rem;
+            min-width: 0;
+
+            > .ui.input {
+                width: 100%;
+            }
+
+            .results {
+                width: 100%;
+            }
+        }
+
         .ui.button {
             flex: 0 0 auto;
+        }
+    }
+
+    .user-open-hint {
+        margin: 0 0 1rem;
+        font-size: 0.85em;
+        opacity: 0.7;
+    }
+
+    .nickname-result {
+        display: grid;
+        gap: 0.1rem;
+
+        .nickname-result__id {
+            font-size: 0.85em;
+            opacity: 0.6;
         }
     }
 
@@ -120,9 +150,91 @@
         }
     }
 
+    .roles-search {
+        margin-bottom: 0.75rem;
+    }
+
     .table-scroll {
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
+    }
+
+    .roles-table {
+        .roles-section-header td {
+            background: var(--secondary-background-color, rgba(0, 0, 0, 0.04));
+
+            .roles-section-title {
+                font-weight: 700;
+                text-transform: uppercase;
+                font-size: 0.85rem;
+                letter-spacing: 0.03em;
+            }
+
+            .roles-section-hint {
+                margin-left: 0.75rem;
+                font-weight: 400;
+                font-size: 0.8rem;
+                opacity: 0.65;
+            }
+
+            .roles-section-bar {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 1rem;
+                flex-wrap: wrap;
+            }
+
+            .roles-section-actions {
+                display: flex;
+                gap: 0.4rem;
+                flex-wrap: wrap;
+            }
+        }
+
+        .roles-group-header td {
+            font-weight: 600;
+            background: var(--secondary-background-color, rgba(0, 0, 0, 0.02));
+
+            .ui.label {
+                margin-left: 0.5rem;
+            }
+        }
+
+        .roles-group-header .roles-group-toggle {
+            cursor: pointer;
+
+            .roles-group-toggle-inner {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 0.75rem;
+            }
+
+            .roles-group-label {
+                display: inline-flex;
+                align-items: center;
+            }
+        }
+
+        // вспомогательный слой команд визуально приглушён
+        .roles-group-header td,
+        .roles-group-header + tr td {
+            color: var(--muted-text-color, rgba(0, 0, 0, 0.75));
+        }
+
+        // дочерние роли иерархии — лёгкий отступ имени
+        .role-chain-child .role-name {
+            padding-left: 1.1rem;
+            position: relative;
+
+            &::before {
+                content: "\21B3";
+                position: absolute;
+                left: 0;
+                opacity: 0.5;
+            }
+        }
     }
 
     .roles-table.ui.table {

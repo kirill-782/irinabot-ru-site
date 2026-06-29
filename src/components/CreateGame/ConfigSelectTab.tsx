@@ -55,7 +55,11 @@ function ConfigSelectTab() {
 
     return (
         <Grid columns="equal" stackable className="config-select-tab">
-            {hasError && <Message color="red">{hasError}</Message>}
+            {hasError && (
+                <Grid.Column>
+                    <Message color="red">{hasError}</Message>
+                </Grid.Column>
+            )}
             {isLoading && (
                 <Loader active size="massive">
                     {lang.loadingDotted}

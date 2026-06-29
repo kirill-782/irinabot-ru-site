@@ -4,7 +4,7 @@ export interface RoleDraft {
 }
 
 export interface RoleRow {
-    activeBefore: string | null;
+    activeBefore: number | null;
     declared: boolean;
     grantedBy: string | null;
     name: string;
@@ -13,7 +13,7 @@ export interface RoleRow {
 }
 
 export interface PendingChange {
-    activeBefore: string | null;
+    activeBefore: number | null;
     name: string;
     previousValue: boolean | number | null;
     value: boolean | number | null;

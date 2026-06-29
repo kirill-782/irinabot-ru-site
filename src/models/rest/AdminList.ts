@@ -30,6 +30,11 @@ export interface AdminListFullOutWeb extends AdminListBase, AdminListExtended {
 
 export type AdminListOutWeb = AdminListFullOutWeb;
 
+// Ответ POST /v1/admin-lists: id + Base + Extended (без roles/privilegeLevel).
+export interface AdminListCreatedOutWeb extends AdminListBase, AdminListExtended {
+    id?: number;
+}
+
 export interface AdminListPatchInWeb {
     comment?: string | null;
     valueChangeType?: ValueChangeType;
@@ -44,7 +49,7 @@ export interface AdminListUserOutWebRole {
     name?: string;
     value?: boolean | number | null;
     grantedBy?: string | null;
-    activeBefore?: string | null;
+    activeBefore?: number | null;
 }
 
 export interface AdminListUserOutWeb {
@@ -55,7 +60,7 @@ export interface AdminListUserOutWeb {
 export interface AdminListRolePutInWebRoleChange {
     name: string;
     value: boolean;
-    activeBefore?: string | null;
+    activeBefore?: number | null;
 }
 
 export interface AdminListRolePutInWeb {
@@ -66,33 +71,7 @@ export interface AdminListRolePutInWeb {
 export interface AdminListRolePatchInWeb {
     name: string;
     value?: boolean | number | null;
-    activeBefore?: string | null;
-}
-
-export interface AdminListType {
-    id?: number;
-    canConnect?: boolean;
-    global?: boolean;
-    canSetNonDeclaredItems?: boolean;
-    canSetNonOwnedItems?: boolean;
-    canRevoke?: boolean;
-    declareList?: boolean;
-    conditionExpression?: string | null;
-    parentListType?: AdminListType;
-    comment?: string | null;
-}
-
-export interface AdminListInstance {
-    id?: number;
-    parentListInstance?: AdminListInstance;
-    listType?: AdminListType;
-    owner?: string;
-    sourceUserId?: string;
-    valueChangeType?: ValueChangeType;
-    default?: boolean;
-    activeBefore?: string | null;
-    itemsActiveBefore?: string | null;
-    comment?: string | null;
+    activeBefore?: number | null;
 }
 
 export interface AdminListGlobalOutWeb {
@@ -123,7 +102,7 @@ export interface AdminListRoleUsersOutWebUser {
     userId?: string | null;
     value?: number;
     grantedBy?: string | null;
-    activeBefore?: string | null;
+    activeBefore?: number | null;
 }
 
 export interface AdminListRoleUsersOutWeb {

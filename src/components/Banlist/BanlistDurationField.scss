@@ -1,0 +1,30 @@
+.banlist-duration-field {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+
+    .banlist-duration-field__value {
+        flex: 0 0 auto;
+        width: 6rem;
+    }
+
+    .banlist-duration-field__value > input {
+        width: 100%;
+    }
+
+    .banlist-duration-field__unit {
+        flex: 0 0 auto;
+        min-width: 8rem;
+    }
+
+    // узкая модалка: единица занимает остаток строки, перенос запрещён
+    &--fill {
+        flex-wrap: nowrap;
+
+        .banlist-duration-field__unit {
+            flex: 1 1 auto;
+            min-width: 0;
+        }
+    }
+}

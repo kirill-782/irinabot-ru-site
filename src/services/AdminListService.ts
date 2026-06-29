@@ -1,7 +1,7 @@
 import Axios, { AxiosRequestConfig } from "axios";
 import {
+    AdminListCreatedOutWeb,
     AdminListFullOutWeb,
-    AdminListInstance,
     AdminListPatchInWeb,
     AdminListRolePatchInWeb,
     AdminListRolePutInWeb,
@@ -41,7 +41,7 @@ export class AdminListService {
 
         request = this.appendOptions(request, options);
 
-        const response = await Axios.request<AdminListInstance>(request);
+        const response = await Axios.request<AdminListCreatedOutWeb>(request);
 
         return response.data;
     };
@@ -204,6 +204,58 @@ export class AdminListService {
                 "content-type": "application/json",
             },
             data,
+        };
+
+        request = this.appendOptions(request, options);
+
+        const response = await Axios.request<void>(request);
+
+        return response.data;
+    };
+
+    // Wildcard-роли «все пользователи» (targetUserId = null). Только владелец списка.
+    public getAdminListEveryone = async (listId: number, options?: RequestOptions) => {
+        let request: AxiosRequestConfig = {
+            ...this.defaultConfig,
+            url: `/v1/admin-lists/${listId}/everyone`,
+            method: "GET",
+        };
+
+        request = this.appendOptions(request, options);
+
+        const response = await Axios.request<AdminListUserOutWeb>(request);
+
+        return response.data;
+    };
+
+    public patchAdminListEveryoneRoles = async (
+        listId: number,
+        data: AdminListRolePatchInWeb[],
+        options?: RequestOptions
+    ) => {
+        let request: AxiosRequestConfig<AdminListRolePatchInWeb[]> = {
+            ...this.defaultConfig,
+            url: `/v1/admin-lists/${listId}/everyone/roles`,
+            method: "PATCH",
+            headers: {
+                ...this.defaultConfig.headers,
+                "content-type": "application/json",
+            },
+            data,
+        };
+
+        request = this.appendOptions(request, options);
+
+        const response = await Axios.request<void>(request);
+
+        return response.data;
+    };
+
+    public deleteAdminListEveryone = async (listId: number, options?: RequestOptions) => {
+        let request: AxiosRequestConfig = {
+            ...this.defaultConfig,
+            url: `/v1/admin-lists/${listId}/everyone`,
+            method: "DELETE",
         };
 
         request = this.appendOptions(request, options);

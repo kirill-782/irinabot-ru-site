@@ -1,9 +1,10 @@
 export const convertErrorResponseToString = (error) => {
     if (error.response) {
-        try {
-            const errorMessage = error.response.data;
-            return `${errorMessage.code}: ${errorMessage.message}`;
-        } catch (e) {}
+        const data = error.response.data;
+
+        if (data && data.code !== undefined && data.message !== undefined) {
+            return `${data.code}: ${data.message}`;
+        }
 
         return `Server status ${error.response.status}`;
     }

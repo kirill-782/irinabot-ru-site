@@ -2,8 +2,21 @@
     User Variable Overrides
 *******************************/
 
+$background: #262626;
+
+/* Solid (non-inverted) menu item states. Default uses transparent black overlays
+   which are invisible on a dark surface, so use transparent white instead. */
+$hoverItemBackground: rgba(255, 255, 255, 0.05);
+$activeItemBackground: rgba(255, 255, 255, 0.1);
+$activeHoverItemBackground: rgba(255, 255, 255, 0.13);
+
 $dropdownBackground: #666666;
 $tabularActiveBackground: #101010;
 $tabularBorderColor: #444;
 $tabularActiveColor: #adadad;
 $tabularTextColor: #adadad;
+$labelBackground: #444;
+$labelTextColor: $white;
+$secondaryPointingActiveBorderColor: $white;
+$secondaryPointingActiveHoverBorderColor: $white;
+$secondaryPointingHoverTextColor: $hoveredTextColor;

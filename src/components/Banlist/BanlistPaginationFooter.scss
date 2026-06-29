@@ -1,0 +1,31 @@
+.banlist-pagination-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 0.75rem;
+
+    .footer-left {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .count {
+        margin: 0;
+    }
+
+    .page-size {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.85em;
+        color: var(--muted-text-color);
+
+        .ui.dropdown {
+            font-size: 1rem;
+        }
+    }
+}

@@ -1,0 +1,119 @@
+.banlist-overview {
+    .toolbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .actions {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+    }
+
+    .search-input {
+        min-width: 16rem;
+    }
+
+    .card-grid {
+        margin-top: 1rem !important;
+    }
+
+    // банлист без доступа (нет права view) — карточка выглядит отключённой
+    .card-grid > .card.locked {
+        opacity: 0.55;
+
+        .header {
+            color: rgba(255, 255, 255, 0.55);
+        }
+    }
+
+    // индикатор уровня доступа / замок — под описанием, прижат к правому нижнему углу
+    .card-access {
+        margin-top: 0.4rem;
+        text-align: right;
+
+        .label {
+            margin-right: 0;
+        }
+    }
+
+    // длинные имена (особенно цельные числовые токены) переносим по символам,
+    // чтобы заголовок раздвигал карточку, а не наезжал на дату/описание
+    .card-title {
+        line-height: 1.3em;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+        margin-bottom: 0.35rem !important;
+    }
+
+    .card-description {
+        min-height: 2.4rem;
+        // линия-разделитель между заголовком/датой и описанием
+        margin-top: 0.5rem;
+        padding-top: 0.5rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .card-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0.5rem;
+        margin-top: 0.75rem;
+
+        // владелец слева: занимает доступное место, но может сжиматься. Имя
+        // обрезаем многоточием, а иконку/ранг (Label.Detail) держим в одну
+        // строку — иначе при показе ранга рядом с овнером строка переносится
+        // и высота карточки «едет».
+        > .label {
+            flex: 0 1 auto;
+            min-width: 0;
+            display: inline-flex;
+            align-items: center;
+            white-space: nowrap;
+
+            // имя пользователя (ConnectorId) — единственная сжимаемая часть
+            .connectorId {
+                min-width: 0;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+
+            // ранг доступа / замок не сжимаются и не переносятся
+            .detail {
+                flex: 0 0 auto;
+                white-space: nowrap;
+            }
+        }
+
+        // кнопка справа сохраняет свою ширину
+        > .button {
+            flex: 0 0 auto;
+        }
+    }
+
+    .card-grid > .card.empty-card {
+        min-height: 14rem;
+        cursor: pointer;
+
+        // семантиковский .content растягивается (flex-grow: 1),
+        // поэтому центрируем содержимое внутри него, а не саму карточку
+        > .content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+
+    .empty-card-inner {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+    }
+}

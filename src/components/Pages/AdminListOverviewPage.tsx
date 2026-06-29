@@ -4,6 +4,7 @@ import { toast } from "@kokomi/react-semantic-toasts";
 import { Button, Card, Container, Header, Icon, Label, Loader, Message, Segment } from "semantic-ui-react";
 import { AuthContext, RestContext } from "../../context";
 import { useTitle } from "../../hooks/useTitle";
+import { useResolveConnectorIds } from "../../hooks/useResolveConnectorIds";
 import { AdminListOutWeb } from "../../models/rest/AdminList";
 import { convertErrorResponseToString } from "../../utils/ApiUtils";
 import {
@@ -19,7 +20,7 @@ import "./AdminListOverviewPage.scss";
 const OwnerLabel: React.FC<{ owner: string | null | undefined }> = ({ owner }) => {
     const id = (owner || "").trim();
 
-    if (!id) return <>не указан</>;
+    if (!id) return <>Не указан</>;
 
     const numeric = Number(id);
 
@@ -101,6 +102,10 @@ function AdminListOverviewPage() {
 
         return [own, shared];
     }, [auth.currentAuth, lists]);
+
+    // Подтягиваем ники владельцев в кеш, иначе на карточках показываются ID.
+    const ownerIds = useMemo(() => lists.map((list) => list.owner), [lists]);
+    useResolveConnectorIds(ownerIds);
 
     const createList = async () => {
         setCreating(true);

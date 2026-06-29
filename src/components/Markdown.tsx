@@ -10,7 +10,7 @@ import SyntaxHighlighter from "react-syntax-highlighter";
 import { docco, dark } from "react-syntax-highlighter/dist/esm/styles/hljs";
 
 import { currentTheme, E_THEME } from "../utils/Theme";
-import React from "react";
+import React, { memo } from "react";
 
 import { Image, Table, Message, Accordion, Icon, Divider } from "semantic-ui-react";
 import { NavLink } from "react-router-dom";
@@ -132,4 +132,8 @@ function Markdown({ children, light }: MarkdownProps) {
     );
 }
 
-export default Markdown;
+// Мемоизируем: пока строка-разметка (children) и light не меняются, не перерисовываемся.
+// Иначе перерисовки родителя (напр. обновление siteOnlineStats раз в 5с поднимает
+// ре-рендер всего дерева вплоть до роутера и WikiPage) заставляют react-markdown
+// пересобирать дерево, и локальный state вложенных <Spoiler> (каты) сбрасывается.
+export default memo(Markdown);

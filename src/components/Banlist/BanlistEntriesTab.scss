@@ -1,0 +1,88 @@
+.banlist-entries-tab {
+    .toolbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 1rem;
+        flex-wrap: wrap;
+        margin-bottom: 1rem;
+    }
+
+    .filters {
+        display: flex;
+        align-items: stretch; // все контролы одной высоты — по полю поиска
+        gap: 0.5rem;
+        flex-wrap: wrap;
+
+        // поле поиска чуть шире остальных контролов
+        .ui.input {
+            min-width: 18rem;
+        }
+
+        // кнопки-фильтры тянутся по высоте поля, текст по центру
+        .ui.button.dropdown {
+            display: inline-flex;
+            align-items: center;
+        }
+    }
+
+    .actions {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    // «very basic» убирает паддинг у крайних ячеек — кнопки прилипают к краям;
+    // селектор повторяет семантик, чтобы перебить его специфичность
+    .ui[class*="very basic"].table:not(.sortable):not(.striped) {
+        th:first-child,
+        td:first-child {
+            padding-left: 0.75rem;
+        }
+
+        th:last-child,
+        td:last-child {
+            padding-right: 0.75rem;
+        }
+    }
+
+    .subject {
+        font-family: monospace;
+    }
+
+    // номер записи (нарушения) — приглушённый моноширинный, чтобы не перетягивать внимание
+    .entry-id {
+        color: var(--muted-text-color);
+    }
+
+    tr.row-disabled {
+        background: rgba(128, 128, 128, 0.12);
+
+        > td {
+            opacity: 0.65;
+        }
+    }
+
+    .activation-immediate {
+        color: var(--muted-text-color);
+        font-size: 0.9em;
+    }
+
+    // «Активирован»: зелёная галочка + время активации в одну строку.
+    // Смысл статуса — в title (тултип при наведении).
+    .activation-triggered {
+        white-space: nowrap;
+
+        .icon {
+            margin-right: 0.35rem;
+        }
+    }
+
+    .reason {
+        max-width: 20rem;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+        overflow-wrap: anywhere;
+    }
+}

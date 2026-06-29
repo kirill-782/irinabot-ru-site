@@ -79,3 +79,22 @@ $inputColor: #fff;
 
 $inputHighlightBackground: #aaaaaf;
 $inputHighlightColor: #111111;
+
+/*--- Colored Backgrounds ---*/
+/* Used only by colored messages. On the dark theme the default light tints
+   are replaced with a dark surface so the colored border/text stays readable.
+   red / orange / green / info / warning / success are additionally handled in
+   collections/message.overrides.scss. */
+$yellowBackground: #0c0c0c;
+$oliveBackground: #0c0c0c;
+$tealBackground: #0c0c0c;
+$blueBackground: #0c0c0c;
+$violetBackground: #0c0c0c;
+$purpleBackground: #0c0c0c;
+$pinkBackground: #0c0c0c;
+$brownBackground: #0c0c0c;
+
+/*--- Colored Text ---*/
+/* Default violet (#6435c9) is too dark to read on the dark surface; brighten it.
+   Also lifts the violet message border and basic violet buttons/labels. */
+$violetTextColor: #9277e0;

@@ -1,0 +1,73 @@
+.banlist-template-editor {
+    .form-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 1rem;
+        flex-wrap: wrap;
+        margin-bottom: 1rem;
+    }
+
+    .editor-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        align-items: stretch;
+
+        > .ui.segment {
+            margin: 0;
+            height: 100%;
+        }
+
+        @media (max-width: 768px) {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .grid-wide {
+        grid-column: 1 / -1;
+
+        .ui.table.fixed td,
+        .ui.table.fixed th {
+            overflow: visible;
+            text-overflow: clip;
+        }
+
+        // «very basic» убирает паддинг у крайних ячеек — кнопки прилипают к краям;
+        // селектор повторяет семантик, чтобы перебить его специфичность
+        .ui[class*="very basic"].table:not(.sortable):not(.striped) {
+            th:first-child,
+            td:first-child {
+                padding-left: 0.75rem;
+            }
+
+            th:last-child,
+            td:last-child {
+                padding-right: 0.75rem;
+            }
+        }
+    }
+
+    .duration {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .indent {
+        margin-left: 2rem;
+        margin-top: 0.5rem;
+    }
+
+    .default-level {
+        margin-top: 1rem;
+        max-width: 26rem;
+    }
+
+    .default-level-hint {
+        opacity: 0.7;
+        font-size: 0.9em;
+        margin-top: 0.5rem;
+    }
+}

@@ -1,0 +1,87 @@
+.banlist-templates-tab {
+    .toolbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+        margin-bottom: 1rem;
+    }
+
+    .card-grid.ui.cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(min(30rem, 100%), 1fr));
+        gap: 1rem;
+        margin: 0;
+
+        > .ui.card {
+            width: auto;
+            margin: 0;
+        }
+    }
+
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .card-actions {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        flex-shrink: 0;
+
+        .ui.label {
+            margin: 0 0.25rem 0 0;
+        }
+
+        .ui.button {
+            margin: 0;
+        }
+    }
+
+    .card-meta {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        margin-top: 0.25rem;
+    }
+
+    .card-reset {
+        white-space: nowrap;
+    }
+
+    .grad {
+        margin-top: 1rem;
+    }
+
+    .grad-rows {
+        display: grid;
+        grid-template-columns: max-content max-content max-content 1fr;
+        align-items: center;
+        column-gap: 1rem;
+        row-gap: 0.4rem;
+        margin-top: 1rem;
+    }
+
+    .grad-row {
+        display: contents;
+    }
+
+    .grad-threshold {
+        font-family: monospace;
+    }
+
+    .grad-duration {
+        white-space: nowrap;
+    }
+
+    .grad-deferred {
+        white-space: nowrap;
+        opacity: 0.7;
+        font-size: 0.9em;
+    }
+}

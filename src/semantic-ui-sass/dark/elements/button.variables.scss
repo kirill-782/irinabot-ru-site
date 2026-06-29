@@ -1,3 +1,13 @@
 /*******************************
     User Variable Overrides
 *******************************/
+
+/* активная/нажатая кнопка: в дефолтной теме фон светлый (#c0c1c2) — под тёмную тему
+   ставим цвет нажатого состояния темы (#2a2a2a), как у .ui.button:hover/:active */
+$activeBackgroundColor: #2a2a2a;
+$activeHoverBackgroundColor: $activeBackgroundColor;
+
+/* кружок "or" в группе кнопок: в дефолте фон $white (под тёмной темой #dfdfdf —
+   светлый) с почти невидимым текстом. Делаем фон как у кнопок (#101010). */
+$orBackgroundColor: #101010;
+$orTextColor: $lightTextColor;

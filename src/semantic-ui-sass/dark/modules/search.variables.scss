@@ -1,3 +1,54 @@
 /*******************************
-         Site Overrides
+    User Variable Overrides
 *******************************/
+
+/* На светлой (default) теме фон выпадашки и заливки жёстко заданы белым
+   ($resultsBackground: #fff, $resultHoverBackground: $offWhite и т.п.), а
+   dark-глобалы их не переопределяют. Из-за этого на тёмной теме коробка
+   результатов оставалась белой. Приводим её к тёмной плавающей поверхности
+   (как у popup: фон #343434, граница #4b4b4b). */
+
+/* Result Box */
+$resultsBackground: #343434;
+$resultsBorder: 1px solid #4b4b4b;
+
+/* Result */
+$resultTextColor: $textColor;
+$resultDivider: 1px solid $internalBorderColor;
+
+/* Result Content */
+$resultTitleColor: $darkTextColor;
+
+/* Description */
+$resultDescriptionColor: $lightTextColor;
+
+/* Special Message («ничего не найдено») */
+$messageHeaderColor: $textColor;
+$messageDescriptionColor: $textColor;
+
+/* All Results Link */
+$actionBackground: #2b2b2b;
+$actionColor: $textColor;
+
+/*******************************
+            States
+*******************************/
+
+/* Hover */
+$resultHoverBackground: rgba(255, 255, 255, 0.08);
+$actionHoverBackground: rgba(255, 255, 255, 0.12);
+
+/* Active Result (навигация с клавиатуры) */
+$resultActiveBackground: rgba(255, 255, 255, 0.05);
+$resultActiveTitleColor: $darkTextColor;
+$resultActiveDescriptionColor: $darkTextColor;
+
+/*******************************
+            Types
+*******************************/
+
+/* Category (на случай категорийного поиска) */
+$categoryBackground: #2b2b2b;
+$categoryResultBackground: #343434;
+$categoryActiveBackground: rgba(255, 255, 255, 0.05);
+$categoryNameColor: $lightTextColor;

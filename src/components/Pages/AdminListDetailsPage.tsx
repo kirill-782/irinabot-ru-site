@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useEffect, useMemo, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { toast } from "@kokomi/react-semantic-toasts";
 import {
     Button,
@@ -22,10 +22,12 @@ import UserIdLabel from "../AdminList/UserIdLabel";
 import { PendingChange, RoleDraft, RoleRow } from "../AdminList/interfaces";
 import MetaRobots from "../Meta/MetaRobots";
 import { AppRuntimeSettingsContext, AuthContext, RestContext } from "../../context";
+import { useConfirmModal } from "../../hooks/useConfirmModal";
 import { useTitle } from "../../hooks/useTitle";
 import { useAdminList } from "../../hooks/useAdminList";
 import { useAdminListUsers } from "../../hooks/useAdminListUsers";
 import { useAdminListUser } from "../../hooks/useAdminListUser";
+import { useAdminListEveryone } from "../../hooks/useAdminListEveryone";
 import { useResolveConnectorIds } from "../../hooks/useResolveConnectorIds";
 import {
     AdminListOutWebRole,
@@ -34,13 +36,16 @@ import {
 } from "../../models/rest/AdminList";
 import { convertErrorResponseToString } from "../../utils/ApiUtils";
 import {
+    EVERYONE_TARGET,
     formatAdminListDateValue,
     fromDateTimeLocalInputValue,
     isCurrentUserIdentifier,
     isCurrentUserOwner,
     normalizeAdminListValueChangeType,
+    resolveAdminListRoleTitle,
     toDateTimeLocalInputValue,
 } from "../../utils/AdminListUtils";
+import { cascadeHierarchyDrafts } from "../../utils/adminListRoleModel";
 
 import "../AdminList/AdminListDetails.scss";
 
@@ -62,6 +67,8 @@ function AdminListDetailsPage() {
     const { language } = useContext(AppRuntimeSettingsContext);
     const t = language.getString;
 
+    const { confirm, confirmModal } = useConfirmModal();
+
     const {
         data: listData,
         isLoading: isListLoading,
@@ -76,14 +83,42 @@ function AdminListDetailsPage() {
         reload: reloadUsers,
     } = useAdminListUsers(listId);
 
-    const [selectedUserId, setSelectedUserId] = useState("");
+    // Активный элемент (пользователь / «все пользователи») хранится в URL (?user=…),
+    // чтобы ссылку можно было шарить.
+    const [searchParams, setSearchParams] = useSearchParams();
+    const selectedUserId = searchParams.get("user") || "";
+    const setSelectedUserId = useCallback(
+        (userId: string) => {
+            const next = new URLSearchParams(searchParams);
+
+            if (userId) next.set("user", userId);
+            else next.delete("user");
+
+            setSearchParams(next, { replace: true });
+        },
+        [searchParams, setSearchParams]
+    );
+
+    const isEveryone = selectedUserId === EVERYONE_TARGET;
 
     const {
-        data: selectedUserData,
-        isLoading: isUserLoading,
-        errorMessage: userErrorMessage,
-        reload: reloadSelectedUser,
-    } = useAdminListUser(listId, selectedUserId);
+        data: userData,
+        isLoading: isUserDataLoading,
+        errorMessage: userDataError,
+        reload: reloadUserData,
+    } = useAdminListUser(listId, isEveryone ? "" : selectedUserId);
+
+    const {
+        data: everyoneData,
+        isLoading: isEveryoneLoading,
+        errorMessage: everyoneError,
+        reload: reloadEveryone,
+    } = useAdminListEveryone(listId, isEveryone);
+
+    const selectedUserData = isEveryone ? everyoneData : userData;
+    const isUserLoading = isEveryone ? isEveryoneLoading : isUserDataLoading;
+    const userErrorMessage = isEveryone ? everyoneError : userDataError;
+    const reloadSelectedUser = isEveryone ? reloadEveryone : reloadUserData;
 
     const [roleDrafts, setRoleDrafts] = useState<Record<string, RoleDraft>>({});
     const [privilegeDraft, setPrivilegeDraft] = useState("");
@@ -195,6 +230,8 @@ function AdminListDetailsPage() {
         return [...map.values()].sort((left, right) => left.name.localeCompare(right.name, "ru"));
     }, [listData?.roles, selectedUserData?.roles]);
 
+    const presentRoleNames = useMemo(() => new Set(roleRows.map((role) => role.name)), [roleRows]);
+
     useEffect(() => {
         const nextDrafts = roleRows.reduce<Record<string, RoleDraft>>((acc, role) => {
             acc[role.name] = {
@@ -243,8 +280,8 @@ function AdminListDetailsPage() {
     const maxTimeLimitedActiveBefore = useMemo(() => {
         return roleRows
             .filter((role) => role.value !== null && role.activeBefore !== null)
-            .map((role) => role.activeBefore as string)
-            .reduce<string | null>((max, date) => (max === null || date > max ? date : max), null);
+            .map((role) => role.activeBefore as number)
+            .reduce<number | null>((max, date) => (max === null || date > max ? date : max), null);
     }, [roleRows]);
 
     const hasTimeLimitedRoles = maxTimeLimitedActiveBefore !== null;
@@ -256,6 +293,11 @@ function AdminListDetailsPage() {
     const canEditList = useMemo(() => {
         return !!listData && isCurrentUserOwner(auth.currentAuth, listData.owner);
     }, [auth.currentAuth, listData]);
+
+    // Для «всех пользователей» правила те же, что и для обычного, но управление
+    // wildcard-ролями доступно только владельцу, а уровень привилегии не применяется.
+    const rolesReadOnly = isEveryone ? !canEditList : readOnlyMode;
+    const rolesCanManage = isEveryone ? canEditList : canManage;
 
     const openUser = useCallback((userId: string) => {
         const normalized = userId.trim();
@@ -287,18 +329,18 @@ function AdminListDetailsPage() {
         (role: RoleRow) => {
             if (!selectedUserId) return t("adminListRestrictionNoUser");
             if (isUserLoading) return t("adminListRestrictionLoading");
-            if (readOnlyMode) return t("adminListRestrictionReadOnly");
+            if (rolesReadOnly) return t("adminListRestrictionReadOnly");
             if (strongerSelectedUser) return t("adminListRestrictionStronger");
             if (selectedUserHasZeroPrivilege) return t("adminListRestrictionZeroPrivilege");
             if (
-                !canManage &&
+                !rolesCanManage &&
                 role.value !== null &&
                 role.grantedBy &&
                 !isCurrentUserIdentifier(auth.currentAuth, role.grantedBy)
             ) {
                 return t("adminListRestrictionLimitedDelete");
             }
-            if (!canManage && role.value === null && !role.owned && !role.declared) {
+            if (!rolesCanManage && role.value === null && !role.owned && !role.declared) {
                 return t("adminListRestrictionLimitedGrant");
             }
 
@@ -306,9 +348,9 @@ function AdminListDetailsPage() {
         },
         [
             auth.currentAuth,
-            canManage,
+            rolesCanManage,
             isUserLoading,
-            readOnlyMode,
+            rolesReadOnly,
             selectedUserHasZeroPrivilege,
             selectedUserId,
             strongerSelectedUser,
@@ -320,11 +362,11 @@ function AdminListDetailsPage() {
             if (role.value === null) return t("adminListRestrictionNoRecord");
             if (!selectedUserId) return t("adminListRestrictionNoUser");
             if (isUserLoading) return t("adminListRestrictionLoading");
-            if (readOnlyMode) return t("adminListRestrictionReadOnly");
+            if (rolesReadOnly) return t("adminListRestrictionReadOnly");
             if (strongerSelectedUser) return t("adminListRestrictionStronger");
             if (selectedUserHasZeroPrivilege) return t("adminListRestrictionZeroPrivilege");
             if (
-                !canManage &&
+                !rolesCanManage &&
                 role.grantedBy &&
                 !isCurrentUserIdentifier(auth.currentAuth, role.grantedBy)
             ) {
@@ -335,9 +377,9 @@ function AdminListDetailsPage() {
         },
         [
             auth.currentAuth,
-            canManage,
+            rolesCanManage,
             isUserLoading,
-            readOnlyMode,
+            rolesReadOnly,
             selectedUserHasZeroPrivilege,
             selectedUserId,
             strongerSelectedUser,
@@ -406,12 +448,14 @@ function AdminListDetailsPage() {
         return acc;
     }, []);
 
-    const handleDraftChange = useCallback((roleName: string, next: RoleDraft) => {
-        setRoleDrafts((currentDrafts) => ({
-            ...currentDrafts,
-            [roleName]: next,
-        }));
-    }, []);
+    const handleDraftChange = useCallback(
+        (roleName: string, next: RoleDraft) => {
+            setRoleDrafts((currentDrafts) =>
+                cascadeHierarchyDrafts(currentDrafts, roleName, next, presentRoleNames)
+            );
+        },
+        [presentRoleNames]
+    );
 
     const handleResetRow = useCallback((roleName: string) => {
         setRoleDrafts((currentDrafts) => {
@@ -465,20 +509,23 @@ function AdminListDetailsPage() {
     };
 
     const applyChanges = async () => {
-        if (!selectedUserId || selectedUserHasZeroPrivilege || pendingChanges.length === 0) return;
+        if (!selectedUserId || pendingChanges.length === 0) return;
+        if (!isEveryone && selectedUserHasZeroPrivilege) return;
 
         setApplyingChanges(true);
 
         try {
-            await adminListApi.patchAdminListUserRoles(
-                listId,
-                selectedUserId,
-                pendingChanges.map((change) => ({
-                    activeBefore: change.activeBefore,
-                    name: change.name,
-                    value: change.value,
-                }))
-            );
+            const payload = pendingChanges.map((change) => ({
+                activeBefore: change.activeBefore,
+                name: change.name,
+                value: change.value,
+            }));
+
+            if (isEveryone) {
+                await adminListApi.patchAdminListEveryoneRoles(listId, payload);
+            } else {
+                await adminListApi.patchAdminListUserRoles(listId, selectedUserId, payload);
+            }
 
             toast({
                 title: t("adminListToastSaved", { count: String(pendingChanges.length) }),
@@ -532,7 +579,7 @@ function AdminListDetailsPage() {
 
     const deleteUserFromList = async () => {
         if (!listData?.id || !selectedUserId) return;
-        if (!window.confirm(t("adminListConfirmDeleteUser", { id: String(listData.id), userId: selectedUserId }))) return;
+        if (!(await confirm(t("adminListConfirmDeleteUser", { id: String(listData.id), userId: selectedUserId })))) return;
 
         setDeletingUser(true);
 
@@ -558,9 +605,36 @@ function AdminListDetailsPage() {
         }
     };
 
+    const deleteEveryoneRoles = async () => {
+        if (!listData?.id) return;
+        if (!(await confirm(t("adminListEveryoneConfirmDelete", { id: String(listData.id) })))) return;
+
+        setDeletingUser(true);
+
+        try {
+            await adminListApi.deleteAdminListEveryone(listData.id);
+
+            toast({
+                title: t("adminListToastEveryoneDeleted"),
+                type: "success",
+            });
+
+            await reloadEveryone();
+        } catch (error) {
+            toast({
+                title: t("adminListToastEveryoneDeleteFailed"),
+                description: convertErrorResponseToString(error),
+                type: "error",
+                time: 10000,
+            });
+        } finally {
+            setDeletingUser(false);
+        }
+    };
+
     const deleteList = async () => {
         if (!listData?.id) return;
-        if (!window.confirm(t("adminListConfirmDelete", { id: String(listData.id) }))) return;
+        if (!(await confirm(t("adminListConfirmDelete", { id: String(listData.id) })))) return;
 
         setDeletingList(true);
 
@@ -748,7 +822,7 @@ function AdminListDetailsPage() {
                     <Message info>{t("adminListInfoDefault")}</Message>
                 )}
 
-                {readOnlyMode && (
+                {readOnlyMode && !isEveryone && (
                     <Message warning>
                         <Message.Header>{t("adminListReadOnlyHeader")}</Message.Header>
                         <p>{t("adminListReadOnlyDesc")}</p>
@@ -778,6 +852,7 @@ function AdminListDetailsPage() {
                             selectedUserId={selectedUserId}
                             isLoading={isUsersLoading}
                             errorMessage={usersErrorMessage}
+                            everyoneAvailable={canEditList}
                             onOpenUser={openUser}
                         />
                     </Grid.Column>
@@ -795,19 +870,34 @@ function AdminListDetailsPage() {
                                     <div className="user-header">
                                         <div>
                                             <Header as="h2">
-                                                <UserIdLabel userId={selectedUserId} />
+                                                {isEveryone ? (
+                                                    <>
+                                                        <Icon name="users" />
+                                                        {t("adminListEveryoneTitle")}
+                                                    </>
+                                                ) : (
+                                                    <UserIdLabel userId={selectedUserId} />
+                                                )}
                                             </Header>
                                             <div className="user-header-labels">
-                                                <Label basic color={isSelectedUserInList ? "green" : undefined}>
-                                                    {isSelectedUserInList ? t("adminListLabelInList") : t("adminListLabelNewUser")}
-                                                </Label>
-                                                {selectedUserPrivilegeLevel !== null && (
-                                                    <Label basic color="teal">
-                                                        {t("adminListLabelUserStrength", { level: String(selectedUserPrivilegeLevel) })}
+                                                {isEveryone ? (
+                                                    <Label basic color="blue">
+                                                        {t("adminListEveryoneLabel")}
                                                     </Label>
-                                                )}
-                                                {strongerSelectedUser && (
-                                                    <Label color="yellow">{t("adminListLabelStrongerUser")}</Label>
+                                                ) : (
+                                                    <>
+                                                        <Label basic color={isSelectedUserInList ? "green" : undefined}>
+                                                            {isSelectedUserInList ? t("adminListLabelInList") : t("adminListLabelNewUser")}
+                                                        </Label>
+                                                        {selectedUserPrivilegeLevel !== null && (
+                                                            <Label basic color="teal">
+                                                                {t("adminListLabelUserStrength", { level: String(selectedUserPrivilegeLevel) })}
+                                                            </Label>
+                                                        )}
+                                                        {strongerSelectedUser && (
+                                                            <Label color="yellow">{t("adminListLabelStrongerUser")}</Label>
+                                                        )}
+                                                    </>
                                                 )}
                                                 {hasIndefiniteRoles && (
                                                     <Label basic color="blue">
@@ -824,19 +914,33 @@ function AdminListDetailsPage() {
 
                                         {isUserLoading && <Loader active inline size="small" />}
 
-                                        {canManage && isSelectedUserInList && (
-                                            <Button
-                                                color="red"
-                                                disabled={isDeletingUser}
-                                                loading={isDeletingUser}
-                                                onClick={() => {
-                                                    void deleteUserFromList();
-                                                }}
-                                                type="button"
-                                            >
-                                                {t("adminListButtonDeleteUser")}
-                                            </Button>
-                                        )}
+                                        {isEveryone
+                                            ? canEditList && (
+                                                  <Button
+                                                      color="red"
+                                                      disabled={isDeletingUser}
+                                                      loading={isDeletingUser}
+                                                      onClick={() => {
+                                                          void deleteEveryoneRoles();
+                                                      }}
+                                                      type="button"
+                                                  >
+                                                      {t("adminListEveryoneDelete")}
+                                                  </Button>
+                                              )
+                                            : canManage && isSelectedUserInList && (
+                                                  <Button
+                                                      color="red"
+                                                      disabled={isDeletingUser}
+                                                      loading={isDeletingUser}
+                                                      onClick={() => {
+                                                          void deleteUserFromList();
+                                                      }}
+                                                      type="button"
+                                                  >
+                                                      {t("adminListButtonDeleteUser")}
+                                                  </Button>
+                                              )}
                                     </div>
 
                                     {userErrorMessage && (
@@ -860,6 +964,7 @@ function AdminListDetailsPage() {
                                         </Message>
                                     )}
 
+                                    {!isEveryone && (
                                     <Segment>
                                         <Header as="h3">{t("adminListPrivilegeHeader")}</Header>
                                         <div className="privilege-row">
@@ -903,6 +1008,7 @@ function AdminListDetailsPage() {
                                         )}
                                         {privilegeRestriction && <Message info>{privilegeRestriction}</Message>}
                                     </Segment>
+                                    )}
 
                                     {roleRows.length === 0 ? (
                                         <Message info>
@@ -991,7 +1097,7 @@ function AdminListDetailsPage() {
                                                         <Button
                                                             disabled={
                                                                 pendingChanges.length === 0 ||
-                                                                readOnlyMode ||
+                                                                rolesReadOnly ||
                                                                 selectedUserHasZeroPrivilege ||
                                                                 strongerSelectedUser
                                                             }
@@ -1029,7 +1135,7 @@ function AdminListDetailsPage() {
 
                                                                 return (
                                                                     <List.Item key={change.name}>
-                                                                        <strong>{change.name}</strong>:{" "}
+                                                                        <strong>{resolveAdminListRoleTitle(change.name, t)}</strong>:{" "}
                                                                         {describe(change.previousValue)}
                                                                         {" → "}
                                                                         <strong>{describe(change.value)}</strong>
@@ -1066,6 +1172,8 @@ function AdminListDetailsPage() {
                     </Grid.Column>
                 </Grid>
             </Container>
+
+            {confirmModal}
         </div>
     );
 }
