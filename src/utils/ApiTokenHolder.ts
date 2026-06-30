@@ -16,6 +16,12 @@ export class ApiTokenHolder {
         return false;
     }
 
+    // Идентификатор владельца токена (claim `sub`). Нужен, например, чтобы сопоставить
+    // пользователя с owner-ом wiki. У безтокенных/неразобранных холдеров — undefined.
+    public getSubject(): string | undefined {
+        return undefined;
+    }
+
     public hasToken() {
         return this.token.length > 0;
     }
@@ -23,6 +29,7 @@ export class ApiTokenHolder {
 
 export class ApiTokenJwtHolder extends ApiTokenHolder {
     private authorities: string[];
+    private subject?: string;
 
     constructor(token: string) {
         super(token);
@@ -37,6 +44,7 @@ export class ApiTokenJwtHolder extends ApiTokenHolder {
             const jwtPayload = JSON.parse(new TextDecoder().decode(toByteArray(data)));
 
             this.authorities = jwtPayload.authorities;
+            this.subject = jwtPayload.sub;
         } catch (e) {
             console.error(e);
         }
@@ -46,6 +54,10 @@ export class ApiTokenJwtHolder extends ApiTokenHolder {
         return !!this.authorities.find((value: string) => {
             return value.toLocaleLowerCase() === authority.toLocaleLowerCase();
         });
+    }
+
+    public getSubject() {
+        return this.subject;
     }
 }
 

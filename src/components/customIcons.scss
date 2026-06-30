@@ -1,0 +1,24 @@
+/*
+ * Кастомные иконки, которых нет в наборе Font Awesome 5.0.8 (semantic).
+ * Рисуем через CSS mask по currentColor — иконка повторяет цвет текста и работает
+ * в обеих темах. Используется как обычная semantic-иконка: <Icon name="scroll" />.
+ */
+
+// scroll (свиток) — путь из Material Design Icons (script), viewBox 24×24
+$scroll-icon: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%3E%3Cpath%20d='M14,20C15.1,20,16,19.1,16,18V5H9C8.45,5,8,5.45,8,6V16H5V5C5,3.34,6.34,2,8,2H19C20.66,2,22,3.34,22,5V6H18V18L18,19C18,20.66,16.66,22,15,22H5C3.34,22,2,20.66,2,19V18H12C12,19.1,12.9,20,14,20Z'/%3E%3C/svg%3E");
+
+i.icon.scroll {
+    background-color: currentColor;
+    -webkit-mask-image: $scroll-icon;
+    mask-image: $scroll-icon;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+}
+
+i.icon.scroll::before {
+    content: "";
+}

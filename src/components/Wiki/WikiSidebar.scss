@@ -1,0 +1,109 @@
+.wiki-sidebar {
+    .wiki-tree-row {
+        display: flex;
+        align-items: center;
+        line-height: 2.2em;
+        border-radius: 4px;
+        padding-right: 4px;
+
+        .wiki-tree-caret {
+            flex: none;
+            width: 20px;
+            height: 100%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            line-height: 1;
+
+            // Иконка наследует line-height строки (2.2em); из-за этого глиф каретки
+            // съезжает вниз. Сбрасываем до 1em и центрируем флексом родителя.
+            .icon {
+                margin: 0;
+                height: 1em;
+                line-height: 1;
+            }
+
+            &.is-leaf {
+                cursor: default;
+            }
+        }
+
+        .wiki-tree-link {
+            flex: 1;
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+
+            // страницы без контента приглушаем (классом, а не inline-стилем,
+            // чтобы ховер мог вернуть полную непрозрачность)
+            &.is-empty {
+                opacity: 0.55;
+            }
+        }
+
+        // индикаторы скрытая/заблокированная
+        .wiki-tree-flags {
+            flex: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            margin: 0 6px;
+            opacity: 0.6;
+
+            .icon {
+                margin: 0;
+                height: 1em;
+                line-height: 1;
+                font-size: 0.85em;
+            }
+        }
+
+        .wiki-tree-actions {
+            flex: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            opacity: 0;
+            transition: opacity 0.1s ease;
+
+            // та же история, что и с кареткой: сбрасываем наследуемый line-height,
+            // иначе глифы значков съезжают по вертикали
+            .wiki-tree-action {
+                margin: 0;
+                height: 1em;
+                line-height: 1;
+            }
+        }
+
+        &:hover {
+            background: rgba(128, 128, 128, 0.12);
+
+            // глобальный a:hover темы затемняет ссылку до тёмно-синего, что на
+            // подсвеченном фоне нечитаемо — держим обычный цвет и полную непрозрачность
+            .wiki-tree-link {
+                color: #4183c4;
+                opacity: 1;
+            }
+
+            .wiki-tree-actions {
+                opacity: 0.85;
+            }
+        }
+
+        &.is-active {
+            background: rgba(128, 128, 128, 0.16);
+
+            .wiki-tree-link {
+                font-weight: 700;
+            }
+        }
+
+        // скрытая страница — приглушена
+        &.is-hidden .wiki-tree-link {
+            opacity: 0.5;
+            font-style: italic;
+        }
+    }
+}

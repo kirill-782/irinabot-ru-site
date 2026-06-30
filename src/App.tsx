@@ -10,6 +10,7 @@ import {
 import "@kokomi/react-semantic-toasts/styles/react-semantic-alert.css";
 
 import "./components/Slider.scss";
+import "./components/customIcons.scss";
 import { useGHostSocket } from "./hooks/useGHostSocket";
 import { useSiteOnlineStatsSubscribe } from "./hooks/useSiteOnlineStatsSubscribe";
 import { useWebsocketAuth } from "./hooks/useWebsocketAuth";

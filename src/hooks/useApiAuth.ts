@@ -10,6 +10,7 @@ import { RedeemCodeService } from "../services/RedeemCodeService";
 import { UpdaterService } from "../services/UpdaterService";
 import { HostPresetService } from "../services/HostPresetService";
 import { UserNicknameService } from "../services/UserNicknameService";
+import { WikiService } from "../services/WikiService";
 import { DEFAULT_CONFIG } from "../config/ApiConfig";
 
 export interface ApiAuthOptions {
@@ -21,6 +22,7 @@ export interface ApiAuthOptions {
     setUpdaterService: Dispatch<SetStateAction<UpdaterService>>;
     setHostPresetService: Dispatch<SetStateAction<HostPresetService>>;
     setUserNicknameService: Dispatch<SetStateAction<UserNicknameService>>;
+    setWikiService: Dispatch<SetStateAction<WikiService>>;
 }
 
 export const useApiAuth = ({
@@ -32,6 +34,7 @@ export const useApiAuth = ({
     setUpdaterService,
     setHostPresetService,
     setUserNicknameService,
+    setWikiService,
 }: ApiAuthOptions) => {
     const authContext = useContext(AuthContext);
 
@@ -61,6 +64,7 @@ export const useApiAuth = ({
         setUpdaterService(new UpdaterService(newConfig));
         setHostPresetService(new HostPresetService(newConfig));
         setUserNicknameService(new UserNicknameService(newConfig));
+        setWikiService(new WikiService(newConfig));
     }, [
         authContext.auth.apiToken,
         setAdminListApplicationAdministratorService,
@@ -71,5 +75,6 @@ export const useApiAuth = ({
         setUpdaterService,
         setHostPresetService,
         setUserNicknameService,
+        setWikiService,
     ]);
 };

@@ -15,6 +15,7 @@ import { MapUploaderService } from "../services/MapUploaderService";
 import { RedeemCodeService } from "../services/RedeemCodeService";
 import { UpdaterService } from "../services/UpdaterService";
 import { UserNicknameService } from "../services/UserNicknameService";
+import { WikiService } from "../services/WikiService";
 import { AccessMaskHolder } from "../utils/AccessMaskHolder";
 import { ApiTokenHolder } from "../utils/ApiTokenHolder";
 import { ServerWebsocketConnectStats } from "../models/websocket/ServerWebsocketConnectStats";
@@ -141,6 +142,7 @@ export type RestContextType = {
     updaterApi: UpdaterService;
     hostPresetApi: HostPresetService;
     userNicknameApi: UserNicknameService;
+    wikiApi: WikiService;
 };
 
 export const RestContext = createContext<RestContextType>(null);

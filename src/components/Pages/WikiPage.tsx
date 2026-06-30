@@ -1,72 +1,284 @@
-import React, { memo, useEffect, useState } from "react";
-import { Container, Dropdown, Grid, Menu } from "semantic-ui-react";
+import React, { memo, useContext, useEffect, useRef, useState } from "react";
+import { Button, Container, Grid, Loader, Message } from "semantic-ui-react";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import Markdown from "../Markdown";
-import { NavLink, useParams } from "react-router-dom";
+import WikiSidebar, { WikiSidebarHandle } from "../Wiki/WikiSidebar";
+import WikiArticleEditor from "../Wiki/WikiArticleEditor";
+import WikiCreatePageModal from "../Wiki/WikiCreatePageModal";
+import WikiAclModal from "../Wiki/WikiAclModal";
+import WikiMovePageModal from "../Wiki/WikiMovePageModal";
+import WikiAdminModal from "../Wiki/WikiAdminModal";
+import WikiTokensModal from "../Wiki/WikiTokensModal";
 import { useTitle } from "../../hooks/useTitle";
 import { getLocale } from "../../utils/LocaleUtils";
-
-interface ArticleNode {
-    id: number;
-    url?: string;
-    title: string;
-    locale: string;
-}
-
-interface Article {
-    id: number;
-    url?: string;
-    title: string;
-    payload: string;
-    locale: string;
-}
+import { RestContext } from "../../context";
+import { ArticleDto, ArticleNodeDto, WikiDto } from "../../models/rest/Wiki";
+import { useWikiAccess } from "../../utils/useWikiAccess";
 
 function WikiPage() {
-
-    const [articleList, setArticleList] = useState<ArticleNode[]>([]);
-    const [currentArticle, setCurrentArticle] = useState<Article>();
+    const { wikiApi } = useContext(RestContext);
+    const navigate = useNavigate();
 
     const { wiki, article } = useParams();
+    const locale = getLocale();
+    const articleUrl = article || "index";
 
-    useEffect( () => {
-        (async () => {
-            const response = await fetch(`https://api.irinabot.ru/v1/wiki/${wiki}/articles?locale=${getLocale()}`);
-            setArticleList(await response.json());
-        })()
-    }, [wiki]);
+    const sidebarRef = useRef<WikiSidebarHandle>(null);
+    // url страницы, для которой после загрузки нужно сразу открыть редактор (после создания).
+    const autoEditUrlRef = useRef<string | null>(null);
 
-    useEffect( () => {
-        (async () => {
-            const response = await fetch(`https://api.irinabot.ru/v1/wiki/${wiki}/article/${article || "index"}?locale=${getLocale()}`);
-            setCurrentArticle(await response.json());
-        })()
-    }, [wiki, article]);
+    // Метаданные wiki (owner/visibility) — нужны для вычисления прав (см. useWikiAccess).
+    const [wikiMeta, setWikiMeta] = useState<WikiDto>();
+    const access = useWikiAccess(wikiMeta);
 
-    useTitle(currentArticle?.title, "Wiki")
+    const [current, setCurrent] = useState<ArticleDto>();
+    const [loading, setLoading] = useState(false);
+    const [notFound, setNotFound] = useState(false);
+    const [editing, setEditing] = useState(false);
+    // узел редактируемой статьи (его флаги hidden/locked — ArticleDto их не содержит)
+    const [editNode, setEditNode] = useState<ArticleNodeDto | undefined>();
+
+    const [createOpen, setCreateOpen] = useState(false);
+    const [createParent, setCreateParent] = useState<ArticleNodeDto | null>(null);
+    const [aclOpen, setAclOpen] = useState(false);
+    const [tokensOpen, setTokensOpen] = useState(false);
+    const [moveOpen, setMoveOpen] = useState(false);
+    const [moveNode, setMoveNode] = useState<ArticleNodeDto | null>(null);
+    const [adminOpen, setAdminOpen] = useState(false);
+
+    useEffect(() => {
+        if (!wiki) return;
+
+        const controller = new AbortController();
+
+        setEditing(false);
+        setNotFound(false);
+        setLoading(true);
+
+        wikiApi
+            .getArticleByUrl(wiki, articleUrl, locale, { signal: controller.signal })
+            .then((data) => {
+                setCurrent(data);
+                setLoading(false);
+                if (autoEditUrlRef.current === data.url) {
+                    autoEditUrlRef.current = null;
+                    setEditing(true);
+                }
+            })
+            .catch((e) => {
+                if (controller.signal.aborted) return;
+                setCurrent(undefined);
+                setNotFound(true);
+                setLoading(false);
+            });
+
+        return () => controller.abort();
+    }, [wikiApi, wiki, articleUrl, locale]);
+
+    // Подгружаем метаданные wiki для определения владельца (прав). Ошибки/отказ — без прав.
+    useEffect(() => {
+        if (!wiki) {
+            setWikiMeta(undefined);
+            return;
+        }
+
+        const controller = new AbortController();
+
+        wikiApi
+            .getWiki(wiki, { signal: controller.signal })
+            .then(setWikiMeta)
+            .catch(() => {
+                /* приватная без доступа или ошибка — прав владельца нет */
+            });
+
+        return () => controller.abort();
+    }, [wikiApi, wiki]);
+
+    useTitle(current?.title, "Wiki");
+
+    const openCreate = (parent: ArticleNodeDto | null) => {
+        setCreateParent(parent);
+        setCreateOpen(true);
+    };
+
+    const handleCreated = (node: ArticleNodeDto) => {
+        setCreateOpen(false);
+        sidebarRef.current?.refresh();
+        // Откроем редактор сразу после загрузки новой страницы (с её флагами).
+        autoEditUrlRef.current = node.url;
+        setEditNode(node);
+        navigate(`/wiki/${wiki}/${node.url}`);
+    };
+
+    // Перед открытием редактора берём узел из дерева — ради текущих hidden/locked.
+    const startEdit = () => {
+        setEditNode(sidebarRef.current?.getNode(articleUrl));
+        setEditing(true);
+    };
+
+    const handleSaved = (saved: ArticleDto, savedLocale: string) => {
+        // Обновляем просмотр только если редактировали локаль, открытую на странице.
+        if (savedLocale === locale) setCurrent(saved);
+        setEditing(false);
+        sidebarRef.current?.refresh();
+    };
+
+    const openMove = (node: ArticleNodeDto) => {
+        setMoveNode(node);
+        setMoveOpen(true);
+    };
+
+    const handleMoved = () => {
+        setMoveOpen(false);
+        sidebarRef.current?.refresh();
+    };
 
     return (
-        <Container>
-            <Grid columns="equal" stackable>
-                <Grid.Column width={3}>
-                    <Menu text vertical>
-                        {
-                            articleList.map(article => {
-                                return (
-                                    <Menu.Item
-                                        as={NavLink}
-                                        to={`/wiki/${wiki}/${article.url}`}
-                                    >{article.title}</Menu.Item>
-                                );
-                            })
-                        }
-
-                    </Menu>
+        <Container fluid style={{ padding: "1em" }}>
+            <Grid stackable>
+                <Grid.Column width={4}>
+                    {wiki && (
+                        <WikiSidebar
+                            ref={sidebarRef}
+                            api={wikiApi}
+                            wiki={wiki}
+                            locale={locale}
+                            currentUrl={articleUrl}
+                            canEdit={access.canEdit}
+                            onAddChild={openCreate}
+                            onMove={openMove}
+                        />
+                    )}
                 </Grid.Column>
-                <Grid.Column width={13}>
-                    <Markdown>
-                        {currentArticle?.payload}
-                    </Markdown>
+
+                <Grid.Column width={12}>
+                    {editing && current && wiki ? (
+                        <WikiArticleEditor
+                            api={wikiApi}
+                            wiki={wiki}
+                            article={current}
+                            locale={locale}
+                            initialHidden={editNode?.hidden}
+                            initialLocked={editNode?.locked}
+                            canDeleteFiles={access.canDeleteFiles}
+                            onSaved={handleSaved}
+                            onCancel={() => setEditing(false)}
+                        />
+                    ) : (
+                        <>
+                            <div
+                                style={{
+                                    display: "flex",
+                                    justifyContent: "flex-end",
+                                    gap: "0.5em",
+                                    marginBottom: "0.5em",
+                                }}
+                            >
+                                {access.isAdmin && (
+                                    <Button
+                                        size="tiny"
+                                        basic
+                                        icon="sitemap"
+                                        content="Вики"
+                                        onClick={() => setAdminOpen(true)}
+                                    />
+                                )}
+                                {wiki && access.canManage && (
+                                    <Button
+                                        size="tiny"
+                                        basic
+                                        icon="users"
+                                        content="Доступы"
+                                        onClick={() => setAclOpen(true)}
+                                    />
+                                )}
+                                {wiki && access.canManage && (
+                                    <Button
+                                        size="tiny"
+                                        basic
+                                        icon="key"
+                                        content="Токены"
+                                        onClick={() => setTokensOpen(true)}
+                                    />
+                                )}
+                                {current && access.canEdit && (
+                                    <Button
+                                        size="tiny"
+                                        icon="edit"
+                                        content="Редактировать"
+                                        onClick={startEdit}
+                                    />
+                                )}
+                            </div>
+
+                            {loading && <Loader active inline="centered" />}
+
+                            {!loading && notFound && (
+                                <Message warning>
+                                    <Message.Header>Страница не найдена</Message.Header>
+                                    <p>
+                                        Страница «{articleUrl}» отсутствует или ещё не имеет контента
+                                        для текущего языка.{" "}
+                                        <NavLink to={`/wiki/${wiki}`}>На главную вики</NavLink>
+                                    </p>
+                                </Message>
+                            )}
+
+                            {!loading && !notFound && <Markdown>{current?.payload}</Markdown>}
+                        </>
+                    )}
                 </Grid.Column>
             </Grid>
+
+            {wiki && (
+                <WikiCreatePageModal
+                    open={createOpen}
+                    api={wikiApi}
+                    wiki={wiki}
+                    locale={locale}
+                    parent={createParent}
+                    onClose={() => setCreateOpen(false)}
+                    onCreated={handleCreated}
+                />
+            )}
+
+            {wiki && (
+                <WikiAclModal
+                    open={aclOpen}
+                    api={wikiApi}
+                    wiki={wiki}
+                    onClose={() => setAclOpen(false)}
+                />
+            )}
+
+            {wiki && (
+                <WikiTokensModal
+                    open={tokensOpen}
+                    api={wikiApi}
+                    wiki={wiki}
+                    onClose={() => setTokensOpen(false)}
+                />
+            )}
+
+            {wiki && (
+                <WikiMovePageModal
+                    open={moveOpen}
+                    api={wikiApi}
+                    wiki={wiki}
+                    locale={locale}
+                    node={moveNode}
+                    onClose={() => setMoveOpen(false)}
+                    onMoved={handleMoved}
+                />
+            )}
+
+            <WikiAdminModal
+                open={adminOpen}
+                api={wikiApi}
+                currentWiki={wiki}
+                onClose={() => setAdminOpen(false)}
+                onNavigate={(wikiUrl) => navigate(`/wiki/${wikiUrl}`)}
+            />
         </Container>
     );
 }

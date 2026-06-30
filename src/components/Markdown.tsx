@@ -16,6 +16,12 @@ import { Image, Table, Message, Accordion, Icon, Divider } from "semantic-ui-rea
 import { NavLink } from "react-router-dom";
 import WarcraftIIIText from "./WarcraftIIIText";
 import Spoiler from "./Spoiler";
+import ContentPointer, { parsePointer } from "./ContentPointer";
+import WikiFileImage, { parseFilePointer } from "./WikiFileImage";
+import WikiFileLink from "./WikiFileLink";
+
+// id файла вики из старого markdown-пути /v1/files/{id} (обратная совместимость)
+const WIKI_FILE_RE = /\/v1\/files\/([^/?#]+)/;
 
 declare global {
     namespace JSX {
@@ -71,8 +77,13 @@ function Markdown({ children, light }: MarkdownProps) {
                         </code>
                     );
                 },
-                img({ node, ...props }) {
-                    return <Image {...props} />;
+                img({ node, src, ...props }) {
+                    // Картинка-файл по указателю file(uuid) либо по старому пути /v1/files/{id}.
+                    const fileId = parseFilePointer(src) || (src ? WIKI_FILE_RE.exec(src)?.[1] : undefined);
+                    if (fileId) {
+                        return <WikiFileImage id={fileId} {...props} />;
+                    }
+                    return <Image {...props} src={src} />;
                 },
                 table({ node, children, ...props }) {
                     return (
@@ -97,6 +108,14 @@ function Markdown({ children, light }: MarkdownProps) {
                     return light ? <>{children}</> : <p>{children}</p>;
                 },
                 a({ node, href, children, ...props }) {
+                    // Указатель на контент сайта: текст "@", href вида `тип(аргумент)`.
+                    const text = Array.isArray(children) ? children.join("") : children;
+                    if (text === "@") {
+                        const fileId = parseFilePointer(href);
+                        if (fileId) return <WikiFileLink id={fileId} />;
+                        if (parsePointer(href)) return <ContentPointer href={href} />;
+                    }
+
                     return href?.match(new RegExp("^(?:[a-z+]+:)?//", "i")) ? (
                         <a href={href} {...props} rel="nofollow noreferrer" target="_blank">
                             {children}
