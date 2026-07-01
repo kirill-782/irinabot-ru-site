@@ -1,0 +1,57 @@
+// Оформление спойлера :::cat (компонент Spoiler на базе semantic Accordion).
+// Задача — сделать явными границы раскрываемого/скрываемого блока: рамка вокруг
+// всего спойлера, выделенная кликабельная шапка и отделённая линией область контента.
+// Цвета на основе rgba(серый) — одинаково читаемы и в светлой, и в тёмной теме.
+
+.ui.accordion.wiki-spoiler {
+    margin: 1em 0;
+    border: 1px solid rgba(128, 128, 128, 0.4);
+    border-radius: 6px;
+
+    > .title {
+        display: flex;
+        align-items: center;
+        gap: 0.25em;
+        padding: 0.6em 0.9em;
+        font-weight: 600;
+        background: rgba(128, 128, 128, 0.1);
+        border-radius: 6px 6px 0 0;
+        transition: background 0.15s ease;
+        cursor: pointer;
+
+        &:hover {
+            background: rgba(128, 128, 128, 0.18);
+        }
+
+        // раскрыт — отделяем шапку от контента линией и не скругляем низ
+        &.active {
+            border-bottom: 1px solid rgba(128, 128, 128, 0.4);
+        }
+
+        .icon.dropdown {
+            margin: 0;
+        }
+    }
+
+    > .content {
+        padding: 0;
+
+        // !important — перебиваем дефолтное правило semantic с высокой специфичностью
+        // (.ui.accordion:not(.styled) .title ~ .content:not(.ui)), иначе горизонтальные
+        // отступы контента обнуляются и границы блока сливаются с текстом.
+        &.active {
+            padding: 0.85em 0.95em !important;
+            background: rgba(128, 128, 128, 0.05);
+            border-radius: 0 0 6px 6px;
+        }
+
+        // убираем лишние внешние отступы у крайних элементов внутри блока
+        > :first-child {
+            margin-top: 0;
+        }
+
+        > :last-child {
+            margin-bottom: 0;
+        }
+    }
+}

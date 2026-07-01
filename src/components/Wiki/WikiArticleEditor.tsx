@@ -11,6 +11,7 @@ import {
 } from "semantic-ui-react";
 import Markdown from "../Markdown";
 import WikiFilesModal from "./WikiFilesModal";
+import WikiArticleLinkModal from "./WikiArticleLinkModal";
 import { AppRuntimeSettingsContext } from "../../context";
 import { ArticleDto, SavePayloadRequest } from "../../models/rest/Wiki";
 import { WikiService } from "../../services/WikiService";
@@ -100,6 +101,7 @@ function WikiArticleEditor({
     const [error, setError] = useState<string | null>(null);
     const [previewOpen, setPreviewOpen] = useState(false);
     const [filesOpen, setFilesOpen] = useState(false);
+    const [articleLinkOpen, setArticleLinkOpen] = useState(false);
     // найденная несохранённая копия (предложение восстановить)
     const [pendingDraft, setPendingDraft] = useState<Draft | null>(null);
 
@@ -450,6 +452,16 @@ function WikiArticleEditor({
                     disabled={uploading || loadingLocale}
                     onClick={() => fileInputRef.current?.click()}
                 />
+                <Button
+                    basic
+                    size="tiny"
+                    type="button"
+                    icon="linkify"
+                    content={t("wikiEditorArticleLink")}
+                    title={t("wikiEditorArticleLinkTitle")}
+                    disabled={loadingLocale}
+                    onClick={() => setArticleLinkOpen(true)}
+                />
 
                 <span style={{ flex: 1 }} />
 
@@ -541,6 +553,15 @@ function WikiArticleEditor({
                 articleId={article.id}
                 canDelete={canDeleteFiles}
                 onClose={() => setFilesOpen(false)}
+                onInsert={insertText}
+            />
+
+            <WikiArticleLinkModal
+                open={articleLinkOpen}
+                api={api}
+                wiki={wiki}
+                locale={editLocale}
+                onClose={() => setArticleLinkOpen(false)}
                 onInsert={insertText}
             />
         </Form>

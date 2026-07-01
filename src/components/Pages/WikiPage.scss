@@ -1,0 +1,68 @@
+// Страница вики. Ширину контейнера задаёт общий модификатор semantic-ui
+// `.ui.extra.container` (1700px на FullHD, 2200px на 2K) — как и на остальных широких
+// страницах (AdminList/Banlist/…). Здесь — только раскладка сайдбар + контент.
+.wiki-page {
+    // Верхняя полоса на всю ширину: заголовок страницы слева, кнопки справа.
+    // Ниже неё начинаются обе колонки (сайдбар + контент) — на одном уровне.
+    .wiki-topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 0.75em;
+        margin-bottom: 1em;
+    }
+
+    .wiki-topbar__title {
+        margin: 0;
+        font-size: 1.5em;
+        font-weight: 700;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .wiki-topbar__actions {
+        flex: none;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5em;
+    }
+
+    .wiki-layout {
+        display: flex;
+        align-items: flex-start;
+        gap: 1.5em;
+    }
+
+    // Левый блок (дерево статей) ограничен по ширине: иначе на широких экранах (2K+)
+    // занимает слишком много места. Контент забирает всё оставшееся пространство.
+    .wiki-layout__side {
+        flex: 0 0 clamp(220px, 22%, 340px);
+        min-width: 0;
+    }
+
+    .wiki-layout__main {
+        flex: 1 1 auto;
+        min-width: 0;
+
+        // Якорные переходы (оглавление статьи): не прячем целевой заголовок под
+        // верхней панелью/меню — оставляем отступ сверху при scrollIntoView.
+        h1, h2, h3, h4, h5, h6 {
+            scroll-margin-top: 4.5em;
+        }
+    }
+
+    // Узкие экраны — вертикальная раскладка (замена Grid stackable).
+    @media only screen and (max-width: 767px) {
+        .wiki-layout {
+            flex-direction: column;
+        }
+
+        .wiki-layout__side {
+            flex-basis: auto;
+            width: 100%;
+        }
+    }
+}

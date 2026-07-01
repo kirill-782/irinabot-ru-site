@@ -41,7 +41,11 @@ export const useApiAuth = ({
     useEffect(() => {
         let newConfig = {};
 
-        if (authContext.auth.apiToken) {
+        // apiToken всегда задан (по умолчанию — AnonymousTokenHolder с пустым токеном),
+        // поэтому проверяем именно наличие токена. Иначе для анонима ушёл бы заголовок
+        // `Authorization: Bearer ` с пустым значением — а часть API (напр. wiki) отвечает
+        // на такой заголовок 401 вместо публичного доступа. Без токена заголовок не шлём.
+        if (authContext.auth.apiToken?.hasToken()) {
             const authorization = {
                 Authorization: `Bearer ${authContext.auth.apiToken.getToken()}`,
             };

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Accordion, Icon } from "semantic-ui-react";
+import "./Spoiler.scss";
 
 export interface SpoilerProps {
     title: React.ReactNode
@@ -17,7 +18,7 @@ function Spoiler({ title, children, ...props }: SpoilerProps) {
     }
 
     return (
-        <Accordion>
+        <Accordion className="wiki-spoiler">
             <Accordion.Title active={active} onClick={() => {setActive(!active)}}>
                 <Icon name="dropdown" />
                 {titleElement}

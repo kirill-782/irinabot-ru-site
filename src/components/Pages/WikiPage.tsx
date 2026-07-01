@@ -1,5 +1,5 @@
 import React, { memo, useContext, useEffect, useRef, useState } from "react";
-import { Button, Container, Grid, Loader, Message } from "semantic-ui-react";
+import { Button, Container, Loader, Message } from "semantic-ui-react";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import Markdown from "../Markdown";
 import WikiSidebar, { WikiSidebarHandle } from "../Wiki/WikiSidebar";
@@ -14,6 +14,7 @@ import { getLocale } from "../../utils/LocaleUtils";
 import { AppRuntimeSettingsContext, RestContext } from "../../context";
 import { ArticleDto, ArticleNodeDto, WikiDto } from "../../models/rest/Wiki";
 import { useWikiAccess } from "../../utils/useWikiAccess";
+import "./WikiPage.scss";
 
 function WikiPage() {
     const { wikiApi } = useContext(RestContext);
@@ -136,10 +137,52 @@ function WikiPage() {
     };
 
     return (
-        <Container fluid style={{ padding: "1em" }}>
-            <Grid stackable>
-                <Grid.Column width={4}>
-                    {wiki && (
+        <Container className="extra wiki-page" style={{ padding: "1em" }}>
+            {!editing && (
+                <div className="wiki-topbar">
+                    <h2 className="wiki-topbar__title">{current?.title}</h2>
+                    <div className="wiki-topbar__actions">
+                        {access.isAdmin && (
+                            <Button
+                                size="tiny"
+                                basic
+                                icon="sitemap"
+                                content={t("wikiPageWikisButton")}
+                                onClick={() => setAdminOpen(true)}
+                            />
+                        )}
+                        {wiki && access.canManage && (
+                            <Button
+                                size="tiny"
+                                basic
+                                icon="users"
+                                content={t("wikiPageAclButton")}
+                                onClick={() => setAclOpen(true)}
+                            />
+                        )}
+                        {wiki && access.canManage && (
+                            <Button
+                                size="tiny"
+                                basic
+                                icon="key"
+                                content={t("wikiPageTokensButton")}
+                                onClick={() => setTokensOpen(true)}
+                            />
+                        )}
+                        {current && access.canEdit && (
+                            <Button
+                                size="tiny"
+                                icon="edit"
+                                content={t("wikiPageEditButton")}
+                                onClick={startEdit}
+                            />
+                        )}
+                    </div>
+                </div>
+            )}
+            <div className="wiki-layout">
+                {wiki && (
+                    <div className="wiki-layout__side">
                         <WikiSidebar
                             ref={sidebarRef}
                             api={wikiApi}
@@ -150,10 +193,10 @@ function WikiPage() {
                             onAddChild={openCreate}
                             onMove={openMove}
                         />
-                    )}
-                </Grid.Column>
+                    </div>
+                )}
 
-                <Grid.Column width={12}>
+                <div className="wiki-layout__main">
                     {editing && current && wiki ? (
                         <WikiArticleEditor
                             api={wikiApi}
@@ -168,51 +211,6 @@ function WikiPage() {
                         />
                     ) : (
                         <>
-                            <div
-                                style={{
-                                    display: "flex",
-                                    justifyContent: "flex-end",
-                                    gap: "0.5em",
-                                    marginBottom: "0.5em",
-                                }}
-                            >
-                                {access.isAdmin && (
-                                    <Button
-                                        size="tiny"
-                                        basic
-                                        icon="sitemap"
-                                        content={t("wikiPageWikisButton")}
-                                        onClick={() => setAdminOpen(true)}
-                                    />
-                                )}
-                                {wiki && access.canManage && (
-                                    <Button
-                                        size="tiny"
-                                        basic
-                                        icon="users"
-                                        content={t("wikiPageAclButton")}
-                                        onClick={() => setAclOpen(true)}
-                                    />
-                                )}
-                                {wiki && access.canManage && (
-                                    <Button
-                                        size="tiny"
-                                        basic
-                                        icon="key"
-                                        content={t("wikiPageTokensButton")}
-                                        onClick={() => setTokensOpen(true)}
-                                    />
-                                )}
-                                {current && access.canEdit && (
-                                    <Button
-                                        size="tiny"
-                                        icon="edit"
-                                        content={t("wikiPageEditButton")}
-                                        onClick={startEdit}
-                                    />
-                                )}
-                            </div>
-
                             {loading && <Loader active inline="centered" />}
 
                             {!loading && notFound && (
@@ -230,8 +228,8 @@ function WikiPage() {
                             {!loading && !notFound && <Markdown>{current?.payload}</Markdown>}
                         </>
                     )}
-                </Grid.Column>
-            </Grid>
+                </div>
+            </div>
 
             {wiki && (
                 <WikiCreatePageModal

@@ -4,10 +4,13 @@ import { Icon } from "semantic-ui-react";
 import Axios from "axios";
 import { DEFAULT_CONFIG } from "../config/ApiConfig";
 import { Map as MapModel } from "../models/rest/Map";
+import { ArticleDto } from "../models/rest/Wiki";
+import { getLocale } from "../utils/LocaleUtils";
 
 // Указатель на контент сайта внутри markdown.
 // Записывается как ссылка, текст которой "@", а href — вида `тип(аргумент)`:
-//   [@](map(74670))  →  ссылка /maps/74670 с названием карты (берётся из API).
+//   [@](map(74670))                       →  ссылка /maps/74670 с названием карты.
+//   [@](article(new-irina-help/how-to-play)) →  ссылка на статью вики с её заголовком.
 //
 // Новые типы добавляются в RESOLVERS ниже: достаточно задать маршрут (to) и
 // способ получить отображаемый текст (label).
@@ -17,6 +20,14 @@ interface PointerResolver {
     label: (arg: string) => Promise<string>;
     icon?: string;
 }
+
+// Аргумент указателя на статью — `wikiUrl/articleUrl` (url статьи — один сегмент).
+const splitArticleArg = (arg: string) => {
+    const i = arg.indexOf("/");
+    return i >= 0
+        ? { wikiUrl: arg.slice(0, i), articleUrl: arg.slice(i + 1) }
+        : { wikiUrl: arg, articleUrl: "" };
+};
 
 const RESOLVERS: Record<string, PointerResolver> = {
     map: {
@@ -29,6 +40,23 @@ const RESOLVERS: Record<string, PointerResolver> = {
                 method: "GET",
             });
             return res.data.mapInfo?.name || `Карта ${id}`;
+        },
+    },
+    article: {
+        icon: "file alternate outline",
+        to: (arg) => {
+            const { wikiUrl, articleUrl } = splitArticleArg(arg);
+            return `/wiki/${encodeURIComponent(wikiUrl)}/${encodeURIComponent(articleUrl)}`;
+        },
+        label: async (arg) => {
+            const { wikiUrl, articleUrl } = splitArticleArg(arg);
+            const res = await Axios.request<ArticleDto>({
+                ...DEFAULT_CONFIG,
+                url: `/v1/wiki/${encodeURIComponent(wikiUrl)}/article/${encodeURIComponent(articleUrl)}`,
+                method: "GET",
+                params: { locale: getLocale() },
+            });
+            return res.data.title || articleUrl || arg;
         },
     },
 };

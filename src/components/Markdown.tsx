@@ -5,6 +5,7 @@ import remarkTypograf from "@mavrin/remark-typograf";
 import remarkEmoji from "remark-emoji";
 import remarkDirective from "remark-directive";
 import remarkDirectiveRehype from "remark-directive-rehype";
+import { visit } from "unist-util-visit";
 
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { docco, dark } from "react-syntax-highlighter/dist/esm/styles/hljs";
@@ -22,6 +23,51 @@ import WikiFileLink from "./WikiFileLink";
 
 // id файла вики из старого markdown-пути /v1/files/{id} (обратная совместимость)
 const WIKI_FILE_RE = /\/v1\/files\/([^/?#]+)/;
+
+// Слаг заголовка в стиле GitHub: нижний регистр, выкидываем всё кроме букв/цифр/
+// пробелов/дефисов, пробелы → дефисы. Совпадает с якорями оглавления (#1-заголовок),
+// которые пишут в markdown-документах.
+function slugifyHeading(value: string): string {
+    return value
+        .toLowerCase()
+        .trim()
+        .replace(/[^\p{L}\p{N}\s-]/gu, "")
+        .replace(/\s+/g, "-");
+}
+
+function headingText(node: any): string {
+    if (node.type === "text") return node.value || "";
+    if (Array.isArray(node.children)) return node.children.map(headingText).join("");
+    return "";
+}
+
+// rehype-плагин: проставляет id заголовкам (h1–h6), чтобы работали якорные ссылки
+// вида [текст](#слаг). Дубли слагов разводим суффиксами -1, -2 (как github-slugger).
+function rehypeHeadingIds() {
+    return (tree: any) => {
+        const used = new Map<string, number>();
+        visit(tree, "element", (el: any) => {
+            if (!/^h[1-6]$/.test(el.tagName)) return;
+            if (el.properties?.id) return;
+            let slug = slugifyHeading(headingText(el));
+            if (!slug) return;
+            const seen = used.get(slug) ?? 0;
+            used.set(slug, seen + 1);
+            if (seen > 0) slug = `${slug}-${seen}`;
+            el.properties = { ...(el.properties || {}), id: slug };
+        });
+    };
+}
+
+// Плавный переход к заголовку с данным id (оглавление внутри статьи).
+function scrollToAnchor(e: React.MouseEvent<HTMLAnchorElement>, href: string) {
+    const id = decodeURIComponent(href.slice(1));
+    const el = document.getElementById(id);
+    if (!el) return; // нет такого якоря — не мешаем стандартному поведению
+    e.preventDefault();
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+    window.history.replaceState(null, "", href);
+}
 
 declare global {
     namespace JSX {
@@ -60,6 +106,7 @@ function Markdown({ children, light }: MarkdownProps) {
                     },
                 ],
             ]}
+            rehypePlugins={[rehypeHeadingIds]}
             components={{
                 code({ node, inline, className, children, ...props }) {
                     const match = /language-(\w+)/.exec(className || "");
@@ -114,6 +161,15 @@ function Markdown({ children, light }: MarkdownProps) {
                         const fileId = parseFilePointer(href);
                         if (fileId) return <WikiFileLink id={fileId} />;
                         if (parsePointer(href)) return <ContentPointer href={href} />;
+                    }
+
+                    // Якорь внутри страницы (оглавление): плавно скроллим к заголовку.
+                    if (href?.startsWith("#")) {
+                        return (
+                            <a href={href} onClick={(e) => scrollToAnchor(e, href)} {...props}>
+                                {children}
+                            </a>
+                        );
                     }
 
                     return href?.match(new RegExp("^(?:[a-z+]+:)?//", "i")) ? (

@@ -1279,6 +1279,8 @@ export const LanguageData = {
     wikiEditorFileTitle: "Загрузить файл и вставить ссылку",
     wikiEditorFiles: "Файлы",
     wikiEditorFilesTitle: "Файлы статьи",
+    wikiEditorArticleLink: "На статью",
+    wikiEditorArticleLinkTitle: "Вставить ссылку на статью вики",
     wikiEditorDraftFound: "Найдена несохранённая копия этой страницы.",
     wikiEditorDraftRestore: "Восстановить",
     wikiEditorDraftDiscard: "Удалить",
@@ -1300,6 +1302,11 @@ export const LanguageData = {
     wikiEditorSnippetHeadingPlaceholder: "Заголовок",
     wikiEditorSnippetTextPlaceholder: "текст",
     wikiEditorSnippetListItemPlaceholder: "пункт",
+
+    // --- Wiki: ссылка на статью (WikiArticleLinkModal) ---
+    wikiArticleLinkTitle: "Ссылка на статью",
+    wikiArticleLinkEmpty: "В этой вики пока нет статей",
+    wikiArticleLinkLoadError: "Не удалось загрузить список статей",
 
     // --- Wiki: создание страницы (WikiCreatePageModal) ---
     wikiCreateInvalidUrl: "Укажите корректный URL (латиница, цифры, дефис)",
