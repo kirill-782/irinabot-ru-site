@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import {
     Button,
     Dropdown,
@@ -12,6 +12,7 @@ import {
 } from "semantic-ui-react";
 import { WikiTokenDto, WikiTokenRole, WikiTokenSecretDto } from "../../models/rest/Wiki";
 import { WikiService } from "../../services/WikiService";
+import { AppRuntimeSettingsContext } from "../../context";
 
 interface WikiTokensModalProps {
     open: boolean;
@@ -20,12 +21,15 @@ interface WikiTokensModalProps {
     onClose: () => void;
 }
 
-const roleOptions = [
-    { key: "READ", value: "READ", text: "Чтение" },
-    { key: "WRITE", value: "WRITE", text: "Запись" },
-];
-
 function WikiTokensModal({ open, api, wiki, onClose }: WikiTokensModalProps) {
+    const { language } = useContext(AppRuntimeSettingsContext);
+    const t = language.getString;
+
+    const roleOptions = [
+        { key: "READ", value: "READ", text: t("wikiTokensRoleRead") },
+        { key: "WRITE", value: "WRITE", text: t("wikiTokensRoleWrite") },
+    ];
+
     const [tokens, setTokens] = useState<WikiTokenDto[]>([]);
     const [loading, setLoading] = useState(false);
     const [busy, setBusy] = useState(false);
@@ -42,10 +46,10 @@ function WikiTokensModal({ open, api, wiki, onClose }: WikiTokensModalProps) {
         try {
             setTokens(await api.getWikiTokens(wiki));
         } catch (e: any) {
-            setError(e?.response?.data?.message || e?.message || "Не удалось загрузить токены");
+            setError(e?.response?.data?.message || e?.message || t("wikiTokensLoadError"));
         }
         setLoading(false);
-    }, [api, wiki]);
+    }, [api, wiki, t]);
 
     useEffect(() => {
         if (open) {
@@ -68,7 +72,7 @@ function WikiTokensModal({ open, api, wiki, onClose }: WikiTokensModalProps) {
             setNewName("");
             await load();
         } catch (e: any) {
-            setError(e?.response?.data?.message || e?.message || "Не удалось создать токен");
+            setError(e?.response?.data?.message || e?.message || t("wikiTokensCreateError"));
         }
         setBusy(false);
     };
@@ -80,7 +84,7 @@ function WikiTokensModal({ open, api, wiki, onClose }: WikiTokensModalProps) {
             await api.revokeWikiToken(wiki, id);
             await load();
         } catch (e: any) {
-            setError(e?.response?.data?.message || e?.message || "Не удалось отозвать токен");
+            setError(e?.response?.data?.message || e?.message || t("wikiTokensRevokeError"));
         }
         setBusy(false);
     };
@@ -89,21 +93,21 @@ function WikiTokensModal({ open, api, wiki, onClose }: WikiTokensModalProps) {
 
     return (
         <Modal open={open} onClose={onClose} size="small" closeIcon>
-            <Modal.Header>Токены ботов — «{wiki}»</Modal.Header>
+            <Modal.Header>{t("wikiTokensTitle", { wiki })}</Modal.Header>
             <Modal.Content>
                 {error && <Message error content={error} />}
 
                 <Message info size="small">
-                    Токен авторизует бота для одной вики. Передавайте его в заголовке{" "}
-                    <code>Authorization: Bot &lt;токен&gt;</code>. Роль <b>READ</b> — только чтение,{" "}
-                    <b>WRITE</b> — чтение и запись.
+                    {t("wikiTokensInfoIntro")}{" "}
+                    <code>Authorization: Bot &lt;{t("wikiTokensInfoTokenWord")}&gt;</code>. {t("wikiTokensInfoRolePrefix")} <b>READ</b> {t("wikiTokensInfoRoleRead")},{" "}
+                    <b>WRITE</b> {t("wikiTokensInfoRoleWrite")}.
                 </Message>
 
                 {secret && (
                     <Message success onDismiss={() => setSecret(null)}>
-                        <Message.Header>Токен создан — скопируйте сейчас</Message.Header>
+                        <Message.Header>{t("wikiTokensSecretHeader")}</Message.Header>
                         <p style={{ margin: "0.5em 0" }}>
-                            Секрет показывается один раз и больше не будет доступен.
+                            {t("wikiTokensSecretHint")}
                         </p>
                         <Input
                             fluid
@@ -111,7 +115,7 @@ function WikiTokensModal({ open, api, wiki, onClose }: WikiTokensModalProps) {
                             value={secret.token}
                             action={{
                                 icon: "copy",
-                                title: "Скопировать",
+                                title: t("wikiTokensCopy"),
                                 onClick: () => copy(secret.token),
                             }}
                         />
@@ -124,9 +128,9 @@ function WikiTokensModal({ open, api, wiki, onClose }: WikiTokensModalProps) {
                     <Table basic="very" compact>
                         <Table.Header>
                             <Table.Row>
-                                <Table.HeaderCell>Название</Table.HeaderCell>
-                                <Table.HeaderCell>Роль</Table.HeaderCell>
-                                <Table.HeaderCell>Статус</Table.HeaderCell>
+                                <Table.HeaderCell>{t("wikiTokensColName")}</Table.HeaderCell>
+                                <Table.HeaderCell>{t("wikiTokensColRole")}</Table.HeaderCell>
+                                <Table.HeaderCell>{t("wikiTokensColStatus")}</Table.HeaderCell>
                                 <Table.HeaderCell collapsing />
                             </Table.Row>
                         </Table.Header>
@@ -134,29 +138,29 @@ function WikiTokensModal({ open, api, wiki, onClose }: WikiTokensModalProps) {
                             {tokens.length === 0 && (
                                 <Table.Row>
                                     <Table.Cell colSpan={4} disabled>
-                                        Токенов нет
+                                        {t("wikiTokensEmpty")}
                                     </Table.Cell>
                                 </Table.Row>
                             )}
-                            {tokens.map((t) => (
-                                <Table.Row key={t.id} disabled={!t.active}>
-                                    <Table.Cell>{t.name || <i>без имени</i>}</Table.Cell>
-                                    <Table.Cell>{t.role === "WRITE" ? "Запись" : "Чтение"}</Table.Cell>
+                            {tokens.map((token) => (
+                                <Table.Row key={token.id} disabled={!token.active}>
+                                    <Table.Cell>{token.name || <i>{t("wikiTokensNoName")}</i>}</Table.Cell>
+                                    <Table.Cell>{token.role === "WRITE" ? t("wikiTokensRoleWrite") : t("wikiTokensRoleRead")}</Table.Cell>
                                     <Table.Cell>
-                                        <Label size="tiny" color={t.active ? "green" : "grey"} horizontal>
-                                            {t.active ? "активен" : "отозван"}
+                                        <Label size="tiny" color={token.active ? "green" : "grey"} horizontal>
+                                            {token.active ? t("wikiTokensStatusActive") : t("wikiTokensStatusRevoked")}
                                         </Label>
                                     </Table.Cell>
                                     <Table.Cell collapsing>
-                                        {t.active && (
+                                        {token.active && (
                                             <Button
                                                 basic
                                                 color="red"
                                                 icon="trash"
                                                 size="tiny"
-                                                title="Отозвать токен"
+                                                title={t("wikiTokensRevokeTooltip")}
                                                 disabled={busy}
-                                                onClick={() => revoke(t.id)}
+                                                onClick={() => revoke(token.id)}
                                             />
                                         )}
                                     </Table.Cell>
@@ -170,7 +174,7 @@ function WikiTokensModal({ open, api, wiki, onClose }: WikiTokensModalProps) {
                     <Form.Group>
                         <Form.Field width={8}>
                             <Input
-                                placeholder="Название (необязательно)"
+                                placeholder={t("wikiTokensNamePlaceholder")}
                                 value={newName}
                                 disabled={busy}
                                 onChange={(_, data) => setNewName(data.value)}
@@ -192,7 +196,7 @@ function WikiTokensModal({ open, api, wiki, onClose }: WikiTokensModalProps) {
                                 primary
                                 type="submit"
                                 icon="plus"
-                                content="Создать"
+                                content={t("wikiTokensCreate")}
                                 loading={busy}
                                 disabled={busy}
                             />

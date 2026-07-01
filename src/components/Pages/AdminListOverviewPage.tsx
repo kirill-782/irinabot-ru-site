@@ -2,7 +2,7 @@ import React, { useCallback, useContext, useEffect, useMemo, useState } from "re
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "@kokomi/react-semantic-toasts";
 import { Button, Card, Container, Header, Icon, Label, Loader, Message, Segment } from "semantic-ui-react";
-import { AuthContext, RestContext } from "../../context";
+import { AppRuntimeSettingsContext, AuthContext, RestContext } from "../../context";
 import { useTitle } from "../../hooks/useTitle";
 import { useResolveConnectorIds } from "../../hooks/useResolveConnectorIds";
 import { AdminListOutWeb } from "../../models/rest/AdminList";
@@ -18,9 +18,11 @@ import ConnectorId from "../ConnectorId";
 import "./AdminListOverviewPage.scss";
 
 const OwnerLabel: React.FC<{ owner: string | null | undefined }> = ({ owner }) => {
+    const { language } = useContext(AppRuntimeSettingsContext);
+    const t = language.getString;
     const id = (owner || "").trim();
 
-    if (!id) return <>Не указан</>;
+    if (!id) return <>{t("adminListOverviewOwnerUnknown")}</>;
 
     const numeric = Number(id);
 
@@ -43,6 +45,8 @@ const sortAdminLists = (left: AdminListOutWeb, right: AdminListOutWeb) => {
 
 function AdminListOverviewPage() {
     const navigate = useNavigate();
+    const { language } = useContext(AppRuntimeSettingsContext);
+    const t = language.getString;
     const { adminListApi } = useContext(RestContext);
     const auth = useContext(AuthContext).auth;
 
@@ -114,8 +118,10 @@ function AdminListOverviewPage() {
             const response = await adminListApi.createAdminList();
 
             toast({
-                title: "Admin list создан",
-                description: response.id ? `Открываю список #${response.id}.` : undefined,
+                title: t("adminListOverviewCreateSuccessTitle"),
+                description: response.id
+                    ? t("adminListOverviewCreateSuccessDescription", { id: response.id })
+                    : undefined,
                 type: "success",
             });
 
@@ -128,7 +134,7 @@ function AdminListOverviewPage() {
             const description = convertErrorResponseToString(error);
 
             toast({
-                title: "Не удалось создать admin list",
+                title: t("adminListOverviewCreateErrorTitle"),
                 description,
                 type: "error",
                 time: 10000,
@@ -156,31 +162,45 @@ function AdminListOverviewPage() {
                                     <Card.Content>
                                         <div className="admin-list-overview__labels">
                                             <Label basic color={isOwned ? "green" : undefined}>
-                                                {isOwned ? "Свой" : "Расшарен"}
+                                                {isOwned
+                                                    ? t("adminListOverviewLabelOwn")
+                                                    : t("adminListOverviewLabelShared")}
                                             </Label>
                                             {mode === "SET" && (
                                                 <Label basic color="violet">
                                                     {mode}
                                                 </Label>
                                             )}
-                                            {list.default && <Label basic color="orange">Стандартный</Label>}
+                                            {list.default && (
+                                                <Label basic color="orange">
+                                                    {t("adminListOverviewLabelDefault")}
+                                                </Label>
+                                            )}
                                         </div>
 
-                                        <Card.Header>Список #{list.id || "?"}</Card.Header>
-                                        <Card.Meta>Владелец: <OwnerLabel owner={list.owner} /></Card.Meta>
+                                        <Card.Header>{t("adminListOverviewCardHeader", { id: list.id || "?" })}</Card.Header>
+                                        <Card.Meta>
+                                            {t("adminListOverviewCardOwner")} <OwnerLabel owner={list.owner} />
+                                        </Card.Meta>
                                         <Card.Description>
                                             {list.comment?.trim() && <p>{list.comment.trim()}</p>}
                                             <div className="admin-list-overview__meta">
-                                                <span>Список активен до: {formatAdminListDateValue(list.activeBefore)}</span>
                                                 <span>
-                                                    Элементы активны до: {formatAdminListDateValue(list.itemsActiveBefore)}
+                                                    {t("adminListOverviewCardActiveBefore", {
+                                                        date: formatAdminListDateValue(list.activeBefore),
+                                                    })}
+                                                </span>
+                                                <span>
+                                                    {t("adminListOverviewCardItemsActiveBefore", {
+                                                        date: formatAdminListDateValue(list.itemsActiveBefore),
+                                                    })}
                                                 </span>
                                             </div>
                                         </Card.Description>
                                     </Card.Content>
                                     <Card.Content extra>
                                         <Button as={Link} fluid primary size="small" to={`/admin-list/${list.id}`}>
-                                            Открыть
+                                            {t("adminListOverviewCardOpenButton")}
                                         </Button>
                                     </Card.Content>
                                 </Card>
@@ -209,7 +229,7 @@ function AdminListOverviewPage() {
                         onClick={() => {
                             void loadLists();
                         }}
-                        title="Обновить список"
+                        title={t("adminListOverviewRefreshTitle")}
                         type="button"
                     >
                         <Icon name="refresh" />
@@ -222,14 +242,14 @@ function AdminListOverviewPage() {
                         primary
                         type="button"
                     >
-                        Создать дочерний список
+                        {t("adminListOverviewCreateButton")}
                     </Button>
                 </div>
             </div>
 
             {errorMessage && (
                 <Message error>
-                    <Message.Header>Не удалось загрузить admin list</Message.Header>
+                    <Message.Header>{t("adminListOverviewLoadErrorHeader")}</Message.Header>
                     <p>{errorMessage}</p>
                 </Message>
             )}
@@ -240,8 +260,16 @@ function AdminListOverviewPage() {
                 </Segment>
             ) : (
                 <>
-                    {renderListCards("Собственные списки", ownLists, "У текущего пользователя пока нет собственных списков.")}
-                    {renderListCards("Общие списки", sharedLists, "Нет списков, которыми поделились другие пользователи.")}
+                    {renderListCards(
+                        t("adminListOverviewOwnListsTitle"),
+                        ownLists,
+                        t("adminListOverviewOwnListsEmpty")
+                    )}
+                    {renderListCards(
+                        t("adminListOverviewSharedListsTitle"),
+                        sharedLists,
+                        t("adminListOverviewSharedListsEmpty")
+                    )}
                 </>
             )}
         </Container>

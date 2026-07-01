@@ -1,5 +1,6 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { Button, Dropdown, Form, Input, Loader, Message, Modal, Table } from "semantic-ui-react";
+import { AppRuntimeSettingsContext } from "../../context";
 import { AclEntryDto, WikiAclRole } from "../../models/rest/Wiki";
 import { WikiService } from "../../services/WikiService";
 
@@ -10,12 +11,15 @@ interface WikiAclModalProps {
     onClose: () => void;
 }
 
-const roleOptions = [
-    { key: "VIEWER", value: "VIEWER", text: "Просмотр" },
-    { key: "EDITOR", value: "EDITOR", text: "Редактирование" },
-];
-
 function WikiAclModal({ open, api, wiki, onClose }: WikiAclModalProps) {
+    const { language } = useContext(AppRuntimeSettingsContext);
+    const t = language.getString;
+
+    const roleOptions = [
+        { key: "VIEWER", value: "VIEWER", text: t("wikiAclRoleViewer") },
+        { key: "EDITOR", value: "EDITOR", text: t("wikiAclRoleEditor") },
+    ];
+
     const [entries, setEntries] = useState<AclEntryDto[]>([]);
     const [loading, setLoading] = useState(false);
     const [busy, setBusy] = useState(false);
@@ -30,10 +34,10 @@ function WikiAclModal({ open, api, wiki, onClose }: WikiAclModalProps) {
         try {
             setEntries(await api.getWikiAcl(wiki));
         } catch (e: any) {
-            setError(e?.response?.data?.message || e?.message || "Не удалось загрузить доступы");
+            setError(e?.response?.data?.message || e?.message || t("wikiAclLoadError"));
         }
         setLoading(false);
-    }, [api, wiki]);
+    }, [api, wiki, t]);
 
     useEffect(() => {
         if (open) {
@@ -50,7 +54,7 @@ function WikiAclModal({ open, api, wiki, onClose }: WikiAclModalProps) {
             await api.setWikiAclRole(wiki, userId, { role });
             await load();
         } catch (e: any) {
-            setError(e?.response?.data?.message || e?.message || "Не удалось изменить роль");
+            setError(e?.response?.data?.message || e?.message || t("wikiAclSetRoleError"));
         }
         setBusy(false);
     };
@@ -62,7 +66,7 @@ function WikiAclModal({ open, api, wiki, onClose }: WikiAclModalProps) {
             await api.removeWikiAcl(wiki, userId);
             await load();
         } catch (e: any) {
-            setError(e?.response?.data?.message || e?.message || "Не удалось удалить доступ");
+            setError(e?.response?.data?.message || e?.message || t("wikiAclRemoveError"));
         }
         setBusy(false);
     };
@@ -76,7 +80,7 @@ function WikiAclModal({ open, api, wiki, onClose }: WikiAclModalProps) {
 
     return (
         <Modal open={open} onClose={onClose} size="small" closeIcon>
-            <Modal.Header>Доступы вики «{wiki}»</Modal.Header>
+            <Modal.Header>{t("wikiAclTitle", { wiki })}</Modal.Header>
             <Modal.Content>
                 {error && <Message error content={error} />}
 
@@ -86,8 +90,8 @@ function WikiAclModal({ open, api, wiki, onClose }: WikiAclModalProps) {
                     <Table basic="very" compact>
                         <Table.Header>
                             <Table.Row>
-                                <Table.HeaderCell>Пользователь</Table.HeaderCell>
-                                <Table.HeaderCell width={5}>Роль</Table.HeaderCell>
+                                <Table.HeaderCell>{t("wikiAclUserColumn")}</Table.HeaderCell>
+                                <Table.HeaderCell width={5}>{t("wikiAclRoleColumn")}</Table.HeaderCell>
                                 <Table.HeaderCell collapsing />
                             </Table.Row>
                         </Table.Header>
@@ -95,7 +99,7 @@ function WikiAclModal({ open, api, wiki, onClose }: WikiAclModalProps) {
                             {entries.length === 0 && (
                                 <Table.Row>
                                     <Table.Cell colSpan={3} disabled>
-                                        Доступы не назначены
+                                        {t("wikiAclEmpty")}
                                     </Table.Cell>
                                 </Table.Row>
                             )}
@@ -121,7 +125,7 @@ function WikiAclModal({ open, api, wiki, onClose }: WikiAclModalProps) {
                                             icon="trash"
                                             size="tiny"
                                             disabled={busy}
-                                            title="Удалить доступ"
+                                            title={t("wikiAclRemoveTooltip")}
                                             onClick={() => remove(entry.userId)}
                                         />
                                     </Table.Cell>
@@ -135,7 +139,7 @@ function WikiAclModal({ open, api, wiki, onClose }: WikiAclModalProps) {
                     <Form.Group>
                         <Form.Field width={8}>
                             <Input
-                                placeholder="ID пользователя"
+                                placeholder={t("wikiAclUserIdPlaceholder")}
                                 value={newUserId}
                                 disabled={busy}
                                 onChange={(_, data) => setNewUserId(data.value)}
@@ -157,7 +161,7 @@ function WikiAclModal({ open, api, wiki, onClose }: WikiAclModalProps) {
                                 primary
                                 type="submit"
                                 icon="plus"
-                                content="Дать"
+                                content={t("wikiAclAddButton")}
                                 loading={busy}
                                 disabled={busy || !newUserId.trim()}
                             />

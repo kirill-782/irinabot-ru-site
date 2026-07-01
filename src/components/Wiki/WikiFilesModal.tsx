@@ -1,5 +1,6 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { Button, Icon, List, Loader, Message, Modal } from "semantic-ui-react";
+import { AppRuntimeSettingsContext } from "../../context";
 import { FileDto } from "../../models/rest/Wiki";
 import { WikiService } from "../../services/WikiService";
 import WikiFileImage, { formatFileSize } from "../WikiFileImage";
@@ -16,6 +17,8 @@ interface WikiFilesModalProps {
 }
 
 function WikiFilesModal({ open, api, wiki, articleId, canDelete, onClose, onInsert }: WikiFilesModalProps) {
+    const { language } = useContext(AppRuntimeSettingsContext);
+    const t = language.getString;
     const [files, setFiles] = useState<FileDto[]>([]);
     const [loading, setLoading] = useState(false);
     const [busy, setBusy] = useState(false);
@@ -27,7 +30,7 @@ function WikiFilesModal({ open, api, wiki, articleId, canDelete, onClose, onInse
         try {
             setFiles(await api.getArticleFiles(articleId));
         } catch (e: any) {
-            setError(e?.response?.data?.message || e?.message || "Не удалось загрузить файлы");
+            setError(e?.response?.data?.message || e?.message || t("wikiFilesLoadError"));
         }
         setLoading(false);
     }, [api, articleId]);
@@ -53,7 +56,7 @@ function WikiFilesModal({ open, api, wiki, articleId, canDelete, onClose, onInse
             await api.deleteWikiFile(wiki, file.id);
             await load();
         } catch (e: any) {
-            setError(e?.response?.data?.message || e?.message || "Не удалось удалить файл");
+            setError(e?.response?.data?.message || e?.message || t("wikiFilesDeleteError"));
         }
         setBusy(false);
     };
@@ -63,14 +66,14 @@ function WikiFilesModal({ open, api, wiki, articleId, canDelete, onClose, onInse
 
     return (
         <Modal open={open} onClose={onClose} size="small" closeIcon>
-            <Modal.Header>Файлы статьи</Modal.Header>
+            <Modal.Header>{t("wikiFilesTitle")}</Modal.Header>
             <Modal.Content scrolling>
                 {error && <Message error content={error} />}
 
                 {loading ? (
                     <Loader active inline="centered" />
                 ) : files.length === 0 ? (
-                    <Message info content="К статье ещё не прикреплены файлы. Загрузите их кнопкой «Изображение» или перетащив в редактор." />
+                    <Message info content={t("wikiFilesEmptyHint")} />
                 ) : (
                     <List divided relaxed verticalAlign="middle">
                         {files.map((file) => (
@@ -81,7 +84,7 @@ function WikiFilesModal({ open, api, wiki, articleId, canDelete, onClose, onInse
                                             size="tiny"
                                             basic
                                             icon="image"
-                                            title="Вставить картинкой"
+                                            title={t("wikiFilesInsertAsImage")}
                                             onClick={() => insertImage(file)}
                                         />
                                     )}
@@ -89,7 +92,7 @@ function WikiFilesModal({ open, api, wiki, articleId, canDelete, onClose, onInse
                                         size="tiny"
                                         basic
                                         icon="linkify"
-                                        title="Вставить ссылкой"
+                                        title={t("wikiFilesInsertAsLink")}
                                         onClick={() => insertLink(file)}
                                     />
                                     {canDelete && (
@@ -98,7 +101,7 @@ function WikiFilesModal({ open, api, wiki, articleId, canDelete, onClose, onInse
                                             basic
                                             color="red"
                                             icon="trash"
-                                            title="Удалить файл"
+                                            title={t("wikiFilesDeleteTitle")}
                                             disabled={busy}
                                             onClick={() => remove(file)}
                                         />

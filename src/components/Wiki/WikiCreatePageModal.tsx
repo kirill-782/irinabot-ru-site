@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button, Checkbox, Form, Message, Modal } from "semantic-ui-react";
 import { ArticleNodeDto, CreateArticleRequest } from "../../models/rest/Wiki";
 import { WikiService } from "../../services/WikiService";
+import { AppRuntimeSettingsContext } from "../../context";
 
 interface WikiCreatePageModalProps {
     open: boolean;
@@ -30,6 +31,9 @@ function WikiCreatePageModal({
     onClose,
     onCreated,
 }: WikiCreatePageModalProps) {
+    const { language } = useContext(AppRuntimeSettingsContext);
+    const t = language.getString;
+
     const [title, setTitle] = useState("");
     const [url, setUrl] = useState("");
     const [urlTouched, setUrlTouched] = useState(false);
@@ -60,7 +64,7 @@ function WikiCreatePageModal({
     const create = async () => {
         const slug = toSlug(url);
         if (!slug) {
-            setError("Укажите корректный URL (латиница, цифры, дефис)");
+            setError(t("wikiCreateInvalidUrl"));
             return;
         }
 
@@ -89,34 +93,34 @@ function WikiCreatePageModal({
             });
             onCreated({ ...node, title: title || node.title || slug });
         } catch (e: any) {
-            setError(e?.response?.data?.message || e?.message || "Не удалось создать страницу");
+            setError(e?.response?.data?.message || e?.message || t("wikiCreateError"));
             setSaving(false);
         }
     };
 
     return (
         <Modal open={open} onClose={onClose} size="tiny" closeIcon>
-            <Modal.Header>Новая страница</Modal.Header>
+            <Modal.Header>{t("wikiCreateHeader")}</Modal.Header>
             <Modal.Content>
                 <Message info size="small" style={{ marginTop: 0 }}>
                     {parent ? (
                         <>
-                            Дочерняя для: <b>{parent.title || parent.url}</b>
+                            {t("wikiCreateChildOf")} <b>{parent.title || parent.url}</b>
                         </>
                     ) : (
-                        "Корневая страница вики"
+                        t("wikiCreateRootPage")
                     )}
                 </Message>
                 <Form error={!!error}>
                     <Form.Input
-                        label="Заголовок"
-                        placeholder="Как играть"
+                        label={t("wikiCreateTitleLabel")}
+                        placeholder={t("wikiCreateTitlePlaceholder")}
                         value={title}
                         onChange={(_, data) => onTitleChange(data.value)}
                         autoFocus
                     />
                     <Form.Input
-                        label="URL (slug)"
+                        label={t("wikiCreateUrlLabel")}
                         placeholder="how-to-play"
                         value={url}
                         onChange={(_, data) => {
@@ -126,13 +130,13 @@ function WikiCreatePageModal({
                     />
                     <Form.Group inline>
                         <Checkbox
-                            label="Скрытая"
+                            label={t("wikiCreateHidden")}
                             checked={hidden}
                             onChange={(_, data) => setHidden(!!data.checked)}
                             style={{ marginRight: "1.5em" }}
                         />
                         <Checkbox
-                            label="Заблокированная"
+                            label={t("wikiCreateLocked")}
                             checked={locked}
                             onChange={(_, data) => setLocked(!!data.checked)}
                         />
@@ -141,11 +145,11 @@ function WikiCreatePageModal({
                 </Form>
             </Modal.Content>
             <Modal.Actions>
-                <Button basic content="Отмена" onClick={onClose} disabled={saving} />
+                <Button basic content={t("wikiCreateCancel")} onClick={onClose} disabled={saving} />
                 <Button
                     primary
                     icon="plus"
-                    content="Создать"
+                    content={t("wikiCreateCreate")}
                     onClick={create}
                     loading={saving}
                     disabled={saving || !url}

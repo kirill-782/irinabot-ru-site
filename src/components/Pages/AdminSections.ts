@@ -38,6 +38,14 @@ export const adminSections: AdminSection[] = [
         requireToken: true,
         requiredAuthorities: ["CONFIG_CREATE"],
     },
+    {
+        key: "language-pack",
+        title: "Языковой пакет",
+        path: "language-pack",
+        requireAuth: true,
+        requireToken: true,
+        requiredAuthorities: ["WIKI_LANG_ADMIN"],
+    },
 ];
 
 export function canAccessControlledRoute(auth: AuthData, route: AccessControlledRoute) {

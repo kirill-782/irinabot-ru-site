@@ -1,6 +1,7 @@
 import React, {
     forwardRef,
     useCallback,
+    useContext,
     useEffect,
     useImperativeHandle,
     useState,
@@ -9,6 +10,7 @@ import { Button, Icon, Loader } from "semantic-ui-react";
 import { NavLink } from "react-router-dom";
 import { ArticleNodeDto } from "../../models/rest/Wiki";
 import { WikiService } from "../../services/WikiService";
+import { AppRuntimeSettingsContext } from "../../context";
 import "./WikiSidebar.scss";
 
 export interface WikiSidebarHandle {
@@ -37,6 +39,9 @@ const byPosition = (arr: ArticleNodeDto[]) =>
 
 const WikiSidebar = forwardRef<WikiSidebarHandle, WikiSidebarProps>(
     ({ api, wiki, locale, currentUrl, canEdit, onAddChild, onMove }, ref) => {
+        const { language } = useContext(AppRuntimeSettingsContext);
+        const t = language.getString;
+
         const [roots, setRoots] = useState<ArticleNodeDto[]>([]);
         const [childrenMap, setChildrenMap] = useState<Record<number, ArticleNodeDto[]>>({});
         const [expanded, setExpanded] = useState<Set<number>>(new Set());
@@ -198,7 +203,7 @@ const WikiSidebar = forwardRef<WikiSidebarHandle, WikiSidebarProps>(
                                         disabled={isFirst}
                                         className="wiki-tree-action"
                                         name="angle up"
-                                        title="Выше"
+                                        title={t("wikiSidebarMoveUp")}
                                         onClick={isFirst ? undefined : () => reorder(node, "up")}
                                     />
                                     <Icon
@@ -206,21 +211,21 @@ const WikiSidebar = forwardRef<WikiSidebarHandle, WikiSidebarProps>(
                                         disabled={isLast}
                                         className="wiki-tree-action"
                                         name="angle down"
-                                        title="Ниже"
+                                        title={t("wikiSidebarMoveDown")}
                                         onClick={isLast ? undefined : () => reorder(node, "down")}
                                     />
                                     <Icon
                                         link
                                         className="wiki-tree-action"
                                         name="exchange"
-                                        title="Переместить страницу"
+                                        title={t("wikiSidebarMovePage")}
                                         onClick={() => onMove(node)}
                                     />
                                     <Icon
                                         link
                                         className="wiki-tree-action"
                                         name="plus"
-                                        title="Добавить дочернюю страницу"
+                                        title={t("wikiSidebarAddChild")}
                                         onClick={() => onAddChild(node)}
                                     />
                                 </span>
@@ -229,9 +234,9 @@ const WikiSidebar = forwardRef<WikiSidebarHandle, WikiSidebarProps>(
                             {(node.hidden || node.locked) && (
                                 <span className="wiki-tree-flags">
                                     {node.hidden && (
-                                        <Icon fitted name="eye slash" title="Скрытая" />
+                                        <Icon fitted name="eye slash" title={t("wikiSidebarHidden")} />
                                     )}
-                                    {node.locked && <Icon fitted name="lock" title="Заблокированная" />}
+                                    {node.locked && <Icon fitted name="lock" title={t("wikiSidebarLocked")} />}
                                 </span>
                             )}
                         </div>
@@ -265,7 +270,7 @@ const WikiSidebar = forwardRef<WikiSidebarHandle, WikiSidebarProps>(
                         fluid
                         size="tiny"
                         icon="plus"
-                        content="Создать страницу"
+                        content={t("wikiSidebarCreatePage")}
                         style={{ marginTop: 14 }}
                         onClick={() => onAddChild(null)}
                     />

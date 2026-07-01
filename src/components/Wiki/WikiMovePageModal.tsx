@@ -1,7 +1,8 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { Button, Dropdown, Loader, Message, Modal } from "semantic-ui-react";
 import { ArticleNodeDto } from "../../models/rest/Wiki";
 import { WikiService } from "../../services/WikiService";
+import { AppRuntimeSettingsContext } from "../../context";
 
 interface WikiMovePageModalProps {
     open: boolean;
@@ -21,6 +22,9 @@ interface FlatNode {
 const ROOT = "__root__";
 
 function WikiMovePageModal({ open, api, wiki, locale, node, onClose, onMoved }: WikiMovePageModalProps) {
+    const { language } = useContext(AppRuntimeSettingsContext);
+    const t = language.getString;
+
     const [flat, setFlat] = useState<FlatNode[]>([]);
     const [target, setTarget] = useState<string>(ROOT);
     const [loading, setLoading] = useState(false);
@@ -45,10 +49,10 @@ function WikiMovePageModal({ open, api, wiki, locale, node, onClose, onMoved }: 
             await walk(roots, 0);
             setFlat(acc);
         } catch (e: any) {
-            setError(e?.response?.data?.message || e?.message || "Не удалось загрузить дерево страниц");
+            setError(e?.response?.data?.message || e?.message || t("wikiMoveLoadError"));
         }
         setLoading(false);
-    }, [api, wiki, locale]);
+    }, [api, wiki, locale, t]);
 
     useEffect(() => {
         if (open && node) {
@@ -60,7 +64,7 @@ function WikiMovePageModal({ open, api, wiki, locale, node, onClose, onMoved }: 
     // Кандидаты в родители: все страницы, кроме самой переносимой и её потомков
     // (иначе образуется цикл). Плюс вариант «Корень».
     const options = (() => {
-        const opts = [{ key: ROOT, value: ROOT, text: "— Корень —" }];
+        const opts = [{ key: ROOT, value: ROOT, text: t("wikiMoveRootOption") }];
         if (!node) return opts;
 
         const parentOf = new Map<number, number | null>();
@@ -108,21 +112,21 @@ function WikiMovePageModal({ open, api, wiki, locale, node, onClose, onMoved }: 
             await api.moveArticle(node.id, parentId);
             onMoved();
         } catch (e: any) {
-            setError(e?.response?.data?.message || e?.message || "Не удалось переместить страницу");
+            setError(e?.response?.data?.message || e?.message || t("wikiMoveSaveError"));
             setSaving(false);
         }
     };
 
     return (
         <Modal open={open} onClose={onClose} size="tiny" closeIcon>
-            <Modal.Header>Переместить «{node?.title || node?.url}»</Modal.Header>
+            <Modal.Header>{t("wikiMoveTitle", { name: node?.title || node?.url })}</Modal.Header>
             <Modal.Content>
                 {error && <Message error content={error} />}
                 {loading ? (
                     <Loader active inline="centered" />
                 ) : (
                     <>
-                        <p>Новый родитель:</p>
+                        <p>{t("wikiMoveNewParentLabel")}</p>
                         <Dropdown
                             selection
                             search
@@ -136,11 +140,11 @@ function WikiMovePageModal({ open, api, wiki, locale, node, onClose, onMoved }: 
                 )}
             </Modal.Content>
             <Modal.Actions>
-                <Button basic content="Отмена" onClick={onClose} disabled={saving} />
+                <Button basic content={t("wikiMoveCancelButton")} onClick={onClose} disabled={saving} />
                 <Button
                     primary
                     icon="exchange"
-                    content="Переместить"
+                    content={t("wikiMoveSubmitButton")}
                     onClick={move}
                     loading={saving}
                     disabled={saving || loading}

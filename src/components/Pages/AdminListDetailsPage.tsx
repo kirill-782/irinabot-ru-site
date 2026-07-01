@@ -832,7 +832,7 @@ function AdminListDetailsPage() {
                             })}
                         </List>
                         <p>
-                            Диагностика: canInsert = <b>{canInsert ? "true" : "false"}</b>, canManage ={" "}
+                            {t("adminListDetailsDiagnostics")} canInsert = <b>{canInsert ? "true" : "false"}</b>, canManage ={" "}
                             <b>{canManage ? "true" : "false"}</b>, listPrivilegeLevel ={" "}
                             <b>{listPrivilegeLevel !== null ? listPrivilegeLevel : "null"}</b>, currentUser ={" "}
                             <b>{auth.currentAuth?.connectorId ?? "null"}</b>, listOwner ={" "}

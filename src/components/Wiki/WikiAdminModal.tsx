@@ -1,7 +1,8 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { Button, Dropdown, Form, Header, Label, Loader, Message, Modal, Table } from "semantic-ui-react";
 import { WikiDto, WikiVisibility } from "../../models/rest/Wiki";
 import { WikiService } from "../../services/WikiService";
+import { AppRuntimeSettingsContext } from "../../context";
 
 interface WikiAdminModalProps {
     open: boolean;
@@ -11,12 +12,21 @@ interface WikiAdminModalProps {
     onNavigate: (wikiUrl: string) => void;
 }
 
-const visibilityOptions = [
-    { key: "PUBLIC", value: "PUBLIC", text: "Публичная" },
-    { key: "PRIVATE", value: "PRIVATE", text: "Приватная" },
-];
+const visibilityOptionsConfig = [
+    { key: "PUBLIC", value: "PUBLIC", textKey: "wikiAdminVisibilityPublic" },
+    { key: "PRIVATE", value: "PRIVATE", textKey: "wikiAdminVisibilityPrivate" },
+] as const;
 
 function WikiAdminModal({ open, api, currentWiki, onClose, onNavigate }: WikiAdminModalProps) {
+    const { language } = useContext(AppRuntimeSettingsContext);
+    const t = language.getString;
+
+    const visibilityOptions = visibilityOptionsConfig.map((o) => ({
+        key: o.key,
+        value: o.value,
+        text: t(o.textKey),
+    }));
+
     const [wikis, setWikis] = useState<WikiDto[]>([]);
     const [loading, setLoading] = useState(false);
     const [busy, setBusy] = useState(false);
@@ -32,7 +42,7 @@ function WikiAdminModal({ open, api, currentWiki, onClose, onNavigate }: WikiAdm
         try {
             setWikis(await api.listWikis());
         } catch (e: any) {
-            setError(e?.response?.data?.message || e?.message || "Не удалось загрузить список вики");
+            setError(e?.response?.data?.message || e?.message || t("wikiAdminErrorLoadList"));
         }
         setLoading(false);
     }, [api]);
@@ -53,7 +63,7 @@ function WikiAdminModal({ open, api, currentWiki, onClose, onNavigate }: WikiAdm
             await api.setWikiVisibility(wikiUrl, { visibility });
             await load();
         } catch (e: any) {
-            setError(e?.response?.data?.message || e?.message || "Не удалось изменить видимость");
+            setError(e?.response?.data?.message || e?.message || t("wikiAdminErrorSetVisibility"));
         }
         setBusy(false);
     };
@@ -76,14 +86,14 @@ function WikiAdminModal({ open, api, currentWiki, onClose, onNavigate }: WikiAdm
             });
             goto(created.url);
         } catch (e: any) {
-            setError(e?.response?.data?.message || e?.message || "Не удалось создать вики");
+            setError(e?.response?.data?.message || e?.message || t("wikiAdminErrorCreate"));
             setBusy(false);
         }
     };
 
     return (
         <Modal open={open} onClose={onClose} size="small" closeIcon>
-            <Modal.Header>Управление вики</Modal.Header>
+            <Modal.Header>{t("wikiAdminTitle")}</Modal.Header>
             <Modal.Content>
                 {error && <Message error content={error} />}
 
@@ -93,16 +103,16 @@ function WikiAdminModal({ open, api, currentWiki, onClose, onNavigate }: WikiAdm
                     <Table basic="very" compact>
                         <Table.Header>
                             <Table.Row>
-                                <Table.HeaderCell>URL</Table.HeaderCell>
-                                <Table.HeaderCell>Владелец</Table.HeaderCell>
-                                <Table.HeaderCell width={5}>Видимость</Table.HeaderCell>
+                                <Table.HeaderCell>{t("wikiAdminColumnUrl")}</Table.HeaderCell>
+                                <Table.HeaderCell>{t("wikiAdminColumnOwner")}</Table.HeaderCell>
+                                <Table.HeaderCell width={5}>{t("wikiAdminColumnVisibility")}</Table.HeaderCell>
                             </Table.Row>
                         </Table.Header>
                         <Table.Body>
                             {wikis.length === 0 && (
                                 <Table.Row>
                                     <Table.Cell colSpan={3} disabled>
-                                        Вики не найдены
+                                        {t("wikiAdminEmptyHint")}
                                     </Table.Cell>
                                 </Table.Row>
                             )}
@@ -118,7 +128,7 @@ function WikiAdminModal({ open, api, currentWiki, onClose, onNavigate }: WikiAdm
                                         />
                                         {w.url === currentWiki && (
                                             <Label size="tiny" color="blue" horizontal>
-                                                текущая
+                                                {t("wikiAdminCurrentLabel")}
                                             </Label>
                                         )}
                                     </Table.Cell>
@@ -141,19 +151,19 @@ function WikiAdminModal({ open, api, currentWiki, onClose, onNavigate }: WikiAdm
                     </Table>
                 )}
 
-                <Header as="h5">Новая вики</Header>
+                <Header as="h5">{t("wikiAdminNewSectionTitle")}</Header>
                 <Form onSubmit={create}>
                     <Form.Group>
                         <Form.Input
                             width={6}
-                            placeholder="url (slug)"
+                            placeholder={t("wikiAdminUrlPlaceholder")}
                             value={newUrl}
                             disabled={busy}
                             onChange={(_, data) => setNewUrl(data.value)}
                         />
                         <Form.Input
                             width={5}
-                            placeholder="владелец (необязательно)"
+                            placeholder={t("wikiAdminOwnerPlaceholder")}
                             value={newOwner}
                             disabled={busy}
                             onChange={(_, data) => setNewOwner(data.value)}
@@ -173,7 +183,7 @@ function WikiAdminModal({ open, api, currentWiki, onClose, onNavigate }: WikiAdm
                         primary
                         type="submit"
                         icon="plus"
-                        content="Создать вики"
+                        content={t("wikiAdminCreateButton")}
                         loading={busy}
                         disabled={busy || !newUrl.trim()}
                     />

@@ -15,7 +15,7 @@ import {
     Message,
     Segment,
 } from "semantic-ui-react";
-import { RestContext } from "../../context";
+import { AppRuntimeSettingsContext, RestContext } from "../../context";
 import { useTitle } from "../../hooks/useTitle";
 import {
     AdminListGlobalOutWeb,
@@ -77,8 +77,10 @@ function rolesForUser(
 
 function AdminListAppAdminPage() {
     const { adminListAppAdminApi } = useContext(RestContext);
+    const { language } = useContext(AppRuntimeSettingsContext);
+    const t = language.getString;
 
-    useTitle("Admin list — администратор");
+    useTitle(t("adminListAppAdminPageTitle"));
 
     // --- кеш ---
     const [invalidatingAll, setInvalidatingAll] = useState(false);
@@ -191,10 +193,10 @@ function AdminListAppAdminPage() {
 
         try {
             await adminListAppAdminApi.initUser(id);
-            toast({ title: `Пользователь ${id} инициализирован`, type: "success" });
+            toast({ title: t("adminListAppAdminInitUserSuccess", { id }), type: "success" });
         } catch (error) {
             toast({
-                title: "Не удалось инициализировать пользователя",
+                title: t("adminListAppAdminInitUserError"),
                 description: convertErrorResponseToString(error),
                 type: "error",
                 time: 10000,
@@ -209,10 +211,10 @@ function AdminListAppAdminPage() {
 
         try {
             await adminListAppAdminApi.invalidateCache();
-            toast({ title: "Кеш admin list очищен", type: "success" });
+            toast({ title: t("adminListAppAdminInvalidateAllSuccess"), type: "success" });
         } catch (error) {
             toast({
-                title: "Не удалось очистить кеш",
+                title: t("adminListAppAdminInvalidateAllError"),
                 description: convertErrorResponseToString(error),
                 type: "error",
                 time: 10000,
@@ -231,10 +233,10 @@ function AdminListAppAdminPage() {
 
         try {
             await adminListAppAdminApi.invalidateUserCache(id);
-            toast({ title: `Кеш пользователя ${id} очищен`, type: "success" });
+            toast({ title: t("adminListAppAdminInvalidateUserSuccess", { id }), type: "success" });
         } catch (error) {
             toast({
-                title: "Не удалось очистить кеш пользователя",
+                title: t("adminListAppAdminInvalidateUserError"),
                 description: convertErrorResponseToString(error),
                 type: "error",
                 time: 10000,
@@ -263,11 +265,11 @@ function AdminListAppAdminPage() {
 
         if (roles.length === 0) {
             toast({
-                title: "Роли не найдены",
+                title: t("adminListAppAdminRolesNotFoundTitle"),
                 description:
                     targetId === null
-                        ? "В списке нет записей с userId = null."
-                        : `В списке нет записей для пользователя ${targetId}.`,
+                        ? t("adminListAppAdminRolesNotFoundNull")
+                        : t("adminListAppAdminRolesNotFoundUser", { targetId }),
                 type: "warning",
             });
             return;
@@ -281,19 +283,19 @@ function AdminListAppAdminPage() {
         const name = newRoleName.trim();
 
         if (!name) {
-            toast({ title: "Укажите имя роли", type: "error" });
+            toast({ title: t("adminListAppAdminRoleNameRequired"), type: "error" });
             return;
         }
 
         if (draft.roles.some((role) => role.name === name)) {
-            toast({ title: "Роль уже добавлена", type: "error" });
+            toast({ title: t("adminListAppAdminRoleAlreadyAdded"), type: "error" });
             return;
         }
 
         const parsedValue = Number(newRoleValue);
 
         if (!Number.isFinite(parsedValue)) {
-            toast({ title: "Некорректное значение", type: "error" });
+            toast({ title: t("adminListAppAdminRoleInvalidValue"), type: "error" });
             return;
         }
 
@@ -345,7 +347,7 @@ function AdminListAppAdminPage() {
 
     const accumulateChange = () => {
         if (!draft.targetUserIdNull && !draft.targetUserId.trim()) {
-            toast({ title: "Укажите targetUserId или отметьте null", type: "error" });
+            toast({ title: t("adminListAppAdminTargetUserRequired"), type: "error" });
             return;
         }
 
@@ -374,12 +376,12 @@ function AdminListAppAdminPage() {
         const listIdNum = Number(rawListId);
 
         if (!Number.isInteger(listIdNum)) {
-            toast({ title: "Некорректный id списка", type: "error" });
+            toast({ title: t("adminListAppAdminInvalidListId"), type: "error" });
             return;
         }
 
         if (batch.length === 0) {
-            toast({ title: "Нет накопленных изменений", type: "error" });
+            toast({ title: t("adminListAppAdminNoAccumulatedChanges"), type: "error" });
             return;
         }
 
@@ -389,11 +391,11 @@ function AdminListAppAdminPage() {
 
         try {
             await adminListAppAdminApi.applyRawChanges(listIdNum, payload);
-            toast({ title: `Изменения применены к списку #${listIdNum}`, type: "success" });
+            toast({ title: t("adminListAppAdminApplyBatchSuccess", { listIdNum }), type: "success" });
             setBatch([]);
         } catch (error) {
             toast({
-                title: "Не удалось применить изменения",
+                title: t("adminListAppAdminApplyBatchError"),
                 description: convertErrorResponseToString(error),
                 type: "error",
                 time: 10000,
@@ -435,28 +437,25 @@ function AdminListAppAdminPage() {
 
     return (
         <div className="admin-list-app-admin admin-list-details">
-            <Header as="h1">Admin list — прикладной администратор</Header>
-            <p>
-                Управление кешем admin list и прямое редактирование глобальных списков через
-                специальные ручки прикладного администратора.
-            </p>
+            <Header as="h1">{t("adminListAppAdminMainHeader")}</Header>
+            <p>{t("adminListAppAdminIntro")}</p>
 
             {/* ===== инициализация пользователя ===== */}
             <Segment color="green">
-                <Header as="h2" dividing>Инициализация пользователя</Header>
+                <Header as="h2" dividing>{t("adminListAppAdminInitSectionHeader")}</Header>
                 <Form>
                     <Form.Field>
-                        <label>Инициализировать пользователя</label>
+                        <label>{t("adminListAppAdminInitUserLabel")}</label>
                         <Input
                             action={{
-                                content: "Инициализировать",
+                                content: t("adminListAppAdminInitUserButton"),
                                 disabled: initializingUser || !initUserId.trim(),
                                 loading: initializingUser,
                                 color: "green",
                                 onClick: () => { void initUser(); },
                             }}
                             onChange={(_, data) => setInitUserId((data.value as string) || "")}
-                            placeholder="User id"
+                            placeholder={t("adminListAppAdminUserIdPlaceholder")}
                             type="number"
                             value={initUserId}
                         />
@@ -466,17 +465,14 @@ function AdminListAppAdminPage() {
 
             {/* ===== кеш ===== */}
             <Segment color="orange">
-                <Header as="h2" dividing>Инвалидация кеша</Header>
-                <p>
-                    Сбрасывает кеш admin list в ghost-сервисе. Используйте после ручных изменений
-                    в БД или при подозрении на расхождение состояния.
-                </p>
+                <Header as="h2" dividing>{t("adminListAppAdminCacheSectionHeader")}</Header>
+                <p>{t("adminListAppAdminCacheIntro")}</p>
 
                 <Form>
                     <Form.Field>
                         <Button
                             color="orange"
-                            content="Сбросить весь кеш"
+                            content={t("adminListAppAdminInvalidateAllButton")}
                             disabled={invalidatingAll}
                             loading={invalidatingAll}
                             onClick={() => { void invalidateAllCache(); }}
@@ -484,16 +480,16 @@ function AdminListAppAdminPage() {
                         />
                     </Form.Field>
                     <Form.Field>
-                        <label>Сбросить кеш пользователя</label>
+                        <label>{t("adminListAppAdminInvalidateUserLabel")}</label>
                         <Input
                             action={{
-                                content: "Сбросить",
+                                content: t("adminListAppAdminInvalidateUserButton"),
                                 disabled: invalidatingUser || !cacheUserId.trim(),
                                 loading: invalidatingUser,
                                 onClick: () => { void invalidateUserCache(); },
                             }}
                             onChange={(_, data) => setCacheUserId((data.value as string) || "")}
-                            placeholder="User id"
+                            placeholder={t("adminListAppAdminUserIdPlaceholder")}
                             type="number"
                             value={cacheUserId}
                         />
@@ -503,11 +499,11 @@ function AdminListAppAdminPage() {
 
             {/* ===== глобальные списки ===== */}
             <Segment color="teal">
-                <Header as="h2" dividing>Глобальные списки</Header>
+                <Header as="h2" dividing>{t("adminListAppAdminGlobalListsHeader")}</Header>
                 <div style={{ marginBottom: "0.75em" }}>
                     <Button
                         basic
-                        content="Обновить"
+                        content={t("adminListAppAdminRefreshButton")}
                         icon="refresh"
                         loading={loadingLists}
                         onClick={() => { void loadGlobalLists(); }}
@@ -517,7 +513,7 @@ function AdminListAppAdminPage() {
 
                 {listsError && (
                     <Message error>
-                        <Message.Header>Не удалось загрузить глобальные списки</Message.Header>
+                        <Message.Header>{t("adminListAppAdminGlobalListsLoadError")}</Message.Header>
                         <p>{listsError}</p>
                     </Message>
                 )}
@@ -525,25 +521,25 @@ function AdminListAppAdminPage() {
                 {loadingLists ? (
                     <Loader active inline="centered" />
                 ) : globalLists.length === 0 ? (
-                    <Message info>Глобальные списки отсутствуют.</Message>
+                    <Message info>{t("adminListAppAdminGlobalListsEmpty")}</Message>
                 ) : (
                     <List divided relaxed>
                         {globalLists.map((list) => (
                             <List.Item key={list.id ?? `${list.listTypeId}-${list.sourceUserId}`}>
                                 <List.Content>
                                     <List.Header>
-                                        Список #{list.id ?? "?"}
-                                        {list.listTypeId !== undefined && <> · тип {list.listTypeId}</>}
+                                        {t("adminListAppAdminListItemTitle", { id: list.id ?? "?" })}
+                                        {list.listTypeId !== undefined && <> {t("adminListAppAdminListItemType", { typeId: list.listTypeId })}</>}
                                     </List.Header>
                                     <List.Description>
-                                        {list.parentListInstanceId != null && <>Родитель: #{list.parentListInstanceId}. </>}
-                                        {list.sourceUserId && <>Источник: {list.sourceUserId}. </>}
+                                        {list.parentListInstanceId != null && <>{t("adminListAppAdminListItemParent", { parentId: list.parentListInstanceId })} </>}
+                                        {list.sourceUserId && <>{t("adminListAppAdminListItemSource", { sourceUserId: list.sourceUserId })} </>}
                                         {list.comment?.trim() && <>{list.comment.trim()}</>}
                                     </List.Description>
                                     <Button
                                         basic
                                         compact
-                                        content="Выбрать"
+                                        content={t("adminListAppAdminSelectButton")}
                                         onClick={() => setRawListId(String(list.id ?? ""))}
                                         size="mini"
                                         style={{ marginTop: "0.5em" }}
@@ -558,26 +554,26 @@ function AdminListAppAdminPage() {
 
             {/* ===== raw-изменения ===== */}
             <Segment color="blue">
-                <Header as="h2" dividing>Raw-изменения</Header>
+                <Header as="h2" dividing>{t("adminListAppAdminRawChangesHeader")}</Header>
 
                 <Form>
                     <Form.Field>
-                        <label>Id списка</label>
+                        <label>{t("adminListAppAdminListIdLabel")}</label>
                         <Input
                             icon={loadingListRoles ? "spinner" : listRolesLoaded ? "check" : undefined}
                             loading={loadingListRoles}
                             onChange={(_, data) => setRawListId((data.value as string) || "")}
-                            placeholder="Id"
+                            placeholder={t("adminListAppAdminListIdPlaceholder")}
                             value={rawListId}
                         />
                         {listRolesLoaded && (
                             <Message info size="mini" style={{ marginTop: "0.4em" }}>
-                                Загружено ролей: {listRoles.length}. Данные будут использованы для инициализации таблицы.
+                                {t("adminListAppAdminRolesLoadedInfo", { count: listRoles.length })}
                             </Message>
                         )}
                         {listRolesError && (
                             <Message error size="small" style={{ marginTop: "0.5em" }}>
-                                <Message.Header>Не удалось загрузить роли списка</Message.Header>
+                                <Message.Header>{t("adminListAppAdminListRolesLoadError")}</Message.Header>
                                 <p>{listRolesError}</p>
                             </Message>
                         )}
@@ -585,11 +581,11 @@ function AdminListAppAdminPage() {
 
                     <Divider />
 
-                    <Header as="h3" dividing>Текущее изменение</Header>
+                    <Header as="h3" dividing>{t("adminListAppAdminCurrentChangeHeader")}</Header>
 
                     {userOptions.length > 0 && (
                         <Form.Field>
-                            <label>Выбрать пользователя из списка</label>
+                            <label>{t("adminListAppAdminSelectUserFromListLabel")}</label>
                             <Dropdown
                                 clearable
                                 disabled={draft.targetUserIdNull}
@@ -611,7 +607,7 @@ function AdminListAppAdminPage() {
                                     }));
                                 }}
                                 options={userOptions}
-                                placeholder="Поиск по userId..."
+                                placeholder={t("adminListAppAdminUserSearchPlaceholder")}
                                 search
                                 selection
                                 value={
@@ -625,7 +621,7 @@ function AdminListAppAdminPage() {
 
                     <Form.Group>
                         <Form.Field width={6}>
-                            <label>Target user id</label>
+                            <label>{t("adminListAppAdminTargetUserIdLabel")}</label>
                             <Input
                                 disabled={draft.targetUserIdNull}
                                 onChange={(_, data) => {
@@ -634,7 +630,7 @@ function AdminListAppAdminPage() {
                                         targetUserId: (data.value as string) || "",
                                     }));
                                 }}
-                                placeholder="User id"
+                                placeholder={t("adminListAppAdminUserIdPlaceholder")}
                                 type="number"
                                 value={draft.targetUserIdNull ? "" : draft.targetUserId}
                             />
@@ -660,25 +656,25 @@ function AdminListAppAdminPage() {
                         <Form.Field width={4} style={{ display: "flex", alignItems: "flex-end" }}>
                             <Button
                                 basic
-                                content="Заполнить из списка"
+                                content={t("adminListAppAdminFillFromListButton")}
                                 disabled={!listRolesLoaded}
                                 fluid
                                 icon="download"
                                 onClick={fillFromList}
                                 title={
                                     listRolesLoaded
-                                        ? "Инициализировать роли текущими значениями из выбранного списка"
-                                        : "Сначала выберите список с загруженными ролями"
+                                        ? t("adminListAppAdminFillFromListTitleEnabled")
+                                        : t("adminListAppAdminFillFromListTitleDisabled")
                                 }
                                 type="button"
                             />
                         </Form.Field>
                     </Form.Group>
 
-                    <Header as="h4">Добавить роль</Header>
+                    <Header as="h4">{t("adminListAppAdminAddRoleHeader")}</Header>
                     <Form.Group>
                         <Form.Input
-                            label="Имя роли"
+                            label={t("adminListAppAdminRoleNameLabel")}
                             onChange={(_, data) => setNewRoleName((data.value as string) || "")}
                             placeholder="ROLE_NAME"
                             value={newRoleName}
@@ -688,7 +684,7 @@ function AdminListAppAdminPage() {
                             disabled={newRoleOwnerNull}
                             label="Owner"
                             onChange={(_, data) => setNewRoleOwner((data.value as string) || "")}
-                            placeholder="Owner user id"
+                            placeholder={t("adminListAppAdminOwnerPlaceholder")}
                             value={newRoleOwnerNull ? "" : newRoleOwner}
                             width={4}
                         />
@@ -708,7 +704,7 @@ function AdminListAppAdminPage() {
                         />
                         <Form.Field width={2} style={{ display: "flex", alignItems: "flex-end" }}>
                             <Button
-                                content="Добавить"
+                                content={t("adminListAppAdminAddRoleButton")}
                                 fluid
                                 icon="plus"
                                 onClick={addRole}
@@ -736,7 +732,7 @@ function AdminListAppAdminPage() {
 
                 <div style={{ marginTop: "1em" }}>
                     <Button
-                        content="Добавить в batch"
+                        content={t("adminListAppAdminAddToBatchButton")}
                         icon="save"
                         onClick={accumulateChange}
                         primary
@@ -748,14 +744,14 @@ function AdminListAppAdminPage() {
             {/* ===== накопленные изменения ===== */}
             <Segment color="violet">
                 <Header as="h2" dividing>
-                    Накопленные изменения
+                    {t("adminListAppAdminAccumulatedChangesHeader")}
                     <Label circular style={{ marginLeft: "0.5em" }}>
                         {batch.length}
                     </Label>
                 </Header>
 
                 {batch.length === 0 ? (
-                    <Message info>Изменения ещё не добавлены.</Message>
+                    <Message info>{t("adminListAppAdminAccumulatedChangesEmpty")}</Message>
                 ) : (
                     <List divided relaxed>
                         {batch.map((change, index) => (
@@ -775,7 +771,7 @@ function AdminListAppAdminPage() {
                                         {change.targetUserId === null ? (
                                             <em>targetUserId = null</em>
                                         ) : (
-                                            <>Пользователь: {change.targetUserId}</>
+                                            <>{t("adminListAppAdminBatchUser", { userId: change.targetUserId })}</>
                                         )}
                                         {change.purge && (
                                             <Label color="red" size="mini" style={{ marginLeft: "0.5em" }}>
@@ -786,7 +782,7 @@ function AdminListAppAdminPage() {
                                     <List.Description>
                                         {change.roles && change.roles.length > 0 ? (
                                             <>
-                                                Роли:{" "}
+                                                {t("adminListAppAdminBatchRolesLabel")}{" "}
                                                 {change.roles.map((role, i) => (
                                                     <Label key={i} basic size="tiny" style={{ marginRight: "0.25em" }}>
                                                         {role.name} = {role.value}
@@ -797,7 +793,7 @@ function AdminListAppAdminPage() {
                                                 ))}
                                             </>
                                         ) : (
-                                            <em>Без ролей</em>
+                                            <em>{t("adminListAppAdminBatchNoRoles")}</em>
                                         )}
                                     </List.Description>
                                 </List.Content>
@@ -808,7 +804,7 @@ function AdminListAppAdminPage() {
 
                 <div style={{ marginTop: "1em", display: "flex", gap: "0.5em", flexWrap: "wrap" }}>
                     <Button
-                        content="Применить batch"
+                        content={t("adminListAppAdminApplyBatchButton")}
                         disabled={applyingRaw || batch.length === 0 || !rawListId.trim()}
                         icon="paper plane"
                         loading={applyingRaw}
@@ -818,7 +814,7 @@ function AdminListAppAdminPage() {
                     />
                     <Button
                         basic
-                        content="Очистить batch"
+                        content={t("adminListAppAdminClearBatchButton")}
                         disabled={batch.length === 0 || applyingRaw}
                         onClick={() => setBatch([])}
                         type="button"

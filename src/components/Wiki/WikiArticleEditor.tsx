@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import {
     Button,
     Checkbox,
@@ -11,9 +11,11 @@ import {
 } from "semantic-ui-react";
 import Markdown from "../Markdown";
 import WikiFilesModal from "./WikiFilesModal";
+import { AppRuntimeSettingsContext } from "../../context";
 import { ArticleDto, SavePayloadRequest } from "../../models/rest/Wiki";
 import { WikiService } from "../../services/WikiService";
 import { SUPPORT_LOCALES } from "../../config/Locales";
+import { LanguageRepositoryKeys } from "../../localization/Lang";
 
 interface WikiArticleEditorProps {
     api: WikiService;
@@ -33,30 +35,35 @@ const localeOptions = SUPPORT_LOCALES.map((l) => ({ key: l, value: l, text: l })
 
 // Кнопки быстрой вставки Markdown-разметки.
 interface MdSnippet {
-    label: string;
+    id: string;
+    // ключи локализации (резолвятся через t() при рендере)
+    labelKey: LanguageRepositoryKeys;
+    placeholderKey?: LanguageRepositoryKeys;
+    // нелокализуемый плейсхолдер (например, "code")
+    placeholder?: string;
     icon?: string;
     before: string;
     after?: string;
-    placeholder?: string;
 }
 
 const SNIPPETS: MdSnippet[] = [
-    { label: "H1", before: "# ", placeholder: "Заголовок" },
-    { label: "H2", before: "## ", placeholder: "Заголовок" },
-    { label: "Жирный", icon: "bold", before: "**", after: "**", placeholder: "текст" },
-    { label: "Курсив", icon: "italic", before: "_", after: "_", placeholder: "текст" },
-    { label: "Ссылка", icon: "linkify", before: "[", after: "](https://)", placeholder: "текст" },
-    { label: "Код", icon: "code", before: "`", after: "`", placeholder: "code" },
-    { label: "Список", icon: "list ul", before: "- ", placeholder: "пункт" },
+    { id: "h1", labelKey: "wikiEditorSnippetH1", before: "# ", placeholderKey: "wikiEditorSnippetHeadingPlaceholder" },
+    { id: "h2", labelKey: "wikiEditorSnippetH2", before: "## ", placeholderKey: "wikiEditorSnippetHeadingPlaceholder" },
+    { id: "bold", labelKey: "wikiEditorSnippetBold", icon: "bold", before: "**", after: "**", placeholderKey: "wikiEditorSnippetTextPlaceholder" },
+    { id: "italic", labelKey: "wikiEditorSnippetItalic", icon: "italic", before: "_", after: "_", placeholderKey: "wikiEditorSnippetTextPlaceholder" },
+    { id: "link", labelKey: "wikiEditorSnippetLink", icon: "linkify", before: "[", after: "](https://)", placeholderKey: "wikiEditorSnippetTextPlaceholder" },
+    { id: "code", labelKey: "wikiEditorSnippetCode", icon: "code", before: "`", after: "`", placeholder: "code" },
+    { id: "list", labelKey: "wikiEditorSnippetList", icon: "list ul", before: "- ", placeholderKey: "wikiEditorSnippetListItemPlaceholder" },
     {
-        label: "Инфо-блок",
+        id: "info",
+        labelKey: "wikiEditorSnippetInfo",
         icon: "info",
         before: ":::div{.ui.info.message}\n",
         after: "\n:::",
-        placeholder: "текст",
+        placeholderKey: "wikiEditorSnippetTextPlaceholder",
     },
 ];
-const byLabel = (label: string) => SNIPPETS.find((s) => s.label === label) as MdSnippet;
+const byId = (id: string) => SNIPPETS.find((s) => s.id === id) as MdSnippet;
 
 // Ключ локальной копии черновика в браузере.
 const draftKey = (wiki: string, articleId: number, loc: string) =>
@@ -79,6 +86,9 @@ function WikiArticleEditor({
     onSaved,
     onCancel,
 }: WikiArticleEditorProps) {
+    const { language } = useContext(AppRuntimeSettingsContext);
+    const t = language.getString;
+
     const [editLocale, setEditLocale] = useState(locale);
     const [title, setTitle] = useState(article.title ?? "");
     const [payload, setPayload] = useState(article.payload ?? "");
@@ -164,7 +174,7 @@ function WikiArticleEditor({
         if (next === editLocale) return;
         if (
             contentDirty() &&
-            !window.confirm("Несохранённые изменения в текущем языке будут потеряны. Продолжить?")
+            !window.confirm(t("wikiEditorSwitchLocaleConfirm"))
         ) {
             return;
         }
@@ -172,20 +182,20 @@ function WikiArticleEditor({
         setEditLocale(next);
         setError(null);
         setLoadingLocale(true);
-        let t = "";
-        let p = "";
+        let nextTitle = "";
+        let nextPayload = "";
         try {
             const dto = await api.getArticleById(article.id, next);
-            t = dto.title ?? "";
-            p = dto.payload ?? "";
+            nextTitle = dto.title ?? "";
+            nextPayload = dto.payload ?? "";
         } catch {
             // Перевода для этой локали ещё нет — начинаем с пустого.
         }
-        setTitle(t);
-        setPayload(p);
+        setTitle(nextTitle);
+        setPayload(nextPayload);
         // hidden/locked — свойства статьи, не зависят от локали; их эталон не трогаем
-        baselineRef.current = { ...baselineRef.current, title: t, payload: p };
-        checkDraft(t, p, next);
+        baselineRef.current = { ...baselineRef.current, title: nextTitle, payload: nextPayload };
+        checkDraft(nextTitle, nextPayload, next);
         setLoadingLocale(false);
     };
 
@@ -246,7 +256,8 @@ function WikiArticleEditor({
         }
 
         // обычная обёртка/вставка
-        const selected = sel || snippet.placeholder || "";
+        const placeholder = snippet.placeholderKey ? t(snippet.placeholderKey) : snippet.placeholder;
+        const selected = sel || placeholder || "";
         document.execCommand("insertText", false, before + selected + after);
         const selStart = start + before.length;
         el.setSelectionRange(selStart, selStart + selected.length);
@@ -270,7 +281,7 @@ function WikiArticleEditor({
             const dto = await api.uploadWikiFile(wiki, file, article.id);
             insertText(asImage ? `![@](file(${dto.id}))` : `[@](file(${dto.id}))`);
         } catch (e: any) {
-            setError(e?.response?.data?.message || e?.message || "Не удалось загрузить файл");
+            setError(e?.response?.data?.message || e?.message || t("wikiEditorUploadError"));
         }
         setUploading(false);
     };
@@ -322,13 +333,13 @@ function WikiArticleEditor({
             }
             onSaved(updated, editLocale);
         } catch (e: any) {
-            setError(e?.response?.data?.message || e?.message || "Не удалось сохранить страницу");
+            setError(e?.response?.data?.message || e?.message || t("wikiEditorSaveError"));
             setSaving(false);
         }
     };
 
     const handleCancel = () => {
-        if (isDirty() && !window.confirm("Несохранённые изменения будут потеряны. Закрыть редактор?")) {
+        if (isDirty() && !window.confirm(t("wikiEditorCancelConfirm"))) {
             return;
         }
         onCancel();
@@ -342,13 +353,13 @@ function WikiArticleEditor({
             if (!saving) save();
         } else if (k === "b") {
             e.preventDefault();
-            insert(byLabel("Жирный"));
+            insert(byId("bold"));
         } else if (k === "i") {
             e.preventDefault();
-            insert(byLabel("Курсив"));
+            insert(byId("italic"));
         } else if (k === "k") {
             e.preventDefault();
-            insert(byLabel("Ссылка"));
+            insert(byId("link"));
         }
     };
 
@@ -370,7 +381,7 @@ function WikiArticleEditor({
                     value={editLocale}
                     disabled={saving || loadingLocale}
                     loading={loadingLocale}
-                    title="Локаль перевода"
+                    title={t("wikiEditorLocaleTitle")}
                     onChange={(_, data) => switchLocale(String(data.value))}
                 />
                 <span style={{ flex: 1 }} />
@@ -378,7 +389,7 @@ function WikiArticleEditor({
                     basic
                     type="button"
                     icon="eye"
-                    content="Предпросмотр"
+                    content={t("wikiEditorPreview")}
                     onClick={() => setPreviewOpen(true)}
                 />
                 <Button
@@ -387,16 +398,16 @@ function WikiArticleEditor({
                     loading={saving}
                     disabled={saving}
                     icon="save"
-                    content="Сохранить"
-                    title="Сохранить (Ctrl+S)"
+                    content={t("wikiEditorSave")}
+                    title={t("wikiEditorSaveTitle")}
                     onClick={save}
                 />
-                <Button basic type="button" disabled={saving} content="Отмена" onClick={handleCancel} />
+                <Button basic type="button" disabled={saving} content={t("wikiEditorCancel")} onClick={handleCancel} />
             </div>
 
             <Input
                 fluid
-                placeholder="Заголовок страницы"
+                placeholder={t("wikiEditorTitlePlaceholder")}
                 value={title}
                 disabled={loadingLocale}
                 onChange={(_, data) => setTitle(data.value)}
@@ -407,11 +418,11 @@ function WikiArticleEditor({
                 <Button.Group basic size="tiny" style={{ flexWrap: "wrap" }}>
                     {SNIPPETS.map((s) => (
                         <Button
-                            key={s.label}
+                            key={s.id}
                             type="button"
                             icon={s.icon}
-                            content={s.icon ? undefined : s.label}
-                            title={s.label}
+                            content={s.icon ? undefined : t(s.labelKey)}
+                            title={t(s.labelKey)}
                             onClick={() => insert(s)}
                         />
                     ))}
@@ -422,8 +433,8 @@ function WikiArticleEditor({
                     size="tiny"
                     type="button"
                     icon="image"
-                    content="Изображение"
-                    title="Загрузить и вставить изображение"
+                    content={t("wikiEditorImage")}
+                    title={t("wikiEditorImageTitle")}
                     loading={uploading}
                     disabled={uploading || loadingLocale}
                     onClick={() => imageInputRef.current?.click()}
@@ -433,8 +444,8 @@ function WikiArticleEditor({
                     size="tiny"
                     type="button"
                     icon="upload"
-                    content="Файл"
-                    title="Загрузить файл и вставить ссылку"
+                    content={t("wikiEditorFile")}
+                    title={t("wikiEditorFileTitle")}
                     loading={uploading}
                     disabled={uploading || loadingLocale}
                     onClick={() => fileInputRef.current?.click()}
@@ -447,8 +458,8 @@ function WikiArticleEditor({
                     size="tiny"
                     type="button"
                     icon="folder open"
-                    content="Файлы"
-                    title="Файлы статьи"
+                    content={t("wikiEditorFiles")}
+                    title={t("wikiEditorFilesTitle")}
                     onClick={() => setFilesOpen(true)}
                 />
 
@@ -463,12 +474,12 @@ function WikiArticleEditor({
                     style={{ marginBottom: "0.5em" }}
                 >
                     <Message.Content>
-                        Найдена несохранённая копия этой страницы.{" "}
+                        {t("wikiEditorDraftFound")}{" "}
                         <Button size="mini" primary onClick={restoreDraft}>
-                            Восстановить
+                            {t("wikiEditorDraftRestore")}
                         </Button>
                         <Button size="mini" basic onClick={discardDraft}>
-                            Удалить
+                            {t("wikiEditorDraftDiscard")}
                         </Button>
                     </Message.Content>
                 </Message>
@@ -486,7 +497,7 @@ function WikiArticleEditor({
                 onDragOver={(e) => e.preventDefault()}
                 onPaste={onPaste}
                 spellCheck={false}
-                placeholder="Markdown. Перетащите или вставьте файл/изображение для загрузки. Ctrl+S — сохранить."
+                placeholder={t("wikiEditorPayloadPlaceholder")}
                 style={{
                     width: "100%",
                     minHeight: "60vh",
@@ -500,20 +511,22 @@ function WikiArticleEditor({
 
             <Form.Group inline style={{ marginTop: "0.6em" }}>
                 <Checkbox
-                    label="Скрытая"
+                    label={t("wikiEditorHidden")}
                     checked={hidden}
                     onChange={(_, data) => setHidden(!!data.checked)}
                     style={{ marginRight: "1.5em" }}
                 />
                 <Checkbox
-                    label="Заблокированная"
+                    label={t("wikiEditorLocked")}
                     checked={locked}
                     onChange={(_, data) => setLocked(!!data.checked)}
                 />
             </Form.Group>
 
             <Modal open={previewOpen} onClose={() => setPreviewOpen(false)} closeIcon size="large">
-                <Modal.Header>{title ? `Предпросмотр: ${title}` : "Предпросмотр"}</Modal.Header>
+                <Modal.Header>
+                    {title ? t("wikiEditorPreviewWithTitle", { title }) : t("wikiEditorPreview")}
+                </Modal.Header>
                 <Modal.Content scrolling>
                     <Segment basic>
                         <Markdown>{payload}</Markdown>

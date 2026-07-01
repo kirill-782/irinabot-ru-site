@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Icon } from "semantic-ui-react";
-import { RestContext } from "../context";
+import { AppRuntimeSettingsContext, RestContext } from "../context";
 import { FileLinkDto } from "../models/rest/Wiki";
 import { absolutize, formatFileSize, loadFileLink, redirectUrl } from "./WikiFileImage";
 
@@ -13,6 +13,8 @@ interface WikiFileLinkProps {
 
 function WikiFileLink({ id }: WikiFileLinkProps) {
     const { wikiApi } = useContext(RestContext);
+    const { language } = useContext(AppRuntimeSettingsContext);
+    const t = language.getString;
     const [dto, setDto] = useState<FileLinkDto | null | undefined>(undefined);
 
     useEffect(() => {
@@ -26,7 +28,7 @@ function WikiFileLink({ id }: WikiFileLinkProps) {
     if (dto === undefined) return <span>…</span>;
 
     const href = dto ? absolutize(dto.url) : redirectUrl(id);
-    const name = dto?.name || "Файл";
+    const name = dto?.name || t("wikiFileLinkDefaultName");
     const size = dto ? formatFileSize(dto.size) : "";
 
     return (

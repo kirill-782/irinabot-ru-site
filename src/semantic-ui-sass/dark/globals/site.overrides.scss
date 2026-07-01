@@ -12,3 +12,15 @@ textarea::selection {
   background: #fff;
   color: #000;
 }*/
+
+// Редактор языкового пакета (LanguageManagerPage) — тёмная тема.
+.language-manager {
+    // Залипающий первый столбец таблицы перекрывает прокручиваемые ячейки —
+    // ему нужен непрозрачный фон, совпадающий с фоном .ui.table тёмной темы.
+    .lang-sticky-cell {
+        background: #343434;
+    }
+    .lang-muted {
+        color: rgba(255, 255, 255, 0.7);
+    }
+}

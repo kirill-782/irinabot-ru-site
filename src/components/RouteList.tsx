@@ -195,8 +195,9 @@ const routes: ConditionalRoute[] = [
                 element: <ReplayParserPage />,
             },
             {
+                // Перенесён в админ-консоль (/admin/language-pack); редирект для старых ссылок.
                 path: "lang",
-                element: <LanguageManagerPage />,
+                element: <Navigate replace to="/admin/language-pack" />,
             },
             {
                 path: "host-presets",
@@ -299,6 +300,16 @@ function RouteList() {
                     acc.push({
                         path: section.path,
                         element: <HostPresetPropertiesPage />,
+                        requiredAccessMask: section.requiredAccessMask,
+                        requiredAuthorities: section.requiredAuthorities,
+                        requireAuth: section.requireAuth,
+                        requireToken: section.requireToken,
+                    });
+                    break;
+                case "language-pack":
+                    acc.push({
+                        path: section.path,
+                        element: <LanguageManagerPage />,
                         requiredAccessMask: section.requiredAccessMask,
                         requiredAuthorities: section.requiredAuthorities,
                         requireAuth: section.requireAuth,

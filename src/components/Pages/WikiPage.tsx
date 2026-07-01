@@ -11,12 +11,14 @@ import WikiAdminModal from "../Wiki/WikiAdminModal";
 import WikiTokensModal from "../Wiki/WikiTokensModal";
 import { useTitle } from "../../hooks/useTitle";
 import { getLocale } from "../../utils/LocaleUtils";
-import { RestContext } from "../../context";
+import { AppRuntimeSettingsContext, RestContext } from "../../context";
 import { ArticleDto, ArticleNodeDto, WikiDto } from "../../models/rest/Wiki";
 import { useWikiAccess } from "../../utils/useWikiAccess";
 
 function WikiPage() {
     const { wikiApi } = useContext(RestContext);
+    const { language } = useContext(AppRuntimeSettingsContext);
+    const t = language.getString;
     const navigate = useNavigate();
 
     const { wiki, article } = useParams();
@@ -179,7 +181,7 @@ function WikiPage() {
                                         size="tiny"
                                         basic
                                         icon="sitemap"
-                                        content="Вики"
+                                        content={t("wikiPageWikisButton")}
                                         onClick={() => setAdminOpen(true)}
                                     />
                                 )}
@@ -188,7 +190,7 @@ function WikiPage() {
                                         size="tiny"
                                         basic
                                         icon="users"
-                                        content="Доступы"
+                                        content={t("wikiPageAclButton")}
                                         onClick={() => setAclOpen(true)}
                                     />
                                 )}
@@ -197,7 +199,7 @@ function WikiPage() {
                                         size="tiny"
                                         basic
                                         icon="key"
-                                        content="Токены"
+                                        content={t("wikiPageTokensButton")}
                                         onClick={() => setTokensOpen(true)}
                                     />
                                 )}
@@ -205,7 +207,7 @@ function WikiPage() {
                                     <Button
                                         size="tiny"
                                         icon="edit"
-                                        content="Редактировать"
+                                        content={t("wikiPageEditButton")}
                                         onClick={startEdit}
                                     />
                                 )}
@@ -215,11 +217,12 @@ function WikiPage() {
 
                             {!loading && notFound && (
                                 <Message warning>
-                                    <Message.Header>Страница не найдена</Message.Header>
+                                    <Message.Header>{t("wikiPageNotFoundHeader")}</Message.Header>
                                     <p>
-                                        Страница «{articleUrl}» отсутствует или ещё не имеет контента
-                                        для текущего языка.{" "}
-                                        <NavLink to={`/wiki/${wiki}`}>На главную вики</NavLink>
+                                        {t("wikiPageNotFoundText", { url: articleUrl })}{" "}
+                                        <NavLink to={`/wiki/${wiki}`}>
+                                            {t("wikiPageNotFoundHomeLink")}
+                                        </NavLink>
                                     </p>
                                 </Message>
                             )}
