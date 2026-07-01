@@ -4,6 +4,7 @@ import { useMapFlags } from "../../hooks/useMapFlags";
 import MapHeader from "../MapPage/MapHeader";
 import AccessControl from "./AccessControl";
 import FlagsEditBlock from "./FlagsEditBlock";
+import FranchiseEditBlock from "./FranchiseEditBlock";
 import { AppRuntimeSettingsContext, AuthContext, MapContext, RestContext } from "../../context";
 import usePrevious from "../../hooks/usePrevious";
 import ForbiddenPage from "../Pages/ForbiddenPage";
@@ -87,6 +88,9 @@ function MapEditPage({ updateMap }: MapEditPageProps) {
                         </Loader>
                     )}
                 </Grid.Row>
+            </AccessControl>
+            <AccessControl requeredAuthority="MAP_VERIFY">
+                <FranchiseEditBlock flags={flags} onFranchiseChange={updateMap} />
             </AccessControl>
             <AccessControl requeredAuthority="MAP_VERIFY">
                 <Grid.Row stretched>

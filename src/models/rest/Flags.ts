@@ -12,4 +12,6 @@ export type Flags = {
     mapLocked?: boolean;
     shortTag?: string;
     mapVerified?: boolean;
+    isLeadFranchiseMap?: boolean;
+    franchiseId?: number;
 };

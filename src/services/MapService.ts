@@ -7,6 +7,7 @@ import { SearchFilters, SearchOrder } from "../models/rest/SearchFilters";
 import { ParseMap } from "../models/rest/ParseMap";
 import { ConfigInfo } from "../models/rest/ConfigInfo";
 import { Config } from "../models/rest/Config";
+import { Franchise } from "../models/rest/Franchise";
 
 export interface PageOptions {
     count?: number;
@@ -398,6 +399,62 @@ export class MapService {
         request = this.appendOptions(request, options);
 
         const response = await Axios.request<void>(request);
+
+        return response.data;
+    };
+
+    public getFranchises = async (options?: RequestOptions) => {
+        let request: AxiosRequestConfig = {
+            ...this.defaultConfig,
+            url: "/v1/franchises",
+            method: "GET",
+        };
+
+        request = this.appendOptions(request, options);
+
+        const response = await Axios.request<Franchise[]>(request);
+
+        return response.data;
+    };
+
+    public addMapToFranchise = async (franchiseId: number, mapId: number, options?: RequestOptions) => {
+        let request: AxiosRequestConfig = {
+            ...this.defaultConfig,
+            url: `/v1/franchises/${franchiseId}/maps/${mapId}`,
+            method: "PUT",
+        };
+
+        request = this.appendOptions(request, options);
+
+        const response = await Axios.request<void>(request);
+
+        return response.data;
+    };
+
+    public removeMapFromFranchise = async (franchiseId: number, mapId: number, options?: RequestOptions) => {
+        let request: AxiosRequestConfig = {
+            ...this.defaultConfig,
+            url: `/v1/franchises/${franchiseId}/maps/${mapId}`,
+            method: "DELETE",
+        };
+
+        request = this.appendOptions(request, options);
+
+        const response = await Axios.request<Franchise[]>(request);
+
+        return response.data;
+    };
+
+    public setMapAsLead = async (franchiseId: number, mapId: number, options?: RequestOptions) => {
+        let request: AxiosRequestConfig = {
+            ...this.defaultConfig,
+            url: `/v1/franchises/${franchiseId}/maps/${mapId}/lead`,
+            method: "POST",
+        };
+
+        request = this.appendOptions(request, options);
+
+        const response = await Axios.request<Franchise[]>(request);
 
         return response.data;
     };

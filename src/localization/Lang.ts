@@ -191,6 +191,19 @@ export const LanguageData = {
     flagsEditBlockCategoriesPlaceholder: "Категории",
     flagsEditBlockMapTagLabel: "Тег карты (отметка)",
 
+    franchiseEditBlockFranchiseLabel: "Франшиза",
+    franchiseEditBlockNotification: "Вы можете привязать карту к франшизе и назначить её ведущей картой франшизы.",
+    franchiseEditBlockFranchisePlaceholder: "Франшиза не выбрана",
+    franchiseEditBlockLoadError: "Не удалось загрузить список франшиз",
+    franchiseEditBlockIsLead: "Эта карта — ведущая карта франшизы",
+    franchiseEditBlockMakeLead: "Сделать ведущей",
+    franchiseEditBlockBindSuccess: "Карта привязана к франшизе",
+    franchiseEditBlockBindError: "Не удалось привязать карту к франшизе",
+    franchiseEditBlockUnbindSuccess: "Карта отвязана от франшизы",
+    franchiseEditBlockUnbindError: "Не удалось отвязать карту от франшизы",
+    franchiseEditBlockLeadSuccess: "Карта назначена ведущей картой франшизы",
+    franchiseEditBlockLeadError: "Не удалось назначить карту ведущей",
+
     mapCardShowAllText: "Показать весь текст",
 
     mapFiltersDefault: "(по умолчанию)",

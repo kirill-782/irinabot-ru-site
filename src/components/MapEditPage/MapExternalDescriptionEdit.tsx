@@ -43,7 +43,6 @@ function MapExternalDescriptionEdit({ value, onChange, loading }: MapExternalDes
                             color="green"
                         >
                             <Icon name="save" />
-                            //скипнув? таких ключей нет
                             {lang.save}
                         </Button>
                     )}
