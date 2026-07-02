@@ -1,0 +1,461 @@
+/*******************************************************************************
+ * Warcraft III themed skin (light "quest parchment" + dark "obsidian HUD")
+ *
+ * This is an override layer that sits on top of the Semantic UI theme loaded
+ * by src/utils/Theme.ts. It does NOT replace the semantic-ui-sass variable
+ * files — instead it re-skins the rendered components so the change is
+ * isolated and easy to remove (delete this file + its import in index.js).
+ *
+ * How it hangs together:
+ *   - Colors live in CSS custom properties defined per theme on html.dark /
+ *     html.light, so the same component rules serve both variants.
+ *   - Every component rule is scoped under `html.wc3` (a stable class added in
+ *     index.js) which raises specificity just enough to win over Semantic's
+ *     `.ui.*` rules that are injected asynchronously.
+ ******************************************************************************/
+
+/* Friz Quadrata (the real WC3 face) is proprietary; Cinzel is the closest
+   free engraved-serif substitute widely used for fantasy UI, Marcellus reads
+   well for body copy. */
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Marcellus&display=swap");
+
+/*-------------------------------------------------------------------
+    Theme palettes
+--------------------------------------------------------------------*/
+
+html.dark {
+    /* Obsidian / night-elf HUD */
+    --wc3-bg: #140f0a;
+    --wc3-bg-2: #1d1610;
+    --wc3-panel-top: #2a2013;
+    --wc3-panel-bottom: #191308;
+    --wc3-panel-solid: #211a10;
+    --wc3-field: #100b06;
+
+    --wc3-text: #e7d9b6;
+    --wc3-text-muted: #b3a37c;
+    --wc3-heading: #f3da97;
+
+    --wc3-gold: #c9a24b;
+    --wc3-gold-bright: #f0d288;
+    --wc3-gold-dark: #6f521f;
+    --wc3-border: #856330;
+    --wc3-border-soft: rgba(133, 99, 48, 0.45);
+
+    --wc3-link: #74b9e8;
+    --wc3-link-hover: #a9d6f5;
+    --wc3-red: #c0433a;
+    --wc3-green: #6fae55;
+
+    --wc3-bevel-light: rgba(255, 225, 150, 0.18);
+    --wc3-bevel-dark: rgba(0, 0, 0, 0.6);
+    --wc3-glow: rgba(240, 210, 136, 0.55);
+
+    /* faint stone grain + top-lit vignette */
+    --wc3-body-texture: radial-gradient(120% 90% at 50% 0%, rgba(70, 54, 28, 0.35) 0%, rgba(0, 0, 0, 0) 55%),
+        repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.012) 0 2px, rgba(0, 0, 0, 0) 2px 4px),
+        linear-gradient(180deg, #140f0a 0%, #0d0906 100%);
+}
+
+html.light {
+    /* Human quest-log parchment */
+    --wc3-bg: #d5c096;
+    --wc3-bg-2: #e6d6ac;
+    --wc3-panel-top: #f2e6c2;
+    --wc3-panel-bottom: #e0cd9c;
+    --wc3-panel-solid: #ecdcb3;
+    --wc3-field: #f5ecce;
+
+    --wc3-text: #3c2c13;
+    --wc3-text-muted: #6d5528;
+    --wc3-heading: #5c3a11;
+
+    --wc3-gold: #b0812c;
+    --wc3-gold-bright: #e2b955;
+    --wc3-gold-dark: #7c561d;
+    --wc3-border: #a5762a;
+    --wc3-border-soft: rgba(124, 86, 29, 0.5);
+
+    --wc3-link: #17527f;
+    --wc3-link-hover: #0d3b60;
+    --wc3-red: #9a2d22;
+    --wc3-green: #3f6f2c;
+
+    --wc3-bevel-light: rgba(255, 250, 224, 0.75);
+    --wc3-bevel-dark: rgba(120, 88, 40, 0.4);
+    --wc3-glow: rgba(226, 185, 85, 0.65);
+
+    /* aged-paper blotches */
+    --wc3-body-texture: radial-gradient(90% 70% at 20% 10%, rgba(120, 85, 30, 0.14) 0%, rgba(0, 0, 0, 0) 45%),
+        radial-gradient(80% 60% at 85% 90%, rgba(120, 85, 30, 0.12) 0%, rgba(0, 0, 0, 0) 50%),
+        repeating-linear-gradient(0deg, rgba(90, 60, 20, 0.03) 0 3px, rgba(0, 0, 0, 0) 3px 6px),
+        linear-gradient(180deg, #ddc99f 0%, #cdb886 100%);
+}
+
+/*-------------------------------------------------------------------
+    Reusable gradients / frame mixin
+--------------------------------------------------------------------*/
+
+$wc3-gold-metal: linear-gradient(180deg, var(--wc3-gold-bright) 0%, var(--wc3-gold) 45%, var(--wc3-gold-dark) 100%);
+$wc3-stone-panel: linear-gradient(180deg, var(--wc3-panel-top) 0%, var(--wc3-panel-bottom) 100%);
+
+/* Ornate gold frame with a carved inner bevel — the signature WC3 panel look. */
+@mixin wc3-frame($radius: 4px) {
+    border: 1px solid var(--wc3-border);
+    border-radius: $radius;
+    box-shadow: inset 0 0 0 1px var(--wc3-bevel-dark), inset 0 1px 0 var(--wc3-bevel-light),
+        0 2px 6px rgba(0, 0, 0, 0.45);
+}
+
+/*===================================================================
+    Everything below is scoped under html.wc3 so it outweighs the
+    asynchronously-injected Semantic UI rules.
+====================================================================*/
+
+html.wc3 {
+    /*---------------------------------------------------------------
+        Base document
+    ----------------------------------------------------------------*/
+    body {
+        background: var(--wc3-body-texture) fixed;
+        color: var(--wc3-text);
+        font-family: "Marcellus", "Palatino Linotype", Georgia, serif;
+        letter-spacing: 0.2px;
+    }
+
+    ::selection {
+        background: var(--wc3-glow);
+        color: #1a1206;
+    }
+
+    a {
+        color: var(--wc3-link);
+    }
+    a:hover {
+        color: var(--wc3-link-hover);
+    }
+
+    /* Gilded scrollbar */
+    ::-webkit-scrollbar {
+        width: 12px;
+        height: 12px;
+    }
+    ::-webkit-scrollbar-track {
+        background: var(--wc3-bg);
+    }
+    ::-webkit-scrollbar-thumb {
+        background: $wc3-gold-metal;
+        border: 2px solid var(--wc3-bg);
+        border-radius: 6px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: linear-gradient(180deg, var(--wc3-gold-bright), var(--wc3-gold));
+    }
+
+    /*---------------------------------------------------------------
+        Headings — engraved gold Cinzel
+    ----------------------------------------------------------------*/
+    h1, h2, h3, h4, h5,
+    .ui.header,
+    .ui.header .content,
+    .ui.header > .sub.header {
+        font-family: "Cinzel", "Trajan Pro", Georgia, serif;
+        color: var(--wc3-heading);
+    }
+    h1, h2, h3, h4, h5,
+    .ui.header {
+        letter-spacing: 0.6px;
+        text-shadow: 0 1px 0 var(--wc3-bevel-dark), 0 0 10px var(--wc3-glow);
+    }
+    .ui.header > .sub.header {
+        color: var(--wc3-text-muted);
+        text-shadow: none;
+    }
+    .ui.dividing.header {
+        border-bottom: 2px solid var(--wc3-border);
+        box-shadow: 0 1px 0 var(--wc3-bevel-light);
+    }
+
+    /*---------------------------------------------------------------
+        Top navigation bar
+    ----------------------------------------------------------------*/
+    .ui.menu.main-menu,
+    .ui.inverted.menu.main-menu {
+        background: linear-gradient(180deg, #221a10 0%, #120d07 100%);
+        border-bottom: 2px solid var(--wc3-gold);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.6), inset 0 1px 0 var(--wc3-bevel-light);
+        font-family: "Cinzel", Georgia, serif;
+    }
+    .ui.menu.main-menu .item {
+        color: var(--wc3-text) !important;
+        letter-spacing: 0.5px;
+    }
+    /* Brand */
+    .ui.menu.main-menu > .item:first-child {
+        color: var(--wc3-gold-bright) !important;
+        font-weight: 700;
+        font-size: 1.15em;
+        text-shadow: 0 0 8px var(--wc3-glow);
+    }
+    .ui.menu.main-menu .item:hover,
+    .ui.menu.main-menu .item.active,
+    .ui.menu.main-menu .active.item {
+        color: var(--wc3-gold-bright) !important;
+        background: rgba(201, 162, 75, 0.14) !important;
+        text-shadow: 0 0 8px var(--wc3-glow);
+    }
+    .ui.menu.main-menu .item::before {
+        background: var(--wc3-border-soft);
+    }
+
+    /*---------------------------------------------------------------
+        Buttons — beveled metal
+    ----------------------------------------------------------------*/
+    .ui.button {
+        font-family: "Cinzel", Georgia, serif;
+        font-weight: 600;
+        letter-spacing: 0.4px;
+        color: var(--wc3-text);
+        background: $wc3-stone-panel;
+        border: 1px solid var(--wc3-border);
+        border-radius: 3px;
+        text-shadow: 0 1px 1px var(--wc3-bevel-dark);
+        box-shadow: inset 0 1px 0 var(--wc3-bevel-light), inset 0 0 0 1px rgba(0, 0, 0, 0.25),
+            0 2px 4px rgba(0, 0, 0, 0.4);
+        transition: box-shadow 0.15s ease, filter 0.15s ease, color 0.15s ease;
+    }
+    .ui.button:hover,
+    .ui.button:focus {
+        color: var(--wc3-gold-bright);
+        filter: brightness(1.12);
+        box-shadow: inset 0 1px 0 var(--wc3-bevel-light), 0 0 10px var(--wc3-glow),
+            0 2px 4px rgba(0, 0, 0, 0.4);
+    }
+    .ui.button:active {
+        box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.6);
+        filter: brightness(0.95);
+    }
+
+    /* Primary / positive → gold; the "call to action" plate */
+    .ui.primary.button,
+    .ui.positive.button,
+    .ui.green.button,
+    .ui.primary.buttons .button,
+    .ui.positive.buttons .button {
+        background: $wc3-gold-metal;
+        color: #2a1c08;
+        border-color: var(--wc3-gold-dark);
+        text-shadow: 0 1px 0 rgba(255, 240, 200, 0.4);
+    }
+    .ui.primary.button:hover,
+    .ui.positive.button:hover,
+    .ui.green.button:hover {
+        color: #1a1204;
+    }
+
+    /* Destructive → forged crimson */
+    .ui.negative.button,
+    .ui.red.button {
+        background: linear-gradient(180deg, #b5473b 0%, #6f2019 100%);
+        color: #ffe9d8;
+        border-color: #52140f;
+    }
+
+    .ui.basic.button {
+        background: transparent;
+        box-shadow: inset 0 0 0 1px var(--wc3-border);
+        color: var(--wc3-text) !important;
+    }
+
+    /*---------------------------------------------------------------
+        Panels: segments, cards, feed, comments
+    ----------------------------------------------------------------*/
+    .ui.segment,
+    .ui.segments,
+    .ui.card,
+    .ui.cards > .card,
+    .ui.raised.segment {
+        background: $wc3-stone-panel;
+        color: var(--wc3-text);
+        @include wc3-frame(4px);
+    }
+    .ui.card > .content,
+    .ui.cards > .card > .content {
+        border-color: var(--wc3-border-soft) !important;
+    }
+    .ui.card > .content > .header,
+    .ui.cards > .card > .content > .header,
+    .ui.card .meta,
+    .ui.segment .meta {
+        color: var(--wc3-heading) !important;
+        font-family: "Cinzel", Georgia, serif;
+    }
+    .ui.attached.segment {
+        border-radius: 0;
+    }
+
+    /*---------------------------------------------------------------
+        Tables — gilded header, ledger rows
+    ----------------------------------------------------------------*/
+    .ui.table {
+        background: var(--wc3-panel-solid);
+        color: var(--wc3-text);
+        border: 1px solid var(--wc3-border);
+        box-shadow: inset 0 0 0 1px var(--wc3-bevel-dark);
+    }
+    .ui.table thead th {
+        background: linear-gradient(180deg, #2f2415 0%, #1c1509 100%);
+        color: var(--wc3-heading);
+        font-family: "Cinzel", Georgia, serif;
+        border-bottom: 2px solid var(--wc3-gold);
+    }
+    &.light .ui.table thead th {
+        background: linear-gradient(180deg, #e7d3a2 0%, #d8c088 100%);
+    }
+    .ui.table tbody tr td {
+        border-top: 1px solid var(--wc3-border-soft);
+    }
+    .ui.striped.table tbody tr:nth-child(2n) {
+        background: rgba(201, 162, 75, 0.07);
+    }
+    .ui.selectable.table tbody tr:hover,
+    .ui.table tbody tr:hover {
+        background: rgba(201, 162, 75, 0.12) !important;
+    }
+
+    /*---------------------------------------------------------------
+        Inputs, forms, dropdowns
+    ----------------------------------------------------------------*/
+    .ui.input > input,
+    .ui.form input:not([type]),
+    .ui.form input[type="text"],
+    .ui.form input[type="password"],
+    .ui.form input[type="email"],
+    .ui.form input[type="number"],
+    .ui.form input[type="search"],
+    .ui.form textarea,
+    .ui.selection.dropdown,
+    .ui.dropdown .menu {
+        background: var(--wc3-field);
+        color: var(--wc3-text);
+        border: 1px solid var(--wc3-border);
+        border-radius: 3px;
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.35);
+        font-family: "Marcellus", Georgia, serif;
+    }
+    .ui.input > input:focus,
+    .ui.form input:focus,
+    .ui.form textarea:focus,
+    .ui.selection.dropdown:focus,
+    .ui.selection.active.dropdown {
+        border-color: var(--wc3-gold);
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.35), 0 0 8px var(--wc3-glow);
+    }
+    .ui.form label,
+    .ui.form .field > label {
+        color: var(--wc3-text-muted);
+        font-family: "Cinzel", Georgia, serif;
+    }
+    .ui.dropdown .menu > .item {
+        color: var(--wc3-text);
+    }
+    .ui.dropdown .menu > .item:hover,
+    .ui.dropdown .menu > .active.item {
+        background: rgba(201, 162, 75, 0.16);
+        color: var(--wc3-gold-bright);
+    }
+
+    /*---------------------------------------------------------------
+        Labels — bronze plaques
+    ----------------------------------------------------------------*/
+    .ui.label {
+        background: linear-gradient(180deg, #35281644 0%, #1c150b66 100%);
+        color: var(--wc3-heading);
+        border: 1px solid var(--wc3-border-soft);
+    }
+    &.light .ui.label {
+        background: linear-gradient(180deg, #ecdcb3 0%, #ddc793 100%);
+        color: var(--wc3-text);
+    }
+
+    /*---------------------------------------------------------------
+        Modals — ornate framed dialog
+    ----------------------------------------------------------------*/
+    .ui.modal {
+        background: $wc3-stone-panel;
+        color: var(--wc3-text);
+        border: 2px solid var(--wc3-gold);
+        border-radius: 6px;
+        box-shadow: 0 0 0 1px var(--wc3-bevel-dark), 0 0 24px rgba(0, 0, 0, 0.7),
+            0 0 30px rgba(201, 162, 75, 0.15);
+    }
+    .ui.modal > .header {
+        background: linear-gradient(180deg, #2b2113 0%, #1a1309 100%);
+        color: var(--wc3-heading);
+        font-family: "Cinzel", Georgia, serif;
+        border-bottom: 2px solid var(--wc3-gold);
+    }
+    &.light .ui.modal > .header {
+        background: linear-gradient(180deg, #ecdcb3 0%, #ddc793 100%);
+    }
+    .ui.modal > .content {
+        background: transparent;
+        color: var(--wc3-text);
+    }
+    .ui.modal > .actions {
+        background: rgba(0, 0, 0, 0.18);
+        border-top: 1px solid var(--wc3-border-soft);
+    }
+
+    /*---------------------------------------------------------------
+        Menus / tabs / pagination (generic, non-nav)
+    ----------------------------------------------------------------*/
+    .ui.menu:not(.main-menu) {
+        background: var(--wc3-panel-solid);
+        border: 1px solid var(--wc3-border);
+        font-family: "Cinzel", Georgia, serif;
+    }
+    .ui.menu:not(.main-menu) .item {
+        color: var(--wc3-text);
+    }
+    .ui.menu:not(.main-menu) .item.active,
+    .ui.pointing.menu .active.item,
+    .ui.tabular.menu .active.item {
+        color: var(--wc3-gold-bright);
+        border-color: var(--wc3-gold);
+    }
+
+    /*---------------------------------------------------------------
+        Messages, progress, dividers, loaders
+    ----------------------------------------------------------------*/
+    .ui.message {
+        background: var(--wc3-panel-solid);
+        color: var(--wc3-text);
+        border: 1px solid var(--wc3-border);
+        box-shadow: inset 0 0 0 1px var(--wc3-bevel-dark);
+    }
+    .ui.message .header {
+        color: var(--wc3-heading);
+        font-family: "Cinzel", Georgia, serif;
+    }
+
+    .ui.progress .bar {
+        background: $wc3-gold-metal;
+    }
+    .ui.progress {
+        background: var(--wc3-field);
+        border: 1px solid var(--wc3-border);
+    }
+
+    .ui.divider {
+        color: var(--wc3-text-muted);
+    }
+    .ui.divider:not(.vertical):not(.horizontal) {
+        border-top-color: var(--wc3-border-soft);
+        border-bottom-color: var(--wc3-bevel-light);
+    }
+
+    .ui.loader:after {
+        border-color: var(--wc3-gold) transparent transparent;
+    }
+}

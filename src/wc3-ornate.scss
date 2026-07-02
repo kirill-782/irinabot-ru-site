@@ -1,0 +1,177 @@
+/*******************************************************************************
+ * Warcraft III "Reforged" ornate layer
+ *
+ * Sits on top of wc3-theme.scss and pushes the styling toward the elaborate
+ * night-elf UI look: carved gold frames with corner gems + edge studs
+ * (9-slice border-image), a glowing crescent-moon medallion over the menu bar,
+ * and a deep night-forest ambience with glowing motes.
+ *
+ * All artwork is inline SVG (data URIs) so there are no binary asset files and
+ * no path-resolution issues regardless of where the app is hosted. Remove this
+ * file + its import in index.js to drop back to the flat skin.
+ ******************************************************************************/
+
+/*-------------------------------------------------------------------
+    Inline SVG artwork
+--------------------------------------------------------------------*/
+
+/* 9-slice ornate frame: double gold band, inner highlight, corner gem bosses
+   and periodic edge studs. Designed so the middle edge strips tile seamlessly
+   with `round`. */
+$wc3-frame: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'><rect x='5' y='5' width='110' height='110' rx='8' fill='none' stroke='%23543c15' stroke-width='9'/><rect x='5' y='5' width='110' height='110' rx='8' fill='none' stroke='%23c9a24b' stroke-width='4'/><rect x='9' y='9' width='102' height='102' rx='6' fill='none' stroke='%23f0d68a' stroke-width='1'/><g fill='%23a9822f'><circle cx='60' cy='9' r='2.4'/><circle cx='60' cy='111' r='2.4'/><circle cx='9' cy='60' r='2.4'/><circle cx='111' cy='60' r='2.4'/></g><g stroke='%23402d0f' stroke-width='1.5'><circle cx='11' cy='11' r='8' fill='%23c9a24b'/><circle cx='109' cy='11' r='8' fill='%23c9a24b'/><circle cx='11' cy='109' r='8' fill='%23c9a24b'/><circle cx='109' cy='109' r='8' fill='%23c9a24b'/></g><g fill='%23f6e2a6'><circle cx='11' cy='11' r='3'/><circle cx='109' cy='11' r='3'/><circle cx='11' cy='109' r='3'/><circle cx='109' cy='109' r='3'/></g></svg>";
+
+/* Night-elf crescent-moon medallion (blue) */
+$wc3-moon-blue: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'><defs><radialGradient id='d' cx='50%25' cy='42%25' r='62%25'><stop offset='0%25' stop-color='%23b8e6ff'/><stop offset='42%25' stop-color='%233a72a8'/><stop offset='100%25' stop-color='%23071426'/></radialGradient><mask id='c'><circle cx='58' cy='58' r='22' fill='%23fff'/><circle cx='70' cy='52' r='18' fill='%23000'/></mask></defs><circle cx='60' cy='60' r='52' fill='none' stroke='%23402d0f' stroke-width='4'/><circle cx='60' cy='60' r='49' fill='none' stroke='%236a4e1f' stroke-width='6'/><circle cx='60' cy='60' r='45' fill='url(%23d)' stroke='%23cda54e' stroke-width='3'/><circle cx='60' cy='60' r='43' fill='none' stroke='%23f0d68a' stroke-width='1'/><circle cx='58' cy='58' r='22' fill='%23e6f5ff' mask='url(%23c)'/></svg>";
+
+/* Golden medallion twin for the light (parchment) theme */
+$wc3-moon-gold: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'><defs><radialGradient id='d' cx='50%25' cy='42%25' r='62%25'><stop offset='0%25' stop-color='%23fff2cf'/><stop offset='42%25' stop-color='%23c79a3a'/><stop offset='100%25' stop-color='%233a2708'/></radialGradient><mask id='c'><circle cx='58' cy='58' r='22' fill='%23fff'/><circle cx='70' cy='52' r='18' fill='%23000'/></mask></defs><circle cx='60' cy='60' r='52' fill='none' stroke='%23402d0f' stroke-width='4'/><circle cx='60' cy='60' r='49' fill='none' stroke='%238a5f1e' stroke-width='6'/><circle cx='60' cy='60' r='45' fill='url(%23d)' stroke='%23e2b955' stroke-width='3'/><circle cx='60' cy='60' r='43' fill='none' stroke='%23fff0c0' stroke-width='1'/><circle cx='58' cy='58' r='22' fill='%23fff6da' mask='url(%23c)'/></svg>";
+
+/* Ornate frame mixin — border-image 9-slice with a fixed border width. */
+@mixin wc3-ornate-frame($width: 13px) {
+    // Longhand avoids Sass parsing the `/` in the border-image shorthand as
+    // division. border-image-width defaults to 1× the border-width, so the
+    // artwork fills the $width border exactly.
+    border: $width solid transparent;
+    border-image-source: url("#{$wc3-frame}");
+    border-image-slice: 24;
+    border-image-repeat: round;
+    border-radius: 0;
+}
+
+/*===================================================================
+    Ornate rules (scoped under html.wc3)
+====================================================================*/
+
+html.wc3 {
+    /*---------------------------------------------------------------
+        Framed panels — the hero look
+    ----------------------------------------------------------------*/
+    .game-list-column > .ui.table,
+    .online-stats-column .ui.table,
+    .ui.segment:not(.basic):not(.attached),
+    .ui.raised.segment,
+    .ui.card,
+    .ui.cards > .card {
+        @include wc3-ornate-frame(13px);
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.55);
+    }
+
+    /* Keep interior cell borders subtle so the outer frame dominates */
+    .game-list-column > .ui.table thead th,
+    .online-stats-column .ui.table thead th {
+        border-bottom: 2px solid var(--wc3-gold);
+    }
+
+    /* Framed search field */
+    .game-list .ui.input > input {
+        @include wc3-ornate-frame(10px);
+        padding-left: 14px;
+    }
+
+    /* Framed modals */
+    .ui.modal {
+        @include wc3-ornate-frame(16px);
+        box-shadow: 0 0 40px rgba(0, 0, 0, 0.7), 0 0 30px rgba(90, 150, 210, 0.18);
+    }
+    .ui.modal > .header {
+        margin: -4px -4px 0;
+    }
+
+    /*---------------------------------------------------------------
+        Menu bar — heavier trim + glowing moon medallion
+    ----------------------------------------------------------------*/
+    .ui.menu.main-menu {
+        border-bottom: 3px solid var(--wc3-gold);
+        box-shadow: 0 3px 0 #2a1f0e, 0 6px 14px rgba(0, 0, 0, 0.6),
+            inset 0 1px 0 var(--wc3-bevel-light);
+        overflow: visible;
+    }
+    /* The medallion straddles the centre of the bar. */
+    .ui.menu.main-menu::after {
+        content: "";
+        /* Semantic UI uses .ui.menu:after as a hidden clearfix — undo that. */
+        visibility: visible;
+        display: block;
+        clear: none;
+        position: absolute;
+        left: 50%;
+        top: 100%;
+        width: 72px;
+        height: 72px;
+        transform: translate(-50%, -54%);
+        background: center / contain no-repeat;
+        pointer-events: none;
+        z-index: 1100;
+        animation: wc3-moon-pulse 4.5s ease-in-out infinite;
+    }
+
+    /*---------------------------------------------------------------
+        Button glow — a touch more "enchanted"
+    ----------------------------------------------------------------*/
+    .ui.button:hover,
+    .ui.button:focus {
+        box-shadow: inset 0 1px 0 var(--wc3-bevel-light), 0 0 14px var(--wc3-glow),
+            0 2px 6px rgba(0, 0, 0, 0.45);
+    }
+}
+
+/*-------------------------------------------------------------------
+    Dark = night-elf: blue medallion, night-forest sky + motes
+--------------------------------------------------------------------*/
+html.wc3.dark {
+    .ui.menu.main-menu::after {
+        background-image: url("#{$wc3-moon-blue}");
+        filter: drop-shadow(0 0 12px rgba(96, 184, 255, 0.85));
+    }
+
+    body {
+        /* glowing motes + layered night sky */
+        background:
+            radial-gradient(2px 2px at 12% 26%, rgba(170, 224, 255, 0.85), transparent 60%),
+            radial-gradient(2px 2px at 82% 18%, rgba(150, 210, 255, 0.75), transparent 60%),
+            radial-gradient(1.5px 1.5px at 68% 62%, rgba(190, 230, 255, 0.7), transparent 60%),
+            radial-gradient(1.5px 1.5px at 32% 78%, rgba(150, 210, 255, 0.6), transparent 60%),
+            radial-gradient(2px 2px at 92% 84%, rgba(170, 224, 255, 0.7), transparent 60%),
+            radial-gradient(1.5px 1.5px at 45% 40%, rgba(190, 230, 255, 0.55), transparent 60%),
+            radial-gradient(2px 2px at 6% 66%, rgba(150, 210, 255, 0.6), transparent 60%),
+            radial-gradient(1400px 720px at 50% -18%, rgba(46, 108, 156, 0.4), transparent 62%),
+            radial-gradient(1100px 820px at 12% 30%, rgba(22, 64, 98, 0.32), transparent 58%),
+            radial-gradient(1100px 820px at 88% 74%, rgba(30, 74, 112, 0.3), transparent 58%),
+            linear-gradient(180deg, #0a1524 0%, #060c16 55%, #04070e 100%);
+        background-attachment: fixed;
+    }
+}
+
+/*-------------------------------------------------------------------
+    Light = parchment: golden medallion + warm vignette
+--------------------------------------------------------------------*/
+html.wc3.light {
+    .ui.menu.main-menu::after {
+        background-image: url("#{$wc3-moon-gold}");
+        filter: drop-shadow(0 0 10px rgba(226, 185, 85, 0.85));
+    }
+
+    body {
+        background:
+            radial-gradient(1200px 700px at 50% -12%, rgba(150, 108, 40, 0.22), transparent 60%),
+            radial-gradient(90% 70% at 20% 10%, rgba(120, 85, 30, 0.14) 0%, transparent 45%),
+            radial-gradient(80% 60% at 85% 90%, rgba(120, 85, 30, 0.12) 0%, transparent 50%),
+            repeating-linear-gradient(0deg, rgba(90, 60, 20, 0.03) 0 3px, transparent 3px 6px),
+            linear-gradient(180deg, #ddc99f 0%, #cdb886 100%);
+        background-attachment: fixed;
+    }
+}
+
+/* Only transform/opacity here so each theme keeps its own glow colour (set via
+   `filter` on the per-theme ::after rule). */
+@keyframes wc3-moon-pulse {
+    0%,
+    100% {
+        transform: translate(-50%, -54%) scale(1);
+        opacity: 0.92;
+    }
+    50% {
+        transform: translate(-50%, -54%) scale(1.05);
+        opacity: 1;
+    }
+}
