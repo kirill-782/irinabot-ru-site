@@ -1,7 +1,7 @@
 import { Button, Grid, Header, Message, Modal, Table } from "semantic-ui-react";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { Autohost } from "../../models/websocket/ServerAutohostListResponse";
-import { AppRuntimeSettingsContext, CacheContext, WebsocketContext } from "../../context";
+import { AppRuntimeSettingsContext, WebsocketContext } from "../../context";
 import { GHostPackageEvent } from "../../services/GHostWebsocket";
 import {
     DEFAULT_AUTOHOST_REMOVE_RESPONSE,
@@ -14,7 +14,7 @@ import { ServerAutohostRemoveResponse } from "../../models/websocket/ServerAutoh
 import { toast } from "@kokomi/react-semantic-toasts";
 import { ClientAutohostRemoveConverter } from "../../models/websocket/ClientAutohostRemove";
 import ConnectorId from "../ConnectorId";
-import { ClientResolveConnectorIdsConverter } from "../../models/websocket/ClientResolveConnectorIds";
+import { useResolveConnectorIds } from "../../hooks/useResolveConnectorIds";
 import React from "react";
 
 export interface AutohostListModalProps {
@@ -35,31 +35,16 @@ function AutohostListModal({ open, onClose }: AutohostListModalProps) {
         );
     };
 
-    const connectorCache = useContext(CacheContext).cachedConnectorIds;
-
     const { language } = useContext(AppRuntimeSettingsContext);
     const lang = language.languageRepository;
     const t = language.getString;
 
-    useEffect(() => {
-        if (!autohosts) return;
+    const autohostSpaceIds = useMemo(
+        () => (autohosts || []).map((autohost) => autohost.spaceId),
+        [autohosts]
+    );
 
-        const uncachedConnectorIds = autohosts
-            .map((i) => {
-                return i.spaceId;
-            })
-            .filter((i) => {
-                return !connectorCache[i];
-            });
-
-        if (uncachedConnectorIds.length > 0) {
-            sockets.ghostSocket.send(
-                new ClientResolveConnectorIdsConverter().assembly({
-                    connectorIds: uncachedConnectorIds,
-                })
-            );
-        }
-    }, [autohosts, connectorCache, sockets.ghostSocket]);
+    useResolveConnectorIds(autohostSpaceIds);
 
     useEffect(() => {
         sockets.ghostSocket.send(new ClientAutohostListConverter().assembly({}));

@@ -246,21 +246,12 @@ function AdminListDetailsPage() {
     }, [roleRows]);
 
     useEffect(() => {
-        console.debug("[privilegeDraft] effect fired", {
-            selectedUserId,
-            privilegeLevel: selectedUserData?.privilegeLevel,
-            privilegeLevelType: typeof selectedUserData?.privilegeLevel,
-            listPrivilegeLevel,
-        });
         if (selectedUserData?.privilegeLevel != null && selectedUserData.privilegeLevel !== 0) {
-            console.debug("[privilegeDraft] branch: existing user →", selectedUserData.privilegeLevel);
             setPrivilegeDraft(selectedUserData.privilegeLevel.toString());
         } else if (listPrivilegeLevel !== null) {
             const defaultValue = Math.max(1, listPrivilegeLevel - 10);
-            console.debug("[privilegeDraft] branch: new user → listPrivilegeLevel =", listPrivilegeLevel, "→ defaultValue =", defaultValue);
             setPrivilegeDraft(String(defaultValue));
         } else {
-            console.debug("[privilegeDraft] branch: empty (listPrivilegeLevel is null)");
             setPrivilegeDraft("");
         }
     }, [selectedUserData?.privilegeLevel, selectedUserId, listPrivilegeLevel]);

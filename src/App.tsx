@@ -12,7 +12,6 @@ import "@kokomi/react-semantic-toasts/styles/react-semantic-alert.css";
 import "./components/Slider.scss";
 import "./components/customIcons.scss";
 import { useGHostSocket } from "./hooks/useGHostSocket";
-import { useSiteOnlineStatsSubscribe } from "./hooks/useSiteOnlineStatsSubscribe";
 import { useWebsocketAuth } from "./hooks/useWebsocketAuth";
 import { useConnectorSocket } from "./hooks/useConnectorSocket";
 import { useConnectorGameAdd } from "./hooks/useConnectorGameAdd";
@@ -20,6 +19,7 @@ import RegisterAccountModal from "./components/Modal/RegisterAccountModal";
 import { CONNECTOR_WEBSOCKET_ENDPOINT, WEBSOCKET_ENDPOINT } from "./config/ApplicationConfig";
 
 import AfterContextApp from "./AfterContextApp";
+import SiteOnlineStatsProvider from "./components/SiteOnlineStatsProvider";
 import RouteList from "./components/RouteList";
 import { getLocale } from "./utils/LocaleUtils";
 
@@ -28,7 +28,6 @@ import SitePrepareLoader from "./components/SitePrepareLoader";
 import { useLanguage } from "./hooks/useLanguage";
 import { Header } from "semantic-ui-react";
 import { useLinkAlternate } from "./hooks/useLinkAlternate";
-import { ServerWebsocketConnectStats } from "./models/websocket/ServerWebsocketConnectStats";
 
 function App() {
     const [ghostSocket, isGHostSocketConnected] = useGHostSocket({
@@ -38,7 +37,6 @@ function App() {
     const [connectorSocket, isConnectorSocketConnected] = useConnectorSocket({
         url: CONNECTOR_WEBSOCKET_ENDPOINT,
     });
-    const [siteOnlineStats, setSiteOnlineStats] = useState<ServerWebsocketConnectStats | null>(null);
     const [gameListLocked, setGameListLocked] = useState(false);
     const [linkCopyMode, setLinkCopyMode] = useState(localStorage.getItem("linkCopyMode") === "1");
 
@@ -48,11 +46,6 @@ function App() {
 
     const [authState, authDispatcher, needRegisterModal] = useWebsocketAuth({
         ghostSocket,
-    });
-
-    useSiteOnlineStatsSubscribe({
-        ghostSocket,
-        onOnlineStats: setSiteOnlineStats,
     });
 
     useConnectorGameAdd({ ghostSocket, connectorSocket, linkCopyMode });
@@ -121,7 +114,6 @@ function App() {
                         currentLocale,
                         languageRepository: data,
                     },
-                    siteOnlineStats,
                 }}
             >
                 <AuthContext.Provider
@@ -130,18 +122,20 @@ function App() {
                         dispatchAuth: authDispatcher as React.Dispatch<AuthAction>,
                     }}
                 >
-                    <AfterContextApp>
-                        <RouteList />
-                        <RegisterAccountModal
-                            open={needRegisterModal}
-                            onApprove={() => {
-                                authDispatcher({ action: "setForce", payload: true });
-                            }}
-                            onReject={() => {
-                                authDispatcher({ action: "clearCredentials" });
-                            }}
-                        ></RegisterAccountModal>
-                    </AfterContextApp>
+                    <SiteOnlineStatsProvider ghostSocket={ghostSocket}>
+                        <AfterContextApp>
+                            <RouteList />
+                            <RegisterAccountModal
+                                open={needRegisterModal}
+                                onApprove={() => {
+                                    authDispatcher({ action: "setForce", payload: true });
+                                }}
+                                onReject={() => {
+                                    authDispatcher({ action: "clearCredentials" });
+                                }}
+                            ></RegisterAccountModal>
+                        </AfterContextApp>
+                    </SiteOnlineStatsProvider>
                 </AuthContext.Provider>
             </AppRuntimeSettingsContext.Provider>
         </WebsocketContext.Provider>

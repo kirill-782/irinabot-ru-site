@@ -14,7 +14,14 @@ import {
 import { useLocation, useNavigate } from "react-router-dom";
 import { Map } from "../../models/rest/Map";
 import { ConfigInfo } from "../../models/rest/ConfigInfo";
-import { AppRuntimeSettingsContext, AuthContext, CacheContext, RestContext, WebsocketContext } from "../../context";
+import {
+    AppRuntimeSettingsContext,
+    AuthContext,
+    CacheContext,
+    RestContext,
+    SiteOnlineStatsContext,
+    WebsocketContext,
+} from "../../context";
 import { convertErrorResponseToString } from "../../utils/ApiUtils";
 import { GameOptions } from "../CreateGame/GameOptions";
 import { GameOptionsData } from "../CreateGame/interfaces";
@@ -68,9 +75,11 @@ function CreateGameConfirmPage({}) {
         configName: "",
     });
 
+    const siteOnlineStats = useContext(SiteOnlineStatsContext);
+
     const { language } = runtimeContext;
     const lang = language.languageRepository;
-    const isSiteEnabled = runtimeContext.siteOnlineStats?.isEnanled !== false;
+    const isSiteEnabled = siteOnlineStats?.isEnanled !== false;
 
     const [gameName, setGameName] = useState(localStorage.getItem(GAME_NAME_LOCALSTORAGE_PATH) || "");
     const [autohostModalOpen, setAutohostModalOpen] = useState(false);

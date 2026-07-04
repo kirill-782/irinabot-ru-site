@@ -58,10 +58,18 @@ export type AppRuntimeSettingsContextType = {
         currentLocale: string;
         languageRepository: LanguageRepository;
     };
-    siteOnlineStats: ServerWebsocketConnectStats | null;
 };
 
 export const AppRuntimeSettingsContext = createContext<AppRuntimeSettingsContextType>(null);
+
+// Site online stats context
+//
+// Держим статистику соединений отдельно от AppRuntimeSettingsContext: сервер
+// присылает ServerWebsocketConnectStats раз в ~5с, и если хранить её в общем
+// контексте/в состоянии App, перерисовывается всё дерево. Отдельный контекст
+// ограничивает ре-рендер только реальными потребителями статистики.
+
+export const SiteOnlineStatsContext = createContext<ServerWebsocketConnectStats | null>(null);
 
 // Auth Context
 

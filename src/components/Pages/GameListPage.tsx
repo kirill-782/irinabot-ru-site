@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useMemo, useState } from "react";
 import { Button, Container, Grid, Input, Message } from "semantic-ui-react";
-import { AppRuntimeSettingsContext, WebsocketContext } from "../../context";
+import { AppRuntimeSettingsContext, SiteOnlineStatsContext, WebsocketContext } from "../../context";
 import { GameListGame } from "../../models/websocket/ServerGameList";
 import GameList from "../GameList";
 import OnlineStats from "../GameList/OnlineStats";
@@ -11,12 +11,11 @@ import { useGameListFilter } from "../../hooks/useGameListFilter";
 import { useDisplayedGameList } from "../../hooks/useDisplayedGameList";
 
 import { useDebounce } from "../../hooks/useDebounce";
-import { CacheContext } from "../../context";
 
 import "../GameList/GameList.scss";
 import MapInfo from "../GameList/MapInfo";
 import { Link, NavLink } from "react-router-dom";
-import { ClientResolveConnectorIdsConverter } from "../../models/websocket/ClientResolveConnectorIds";
+import { useResolveConnectorIds } from "../../hooks/useResolveConnectorIds";
 import MetaDescription from "../Meta/MetaDescription";
 import { AuthContext } from "../../context";
 import { AccessMaskBit } from "../Modal/AccessMaskModal";
@@ -60,31 +59,16 @@ function GameListPage() {
         filters: debouncedFilterSettings,
     });
 
-    const connectorCache = useContext(CacheContext).cachedConnectorIds;
-
     const { language } = useContext(AppRuntimeSettingsContext);
+    const siteOnlineStats = useContext(SiteOnlineStatsContext);
     const lang = language.languageRepository;
-    const hasSiteMaintenance = runtimeContext.siteOnlineStats?.isEnanled === false;
+    const hasSiteMaintenance = siteOnlineStats?.isEnanled === false;
 
     useTitle(lang.gameListPageTitle);
 
-    useEffect(() => {
-        const uncachedConnectorIds = gameList
-            .map((i) => {
-                return i.creatorID;
-            })
-            .filter((i) => {
-                return !connectorCache[i];
-            });
+    const creatorIds = useMemo(() => gameList.map((game) => game.creatorID), [gameList]);
 
-        if (uncachedConnectorIds.length > 0) {
-            sockets.ghostSocket.send(
-                new ClientResolveConnectorIdsConverter().assembly({
-                    connectorIds: uncachedConnectorIds,
-                })
-            );
-        }
-    }, [gameList, connectorCache, sockets.ghostSocket]);
+    useResolveConnectorIds(creatorIds);
 
     return (
         <Container className="game-list">
