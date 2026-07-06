@@ -323,6 +323,9 @@ function AdminListDetailsPage() {
             if (rolesReadOnly) return t("adminListRestrictionReadOnly");
             if (strongerSelectedUser) return t("adminListRestrictionStronger");
             if (selectedUserHasZeroPrivilege) return t("adminListRestrictionZeroPrivilege");
+            // Управлять можно только ролями, которыми владеет сам админ — как обычный,
+            // так и полный (наличие MANAGE не даёт права на «чужие» роли).
+            if (!role.owned) return t("adminListRestrictionNotOwned");
             if (
                 !rolesCanManage &&
                 role.value !== null &&
@@ -330,9 +333,6 @@ function AdminListDetailsPage() {
                 !isCurrentUserIdentifier(auth.currentAuth, role.grantedBy)
             ) {
                 return t("adminListRestrictionLimitedDelete");
-            }
-            if (!rolesCanManage && role.value === null && !role.owned && !role.declared) {
-                return t("adminListRestrictionLimitedGrant");
             }
 
             return "";
@@ -356,6 +356,8 @@ function AdminListDetailsPage() {
             if (rolesReadOnly) return t("adminListRestrictionReadOnly");
             if (strongerSelectedUser) return t("adminListRestrictionStronger");
             if (selectedUserHasZeroPrivilege) return t("adminListRestrictionZeroPrivilege");
+            // Удалять можно только роли, которыми владеет сам админ (см. getRoleRestriction).
+            if (!role.owned) return t("adminListRestrictionNotOwned");
             if (
                 !rolesCanManage &&
                 role.grantedBy &&

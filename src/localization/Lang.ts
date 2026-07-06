@@ -592,6 +592,7 @@ export const LanguageData = {
     adminListRestrictionReadOnly: "Страница открыта в режиме просмотра. Для изменения нужен доступ на вставку и собственный уровень силы.",
     adminListRestrictionStronger: "Нельзя менять права пользователя с более высокой силой.",
     adminListRestrictionZeroPrivilege: "Нельзя менять права пользователя с силой 0. Сначала повысьте ему уровень привилегии.",
+    adminListRestrictionNotOwned: "Управлять можно только ролями, которыми вы владеете сами.",
     adminListRestrictionLimitedDelete: "Ограниченный режим разрешает удалять только назначения, выданные текущим пользователем.",
     adminListRestrictionLimitedGrant: "Можно выдавать только собственные роли или роли, задекларированные в списке.",
     adminListRestrictionNoRecord: "Для этой роли уже нет записи в списке.",
