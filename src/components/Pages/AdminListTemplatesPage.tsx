@@ -1,5 +1,5 @@
 import React, { useContext, useMemo, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import {
     Button,
     Card,
@@ -21,6 +21,7 @@ import { ADMIN_LIST_MANAGE_ROLE, hasOwnedListRole } from "../../utils/AdminListU
 import AdminListCard from "../AdminList/AdminListCard";
 import AdminListTemplateEditor from "../AdminList/AdminListTemplateEditor";
 import MetaRobots from "../Meta/MetaRobots";
+import Breadcrumbs from "../Breadcrumbs";
 
 function AdminListTemplatesPage() {
     const params = useParams();
@@ -104,12 +105,13 @@ function AdminListTemplatesPage() {
         <Container className="extra">
             <MetaRobots noIndex />
 
-            <div className="toolbar">
-                <Button as={Link} basic size="small" to={backLink}>
-                    <Icon name="arrow left" />
-                    {t("adminListTemplatesBackToList")}
-                </Button>
-            </div>
+            <Breadcrumbs
+                items={[
+                    { label: t("adminListBreadcrumbLists"), to: "/admin-list" },
+                    { label: t("adminListOverviewCardHeader", { id: String(listId) }), to: backLink },
+                    { label: t("adminListTemplatesLink") },
+                ]}
+            />
 
             {listData && <AdminListCard list={listData} listId={listId} />}
 

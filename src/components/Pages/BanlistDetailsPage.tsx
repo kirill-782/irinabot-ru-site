@@ -1,7 +1,6 @@
 import React, { useContext, useMemo, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
-    Breadcrumb,
     Button,
     Container,
     Header,
@@ -35,6 +34,7 @@ import BanlistFormModal from "../Banlist/BanlistFormModal";
 import BanlistStatsTab from "../Banlist/BanlistStatsTab";
 import BanlistTemplatesTab from "../Banlist/BanlistTemplatesTab";
 import MetaRobots from "../Meta/MetaRobots";
+import Breadcrumbs from "../Breadcrumbs";
 
 import "./BanlistDetailsPage.scss";
 
@@ -151,17 +151,12 @@ function BanlistDetailsPage() {
         <Container className="banlist-details extra">
             <MetaRobots noIndex />
 
-            <Breadcrumb className="crumbs">
-                <Breadcrumb.Section as={Link} to="/banlist">
-                    {t("banlistOverviewHeader")}
-                </Breadcrumb.Section>
-                {banlist?.name && (
-                    <>
-                        <Breadcrumb.Divider />
-                        <Breadcrumb.Section active>{banlist.name}</Breadcrumb.Section>
-                    </>
-                )}
-            </Breadcrumb>
+            <Breadcrumbs
+                items={[
+                    { label: t("banlistOverviewHeader"), to: "/banlist" },
+                    { label: banlist?.name || undefined },
+                ]}
+            />
 
             {banlistError && (
                 <Message error>

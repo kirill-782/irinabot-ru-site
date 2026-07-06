@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
-import { Button, Header, Label } from "semantic-ui-react";
+import { Header, Label } from "semantic-ui-react";
 import { AdminListOutWeb } from "../../models/rest/AdminList";
 import {
     formatAdminListDateValue,
@@ -12,11 +11,10 @@ import UserIdLabel from "./UserIdLabel";
 interface AdminListCardProps {
     list: AdminListOutWeb;
     listId?: number;
-    showBackLink?: boolean;
     toolbar?: React.ReactNode;
 }
 
-const AdminListCard: React.FC<AdminListCardProps> = ({ list, listId, showBackLink, toolbar }) => {
+const AdminListCard: React.FC<AdminListCardProps> = ({ list, listId, toolbar }) => {
     const { language } = useContext(AppRuntimeSettingsContext);
     const t = language.getString;
 
@@ -29,11 +27,6 @@ const AdminListCard: React.FC<AdminListCardProps> = ({ list, listId, showBackLin
         <>
             <div className="toolbar">
                 <div>
-                    {showBackLink && (
-                        <Button as={Link} basic size="small" to="/admin-list">
-                            {t("adminListBackToLists")}
-                        </Button>
-                    )}
                     <Header as="h1">Admin list #{displayId ?? "?"}</Header>
                     <Label.Group>
                         {list.default && (

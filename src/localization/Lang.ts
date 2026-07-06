@@ -519,7 +519,7 @@ export const LanguageData = {
     mapDownloadStatusDownloading: "Загружается",
     mapDownloadStatusPaused: "На паузе",
 
-    adminListBackToLists: "К спискам",
+    adminListBreadcrumbLists: "Списки",
     adminListLabelDefault: "Стандартный",
     adminListLabelStrength: "Сила: {level}",
     adminListLabelNoAccess: "нет доступа",
@@ -603,7 +603,6 @@ export const LanguageData = {
     // --- Admin list: templates (модуль шаблонов выдачи ролей) ---
     adminListTemplatesLink: "Шаблоны",
     adminListTemplatesTitle: "Шаблоны выдачи ролей",
-    adminListTemplatesBackToList: "К списку",
     adminListTemplatesNew: "Новый шаблон",
     adminListTemplatesEmpty: "Шаблонов пока нет. Создайте первый — и применяйте наборы ролей одним действием.",
     adminListTemplatesReadOnlyNote: "Создавать и редактировать шаблоны может только полный управляющий списком. Вам доступно применение существующих шаблонов.",

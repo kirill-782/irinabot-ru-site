@@ -54,6 +54,7 @@ import {
 } from "../../utils/AdminListUtils";
 import { cascadeHierarchyDrafts } from "../../utils/adminListRoleModel";
 import ApplyTemplateControl from "../AdminList/ApplyTemplateControl";
+import Breadcrumbs from "../Breadcrumbs";
 
 import "../AdminList/AdminListDetails.scss";
 
@@ -65,6 +66,16 @@ function AdminListDetailsPage() {
     const auth = useContext(AuthContext).auth;
     const { language } = useContext(AppRuntimeSettingsContext);
     const t = language.getString;
+
+    // Хлебные крошки: Списки / Список #N (на странице деталей #N — активный раздел).
+    const listBreadcrumbItems = [
+        { label: t("adminListBreadcrumbLists"), to: "/admin-list" },
+        {
+            label: Number.isFinite(listId)
+                ? t("adminListOverviewCardHeader", { id: String(listId) })
+                : undefined,
+        },
+    ];
 
     const { confirm, confirmModal } = useConfirmModal();
 
@@ -837,9 +848,7 @@ function AdminListDetailsPage() {
             <div className="admin-list-details">
                 <Container>
                     <MetaRobots noIndex />
-                    <Button as={Link} basic size="small" to="/admin-list">
-                        {t("adminListBackToLists")}
-                    </Button>
+                    <Breadcrumbs items={listBreadcrumbItems} />
                     <Message error>
                         <Message.Header>{t("adminListErrorLoadFailed")}</Message.Header>
                         <p>{listErrorMessage}</p>
@@ -896,11 +905,12 @@ function AdminListDetailsPage() {
             <Container className="extra">
                 <MetaRobots noIndex />
 
+                <Breadcrumbs items={listBreadcrumbItems} />
+
                 {listData && (
                     <AdminListCard
                         list={isEditingList ? { ...listData, comment: listData.comment } : listData}
                         listId={listId}
-                        showBackLink
                         toolbar={toolbar}
                     />
                 )}
