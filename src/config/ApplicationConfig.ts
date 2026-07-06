@@ -16,3 +16,7 @@ export const DEFAULT_THEME = "light";
 
 export const SITE_TITLE = "IrInA Host Bot";
 
+// Фичатогл: показывать действие NOTIFY в списке действий уровня градации банлиста.
+// Пока бекенд с NOTIFY не раскатан в прод — держим выключенным (уровень скрыт из дропдауна).
+export const BANLIST_NOTIFY_ACTION_ENABLED = false;
+

@@ -234,8 +234,9 @@ export const buildTemplatePayload = (
             deferredDuration: null,
         };
 
-        // WARNING и NONE ничего не банят — длительность не нужна (бэкенд её игнорирует)
-        if (grad.action !== "WARNING" && grad.action !== "NONE") {
+        // NONE и NOTIFY не создают запись бана — длительность не нужна (бэкенд её игнорирует).
+        // WARNING теперь создаёт запись (upsert), поэтому длительность к нему применима.
+        if (grad.action !== "NONE" && grad.action !== "NOTIFY") {
             const expire = buildDurationPayload(grad.durationValue, grad.durationUnit);
             if (
                 grad.durationUnit !== "forever" &&

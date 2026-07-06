@@ -12,6 +12,7 @@ interface BanlistActionTextProps {
 
 const ACTION_ICON: Record<BanlistAction, SemanticICONS> = {
     NONE: "circle outline",
+    NOTIFY: "bell outline",
     WARNING: "warning sign",
     CHAT_RESTRICTION: "mute",
     ENTER_GAME_RESTRICTION: "ban",

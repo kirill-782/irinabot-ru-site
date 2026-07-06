@@ -91,7 +91,7 @@ function BanlistTemplateGraduationTable({ draft }: BanlistTemplateGraduationTabl
                                 />
                             </Table.Cell>
                             <Table.Cell>
-                                {grad.action === "WARNING" || grad.action === "NONE" ? (
+                                {grad.action === "NONE" || grad.action === "NOTIFY" ? (
                                     "—"
                                 ) : (
                                     <BanlistDurationField

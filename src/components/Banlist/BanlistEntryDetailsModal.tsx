@@ -188,6 +188,26 @@ function BanlistEntryDetailsModal(props: BanlistEntryDetailsModalProps) {
                                 <BanlistActionText action={entry.action} />
                             </DetailRow>
 
+                            <DetailRow label={t("banlistEntryDetailsMatchByIp")}>
+                                <Icon
+                                    color={entry.matchByIpCidr ? "green" : "grey"}
+                                    name={entry.matchByIpCidr ? "check" : "minus"}
+                                />
+                                {entry.matchByIpCidr
+                                    ? t("banlistMatchEnabled")
+                                    : t("banlistMatchDisabled")}
+                            </DetailRow>
+
+                            <DetailRow label={t("banlistEntryDetailsMatchByHardwareId")}>
+                                <Icon
+                                    color={entry.matchByHardwareId ? "green" : "grey"}
+                                    name={entry.matchByHardwareId ? "check" : "minus"}
+                                />
+                                {entry.matchByHardwareId
+                                    ? t("banlistMatchEnabled")
+                                    : t("banlistMatchDisabled")}
+                            </DetailRow>
+
                             <DetailRow label={t("banlistReasonHeader")}>
                                 {entry.reason ? entry.reason : <i>{t("banlistNoReason")}</i>}
                             </DetailRow>

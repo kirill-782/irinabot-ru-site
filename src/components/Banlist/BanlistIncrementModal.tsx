@@ -145,6 +145,11 @@ function BanlistIncrementModal(props: BanlistIncrementModalProps) {
                                     subject: subjectString(result.createdEntry.subject),
                                 })}
                             </Message>
+                        ) : result.action === "NOTIFY" ? (
+                            <Message info>
+                                <Icon name="bell outline" />
+                                {t("banlistIncrementNotify")}
+                            </Message>
                         ) : (
                             <Message info>{t("banlistIncrementNotTriggered")}</Message>
                         )}

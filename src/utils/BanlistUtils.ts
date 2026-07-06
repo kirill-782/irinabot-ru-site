@@ -1,3 +1,4 @@
+import { BANLIST_NOTIFY_ACTION_ENABLED } from "../config/ApplicationConfig";
 import { GetLanguageStaring } from "../hooks/useLanguage";
 import { LanguageRepositoryKeys } from "../localization/Lang";
 import {
@@ -10,17 +11,22 @@ import {
 
 const BANLIST_ACTION_LONG_LABEL_KEY: Record<BanlistAction, LanguageRepositoryKeys> = {
     NONE: "banlistActionNone",
+    NOTIFY: "banlistActionNotify",
     WARNING: "banlistActionWarning",
     CHAT_RESTRICTION: "banlistActionChatRestriction",
     ENTER_GAME_RESTRICTION: "banlistActionEnterGameRestriction",
 };
 
-// действия для ручной записи бана (NONE здесь не имеет смысла — запись ничего не делает)
+// действия для ручной записи бана: запись можно создать только с этими типами
+// (NONE/NOTIFY имеют смысл лишь как action уровня градации)
 export const BANLIST_ACTIONS: BanlistAction[] = ["WARNING", "CHAT_RESTRICTION", "ENTER_GAME_RESTRICTION"];
 
-// действия для ступени градации: NONE — «засчитать нарушение, но ничего не выдавать»
+// действия для ступени градации: NONE — «ничего не делать», NOTIFY — «разовое
+// уведомление без записи бана» (оба засчитывают нарушение, но записи не создают).
+// NOTIFY скрывается фичатоглом BANLIST_NOTIFY_ACTION_ENABLED, пока бекенд не раскатан.
 export const BANLIST_GRADUATION_ACTIONS: BanlistAction[] = [
     "NONE",
+    ...(BANLIST_NOTIFY_ACTION_ENABLED ? (["NOTIFY"] as BanlistAction[]) : []),
     "WARNING",
     "CHAT_RESTRICTION",
     "ENTER_GAME_RESTRICTION",
@@ -36,10 +42,12 @@ export function actionLongLabel(t: GetLanguageStaring, action?: BanlistAction | 
 
 export function semanticColorForAction(
     action?: BanlistAction | null
-): "yellow" | "orange" | "red" | "grey" {
+): "yellow" | "orange" | "red" | "grey" | "blue" {
     switch (action) {
         case "NONE":
             return "grey";
+        case "NOTIFY":
+            return "blue";
         case "WARNING":
             return "yellow";
         case "CHAT_RESTRICTION":

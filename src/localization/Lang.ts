@@ -960,6 +960,7 @@ export const LanguageData = {
 
     // --- Banlist: actions ---
     banlistActionNone: "Без действия",
+    banlistActionNotify: "Уведомление",
     banlistActionWarning: "Предупреждение",
     banlistActionChatRestriction: "Ограничение чата",
     banlistActionEnterGameRestriction: "Ограничение входа",
@@ -1089,6 +1090,10 @@ export const LanguageData = {
     banlistEntryDetailsStatus: "Статус",
     banlistEntryDetailsIssuer: "Выдавший",
     banlistEntryDetailsTechnicalProps: "Технические свойства",
+    banlistEntryDetailsMatchByIp: "Учёт IP/CIDR",
+    banlistEntryDetailsMatchByHardwareId: "Учёт HWID",
+    banlistMatchEnabled: "учитывается",
+    banlistMatchDisabled: "не учитывается",
     banlistEntryDetailsDeferred: "Отложенная активация",
     banlistEntryDetailsFirstTriggered: "Первое срабатывание",
     banlistEntryDetailsCreatedAt: "Создана",
@@ -1111,6 +1116,7 @@ export const LanguageData = {
     banlistIncrementLastGraduated: "Сработало на счётчике: {count}",
     banlistIncrementTriggered: "Сработала запись бана для «{subject}»",
     banlistIncrementNotTriggered: "Порог градации не достигнут — запись не создана.",
+    banlistIncrementNotify: "Выдано разовое уведомление — запись бана не создаётся.",
     banlistIncrementSuppressed: "Нарушение не засчитано — сработала защита от однотипных нарушений.",
 
     // --- Banlist: entry form ---
@@ -1135,6 +1141,11 @@ export const LanguageData = {
     banlistEntryFormDeferredHint:
         "Необязательная опция — комбинируется с любым сроком действия. Отсчёт начнётся **с первой попытки войти в игру**.",
     banlistEntryFormDeferredEnable: "Включить отложенную активацию",
+    banlistEntryFormMatchHeader: "Учёт IP и HWID при проверке",
+    banlistEntryFormMatchHint:
+        "Основная идентичность (`userId` и пара PvPGN `realm` + `name`) учитывается всегда. IP/CIDR и HWID субъекта участвуют в проверке `/check` только при включённом флаге.",
+    banlistEntryFormMatchByIp: "Учитывать IP/CIDR при проверке",
+    banlistEntryFormMatchByHardwareId: "Учитывать HWID при проверке",
     banlistEntryFormIssuerHeader: "Выдавший",
     banlistEntryFormIssuerHint:
         "Кто выдал эту запись — напрямую или через систему учёта нарушений.",

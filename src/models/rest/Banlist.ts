@@ -1,4 +1,9 @@
-export type BanlistAction = "NONE" | "WARNING" | "CHAT_RESTRICTION" | "ENTER_GAME_RESTRICTION";
+export type BanlistAction =
+    | "NONE"
+    | "NOTIFY"
+    | "WARNING"
+    | "CHAT_RESTRICTION"
+    | "ENTER_GAME_RESTRICTION";
 
 export interface BanlistGraduationLevel {
     minCount: number;
@@ -115,6 +120,10 @@ export interface BanlistEntryOutWeb {
     subject?: BanlistSubjectOutWeb;
     templateId?: number | null;
     enabled?: boolean;
+    // учитывать IP/CIDR субъекта при матчинге этой записи в /check
+    matchByIpCidr?: boolean;
+    // учитывать HWID субъекта при матчинге этой записи в /check
+    matchByHardwareId?: boolean;
     action?: BanlistAction;
     reason?: string | null;
     tag?: string | null;
@@ -161,6 +170,10 @@ export interface BanlistEntryInWeb {
     expireAt?: number | null;
     deferredDurationSeconds?: number | null;
     deferredDuration?: string | null;
+    // учитывать IP/CIDR субъекта при матчинге записи в /check; по умолчанию false
+    matchByIpCidr?: boolean;
+    // учитывать HWID субъекта при матчинге записи в /check; по умолчанию false
+    matchByHardwareId?: boolean;
     // свойства технической УЗ — сохраняются только при выдаче из-под бот-токена; у TYPE_USER игнорируются
     technicalProperties?: Record<string, string> | null;
 }
@@ -172,6 +185,10 @@ export interface BanlistEntryPutInWeb {
     tag?: string | null;
     expireAt?: number | null;
     deferredDurationSeconds?: number | null;
+    // учитывать IP/CIDR субъекта при матчинге записи; полная замена — null/отсутствие = false
+    matchByIpCidr?: boolean | null;
+    // учитывать HWID субъекта при матчинге записи; полная замена — null/отсутствие = false
+    matchByHardwareId?: boolean | null;
     // true — переписать выдавшего на текущего инициатора; иначе/отсутствует — не меняется
     replaceIssuer?: boolean | null;
 }
@@ -180,6 +197,10 @@ export interface BanlistEntryPatchInWeb {
     enabled?: boolean | null;
     action?: BanlistAction | null;
     reason?: string | null;
+    // учитывать IP/CIDR субъекта при матчинге записи; null/отсутствие — не менять
+    matchByIpCidr?: boolean | null;
+    // учитывать HWID субъекта при матчинге записи; null/отсутствие — не менять
+    matchByHardwareId?: boolean | null;
     // true — переписать выдавшего на текущего инициатора; иначе/отсутствует — не трогать
     replaceIssuer?: boolean | null;
 }
