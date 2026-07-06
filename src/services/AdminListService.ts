@@ -6,6 +6,8 @@ import {
     AdminListRolePatchInWeb,
     AdminListRolePutInWeb,
     AdminListSummaryOutWeb,
+    AdminListTemplateInWeb,
+    AdminListTemplateOutWeb,
     AdminListUserListOutWeb,
     AdminListUserOutWeb,
 } from "../models/rest/AdminList";
@@ -255,6 +257,106 @@ export class AdminListService {
         let request: AxiosRequestConfig = {
             ...this.defaultConfig,
             url: `/v1/admin-lists/${listId}/everyone`,
+            method: "DELETE",
+        };
+
+        request = this.appendOptions(request, options);
+
+        const response = await Axios.request<void>(request);
+
+        return response.data;
+    };
+
+    // ---- Шаблоны админ-листа (/v1/admin-lists/{listId}/templates) ----
+
+    public getAdminListTemplates = async (listId: number, options?: RequestOptions) => {
+        let request: AxiosRequestConfig = {
+            ...this.defaultConfig,
+            url: `/v1/admin-lists/${listId}/templates`,
+            method: "GET",
+        };
+
+        request = this.appendOptions(request, options);
+
+        const response = await Axios.request<AdminListTemplateOutWeb[]>(request);
+
+        return response.data;
+    };
+
+    public createAdminListTemplate = async (
+        listId: number,
+        data: AdminListTemplateInWeb,
+        options?: RequestOptions
+    ) => {
+        let request: AxiosRequestConfig<AdminListTemplateInWeb> = {
+            ...this.defaultConfig,
+            url: `/v1/admin-lists/${listId}/templates`,
+            method: "POST",
+            headers: {
+                ...this.defaultConfig.headers,
+                "content-type": "application/json",
+            },
+            data,
+        };
+
+        request = this.appendOptions(request, options);
+
+        const response = await Axios.request<AdminListTemplateOutWeb>(request);
+
+        return response.data;
+    };
+
+    public getAdminListTemplate = async (
+        listId: number,
+        templateId: number,
+        options?: RequestOptions
+    ) => {
+        let request: AxiosRequestConfig = {
+            ...this.defaultConfig,
+            url: `/v1/admin-lists/${listId}/templates/${templateId}`,
+            method: "GET",
+        };
+
+        request = this.appendOptions(request, options);
+
+        const response = await Axios.request<AdminListTemplateOutWeb>(request);
+
+        return response.data;
+    };
+
+    // PUT — полная замена шаблона (см. openApi.yml: «Заменить шаблон ролей»).
+    public putAdminListTemplate = async (
+        listId: number,
+        templateId: number,
+        data: AdminListTemplateInWeb,
+        options?: RequestOptions
+    ) => {
+        let request: AxiosRequestConfig<AdminListTemplateInWeb> = {
+            ...this.defaultConfig,
+            url: `/v1/admin-lists/${listId}/templates/${templateId}`,
+            method: "PUT",
+            headers: {
+                ...this.defaultConfig.headers,
+                "content-type": "application/json",
+            },
+            data,
+        };
+
+        request = this.appendOptions(request, options);
+
+        const response = await Axios.request<AdminListTemplateOutWeb>(request);
+
+        return response.data;
+    };
+
+    public deleteAdminListTemplate = async (
+        listId: number,
+        templateId: number,
+        options?: RequestOptions
+    ) => {
+        let request: AxiosRequestConfig = {
+            ...this.defaultConfig,
+            url: `/v1/admin-lists/${listId}/templates/${templateId}`,
             method: "DELETE",
         };
 

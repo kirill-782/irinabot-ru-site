@@ -1,11 +1,26 @@
 import { ServerUserAuth } from "../models/websocket/ServerUserAuth";
 import type { GetLanguageStaring } from "../hooks/useLanguage";
 import type { LanguageRepositoryKeys } from "../localization/Lang";
+import type { AdminListOutWebRole } from "../models/rest/AdminList";
 
 export type NormalizedValueChangeType = "MAX" | "SET";
 
 // Маркер выбора «все пользователи» (wildcard, targetUserId = null) в UI и в URL (?user=*).
 export const EVERYONE_TARGET = "*";
+
+// Ключевые права владения списком (owned-роль текущего пользователя в этом списке).
+// MANAGE ⇒ полное управление; INSERT ⇒ право добавлять записи (MANAGE его включает).
+export const ADMIN_LIST_INSERT_ROLE = "PERMISSION_ADMIN_LIST_INSERT";
+export const ADMIN_LIST_MANAGE_ROLE = "PERMISSION_ADMIN_LIST_MANAGE";
+
+// Владеет ли текущий пользователь указанной ролью списка (флаг owned на роли списка).
+export const hasOwnedListRole = (
+    roles: AdminListOutWebRole[] | null | undefined,
+    roleName: string
+) =>
+    (roles || []).some(
+        (role) => !!role.owned && (role.name || "").toLocaleUpperCase() === roleName.toLocaleUpperCase()
+    );
 
 // Ключ языкового пакета для роли в общем camelCase-стиле:
 // PERMISSION_ADMIN_LIST_VIEW -> adminListRoleTitlePermissionAdminListView / adminListRoleDescPermissionAdminListView.

@@ -29,14 +29,14 @@ interface AdminListRolesTableProps {
     isApplyingChanges: boolean;
     showDeclaredLabel?: boolean;
     useNumericValue?: boolean;
+    // режим редактора шаблона: нет пользователя → колонки «Срок» и «Владелец» скрыты
+    templateMode?: boolean;
     getRoleRestriction: (role: RoleRow) => string;
     getRoleDeleteRestriction: (role: RoleRow) => string;
     onDraftChange: (roleName: string, next: RoleDraft) => void;
     onResetRow: (roleName: string) => void;
     onMarkForDeletion: (role: RoleRow) => void;
 }
-
-const COLUMN_COUNT = 5;
 
 const getDraft = (role: RoleRow, drafts: Record<string, RoleDraft>): RoleDraft => {
     return (
@@ -56,6 +56,7 @@ const AdminListRolesTable: React.FC<AdminListRolesTableProps> = ({
     isApplyingChanges,
     showDeclaredLabel,
     useNumericValue,
+    templateMode,
     getRoleRestriction,
     getRoleDeleteRestriction,
     onDraftChange,
@@ -64,6 +65,10 @@ const AdminListRolesTable: React.FC<AdminListRolesTableProps> = ({
 }) => {
     const { language } = useContext(AppRuntimeSettingsContext);
     const t = language.getString;
+
+    // Колонок в таблице: обычно 5 (доступ, роль, срок, владелец, действия);
+    // в режиме шаблона остаются только «доступ» + «роль» (срок/владелец/действия скрыты) → 2.
+    const COLUMN_COUNT = templateMode ? 2 : 5;
 
     // По умолчанию блок команд (вспомогательный) свёрнут.
     const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>({});
@@ -247,13 +252,17 @@ const AdminListRolesTable: React.FC<AdminListRolesTableProps> = ({
             role.value !== null && roleExpiry !== null && roleExpiry.getTime() < Date.now();
         const roleTitle = resolveAdminListRoleTitle(role.name, t);
         const roleDescription = resolveAdminListRoleDescription(role.name, t);
+        // роль входит в шаблон: MAX — только allow (true); SET — allow или deny (не null)
+        const templateIncluded =
+            listMode === "MAX" ? draft.value === true : draft.value !== null;
 
         return (
             <Table.Row
                 key={rowKey ?? role.name}
                 className={rowClassName}
-                active={hasRoleChanges}
-                warning={isExpired && !hasRoleChanges}
+                active={!templateMode && hasRoleChanges}
+                positive={templateMode && templateIncluded}
+                warning={!templateMode && isExpired && !hasRoleChanges}
             >
                 <Table.Cell className="access-cell" collapsing>
                     {useNumericValue ? (
@@ -322,73 +331,79 @@ const AdminListRolesTable: React.FC<AdminListRolesTableProps> = ({
                     </div>
                     {editRestriction && <div className="hint">{editRestriction}</div>}
                 </Table.Cell>
-                <Table.Cell>
-                    <div className="date-cell">
-                        <Form.Input
-                            className="date-input"
-                            disabled={!!editRestriction || draft.value === null || isApplyingChanges}
-                            onChange={(_, data) => {
-                                onDraftChange(role.name, {
-                                    ...draft,
-                                    activeBefore: (data.value as string) || "",
-                                });
-                            }}
-                            type="datetime-local"
-                            value={draft.activeBefore}
-                        />
-                        {draft.value !== null && !draft.activeBefore ? (
-                            <Label basic size="mini">
-                                {t("adminListRoleLabelIndefinite")}
-                            </Label>
-                        ) : (
-                            <Button
-                                basic
-                                disabled={
-                                    !!editRestriction ||
-                                    draft.value === null ||
-                                    isApplyingChanges ||
-                                    !draft.activeBefore
-                                }
-                                onClick={() => {
-                                    onDraftChange(role.name, { ...draft, activeBefore: "" });
+                {!templateMode && (
+                    <Table.Cell>
+                        <div className="date-cell">
+                            <Form.Input
+                                className="date-input"
+                                disabled={!!editRestriction || draft.value === null || isApplyingChanges}
+                                onChange={(_, data) => {
+                                    onDraftChange(role.name, {
+                                        ...draft,
+                                        activeBefore: (data.value as string) || "",
+                                    });
                                 }}
-                                size="mini"
-                                title={t("adminListRoleButtonIndefiniteTitle")}
-                                type="button"
-                            >
-                                {t("adminListRoleLabelIndefinite")}
-                            </Button>
-                        )}
-                    </div>
-                </Table.Cell>
-                <Table.Cell>
-                    {role.grantedBy ? <UserIdLabel userId={role.grantedBy} /> : "—"}
-                </Table.Cell>
-                <Table.Cell className="actions-cell" collapsing>
-                    <div className="row-actions">
-                        <Button
-                            basic
-                            color="red"
-                            disabled={!!deleteRestriction || isApplyingChanges}
-                            icon="trash"
-                            onClick={() => onMarkForDeletion(role)}
-                            size="mini"
-                            title={deleteRestriction || t("adminListRoleButtonMarkDelete")}
-                            type="button"
-                        />
-                        {hasRoleChanges && (
+                                type="datetime-local"
+                                value={draft.activeBefore}
+                            />
+                            {draft.value !== null && !draft.activeBefore ? (
+                                <Label basic size="mini">
+                                    {t("adminListRoleLabelIndefinite")}
+                                </Label>
+                            ) : (
+                                <Button
+                                    basic
+                                    disabled={
+                                        !!editRestriction ||
+                                        draft.value === null ||
+                                        isApplyingChanges ||
+                                        !draft.activeBefore
+                                    }
+                                    onClick={() => {
+                                        onDraftChange(role.name, { ...draft, activeBefore: "" });
+                                    }}
+                                    size="mini"
+                                    title={t("adminListRoleButtonIndefiniteTitle")}
+                                    type="button"
+                                >
+                                    {t("adminListRoleLabelIndefinite")}
+                                </Button>
+                            )}
+                        </div>
+                    </Table.Cell>
+                )}
+                {!templateMode && (
+                    <Table.Cell>
+                        {role.grantedBy ? <UserIdLabel userId={role.grantedBy} /> : "—"}
+                    </Table.Cell>
+                )}
+                {!templateMode && (
+                    <Table.Cell className="actions-cell" collapsing>
+                        <div className="row-actions">
                             <Button
                                 basic
-                                disabled={isApplyingChanges}
-                                icon="undo"
-                                onClick={() => onResetRow(role.name)}
+                                color="red"
+                                disabled={!!deleteRestriction || isApplyingChanges}
+                                icon="trash"
+                                onClick={() => onMarkForDeletion(role)}
                                 size="mini"
-                                title={t("adminListRoleButtonResetChange")}
+                                title={deleteRestriction || t("adminListRoleButtonMarkDelete")}
                                 type="button"
                             />
-                        )}
-                    </div>
-                </Table.Cell>
+                            {hasRoleChanges && (
+                                <Button
+                                    basic
+                                    disabled={isApplyingChanges}
+                                    icon="undo"
+                                    onClick={() => onResetRow(role.name)}
+                                    size="mini"
+                                    title={t("adminListRoleButtonResetChange")}
+                                    type="button"
+                                />
+                            )}
+                        </div>
+                    </Table.Cell>
+                )}
             </Table.Row>
         );
     };
@@ -418,13 +433,27 @@ const AdminListRolesTable: React.FC<AdminListRolesTableProps> = ({
             <Table celled className="roles-table" compact unstackable>
                 <Table.Header>
                     <Table.Row>
-                        <Table.HeaderCell className="access-cell" width={3} />
-                        <Table.HeaderCell width={4}>{t("adminListRolesColumnRole")}</Table.HeaderCell>
-                        <Table.HeaderCell width={4}>{t("adminListRolesColumnExpiry")}</Table.HeaderCell>
-                        <Table.HeaderCell width={3}>{t("adminListRolesColumnOwner")}</Table.HeaderCell>
-                        <Table.HeaderCell className="actions-cell" width={2}>
-                            {t("actions")}
+                        {templateMode ? (
+                            <Table.HeaderCell className="access-cell" width={2}>
+                                {t("adminListTemplateEditorRolesInclude")}
+                            </Table.HeaderCell>
+                        ) : (
+                            <Table.HeaderCell className="access-cell" width={3} />
+                        )}
+                        <Table.HeaderCell width={templateMode ? 14 : 4}>
+                            {t("adminListRolesColumnRole")}
                         </Table.HeaderCell>
+                        {!templateMode && (
+                            <Table.HeaderCell width={4}>{t("adminListRolesColumnExpiry")}</Table.HeaderCell>
+                        )}
+                        {!templateMode && (
+                            <Table.HeaderCell width={3}>{t("adminListRolesColumnOwner")}</Table.HeaderCell>
+                        )}
+                        {!templateMode && (
+                            <Table.HeaderCell className="actions-cell" width={2}>
+                                {t("actions")}
+                            </Table.HeaderCell>
+                        )}
                     </Table.Row>
                 </Table.Header>
                 <Table.Body>
@@ -488,7 +517,8 @@ const AdminListRolesTable: React.FC<AdminListRolesTableProps> = ({
                         const grantedEditableCount = group.rows.filter(
                             (role) => !getRoleRestriction(role) && getDraft(role, roleDrafts).value !== null
                         ).length;
-                        const canFillDate = !useNumericValue && roleByName.has(group.key);
+                        const canFillDate =
+                            !templateMode && !useNumericValue && roleByName.has(group.key);
 
                         return (
                             <React.Fragment key={`group-${group.key}`}>

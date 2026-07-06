@@ -109,3 +109,28 @@ export interface AdminListRoleUsersOutWeb {
     name?: string;
     users?: AdminListRoleUsersOutWebUser[];
 }
+
+// ---- Шаблоны админ-листа (/v1/admin-lists/{listId}/templates, см. openApi.yml) ----
+// value: `true` — грант роли, `false` — снятие. Срок в шаблоне не хранится — шаблон
+// бессрочный, срок выставляется уже после применения штатными контролами.
+export interface AdminListTemplateRoleWeb {
+    name: string;
+    value: boolean;
+}
+
+export interface AdminListTemplateOutWeb {
+    id?: number;
+    listInstanceId?: number;
+    name?: string;
+    description?: string | null;
+    roles?: AdminListTemplateRoleWeb[];
+    privilegeLevel?: number;
+}
+
+export interface AdminListTemplateInWeb {
+    name: string;
+    description?: string | null;
+    roles: AdminListTemplateRoleWeb[];
+    // обязателен, минимум 1
+    privilegeLevel: number;
+}

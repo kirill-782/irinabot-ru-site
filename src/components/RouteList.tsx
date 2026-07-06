@@ -8,6 +8,7 @@ import { getAccessibleAdminSections } from "./Pages/AdminSections";
 
 const AutopayPage = React.lazy(() => import("./Pages/AutopayPage"));
 const AdminListDetailsPage = React.lazy(() => import("./Pages/AdminListDetailsPage"));
+const AdminListTemplatesPage = React.lazy(() => import("./Pages/AdminListTemplatesPage"));
 const AdminListOverviewPage = React.lazy(() => import("./Pages/AdminListOverviewPage"));
 const BanlistOverviewPage = React.lazy(() => import("./Pages/BanlistOverviewPage"));
 const BanlistDetailsPage = React.lazy(() => import("./Pages/BanlistDetailsPage"));
@@ -117,6 +118,10 @@ const routes: ConditionalRoute[] = [
                     {
                         path: ":id",
                         element: <AdminListDetailsPage />,
+                    },
+                    {
+                        path: ":id/templates",
+                        element: <AdminListTemplatesPage />,
                     },
                 ],
             },

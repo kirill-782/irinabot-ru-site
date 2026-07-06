@@ -19,7 +19,7 @@ import AdminListEditForm from "../AdminList/AdminListEditForm";
 import AdminListRolesTable from "../AdminList/AdminListRolesTable";
 import AdminListUserSidebar from "../AdminList/AdminListUserSidebar";
 import UserIdLabel from "../AdminList/UserIdLabel";
-import { PendingChange, RoleDraft, RoleRow } from "../AdminList/interfaces";
+import { PendingChange, RoleRow } from "../AdminList/interfaces";
 import MetaRobots from "../Meta/MetaRobots";
 import { AppRuntimeSettingsContext, AuthContext, RestContext } from "../../context";
 import { useConfirmModal } from "../../hooks/useConfirmModal";
@@ -28,17 +28,24 @@ import { useAdminList } from "../../hooks/useAdminList";
 import { useAdminListUsers } from "../../hooks/useAdminListUsers";
 import { useAdminListUser } from "../../hooks/useAdminListUser";
 import { useAdminListEveryone } from "../../hooks/useAdminListEveryone";
+import { useAdminListTemplates } from "../../hooks/useAdminListTemplates";
 import { useResolveConnectorIds } from "../../hooks/useResolveConnectorIds";
+import { useRoleDrafts } from "../../hooks/useRoleDrafts";
 import {
     AdminListOutWebRole,
     AdminListPatchInWeb,
+    AdminListRolePutInWeb,
+    AdminListTemplateOutWeb,
     AdminListUserOutWebRole,
 } from "../../models/rest/AdminList";
 import { convertErrorResponseToString } from "../../utils/ApiUtils";
 import {
+    ADMIN_LIST_INSERT_ROLE,
+    ADMIN_LIST_MANAGE_ROLE,
     EVERYONE_TARGET,
     formatAdminListDateValue,
     fromDateTimeLocalInputValue,
+    hasOwnedListRole,
     isCurrentUserIdentifier,
     isCurrentUserOwner,
     normalizeAdminListValueChangeType,
@@ -46,17 +53,9 @@ import {
     toDateTimeLocalInputValue,
 } from "../../utils/AdminListUtils";
 import { cascadeHierarchyDrafts } from "../../utils/adminListRoleModel";
+import ApplyTemplateControl from "../AdminList/ApplyTemplateControl";
 
 import "../AdminList/AdminListDetails.scss";
-
-const ADMIN_LIST_INSERT_ROLE = "PERMISSION_ADMIN_LIST_INSERT";
-const ADMIN_LIST_MANAGE_ROLE = "PERMISSION_ADMIN_LIST_MANAGE";
-
-const hasOwnedListRole = (roles: AdminListOutWebRole[] | null | undefined, roleName: string) => {
-    return (roles || []).some((role) => {
-        return !!role.owned && (role.name || "").toLocaleUpperCase() === roleName.toLocaleUpperCase();
-    });
-};
 
 function AdminListDetailsPage() {
     const navigate = useNavigate();
@@ -115,12 +114,15 @@ function AdminListDetailsPage() {
         reload: reloadEveryone,
     } = useAdminListEveryone(listId, isEveryone);
 
+    // Шаблоны выдачи ролей (клиентский модуль поверх /v1/admin-lists/{id}/templates).
+    const { templates: adminListTemplates } = useAdminListTemplates(listId);
+    const [isApplyingTemplate, setApplyingTemplate] = useState(false);
+
     const selectedUserData = isEveryone ? everyoneData : userData;
     const isUserLoading = isEveryone ? isEveryoneLoading : isUserDataLoading;
     const userErrorMessage = isEveryone ? everyoneError : userDataError;
     const reloadSelectedUser = isEveryone ? reloadEveryone : reloadUserData;
 
-    const [roleDrafts, setRoleDrafts] = useState<Record<string, RoleDraft>>({});
     const [privilegeDraft, setPrivilegeDraft] = useState("");
     const [bulkActiveBefore, setBulkActiveBefore] = useState("");
 
@@ -230,20 +232,19 @@ function AdminListDetailsPage() {
         return [...map.values()].sort((left, right) => left.name.localeCompare(right.name, "ru"));
     }, [listData?.roles, selectedUserData?.roles]);
 
-    const presentRoleNames = useMemo(() => new Set(roleRows.map((role) => role.name)), [roleRows]);
-
-    useEffect(() => {
-        const nextDrafts = roleRows.reduce<Record<string, RoleDraft>>((acc, role) => {
-            acc[role.name] = {
-                activeBefore: toDateTimeLocalInputValue(role.activeBefore),
-                value: role.value ?? null,
-            };
-
-            return acc;
-        }, {});
-
-        setRoleDrafts(nextDrafts);
-    }, [roleRows]);
+    // Общий плюминг черновиков ролей (состояние, каскад иерархии, типовые операции).
+    // roleRows строится выше по данным списка + пользователя; хук синхронизирует с ним черновики.
+    const {
+        roleDrafts,
+        setRoleDrafts,
+        presentRoleNames,
+        roleByName,
+        getDraft: getRoleDraft,
+        handleDraftChange,
+        handleResetRow,
+        handleMarkForDeletion,
+        resetDrafts,
+    } = useRoleDrafts(roleRows);
 
     useEffect(() => {
         if (selectedUserData?.privilegeLevel != null && selectedUserData.privilegeLevel !== 0) {
@@ -303,18 +304,6 @@ function AdminListDetailsPage() {
 
         await Promise.all([reloadUsers(), reloadSelectedUser()]);
     }, [selectedUserId, reloadUsers, reloadSelectedUser]);
-
-    const getRoleDraft = useCallback(
-        (role: RoleRow, drafts: Record<string, RoleDraft> = roleDrafts) => {
-            return (
-                drafts[role.name] || {
-                    activeBefore: toDateTimeLocalInputValue(role.activeBefore),
-                    value: role.value ?? null,
-                }
-            );
-        },
-        [roleDrafts]
-    );
 
     const getRoleRestriction = useCallback(
         (role: RoleRow) => {
@@ -441,33 +430,6 @@ function AdminListDetailsPage() {
         return acc;
     }, []);
 
-    const handleDraftChange = useCallback(
-        (roleName: string, next: RoleDraft) => {
-            setRoleDrafts((currentDrafts) =>
-                cascadeHierarchyDrafts(currentDrafts, roleName, next, presentRoleNames)
-            );
-        },
-        [presentRoleNames]
-    );
-
-    const handleResetRow = useCallback((roleName: string) => {
-        setRoleDrafts((currentDrafts) => {
-            const { [roleName]: _omit, ...rest } = currentDrafts;
-
-            return rest;
-        });
-    }, []);
-
-    const handleMarkForDeletion = useCallback((role: RoleRow) => {
-        setRoleDrafts((currentDrafts) => ({
-            ...currentDrafts,
-            [role.name]: {
-                activeBefore: "",
-                value: null,
-            },
-        }));
-    }, []);
-
     const myGrantedRoles = useMemo(() => {
         return roleRows.filter(
             (role) =>
@@ -487,19 +449,6 @@ function AdminListDetailsPage() {
             return next;
         });
     }, [myGrantedRoles]);
-
-    const resetChanges = () => {
-        const nextDrafts = roleRows.reduce<Record<string, RoleDraft>>((acc, role) => {
-            acc[role.name] = {
-                activeBefore: toDateTimeLocalInputValue(role.activeBefore),
-                value: role.value ?? null,
-            };
-
-            return acc;
-        }, {});
-
-        setRoleDrafts(nextDrafts);
-    };
 
     const applyChanges = async () => {
         if (!selectedUserId || pendingChanges.length === 0) return;
@@ -698,6 +647,164 @@ function AdminListDetailsPage() {
         }
     };
 
+    // ---- Применение шаблона выдачи ролей ----
+    // Полное развёртывание (PUT) доступно только полному управляющему, владеющему всеми
+    // ролями шаблона; иначе — раскладка ролей в черновики (как ручное прокликивание).
+    const computeCanDeployTemplate = (template: AdminListTemplateOutWeb): boolean => {
+        // deploy (PUT) заменяет запись целиком, включая привилегию из шаблона — поэтому сила 0
+        // у нового пользователя НЕ блокирует: шаблон сам задаст ненулевую силу.
+        if (!canManage || isEveryone || strongerSelectedUser) {
+            return false;
+        }
+
+        return (template.roles || []).every((role) => hasOwnedListRole(listData?.roles, role.name));
+    };
+
+    const deployTemplate = async (template: AdminListTemplateOutWeb) => {
+        if (!selectedUserId || isEveryone) return;
+
+        const roles = (template.roles || []).map((role) => ({
+            name: role.name,
+            // значение шаблона (true — грант, false — снятие) применяется как есть
+            value: role.value,
+            activeBefore: null as number | null,
+        }));
+
+        if (roles.length === 0) return;
+
+        const privilege =
+            template.privilegeLevel ??
+            selectedUserPrivilegeLevel ??
+            Math.max(1, (listPrivilegeLevel ?? 1) - 10);
+
+        if (
+            !Number.isInteger(privilege) ||
+            privilege < 1 ||
+            (listPrivilegeLevel !== null && privilege >= listPrivilegeLevel)
+        ) {
+            toast({
+                title: t("adminListTemplateDeployPrivilegeError", {
+                    level: listPrivilegeLevel !== null ? String(listPrivilegeLevel) : "?",
+                }),
+                type: "error",
+                time: 10000,
+            });
+            return;
+        }
+
+        if (
+            !(await confirm(
+                t("adminListTemplateDeployConfirm", {
+                    count: String(roles.length),
+                    level: String(privilege),
+                }),
+                // деструктивно (замена записи целиком) → красная кнопка «Заменить»
+                { confirmButton: t("adminListTemplatesApplyDeploy"), negative: true }
+            ))
+        ) {
+            return;
+        }
+
+        setApplyingTemplate(true);
+
+        try {
+            const payload: AdminListRolePutInWeb = { roles, privilegeLevel: privilege };
+
+            await adminListApi.replaceAdminListUser(listId, selectedUserId, payload);
+
+            toast({ title: t("adminListTemplateDeployedToast"), type: "success" });
+
+            await refreshCurrentUser();
+        } catch (error) {
+            toast({
+                title: t("adminListTemplateDeployFailedToast"),
+                description: convertErrorResponseToString(error),
+                type: "error",
+                time: 10000,
+            });
+        } finally {
+            setApplyingTemplate(false);
+        }
+    };
+
+    const stageTemplate = async (template: AdminListTemplateOutWeb) => {
+        const allRoles = template.roles || [];
+        const applicable = allRoles.filter((role) => {
+            const row = roleByName.get(role.name);
+            return !!row && presentRoleNames.has(role.name) && !getRoleRestriction(row);
+        });
+        const skipped = allRoles.length - applicable.length;
+
+        if (
+            !(await confirm(
+                t("adminListTemplateStageConfirm", { count: String(applicable.length) }),
+                // недеструктивно (раскладка в черновики) → обычная кнопка «Применить»
+                { confirmButton: t("adminListTemplatesApplyStage"), negative: false }
+            ))
+        ) {
+            return;
+        }
+
+        setRoleDrafts((currentDrafts) => {
+            let nextDrafts = currentDrafts;
+
+            applicable.forEach((role) => {
+                nextDrafts = cascadeHierarchyDrafts(
+                    nextDrafts,
+                    role.name,
+                    // значение шаблона (true — грант, false — снятие) раскладывается как есть
+                    { value: role.value, activeBefore: "" },
+                    presentRoleNames
+                );
+            });
+
+            return nextDrafts;
+        });
+
+        // привилегию только префиллим (стейджинг) — сохранение штатной кнопкой
+        if (template.privilegeLevel != null && !privilegeRestriction) {
+            setPrivilegeDraft(String(template.privilegeLevel));
+        }
+
+        if (applicable.length === 0) {
+            toast({ title: t("adminListTemplateStagedNone"), type: "warning" });
+            return;
+        }
+
+        toast({
+            title: t("adminListTemplateStagedToast", { count: String(applicable.length) }),
+            description:
+                skipped > 0
+                    ? t("adminListTemplateStagedSkipped", { count: String(skipped) })
+                    : undefined,
+            type: "success",
+        });
+    };
+
+    // Раскладка ролей шаблона в редактор («Применить») — путь вставки: как ручное
+    // прокликивание. Осмысленна только при установленной (ненулевой) силе пользователя —
+    // иначе правки ролей всё равно заблокированы; поэтому кнопка появляется лишь тогда.
+    const computeCanStageTemplate = (template: AdminListTemplateOutWeb): boolean => {
+        if (!canInsert || isEveryone || strongerSelectedUser) return false;
+        if ((template.roles?.length ?? 0) === 0) return false;
+        return selectedUserPrivilegeLevel !== null && selectedUserPrivilegeLevel > 0;
+    };
+
+    // Значения контрола применения шаблона вынесены из JSX: вложенные тернарники и
+    // инлайн-стрелки в разметке сбивают control-flow-анализ react-hooks/rules-of-hooks.
+    const showTemplateApply = !isEveryone && !rolesReadOnly && adminListTemplates.length > 0;
+    // причина, по которой шаблон нельзя ни заменить, ни применить (показывается, когда
+    // недоступны обе кнопки)
+    const templateApplyDisabledReason = (
+        template: AdminListTemplateOutWeb
+    ): string | undefined => {
+        if (strongerSelectedUser) return t("adminListBlockedStrongerUser");
+        if ((template.roles?.length ?? 0) === 0) return t("adminListTemplatesApplyEmpty");
+        // «Заменить» сам задаёт привилегию; «Применить» требует ненулевой силы
+        if (selectedUserHasZeroPrivilege) return t("adminListTemplateApplyRaisePrivilege");
+        return undefined;
+    };
+
     if (!Number.isFinite(listId)) {
         return (
             <div className="admin-list-details">
@@ -755,6 +862,11 @@ function AdminListDetailsPage() {
             <Button basic onClick={refreshAll} type="button">
                 {t("adminListButtonRefresh")}
             </Button>
+            {canInsert && (
+                <Button as={Link} basic to={`/admin-list/${listId}/templates`}>
+                    {t("adminListTemplatesLink")}
+                </Button>
+            )}
             {canEditList && (
                 <Button
                     basic
@@ -957,6 +1069,18 @@ function AdminListDetailsPage() {
                                         </Message>
                                     )}
 
+                                    {showTemplateApply && (
+                                        <ApplyTemplateControl
+                                            templates={adminListTemplates}
+                                            getCanDeploy={computeCanDeployTemplate}
+                                            getCanStage={computeCanStageTemplate}
+                                            getDisabledReason={templateApplyDisabledReason}
+                                            isBusy={isApplyingTemplate}
+                                            onDeploy={deployTemplate}
+                                            onStage={stageTemplate}
+                                        />
+                                    )}
+
                                     {!isEveryone && (
                                     <Segment>
                                         <Header as="h3">{t("adminListPrivilegeHeader")}</Header>
@@ -1082,7 +1206,7 @@ function AdminListDetailsPage() {
                                                             disabled={
                                                                 pendingChanges.length === 0 || isApplyingChanges
                                                             }
-                                                            onClick={resetChanges}
+                                                            onClick={resetDrafts}
                                                             type="button"
                                                         >
                                                             {t("adminListPendingReset")}
