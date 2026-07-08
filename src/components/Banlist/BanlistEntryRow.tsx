@@ -94,6 +94,30 @@ function BanlistEntryRow(props: BanlistEntryRowProps) {
                     <BanlistSubjectLabel subject={entry.subject} />
                 </Table.Cell>
             )}
+            {isColumnVisible("matching") && (
+                <Table.Cell collapsing textAlign="center">
+                    {entry.matchByIpCidr || entry.matchByHardwareId ? (
+                        <>
+                            {entry.matchByIpCidr && (
+                                <Icon
+                                    color="blue"
+                                    name="globe"
+                                    title={`${t("banlistEntryDetailsMatchByIp")}: ${t("banlistMatchEnabled")}`}
+                                />
+                            )}
+                            {entry.matchByHardwareId && (
+                                <Icon
+                                    color="blue"
+                                    name="microchip"
+                                    title={`${t("banlistEntryDetailsMatchByHardwareId")}: ${t("banlistMatchEnabled")}`}
+                                />
+                            )}
+                        </>
+                    ) : (
+                        "—"
+                    )}
+                </Table.Cell>
+            )}
             {isColumnVisible("action") && (
                 <Table.Cell>
                     <BanlistActionText action={entry.action} />

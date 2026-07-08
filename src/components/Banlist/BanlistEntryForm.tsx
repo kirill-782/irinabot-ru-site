@@ -511,6 +511,31 @@ function BanlistEntryForm(props: BanlistEntryFormProps) {
 
             <Segment>
                 <Header as="h4">
+                    {t("banlistEntryFormMatchHeader")}
+                    <Header.Subheader>
+                        <Markdown light>{t("banlistEntryFormMatchHint")}</Markdown>
+                    </Header.Subheader>
+                </Header>
+                <Form>
+                    <Form.Field>
+                        <Form.Checkbox
+                            checked={matchByIpCidr}
+                            label={t("banlistEntryFormMatchByIp")}
+                            onChange={(_, data) => setMatchByIpCidr(!!data.checked)}
+                        />
+                    </Form.Field>
+                    <Form.Field>
+                        <Form.Checkbox
+                            checked={matchByHardwareId}
+                            label={t("banlistEntryFormMatchByHardwareId")}
+                            onChange={(_, data) => setMatchByHardwareId(!!data.checked)}
+                        />
+                    </Form.Field>
+                </Form>
+            </Segment>
+
+            <Segment>
+                <Header as="h4">
                     {t("banlistEntryFormDeferredHeader")}
                     <Header.Subheader>
                         <Markdown light>{t("banlistEntryFormDeferredHint")}</Markdown>
@@ -535,31 +560,6 @@ function BanlistEntryForm(props: BanlistEntryFormProps) {
                             value={deferredValue}
                         />
                     )}
-                </Form>
-            </Segment>
-
-            <Segment>
-                <Header as="h4">
-                    {t("banlistEntryFormMatchHeader")}
-                    <Header.Subheader>
-                        <Markdown light>{t("banlistEntryFormMatchHint")}</Markdown>
-                    </Header.Subheader>
-                </Header>
-                <Form>
-                    <Form.Field>
-                        <Form.Checkbox
-                            checked={matchByIpCidr}
-                            label={t("banlistEntryFormMatchByIp")}
-                            onChange={(_, data) => setMatchByIpCidr(!!data.checked)}
-                        />
-                    </Form.Field>
-                    <Form.Field>
-                        <Form.Checkbox
-                            checked={matchByHardwareId}
-                            label={t("banlistEntryFormMatchByHardwareId")}
-                            onChange={(_, data) => setMatchByHardwareId(!!data.checked)}
-                        />
-                    </Form.Field>
                 </Form>
             </Segment>
         </div>

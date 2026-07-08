@@ -198,6 +198,16 @@ function BanlistEntriesTab(props: BanlistEntriesTabProps) {
                     <Button
                         basic
                         icon
+                        loading={isLoading}
+                        onClick={() => void onReload()}
+                        size="small"
+                        title={t("banlistEntriesRefresh")}
+                    >
+                        <Icon name="refresh" />
+                    </Button>
+                    <Button
+                        basic
+                        icon
                         onClick={() => setShowColumns(true)}
                         size="small"
                         title={t("banlistColumnsButton")}
@@ -234,6 +244,11 @@ function BanlistEntriesTab(props: BanlistEntriesTabProps) {
                             <Table.HeaderCell collapsing />
                             {columns.isVisible("subject") && (
                                 <Table.HeaderCell>{t("banlistSubjectHeader")}</Table.HeaderCell>
+                            )}
+                            {columns.isVisible("matching") && (
+                                <Table.HeaderCell collapsing textAlign="center">
+                                    {t("banlistEntriesHeaderMatching")}
+                                </Table.HeaderCell>
                             )}
                             {columns.isVisible("action") && (
                                 <Table.HeaderCell>{t("banlistActionHeader")}</Table.HeaderCell>

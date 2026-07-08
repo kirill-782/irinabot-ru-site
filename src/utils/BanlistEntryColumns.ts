@@ -6,6 +6,7 @@ import { LanguageRepositoryKeys } from "../localization/Lang";
 export type BanlistEntryColumnKey =
     | "id"
     | "subject"
+    | "matching"
     | "action"
     | "reason"
     | "tag"
@@ -25,6 +26,7 @@ export interface BanlistEntryColumnDef {
 export const BANLIST_ENTRY_COLUMNS: BanlistEntryColumnDef[] = [
     { key: "id", labelKey: "banlistEntriesHeaderNumber" },
     { key: "subject", labelKey: "banlistSubjectHeader" },
+    { key: "matching", labelKey: "banlistEntriesHeaderMatching" },
     { key: "action", labelKey: "banlistActionHeader" },
     { key: "reason", labelKey: "banlistReasonHeader" },
     { key: "tag", labelKey: "banlistTagHeader" },

@@ -835,6 +835,7 @@ function AdminListDetailsPage() {
             <div className="admin-list-details">
                 <Container>
                     <MetaRobots noIndex />
+                    <Breadcrumbs items={listBreadcrumbItems} />
                     <Segment className="empty">
                         <Loader active inline="centered" />
                     </Segment>

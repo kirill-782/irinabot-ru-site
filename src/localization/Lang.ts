@@ -1118,6 +1118,8 @@ export const LanguageData = {
     banlistEntriesHeaderTemplate: "Шаблон",
     banlistEntriesHeaderActivation: "Активация",
     banlistEntriesHeaderIssuer: "Выдавший",
+    banlistEntriesHeaderMatching: "IP / HWID",
+    banlistEntriesRefresh: "Обновить",
     banlistEntriesToggleOn: "Включить",
     banlistEntriesToggleOff: "Отключить",
     banlistEntriesActivationImmediate: "Сразу",
