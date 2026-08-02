@@ -43,8 +43,9 @@ const MobileMenu = () => {
                             <Icon name="ruble sign" />
                             {lang.menuAutoPay}
                         </Dropdown.Item>
-                        {/* Пункты "Настройки" (/host-presets) и "Банлисты" (/banlist) временно скрыты из меню —
-                            доступны только по прямым ссылкам до публичного релиза этих разделов. */}
+                        {/* Пункт "Настройки" (/host-presets) временно скрыт из меню — доступен только
+                            по прямой ссылке до публичного релиза раздела. Банлисты и админ-листы живут
+                            в "Утилиты" → "Бета тест" (UtilsDropdown). */}
                         <Dropdown.Item
                             as={NavLink}
                             to="/wiki/irina-help/how-to-play"

@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { NavLink } from "react-router-dom";
 import { Dropdown, Icon } from "semantic-ui-react";
 import { AppRuntimeSettingsContext, AuthContext } from "../../context";
 import AccessMaskModal, { AccessMaskBit } from "../Modal/AccessMaskModal";
@@ -14,6 +15,11 @@ function UtilsDropdown() {
 
     const [autohostModalOpened, setAutohostModalOpened] = useState(false);
     const [accessMaskModalOpened, setAccessMaskModalOpened] = useState(false);
+
+    // Разделы бета-теста лежат за requireAuth + requireToken (см. RouteList) — без входа
+    // ссылка привела бы только на ForbiddenPage, поэтому гасим пункты заранее.
+    const betaAvailable =
+        !!authContext.auth.currentAuth && authContext.auth.apiToken.hasToken();
 
     return (
         <>
@@ -37,6 +43,17 @@ function UtilsDropdown() {
                     >
                         <Icon name="check" />
                         {lang.utilsDropdownAccessMaskCalc}
+                    </Dropdown.Item>
+
+                    <Dropdown.Divider />
+                    <Dropdown.Header content={lang.utilsDropdownBeta} icon="flask" />
+                    <Dropdown.Item as={NavLink} disabled={!betaAvailable} to="/banlist">
+                        <Icon name="ban" />
+                        {lang.utilsDropdownBanlists}
+                    </Dropdown.Item>
+                    <Dropdown.Item as={NavLink} disabled={!betaAvailable} to="/admin-list">
+                        <Icon name="users" />
+                        {lang.utilsDropdownAdminLists}
                     </Dropdown.Item>
                 </Dropdown.Menu>
             </Dropdown>

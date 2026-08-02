@@ -40,8 +40,9 @@ const DesktopMenu = () => {
             <Menu.Item as={NavLink} icon="gamepad" to="/gamelist" title={lang.menuActiveGames} onClick={tryTopScroll} />
             <Menu.Item as={NavLink} icon="file" to="/maps" title={lang.menuMapList} onClick={tryTopScroll} />
             <Menu.Item as={NavLink} title={lang.menuHelp} icon="help" to="/wiki/irina-help/how-to-play" />
-            {/* Пункты "Настройки" (/host-presets) и "Банлисты" (/banlist) временно скрыты из меню —
-                доступны только по прямым ссылкам до публичного релиза этих разделов. */}
+            {/* Пункт "Настройки" (/host-presets) временно скрыт из меню — доступен только по прямой
+                ссылке до публичного релиза раздела. Банлисты и админ-листы живут в
+                "Утилиты" → "Бета тест" (UtilsDropdown). */}
             <Menu.Item
                 onClick={() => {
                     switchTheme(currentTheme === E_THEME.LIGHT ? E_THEME.DARK : E_THEME.LIGHT);

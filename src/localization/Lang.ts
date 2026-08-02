@@ -160,6 +160,9 @@ export const LanguageData = {
     utilsDropdownOption: "Утилиты",
     utilsDropdownAutohostList: "Список автохостов",
     utilsDropdownAccessMaskCalc: "Калькулятор accessMask",
+    utilsDropdownBeta: "Бета тест",
+    utilsDropdownBanlists: "Банлисты",
+    utilsDropdownAdminLists: "Админ-листы",
 
     menuActiveGames: "Активные игры",
     menuMapList: "Список карт",
