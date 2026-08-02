@@ -139,6 +139,13 @@ function BanlistDetailsPage() {
         }
     };
 
+    // Подтверждение — отдельный диалог. Чтобы не открывать модалку поверх модалки,
+    // настройки закрываем до вопроса.
+    const deleteFromSettings = () => {
+        setSettingsOpen(false);
+        void handleDelete();
+    };
+
     if (!Number.isFinite(banlistId)) {
         return (
             <Container className="banlist-details extra">
@@ -210,15 +217,6 @@ function BanlistDetailsPage() {
                                     >
                                         {t("banlistSettings")}
                                     </Button>
-                                    <Button
-                                        basic
-                                        color="red"
-                                        loading={isDeleting}
-                                        onClick={() => void handleDelete()}
-                                        size="small"
-                                    >
-                                        {t("remove")}
-                                    </Button>
                                 </div>
                             )}
                         </div>
@@ -286,7 +284,10 @@ function BanlistDetailsPage() {
 
                         <BanlistFormModal
                             banlist={banlist}
+                            canDelete={capabilities.canManageBanlist}
+                            isDeleting={isDeleting}
                             onClose={() => setSettingsOpen(false)}
+                            onDelete={deleteFromSettings}
                             onSuccess={() => reloadBanlist()}
                             open={isSettingsOpen}
                         />

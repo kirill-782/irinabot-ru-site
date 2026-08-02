@@ -527,6 +527,7 @@ export const LanguageData = {
     adminListLabelOwnerNone: "не указан",
     adminListLabelListExpiry: "Список до: {date}",
     adminListLabelItemsExpiry: "Элементы до: {date}",
+    adminListSettingsHeader: "Настройки списка",
     adminListEditComment: "Комментарий",
     adminListEditCommentPlaceholder: "Комментарий для списка",
     adminListEditValueMode: "Режим значений",
@@ -670,15 +671,15 @@ export const LanguageData = {
     adminListToastUserDeleteFailed: "Не удалось удалить пользователя из списка",
     adminListInfoDefault: "Стандартный список нельзя удалить, но от него можно строить дочерние списки.",
 
-    // --- AdminList: роли «все пользователи» (wildcard) ---
-    adminListSidebarEveryone: "Все пользователи",
-    adminListSidebarEveryoneHint: "Роли, применяемые ко всем пользователям списка",
-    adminListEveryoneTitle: "Все пользователи",
-    adminListEveryoneLabel: "Применяется ко всем пользователям списка",
+    // --- AdminList: роли «любой пользователь» (wildcard) ---
+    adminListSidebarEveryone: "Любой пользователь",
+    adminListSidebarEveryoneHint: "Роли, применяемые к любому пользователю, включая тех, кого нет в списке",
+    adminListEveryoneTitle: "Любой пользователь",
+    adminListEveryoneLabel: "Применяется к любому пользователю, включая тех, кого нет в списке",
     adminListEveryoneDelete: "Снять все роли",
-    adminListEveryoneConfirmDelete: "Снять все роли, назначенные всем пользователям списка #{id}?",
-    adminListToastEveryoneDeleted: "Роли для всех пользователей сняты",
-    adminListToastEveryoneDeleteFailed: "Не удалось снять роли для всех пользователей",
+    adminListEveryoneConfirmDelete: "Снять роли «Любой пользователь» в списке #{id}?",
+    adminListToastEveryoneDeleted: "Роли «Любой пользователь» сняты",
+    adminListToastEveryoneDeleteFailed: "Не удалось снять роли «Любой пользователь»",
 
     // --- AdminList: секции таблицы ролей ---
     adminListRolesSectionPermissions: "Права (основные)",
@@ -1092,6 +1093,7 @@ export const LanguageData = {
     banlistSharedAccessDefaultList: "Стандартный",
     banlistSettingsSavedToast: "Настройки сохранены",
     banlistSettingsSaveFailedToast: "Не удалось сохранить",
+    banlistDeleteBanlist: "Удалить банлист",
     banlistDeletedToast: "Банлист удалён",
     banlistDeleteFailedToast: "Не удалось удалить банлист",
     banlistDeleteConfirm: "Удалить банлист «{name}» безвозвратно?",

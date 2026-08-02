@@ -17,11 +17,24 @@ interface BanlistFormModalProps {
     open: boolean;
     // если задан — режим настроек существующего банлиста, иначе создание нового
     banlist?: BanlistOutWeb | null;
+    // Удаление банлиста живёт в этой же модалке (только режим настроек).
+    // Подтверждение спрашивает страница — здесь только кнопка.
+    canDelete?: boolean;
+    isDeleting?: boolean;
+    onDelete?: () => void;
     onClose: () => void;
     onSuccess?: (banlist: BanlistOutWeb) => void | Promise<void>;
 }
 
-function BanlistFormModal({ open, banlist, onClose, onSuccess }: BanlistFormModalProps) {
+function BanlistFormModal({
+    open,
+    banlist,
+    canDelete,
+    isDeleting,
+    onDelete,
+    onClose,
+    onSuccess,
+}: BanlistFormModalProps) {
     const { banlistApi, adminListApi } = useContext(RestContext);
     const { language } = useContext(AppRuntimeSettingsContext);
     const t = language.getString;
@@ -258,6 +271,17 @@ function BanlistFormModal({ open, banlist, onClose, onSuccess }: BanlistFormModa
                 </Form>
             </Modal.Content>
             <Modal.Actions>
+                {isEdit && canDelete && onDelete && (
+                    <Button
+                        color="red"
+                        disabled={isSaving}
+                        loading={isDeleting}
+                        onClick={onDelete}
+                        style={{ float: "left" }}
+                    >
+                        {t("banlistDeleteBanlist")}
+                    </Button>
+                )}
                 <Button onClick={onClose}>{t("cancel")}</Button>
                 <Button
                     disabled={

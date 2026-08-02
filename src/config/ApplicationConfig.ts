@@ -5,7 +5,7 @@ const isProduction = process.env.NODE_ENV === "production";
 const wsHost = window.location.host === "irinabot.com" ?  "irinabot.com" :  "irinabot.ru"
 
 export const WEBSOCKET_ENDPOINT = isProduction
-     ? "wss://" + wsHost + "/ghost/"
+     ? "wss://" + window.location.host + "/ghost/"
      : "wss://ghost.services.irinabot.ru/ghost/";
 
 

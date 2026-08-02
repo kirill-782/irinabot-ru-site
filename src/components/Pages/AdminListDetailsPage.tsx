@@ -15,8 +15,8 @@ import {
     Segment,
 } from "semantic-ui-react";
 import AdminListCard from "../AdminList/AdminListCard";
-import AdminListEditForm from "../AdminList/AdminListEditForm";
 import AdminListRolesTable from "../AdminList/AdminListRolesTable";
+import AdminListSettingsModal from "../AdminList/AdminListSettingsModal";
 import AdminListUserSidebar from "../AdminList/AdminListUserSidebar";
 import UserIdLabel from "../AdminList/UserIdLabel";
 import { PendingChange, RoleRow } from "../AdminList/interfaces";
@@ -612,6 +612,13 @@ function AdminListDetailsPage() {
         }
     };
 
+    // Подтверждение удаления — отдельный диалог. Чтобы не открывать модалку поверх
+    // модалки, настройки закрываем до вопроса.
+    const deleteListFromSettings = () => {
+        setEditingList(false);
+        void deleteList();
+    };
+
     const normalizedPrivilegeDraft = privilegeDraft.trim();
     const parsedPrivilegeDraft = normalizedPrivilegeDraft ? Number(normalizedPrivilegeDraft) : null;
     const privilegeHasError =
@@ -869,8 +876,14 @@ function AdminListDetailsPage() {
 
     const toolbar = (
         <>
-            <Button basic onClick={refreshAll} type="button">
-                {t("adminListButtonRefresh")}
+            <Button
+                basic
+                icon
+                onClick={refreshAll}
+                title={t("adminListButtonRefresh")}
+                type="button"
+            >
+                <Icon name="refresh" />
             </Button>
             {canInsert && (
                 <Button as={Link} basic to={`/admin-list/${listId}/templates`}>
@@ -880,24 +893,13 @@ function AdminListDetailsPage() {
             {canEditList && (
                 <Button
                     basic
-                    disabled={isEditingList || isSavingList}
+                    disabled={isSavingList}
                     onClick={() => setEditingList(true)}
                     type="button"
                 >
                     {t("edit")}
                 </Button>
             )}
-            <Button
-                color="red"
-                disabled={!canDeleteList}
-                loading={isDeletingList}
-                onClick={() => {
-                    void deleteList();
-                }}
-                type="button"
-            >
-                {t("adminListButtonDeleteList")}
-            </Button>
         </>
     );
 
@@ -909,22 +911,7 @@ function AdminListDetailsPage() {
                 <Breadcrumbs items={listBreadcrumbItems} />
 
                 {listData && (
-                    <AdminListCard
-                        list={isEditingList ? { ...listData, comment: listData.comment } : listData}
-                        listId={listId}
-                        toolbar={toolbar}
-                    />
-                )}
-
-                {isEditingList && listData && (
-                    <AdminListEditForm
-                        list={listData}
-                        isSaving={isSavingList}
-                        onCancel={() => setEditingList(false)}
-                        onSave={(patch) => {
-                            void saveListChanges(patch);
-                        }}
-                    />
+                    <AdminListCard list={listData} listId={listId} toolbar={toolbar} />
                 )}
 
                 {listErrorMessage && (
@@ -1300,6 +1287,21 @@ function AdminListDetailsPage() {
                     </Grid.Column>
                 </Grid>
             </Container>
+
+            {listData && (
+                <AdminListSettingsModal
+                    canDelete={canDeleteList}
+                    isDeleting={isDeletingList}
+                    isSaving={isSavingList}
+                    list={listData}
+                    onClose={() => setEditingList(false)}
+                    onDelete={deleteListFromSettings}
+                    onSave={(patch) => {
+                        void saveListChanges(patch);
+                    }}
+                    open={isEditingList}
+                />
+            )}
 
             {confirmModal}
         </div>

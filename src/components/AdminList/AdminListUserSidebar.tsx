@@ -126,6 +126,16 @@ const AdminListUserSidebar: React.FC<AdminListUserSidebarProps> = ({
         onOpenUser(result.userId);
     };
 
+    // Бэкенд возвращает wildcard-цель отдельной записью с пустым userId (null);
+    // фронт же адресует её маркером EVERYONE_TARGET ("*"). Показываем её единым пунктом
+    // «Любой пользователь» (с числом записей), а из общего списка исключаем — иначе была бы
+    // вторая строка без имени, ведущая в «пустого» пользователя.
+    const isEveryoneEntry = (user: AdminListUserListOutWeb) =>
+        !user.userId || user.userId === EVERYONE_TARGET;
+    const everyoneUser = users.find(isEveryoneEntry);
+    const regularUsers = users.filter((user) => !isEveryoneEntry(user));
+    const showEveryoneItem = everyoneAvailable || !!everyoneUser;
+
     return (
         <Segment>
             <Header as="h3">{t("adminListSidebarTitle")}</Header>
@@ -168,7 +178,7 @@ const AdminListUserSidebar: React.FC<AdminListUserSidebarProps> = ({
                 <Message info>{t("adminListSidebarEmpty")}</Message>
             ) : (
                 <Menu className="user-menu" fluid secondary vertical>
-                    {everyoneAvailable && (
+                    {showEveryoneItem && (
                         <Menu.Item
                             active={selectedUserId === EVERYONE_TARGET}
                             onClick={() => onOpenUser(EVERYONE_TARGET)}
@@ -179,10 +189,17 @@ const AdminListUserSidebar: React.FC<AdminListUserSidebarProps> = ({
                                     {t("adminListSidebarEveryone")}
                                 </strong>
                                 <span>{t("adminListSidebarEveryoneHint")}</span>
+                                {everyoneUser && (
+                                    <span>
+                                        {t("adminListSidebarDeclarationCount", {
+                                            count: String(everyoneUser.declarationCount || 0),
+                                        })}
+                                    </span>
+                                )}
                             </div>
                         </Menu.Item>
                     )}
-                    {users.map((user) => {
+                    {regularUsers.map((user) => {
                         const userId = user.userId || "";
 
                         return (
