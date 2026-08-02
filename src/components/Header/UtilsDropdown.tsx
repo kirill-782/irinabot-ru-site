@@ -4,6 +4,7 @@ import { Dropdown, Icon } from "semantic-ui-react";
 import { AppRuntimeSettingsContext, AuthContext } from "../../context";
 import AccessMaskModal, { AccessMaskBit } from "../Modal/AccessMaskModal";
 import AutohostListModal from "../Modal/AutohostListModal";
+import EntitlementsModal from "../Modal/EntitlementsModal";
 import DownloadMap from "./DownloadMap";
 import UploadMap from "./UploadMap";
 
@@ -15,6 +16,7 @@ function UtilsDropdown() {
 
     const [autohostModalOpened, setAutohostModalOpened] = useState(false);
     const [accessMaskModalOpened, setAccessMaskModalOpened] = useState(false);
+    const [entitlementsModalOpened, setEntitlementsModalOpened] = useState(false);
 
     // Разделы бета-теста лежат за requireAuth + requireToken (см. RouteList) — без входа
     // ссылка привела бы только на ForbiddenPage, поэтому гасим пункты заранее.
@@ -55,6 +57,15 @@ function UtilsDropdown() {
                         <Icon name="users" />
                         {lang.utilsDropdownAdminLists}
                     </Dropdown.Item>
+                    <Dropdown.Item
+                        disabled={!betaAvailable}
+                        onClick={() => {
+                            setEntitlementsModalOpened(true);
+                        }}
+                    >
+                        <Icon name="star" />
+                        {lang.utilsDropdownEntitlements}
+                    </Dropdown.Item>
                 </Dropdown.Menu>
             </Dropdown>
             {autohostModalOpened && (
@@ -72,6 +83,14 @@ function UtilsDropdown() {
                         setAccessMaskModalOpened(false);
                     }}
                 ></AccessMaskModal>
+            )}
+            {entitlementsModalOpened && (
+                <EntitlementsModal
+                    open={entitlementsModalOpened}
+                    onClose={() => {
+                        setEntitlementsModalOpened(false);
+                    }}
+                ></EntitlementsModal>
             )}
         </>
     );

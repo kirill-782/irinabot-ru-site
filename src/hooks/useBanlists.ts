@@ -1,18 +1,23 @@
 import { useCallback, useContext, useEffect, useState } from "react";
 import { RestContext } from "../context";
-import { BanlistOutWeb } from "../models/rest/Banlist";
+import { BanlistOutWeb, BanlistsFilter } from "../models/rest/Banlist";
 import { convertErrorResponseToString } from "../utils/ApiUtils";
 
 interface UseBanlistsResult {
     banlists: BanlistOutWeb[];
+    // общее число банлистов под фильтром (X-Total-Count) — может быть больше
+    // длины banlists, если запрос ограничен пагинацией
+    total: number;
     isLoading: boolean;
     errorMessage: string;
     reload: (signal?: AbortSignal) => Promise<void>;
 }
 
-export const useBanlists = (): UseBanlistsResult => {
+// filter не задан — сервер отдаёт и свои, и общие банлисты (сначала свои).
+export const useBanlists = (filter?: BanlistsFilter): UseBanlistsResult => {
     const { banlistApi } = useContext(RestContext);
     const [banlists, setBanlists] = useState<BanlistOutWeb[]>([]);
+    const [total, setTotal] = useState(0);
     const [isLoading, setLoading] = useState(true);
     const [errorMessage, setErrorMessage] = useState("");
 
@@ -22,9 +27,12 @@ export const useBanlists = (): UseBanlistsResult => {
             setErrorMessage("");
 
             try {
-                const response = await banlistApi.getBanlists({ signal });
+                const response = await banlistApi.getBanlists(filter ? { filter } : undefined, {
+                    signal,
+                });
 
-                setBanlists(response);
+                setBanlists(response.banlists);
+                setTotal(response.total);
             } catch (error) {
                 if ((error as Error).message === "canceled") return;
 
@@ -35,7 +43,7 @@ export const useBanlists = (): UseBanlistsResult => {
                 }
             }
         },
-        [banlistApi]
+        [banlistApi, filter]
     );
 
     useEffect(() => {
@@ -48,5 +56,5 @@ export const useBanlists = (): UseBanlistsResult => {
         };
     }, [reload]);
 
-    return { banlists, isLoading, errorMessage, reload };
+    return { banlists, total, isLoading, errorMessage, reload };
 };

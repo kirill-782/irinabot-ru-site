@@ -6,6 +6,7 @@ import { AccessListRecord } from "../models/websocket/ServerAccessList";
 import { AdminListApplicationAdministratorService } from "../services/AdminListApplicationAdministratorService";
 import { AdminListService } from "../services/AdminListService";
 import { BanlistService } from "../services/BanlistService";
+import { EntitlementService } from "../services/EntitlementService";
 import { HostPresetService } from "../services/HostPresetService";
 import { ConnectorWebsocket } from "../services/ConnectorWebsocket";
 import { GHostWebSocket } from "../services/GHostWebsocket";
@@ -143,6 +144,7 @@ export type RestContextType = {
     adminListApi: AdminListService;
     adminListAppAdminApi: AdminListApplicationAdministratorService;
     banlistApi: BanlistService;
+    entitlementApi: EntitlementService;
     mapDownloader: MapDownloaderService;
     mapUploader: MapUploaderService;
     mapsApi: MapService;

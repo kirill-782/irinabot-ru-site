@@ -5,6 +5,7 @@ import { AuthContext } from "./../context/index";
 import { AdminListApplicationAdministratorService } from "../services/AdminListApplicationAdministratorService";
 import { AdminListService } from "../services/AdminListService";
 import { BanlistService } from "../services/BanlistService";
+import { EntitlementService } from "../services/EntitlementService";
 import { MapService } from "../services/MapService";
 import { RedeemCodeService } from "../services/RedeemCodeService";
 import { UpdaterService } from "../services/UpdaterService";
@@ -17,6 +18,7 @@ export interface ApiAuthOptions {
     setAdminListService: Dispatch<SetStateAction<AdminListService>>;
     setAdminListApplicationAdministratorService: Dispatch<SetStateAction<AdminListApplicationAdministratorService>>;
     setBanlistService: Dispatch<SetStateAction<BanlistService>>;
+    setEntitlementService: Dispatch<SetStateAction<EntitlementService>>;
     setMapService: Dispatch<SetStateAction<MapService>>;
     setRedeemService: Dispatch<SetStateAction<RedeemCodeService>>;
     setUpdaterService: Dispatch<SetStateAction<UpdaterService>>;
@@ -29,6 +31,7 @@ export const useApiAuth = ({
     setAdminListService,
     setAdminListApplicationAdministratorService,
     setBanlistService,
+    setEntitlementService,
     setMapService,
     setRedeemService,
     setUpdaterService,
@@ -63,6 +66,7 @@ export const useApiAuth = ({
         setAdminListService(new AdminListService(newConfig));
         setAdminListApplicationAdministratorService(new AdminListApplicationAdministratorService(newConfig));
         setBanlistService(new BanlistService(newConfig));
+        setEntitlementService(new EntitlementService(newConfig));
         setMapService(new MapService(newConfig));
         setRedeemService(new RedeemCodeService(newConfig));
         setUpdaterService(new UpdaterService(newConfig));
@@ -74,6 +78,7 @@ export const useApiAuth = ({
         setAdminListApplicationAdministratorService,
         setAdminListService,
         setBanlistService,
+        setEntitlementService,
         setMapService,
         setRedeemService,
         setUpdaterService,

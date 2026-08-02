@@ -13,6 +13,8 @@ import {
     BanlistInWeb,
     BanlistOutWeb,
     BanlistPatchInWeb,
+    BanlistsPage,
+    BanlistsQueryParams,
     BanlistSubjectOutWeb,
     BanlistSubjectPatchInWeb,
     BanlistViolationStatsOutWeb,
@@ -31,18 +33,29 @@ export class BanlistService {
         this.defaultConfig = defaultConfig || {};
     }
 
-    public getBanlists = async (options?: RequestOptions) => {
+    public getBanlists = async (
+        params?: BanlistsQueryParams,
+        options?: RequestOptions
+    ): Promise<BanlistsPage> => {
         let request: AxiosRequestConfig = {
             ...this.defaultConfig,
             url: "/v1/banlists",
             method: "GET",
+            params,
         };
 
         request = this.appendOptions(request, options);
 
         const response = await Axios.request<BanlistOutWeb[]>(request);
 
-        return response.data;
+        // общее число банлистов под фильтром — в заголовке; без него считаем длину тела
+        const totalHeader = response.headers["x-total-count"];
+        const total = totalHeader !== undefined ? Number(totalHeader) : response.data.length;
+
+        return {
+            banlists: response.data,
+            total: Number.isFinite(total) ? total : response.data.length,
+        };
     };
 
     public createBanlist = async (data: BanlistInWeb, options?: RequestOptions) => {

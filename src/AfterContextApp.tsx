@@ -8,6 +8,7 @@ import { DEFAULT_CONFIG } from "./config/ApiConfig";
 import { AdminListApplicationAdministratorService } from "./services/AdminListApplicationAdministratorService";
 import { AdminListService } from "./services/AdminListService";
 import { BanlistService } from "./services/BanlistService";
+import { EntitlementService } from "./services/EntitlementService";
 import { MapDownloaderService } from "./services/MapDownloaderService";
 import { MapService } from "./services/MapService";
 import { MapUploaderService } from "./services/MapUploaderService";
@@ -23,6 +24,7 @@ function AfterContextApp(props) {
         new AdminListApplicationAdministratorService(DEFAULT_CONFIG)
     );
     const [banlistApi, setBanlistApi] = useState(new BanlistService(DEFAULT_CONFIG));
+    const [entitlementApi, setEntitlementApi] = useState(new EntitlementService(DEFAULT_CONFIG));
     const [mapsApi, setMapsApi] = useState(new MapService(DEFAULT_CONFIG));
     const [mapDownloader] = useState(new MapDownloaderService());
     const [mapUploader] = useState(new MapUploaderService(new MapService(DEFAULT_CONFIG)));
@@ -40,6 +42,7 @@ function AfterContextApp(props) {
         setAdminListService: setAdminListApi,
         setAdminListApplicationAdministratorService: setAdminListAppAdminApi,
         setBanlistService: setBanlistApi,
+        setEntitlementService: setEntitlementApi,
         setMapService: setMapsApi,
         setRedeemService: setRedeemApi,
         setUpdaterService: setUpdaterApi,
@@ -62,6 +65,7 @@ function AfterContextApp(props) {
                 adminListApi,
                 adminListAppAdminApi,
                 banlistApi,
+                entitlementApi,
                 mapDownloader,
                 mapsApi,
                 mapUploader,

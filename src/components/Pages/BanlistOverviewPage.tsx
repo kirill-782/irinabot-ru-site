@@ -9,6 +9,7 @@ import {
     Input,
     Label,
     Loader,
+    Menu,
     Message,
     Segment,
 } from "semantic-ui-react";
@@ -16,7 +17,8 @@ import { AppRuntimeSettingsContext, AuthContext } from "../../context";
 import { useBanlists } from "../../hooks/useBanlists";
 import { useResolveConnectorIds } from "../../hooks/useResolveConnectorIds";
 import { useTitle } from "../../hooks/useTitle";
-import { BanlistOutWeb } from "../../models/rest/Banlist";
+import { BanlistOutWeb, BanlistsFilter } from "../../models/rest/Banlist";
+import { LanguageRepositoryKeys } from "../../localization/Lang";
 import { formatRelative } from "../../utils/BanlistUtils";
 import {
     banlistAccessLevelLabel,
@@ -28,13 +30,27 @@ import MetaRobots from "../Meta/MetaRobots";
 
 import "./BanlistOverviewPage.scss";
 
+// Серверный фильтр GET /v1/banlists: «Все» — это отсутствие параметра,
+// сервер сам отдаёт оба набора (сначала свои).
+type FilterTab = "all" | BanlistsFilter;
+
+const FILTER_TABS: Array<{ key: FilterTab; labelKey: LanguageRepositoryKeys }> = [
+    { key: "all", labelKey: "banlistOverviewFilterAll" },
+    { key: "own", labelKey: "banlistOverviewFilterOwn" },
+    { key: "shared", labelKey: "banlistOverviewFilterShared" },
+];
+
 function BanlistOverviewPage() {
     const navigate = useNavigate();
     const { language } = useContext(AppRuntimeSettingsContext);
     const { auth } = useContext(AuthContext);
     const t = language.getString;
 
-    const { banlists, isLoading, errorMessage, reload } = useBanlists();
+    const [filterTab, setFilterTab] = useState<FilterTab>("all");
+
+    const { banlists, total, isLoading, errorMessage, reload } = useBanlists(
+        filterTab === "all" ? undefined : filterTab
+    );
 
     const [search, setSearch] = useState("");
     const [isNewOpen, setNewOpen] = useState(false);
@@ -155,8 +171,8 @@ function BanlistOverviewPage() {
                     <Header as="h1">
                         {t("banlistOverviewHeader")}
                         <Header.Subheader>
-                            {banlists.length}{" "}
-                            {banlists.length === 1
+                            {total}{" "}
+                            {total === 1
                                 ? t("banlistOverviewCountOne")
                                 : t("banlistOverviewCountMany")}
                         </Header.Subheader>
@@ -189,6 +205,18 @@ function BanlistOverviewPage() {
                 </div>
             </div>
 
+            <Menu pointing secondary>
+                {FILTER_TABS.map((tab) => (
+                    <Menu.Item
+                        active={filterTab === tab.key}
+                        key={tab.key}
+                        onClick={() => setFilterTab(tab.key)}
+                    >
+                        {t(tab.labelKey)}
+                    </Menu.Item>
+                ))}
+            </Menu>
+
             {errorMessage && (
                 <Message error>
                     <Message.Header>{t("banlistOverviewLoadFailed")}</Message.Header>
@@ -200,6 +228,8 @@ function BanlistOverviewPage() {
                 <Segment>
                     <Loader active inline="centered" />
                 </Segment>
+            ) : filtered.length === 0 && !search && filterTab === "shared" ? (
+                <Message info>{t("banlistOverviewEmptyShared")}</Message>
             ) : filtered.length === 0 && !search ? (
                 <Card.Group className="card-grid" doubling itemsPerRow={3} stackable>
                     <Card

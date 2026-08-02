@@ -23,6 +23,24 @@ export interface BanlistPermissionsOutWeb {
     manage?: boolean;
 }
 
+// GET /v1/banlists: own — только собственные (по владельцу, без проверки прав),
+// shared — чужие, где актору напрямую выдана BAN_LIST_* роль и подтверждено право VIEW.
+// Без параметра сервер отдаёт оба набора, сначала свои.
+export type BanlistsFilter = "own" | "shared";
+
+export interface BanlistsQueryParams {
+    filter?: BanlistsFilter;
+    // оффсетная пагинация; без count сервер отдаёт все записи (count > 200 режется до 200)
+    offset?: number;
+    count?: number;
+}
+
+// тело + общее число банлистов под фильтром из заголовка X-Total-Count
+export interface BanlistsPage {
+    banlists: BanlistOutWeb[];
+    total: number;
+}
+
 export interface BanlistOutWeb {
     id?: number;
     ownerUserId?: string;
