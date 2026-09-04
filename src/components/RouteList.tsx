@@ -35,6 +35,8 @@ const WikiPage = React.lazy(() => import("./Pages/WikiPage"));
 
 const LanguageManagerPage = React.lazy(() => import("./Pages/LanguageManagerPage"));
 
+const BannerManagerPage = React.lazy(() => import("./Pages/BannerManagerPage"));
+
 const ConsentStubPage = React.lazy(() => import("./Pages/ConsentStubPage"));
 const ConfigSettingsPage = React.lazy(() => import("./Pages/ConfigSettingsPage"));
 const HostPresetPropertiesPage = React.lazy(() => import("./Pages/HostPresetPropertiesPage"));
@@ -315,6 +317,16 @@ function RouteList() {
                     acc.push({
                         path: section.path,
                         element: <LanguageManagerPage />,
+                        requiredAccessMask: section.requiredAccessMask,
+                        requiredAuthorities: section.requiredAuthorities,
+                        requireAuth: section.requireAuth,
+                        requireToken: section.requireToken,
+                    });
+                    break;
+                case "banners":
+                    acc.push({
+                        path: section.path,
+                        element: <BannerManagerPage />,
                         requiredAccessMask: section.requiredAccessMask,
                         requiredAuthorities: section.requiredAuthorities,
                         requireAuth: section.requireAuth,

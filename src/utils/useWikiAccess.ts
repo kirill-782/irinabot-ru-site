@@ -13,6 +13,7 @@ export interface WikiAccess {
     isAdmin: boolean; // WIKI_ADMIN — полный доступ ко всем wiki
     isLangAdmin: boolean; // WIKI_LANG_ADMIN — правит словарь локализаций
     isTechAdmin: boolean; // WIKI_TECH_ADMIN — ревизии и удаление файлов
+    isBannerAdmin: boolean; // управление баннерами (/v1/banners), по умолчанию WIKI_ADMIN
     isOwner: boolean; // wiki.owner == sub
     canEdit: boolean; // создавать/править статьи, файлы, порядок, флаги
     canManage: boolean; // ACL, токены, видимость wiki
@@ -35,6 +36,9 @@ export function useWikiAccess(wiki?: WikiDto | null): WikiAccess {
         isAdmin,
         isLangAdmin,
         isTechAdmin,
+        // Роль админа баннеров настраивается на сервере (wiki.security.roles.*),
+        // по умолчанию это WIKI_ADMIN — на него и ориентируемся.
+        isBannerAdmin: isAdmin,
         isOwner,
         canEdit: isAdmin || isOwner,
         canManage: isAdmin || isOwner,

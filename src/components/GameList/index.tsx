@@ -1,4 +1,4 @@
-import { Image, Table } from "semantic-ui-react";
+import { Table } from "semantic-ui-react";
 import GameListPlayers from "./GameListPlayers";
 import React, { memo, useContext } from "react";
 import ConnectorAddButton from "./ConnectorAddButton";
@@ -10,44 +10,9 @@ import SendSignalButton from "./SendSignalButton";
 import ReactTimeAgo from "react-time-ago";
 import classnames from "classnames";
 import copy from "clipboard-copy";
-import { AppRuntimeSettingsContext, AuthContext } from "../../context";
-import { AccessMaskBit } from "../Modal/AccessMaskModal";
-
-// TODO AdsFile
-
-const ADS = [
-    {
-        img: "/kaisa/TelegramBanner.png",
-        link: "https://t.me/irina_hostbot",
-        index: 1,
-        expire: 3692478800000,
-        alwaysVisible: true
-    },
-    {
-        img: "/kaisa/XGMLogo.png",
-        link: "https://xgm.guru/p/wc3/xgm-irina-autohost",
-        index: undefined,
-        creatorId: 170246,
-    },
-    {
-        img: "/kaisa/Banner.png",
-        link: "https://discord.gg/d3WvXDk9zQ",
-        index: 10,
-        expire: 1773090000000,
-    },
-    {
-        img: "/kaisa/4x4ATR6k.png",
-        link: "https://goodgame.ru/cups/irinabot-4x4-buff-cup-10074",
-        index: 15,
-        expire: 1782680400000,
-    },
-    {
-        img: "/kaisa/YouTubeBanner.svg",
-        link: "https://www.youtube.com/@irinabottv",
-        index: 10,
-        expire: 1786000000000, // ~2026-08-06, ротация на ~1.5 месяца
-    }
-];
+import { AppRuntimeSettingsContext } from "../../context";
+import { useBanners } from "../../hooks/useBanners";
+import BannerView from "../Banner/BannerView";
 
 interface GameListProps {
     gameList: GameListGame[];
@@ -59,7 +24,9 @@ function GameList({ gameList, selectedGame, setSelectedGame }: GameListProps) {
     const { language } = useContext(AppRuntimeSettingsContext);
     const lang = language.languageRepository;
 
-    const { accessMask } = useContext(AuthContext).auth;
+    // Баннеры приходят с сервера (/v1/banners?placement=GAME_LIST): период показа,
+    // ротация и скрытие от VIP уже учтены в useBanners.
+    const { banners } = useBanners("GAME_LIST");
 
     const getPlayerSlots = (game: GameListGame): number => {
         let usedSlots = 0;
@@ -71,7 +38,9 @@ function GameList({ gameList, selectedGame, setSelectedGame }: GameListProps) {
         return usedSlots;
     };
 
-    let remaingAdsRow = ADS.filter((i) => !i.expire || i.expire > Date.now());
+    // Копия на каждый рендер: баннер вставляется в список не более одного раза
+    // (при отрисовке строки его вырезают из остатка через splice).
+    const remaingAdsRow = [...banners];
 
     return (
         <Table selectable>
@@ -149,12 +118,10 @@ function GameList({ gameList, selectedGame, setSelectedGame }: GameListProps) {
                                     <SendSignalButton game={game} />
                                 </Table.Cell>
                             </Table.Row>
-                            {adsRow && ( !accessMask.hasAccess(AccessMaskBit.VIP_COMMANDS) || adsRow.alwaysVisible ) && (
+                            {adsRow && (
                                 <Table.Row>
                                     <Table.Cell colSpan="5">
-                                        <a href={adsRow.link} className="gachi">
-                                            <Image src={adsRow.img}></Image>
-                                        </a>
+                                        <BannerView banner={adsRow} />
                                     </Table.Cell>
                                 </Table.Row>
                             )}

@@ -46,6 +46,14 @@ export const adminSections: AdminSection[] = [
         requireToken: true,
         requiredAuthorities: ["WIKI_LANG_ADMIN"],
     },
+    {
+        key: "banners",
+        title: "Баннеры",
+        path: "banners",
+        requireAuth: true,
+        requireToken: true,
+        requiredAuthorities: ["WIKI_ADMIN"],
+    },
 ];
 
 export function canAccessControlledRoute(auth: AuthData, route: AccessControlledRoute) {

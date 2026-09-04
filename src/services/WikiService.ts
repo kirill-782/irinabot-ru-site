@@ -1,5 +1,12 @@
 import Axios, { AxiosRequestConfig } from "axios";
 import {
+    BannerAdminDto,
+    BannerClickStatDto,
+    BannerDto,
+    BannerPlacement,
+    BannerRequest,
+} from "../models/rest/Banner";
+import {
     AclEntryDto,
     ArticleDto,
     ArticleNodeDto,
@@ -571,8 +578,20 @@ export class WikiService {
 
     // Прямая ссылка на скачивание файла — удобно для <img src> / <a href>.
     public getFileUrl = (id: string) => {
+        return this.resolveApiUrl(`/v1/files/${encodeURIComponent(id)}`);
+    };
+
+    // Абсолютный URL к API. Ссылки из DTO (imageUrl/clickUrl) сервер может отдавать
+    // как абсолютными (S3/CDN), так и относительными — во втором случае дополняем baseURL.
+    public resolveApiUrl = (url: string) => {
+        if (/^(https?:)?\/\//i.test(url) || url.startsWith("data:") || url.startsWith("blob:")) {
+            return url;
+        }
+
         const base = this.defaultConfig.baseURL ?? "";
-        return `${base}${base.endsWith("/") ? "" : "/"}v1/files/${encodeURIComponent(id)}`;
+        const trimmedBase = base.endsWith("/") ? base.slice(0, -1) : base;
+
+        return `${trimmedBase}${url.startsWith("/") ? "" : "/"}${url}`;
     };
 
     // ---------- i18n (словарь сайта) ----------
@@ -615,6 +634,138 @@ export class WikiService {
         const response = await Axios.request<WikiLangMap>(request);
 
         return response.data;
+    };
+
+    // ---------- Баннеры сайта (/v1/banners) ----------
+
+    // Публичная выдача для места показа: только активные баннеры, отобранные сервером
+    // (enabled + окно startsAt/expiresAt + ротация по weight).
+    public getBanners = async (placement?: BannerPlacement, options?: RequestOptions) => {
+        let request: AxiosRequestConfig = {
+            ...this.defaultConfig,
+            url: "/v1/banners",
+            method: "GET",
+            params: placement ? { placement } : undefined,
+        };
+
+        request = this.appendOptions(request, options);
+
+        const response = await Axios.request<BannerDto[]>(request);
+
+        return response.data;
+    };
+
+    // Полный список баннеров для админки (включая выключенные и просроченные).
+    public getBannersForManagement = async (options?: RequestOptions) => {
+        let request: AxiosRequestConfig = {
+            ...this.defaultConfig,
+            url: "/v1/banners/manage",
+            method: "GET",
+        };
+
+        request = this.appendOptions(request, options);
+
+        const response = await Axios.request<BannerAdminDto[]>(request);
+
+        return response.data;
+    };
+
+    public createBanner = async (data: BannerRequest, options?: RequestOptions) => {
+        let request: AxiosRequestConfig<BannerRequest> = {
+            ...this.defaultConfig,
+            url: "/v1/banners",
+            method: "POST",
+            headers: {
+                ...this.defaultConfig.headers,
+                "content-type": "application/json",
+            },
+            data,
+        };
+
+        request = this.appendOptions(request, options);
+
+        const response = await Axios.request<BannerAdminDto>(request);
+
+        return response.data;
+    };
+
+    // PUT заменяет баннер целиком — отправлять нужно все поля, а не только изменённые.
+    public replaceBanner = async (id: string, data: BannerRequest, options?: RequestOptions) => {
+        let request: AxiosRequestConfig<BannerRequest> = {
+            ...this.defaultConfig,
+            url: `/v1/banners/${encodeURIComponent(id)}`,
+            method: "PUT",
+            headers: {
+                ...this.defaultConfig.headers,
+                "content-type": "application/json",
+            },
+            data,
+        };
+
+        request = this.appendOptions(request, options);
+
+        const response = await Axios.request<BannerAdminDto>(request);
+
+        return response.data;
+    };
+
+    public deleteBanner = async (id: string, options?: RequestOptions) => {
+        let request: AxiosRequestConfig = {
+            ...this.defaultConfig,
+            url: `/v1/banners/${encodeURIComponent(id)}`,
+            method: "DELETE",
+        };
+
+        request = this.appendOptions(request, options);
+
+        const response = await Axios.request<void>(request);
+
+        return response.data;
+    };
+
+    // Картинка баннера. content-type для multipart (с boundary) выставит браузер.
+    public uploadBannerImage = async (id: string, file: File, options?: RequestOptions) => {
+        const body = new FormData();
+        body.append("file", file);
+
+        let request: AxiosRequestConfig<FormData> = {
+            ...this.defaultConfig,
+            url: `/v1/banners/${encodeURIComponent(id)}/image`,
+            method: "PUT",
+            data: body,
+        };
+
+        request = this.appendOptions(request, options);
+
+        const response = await Axios.request<BannerAdminDto>(request);
+
+        return response.data;
+    };
+
+    // Клики по дням за последние days суток.
+    public getBannerStats = async (id: string, days?: number, options?: RequestOptions) => {
+        let request: AxiosRequestConfig = {
+            ...this.defaultConfig,
+            url: `/v1/banners/${encodeURIComponent(id)}/stats`,
+            method: "GET",
+            params: days !== undefined ? { days } : undefined,
+        };
+
+        request = this.appendOptions(request, options);
+
+        const response = await Axios.request<BannerClickStatDto[]>(request);
+
+        return response.data;
+    };
+
+    // Прямые ссылки на картинку и на переход с учётом клика — для <img src> / <a href>,
+    // если в DTO соответствующее поле не пришло.
+    public getBannerImageUrl = (id: string) => {
+        return this.resolveApiUrl(`/v1/banners/${encodeURIComponent(id)}/image`);
+    };
+
+    public getBannerClickUrl = (id: string) => {
+        return this.resolveApiUrl(`/v1/banners/${encodeURIComponent(id)}/click`);
     };
 
     private appendOptions(request: AxiosRequestConfig, options?: RequestOptions) {

@@ -25,6 +25,7 @@ import { useTitle } from "../../hooks/useTitle";
 import { currentTheme, E_THEME } from "../../utils/Theme";
 import { useAdsRender } from "../../hooks/useAdsRender";
 import SiteMaintenanceMessage from "../SiteMaintenanceMessage";
+import BannerPlacementBlock from "../Banner/BannerPlacementBlock";
 
 function GameListPage() {
     const sockets = useContext(WebsocketContext);
@@ -118,6 +119,7 @@ function GameListPage() {
                     )}
                     {hasSiteMaintenance && <SiteMaintenanceMessage />}
                     <div id="yandex_rtb_gameList" style={{marginTop: 10}}></div>
+                    <BannerPlacementBlock placement="ABOVE_GAME_LIST" style={{ marginTop: 10 }} />
                     <GameList
                         gameList={displayedGameList}
                         selectedGame={selectedGame}
