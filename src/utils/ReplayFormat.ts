@@ -1,4 +1,11 @@
-import { PlayerInfo, ReplayResult, SlotInfo, StatStringData } from "@kokomi/w3g-parser-browser";
+import {
+    PlayerInfo,
+    ReforgedPlayerMetadataRecord,
+    ReforgedPlayerProfile,
+    ReplayResult,
+    SlotInfo,
+    StatStringData,
+} from "@kokomi/w3g-parser-browser";
 import { LanguageRepositoryKeys } from "../localization/Lang";
 
 // Расшифровка числовых полей формата .w3g в человекочитаемый вид.
@@ -86,6 +93,43 @@ export const WC3_COLOR_CLASSES = [
     "emerald",
     "peanut",
 ];
+
+/**
+ * Те же цвета, но значениями — для рисования на canvas, где классов нет.
+ * Порядок и оттенки обязаны совпадать с ReplayColors.scss.
+ */
+export const WC3_COLOR_HEX = [
+    "#fd0400",
+    "#0142ff",
+    "#17bf99",
+    "#540081",
+    "#bbb805",
+    "#fd8b10",
+    "#20bf00",
+    "#e45baf",
+    "#939796",
+    "#7dbff1",
+    "#126049",
+    "#4f2a04",
+    "#9b0000",
+    "#0001c4",
+    "#00eaff",
+    "#be00fe",
+    "#bfa670",
+    "#f8a48a",
+    "#97c167",
+    "#deb7ee",
+    "#282828",
+    "#bfc3d1",
+    "#00781e",
+    "#a56f33",
+];
+
+export const getColorHex = (color?: number): string => {
+    if (color === undefined) return "#939796";
+
+    return WC3_COLOR_HEX[color] || "#939796";
+};
 
 export const getColorClass = (color?: number): string => {
     if (color === undefined) return "";
@@ -405,8 +449,36 @@ export const getReplayPlayers = (replay?: ReplayResult): PlayerInfo[] => {
     return players;
 };
 
-export const getPlayerName = (replay?: ReplayResult, playerId?: number): string | undefined =>
-    getReplayPlayers(replay).find((player) => player.playerId === playerId)?.playerName;
+/**
+ * Профили Reforged из записей 0x39. Игра пишет запись заново при каждом изменении профиля,
+ * поэтому побеждает последняя.
+ */
+export const getReforgedProfiles = (replay?: ReplayResult): Map<number, ReforgedPlayerProfile> => {
+    const profiles = new Map<number, ReforgedPlayerProfile>();
+
+    replay?.records.others.forEach((record) => {
+        if (record.type !== RECORD_REFORGED_METADATA) return;
+
+        const profile = (record as ReforgedPlayerMetadataRecord).profile;
+
+        if (profile) profiles.set(profile.playerId, profile);
+    });
+
+    return profiles;
+};
+
+/**
+ * Имя игрока. У классических реплеев это ник из записи игрока; в Reforged, если записи нет
+ * (например, у игрока, вышедшего до старта), остаётся батлтег из профиля.
+ */
+export const getPlayerName = (replay?: ReplayResult, playerId?: number): string | undefined => {
+    const name = getReplayPlayers(replay).find((player) => player.playerId === playerId)?.playerName;
+
+    if (name) return name;
+    if (playerId === undefined) return undefined;
+
+    return getReforgedProfiles(replay).get(playerId)?.battleTag;
+};
 
 export const getSlotByPlayerId = (replay?: ReplayResult, playerId?: number): SlotInfo | undefined =>
     replay?.records.startInfo?.slots.find(

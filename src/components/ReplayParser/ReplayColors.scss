@@ -113,7 +113,7 @@ $chat-name-opacity: 25%;
     border: 1px solid rgba(128, 128, 128, 0.4);
 }
 
-.replay-chat-tab .chat-row a.item.player-name {
+.replay-timeline .chat-row a.item.player-name {
     padding: 3px;
     border-radius: 4px;
     margin: 0 5px 0 5px;
@@ -127,13 +127,13 @@ $chat-name-opacity: 25%;
         background: $light;
     }
 
-    .replay-chat-tab .chat-row a.item.player-name.#{$name} {
+    .replay-timeline .chat-row a.item.player-name.#{$name} {
         background: rgba($light, $chat-name-opacity);
     }
 }
 
 .dark {
-    .replay-chat-tab .chat-row a.item.player-name {
+    .replay-timeline .chat-row a.item.player-name {
         color: #e0e0e0;
     }
 
@@ -145,7 +145,7 @@ $chat-name-opacity: 25%;
                 background: $dark;
             }
 
-            .replay-chat-tab .chat-row a.item.player-name.#{$name} {
+            .replay-timeline .chat-row a.item.player-name.#{$name} {
                 background: rgba($dark, $chat-name-opacity);
             }
         }

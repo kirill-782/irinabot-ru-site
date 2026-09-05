@@ -1,6 +1,6 @@
-// Цвета ников задаются в ReplayColors.scss — здесь только раскладка строки чата.
+// Цвета ников задаются в ReplayColors.scss — здесь только раскладка строки ленты.
 
-.replay-chat-tab {
+.replay-timeline {
     .chat-filter {
         margin: 10px 0;
     }
@@ -13,7 +13,7 @@
         }
 
         .target {
-            margin-left: 5px;
+            margin: 0 5px;
             color: var(--muted-text-color);
         }
 

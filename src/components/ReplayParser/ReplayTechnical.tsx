@@ -13,6 +13,7 @@ import {
     formatVersion,
     getGameModeKey,
     getGameTypeFlagKeys,
+    getReforgedProfiles,
     getRecordKey,
     RECORD_CHECKSUM,
     RECORD_REFORGED_METADATA,
@@ -33,6 +34,7 @@ function ReplayTechnical() {
     records.records.forEach((record) => recordCounts.set(record.type, (recordCounts.get(record.type) || 0) + 1));
 
     const checksums = records.others.filter((record) => record.type === RECORD_CHECKSUM);
+    const profiles = [...getReforgedProfiles(replayData).values()];
     const reforgedMetadata = records.others.filter((record) => record.type === RECORD_REFORGED_METADATA);
 
 
@@ -171,6 +173,22 @@ function ReplayTechnical() {
                                 {
                                     label: t("replayTechnicalReforgedMetadataCount"),
                                     value: reforgedMetadata.length || undefined,
+                                    hideWhenEmpty: true,
+                                },
+                                {
+                                    label: t("replayTechnicalReforgedProfiles"),
+                                    value: profiles.length ? (
+                                        <>
+                                            {profiles.map((profile) => (
+                                                <div key={profile.playerId}>
+                                                    {profile.battleTag}
+                                                    {profile.avatar && (
+                                                        <Label size="tiny" basic content={profile.avatar} />
+                                                    )}
+                                                </div>
+                                            ))}
+                                        </>
+                                    ) : undefined,
                                     hideWhenEmpty: true,
                                 },
                             ]}

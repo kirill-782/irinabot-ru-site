@@ -77,11 +77,106 @@
         }
     }
 
+    .replay-timeline {
+        .timeline-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 10px 0 15px;
+        }
+
+        .timeline-row {
+            // События игры отделяем от чата приглушённым фоном строки.
+            &:not(.chat) {
+                background: rgba(128, 128, 128, 0.08);
+                border-radius: 4px;
+                padding: 2px 4px;
+            }
+        }
+    }
+
+    .replay-apm {
+        .apm-value {
+            font-weight: bold;
+        }
+
+        // Спарклайны — малые кратные: один ряд, один игрок, поэтому цвет один на всех.
+        .apm-sparkline {
+            display: block;
+
+            .line {
+                fill: none;
+                stroke: #2a78d6;
+                stroke-width: 2;
+                stroke-linejoin: round;
+            }
+
+            .area {
+                fill: rgba(42, 120, 214, 0.15);
+                stroke: none;
+            }
+        }
+    }
+
+    .replay-click-map {
+        .click-map-layout {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .click-map-canvas {
+            flex: 0 0 auto;
+
+            canvas {
+                display: block;
+                width: 512px;
+                max-width: 100%;
+                height: auto;
+                image-rendering: pixelated;
+                border-radius: 4px;
+            }
+        }
+
+        .click-map-controls {
+            flex: 1 1 260px;
+            min-width: 240px;
+
+            .click-map-players {
+                display: flex;
+                flex-direction: column;
+                gap: 6px;
+                margin: 15px 0;
+
+                .wc3-color {
+                    // Цвет задаётся инлайном из палитры в ReplayFormat.ts.
+                    margin-left: 4px;
+                }
+            }
+
+            .click-map-summary {
+                color: var(--muted-text-color);
+            }
+        }
+    }
+
     .replay-actions-gate {
         min-height: 120px;
 
         .ui.progress {
             width: 100%;
         }
+    }
+}
+
+// Шаг синего под тёмную поверхность — подобран отдельно, а не осветлением светлого.
+.dark .replay-info .replay-apm .apm-sparkline {
+    .line {
+        stroke: #3987e5;
+    }
+
+    .area {
+        fill: rgba(57, 135, 229, 0.18);
     }
 }

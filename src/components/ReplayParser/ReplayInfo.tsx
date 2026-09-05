@@ -7,7 +7,9 @@ import ReplayOverview from "./ReplayOverview";
 import ReplayPlayers from "./ReplayPlayers";
 import ReplayHcl from "./ReplayHcl";
 import ReplayTechnical from "./ReplayTechnical";
-import ChatTab from "./ChatTab";
+import ReplayTimeline from "./ReplayTimeline";
+import ReplayApm from "./ReplayApm";
+import ReplayClickMap from "./ReplayClickMap";
 import ActionLog from "./ActionLog";
 import W3MMDStats from "./W3MMDStats";
 import ReplayActionsGate from "./ReplayActionsGate";
@@ -38,7 +40,25 @@ function ReplayInfo() {
                     { menuItem: t("replayTabOverview"), render: () => renderPane(<ReplayOverview />) },
                     { menuItem: t("replayTabPlayers"), render: () => renderPane(<ReplayPlayers />) },
                     { menuItem: t("replayTabHcl"), render: () => renderPane(<ReplayHcl />) },
-                    { menuItem: t("replayTabChat"), render: () => renderPane(<ChatTab />) },
+                    { menuItem: t("replayTabTimeline"), render: () => renderPane(<ReplayTimeline />) },
+                    {
+                        menuItem: t("replayTabClickMap"),
+                        render: () =>
+                            renderPane(
+                                <ReplayActionsGate>
+                                    <ReplayClickMap />
+                                </ReplayActionsGate>
+                            ),
+                    },
+                    {
+                        menuItem: t("replayTabApm"),
+                        render: () =>
+                            renderPane(
+                                <ReplayActionsGate>
+                                    <ReplayApm />
+                                </ReplayActionsGate>
+                            ),
+                    },
                     { menuItem: t("replayTabTechnical"), render: () => renderPane(<ReplayTechnical />) },
                     {
                         menuItem: t("replayTabBlocks"),
