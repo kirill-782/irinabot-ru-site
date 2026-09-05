@@ -26,7 +26,7 @@ function ShortBlockCardList({ actionsBlocks }: ShortBlockCardListProps) {
                 </Card>
             );
         });
-    }, [actionsBlocks]);
+    }, [actionsBlocks, getShortBlockDescription]);
 
     return (
         <>

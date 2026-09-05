@@ -61,6 +61,11 @@ function ExternalBlockCard({ actionsBlock }: ExternalBlockCardProps) {
                                                     {lang.externalBlockCardUnknownActionsLabel}
                                                 </Label>
                                             )}
+                                            {i.error && (
+                                                <Label color="red" title={i.error.message}>
+                                                    {lang.externalBlockCardParseErrorLabel}
+                                                </Label>
+                                            )}
                                         </React.Fragment>
                                     );
                                 })}

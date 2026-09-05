@@ -1,0 +1,153 @@
+// Палитра цветов игроков Warcraft III. Порядок соответствует WC3_COLOR_CLASSES в utils/ReplayFormat.ts.
+// Второе значение — вариант для тёмной темы (null, если отдельный не нужен).
+
+$wc3-colors: (
+    "red": (
+        #fd0400,
+        null,
+    ),
+    "blue": (
+        #0142ff,
+        #2b61ff,
+    ),
+    "teal": (
+        #17bf99,
+        null,
+    ),
+    "purple": (
+        #540081,
+        #a505fb,
+    ),
+    "yellow": (
+        #bbb805,
+        null,
+    ),
+    "orange": (
+        #fd8b10,
+        null,
+    ),
+    "green": (
+        #20bf00,
+        null,
+    ),
+    "pink": (
+        #e45baf,
+        null,
+    ),
+    "gray": (
+        #939796,
+        null,
+    ),
+    "light-blue": (
+        #7dbff1,
+        null,
+    ),
+    "dark-green": (
+        #126049,
+        #177a5d,
+    ),
+    "brown": (
+        #4f2a04,
+        #85592d,
+    ),
+    "maroon": (
+        #9b0000,
+        #bf1e1e,
+    ),
+    "navy": (
+        #0001c4,
+        #5253c1,
+    ),
+    "turquoise": (
+        #00eaff,
+        null,
+    ),
+    "violet": (
+        #be00fe,
+        null,
+    ),
+    "wheat": (
+        #bfa670,
+        null,
+    ),
+    "peach": (
+        #f8a48a,
+        null,
+    ),
+    "mint": (
+        #97c167,
+        null,
+    ),
+    "leavender": (
+        #deb7ee,
+        null,
+    ),
+    "coal": (
+        #282828,
+        #000000,
+    ),
+    "snow": (
+        #bfc3d1,
+        null,
+    ),
+    "emerald": (
+        #00781e,
+        #029527,
+    ),
+    "peanut": (
+        #a56f33,
+        null,
+    ),
+);
+
+$chat-name-opacity: 25%;
+
+// Квадратик цвета слота в таблицах.
+.wc3-color {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-right: 6px;
+    border-radius: 2px;
+    vertical-align: middle;
+    border: 1px solid rgba(128, 128, 128, 0.4);
+}
+
+.replay-chat-tab .chat-row a.item.player-name {
+    padding: 3px;
+    border-radius: 4px;
+    margin: 0 5px 0 5px;
+    color: #000000;
+}
+
+@each $name, $values in $wc3-colors {
+    $light: nth($values, 1);
+
+    .wc3-color.#{$name} {
+        background: $light;
+    }
+
+    .replay-chat-tab .chat-row a.item.player-name.#{$name} {
+        background: rgba($light, $chat-name-opacity);
+    }
+}
+
+.dark {
+    .replay-chat-tab .chat-row a.item.player-name {
+        color: #e0e0e0;
+    }
+
+    @each $name, $values in $wc3-colors {
+        $dark: nth($values, 2);
+
+        @if $dark != null {
+            .wc3-color.#{$name} {
+                background: $dark;
+            }
+
+            .replay-chat-tab .chat-row a.item.player-name.#{$name} {
+                background: rgba($dark, $chat-name-opacity);
+            }
+        }
+    }
+}

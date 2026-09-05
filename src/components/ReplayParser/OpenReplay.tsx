@@ -88,7 +88,7 @@ function OpenReplay({ setReplayData }: OpenReplayProps) {
                                     }}
                                 ></Form.Input>
                                 <Form.Button
-                                    disabled={!!xhr.current}
+                                    disabled={!!xhr.current || !url.trim()}
                                     onClick={() => {
                                         openFromUrl(url);
                                     }}

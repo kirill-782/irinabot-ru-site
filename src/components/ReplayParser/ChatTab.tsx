@@ -1,97 +1,74 @@
-import React, { useContext } from "react";
-import { Item } from "semantic-ui-react";
-import GameListPlayerItem from "../GameList/GameListPlayerItem";
-import { ReplayContext } from "../Pages/ReplayParserPage";
-
+import React, { useContext, useState } from "react";
+import { Checkbox, Item, Message } from "semantic-ui-react";
 import prettyMilliseconds from "pretty-ms";
+
+import { ReplayContext } from "../Pages/ReplayParserPage";
+import { AppRuntimeSettingsContext } from "../../context";
+import WarcraftIIIText from "../WarcraftIIIText";
+import {
+    CHAT_FLAG_LOBBY,
+    getChatTarget,
+    getColorClass,
+    getPlayerName,
+    getSlotByPlayerId,
+    SLOT_STATUS_OCCUPIED,
+} from "../../utils/ReplayFormat";
 
 import "./ChatTab.scss";
 
-const getClassColorByPlayer = (colour) => {
-    switch (colour) {
-        case 0:
-            return "red";
-        case 1:
-            return "blue";
-        case 2:
-            return "teal";
-        case 3:
-            return "purple";
-        case 4:
-            return "yellow";
-        case 5:
-            return "orange";
-        case 6:
-            return "green";
-        case 7:
-            return "pink";
-        case 8:
-            return "gray";
-        case 9:
-            return "light-blue";
-        case 10:
-            return "dark-green";
-        case 11:
-            return "brown";
-        case 12:
-            return "maroon";
-        case 13:
-            return "navy";
-        case 14:
-            return "turquoise";
-        case 15:
-            return "violet";
-        case 16:
-            return "wheat";
-        case 17:
-            return "peach";
-        case 18:
-            return "mint";
-        case 19:
-            return "leavender";
-        case 20:
-            return "coal";
-        case 21:
-            return "snow";
-        case 22:
-            return "emerald";
-        case 23:
-            return "peanut";
-        default:
-            return "";
-    }
-};
-
 function ChatTab() {
-    const { replayData, replayActions, name } = useContext(ReplayContext) || {};
+    const { replayData } = useContext(ReplayContext)!;
 
-    const getSlotFromPid = (pid?: number) => {
-        return replayData?.records.startInfo?.slots.find((i) => {
-            return i.playerId === pid;
-        });
-    };
+    const { language } = useContext(AppRuntimeSettingsContext);
+    const t = language.getString;
 
-    const getPlayerByPid = (pid?: number) => {
-        if (replayData?.records.gameInfo?.hostPlayer.playerId === pid) return replayData?.records.gameInfo?.hostPlayer;
+    const [showLobby, setShowLobby] = useState(true);
 
-        return replayData?.records.players.find((i) => {
-            return i.playerId === pid;
-        });
+    const slots = replayData.records.startInfo?.slots || [];
+    const messages = replayData.records.chatMessages.filter(
+        (message) => showLobby || message.flags !== CHAT_FLAG_LOBBY
+    );
+
+    // Получатель приватного сообщения закодирован номером своего цвета. У наблюдателей цвет
+    // общий на всех, поэтому опознаём игрока, только если такой цвет ровно один.
+    const getTargetName = (targetColor: number) => {
+        const matches = slots.filter((slot) => slot.slotStatus === SLOT_STATUS_OCCUPIED && slot.color === targetColor);
+        const name = matches.length === 1 ? getPlayerName(replayData, matches[0].playerId) : undefined;
+
+        return name || t("replayChatTargetColorFallback", { color: targetColor });
     };
 
     return (
         <div className="replay-chat-tab">
-            {replayData?.records.chatMessages.map((i, k) => {
-                const player = getPlayerByPid(i.playerId);
-                const slot = getSlotFromPid(i.playerId);
+            <Checkbox
+                toggle
+                className="chat-filter"
+                label={t("replayChatShowLobby")}
+                checked={showLobby}
+                onChange={(_, data) => setShowLobby(!!data.checked)}
+            />
+
+            {messages.length === 0 && <Message content={t("replayChatEmpty")} />}
+
+            {messages.map((message, index) => {
+                const name = getPlayerName(replayData, message.playerId);
+                const slot = getSlotByPlayerId(replayData, message.playerId);
+                const target = getChatTarget(message.flags, message.chatMode);
 
                 return (
-                    <div key={k} className="chat-row">
-                        <span className="time">({prettyMilliseconds(i.time)})</span>
-                        <Item as="a" className={`player-name ${getClassColorByPlayer(slot?.color)}`}>
-                            {player?.playerName}
+                    <div key={index} className="chat-row">
+                        <span className="time">({prettyMilliseconds(message.time)})</span>
+                        <span className="target">
+                            [
+                            {target.targetColor === undefined
+                                ? t(target.key)
+                                : `${t(target.key)} → ${getTargetName(target.targetColor)}`}
+                            ]
+                        </span>
+                        <Item as="a" className={`player-name ${getColorClass(slot?.color)}`}>
+                            <WarcraftIIIText ignoreTags={["|n"]}>{name || t("unknown")}</WarcraftIIIText>
                         </Item>
-                        <span>{i.message}</span>
+                        <span className="message">{message.message}</span>
                     </div>
                 );
             })}

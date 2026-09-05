@@ -1,49 +1,45 @@
-import React, { useEffect, useMemo, useState, memo } from "react";
-import { useContext } from "react";
-import { ReplayContext } from "../Pages/ReplayParserPage";
-
-import { W3MMDStatsParser } from "../../utils/W3MMDParser";
-
-import { Resizable } from "re-resizable";
+import React, { useContext, useMemo } from "react";
 import { Grid } from "semantic-ui-react";
-import "./W3MMDStats.scss";
-import { W3MMDStatsState } from "./../../utils/W3MMDParser";
-import { ActionData } from "../Pages/ReplayParserPage";
+import { Resizable } from "re-resizable";
 
+import { ActionData, ReplayContext } from "../Pages/ReplayParserPage";
+import { W3MMDStatsParser, W3MMDStatsState } from "../../utils/W3MMDParser";
 import ShortBlockCardList from "./ShortBlockCardList";
 import JSONHighlighter from "./JSONHighlighter";
 
+import "./W3MMDStats.scss";
+
+// W3MMD передаётся действием SyncStoredInteger (0x6b).
+const ACTION_SYNC_STORED_INTEGER = 0x6b;
+
+interface W3MMDResult {
+    state: W3MMDStatsState;
+    /** Блоки, после которых состояние статистики изменилось, — по ним удобно листать историю. */
+    meaningfulBlocks: ActionData[];
+}
+
 function W3MMDStats() {
-    const { replayActions } = useContext(ReplayContext)!!;
+    const { replayActions } = useContext(ReplayContext)!;
 
-    const [meaningfulBlocks, setMeaningfulBlocks] = useState<ActionData[]>([]);
-    const [displayState, setDisplayState] = useState<W3MMDStatsState>();
+    const { state, meaningfulBlocks } = useMemo<W3MMDResult>(() => {
+        const parser = new W3MMDStatsParser();
+        const blocks: ActionData[] = [];
 
-    useEffect(() => {
-        const mmdParser = new W3MMDStatsParser();
-        const syncActions = replayActions?.filter((i) => {
-            return i.commandBlocks.some((i) => {
-                return i.actions.some((i) => {
-                    return i.type === 107;
-                });
-            });
+        replayActions.forEach((action) => {
+            const hasSync = action.commandBlocks.some((commandBlock) =>
+                commandBlock.actions.some((i) => i.type === ACTION_SYNC_STORED_INTEGER)
+            );
+
+            if (!hasSync) return;
+
+            const previousState = parser.state;
+
+            parser.processActions(action.commandBlocks, action.time);
+
+            if (parser.state !== previousState) blocks.push(action);
         });
 
-        let oldState = mmdParser.state;
-
-        syncActions?.forEach((i) => {
-            mmdParser.processActions(i.commandBlocks, i.time);
-
-            if (oldState !== mmdParser.state) {
-                setMeaningfulBlocks((meaningfulBlocks) => {
-                    return [...meaningfulBlocks, i];
-                });
-
-                oldState = mmdParser.state;
-            }
-        });
-
-        setDisplayState(mmdParser.state);
+        return { state: parser.state, meaningfulBlocks: blocks };
     }, [replayActions]);
 
     return (
@@ -52,7 +48,7 @@ function W3MMDStats() {
                 <ShortBlockCardList actionsBlocks={meaningfulBlocks} />
             </Resizable>
             <Grid.Column className="state" width={16}>
-                <JSONHighlighter data={displayState}></JSONHighlighter>
+                <JSONHighlighter data={state} />
             </Grid.Column>
         </Grid>
     );

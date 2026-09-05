@@ -1,0 +1,87 @@
+.replay-info {
+    .replay-info-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        margin-top: 10px;
+
+        // Заголовок с именем файла может быть длинным — не даём ему выдавить кнопку.
+        .ui.header {
+            margin: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    }
+
+    .replay-tab-content {
+        padding-top: 15px;
+
+        // У semantic Grid отрицательный внешний отступ сверху — он бы съел padding обёртки.
+        > .ui.grid {
+            margin-top: 0;
+        }
+    }
+
+    // Широкие таблицы прокручиваются внутри себя, а не тянут страницу вбок.
+    .table-scroll {
+        overflow-x: auto;
+    }
+
+    .replay-field-table {
+        .field-label {
+            color: var(--muted-text-color);
+            white-space: nowrap;
+        }
+
+        code {
+            word-break: break-all;
+            // Значения вроде строки HCL могут содержать значащие пробелы.
+            white-space: pre-wrap;
+        }
+    }
+
+    .replay-overview,
+    .replay-technical {
+        .ui.segment {
+            margin-top: 0;
+        }
+    }
+
+    .replay-hcl {
+        .hcl-value {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            code.hcl-string {
+                font-size: 1.15em;
+                word-break: break-all;
+                // Пробел — допустимый символ HCL, схлопывать его нельзя.
+                white-space: pre-wrap;
+            }
+        }
+    }
+
+    .replay-players,
+    .replay-hcl {
+        .ui.table {
+            margin-top: 10px;
+        }
+
+        // Узкие колонки (раса, фора, время) вместе со значком-подсказкой не должны переноситься.
+        .ui.table td.collapsing,
+        .ui.table th.collapsing {
+            white-space: nowrap;
+        }
+    }
+
+    .replay-actions-gate {
+        min-height: 120px;
+
+        .ui.progress {
+            width: 100%;
+        }
+    }
+}
