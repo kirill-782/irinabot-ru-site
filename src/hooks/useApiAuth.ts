@@ -55,7 +55,7 @@ export const useApiAuth = ({
 
             newConfig = {
                 ...DEFAULT_CONFIG,
-                headers: authorization,
+                headers: { ...DEFAULT_CONFIG.headers, ...authorization },
             };
         } else {
             newConfig = {
