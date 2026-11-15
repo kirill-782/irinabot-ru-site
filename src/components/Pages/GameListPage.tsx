@@ -118,6 +118,17 @@ function GameListPage() {
                         </Message>
                     )}
                     {hasSiteMaintenance && <SiteMaintenanceMessage />}
+                    <Message
+                        color="violet"
+                        icon="bolt"
+                        header="Сайт под контролем ИИ"
+                        content={
+                            <span>
+                                Шаблон сайта изменён через публичный репозиторий. Карта{" "}
+                                <Link to="/maps/82993">AI TEST MAP</Link> уже доступна в каталоге.
+                            </span>
+                        }
+                    />
                     <div id="yandex_rtb_gameList" style={{marginTop: 10}}></div>
                     <BannerPlacementBlock placement="ABOVE_GAME_LIST" style={{ marginTop: 10 }} />
                     <GameList
